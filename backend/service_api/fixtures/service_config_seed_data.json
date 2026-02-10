@@ -1,0 +1,234 @@
+[
+  {
+    "model": "service_api.serviceconfig",
+    "pk": 1,
+    "fields": {
+      "service_code": "BIRTH_REG",
+      "service_name": "Birth Registration",
+      "mda": 1,
+      "config": {
+        "rules": {
+          "required_fields": [
+            "full_name",
+            "dob",
+            "parent_names",
+            "place_of_birth"
+          ],
+          "schema": {
+            "type": "object",
+            "properties": {
+              "full_name": { "type": "string", "title": "Full Name" },
+              "dob": {
+                "type": "string",
+                "format": "date",
+                "title": "Date of Birth"
+              },
+              "parent_names": {
+                "type": "string",
+                "title": "Parent(s) Name(s)"
+              },
+              "place_of_birth": { "type": "string", "title": "Place of Birth" }
+            },
+            "required": ["full_name", "dob", "parent_names", "place_of_birth"]
+          }
+        },
+        "sla": 3,
+        "output": "Birth Certificate"
+      }
+    }
+  },
+  {
+    "model": "service_api.workflowstep",
+    "pk": 1,
+    "fields": {
+      "service_config": 1,
+      "step_name": "Initial Validation",
+      "role": "officer",
+      "action": "validate",
+      "step_type": "manual",
+      "sequence": 1
+    }
+  },
+  {
+    "model": "service_api.workflowstep",
+    "pk": 2,
+    "fields": {
+      "service_config": 1,
+      "step_name": "Supervisor Approval",
+      "role": "supervisor",
+      "action": "approve",
+      "step_type": "manual",
+      "sequence": 2
+    }
+  },
+  {
+    "model": "service_api.serviceconfig",
+    "pk": 2,
+    "fields": {
+      "service_code": "ID_RENEWAL",
+      "service_name": "ID Card Renewal",
+      "mda": 2,
+      "config": {
+        "rules": {
+          "required_fields": ["id_number", "full_name", "address"],
+          "schema": {
+            "type": "object",
+            "properties": {
+              "id_number": { "type": "string", "title": "ID Number" },
+              "full_name": { "type": "string", "title": "Full Name" },
+              "address": { "type": "string", "title": "Current Address" }
+            },
+            "required": ["id_number", "full_name", "address"]
+          }
+        },
+        "sla": 5,
+        "output": "Renewed ID Card"
+      }
+    }
+  },
+  {
+    "model": "service_api.workflowstep",
+    "pk": 3,
+    "fields": {
+      "service_config": 2,
+      "step_name": "Automated Check",
+      "role": "system",
+      "action": "auto_verify",
+      "step_type": "api_call",
+      "sequence": 1
+    }
+  },
+  {
+    "model": "service_api.workflowstep",
+    "pk": 4,
+    "fields": {
+      "service_config": 2,
+      "step_name": "Officer Review",
+      "role": "officer",
+      "action": "review",
+      "step_type": "manual",
+      "sequence": 2
+    }
+  },
+  {
+    "model": "service_api.serviceconfig",
+    "pk": 3,
+    "fields": {
+      "service_code": "SCHOLARSHIPS",
+      "service_name": "Scholarships & Bursaries Coordination",
+      "mda": 3,
+      "config": {
+        "rules": {
+          "required_fields": [
+            "full_name",
+            "id_number",
+            "institution",
+            "financial_need_description"
+          ],
+          "schema": {
+            "type": "object",
+            "properties": {
+              "full_name": { "type": "string", "title": "Applicant Name" },
+              "id_number": { "type": "string", "title": "ID Number" },
+              "date_of_birth": {
+                "type": "string",
+                "format": "date",
+                "title": "Date of Birth"
+              },
+              "institution": { "type": "string", "title": "Institution Name" },
+              "admission_number": {
+                "type": "string",
+                "title": "Admission Number"
+              },
+              "financial_need_description": {
+                "type": "string",
+                "title": "Financial Need Description"
+              },
+              "documents": { "type": "array", "title": "Supporting Documents" }
+            },
+            "required": [
+              "full_name",
+              "id_number",
+              "institution",
+              "financial_need_description"
+            ]
+          }
+        },
+        "sla": 10,
+        "output": "Scholarship Award Letter"
+      }
+    }
+  },
+  {
+    "model": "service_api.workflowstep",
+    "pk": 5,
+    "fields": {
+      "service_config": 3,
+      "step_name": "Preliminary Screening",
+      "role": "officer",
+      "action": "screen",
+      "step_type": "manual",
+      "sequence": 1
+    }
+  },
+  {
+    "model": "service_api.workflowstep",
+    "pk": 6,
+    "fields": {
+      "service_config": 3,
+      "step_name": "Verification & Due Diligence",
+      "role": "verifier",
+      "action": "verify",
+      "step_type": "manual",
+      "sequence": 2
+    }
+  },
+  {
+    "model": "service_api.workflowstep",
+    "pk": 7,
+    "fields": {
+      "service_config": 3,
+      "step_name": "Evaluation & Scoring",
+      "role": "evaluator",
+      "action": "score",
+      "step_type": "manual",
+      "sequence": 3
+    }
+  },
+  {
+    "model": "service_api.workflowstep",
+    "pk": 8,
+    "fields": {
+      "service_config": 3,
+      "step_name": "Approval & Award Decision",
+      "role": "approver",
+      "action": "approve",
+      "step_type": "manual",
+      "sequence": 4
+    }
+  },
+  {
+    "model": "service_api.workflowstep",
+    "pk": 9,
+    "fields": {
+      "service_config": 3,
+      "step_name": "Funds Disbursement",
+      "role": "finance",
+      "action": "disburse",
+      "step_type": "manual",
+      "sequence": 5
+    }
+  },
+  {
+    "model": "service_api.workflowstep",
+    "pk": 10,
+    "fields": {
+      "service_config": 3,
+      "step_name": "Utilization Monitoring",
+      "role": "monitor",
+      "action": "monitor",
+      "step_type": "manual",
+      "sequence": 6
+    }
+  }
+]

@@ -1,0 +1,72 @@
+import json
+import uuid
+import datetime
+from django.utils import timezone
+
+class DocumentGenerator:
+    """
+    Utility to generate authoritative digital documents for government services.
+    This simulates PDF generation with digital signatures and barcodes.
+    """
+    
+    @staticmethod
+    def generate_output(service_request):
+        """
+        Creates a digital certificate/permit payload for the approved request.
+        """
+        service_config = service_request.service_config
+        citizen = service_request.citizen
+        mda = service_config.mda
+        
+        import random
+        svc_code = service_config.service_code
+        
+        # 1. Generate a Unique Authoritative ID (The "Barcode" content) based on Service Type
+        if svc_code == 'BIRTH_REG':
+            auth_id = f"BEN-{random.randint(100000, 999999)}"
+        elif svc_code == 'NATIONAL_ID':
+            auth_id = str(random.randint(10000000, 99999999))
+        elif svc_code == 'KRA_PIN_REG':
+            auth_id = f"A{random.randint(100000000, 999999999)}W"
+        elif svc_code == 'BIZ_INCORPORATION':
+            auth_id = f"PVT-{random.randint(1000,9999)}"
+        elif svc_code == 'NEMIS_REG':
+            auth_id = f"UPI-{random.randint(10000000, 99999999)}"
+        else:
+            auth_id = f"GOK-{mda.code}-{datetime.datetime.now().year}-{str(uuid.uuid4())[:8].upper()}"
+        
+        # 2. Extract specific data points based on service type
+        payload = service_request.payload
+        subject_name = payload.get('child_full_name') or payload.get('business_name') or citizen.get_full_name() or citizen.username
+        
+        # 3. Construct the "Digital Document" Structure
+        document = {
+            "id": str(uuid.uuid4()),
+            "type": "AUTHORITATIVE_OUTPUT",
+            "name": f"{service_config.service_name} - {subject_name}",
+            "issued_by": f"{mda.name} ({mda.code})",
+            "issued_to": citizen.username,
+            "issue_date": timezone.now().isoformat(),
+            "authoritative_id": auth_id,
+            "status": "VALID",
+            "verification_url": f"https://trust.example.go.ke/verify/{auth_id}",
+            "metadata": {
+                "service_request_id": service_request.request_id,
+                "workflow_finalized_at": timezone.now().isoformat(),
+                "barcode_data": auth_id,
+                "digital_signature": f"SIG_{str(uuid.uuid4())[:16].upper()}_NPKI_GOK"
+            },
+            # Mock PDF content (representing the visual appearance)
+            "content": f"data:application/pdf;base64,JVBERi0xLjQKJ...(MOCK_BASE64_CERTIFICATE_FOR_{auth_id})..."
+        }
+        
+        return document
+
+    @staticmethod
+    def archive_to_edrms(document):
+        """
+        Simulates sending the document to the Electronic Document Records Management System.
+        """
+        print(f"EDRMS [ARCHIVE]: Archiving document {document['authoritative_id']} to remote storage...")
+        # In a real system, this would be a POST request to an EDRMS API
+        return True

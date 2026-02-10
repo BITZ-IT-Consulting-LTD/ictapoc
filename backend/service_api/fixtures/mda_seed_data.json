@@ -1,0 +1,26 @@
+[
+  {
+    "model": "service_api.mda",
+    "pk": 1,
+    "fields": {
+      "name": "Ministry of Health",
+      "description": "Handles health-related services."
+    }
+  },
+  {
+    "model": "service_api.mda",
+    "pk": 2,
+    "fields": {
+      "name": "Ministry of Interior",
+      "description": "Handles citizen registration and security."
+    }
+  },
+  {
+    "model": "service_api.mda",
+    "pk": 3,
+    "fields": {
+      "name": "Ministry of Education",
+      "description": "Responsible for national education policy and leadership."
+    }
+  }
+]
