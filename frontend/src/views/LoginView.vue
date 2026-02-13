@@ -99,13 +99,29 @@
              <svg class="w-5 h-5 text-slate-300 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
            </button>
 
-           <div class="text-center text-xs text-slate-400">
+           <div class="text-center text-xs text-slate-400 mb-8">
               <span class="inline-flex items-center gap-1">
                 <svg class="w-3 h-3 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
                 System Operational
               </span>
               <span class="mx-2">•</span>
               <span class="hover:underline cursor-pointer">Help & Support</span>
+           </div>
+
+           <!-- Quick Login Section -->
+           <div class="border-t border-slate-100 pt-6">
+               <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                   <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                   POC Quick Access (RBAC Testing)
+               </p>
+               <div class="grid grid-cols-2 gap-2">
+                   <button @click="quickLogin('global.officer')" class="text-[10px] bg-indigo-50 text-indigo-700 font-bold py-2 rounded-lg hover:bg-indigo-100 transition-colors border border-indigo-100">Global Officer</button>
+                   <button @click="quickLogin('global.supervisor')" class="text-[10px] bg-indigo-50 text-indigo-700 font-bold py-2 rounded-lg hover:bg-indigo-100 transition-colors border border-indigo-100">Global Supervisor</button>
+                   <button @click="quickLogin('moh.officer')" class="text-[10px] bg-emerald-50 text-emerald-700 font-bold py-2 rounded-lg hover:bg-emerald-100 transition-colors border border-emerald-100">MOH Officer</button>
+                   <button @click="quickLogin('moh.supervisor')" class="text-[10px] bg-emerald-50 text-emerald-700 font-bold py-2 rounded-lg hover:bg-emerald-100 transition-colors border border-emerald-100">MOH Supervisor</button>
+                   <button @click="quickLogin('moe.officer')" class="text-[10px] bg-blue-50 text-blue-700 font-bold py-2 rounded-lg hover:bg-blue-100 transition-colors border border-blue-100">MOE Officer</button>
+                   <button @click="quickLogin('maggy1')" class="text-[10px] bg-slate-100 text-slate-700 font-bold py-2 rounded-lg hover:bg-slate-200 transition-colors border border-slate-200">Citizen (Maggy)</button>
+               </div>
            </div>
         </div>
 
@@ -262,10 +278,13 @@ const startSSOFlow = () => {
 
 const simulateSSOLogin = async (simUser, role) => {
   ssoModalOpen.value = false; // Close modal
-  // HARDCODED PASSWORD FOR POC USERS
-  const simPass = 'Starten1@'; 
-  
-  await performLogin(simUser, simPass);
+  await quickLogin(simUser);
+}
+
+const quickLogin = async (usr) => {
+    // All POC users now use the standardized password
+    const pwd = 'Starten1@';
+    await performLogin(usr, pwd);
 }
 
 // --- PKI Logic ---

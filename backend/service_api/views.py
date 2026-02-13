@@ -22,7 +22,7 @@ from .serializers import (
     OfficialLetterSerializer,
     CorrespondenceActionSerializer
 )
-from .permissions import IsAdminOrAuthenticatedReadOnly, IsParticipantOrAdmin, AuditLogPermission, IsSystemAdmin
+from .permissions import IsAdminOrAuthenticatedReadOnly, IsParticipantOrAdmin, AuditLogPermission, IsSystemAdmin, IsClaimAuthorized
 from .workflow import WorkflowEngine, send_notification
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -248,7 +248,7 @@ class WorkflowStepViewSet(viewsets.ModelViewSet):
 class ServiceRequestViewSet(viewsets.ModelViewSet):
     queryset = ServiceRequest.objects.all()
     serializer_class = ServiceRequestSerializer
-    permission_classes = [IsParticipantOrAdmin]
+    permission_classes = [IsParticipantOrAdmin, IsClaimAuthorized]
 
     def get_queryset(self):
         user = self.request.user
@@ -260,43 +260,56 @@ class ServiceRequestViewSet(viewsets.ModelViewSet):
         if user.role == 'citizen':
             return queryset.filter(citizen=user).order_by('-created_at')
 
-        if user.role in ['officer', 'supervisor', 'mda_admin', 'registrar']:
+        if user.role in ['officer', 'supervisor', 'mda_admin', 'registrar', 'GLOBAL_OFFICER', 'GLOBAL_SUPERVISOR', 'MDA_OFFICER', 'MDA_SUPERVISOR']:
             from django.db.models import Q
-            mda_filter = Q(service_config__mda=user.mda) | Q(current_step__target_mda=user.mda)
             
-            # BROADEN: For detail view (retrieve), allow anything in the MDA.
+            # 1. Global / System Admin Bypass
+            if user.role in ['GLOBAL_OFFICER', 'GLOBAL_SUPERVISOR', 'system_admin', 'admin'] or user.is_superuser:
+                return queryset.order_by('-created_at')
+
+            # 2. Scope Determination (Legacy MDA vs New Assigned MDAs)
+            assigned_mda_ids = list(user.assigned_mdas.values_list('id', flat=True))
+            if user.mda: assigned_mda_ids.append(user.mda.id)
+            
+            # Universal MDA Filter
+            mda_filter = Q(service_config__mda_id__in=assigned_mda_ids) | Q(current_step__target_mda_id__in=assigned_mda_ids)
+            
+            # View-level (detail) bypass
             if self.action != 'list':
                 return queryset.filter(mda_filter)
 
-            # For list view, apply specific filters
-            if self.request.query_params.get('all_mda') or self.request.query_params.get('team_requests') or user.role == 'mda_admin':
+            # 3. List Filtering Logic
+            # Higher Authority (Admins/Supervisors) - See Everything in Scope
+            if self.request.query_params.get('all_mda') or \
+               self.request.query_params.get('team_requests') or \
+               user.role in ['mda_admin', 'MDA_SUPERVISOR', 'supervisor', 'registrar']:
+                
                 queryset = queryset.filter(mda_filter).exclude(status__in=['closed', 'approved', 'rejected'])
                 
-                # Filter for Unassigned Pool
                 if self.request.query_params.get('unassigned'):
                     queryset = queryset.filter(assigned_to__isnull=True)
-                # Filter for My Tasks specifically
                 elif self.request.query_params.get('assigned_to_me'):
                      queryset = queryset.filter(assigned_to=user)
+                elif self.request.query_params.get('is_escalated'):
+                     queryset = queryset.filter(is_escalated=True)
 
-            elif user.role == 'officer':
+            # Standard Officers - Restricted Pool
+            elif user.role in ['officer', 'MDA_OFFICER']:
                 if self.request.query_params.get('assigned_to_me'):
                     queryset = queryset.filter(mda_filter, assigned_to=user).exclude(status='closed')
                 elif self.request.query_params.get('unassigned'):
-                    queryset = queryset.filter(mda_filter, assigned_to__isnull=True, current_step__role=user.role).exclude(status='closed')
+                    queryset = queryset.filter(mda_filter, assigned_to__isnull=True, current_step__role__icontains='officer').exclude(status='closed')
                 else:
-                    queryset = queryset.filter(Q(citizen=user) | (mda_filter & Q(current_step__role=user.role))).exclude(status='closed')
-            else: # supervisor or registrar
-                if self.request.query_params.get('assigned_to_me'):
-                    queryset = queryset.filter(mda_filter, assigned_to=user).exclude(status='closed')
-                elif self.request.query_params.get('is_escalated'):
-                    queryset = queryset.filter(mda_filter, is_escalated=True)
-                else:
-                    queryset = queryset.filter(mda_filter).exclude(status='closed')
+                    # Default: See own citizen requests + available tasks for their role
+                    queryset = queryset.filter(Q(citizen=user) | (mda_filter & Q(current_step__role__icontains='officer'))).exclude(status='closed')
             
+            else:
+                # Catch-all for other MDA roles: basic visibility of assigned MDA requests
+                queryset = queryset.filter(mda_filter)
+
             return queryset.order_by('-created_at')
 
-        return ServiceRequest.objects.none()
+        return queryset.none()
 
     def create(self, request, *args, **kwargs):
         citizen = request.user
@@ -400,21 +413,22 @@ class ServiceRequestViewSet(viewsets.ModelViewSet):
         service_request = self.get_object()
         user = request.user
 
+        # 1. Enforce Role & Scope
+        from .permissions import RBACScopeManager
+        allowed, reason = RBACScopeManager.evaluate_claim(user, service_request)
+        if not allowed:
+            return Response({"detail": reason}, status=status.HTTP_403_FORBIDDEN)
+
+        # 2. Check if already assigned
         if service_request.assigned_to and service_request.assigned_to != user:
              return Response({"detail": f"This task is already assigned to {service_request.assigned_to.username}"}, status=status.HTTP_400_BAD_REQUEST)
 
         service_request.assigned_to = user
         service_request.save()
 
-        AuditLog.objects.create(
-            service_request=service_request,
-            actor=user,
-            action='TASK_CLAIMED',
-            details=f"Task claimed by {user.username}."
-        )
-
-        serializer = self.get_serializer(service_request)
-        return Response(serializer.data)
+        # Logging is handled by evaluate_claim automatically for the attempt, 
+        # but we can add more context if successful.
+        return Response(self.get_serializer(service_request).data)
 
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def release(self, request, pk=None):

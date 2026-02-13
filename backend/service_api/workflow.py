@@ -226,7 +226,12 @@ class WorkflowEngine:
         """
         Notifies officers assigned to the current role.
         """
-        officers = User.objects.filter(role=step.role)
+        # Support both legacy role strings and new RBAC role names
+        from django.db.models import Q
+        officers = User.objects.filter(
+            Q(role__icontains=step.role) | 
+            Q(user_role__name__icontains=step.role)
+        )
         for officer in officers:
             send_notification(officer, f"Pending Task: Request {self.service_request.request_id} requires {step.action}.", self.service_request)
             
@@ -245,8 +250,12 @@ class WorkflowEngine:
             return
 
         # Ensure user has the right role
-        if self.service_request.assigned_to != user and user.role != 'admin':
-             raise PermissionError("You must be the assigned officer to complete this step.")
+        # Ensure user has the right role or is specifically assigned
+        resolved_role = user.user_role.name if user.user_role else user.role
+        is_privileged = resolved_role in ['admin', 'system_admin', 'GLOBAL_SUPERVISOR']
+        
+        if self.service_request.assigned_to != user and not is_privileged:
+             raise PermissionError("You must claim this task before you can complete it (only site admins/global supervisors can bypass).")
 
         AuditLog.objects.create(
             service_request=self.service_request,

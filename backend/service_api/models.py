@@ -22,7 +22,8 @@ class User(AbstractUser):
     # Deprecated 'role' string in favor of 'user_role', but kept for legacy checks
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='citizen')
     user_role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=True, related_name='users')
-    mda = models.ForeignKey('MDA', on_delete=models.SET_NULL, null=True, blank=True, related_name='staff')
+    mda = models.ForeignKey('MDA', on_delete=models.SET_NULL, null=True, blank=True, related_name='staff') # Primary MDA
+    assigned_mdas = models.ManyToManyField('MDA', blank=True, related_name='assigned_users') # Multi-MDA assignment
 
     # Profile Fields
     id_number = models.CharField(max_length=20, blank=True, null=True)
@@ -175,14 +176,27 @@ class ServiceRequest(models.Model):
         return self.request_id
 
 class AuditLog(models.Model):
-    service_request = models.ForeignKey(ServiceRequest, on_delete=models.CASCADE, related_name='audit_logs')
+    # Enforced RBAC Audit structure
+    service_request = models.ForeignKey(ServiceRequest, on_delete=models.CASCADE, related_name='audit_logs', null=True, blank=True)
     actor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    action = models.CharField(max_length=255)
+    
+    # Metadata for RBAC Enforcement
+    actor_role = models.CharField(max_length=50, blank=True, null=True)
+    actor_mdas = models.JSONField(default=list, blank=True)
+    
+    action = models.CharField(max_length=255) # e.g. "CLAIM_PROCESS"
+    decision = models.CharField(max_length=10, choices=(('ALLOW', 'ALLOW'), ('DENY', 'DENY')), default='ALLOW')
+    
+    # Context
+    process_id = models.CharField(max_length=100, blank=True, null=True)
+    service_id = models.CharField(max_length=100, blank=True, null=True)
+    owning_mda_id = models.IntegerField(null=True, blank=True)
+    
     timestamp = models.DateTimeField(auto_now_add=True)
     details = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f"{self.service_request.request_id} - {self.action}"
+        return f"{self.timestamp} - {self.actor} - {self.action} - {self.decision}"
 
 class GovernmentFile(models.Model):
     STATUS_CHOICES = (

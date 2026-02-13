@@ -166,7 +166,7 @@
       </div>
 
       <!-- Officer/Supervisor/Other Staff View (Original List Layout) -->
-      <div v-else-if="['officer', 'supervisor', 'registrar', 'mda_admin'].includes(user.role)" class="space-y-8">
+      <div v-else-if="['officer', 'supervisor', 'registrar', 'mda_admin', 'GLOBAL_OFFICER', 'GLOBAL_SUPERVISOR', 'MDA_OFFICER', 'MDA_SUPERVISOR'].includes(user.role)" class="space-y-8">
         <div>
           <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
             <h2 class="text-2xl font-semibold">Catalogue Monitor</h2>
@@ -208,13 +208,13 @@
       </div>
 
       <!-- Supervisor Reports -->
-      <div v-if="user.role === 'supervisor'" class="mt-8">
+      <div v-if="['supervisor', 'GLOBAL_SUPERVISOR', 'MDA_SUPERVISOR', 'mda_admin'].includes(user.role)" class="mt-8">
         <h2 class="text-2xl font-semibold mb-4">System Reports</h2>
         <ReportsDashboard />
       </div>
 
       <!-- Work Queue (Officer, Supervisor, Registrar, MDA Admin) -->
-      <div v-if="['officer', 'supervisor', 'registrar', 'mda_admin'].includes(user.role)" class="space-y-8 mt-8">
+      <div v-if="['officer', 'supervisor', 'registrar', 'mda_admin', 'GLOBAL_OFFICER', 'GLOBAL_SUPERVISOR', 'MDA_OFFICER', 'MDA_SUPERVISOR'].includes(user.role)" class="space-y-8 mt-8">
 
         <!-- Section 1: My Active Tasks (Individual Accountability) -->
         <div class="bg-white border border-indigo-200 p-6 rounded-xl shadow-md">
@@ -685,19 +685,19 @@
     }
 
     // Common data for all dashboard users
-    if (['citizen', 'officer', 'supervisor', 'registrar', 'mda_admin'].includes(role)) {
+    if (['citizen', 'officer', 'supervisor', 'registrar', 'mda_admin', 'GLOBAL_OFFICER', 'GLOBAL_SUPERVISOR', 'MDA_OFFICER', 'MDA_SUPERVISOR'].includes(role)) {
       citizenStore.fetchAvailableServices();
       citizenStore.fetchMyRequests();
       mdaStore.fetchMdas();
     }
 
     // Specific data for staff roles
-    if (['officer', 'supervisor', 'registrar', 'mda_admin'].includes(role)) {
+    if (['officer', 'supervisor', 'registrar', 'mda_admin', 'GLOBAL_OFFICER', 'GLOBAL_SUPERVISOR', 'MDA_OFFICER', 'MDA_SUPERVISOR'].includes(role)) {
       staffStore.fetchIncompleteMdaRequests();
       staffStore.fetchUnassignedRequests();
       staffStore.fetchAssignedRequests();
 
-      if (role === 'supervisor') {
+      if (['supervisor', 'GLOBAL_SUPERVISOR', 'MDA_SUPERVISOR', 'mda_admin'].includes(role)) {
         staffStore.fetchTeamRequests();
         staffStore.fetchEscalatedRequests();
       }
