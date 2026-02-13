@@ -4,8 +4,49 @@ import api from '../services/api';
 export const useServiceConfigStore = defineStore('serviceConfig', {
   state: () => ({
     services: [],
+    catalogueSummary: null,
+    loadingSummary: false,
   }),
   actions: {
+    async fetchCatalogueSummary() {
+      this.loadingSummary = true;
+      try {
+        const response = await api.get('/catalog/services/process_matrix/');
+
+        let totalServices = 0;
+        let withWf = 0;
+        let mdaSet = new Set();
+        let domainCount = response.data.length;
+        let totalMaturity = 0;
+        let citizenFacing = 0;
+
+        response.data.forEach(domain => {
+          domain.processes.forEach(proc => {
+            proc.services.forEach(svc => {
+              totalServices++;
+              mdaSet.add(svc.mda);
+              if (svc.workflow_configured) withWf++;
+              totalMaturity += (svc.maturity || 1);
+              if (svc.service_type?.includes('C2G')) citizenFacing++;
+            });
+          });
+        });
+
+        this.catalogueSummary = {
+          totalServices,
+          totalMDAs: mdaSet.size,
+          totalDomains: domainCount,
+          withWorkflow: withWf,
+          missingWorkflow: totalServices - withWf,
+          avgMaturity: totalServices > 0 ? (totalMaturity / totalServices).toFixed(1) : 0,
+          citizenFacing
+        };
+      } catch (error) {
+        console.error('Failed to fetch Catalogue Summary:', error);
+      } finally {
+        this.loadingSummary = false;
+      }
+    },
     async fetchServices() {
       try {
         const response = await api.get('/service-configs/');

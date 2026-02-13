@@ -11,16 +11,12 @@ class IsAdminOrAuthenticatedReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
             
-        # Write Operations
+        # Write Operations (ONLY Platform Admins)
         user = request.user
         perms = user.user_role.permissions if user.user_role else []
         
-        # Global Admin
-        if user.role == 'admin' or user.is_staff or 'all' in perms or 'global_manage' in perms:
-            return True
-            
-        # MDA Admin (Partial support here, object-level check needed for specific MDA)
-        if user.role == 'mda_admin' or 'mda_manage_services' in perms:
+        # Centralized Authority: System Admin or Global Admin
+        if user.role in ['admin', 'system_admin'] or user.is_staff or 'all' in perms or 'global_manage' in perms:
             return True
             
         return False
@@ -93,3 +89,14 @@ class AuditLogPermission(permissions.BasePermission):
             return obj.service_request.service_config.mda == user.mda
             
         return False
+
+class IsSystemAdmin(permissions.BasePermission):
+    """
+    Strict permission for platform-level management (MDAs, Service Schemas).
+    """
+    def has_permission(self, request, view):
+        if not (request.user and request.user.is_authenticated):
+            return False
+        user = request.user
+        # Only Platform Admins can hit these
+        return user.role in ['admin', 'system_admin'] or user.is_staff

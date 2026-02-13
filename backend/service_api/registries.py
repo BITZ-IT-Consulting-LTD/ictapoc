@@ -49,15 +49,26 @@ class CRS(MockRegistry):
     """Civil Registration Services (Births/Deaths)."""
     BIRTH_RECORDS = {
         "BC-001": {
-            "full_name": "Little John Jnr",
-            "date_of_birth": "2024-01-01",
-            "gender": "Male",
-            "county": "Nairobi City",
-            "mother_name": "Jane Mother",
-            "mother_id": "100",
+            "full_name": "James Doe Jnr",
+            "date_of_birth": "2006-05-15",
+            "gender": "male",
+            "county_of_birth": "Nairobi",
+            "mother_name": "Mary Mother",
+            "mother_id": "11223344",
             "father_name": "John Father",
-            "father_id": "200",
+            "father_id": "55667788",
             "place_of_birth": "Nairobi Hospital"
+        },
+        "BEN-999": {
+            "full_name": "Sarah Test Citizen",
+            "date_of_birth": "2005-10-20",
+            "gender": "female",
+            "county_of_birth": "Mombasa",
+            "mother_name": "Grace Mother",
+            "mother_id": "88776655",
+            "father_name": "Abe Father",
+            "father_id": "44332211",
+            "place_of_birth": "Coast General"
         },
         "BC-999": {
             "full_name": "Orphan Baby",
@@ -103,61 +114,66 @@ class CRS(MockRegistry):
             "father_name": "John Doe",
             "father_id": "12345678",
             "place_of_birth": "Aga Khan"
+        },
+        "BEN-TEST-2026": {
+            "full_name": "James Bond Standard",
+            "date_of_birth": "2000-01-01",
+            "gender": "Male",
+            "county": "Nairobi City",
+            "mother_name": "Molly Mother",
+            "mother_id": "ID-MOTHER-001",
+            "father_name": "Frank Father",
+            "father_id": "ID-FATHER-001",
+            "place_of_birth": "Nairobi Hospital"
         }
     }
 
     def query(self, params):
-        action = params.get('action')
-        # Robust fallback for finding the BEN/Cert No
-        cert_no = params.get('birth_cert_no') or params.get('ben') or params.get('birth_entry_number')
-        
+        cert_no = params.get('birth_entry_number') or params.get('ben') or params.get('bc_number')
+        action = params.get('action', 'fetch')
+
         if not cert_no:
-             reserved_keys = ['action', 'requester_id', 'is_guardian']
-             for k, v in params.items():
-                 if k not in reserved_keys and v:
-                     cert_no = v
-                     break
+            return {"status": "ERROR", "message": "Missing Birth Entry Number (BEN)"}
 
-        if action == 'fetch' or action == 'verify':
-            if not cert_no:
-                 # Check if we have parent details - this is enough for 'verify' in new registrations
-                 if action == 'verify' and (params.get('mother_id') or params.get('mother_name')):
-                     return {"status": "SUCCESS", "message": "Parent details verified for new registration."}
-                 return {"status": "ERROR", "message": "Missing Birth Entry Number (BEN) / Certificate No."}
-            
-            record = self.BIRTH_RECORDS.get(cert_no)
-            if record:
-                # Ownership Validation
-                requester_id = params.get('requester_id')
-                mother_is_dead = record.get('mother_id') == "900"
-                
-                if requester_id:
-                    is_parent = requester_id in [record.get('mother_id'), record.get('father_id')]
-                    is_guardian = params.get('is_guardian') == True
-                    
-                    if not is_parent and not is_guardian and cert_no != "GOK-MOI-2026-0CE47A67":
-                        error_msg = "Identity Match Failed: You do not have authority to fetch this BEN. "
-                        if mother_is_dead:
-                            error_msg += "Mother is deceased. If you are a Legal Guardian, please check the 'Guardian' box."
-                        else:
-                            error_msg += "Only verified parents can access these records."
-                        
-                        return {"status": "DENIED", "message": error_msg}
-                
-                if mother_is_dead:
-                    record['parent_status'] = "MOTHER_DECEASED"
-                    
-                return {"status": "SUCCESS", "data": record, "message": "Birth records retrieved and verified successfully."}
-            
-            # For 'verify' (Searching for existence), NOT finding a record is often the goal for new apps (no duplicates)
-            if action == 'verify':
-                return {"status": "SUCCESS", "message": "No duplicate birth records found. Registration can proceed."}
-                
-            return {"status": "NOT_FOUND", "message": "No birth record found for the provided BEN/Certificate No."}
+        # Dynamic Mock for POC: Any BEN starting with BEN- will work
+        if cert_no.startswith("BEN-") and cert_no not in self.BIRTH_RECORDS:
+            return {
+                "status": "SUCCESS",
+                "message": "Dynamic Birth Record Found. Data pre-filled from authoritative registry.",
+                "data": {
+                    "full_name": f"Authorized Applicant ({cert_no})",
+                    "date_of_birth": "2006-01-01",
+                    "gender": "male",
+                    "county_of_birth": "Kiambu",
+                    "mother_name": "Jane Doe (Verified)",
+                    "mother_id": "12345678",
+                    "father_name": "John Doe (Verified)",
+                    "father_id": "87654321",
+                    "birth_entry_number": cert_no
+                }
+            }
 
-        if "parent_names" in params or "mother_name" in params or "father_name" in params:
-             return {"status": "SUCCESS", "message": "Parents verified against birth records."}
-        return {"status": "ERROR", "message": "Invalid query for CRS: Missing parent details."}
+        record = self.BIRTH_RECORDS.get(str(cert_no))
+        if record:
+            # Ownership Validation
+            requester_id = params.get('requester_id')
+            
+            if requester_id and not cert_no.startswith("BEN-"):
+                is_parent = requester_id in [record.get('mother_id'), record.get('father_id')]
+                is_self = requester_id == record.get('child_id')
+                is_guardian = params.get('is_guardian') == True
+                
+                # Permissive check for POC
+                if not any([is_parent, is_self, is_guardian]):
+                    return {"status": "DENIED", "message": "Identity Match Failed: Unauthorized access to this birth record."}
+            
+            return {
+                "status": "SUCCESS", 
+                "data": record, 
+                "message": "Birth records retrieved and verified successfully."
+            }
+        
+        return {"status": "NOT_FOUND", "message": "Birth Entry Number (BEN) not found in Civil Registry."}
 
 class BRS(MockRegistry):
     """Business Registration Service."""

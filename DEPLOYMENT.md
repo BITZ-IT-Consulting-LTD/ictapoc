@@ -55,30 +55,63 @@ The fastest way to get the platform running is using **Docker Compose**. This sp
 
 ## 2. Production Deployment
 
-For a GOK-ready production environment, follow these architectural best practices.
+For a GOK-ready production environment, we use a dedicated `docker-compose.prod.yml` which sets up:
+1.  **Backend:** Gunicorn application server with static file collection.
+2.  **Frontend/Nginx:** An internal Nginx container that serves the built Vue.js assets and proxies API requests.
+3.  **Database & Cache:** PostgreSQL and Redis.
 
-### **A. Infrastructure Requirements**
-- **Compute:** AWS EC2, Azure VM, or Local Data Center.
-- **Database:** Managed PostgreSQL (e.g., RDS) for reliability.
-- **Reverse Proxy:** The included `nginx` container should be updated to handle **SSL (HTTPS)** via Certbot/Let's Encrypt.
+### **Steps**
 
-### **B. Production Configuration**
-1. **Security:**
-   - Change `DEBUG=False` in `.env`.
-   - Generate a strong `SECRET_KEY`.
-   - Restrict `ALLOWED_HOSTS` to your domain.
+1.  **Configure Environment:**
+    Ensure your `.env` file has production settings. **Critical**: Set hosts to service names.
+    ```bash
+    POSTGRES_DB=icta_db
+    POSTGRES_USER=icta_user
+    POSTGRES_PASSWORD=secure_password
+    POSTGRES_HOST=db
+    
+    REDIS_HOST=redis
+    REDIS_PORT=6379
+    
+    SECRET_KEY=long_random_secret_key
+    DEBUG=False
+    ALLOWED_HOSTS=yourdomain.com,localhost,127.0.0.1
+    ```
 
-2. **Application Server:**
-   - Use `gunicorn` to serve the Django application (already in `requirements.txt`).
-   - Run gunicorn via the backend container command.
+2.  **Build and Run:**
+    Use the production compose file:
+    ```bash
+    docker-compose -f docker-compose.prod.yml up -d --build
+    ```
 
-3. **Asset Serving:**
-   - Use `nginx` to serve the static Vue.js build files.
-   - Run `npm run build` in the frontend and map the `dist/` folder to Nginx.
+    *This command will:*
+    - Build the Vue frontend (multi-stage build).
+    - Build the Django backend and install Gunicorn.
+    - Start the Internal Nginx (Port 80).
+    - Run `collectstatic` automatically on startup.
 
-4. **Background Tasks:**
-   - Ensure the **Celery Worker** is running to handle SLA escalations and notifications.
-   - Command: `celery -A project worker -l info`.
+3.  **Host Nginx Configuration (External):**
+    The user requested an "Internal Nginx" to communicate with the "Host Nginx".
+    The container `nginx` exposes Port 80.
+    
+    Configure your **Host** Nginx to proxy to this container:
+    ```nginx
+    server {
+        listen 80;
+        server_name yourdomain.com;
+    
+        location / {
+            proxy_pass http://localhost:80;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+    }
+    ```
+
+4.  **Verification:**
+    - Access `http://localhost` (or your domain).
+    - Check API at `http://localhost/api/`.
+    - Check Admin at `http://localhost/admin/`.
 
 ---
 

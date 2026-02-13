@@ -91,9 +91,10 @@ class WorkflowEngine:
             # It's an orphan (status in_progress/escalated but no step)
             current_seq = 0 
         
-        # Find the next step in the sequence
+        # Find the next step in the sequence - STRICTLY 'to_be' for client-facing demo
         next_step = WorkflowStep.objects.filter(
             service_config=service_config, 
+            lifecycle_stage='to_be',
             sequence__gt=current_seq
         ).order_by('sequence').first()
 

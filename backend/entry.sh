@@ -6,6 +6,7 @@ python manage.py migrate --noinput
 
 echo "Seeding database..."
 python seed_data.py
+python seed_catalogue_master.py
 
 echo "Starting server..."
 exec "$@"

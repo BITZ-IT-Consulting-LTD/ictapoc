@@ -28,7 +28,7 @@ const setupInterceptors = (apiInstance) => {
 
         try {
           // Attempt to refresh token
-          await authStore.refreshToken();
+          await authStore.refreshAccessToken();
           // Retry the original request with the new token
           return apiInstance(originalRequest);
         } catch (refreshError) {

@@ -16,6 +16,7 @@ class User(AbstractUser):
         ('supervisor', 'Supervisor'),
         ('registrar', 'Registrar'),
         ('mda_admin', 'MDA Admin'),
+        ('system_admin', 'System Admin'),
         ('admin', 'Admin'),
     )
     # Deprecated 'role' string in favor of 'user_role', but kept for legacy checks
@@ -42,11 +43,75 @@ class MDA(models.Model):
     def __str__(self):
         return self.name
 
+class ServiceDomain(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+class ServiceCategory(models.Model):
+    name = models.CharField(max_length=255)
+    domain = models.ForeignKey(ServiceDomain, related_name='categories', on_delete=models.CASCADE)
+    description = models.TextField(blank=True, null=True)
+
+    class Meta:
+        unique_together = ('name', 'domain')
+
+    def __str__(self):
+        return f"{self.domain.name} - {self.name}"
+
 class ServiceConfig(models.Model):
+    STATUS_CHOICES = (
+        ('active', 'Active'),
+        ('inactive', 'Inactive'),
+        ('deprecated', 'Deprecated'),
+        ('draft', 'Draft'),
+    )
+
     service_code = models.CharField(max_length=50, unique=True)
     service_name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True) # New field
     mda = models.ForeignKey(MDA, on_delete=models.CASCADE)
-    config = models.JSONField() # Stores rules, sla, output, etc.
+    
+    # Catalogue & Classification
+    category = models.ForeignKey(ServiceCategory, on_delete=models.SET_NULL, null=True, blank=True, related_name='services')
+    service_status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
+    
+    # Digitization & Readiness
+    digitization_level = models.IntegerField(default=1, help_text="1=Manual, 5=Fully Digital")
+    is_public_facing = models.BooleanField(default=True)
+    
+    # New fields for Catalogue
+    service_type = models.CharField(max_length=50, blank=True, null=True) # G2G, G2C, G2B, Internal
+    delivery_channels = models.JSONField(default=list, blank=True)
+    process_complexity = models.CharField(max_length=50, blank=True, null=True)
+    pain_points = models.JSONField(default=list, blank=True)
+    
+    # Metadata
+    legal_basis_summary = models.TextField(blank=True, null=True)
+    processing_time_estimate = models.CharField(max_length=100, blank=True, null=True)
+    fees_applicable = models.BooleanField(default=False)
+    
+    # Discovery
+    catalogue_visible = models.BooleanField(default=True)
+    catalogue_order = models.IntegerField(default=0)
+    life_event_group = models.CharField(max_length=100, blank=True, null=True) # e.g. "Birth", "Business"
+    catalogue_tags = models.JSONField(default=list, blank=True)
+    
+    # Analysis & Roadmap
+    consolidation_candidate = models.BooleanField(default=False)
+    blocking_issues = models.TextField(blank=True, null=True)
+    quick_wins = models.TextField(blank=True, null=True)
+
+    # Technical
+    shared_services = models.JSONField(default=list, blank=True) # List of shared enablers used
+    associated_systems = models.JSONField(default=list, blank=True) # e.g. ["NIIMS", "IPPD"]
+    associated_actors = models.JSONField(default=list, blank=True) # e.g. ["Citizens", "Immigration Officers"]
+    dependencies = models.JSONField(default=list, blank=True)
+    
+    config = models.JSONField(default=dict) # Stores rules, sla, output, etc.
+    form_schema = models.JSONField(default=dict, blank=True) # Dynamic form configuration for workflows
     
     def __str__(self):
         return self.service_name
@@ -56,9 +121,22 @@ class WorkflowStep(models.Model):
         ('manual', 'Manual'),
         ('api_call', 'API Call'),
     )
+    BPMN_ELEMENT_CHOICES = (
+        ('start_event', 'Start Event'),
+        ('user_task', 'User Task'),
+        ('service_task', 'Service Task'),
+        ('exclusive_gateway', 'Exclusive Gateway'),
+        ('end_event', 'End Event'),
+    )
+    LIFECYCLE_CHOICES = (
+        ('as_is', 'As-Is (Current)'),
+        ('to_be', 'To-Be (Optimized)'),
+    )
     service_config = models.ForeignKey(ServiceConfig, related_name='workflow_steps', on_delete=models.CASCADE)
     step_name = models.CharField(max_length=255)
     step_type = models.CharField(max_length=20, choices=STEP_TYPE_CHOICES, default='manual')
+    bpmn_element_type = models.CharField(max_length=30, choices=BPMN_ELEMENT_CHOICES, default='user_task')
+    lifecycle_stage = models.CharField(max_length=10, choices=LIFECYCLE_CHOICES, default='as_is')
     role = models.CharField(max_length=50, blank=True, null=True) # Role responsible for this step
     target_mda = models.ForeignKey('MDA', on_delete=models.SET_NULL, null=True, blank=True, related_name='assigned_steps')
     action = models.CharField(max_length=50, blank=True, null=True)
@@ -105,3 +183,95 @@ class AuditLog(models.Model):
 
     def __str__(self):
         return f"{self.service_request.request_id} - {self.action}"
+
+class GovernmentFile(models.Model):
+    STATUS_CHOICES = (
+        ('open', 'Open'),
+        ('pending', 'Pending'),
+        ('escalated', 'Escalated'),
+        ('closed', 'Closed'),
+        ('archived', 'Archived'),
+    )
+    file_number = models.CharField(max_length=100, unique=True) # Official Registry Ref
+    subject = models.CharField(max_length=255)
+    owning_mda = models.ForeignKey(MDA, on_delete=models.CASCADE, related_name='registry_files')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.file_number}: {self.subject}"
+
+class InterDepartmentalMemo(models.Model):
+    MEMO_TYPES = (
+        ('policy', 'Policy Memo'),
+        ('operational', 'Operational Request'),
+        ('instruction', 'Instruction'),
+        ('concurrence', 'Concurrence'),
+        ('escalation', 'Escalation'),
+        ('information', 'Information'),
+    )
+    STATUS_CHOICES = (
+        ('draft', 'Draft (Initiated)'), 
+        ('reviewing', 'In Internal Review'),
+        ('approved', 'Internally Approved'),
+        ('registered', 'Registry Registered'),
+        ('signed', 'Digitally Signed'),
+        ('actioning', 'Issued & In Action'),
+        ('responded', 'Responded'),
+        ('closed', 'Closed'),
+    )
+    PRIORITY_CHOICES = (
+        ('normal', 'Normal'),
+        ('high', 'High'),
+        ('urgent', 'Urgent'),
+    )
+
+    gov_file = models.ForeignKey(GovernmentFile, on_delete=models.CASCADE, related_name='memos', null=True, blank=True)
+    official_ref = models.CharField(max_length=100, unique=True, null=True, blank=True)
+    
+    sender = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='sent_memos')
+    sender_mda = models.ForeignKey(MDA, on_delete=models.CASCADE, related_name='outbound_memos')
+    recipient_mda = models.ForeignKey(MDA, on_delete=models.CASCADE, related_name='inbound_memos')
+    
+    memo_type = models.CharField(max_length=30, choices=MEMO_TYPES, default='operational')
+    subject = models.CharField(max_length=255)
+    content = models.TextField()
+    
+    status = models.CharField(max_length=30, choices=STATUS_CHOICES, default='draft')
+    priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='normal')
+    
+    is_read = models.BooleanField(default=False)
+    digitally_signed = models.BooleanField(default=False)
+    signed_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='signed_memos', blank=True)
+    
+    parent_memo = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='responses')
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.official_ref or 'DRAFT'}: {self.subject}"
+
+class OfficialLetter(models.Model):
+    gov_file = models.ForeignKey(GovernmentFile, on_delete=models.CASCADE, related_name='letters')
+    official_ref = models.CharField(max_length=100, unique=True)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    recipient_name = models.CharField(max_length=255)
+    subject = models.CharField(max_length=255)
+    content = models.TextField()
+    signed_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class CorrespondenceAction(models.Model):
+    memo = models.ForeignKey(InterDepartmentalMemo, on_delete=models.CASCADE, related_name='actions')
+    assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    instruction = models.TextField()
+    deadline = models.DateTimeField(null=True, blank=True)
+    is_completed = models.BooleanField(default=False)
+    completed_at = models.DateTimeField(null=True, blank=True)
+    progress_notes = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)

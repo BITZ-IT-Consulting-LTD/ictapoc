@@ -25,7 +25,7 @@ export const useAuthStore = defineStore('auth', {
       this.user = userResponse.data
       localStorage.setItem('user', JSON.stringify(this.user))
     },
-    async refreshToken() {
+    async refreshAccessToken() {
       if (!this.refreshToken) {
         throw new Error('No refresh token available.');
       }

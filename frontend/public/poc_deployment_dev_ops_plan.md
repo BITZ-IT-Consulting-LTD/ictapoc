@@ -12,13 +12,13 @@
 
 ## 2. Environment Setup
 - **Dockerized Architecture:**
-  - Backend container: Django REST Framework + PostgreSQL
-  - Frontend container: Vue 3 + Pinia + Tailwind CSS
-  - Database container: PostgreSQL
-  - Cache container: Redis (for Celery tasks)
-  - Optional: Nginx reverse proxy for routing
+  - **Logic Tier:** API-driven application logic and workflow orchestration
+  - **UI Tier:** Decoupled client application for dynamic interface rendering
+  - **State Tier:** Robust relational persistence for system records
+  - **Messaging Tier:** Asynchronous task queue and message broker for background processing
+  - **Edge Tier:** Optimized reverse proxy for routing and secure traffic management
 
-- **Environment Variables:** Manage secrets and configs for DB, JWT, email service, and API endpoints.
+- **Configuration Management:** Environment-based secrets and parameters for connectivity, security tokens, and orchestration triggers.
 
 ---
 

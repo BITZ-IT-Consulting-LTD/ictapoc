@@ -1,8 +1,12 @@
 
-from rest_framework import viewsets, permissions, status
+from rest_framework import viewsets, permissions, status, serializers
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from .models import ServiceRequest, ServiceConfig, WorkflowStep, User, MDA, AuditLog, Role
+from .models import (
+    ServiceRequest, ServiceConfig, WorkflowStep, User, MDA, AuditLog, Role, 
+    ServiceDomain, ServiceCategory, InterDepartmentalMemo, GovernmentFile, 
+    OfficialLetter, CorrespondenceAction
+)
 from .serializers import (
     ServiceRequestSerializer, 
     ServiceConfigSerializer, 
@@ -10,9 +14,15 @@ from .serializers import (
     UserSerializer, 
     MDASerializer, 
     AuditLogSerializer,
-    RoleSerializer
+    RoleSerializer,
+    ServiceDomainSerializer,
+    ServiceCategorySerializer,
+    InterDepartmentalMemoSerializer,
+    GovernmentFileSerializer,
+    OfficialLetterSerializer,
+    CorrespondenceActionSerializer
 )
-from .permissions import IsAdminOrAuthenticatedReadOnly, IsParticipantOrAdmin, AuditLogPermission
+from .permissions import IsAdminOrAuthenticatedReadOnly, IsParticipantOrAdmin, AuditLogPermission, IsSystemAdmin
 from .workflow import WorkflowEngine, send_notification
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -22,11 +32,11 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        if user.role == 'admin':
+        if user.role in ['admin', 'system_admin'] or user.is_staff:
             return User.objects.all()
         
         perms = user.user_role.permissions if user.user_role else []
-        if 'mda_manage_users' in perms or user.role == 'mda_admin':
+        if user.role == 'mda_admin' or 'mda_manage_users' in perms:
             return User.objects.filter(mda=user.mda)
             
         return User.objects.filter(id=user.id)
@@ -149,12 +159,74 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 class RoleViewSet(viewsets.ModelViewSet):
     queryset = Role.objects.all()
     serializer_class = RoleSerializer
-    permission_classes = [permissions.IsAuthenticated] # Simplified for POC, ideally Admin only for write
+    permission_classes = [IsSystemAdmin] # Restricted to Platform Admins
 
 class MDAViewSet(viewsets.ModelViewSet):
     queryset = MDA.objects.all()
     serializer_class = MDASerializer
     permission_classes = [IsAdminOrAuthenticatedReadOnly]
+
+class ServiceDomainViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = ServiceDomain.objects.all()
+    serializer_class = ServiceDomainSerializer
+    permission_classes = [permissions.AllowAny]
+
+class ServiceCategoryViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = ServiceCategory.objects.all()
+    serializer_class = ServiceCategorySerializer
+    permission_classes = [permissions.AllowAny]
+
+class ServiceCatalogViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    Public facing API for the Service Catalogue.
+    """
+    queryset = ServiceConfig.objects.filter(catalogue_visible=True, service_status='active').order_by('catalogue_order', 'service_name')
+    serializer_class = ServiceConfigSerializer
+    permission_classes = [permissions.AllowAny]
+    search_fields = ['service_name', 'description', 'life_event_group']
+    @action(detail=False, methods=['get'])
+    def process_matrix(self, request):
+        """
+        Returns a hierarchical view: Domain -> Process (Category) -> Service -> Systems & Actors
+        """
+        domains = ServiceDomain.objects.prefetch_related('categories__services').all()
+        data = []
+        
+        for domain in domains:
+            domain_data = {
+                "domain_name": domain.name,
+                "processes": []
+            }
+            for category in domain.categories.all():
+                process_data = {
+                    "process_name": category.name,
+                    "services": []
+                }
+                for service in category.services.filter(service_status='active'):
+                    process_data["services"].append({
+                        "id": service.id,
+                        "service_code": service.service_code,
+                        "service_name": service.service_name,
+                        "description": service.description,
+                        "systems": service.associated_systems,
+                        "actors": service.associated_actors,
+                        "mda": service.mda.name,
+                        "mda_code": service.mda.code if service.mda.code else "",
+                        "service_type": service.service_type,
+                        "maturity": service.digitization_level,
+                        "delivery_channels": service.delivery_channels,
+                        "process_complexity": service.process_complexity,
+                        "pain_points": service.pain_points,
+                        "workflow_configured": service.workflow_steps.exists(),
+                        "workflow_steps": list(service.workflow_steps.order_by('sequence').values('step_name', 'role', 'step_type', 'sequence', 'bpmn_element_type', 'lifecycle_stage'))
+                    })
+                if process_data["services"]:
+                    domain_data["processes"].append(process_data)
+            
+            if domain_data["processes"]:
+                data.append(domain_data)
+                
+        return Response(data)
 
 class ServiceConfigViewSet(viewsets.ModelViewSet):
     queryset = ServiceConfig.objects.all()
@@ -454,3 +526,141 @@ class RegistryQueryView(APIView):
         
         result = registry.query(params)
         return Response(result)
+
+class GovernmentFileViewSet(viewsets.ModelViewSet):
+    serializer_class = GovernmentFileSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.role in ['admin', 'system_admin'] or user.is_staff:
+            return GovernmentFile.objects.all()
+        return GovernmentFile.objects.filter(owning_mda=user.mda)
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        if not user.mda:
+            raise serializers.ValidationError("User must belong to an MDA.")
+        serializer.save(owning_mda=user.mda)
+
+class CorrespondenceActionViewSet(viewsets.ModelViewSet):
+    queryset = CorrespondenceAction.objects.all()
+    serializer_class = CorrespondenceActionSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class OfficialLetterViewSet(viewsets.ModelViewSet):
+    queryset = OfficialLetter.objects.all()
+    serializer_class = OfficialLetterSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class InterDepartmentalMemoViewSet(viewsets.ModelViewSet):
+    serializer_class = InterDepartmentalMemoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.role in ['admin', 'system_admin'] or user.is_staff:
+            return InterDepartmentalMemo.objects.all().order_by('-created_at')
+            
+        if not user.mda:
+            return InterDepartmentalMemo.objects.none()
+        
+        # Return memos where user's MDA is sender OR recipient
+        return InterDepartmentalMemo.objects.filter(
+            Q(sender_mda=user.mda) | Q(recipient_mda=user.mda)
+        ).order_by('-created_at')
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        if not user.mda:
+            raise serializers.ValidationError("User must belong to an MDA.")
+        
+        # Default to 'draft' status
+        serializer.save(sender=user, sender_mda=user.mda, status='draft')
+
+    @action(detail=True, methods=['post'])
+    def request_review(self, request, pk=None):
+        memo = self.get_object()
+        if memo.status != 'draft':
+            return Response({"detail": "Only drafts can be sent for review."}, status=400)
+        memo.status = 'reviewing'
+        memo.save()
+        return Response({'status': 'sent for internal review'})
+
+    @action(detail=True, methods=['post'])
+    def approve_memo(self, request, pk=None):
+        memo = self.get_object()
+        if request.user.role not in ['supervisor', 'mda_admin', 'admin']:
+             return Response({"detail": "Only Supervisors or MDA Admins can approve drafts."}, status=403)
+        if memo.status != 'reviewing':
+            return Response({"detail": "Memo must be in review to be approved."}, status=400)
+        memo.status = 'approved'
+        memo.save()
+        return Response({'status': 'internally approved'})
+
+    @action(detail=True, methods=['post'])
+    def register_memo(self, request, pk=None):
+        memo = self.get_object()
+        if request.user.role not in ['registrar', 'admin']:
+             return Response({"detail": "Only Registry Officers can register memos."}, status=403)
+        
+        if memo.status != 'approved':
+             return Response({"detail": "Memo must be internally approved before registration."}, status=400)
+        
+        file_num = request.data.get('file_number')
+        if not file_num:
+             return Response({"detail": "File Number is required for registration."}, status=400)
+             
+        gov_file, _ = GovernmentFile.objects.get_or_create(
+            file_number=file_num,
+            defaults={'subject': memo.subject, 'owning_mda': memo.sender_mda}
+        )
+        
+        memo.gov_file = gov_file
+        memo.status = 'registered'
+        import datetime
+        year = datetime.datetime.now().year
+        count = InterDepartmentalMemo.objects.filter(gov_file=gov_file).count() + 1
+        memo.official_ref = f"{memo.sender_mda.code}/{file_num}/{year}/{count}"
+        memo.save()
+        return Response({'status': 'registered', 'official_ref': memo.official_ref})
+
+    @action(detail=True, methods=['post'])
+    def sign_memo(self, request, pk=None):
+        memo = self.get_object()
+        if request.user.role not in ['supervisor', 'mda_admin', 'admin']:
+             return Response({"detail": "Only authorized signatories can sign official memos."}, status=403)
+        
+        if memo.status != 'registered':
+             return Response({"detail": "Memo must be registered before signing."}, status=400)
+             
+        memo.digitally_signed = True
+        memo.signed_by = request.user
+        memo.status = 'actioning' # Once signed, it is issued to recipient
+        memo.save()
+        return Response({'status': 'signed and issued'})
+
+    @action(detail=True, methods=['post'])
+    def assign_action(self, request, pk=None):
+        memo = self.get_object()
+        user_id = request.data.get('assigned_to')
+        instruction = request.data.get('instruction')
+        
+        action = CorrespondenceAction.objects.create(
+            memo=memo,
+            assigned_to_id=user_id,
+            instruction=instruction
+        )
+        return Response({'status': 'action assigned', 'action_id': action.id})
+
+    @action(detail=True, methods=['post'])
+    def mark_read(self, request, pk=None):
+        memo = self.get_object()
+        user = request.user
+        
+        if memo.recipient_mda != user.mda:
+             return Response({"detail": "Not authorized."}, status=403)
+             
+        memo.is_read = True
+        memo.save()
+        return Response({'status': 'marked as read'})

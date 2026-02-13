@@ -11,6 +11,12 @@
           {{ request.status }}
         </span>
       </div>
+      <div class="mt-2 flex items-center gap-2">
+        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded border border-emerald-200 uppercase tracking-widest flex items-center gap-1">
+          <svg class="w-2 h-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg>
+          Optimized To-Be Process
+        </span>
+      </div>
 
       <div class="mt-6 border-t pt-6">
         <h2 class="text-xl font-semibold mb-4">Submitted Information</h2>

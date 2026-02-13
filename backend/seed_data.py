@@ -147,14 +147,74 @@ def seed_data():
             'email': 'citizen1@example.com', 
             'role': 'citizen', 
             'rbac': 'citizen',
-            'id_number': '100'
+            'id_number': '12345678',
+            'saved_documents': [
+                {
+                    "name": "Birth Certificate",
+                    "type": "AUTHORITATIVE_OUTPUT",
+                    "doctype": "BIRTH_CERTIFICATE",
+                    "authoritative_id": "BEN-TEST-2026",
+                    "issued_by": "Civil Registration Services",
+                    "issued_to": "James Bond Standard",
+                    "issue_date": "2026-02-01",
+                    "metadata": {
+                        "ben": "BEN-TEST-2026",
+                        "full_name": "James Bond Standard",
+                        "mother_name": "Molly Mother",
+                        "mother_id": "ID-MOTHER-001",
+                        "father_name": "Frank Father",
+                        "father_id": "ID-FATHER-001",
+                        "date_of_birth": "2000-01-01",
+                        "county": "Nairobi City",
+                        "place_of_birth": "Nairobi Hospital",
+                        "digital_signature": "SIG-CRS-998877665544"
+                    }
+                },
+                {
+                    "name": "NEMIS Card",
+                    "type": "AUTHORITATIVE_OUTPUT",
+                    "doctype": "NEMIS_CARD",
+                    "authoritative_id": "UPI-88877766",
+                    "issued_by": "Ministry of Education",
+                    "issued_to": "James Bond Standard",
+                    "issue_date": "2026-02-05",
+                    "metadata": {
+                        "upi": "UPI-88877766",
+                        "institution": "University of Nairobi",
+                        "digital_signature": "SIG-MOE-1122334455"
+                    }
+                }
+            ]
         },
         {
             'username': 'maggy1', 
             'email': 'maggy1@example.com', 
             'role': 'citizen', 
             'rbac': 'citizen',
-            'id_number': '555555'
+            'id_number': '555555',
+            'saved_documents': [
+                {
+                    "name": "Birth Certificate",
+                    "type": "AUTHORITATIVE_OUTPUT",
+                    "doctype": "BIRTH_CERTIFICATE",
+                    "authoritative_id": "BEN-MAGGY",
+                    "issued_by": "Civil Registration Services",
+                    "issued_to": "Maggy One",
+                    "issue_date": "2026-01-15",
+                    "metadata": {
+                        "ben": "BEN-MAGGY",
+                        "full_name": "Maggy One",
+                        "mother_name": "Mama Maggy",
+                        "mother_id": "8888",
+                        "father_name": "Baba Maggy",
+                        "father_id": "9999",
+                        "date_of_birth": "1995-10-20",
+                        "county": "Kisumu",
+                        "place_of_birth": "Kisumu General Hospital",
+                        "digital_signature": "SIG-CRS-MAGGY-123"
+                    }
+                }
+            ]
         },
         {
             'username': 'officer1', 
@@ -221,6 +281,14 @@ def seed_data():
 
     # 3. Create Service Configs
     services = [
+        {
+            'service_code': 'ONBOARD',
+            'service_name': 'Platform Onboarding',
+            'mda': 'Ministry of Interior',
+            'config': {
+                'description': 'Onboard from legacy systems to the Digital Maisha Platform.',
+            }
+        },
         {
             'service_code': 'BIRTH_REG',
             'service_name': 'Birth Registration & Issuance',
