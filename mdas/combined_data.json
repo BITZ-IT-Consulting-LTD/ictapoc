@@ -3827,10 +3827,10 @@
         "classification": ""
       },
       "document_control": [],
-      "executive_summary": "Representative regulator/service body; permits/licensing/registries; moderate volumes; suitable exemplar.",
+      "executive_summary": "The Anti-Counterfeit Authority (ACA) Kenya is a State Corporation established under the Anti-Counterfeit Act 2008. Its primary mandate is to protect intellectual property rights and consumer rights by actively combating trade in counterfeit goods, raising public awareness, and coordinating with other organizations involved in anti-counterfeiting efforts in Kenya.",
       "process_overview": {
         "service_category": "",
-        "process_objective": "Representative regulator/service body; permits/licensing/registries; moderate volumes; suitable exemplar.",
+        "process_objective": "To enlighten the public on counterfeiting, combat trade in counterfeit goods, promote training programs for stakeholders, and coordinate with other organizations involved in combating counterfeiting to safeguard intellectual property rights, protect consumers, and foster a fair trading environment in Kenya.",
         "scope": {
           "in_scope": [],
           "out_of_scope": []
@@ -3840,9 +3840,78 @@
           "successful": [],
           "unsuccessful": []
         },
-        "policy_legal_context": []
+        "policy_legal_context": [
+          "Established under the Agriculture and Food Authority Act No. 13 of 2013. Administers the Crops Act (2013) and consolidates various crop regulatory institutions into a unified framework. (INFERRED: This legislative framework provides its authority for comprehensive agricultural regulation.)",
+          "Established under the Anti-Counterfeit Act 2008, which provides the legal framework for its mandate. Operates under the Ministry of Industry, Investment and Trade."
+        ]
       },
-      "stakeholders": [],
+      "stakeholders": [
+        {
+          "stakeholder": "Farmers",
+          "role": "Primary producers of scheduled crops; direct subjects and beneficiaries of AFA's regulations and promotions",
+          "responsibilities": "(INFERRED) Adhering to best practices, complying with regulations, contributing to food production."
+        },
+        {
+          "stakeholder": "Processors",
+          "role": "Entities involved in the post-harvest handling and value addition of agricultural products",
+          "responsibilities": "(INFERRED) Complying with processing standards, enhancing product quality."
+        },
+        {
+          "stakeholder": "Exporters",
+          "role": "Entities involved in the export of Kenyan agricultural products",
+          "responsibilities": "(INFERRED) Adhering to international trade standards, promoting Kenyan produce globally."
+        },
+        {
+          "stakeholder": "Cooperatives",
+          "role": "Farmer organizations supporting agricultural production and marketing",
+          "responsibilities": "(INFERRED) Mobilizing farmers, facilitating market access, ensuring quality control."
+        },
+        {
+          "stakeholder": "Agribusinesses",
+          "role": "Commercial enterprises in the agricultural sector",
+          "responsibilities": "(INFERRED) Investing in agriculture, adopting modern technologies, creating value."
+        },
+        {
+          "stakeholder": "National and County Governments",
+          "role": "Policy makers and implementers; recipients of AFA's advisory services",
+          "responsibilities": "(INFERRED) Formulating agricultural policies, supporting AFA's mandate, allocating resources."
+        },
+        {
+          "stakeholder": "Consumers",
+          "role": "Ultimate beneficiaries of safe, quality, and affordable food products",
+          "responsibilities": "(INFERRED) Making informed food choices, supporting local agricultural products."
+        },
+        {
+          "stakeholder": "Intellectual Property Rights Holders (e.g., brand owners)",
+          "role": "Beneficiaries of intellectual property protection",
+          "responsibilities": "(INFERRED) Registering IP, collaborating with ACA on enforcement."
+        },
+        {
+          "stakeholder": "Consumers",
+          "role": "Victims of counterfeit goods; beneficiaries of safe and authentic products",
+          "responsibilities": "(INFERRED) Being vigilant, reporting suspected counterfeit goods, demanding authentic products."
+        },
+        {
+          "stakeholder": "Law Enforcement Agencies (Police, Customs)",
+          "role": "Partners in intelligence gathering, investigations, and seizure of counterfeit goods",
+          "responsibilities": "(INFERRED) Enforcing anti-counterfeiting laws, conducting raids, border control."
+        },
+        {
+          "stakeholder": "Manufacturers",
+          "role": "Producers of genuine goods; affected by counterfeiting",
+          "responsibilities": "(INFERRED) Producing quality goods, collaborating on anti-counterfeiting measures."
+        },
+        {
+          "stakeholder": "Traders (Retailers, Wholesalers)",
+          "role": "Distributors of goods; potential conduits for counterfeit products",
+          "responsibilities": "(INFERRED) Ensuring authenticity of products sold, complying with anti-counterfeiting regulations."
+        },
+        {
+          "stakeholder": "International Anti-Counterfeiting Organizations",
+          "role": "Collaborators in global efforts to combat counterfeiting",
+          "responsibilities": "(INFERRED) Sharing intelligence, harmonizing strategies, providing technical support."
+        }
+      ],
       "inputs_outputs_dependencies": {
         "inputs": [],
         "outputs": [],
@@ -3853,7 +3922,7 @@
         "documentation_status": "",
         "level_of_automation": ""
       },
-      "as_is_narrative": "",
+      "as_is_narrative": "(INFERRED) The ACA operates by conducting public awareness and enlightenment campaigns on the dangers of counterfeiting, undertaking investigations and enforcement actions (including seizures of counterfeit goods) across various markets and entry points, promoting training programs for stakeholders (including law enforcement and customs officials), and coordinating with national and international organizations to combat illicit trade and protect intellectual property rights effectively.",
       "as_is_steps": [],
       "decision_points": [],
       "exceptions": [],
@@ -3878,7 +3947,13 @@
       "glossary": [],
       "metadata": {
         "source_url": "",
-        "confidence_level": ""
+        "confidence_level": "high (mandate, functions, legal basis from official website and other sources) / medium (inferred responsibilities, narrative)",
+        "enrichment_method": "web_search_and_inference",
+        "source_urls": [
+          "https://aca.go.ke/",
+          "https://devex.com/"
+        ],
+        "last_enriched_date": "2026-02-14"
       }
     },
     {
@@ -3892,10 +3967,10 @@
         "classification": ""
       },
       "document_control": [],
-      "executive_summary": "Representative regulator/service body; permits/licensing/registries; moderate volumes; suitable exemplar.",
+      "executive_summary": "The Anti-Counterfeit Authority (ACA) Kenya is a State Corporation established under the Anti-Counterfeit Act 2008. Its primary mandate is to protect intellectual property rights and consumer rights by actively combating trade in counterfeit goods, raising public awareness, and coordinating with other organizations involved in anti-counterfeiting efforts in Kenya.",
       "process_overview": {
         "service_category": "",
-        "process_objective": "Representative regulator/service body; permits/licensing/registries; moderate volumes; suitable exemplar.",
+        "process_objective": "To enlighten the public on counterfeiting, combat trade in counterfeit goods, promote training programs for stakeholders, and coordinate with other organizations involved in combating counterfeiting to safeguard intellectual property rights, protect consumers, and foster a fair trading environment in Kenya.",
         "scope": {
           "in_scope": [],
           "out_of_scope": []
@@ -3905,9 +3980,42 @@
           "successful": [],
           "unsuccessful": []
         },
-        "policy_legal_context": []
+        "policy_legal_context": [
+          "Established under the Anti-Counterfeit Act 2008, which provides the legal framework for its mandate. Operates under the Ministry of Industry, Investment and Trade."
+        ]
       },
-      "stakeholders": [],
+      "stakeholders": [
+        {
+          "stakeholder": "Intellectual Property Rights Holders (e.g., brand owners)",
+          "role": "Beneficiaries of intellectual property protection",
+          "responsibilities": "(INFERRED) Registering IP, collaborating with ACA on enforcement."
+        },
+        {
+          "stakeholder": "Consumers",
+          "role": "Victims of counterfeit goods; beneficiaries of safe and authentic products",
+          "responsibilities": "(INFERRED) Being vigilant, reporting suspected counterfeit goods, demanding authentic products."
+        },
+        {
+          "stakeholder": "Law Enforcement Agencies (Police, Customs)",
+          "role": "Partners in intelligence gathering, investigations, and seizure of counterfeit goods",
+          "responsibilities": "(INFERRED) Enforcing anti-counterfeiting laws, conducting raids, border control."
+        },
+        {
+          "stakeholder": "Manufacturers",
+          "role": "Producers of genuine goods; affected by counterfeiting",
+          "responsibilities": "(INFERRED) Producing quality goods, collaborating on anti-counterfeiting measures."
+        },
+        {
+          "stakeholder": "Traders (Retailers, Wholesalers)",
+          "role": "Distributors of goods; potential conduits for counterfeit products",
+          "responsibilities": "(INFERRED) Ensuring authenticity of products sold, complying with anti-counterfeiting regulations."
+        },
+        {
+          "stakeholder": "International Anti-Counterfeiting Organizations",
+          "role": "Collaborators in global efforts to combat counterfeiting",
+          "responsibilities": "(INFERRED) Sharing intelligence, harmonizing strategies, providing technical support."
+        }
+      ],
       "inputs_outputs_dependencies": {
         "inputs": [],
         "outputs": [],
@@ -3918,7 +4026,7 @@
         "documentation_status": "",
         "level_of_automation": ""
       },
-      "as_is_narrative": "",
+      "as_is_narrative": "(INFERRED) The ACA operates by conducting public awareness and enlightenment campaigns on the dangers of counterfeiting, undertaking investigations and enforcement actions (including seizures of counterfeit goods) across various markets and entry points, promoting training programs for stakeholders (including law enforcement and customs officials), and coordinating with national and international organizations to combat illicit trade and protect intellectual property rights effectively.",
       "as_is_steps": [],
       "decision_points": [],
       "exceptions": [],
@@ -3943,7 +4051,13 @@
       "glossary": [],
       "metadata": {
         "source_url": "",
-        "confidence_level": ""
+        "confidence_level": "high (mandate, functions, legal basis from official website and other sources) / medium (inferred responsibilities, narrative)",
+        "enrichment_method": "web_search_and_inference",
+        "source_urls": [
+          "https://aca.go.ke/",
+          "https://devex.com/"
+        ],
+        "last_enriched_date": "2026-02-14"
       }
     },
     {

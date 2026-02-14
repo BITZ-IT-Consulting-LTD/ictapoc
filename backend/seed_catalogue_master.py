@@ -8,6 +8,7 @@ import re
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
 django.setup()
 
+from django.db import IntegrityError
 from service_api.models import ServiceConfig, MDA, ServiceCategory, ServiceDomain, WorkflowStep, Role, User, ServiceRequest, AuditLog
 
 def convert_fields_to_schema(fields_array):
@@ -59,6 +60,9 @@ def run_master_seed():
     ServiceRequest.objects.all().delete()
     WorkflowStep.objects.all().delete()
     ServiceConfig.objects.all().delete()
+    ServiceCategory.objects.all().delete()
+    ServiceDomain.objects.all().delete()
+    MDA.objects.all().delete()
 
     # 2. SEED FROM CSV
     print("\n📄 Seeding from all_wog_services.csv...")
@@ -81,10 +85,23 @@ def run_master_seed():
             # Use Department Name if available, fallback to Ministry
             final_mda_name = department_name if department_name else ministry_name
             
-            mda_obj, _ = MDA.objects.get_or_create(
-                name=final_mda_name,
-                defaults={'code': code.split('-')[0] if '-' in code else code[:5]}
-            )
+            # First try to get existing MDA by name
+            mda_obj = MDA.objects.filter(name=final_mda_name).first()
+            if not mda_obj:
+                # Generate a unique code based on service code
+                base_code = code.split('-')[0] if '-' in code else code[:5]
+                # Check if this code already exists
+                if MDA.objects.filter(code=base_code).exists():
+                    # Use a sanitized version of the name as fallback
+                    base_code = ''.join(c for c in final_mda_name[:10].upper() if c.isalnum())
+                    # If still exists, make it unique with a counter
+                    counter = 1
+                    unique_code = base_code
+                    while MDA.objects.filter(code=unique_code).exists():
+                        unique_code = f"{base_code[:8]}{counter}"
+                        counter += 1
+                    base_code = unique_code
+                mda_obj = MDA.objects.create(name=final_mda_name, code=base_code)
             
             sector = "Public Service & Administration"
             if any(x in final_mda_name for x in ["Interior", "Immigration", "Police"]): sector = "Identity & Security"
