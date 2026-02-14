@@ -52,26 +52,30 @@ def seed_test_requests():
                lifecycle_stage="to_be"
            )
 
-    # Create Requests
-    for i in range(5):
-        # Health Requests
-        sr_h = ServiceRequest.objects.create(
-            request_id=f"MOH-{uuid.uuid4().hex[:6].upper()}",
-            citizen=citizen,
-            service_config=svc_health,
-            current_step=svc_health.workflow_steps.first(),
-            status="in_progress",
-            payload={"facility_name": f"Clinic {i}", "location": "Nairobi"}
-        )
-        # Education Requests
-        sr_e = ServiceRequest.objects.create(
-            request_id=f"MOE-{uuid.uuid4().hex[:6].upper()}",
-            citizen=citizen,
-            service_config=svc_edu,
-            current_step=svc_edu.workflow_steps.first(),
-            status="in_progress",
-            payload={"school_name": f"Academy {i}", "students": 100}
-        )
+    # Create Requests (Idempotent check)
+    if ServiceRequest.objects.filter(service_config=svc_health).count() < 5:
+        for i in range(5):
+            # Health Requests
+            ServiceRequest.objects.create(
+                request_id=f"MOH-{uuid.uuid4().hex[:6].upper()}",
+                citizen=citizen,
+                service_config=svc_health,
+                current_step=svc_health.workflow_steps.first(),
+                status="in_progress",
+                payload={"facility_name": f"Clinic {i}", "location": "Nairobi"}
+            )
+    
+    if ServiceRequest.objects.filter(service_config=svc_edu).count() < 5:
+        for i in range(5):
+            # Education Requests
+            ServiceRequest.objects.create(
+                request_id=f"MOE-{uuid.uuid4().hex[:6].upper()}",
+                citizen=citizen,
+                service_config=svc_edu,
+                current_step=svc_edu.workflow_steps.first(),
+                status="in_progress",
+                payload={"school_name": f"Academy {i}", "students": 100}
+            )
     
     print(f"✅ Created 10 requests (5 MOH, 5 MOE).")
 
