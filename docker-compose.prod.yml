@@ -5,35 +5,48 @@ services:
     build:
       context: .
       dockerfile: ./docker/prod/backend/Dockerfile
+    # The entrypoint script handles migrations, static collection, and seeding
     entrypoint: ["/app/entry.sh"]
-    command: gunicorn project.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn -c gunicorn_config.py project.wsgi:application
     volumes:
       - static_volume:/app/staticfiles
     env_file:
       - .env
     depends_on:
-      - db
-      - redis
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     restart: always
+    networks:
+      - intranet
 
   nginx:
     build:
       context: .
-      dockerfile: ./docker/prod/nginx/Dockerfile
+      dockerfile: ./docker/prod/frontend/Dockerfile
     volumes:
-      - static_volume:/app/staticfiles
+      - static_volume:/app/staticfiles:ro
+      # Uncomment below for production SSL with Certbot
+      # - /etc/letsencrypt:/etc/letsencrypt:ro
     ports:
-      - "8080:80"
+      - "8087:80"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     restart: always
+    networks:
+      - intranet
 
   db:
-    image: postgres:15
+    image: postgres:15-alpine
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    env_file:
-      - .env
+      - postgres_prod_data:/var/lib/postgresql/data/
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
@@ -44,6 +57,8 @@ services:
       timeout: 5s
       retries: 5
     restart: always
+    networks:
+      - intranet
 
   redis:
     image: redis:7-alpine
@@ -53,7 +68,13 @@ services:
       timeout: 5s
       retries: 5
     restart: always
+    networks:
+      - intranet
+
+networks:
+  intranet:
+    driver: bridge
 
 volumes:
-  postgres_data:
+  postgres_prod_data:
   static_volume:

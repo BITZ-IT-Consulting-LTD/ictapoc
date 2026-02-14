@@ -1,22 +1,38 @@
+# Production Backend Dockerfile
 FROM python:3.11-slim
 
+# System environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV PORT=8000
 
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies (Hardened: only minimal requirements)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libpq-dev \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Install python dependencies
 COPY backend/requirements.txt /app/
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt \
+    && pip install --no-cache-dir gunicorn gevent setproctitle
 
-# Copy project
+# Copy project source
 COPY ./backend /app/
 
-# The command will be overridden by docker-compose or entrypoint
-CMD ["gunicorn", "project.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Create a non-privileged user and group
+RUN groupadd -g 1000 appuser && \
+    useradd -u 1000 -g appuser -s /bin/sh appuser && \
+    chown -R appuser:appuser /app
+
+# Switch to non-privileged user
+USER appuser
+
+# Expose the internal port
+EXPOSE 8000
+
+# Use Gunicorn with the hardware-optimized config
+CMD ["gunicorn", "-c", "gunicorn_config.py", "project.wsgi:application"]

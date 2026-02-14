@@ -129,3 +129,39 @@ CELERY_RESULT_BACKEND = f"redis://{config('REDIS_HOST')}:{config('REDIS_PORT')}/
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+# --- PRODUCTION HARDENING ---
+
+# Security Headers (Applicable if Django handles SSL, but Nginx is the primary)
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+
+# Structured Logging (JSON) for Cloud-Native Observability
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'json': {
+            '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
+            'format': '%(asctime)s %(levelname)s %(name)s %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'json',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': config('LOG_LEVEL', default='INFO'),
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': config('LOG_LEVEL', default='INFO'),
+            'propagate': False,
+        },
+    },
+}

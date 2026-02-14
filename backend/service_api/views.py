@@ -1,4 +1,21 @@
 
+from django.http import JsonResponse
+from django.db import connections
+from django.db.utils import OperationalError
+
+def health_check(request):
+    """Liveness probe: App is running."""
+    return JsonResponse({"status": "healthy", "timestamp": "now"}, status=200)
+
+def ready_check(request):
+    """Readiness probe: App + DB are connected."""
+    try:
+        # Verify DB connection
+        connections['default'].cursor()
+    except OperationalError:
+        return JsonResponse({"status": "unready", "reason": "database_connection_failed"}, status=503)
+    return JsonResponse({"status": "ready"}, status=200)
+
 from rest_framework import viewsets, permissions, status, serializers
 from rest_framework.decorators import action
 from rest_framework.response import Response

@@ -17,3 +17,4 @@ python-decouple==3.8
 # YAML support for service configs
 PyYAML==6.0.1
 gunicorn==21.2.0
+python-json-logger==2.0.7
