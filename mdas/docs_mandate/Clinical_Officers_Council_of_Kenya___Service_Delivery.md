@@ -1,0 +1,156 @@
+# Clinical Officers Council of Kenya – Service Delivery
+
+## Cover Page
+- **Ministry/Department/Agency (MDA):** Clinical Officers Council of Kenya
+- **Process Name:** Service Delivery
+- **Document Version:** 1.0
+- **Date:** 2026-02-14
+- **Classification:** Official
+
+---
+
+## Executive Summary
+The Clinical Officers Council of Kenya (COC) is a government agency established under the Clinical Officers (Training, Registration and Licensing) Act No. 20 of 2017. Its primary mandate is to regulate the training, registration, licensing, and practice of Clinical Officers in Kenya. The Council ensures high standards of education, professional competence, and ethical conduct in clinical medicine practice, thereby safeguarding public health and maintaining the integrity of the clinical officer profession in the country.
+
+---
+
+## Service Mandate & Legal Basis
+### Statutory Mandate
+To advise the government on policy matters concerning clinical medicine practice; to prescribe the minimum educational entry requirements for individuals aspiring to be trained as clinical officers; to approve institutions for the training of clinical officers and establish, approve, and accredit clinical medicine programs and continuing professional education programs; to register and license clinical officers; to maintain a comprehensive register and records of all clinical officers registered by the Council; to publish the names of all registered clinical officers in the Kenya Gazette every calendar year; to promote the development and adoption of codes of practice; to regulate professional conduct and ensure the maintenance and improvement of the standards of practice of clinical medicine; to administer pre-internship/licensure examinations to ensure the competency of clinical officers; to collaborate with other medical professional associations, organizations, and relevant bodies; to assess the qualifications of clinical officers; and to consider and address any other matters related to clinical officers, including prescribing badges, insignia, or uniforms.
+
+### Legal Context
+- Established under the Clinical Officers (Training, Registration and Licensing) Act No. 20 of 2017, which provides the comprehensive legal framework for the regulation of the clinical officer profession in Kenya. COC operates under the Ministry of Health (or the relevant government ministry responsible for healthcare services) and is crucial for upholding professional standards in healthcare delivery, protecting public health, and ensuring that competent clinical officers deliver essential medical services across Kenya in line with national health policies.
+
+---
+
+## 1. AS-IS Process Flowchart (BPMN 2.0)
+*Current State visualization.*
+
+```mermaid
+graph TD
+    Start((Start)) --> S1
+    subgraph Professional [Professional]
+        S1["Professional registers on the Board's Online Porta..."]
+        S2["Applicant uploads academic certificates and profes..."]
+        S4["Applicant pays the registration/annual retention f..."]
+    end
+    subgraph Board [Board]
+        S3["Board Secretariat conducts verification and indexi..."]
+        S5["Board gazettes the member and issues the Annual Pr..."]
+    end
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+    S4 --> S5
+    S5 --> End((End))
+```
+
+---
+
+## Process Overview
+### Service Category
+- G2C/G2B
+
+### Scope
+- **In Scope:** End-to-end processing within Clinical Officers Council of Kenya.
+
+### Triggers
+- Submission of application/request by Professional.
+
+### End States
+- **Successful:** Patient File / EMR Record, Diagnostic Lab Reports, Prescription / Medication, Discharge Summary
+
+---
+
+## Stakeholders
+| Stakeholder | Role | Responsibilities |
+|---|---|---|
+| Board | Process Actor | Performs actions as defined in steps. |
+| Professional | Process Actor | Performs actions as defined in steps. |
+
+---
+
+## Inputs & Outputs
+- **Inputs:** Patient Personal/Bio-data, Insurance Card / NHIF Number, Medical History Records, Triage Vitals (BP, Temp, etc.)
+- **Outputs:** Patient File / EMR Record, Diagnostic Lab Reports, Prescription / Medication, Discharge Summary
+
+---
+
+## Detailed Process (AS-IS)
+| Step | Role | Action | Tool | Notes |
+|---|---|---|---|---|
+| 1 | Professional | Professional registers on the Board's Online Portal. | Digital | |
+| 2 | Professional | Applicant uploads academic certificates and professional testimonials. | Manual | |
+| 3 | Board | Board Secretariat conducts verification and indexing. | Manual | |
+| 4 | Professional | Applicant pays the registration/annual retention fee. | Manual | |
+| 5 | Board | Board gazettes the member and issues the Annual Practicing Certificate. | Manual | |
+
+---
+
+## Pain Points & Opportunities
+### Pain Points
+- Loss of physical patient files.
+- Long patient wait times at triage and pharmacy.
+- Lack of interoperability between departments (Lab, Pharmacy, Billing).
+- Revenue leakage in cash collections.
+
+### Opportunities
+- Integration with IPRS/BRS via Service Bus.
+- Adoption of Government Payment Gateway.
+- Implementation of Automated Rules Engine.
+- Issuance of Digital Verifiable Credentials.
+
+---
+
+## 2. TO-BE Process Flowchart (BPMN 2.0)
+*Future State visualization (Optimized).*
+
+```mermaid
+graph TD
+    Start((Start)) --> S1
+    subgraph Applicant [Applicant]
+        S1["Applicant logs in via Single Sign-On (SSO) and sel..."]
+        S4["Applicant pays fees via the Government Payment Gat..."]
+    end
+    subgraph System [System]
+        S2["Applicant enters Business Registration Number; Sys..."]
+        S3["System performs auto-validation of compliance (e.g..."]
+        S5["Application is processed by the Rules Engine. (Low..."]
+        S7["System generates a Verifiable Digital Certificate ..."]
+    end
+    subgraph Officer [Officer]
+        S6["Complex cases are routed to the Officer Workbench ..."]
+    end
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+    S4 --> S5
+    S5 --> S6
+    S6 --> S7
+    S7 --> End((End))
+```
+
+## Future State Process (TO-BE)
+### Narrative
+The To-Be process leverages the Government Service Bus to integrate with BRS (Business Registry) and the Payment Gateway. Manual data entry and document uploads are replaced by real-time API validations, enabling a paperless, cashless, and presence-less service experience.
+
+### Optimized Steps (Digital)
+| Step | Actor | Action | System |
+|---|---|---|---|
+| 1 | Applicant | Applicant logs in via Single Sign-On (SSO) and selects the service. | Citizen Portal / SSO |
+| 2 | System | Applicant enters Business Registration Number; System auto-populates details from BRS (Business Registry) via the Service Bus. | Service Bus / Registry API |
+| 3 | System | System performs auto-validation of compliance (e.g., KRA Tax Status) via Inter-Agency APIs. | Service Bus / Compliance Engine |
+| 4 | Applicant | Applicant pays fees via the Government Payment Gateway; System auto-receipts. | Payment Gateway |
+| 5 | System | Application is processed by the Rules Engine. (Low-risk cases are Auto-Approved). | Workflow Engine |
+| 6 | Officer | Complex cases are routed to the Officer Workbench for digital review and approval. | Officer Workbench |
+| 7 | System | System generates a Verifiable Digital Certificate (QR Code) and notifies the applicant. | Output Generator |
+
+---
+
+## References & Evidence
+The information in this document was derived from the following official sources:
+
+- [https://www.clinicalofficerscouncil.org/](https://www.clinicalofficerscouncil.org/)
+- [https://wikipedia.org/](https://wikipedia.org/)
+- [https://business.blog/](https://business.blog/)
+- [https://www.who.int/](https://www.who.int/)
