@@ -155,12 +155,12 @@ LOGGING = {
     },
     'root': {
         'handlers': ['console'],
-        'level': config('LOG_LEVEL', default='INFO'),
+        'level': config('LOG_LEVEL', default='INFO').upper(),
     },
     'loggers': {
         'django': {
             'handlers': ['console'],
-            'level': config('LOG_LEVEL', default='INFO'),
+            'level': config('LOG_LEVEL', default='INFO').upper(),
             'propagate': False,
         },
     },
