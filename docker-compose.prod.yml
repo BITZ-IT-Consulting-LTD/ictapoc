@@ -5,7 +5,8 @@ services:
     build:
       context: .
       dockerfile: ./docker/prod/backend/Dockerfile
-    command: sh -c "python manage.py collectstatic --noinput && gunicorn project.wsgi:application --bind 0.0.0.0:8000"
+    entrypoint: ["/app/entry.sh"]
+    command: gunicorn project.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/app/staticfiles
     env_file:
