@@ -14,8 +14,8 @@ The Commission for University Education (CUE) Kenya is a statutory body establis
 
 ---
 
-## Process Flowchart (BPMN 2.0 - Mermaid)
-*Guidance: This diagram visualizes the AS-IS process flow across different actors.*
+## 1. AS-IS Process Flowchart (BPMN 2.0)
+*Current State visualization.*
 
 ```mermaid
 graph TD
@@ -62,14 +62,8 @@ Service Delivery
 ## Stakeholders
 | Stakeholder | Role | Responsibilities |
 |---|---|---|
-| Applicant | Process Actor | Performs actions as defined in steps. |
 | CUE | Process Actor | Performs actions as defined in steps. |
-
----
-
-## Inputs & Outputs
-- **Inputs:** KCSE/Academic Result Slips, National ID / Birth Certificate, Student Personal Details Form, Fee Payment Receipts
-- **Outputs:** Admission Letter, Student ID Card, Academic Transcripts, Degree/Diploma Certificate
+| Applicant | Process Actor | Performs actions as defined in steps. |
 
 ---
 
@@ -99,6 +93,34 @@ Service Delivery
 
 ---
 
+## 2. TO-BE Process Flowchart (BPMN 2.0)
+*Future State visualization (Optimized).*
+
+```mermaid
+graph TD
+    Start((Start)) --> S1
+    subgraph Applicant [Applicant]
+        S1["Applicant logs in via Single Sign-On (SSO) and sel..."]
+        S4["Applicant pays fees via the Government Payment Gat..."]
+    end
+    subgraph System [System]
+        S2["Applicant enters National ID; System auto-populate..."]
+        S3["System performs auto-validation of compliance (e.g..."]
+        S5["Application is processed by the Rules Engine. (Low..."]
+        S7["System generates a Verifiable Digital Certificate ..."]
+    end
+    subgraph Officer [Officer]
+        S6["Complex cases are routed to the Officer Workbench ..."]
+    end
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+    S4 --> S5
+    S5 --> S6
+    S6 --> S7
+    S7 --> End((End))
+```
+
 ## Future State Process (TO-BE)
 ### Narrative
 The To-Be process leverages the Government Service Bus to integrate with IPRS (Identity Registry) and the Payment Gateway. Manual data entry and document uploads are replaced by real-time API validations, enabling a paperless, cashless, and presence-less service experience.
@@ -116,16 +138,5 @@ The To-Be process leverages the Government Service Bus to integrate with IPRS (I
 
 ---
 
-## References & Evidence
-The information in this document was derived from the following official sources:
-
-- [https://www.cue.or.ke/](https://www.cue.or.ke/)
-- [https://unirank.org/](https://unirank.org/)
-- [https://businessradar.co.ke/](https://businessradar.co.ke/)
-- [https://wikipedia.org/](https://wikipedia.org/)
-- [https://institutiontoday.com/](https://institutiontoday.com/)
-
----
-
-## Appendices
-See attached ERD and System Design.
+## References
+Derived from official mandates.

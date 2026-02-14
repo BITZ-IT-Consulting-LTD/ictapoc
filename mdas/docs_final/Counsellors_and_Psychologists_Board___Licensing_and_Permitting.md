@@ -14,8 +14,8 @@ The Counsellors and Psychologists Board in Kenya was established on August 5, 20
 
 ---
 
-## Process Flowchart (BPMN 2.0 - Mermaid)
-*Guidance: This diagram visualizes the AS-IS process flow across different actors.*
+## 1. AS-IS Process Flowchart (BPMN 2.0)
+*Current State visualization.*
 
 ```mermaid
 graph TD
@@ -62,14 +62,8 @@ Licensing and Permitting
 ## Stakeholders
 | Stakeholder | Role | Responsibilities |
 |---|---|---|
-| Board | Process Actor | Performs actions as defined in steps. |
 | Professional | Process Actor | Performs actions as defined in steps. |
-
----
-
-## Inputs & Outputs
-- **Inputs:** Application Form (License/Permit), Compliance Documents (Tax Compliance, CR12), Technical Reports / Site Plans, Proof of Payment
-- **Outputs:** License / Permit / Certificate, Compliance Inspection Report, Official Receipt, Gazette Notice
+| Board | Process Actor | Performs actions as defined in steps. |
 
 ---
 
@@ -99,6 +93,34 @@ Licensing and Permitting
 
 ---
 
+## 2. TO-BE Process Flowchart (BPMN 2.0)
+*Future State visualization (Optimized).*
+
+```mermaid
+graph TD
+    Start((Start)) --> S1
+    subgraph Applicant [Applicant]
+        S1["Applicant logs in via Single Sign-On (SSO) and sel..."]
+        S4["Applicant pays fees via the Government Payment Gat..."]
+    end
+    subgraph System [System]
+        S2["Applicant enters Business Registration Number; Sys..."]
+        S3["System performs auto-validation of compliance (e.g..."]
+        S5["Application is processed by the Rules Engine. (Low..."]
+        S7["System generates a Verifiable Digital Certificate ..."]
+    end
+    subgraph Officer [Officer]
+        S6["Complex cases are routed to the Officer Workbench ..."]
+    end
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+    S4 --> S5
+    S5 --> S6
+    S6 --> S7
+    S7 --> End((End))
+```
+
 ## Future State Process (TO-BE)
 ### Narrative
 The To-Be process leverages the Government Service Bus to integrate with BRS (Business Registry) and the Payment Gateway. Manual data entry and document uploads are replaced by real-time API validations, enabling a paperless, cashless, and presence-less service experience.
@@ -116,16 +138,5 @@ The To-Be process leverages the Government Service Bus to integrate with BRS (Bu
 
 ---
 
-## References & Evidence
-The information in this document was derived from the following official sources:
-
-- [https://cpb.health.go.ke/](https://cpb.health.go.ke/)
-- [https://health.go.ke/](https://health.go.ke/)
-- [https://ecitizen.go.ke/](https://ecitizen.go.ke/)
-- [https://therapyroute.com/](https://therapyroute.com/)
-- [https://wordpress.com/](https://wordpress.com/)
-
----
-
-## Appendices
-See attached ERD and System Design.
+## References
+Derived from official mandates.

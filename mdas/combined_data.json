@@ -2768,113 +2768,106 @@
       ],
       "inputs_outputs_dependencies": {
         "inputs": [
-          "Public Inquiries / Petitions",
-          "Policy Proposals / Memos",
-          "Inter-agency Correspondence",
-          "Cabinet Memos"
+          "Draft Cabinet Memo",
+          "Policy Proposal Document",
+          "Legal Opinion (Attorney General)",
+          "Treasury Concurrence (Financial Implications)"
         ],
         "outputs": [
-          "Policy Guidelines / Circulars",
-          "Official Response Letters",
-          "Cabinet Resolutions",
-          "Public Service Reports"
+          "Cabinet Paper Number",
+          "Cabinet Minute/Resolution",
+          "Notification of Decision Letter"
         ],
         "external_dependencies": [
-          "National Treasury (Funding)",
-          "ICT Authority (Standards)"
+          "All Ministries",
+          "Attorney General",
+          "National Treasury"
         ]
       },
       "process_maturity": {
-        "documentation_status": "Documented (Standard Archetype)"
+        "documentation_status": "Documented (Specific Mandate)"
       },
-      "as_is_narrative": "Public service delivery focuses on policy formulation, oversight, and complaints handling. (Standard Ministry Workflow).",
+      "as_is_narrative": "The Cabinet Office coordinates the processing of Cabinet Memoranda, scheduling of meetings, and communication of Executive decisions. (Updated with specific Cabinet Secretariat workflow).",
       "as_is_steps": [
         {
           "step_number": 1,
-          "description": "Citizen/Stakeholder submits inquiry, complaint, or policy proposal via email or office.",
-          "actor": "Citizen"
+          "description": "Ministry/State Department submits a Draft Cabinet Memo to the Head of Public Service.",
+          "actor": "Ministry PS"
         },
         {
           "step_number": 2,
-          "description": "Central Registry receives and tags the correspondence.",
-          "actor": "Registry"
+          "description": "Cabinet Office Secretariat reviews the Memo for policy alignment and formatting compliance.",
+          "actor": "Cabinet Secretariat"
         },
         {
           "step_number": 3,
-          "description": "Relevant Technical Directorate reviews and drafts response/action.",
-          "actor": "Directorate"
+          "description": "Approved Memo is allocated a Cabinet Paper Number and scheduled for an upcoming Cabinet Meeting.",
+          "actor": "Secretary to Cabinet"
         },
         {
           "step_number": 4,
-          "description": "Principal Secretary/Director approves the response.",
-          "actor": "PS/Director"
+          "description": "Cabinet deliberates on the Memo during the scheduled meeting.",
+          "actor": "The Cabinet"
         },
         {
           "step_number": 5,
-          "description": "Ministry issues official response or policy guideline.",
-          "actor": "Ministry"
+          "description": "Cabinet Office records the decision as a Cabinet Minute (Resolution).",
+          "actor": "Secretariat"
+        },
+        {
+          "step_number": 6,
+          "description": "Cabinet Office issues a 'Notification of Cabinet Decision' to the originating Ministry.",
+          "actor": "Head of Public Service"
         }
       ],
       "decision_points": [],
       "exceptions": [],
       "pain_points_bottlenecks_risks": [
-        "Slow movement of physical files (Bureaucracy).",
-        "Loss of institutional memory (Manual registries).",
-        "Difficulty in tracking correspondence status.",
-        "Siloed operations between departments."
+        "Manual movement of sensitive physical files.",
+        "Risk of leakage of confidential information.",
+        "Delays in scheduling and feedback.",
+        "Difficulty in tracking implementation status."
       ],
       "to_be_process": {
-        "narrative": "The To-Be process leverages the Government Service Bus to integrate with BRS (Business Registry) and the Payment Gateway. Manual data entry and document uploads are replaced by real-time API validations, enabling a paperless, cashless, and presence-less service experience.",
+        "narrative": "The To-Be process utilizes a secure e-Cabinet System where Ministers access papers via tablets, and decisions are digitally tracked.",
         "steps": [
           {
             "step_number": 1,
-            "description": "Applicant logs in via Single Sign-On (SSO) and selects the service.",
-            "actor": "Applicant",
-            "system": "Citizen Portal / SSO"
+            "description": "Ministry uploads Memo to secure e-Cabinet Portal.",
+            "actor": "PS",
+            "system": "e-Cabinet"
           },
           {
             "step_number": 2,
-            "description": "Applicant enters Business Registration Number; System auto-populates details from BRS (Business Registry) via the Service Bus.",
+            "description": "System validates attachments (AG/Treasury) and routes for Secretariat review.",
             "actor": "System",
-            "system": "Service Bus / Registry API"
+            "system": "e-Cabinet"
           },
           {
             "step_number": 3,
-            "description": "System performs auto-validation of compliance (e.g., KRA Tax Status) via Inter-Agency APIs.",
-            "actor": "System",
-            "system": "Service Bus / Compliance Engine"
+            "description": "Secretariat schedules the item digitally; Agenda is pushed to Cabinet tablets.",
+            "actor": "Secretariat",
+            "system": "e-Cabinet"
           },
           {
             "step_number": 4,
-            "description": "Applicant pays fees via the Government Payment Gateway; System auto-receipts.",
-            "actor": "Applicant",
-            "system": "Payment Gateway"
+            "description": "Decisions are recorded in the system during the meeting.",
+            "actor": "Secretariat",
+            "system": "e-Cabinet"
           },
           {
             "step_number": 5,
-            "description": "Application is processed by the Rules Engine. (Low-risk cases are Auto-Approved).",
+            "description": "System auto-generates Notification Letter and emails it to the Ministry.",
             "actor": "System",
-            "system": "Workflow Engine"
-          },
-          {
-            "step_number": 6,
-            "description": "Complex cases are routed to the Officer Workbench for digital review and approval.",
-            "actor": "Officer",
-            "system": "Officer Workbench"
-          },
-          {
-            "step_number": 7,
-            "description": "System generates a Verifiable Digital Certificate (QR Code) and notifies the applicant.",
-            "actor": "System",
-            "system": "Output Generator"
+            "system": "e-Cabinet"
           }
         ]
       },
       "digitization_opportunities": [
-        "Integration with IPRS/BRS via Service Bus.",
-        "Adoption of Government Payment Gateway.",
-        "Implementation of Automated Rules Engine.",
-        "Issuance of Digital Verifiable Credentials."
+        "Secure e-Cabinet System for digital memo distribution.",
+        "Biometric access control for meeting documents.",
+        "Digital dashboard for tracking Cabinet decision implementation.",
+        "Encrypted communication channels."
       ],
       "kpis": [],
       "change_impact": {
