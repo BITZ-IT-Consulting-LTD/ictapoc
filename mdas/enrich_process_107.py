@@ -1,0 +1,44 @@
+
+import json
+import datetime
+
+# Load the JSON data
+with open('combined_data.json', 'r') as f:
+    data = json.load(f)
+
+# Get the hundred and eighth process (index 107)
+process = data['processes'][107]
+
+# Populate fields
+process['executive_summary'] = "The Department of Citizen Services operates under the State Department for Immigration and Citizen Services within the Ministry of Interior and National Administration in Kenya. Its mandate, rooted in the Constitution of Kenya and relevant legislation, is to provide comprehensive citizen services, including population registration, identification and documentation, immigration control, issuance of travel documents, residency management, civil registration, and refugee affairs. Largely facilitated by digital platforms like eCitizen, the Department aims to enhance national security, socio-economic development, and efficient service delivery to both Kenyan citizens and foreign nationals."
+process['process_overview']['process_objective'] = "To manage the Integrated Population Registration System (IPRS) and operate/maintain a national population register for all Kenyan citizens and foreign residents; to identify and register all Kenyan citizens aged 18 and above, issuing secure identification documents (National Identity Cards), and maintaining a comprehensive database of registered individuals; to regulate and control the entry and exit of all individuals, including the removal of prohibited immigrants, and managing border points (airports, seaports, and land borders); to issue Kenyan passports and other necessary travel documents; to oversee residency through the issuance and renewal of entry and work permits, various passes, and entry visas, and managing citizenship applications for eligible foreign nationals; to register births and deaths, ensuring the preservation and security of related certificates, and processing vital statistics; to handle the registration and status determination of refugees, coordinating service provision, issuing identification and movement passes, and managing refugee camps; to enforce relevant laws and regulations pertaining to immigration and citizenship; and to develop national migration policies and review existing immigration laws and regulations."
+process['process_overview']['policy_legal_context'].append("The Department's mandate is rooted in the Constitution of Kenya, 2010 (particularly Articles 43, 53, 54, 55, 56, 57, and 59 concerning rights to services), and relevant legislation such as the Kenya Citizenship and Immigration Act, 2011, and the National Registration Act. It operates under the Ministry of Interior and National Administration and is guided by national policies on security, immigration, citizen registration, and digital service delivery, aiming to enhance service accessibility, national data integrity, and socio-economic planning.")
+process['stakeholders'].append({"stakeholder": "Kenyan Citizens", "role": "Primary beneficiaries of identification, civil registration, and travel document services", "responsibilities": "(INFERRED) Seeking services, obtaining identification, complying with citizenship laws."})
+process['stakeholders'].append({"stakeholder": "Foreign Nationals (residents, visitors, refugees)", "role": "Subjects of immigration control, residency management, and refugee affairs services", "responsibilities": "(INFERRED) Complying with immigration laws, seeking permits/visas, adhering to refugee regulations."})
+process['stakeholders'].append({"stakeholder": "Government Ministries and Agencies (e.g., Interior, Education, Health, NSSF)", "role": "Users of population data from IPRS for planning, policy implementation, and service delivery", "responsibilities": "(INFERRED) Utilizing citizen data, collaborating on inter-agency services, ensuring data security."})
+process['stakeholders'].append({"stakeholder": "eCitizen Platform (as a service delivery channel)", "role": "Digital platform aggregating and delivering numerous government services, including those from Citizen Services", "responsibilities": "(INFERRED) Hosting online services, ensuring platform functionality, enhancing user experience."})
+process['stakeholders'].append({"stakeholder": "National Registration Bureau", "role": "Responsible for registration of persons and issuance of ID cards; a key component of Citizen Services", "responsibilities": "(INFERRED) Registering citizens, issuing IDs, maintaining population register."})
+process['stakeholders'].append({"stakeholder": "Directorate of Immigration Services", "role": "Manages immigration control and issuance of passports/permits; a key component of Citizen Services", "responsibilities": "(INFERRED) Controlling borders, issuing travel/residency documents, enforcing immigration laws."})
+process['stakeholders'].append({"stakeholder": "Civil Registration Department", "role": "Registers births and deaths; a key component of Citizen Services", "responsibilities": "(INFERRED) Registering vital events, issuing certificates, maintaining vital statistics."})
+process['stakeholders'].append({"stakeholder": "Refugee Affairs Secretariat", "role": "Manages refugee registration and affairs; a key component of Citizen Services", "responsibilities": "(INFERRED) Registering refugees, determining status, coordinating humanitarian assistance."})
+process['stakeholders'].append({"stakeholder": "Law Enforcement Agencies", "role": "Collaborate on security matters, enforcement of immigration laws, and identification verification", "responsibilities": "(INFERRED) Enforcing laws, investigating identity fraud, ensuring national security."})
+process['stakeholders'].append({"stakeholder": "International Organizations (e.g., UNHCR, IOM)", "role": "Partners in refugee management and migration governance", "responsibilities": "(INFERRED) Providing humanitarian assistance, advocating for migrants/refugees, capacity building."})
+process['stakeholders'].append({"stakeholder": "Border Control Agencies", "role": "Collaborate on securing entry and exit points and managing cross-border movement", "responsibilities": "(INFERRED) Securing borders, controlling illegal immigration, facilitating legitimate travel."})
+
+process['as_is_narrative'] = "(INFERRED) The Department of Citizen Services, under the State Department for Immigration and Citizen Services, plays a pivotal role in the administration of civil and national security functions in Kenya. Its operations are heavily reliant on the Integrated Population Registration System (IPRS), which serves as the central repository for all citizen and resident data, enabling efficient cross-referencing and service delivery. The Department manages the entire lifecycle of national identity documents, from the registration of persons upon reaching 18 years of age, to the issuance of National Identity Cards, and their subsequent replacement or updates. A core function involves stringent immigration control, where officers at various border points (airports, seaports, land borders) vet and process visas, work permits, entry and exit clearances for both citizens and foreign nationals, including the identification and removal of prohibited immigrants. It facilitates the issuance of Kenyan passports and other travel documents, ensuring citizens can travel internationally. The Department is responsible for accurate and timely civil registration, encompassing the registration of births, deaths, and marriages, and the issuance of corresponding certificates, which are crucial for vital statistics and planning. Furthermore, it manages the registration, status determination, and welfare of refugees in Kenya through the Refugee Affairs Secretariat. The Department actively enforces relevant immigration and citizenship laws and continuously enhances service delivery through digital platforms like eCitizen, which aggregates many government services, making them more accessible and efficient for the public, thereby streamlining interactions between citizens and the government while bolstering national security."
+
+# Update metadata
+process['metadata']['enrichment_method'] = "web_search_and_inference"
+process['metadata']['confidence_level'] = "high (mandates, functions, legal basis from official government websites and reliable sources) / medium (inferred responsibilities, narrative)"
+process['metadata']['source_urls'] = [
+    "https://www.ecitizen.go.ke/", # Official eCitizen platform
+    "https://www.immigration.go.ke/", # Official Directorate of Immigration Services website
+]
+process['metadata']['last_enriched_date'] = datetime.datetime.now().strftime("%Y-%m-%d")
+
+
+# Save the updated JSON data
+with open('combined_data.json', 'w') as f:
+    json.dump(data, f, indent=2)
+
+print("Hundred and eighth process enriched and combined_data.json updated.")

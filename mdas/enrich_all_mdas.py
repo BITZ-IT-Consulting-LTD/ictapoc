@@ -81,14 +81,39 @@ def enrich_mda_process(process_index, mda_name):
     print("Initiating enrichment for the next MDA (index 24).")
     return None # Indicate that the full enrichment for this specific MDA is handled outside this function call.
 
+def normalize_mda_name(name):
+    """Normalizes an MDA name for consistent comparison."""
+    name = name.lower()
+    name = name.replace("state department for", "")
+    name = name.replace("ministry of", "")
+    name = name.replace("of kenya", "")
+    name = name.replace("limited", "")
+    name = name.replace("(subsidiary of consolidated bank)", "") # Specific for the last one
+    name = name.strip()
+    return name
+
 # Load the JSON data
 with open('combined_data.json', 'r') as f:
     data = json.load(f)
 
 # Find the next unenriched process
 next_process_index = -1
+enriched_mda_names = set() # Use a set for faster lookups with normalized names
+
+# First pass to populate enriched_mda_names with normalized names
 for i, process in enumerate(data['processes']):
-    # Check if 'metadata' key exists and 'confidence_level' within it is empty
+    if process.get('metadata') and process['metadata'].get('confidence_level'):
+        normalized_name = normalize_mda_name(process['mda_name'])
+        enriched_mda_names.add(normalized_name)
+
+for i, process in enumerate(data['processes']):
+    mda_name = process['mda_name']
+    normalized_mda_name = normalize_mda_name(mda_name)
+
+    if normalized_mda_name in enriched_mda_names:
+        # print(f"Skipping process {i}: '{mda_name}' (already enriched or duplicate normalized name)")
+        continue
+
     if not process.get('metadata') or not process['metadata'].get('confidence_level'):
         next_process_index = i
         break
@@ -98,5 +123,3 @@ if next_process_index == -1:
 else:
     mda_name = data['processes'][next_process_index]['mda_name']
     enrich_mda_process(next_process_index, mda_name)
-
-# I will then manually proceed with the next step, which is calling google_web_search for this MDA.

@@ -1,0 +1,49 @@
+
+import json
+import datetime
+
+# Load the JSON data
+with open('combined_data.json', 'r') as f:
+    data = json.load(f)
+
+# Get the hundred and eleventh process (index 110)
+process = data['processes'][110]
+
+# Populate fields
+process['executive_summary'] = "The Coast Development Authority (CDA) is a State Corporation in Kenya, established by an Act of Parliament (No. 20 of 1990, Cap 449). Its primary mandate is to provide integrated development planning, coordination, and implementation of projects and programs throughout the entire Coast Region of Kenya, including the exclusive economic zone. CDA focuses on sustainable utilization and conservation of natural resources, promoting economic growth, and empowering local communities, thereby contributing to national development strategies, particularly those related to the Blue Economy."
+process['process_overview']['process_objective'] = "To oversee the sustainable utilization and conservation of natural resources in Kenya's coastal region; to promote agricultural productivity through initiatives like irrigation schemes, modern farming practices, and value addition; to implement projects to enhance water supply for domestic, agricultural, and industrial use, including promoting alternative sources of freshwater like rainwater harvesting; to protect coastal ecosystems, combat soil erosion, and promote reforestation efforts, and increase resilience to climate change in shoreline and mangrove ecosystems; to plan and develop infrastructure such as roads, bridges, and water systems to support regional growth; to engage and empower local communities through capacity-building programs and development initiatives; to foster industrial and commercial ventures, especially those leveraging the region's natural resources; to support the development of eco-tourism and sustainable tourism activities in the coastal region; to conduct research and studies on natural resources, climate change, and development challenges to inform decision-making; and to align and implement national policies related to regional planning, environmental protection, and resource management."
+process['process_overview']['policy_legal_context'].append("Established by an Act of Parliament (No. 20 of 1990, Cap 449), revised in 1992, which provides the legal framework for its mandate and functions. CDA operates under the Ministry of East African Community, Arid and Semi-Arid Lands (ASALs) and Regional Development (or the relevant government ministry responsible for regional development) and is guided by national development policies, environmental conservation acts, and regional development strategies, particularly those related to the Blue Economy and sustainable development of coastal resources.")
+process['stakeholders'].append({"stakeholder": "Local Communities (within the Coast Region, including fisherfolk, farmers, pastoralists)", "role": "Primary beneficiaries and participants in CDA's development projects and conservation efforts", "responsibilities": "(INFERRED) Engaging in development initiatives, adopting sustainable practices, providing local knowledge and labor."})
+process['stakeholders'].append({"stakeholder": "County Governments (Mombasa, Kilifi, Kwale, Tana River, Lamu)", "role": "Partners in local development planning and implementation of projects within their respective counties", "responsibilities": "(INFERRED) Collaborating on development plans, allocating resources, implementing national policies locally."})
+process['stakeholders'].append({"stakeholder": "Ministry of East African Community, ASALs and Regional Development", "role": "Parent Ministry providing policy direction, funding, and oversight to CDA", "responsibilities": "(INFERRED) Formulating regional development policies, allocating resources, strategic guidance."})
+process['stakeholders'].append({"stakeholder": "National Environment Management Authority (NEMA)", "role": "Collaborator in ensuring environmental compliance and conservation of coastal ecosystems", "responsibilities": "(INFERRED) Enforcing environmental laws, conducting environmental impact assessments, advising on coastal ecosystem protection."})
+process['stakeholders'].append({"stakeholder": "Kenya Wildlife Service (KWS)", "role": "Manages wildlife conservation areas along the coast; collaborates on eco-tourism and conservation", "responsibilities": "(INFERRED) Conserving coastal wildlife, partnering on eco-tourism development."})
+process['stakeholders'].append({"stakeholder": "Kenya Forest Service (KFS)", "role": "Manages coastal forests and mangrove ecosystems; collaborates on reforestation and conservation", "responsibilities": "(INFERRED) Conserving coastal forests, promoting reforestation, managing mangrove resources."})
+process['stakeholders'].append({"stakeholder": "Kenya Marine and Fisheries Research Institute (KMFRI)", "role": "Conducts research on marine and fisheries resources; provides data and expertise to CDA", "responsibilities": "(INFERRED) Conducting marine research, providing expert advice on fisheries management."})
+process['stakeholders'].append({"stakeholder": "Kenya Ports Authority (KPA)", "role": "Manages port operations in the coastal region; collaborator on infrastructure development and economic ventures", "responsibilities": "(INFERRED) Managing ports, supporting trade, collaborating on maritime infrastructure."})
+process['stakeholders'].append({"stakeholder": "Tourism Sector Stakeholders", "role": "Industry players (hoteliers, tour operators) who benefit from CDA's efforts in promoting sustainable tourism", "responsibilities": "(INFERRED) Promoting coastal tourism, investing in sustainable tourism products."})
+process['stakeholders'].append({"stakeholder": "Farmers / Fisherfolk", "role": "Direct beneficiaries of agricultural and fisheries development programs promoted by CDA", "responsibilities": "(INFERRED) Adopting improved practices, participating in development initiatives."})
+process['stakeholders'].append({"stakeholder": "Water Resource Users Associations (WRUAs)", "role": "Community-based organizations involved in water resource management; collaborate with CDA on water projects", "responsibilities": "(INFERRED) Managing local water resources, participating in water development projects."})
+process['stakeholders'].append({"stakeholder": "Development Partners", "role": "Provide financial and technical assistance to support CDA's programs and projects in the coastal region", "responsibilities": "(INFERRED) Funding projects, sharing expertise in regional development and natural resource management."})
+process['stakeholders'].append({"stakeholder": "Investors (in coastal industries, tourism)", "role": "Private sector entities whose investments contribute to economic growth in the region; supported by CDA's facilitative role", "responsibilities": "(INFERRED) Investing responsibly, creating employment, adhering to sustainable practices."})
+
+process['as_is_narrative'] = "(INFERRED) The Coast Development Authority (CDA) implements its mandate through an integrated and multi-sectoral approach to foster sustainable development in the vast Coast Region. Its operations typically involve conducting comprehensive feasibility studies and developing strategic integrated development plans that cover various sectors such as agriculture, water, infrastructure, environment, and tourism. CDA initiates and implements a wide array of projects, including the construction and rehabilitation of water resource infrastructure (e.g., dams, boreholes, water harvesting systems) to improve access to safe water for domestic, agricultural, and industrial use. It actively promotes improved agricultural practices, irrigation schemes, and value addition initiatives to enhance food security and increase farmer incomes within the region. Environmental conservation is a key focus, with CDA undertaking projects like mangrove reforestation, protection of coastal ecosystems, and awareness campaigns to mitigate climate change impacts and combat soil erosion. The Authority facilitates infrastructure development, including roads, bridges, and other logistical networks crucial for unlocking the economic potential of the coast. Community engagement is central to its strategy, involving local communities in the planning and implementation of projects to ensure ownership and long-term sustainability. CDA conducts continuous research on natural resources, socio-economic trends, and climate change vulnerabilities to inform its planning and decision-making processes. It plays a significant coordinating role, working closely with various national and county government agencies, private sector entities, and non-governmental organizations to ensure harmonized development efforts. Furthermore, CDA actively mobilizes resources from both government budgetary allocations and development partners to fund its diverse portfolio of programs, all aimed at realizing the economic potential of the coastal region and improving the livelihoods of its inhabitants."
+
+# Update metadata
+process['metadata']['enrichment_method'] = "web_search_and_inference"
+process['metadata']['confidence_level'] = "high (mandates, functions, legal basis from reliable sources) / medium (inferred responsibilities, narrative)"
+process['metadata']['source_urls'] = [
+    "https://developmentaid.org/", # Provided context
+    "https://saraka.info/", # Provided context
+    "https://fao.org/", # Provided context
+    "https://policyvault.africa/", # Provided context
+    "https://nema.go.ke/" # Provided context
+]
+process['metadata']['last_enriched_date'] = datetime.datetime.now().strftime("%Y-%m-%d")
+
+
+# Save the updated JSON data
+with open('combined_data.json', 'w') as f:
+    json.dump(data, f, indent=2)
+
+print("Hundred and eleventh process enriched and combined_data.json updated.")

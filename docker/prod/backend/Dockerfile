@@ -25,8 +25,11 @@ COPY ./backend /app/
 
 # Create a non-privileged user and group
 RUN groupadd -g 1000 appuser && \
-    useradd -u 1000 -g appuser -s /bin/sh appuser && \
-    chown -R appuser:appuser /app
+    useradd -u 1000 -g appuser -s /bin/sh appuser
+
+# Pre-prepare directories for volumes to ensure correct permissions
+RUN mkdir -p /app/staticfiles && \
+    chown -R appuser:appuser /app /app/staticfiles
 
 # Switch to non-privileged user
 USER appuser

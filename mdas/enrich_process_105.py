@@ -1,0 +1,47 @@
+
+import json
+import datetime
+
+# Load the JSON data
+with open('combined_data.json', 'r') as f:
+    data = json.load(f)
+
+# Get the hundred and sixth process (index 105)
+process = data['processes'][105]
+
+# Populate fields
+process['executive_summary'] = "The Child Welfare Society of Kenya (CWSK) is a national non-governmental organization, established and gazetted in 1955 and governed by an irrevocable Trust Deed of 1970. CWSK serves as the National Adoption Society for Kenya and the National Emergency Response, Welfare, and Rescue Organization for children. Its mandate is to promote and secure the rights of children and young persons, provide comprehensive services to marginalized children across social sectors, and protect vulnerable children on behalf of the government, with the overarching aim for all children to lead happy, fulfilling, and fruitful lives."
+process['process_overview']['process_objective'] = "To ensure child protection by safeguarding children from abuse, neglect, and exploitation; to provide emergency preparedness, rapid response, and rescue services for separated, lost, or distressed children; to facilitate alternative family care, including child adoption, foster care for orphans and vulnerable children, and guardianship placements, to ensure children grow up in stable family environments; to offer rehabilitation services for children in need, including those affected by abuse, neglect, or those in conflict with the law; to advocate for children's rights and promote their needs at community, county, and national levels; to support vulnerable groups, such as children affected by HIV/AIDS, child labor, and street children, through identification, rescue, rehabilitation, and family tracing; to provide education and skills development through early childhood education support, primary, secondary, and university education sponsorships, and vocational skills training; to offer counseling and family support, including psychological support, crisis intervention, and family tracing and reunification services; to counter child trafficking by supporting victims and building capacity among stakeholders; and to operate rescue shelters and safe houses for children in immediate need of care and protection."
+process['process_overview']['policy_legal_context'].append("Established and gazetted in 1955, and governed by an irrevocable Trust Deed of 1970. CWSK's mandate aligns with Section 56 of the Kenyan Constitution, which guarantees children's rights, and it operates under the Ministry of Labour and Social Protection (specifically the Department of Children Services). Its activities are guided by the Children Act, 2022, and other relevant national and international child protection policies, conventions (e.g., UN Convention on the Rights of the Child), and best practices.")
+process['stakeholders'].append({"stakeholder": "Vulnerable Children (orphans, abused, neglected, abandoned, street children)", "role": "Primary beneficiaries of CWSK's protection, care, and rehabilitation programs", "responsibilities": "(INFERRED) Engaging with support services, participating in rehabilitation, seeking protection."})
+process['stakeholders'].append({"stakeholder": "Families (biological, foster, adoptive)", "role": "Partners in providing a stable and nurturing environment for children; beneficiaries of family support services", "responsibilities": "(INFERRED) Providing care, participating in family reunification, adopting/fostering children."})
+process['stakeholders'].append({"stakeholder": "Local Communities", "role": "First line of protection for children; partners in identifying vulnerable children and promoting child welfare", "responsibilities": "(INFERRED) Reporting child abuse, participating in awareness campaigns, supporting child protection."})
+process['stakeholders'].append({"stakeholder": "Children's Homes / Care Institutions", "role": "Partners in providing residential care for children in need of protection", "responsibilities": "(INFERRED) Collaborating on child placement, ensuring quality care, adherence to children's rights."})
+process['stakeholders'].append({"stakeholder": "Department of Children Services (under Ministry of Labour and Social Protection)", "role": "Primary government agency for child protection; collaborates with CWSK on policy implementation and case management", "responsibilities": "(INFERRED) Policy oversight, case referrals, legal guardianship, coordinating child protection efforts."})
+process['stakeholders'].append({"stakeholder": "Judiciary (Family Courts, Children's Courts)", "role": "Provides legal framework for child protection orders, adoptions, and guardianship", "responsibilities": "(INFERRED) Adjudicating child cases, issuing legal orders, ensuring child rights in legal processes."})
+process['stakeholders'].append({"stakeholder": "Law Enforcement Agencies (Police)", "role": "Collaborates on rescue operations, investigations of child abuse, and protection of children", "responsibilities": "(INFERRED) Investigating child protection cases, ensuring child safety, enforcing child protection laws."})
+process['stakeholders'].append({"stakeholder": "Schools / Educational Institutions", "role": "Partners in providing education and identifying children in need of support", "responsibilities": "(INFERRED) Providing education, identifying vulnerable children, referring cases to CWSK/DCS."})
+process['stakeholders'].append({"stakeholder": "Healthcare Providers", "role": "Provide medical and psychological support to vulnerable children and families", "responsibilities": "(INFERRED) Providing healthcare, supporting rehabilitation, reporting child abuse."})
+process['stakeholders'].append({"stakeholder": "NGOs and CBOs in Child Protection", "role": "Collaborators in implementing child welfare programs and advocacy", "responsibilities": "(INFERRED) Partnering on projects, sharing best practices, advocating for child rights."})
+process['stakeholders'].append({"stakeholder": "Donors / Development Partners", "role": "Provide financial and technical assistance to support CWSK's programs", "responsibilities": "(INFERRED) Funding child protection initiatives, sharing expertise, supporting capacity building."})
+process['stakeholders'].append({"stakeholder": "Government (Ministry of Labour and Social Protection, Ministry of Education, Ministry of Health)", "role": "Provides overarching policy guidance, legal framework, and support for child welfare", "responsibilities": "(INFERRED) Formulating policies, allocating resources, ensuring inter-agency coordination for child welfare."})
+
+process['as_is_narrative'] = "(INFERRED) The Child Welfare Society of Kenya (CWSK) actively implements its broad mandate through a comprehensive suite of programs focused on child protection, rescue, care, and rehabilitation. Its operations involve identifying vulnerable children, including orphans, those subjected to abuse or neglect, abandoned children, and street children, often through community networks and referrals from government agencies. CWSK provides immediate emergency response and rescue services for children in distress, relocating them to safe havens. A core function is facilitating alternative family care, meticulously managing child adoption processes, fostering, and guardianship placements to ensure children grow up in loving and stable family environments. For children who have experienced trauma, abuse, or neglect, CWSK offers rehabilitation services, including psychosocial support and therapeutic interventions. The organization runs a network of rescue shelters across the country that serve as temporary safe houses for children in crisis. CWSK engages in extensive advocacy and public awareness campaigns on children's rights, child protection laws, and the importance of family-based care, targeting both communities and policymakers. It implements specialized programs to support specific vulnerable groups, such as identifying, rescuing, rehabilitating, and tracing families for street children or those affected by HIV/AIDS. Additionally, CWSK provides educational sponsorships and facilitates access to vocational training, ensuring children's access to learning and skill development. It offers professional counseling and psychological support services to children and families in distress, as well as family tracing and reunification services where appropriate. CWSK collaborates closely with government agencies, particularly the Department of Children Services, law enforcement, the judiciary, and other child protection stakeholders, to ensure comprehensive and coordinated child welfare services, and actively participates in efforts to counter child trafficking."
+
+# Update metadata
+process['metadata']['enrichment_method'] = "web_search_and_inference"
+process['metadata']['confidence_level'] = "high (mandates, functions, legal basis from official website and reliable sources) / medium (inferred responsibilities, narrative)"
+process['metadata']['source_urls'] = [
+    "https://www.cwsk.go.ke/", # Official website
+    "https://childwelfare.or.ke/", # Official website (alternative domain)
+    "https://saraka.info/", # Provided context
+    "https://youtube.com/" # Provided context
+]
+process['metadata']['last_enriched_date'] = datetime.datetime.now().strftime("%Y-%m-%d")
+
+
+# Save the updated JSON data
+with open('combined_data.json', 'w') as f:
+    json.dump(data, f, indent=2)
+
+print("Hundred and sixth process enriched and combined_data.json updated.")

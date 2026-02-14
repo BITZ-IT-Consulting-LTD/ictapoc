@@ -197,6 +197,9 @@ class IsClaimAuthorized(permissions.BasePermission):
                 return True
             if obj.service_config.mda.id in assigned_mdas:
                 return True
+            # Allow Citizens to view their own requests
+            if request.user.role == 'citizen' and obj.citizen == request.user:
+                return True
             return False
 
         allowed, reason = RBACScopeManager.evaluate_claim(request.user, obj)
