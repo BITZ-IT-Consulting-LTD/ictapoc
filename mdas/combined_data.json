@@ -4071,10 +4071,10 @@
         "classification": ""
       },
       "document_control": [],
-      "executive_summary": "High-sensitivity financial crime records; inter-agency dependencies; strong public interest.",
+      "executive_summary": "The Assets Recovery Agency (ARA) in Kenya is a vital semi-autonomous institution under the Office of the Attorney General, established to combat economic crimes, money laundering, and corruption. Its primary focus is to identify, trace, freeze, seize, confiscate, and recover proceeds of crime, thereby dismantling financial incentives for criminal activities and restoring public resources.",
       "process_overview": {
         "service_category": "",
-        "process_objective": "High-sensitivity financial crime records; inter-agency dependencies; strong public interest.",
+        "process_objective": "To identify, trace, freeze, seize, confiscate, and recover proceeds of crime, institute legal proceedings for forfeiture of unlawfully acquired assets, manage preserved and forfeited assets, and administer the Criminal Assets Recovery Fund, in order to combat economic crimes, money laundering, and corruption and enhance accountability in Kenya.",
         "scope": {
           "in_scope": [],
           "out_of_scope": []
@@ -4084,9 +4084,47 @@
           "successful": [],
           "unsuccessful": []
         },
-        "policy_legal_context": []
+        "policy_legal_context": [
+          "Established under Section 53 of the Proceeds of Crime and Anti-Money Laundering Act (POCAMLA) No. 9 of 2009. Operates under the Office of the Attorney General and collaborates with other law enforcement bodies under relevant legal frameworks for combating crime and corruption."
+        ]
       },
-      "stakeholders": [],
+      "stakeholders": [
+        {
+          "stakeholder": "Office of the Attorney General",
+          "role": "Parent body providing oversight and legal guidance",
+          "responsibilities": "(INFERRED) General supervision, legal advice on asset recovery cases."
+        },
+        {
+          "stakeholder": "Ethics and Anti-Corruption Commission (EACC)",
+          "role": "Collaborating agency in anti-corruption efforts",
+          "responsibilities": "(INFERRED) Investigating corruption, providing intelligence on illicit assets."
+        },
+        {
+          "stakeholder": "Directorate of Criminal Investigations (DCI)",
+          "role": "Collaborating agency in criminal investigations",
+          "responsibilities": "(INFERRED) Investigating criminal activities, providing evidence for asset tracing."
+        },
+        {
+          "stakeholder": "Financial Reporting Centre (FRC)",
+          "role": "Collaborating agency in combating money laundering and terrorist financing",
+          "responsibilities": "(INFERRED) Receiving and analyzing financial transaction reports, providing intelligence."
+        },
+        {
+          "stakeholder": "Office of the Director of Public Prosecutions (ODPP)",
+          "role": "Collaborating agency in prosecuting criminal cases and asset forfeiture",
+          "responsibilities": "(INFERRED) Prosecuting cases, supporting ARA's applications for asset recovery."
+        },
+        {
+          "stakeholder": "Courts (Judiciary)",
+          "role": "Adjudicating body for legal proceedings related to asset recovery",
+          "responsibilities": "(INFERRED) Issuing orders for freezing/forfeiture, ensuring due process."
+        },
+        {
+          "stakeholder": "Public",
+          "role": "Beneficiaries of recovered assets and reduced economic crime",
+          "responsibilities": "(INFERRED) Reporting suspicious activities, supporting anti-corruption efforts."
+        }
+      ],
       "inputs_outputs_dependencies": {
         "inputs": [],
         "outputs": [],
@@ -4097,7 +4135,7 @@
         "documentation_status": "",
         "level_of_automation": ""
       },
-      "as_is_narrative": "",
+      "as_is_narrative": "(INFERRED) The ARA's operations involve receiving intelligence and conducting investigations to identify and trace proceeds of crime, both domestically and internationally. It then initiates legal proceedings in court to obtain orders for freezing, seizing, preserving, and ultimately forfeiting these assets. The Agency is also responsible for the management of these recovered assets and the administration of the Criminal Assets Recovery Fund, working in close collaboration with other law enforcement and anti-corruption agencies.",
       "as_is_steps": [],
       "decision_points": [],
       "exceptions": [],
@@ -4122,7 +4160,15 @@
       "glossary": [],
       "metadata": {
         "source_url": "",
-        "confidence_level": ""
+        "confidence_level": "high (mandates, functions, legal basis from official sources) / medium (inferred responsibilities, narrative)",
+        "enrichment_method": "web_search_and_inference",
+        "source_urls": [
+          "https://cifar.eu/",
+          "https://businessradar.co.ke/",
+          "https://parliament.go.ke/",
+          "https://youtube.com/"
+        ],
+        "last_enriched_date": "2026-02-14"
       }
     },
     {
