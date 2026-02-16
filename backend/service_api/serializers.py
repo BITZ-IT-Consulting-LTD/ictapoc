@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import (
     ServiceRequest, ServiceConfig, WorkflowStep, User, MDA, AuditLog, Role, 
     ServiceDomain, ServiceCategory, InterDepartmentalMemo, GovernmentFile, 
-    OfficialLetter, CorrespondenceAction
+    OfficialLetter, CorrespondenceAction, DesktopReview
 )
 
 class RoleSerializer(serializers.ModelSerializer):
@@ -133,3 +133,19 @@ class InterDepartmentalMemoSerializer(serializers.ModelSerializer):
         validated_data['sender_mda'] = user.mda
         # Default status is 'draft' as per model, or user can set to 'internal_approval'
         return super().create(validated_data)
+
+class OfficialLetterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OfficialLetter
+        fields = '__all__'
+
+class CorrespondenceActionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CorrespondenceAction
+        fields = '__all__'
+
+class DesktopReviewSerializer(serializers.ModelSerializer):
+    mda_details = MDASerializer(source='mda', read_only=True)
+    class Meta:
+        model = DesktopReview
+        fields = '__all__'

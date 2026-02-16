@@ -18,6 +18,7 @@ router.register(r'memos', views.InterDepartmentalMemoViewSet, basename='memos')
 router.register(r'government-files', views.GovernmentFileViewSet, basename='government-files')
 router.register(r'official-letters', views.OfficialLetterViewSet, basename='official-letters')
 router.register(r'correspondence-actions', views.CorrespondenceActionViewSet, basename='correspondence-actions')
+router.register(r'desktop-reviews', views.DesktopReviewViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

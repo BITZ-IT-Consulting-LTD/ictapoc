@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, MDA, ServiceConfig, WorkflowStep, ServiceRequest, AuditLog
+from .models import User, MDA, ServiceConfig, WorkflowStep, ServiceRequest, AuditLog, DesktopReview
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
@@ -42,3 +42,9 @@ class AuditLogAdmin(admin.ModelAdmin):
     list_filter = ('action', 'timestamp')
     search_fields = ('service_request__request_id', 'actor__username', 'action')
     raw_id_fields = ('service_request', 'actor')
+
+@admin.register(DesktopReview)
+class DesktopReviewAdmin(admin.ModelAdmin):
+    list_display = ('mda', 'process_id', 'created_at')
+    search_fields = ('mda__name', 'process_id', 'executive_summary')
+    list_filter = ('created_at',)

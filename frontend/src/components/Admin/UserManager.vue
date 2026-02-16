@@ -12,16 +12,47 @@
             class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
         </div>
-        <div class="flex gap-2">
-          <select v-model="roleFilter" class="block w-36 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-            <option value="">All Roles</option>
-            <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.name }}</option>
-          </select>
-          <select v-model="mdaFilter" class="block w-40 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-            <option value="">All MDAs</option>
-            <option :value="null">Global / Citizen</option>
-            <option v-for="mda in mdas" :key="mda.id" :value="mda.id">{{ mda.name }}</option>
-          </select>
+        <div class="flex flex-wrap md:flex-nowrap gap-4 w-full md:w-auto">
+          <!-- Searchable Role Filter -->
+          <div class="relative w-full md:w-36">
+            <input type="text" v-model="roleSearchLocal" placeholder="Filter Role..."
+              @focus="showRoleDropdown = true"
+              @blur="setTimeout(() => showRoleDropdown = false, 200)"
+              class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm cursor-pointer outline-none">
+            <div v-if="showRoleDropdown" class="absolute z-[100] mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-y-auto p-1">
+               <div @click="selectRole('')" class="px-2 py-1.5 hover:bg-indigo-50 cursor-pointer text-xs font-bold text-indigo-600 rounded">All Roles</div>
+               <div v-for="role in filteredRoles" :key="role.id" @click="selectRole(role)"
+                 class="px-2 py-1.5 hover:bg-indigo-50 cursor-pointer text-sm text-gray-700 rounded transition-colors">
+                 {{ role.name }}
+               </div>
+            </div>
+            <div class="absolute right-2 top-2.5 pointer-events-none text-gray-400">
+              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Searchable MDA Filter -->
+          <div class="relative w-full md:w-48">
+            <input type="text" v-model="mdaFilterSearchLocal" placeholder="Filter MDA..."
+              @focus="showMdaFilterDropdown = true"
+              @blur="setTimeout(() => showMdaFilterDropdown = false, 200)"
+              class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm cursor-pointer outline-none">
+            <div v-if="showMdaFilterDropdown" class="absolute z-[100] mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-y-auto p-1">
+               <div @click="selectMdaFilter('')" class="px-2 py-1.5 hover:bg-indigo-50 cursor-pointer text-xs font-bold text-indigo-600 rounded">All MDAs</div>
+               <div @click="selectMdaFilter(null)" class="px-2 py-1.5 hover:bg-indigo-50 cursor-pointer text-xs font-bold text-indigo-600 rounded">Global / Citizen</div>
+               <div v-for="mda in filteredMdasForFilter" :key="mda.id" @click="selectMdaFilter(mda)"
+                 class="px-2 py-1.5 hover:bg-indigo-50 cursor-pointer text-sm text-gray-700 rounded transition-colors">
+                 {{ mda.name }}
+               </div>
+            </div>
+            <div class="absolute right-2 top-2.5 pointer-events-none text-gray-400">
+              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
       <button @click="openCreateModal" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 shadow-sm font-medium transition-colors">
@@ -132,6 +163,48 @@ const roles = ref([]);
 const searchQuery = ref('');
 const roleFilter = ref('');
 const mdaFilter = ref('');
+
+const roleSearchLocal = ref('');
+const mdaFilterSearchLocal = ref('');
+const showRoleDropdown = ref(false);
+const showMdaFilterDropdown = ref(false);
+
+const filteredRoles = computed(() => {
+  if (!roleSearchLocal.value) return roles.value;
+  const q = roleSearchLocal.value.toLowerCase();
+  return roles.value.filter(r => r.name.toLowerCase().includes(q));
+});
+
+const filteredMdasForFilter = computed(() => {
+  if (!mdaFilterSearchLocal.value) return mdas.value;
+  const q = mdaFilterSearchLocal.value.toLowerCase();
+  return mdas.value.filter(m => m.name.toLowerCase().includes(q));
+});
+
+const selectRole = (role) => {
+  if (role === '') {
+    roleFilter.value = '';
+    roleSearchLocal.value = '';
+  } else {
+    roleFilter.value = role.id;
+    roleSearchLocal.value = role.name;
+  }
+  showRoleDropdown.value = false;
+};
+
+const selectMdaFilter = (mda) => {
+  if (mda === '') {
+    mdaFilter.value = '';
+    mdaFilterSearchLocal.value = '';
+  } else if (mda === null) {
+    mdaFilter.value = null;
+    mdaFilterSearchLocal.value = 'Global / Citizen';
+  } else {
+    mdaFilter.value = mda.id;
+    mdaFilterSearchLocal.value = mda.name;
+  }
+  showMdaFilterDropdown.value = false;
+};
 
 const filteredUsers = computed(() => {
   let result = users.value;

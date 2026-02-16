@@ -22,7 +22,7 @@ from rest_framework.response import Response
 from .models import (
     ServiceRequest, ServiceConfig, WorkflowStep, User, MDA, AuditLog, Role, 
     ServiceDomain, ServiceCategory, InterDepartmentalMemo, GovernmentFile, 
-    OfficialLetter, CorrespondenceAction
+    OfficialLetter, CorrespondenceAction, DesktopReview
 )
 from .serializers import (
     ServiceRequestSerializer, 
@@ -37,7 +37,8 @@ from .serializers import (
     InterDepartmentalMemoSerializer,
     GovernmentFileSerializer,
     OfficialLetterSerializer,
-    CorrespondenceActionSerializer
+    CorrespondenceActionSerializer,
+    DesktopReviewSerializer
 )
 from .permissions import IsAdminOrAuthenticatedReadOnly, IsParticipantOrAdmin, AuditLogPermission, IsSystemAdmin, IsClaimAuthorized
 from .workflow import WorkflowEngine, send_notification
@@ -695,3 +696,8 @@ class InterDepartmentalMemoViewSet(viewsets.ModelViewSet):
         memo.is_read = True
         memo.save()
         return Response({'status': 'marked as read'})
+
+class DesktopReviewViewSet(viewsets.ModelViewSet):
+    queryset = DesktopReview.objects.all()
+    serializer_class = DesktopReviewSerializer
+    permission_classes = [permissions.IsAuthenticated]

@@ -130,15 +130,67 @@
                 Explore Government Services</h2>
               <p class="text-sm text-gray-500">Apply for various permits, licenses, and certificates digitally.</p>
             </div>
-            <div class="relative max-w-sm w-full">
-              <input type="text" v-model="serviceSearchQuery"
-                placeholder="Search services (e.g. Identity, Education)..."
-                class="block w-full px-4 py-3 bg-white border border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all pl-10">
-              <svg class="w-5 h-5 text-gray-400 absolute left-3 top-3.5" fill="none" stroke="currentColor"
-                viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
+            <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
+              <!-- Searchable MDA filter -->
+              <div class="relative w-full md:w-72">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+                <input type="text" v-model="mdaSearchLocal" placeholder="Filter by MDA / Ministry..."
+                  class="block w-full pl-9 pr-4 py-3 bg-white border border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none"
+                  @focus="showMdaDropdown = true"
+                  @blur="setTimeout(() => showMdaDropdown = false, 200)">
+                
+                <!-- Custom Dropdown -->
+                <div v-if="showMdaDropdown && filteredMdas.length" 
+                  class="absolute z-[100] mt-2 w-full bg-white border border-gray-100 rounded-xl shadow-2xl max-h-60 overflow-y-auto animate-in fade-in zoom-in duration-200">
+                  <div @click="selectMda('')" 
+                    class="px-4 py-2 hover:bg-indigo-50 cursor-pointer text-xs font-bold text-indigo-600 border-b border-gray-50">
+                    All MDAs / Ministries
+                  </div>
+                  <div v-for="mda in filteredMdas" :key="mda.id" 
+                    @click="selectMda(mda)"
+                    class="px-4 py-2 hover:bg-indigo-50 cursor-pointer text-sm text-gray-700 transition-colors">
+                    {{ mda.name }}
+                  </div>
+                </div>
+              </div>
+              
+              <div class="relative max-w-sm w-full">
+                <input type="text" v-model="serviceSearchQuery"
+                  placeholder="Service keywords..."
+                  class="block w-full px-4 py-3 bg-white border border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all pl-10">
+                <svg class="w-5 h-5 text-gray-400 absolute left-3 top-3.5" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <div class="relative w-full md:w-44">
+                <input type="text" v-model="prioritySearchLocal" placeholder="Any Priority..."
+                  readonly
+                  @focus="showPriorityDropdown = true"
+                  @blur="setTimeout(() => showPriorityDropdown = false, 200)"
+                  class="block w-full px-4 py-3 bg-white border border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none font-bold text-gray-700 cursor-pointer">
+                
+                <div v-if="showPriorityDropdown" class="absolute z-[100] mt-2 w-full bg-white border border-gray-100 rounded-xl shadow-2xl p-1 overflow-hidden animate-in fade-in zoom-in duration-200">
+                  <div @click="selectPriority('')" class="px-4 py-2 hover:bg-indigo-50 cursor-pointer text-xs font-bold text-indigo-600 rounded-lg">Any Priority</div>
+                  <div v-for="p in ['Low', 'Normal', 'High', 'Critical']" :key="p"
+                    @click="selectPriority(p.toLowerCase())"
+                    class="px-4 py-2 hover:bg-gray-50 cursor-pointer text-sm text-gray-700 rounded-lg transition-colors flex items-center gap-2">
+                    <span :class="[p === 'High' ? 'bg-orange-400' : p === 'Critical' ? 'bg-red-500' : p === 'Normal' ? 'bg-blue-400' : 'bg-gray-400', 'w-1.5 h-1.5 rounded-full']"></span>
+                    {{ p }}
+                  </div>
+                </div>
+
+                <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                  <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -226,7 +278,24 @@
               </h2>
               <p class="text-sm text-gray-600">Documents currently assigned to you for processing.</p>
             </div>
-            <div class="flex gap-4 max-w-sm w-full">
+            <div class="flex flex-col md:flex-row gap-4 max-w-xl w-full">
+              <!-- Custom Priority Dropdown -->
+              <div class="relative w-full md:w-44">
+                <input type="text" v-model="prioritySearchLocal" placeholder="All Priorities..."
+                  readonly
+                  @focus="showPriorityDropdown = true"
+                  @blur="setTimeout(() => showPriorityDropdown = false, 200)"
+                  class="block w-full px-3 py-2 bg-white border border-gray-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 text-sm font-bold text-gray-700 cursor-pointer outline-none">
+                <div v-if="showPriorityDropdown" class="absolute z-[100] mt-1 w-full bg-white border border-gray-100 rounded-xl shadow-2xl p-1 overflow-hidden">
+                  <div @click="selectPriority('')" class="px-3 py-2 hover:bg-indigo-50 cursor-pointer text-xs font-bold text-indigo-600 rounded-lg">All Priorities</div>
+                  <div v-for="p in ['Low', 'Normal', 'High', 'Critical']" :key="p"
+                    @click="selectPriority(p.toLowerCase())"
+                    class="px-3 py-2 hover:bg-gray-50 cursor-pointer text-xs text-gray-700 rounded-lg transition-colors flex items-center gap-2">
+                    <span :class="[p === 'High' ? 'bg-orange-400' : p === 'Critical' ? 'bg-red-500' : p === 'Normal' ? 'bg-blue-400' : 'bg-gray-400', 'w-1.5 h-1.5 rounded-full']"></span>
+                    {{ p }}
+                  </div>
+                </div>
+              </div>
               <input type="text" v-model="queueSearchQuery" placeholder="Search my tasks..."
                 class="flex-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             </div>
@@ -240,6 +309,10 @@
                   <span class="font-bold text-gray-900">{{ request.service_config.service_name }}</span>
                   <span class="text-xs font-mono bg-white px-2 py-0.5 rounded border border-gray-200">{{
                     request.request_id }}</span>
+                  <span class="px-2 py-0.5 text-[10px] font-bold rounded-full uppercase"
+                    :class="priorityClass(request.priority)">
+                    {{ request.priority }}
+                  </span>
                 </div>
                 <div class="text-sm text-gray-600 flex flex-wrap gap-x-4">
                   <span>Step: <span class="font-medium">{{ request.current_step?.step_name || 'N/A' }}</span></span>
@@ -277,7 +350,24 @@
               <h2 class="text-2xl font-bold text-slate-900">Task Pool (Unassigned)</h2>
               <p class="text-sm text-slate-600">Requests waiting for an officer to claim and process.</p>
             </div>
-            <div class="flex gap-4 max-w-sm w-full">
+            <div class="flex flex-col md:flex-row gap-4 max-w-xl w-full">
+              <!-- Custom Priority Dropdown -->
+              <div class="relative w-full md:w-44">
+                <input type="text" v-model="prioritySearchLocal" placeholder="Any Priority..."
+                  readonly
+                  @focus="showPriorityDropdown = true"
+                  @blur="setTimeout(() => showPriorityDropdown = false, 200)"
+                  class="block w-full px-3 py-2 bg-white border border-slate-200 rounded-xl shadow-sm focus:ring-2 focus:ring-slate-500 text-sm font-bold text-slate-700 cursor-pointer outline-none">
+                <div v-if="showPriorityDropdown" class="absolute z-[100] mt-1 w-full bg-white border border-slate-100 rounded-xl shadow-2xl p-1 overflow-hidden">
+                  <div @click="selectPriority('')" class="px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs font-bold text-slate-600 rounded-lg">Any Priority</div>
+                  <div v-for="p in ['Low', 'Normal', 'High', 'Critical']" :key="p"
+                    @click="selectPriority(p.toLowerCase())"
+                    class="px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-gray-700 rounded-lg transition-colors flex items-center gap-2">
+                    <span :class="[p === 'High' ? 'bg-orange-400' : p === 'Critical' ? 'bg-red-500' : p === 'Normal' ? 'bg-blue-400' : 'bg-gray-400', 'w-1.5 h-1.5 rounded-full']"></span>
+                    {{ p }}
+                  </div>
+                </div>
+              </div>
               <input type="text" v-model="unassignedSearchQuery" placeholder="Find tasks in pool..."
                 class="flex-1 px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 sm:text-sm">
             </div>
@@ -290,6 +380,7 @@
                   <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase">Service</th>
                   <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase">Request ID</th>
                   <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase">Applicant</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase">Priority</th>
                   <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase">Wait Time</th>
                   <th class="px-4 py-3 text-right text-xs font-medium text-slate-500 uppercase">Action</th>
                 </tr>
@@ -304,6 +395,12 @@
                   <td class="px-4 py-3 text-sm text-slate-500 font-mono">{{ request.request_id }}</td>
                   <td class="px-4 py-3 text-sm text-slate-600 font-medium">
                     {{ request.citizen_details?.username || 'Unknown' }}
+                  </td>
+                  <td class="px-4 py-3">
+                    <span class="px-2 py-0.5 text-[10px] font-bold rounded-full uppercase"
+                      :class="priorityClass(request.priority)">
+                      {{ request.priority }}
+                    </span>
                   </td>
                   <td class="px-4 py-3 text-sm text-slate-500 italic">
                     {{ new Date(request.created_at).toLocaleDateString() }}
@@ -401,18 +498,44 @@
       </div>
 
       <!-- Admin View -->
-      <div v-if="user.role === 'admin'" class="space-y-8">
-        <div>
-          <div class="border-b border-gray-200">
-            <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-              <button v-for="tab in adminTabs" :key="tab.name" @click="currentTab = tab.name"
-                :class="[currentTab === tab.name ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300', 'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm']">
-                {{ tab.name }}
-              </button>
-            </nav>
+      <div v-if="user.role === 'admin'" class="space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <!-- Sidebar Navigation -->
+          <div class="lg:col-span-1 space-y-4">
+            <div v-for="group in adminTabGroups" :key="group.title" class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+               <div class="px-4 py-3 bg-gray-50 border-b border-gray-100 flex items-center gap-2">
+                 <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="group.icon"></path>
+                 </svg>
+                 <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest">{{ group.title }}</span>
+               </div>
+               <div class="p-2 space-y-1">
+                 <button v-for="tab in group.tabs" :key="tab"
+                   @click="currentTab = tab"
+                   :class="[currentTab === tab ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : 'text-gray-600 hover:bg-indigo-50 hover:text-indigo-600', 'w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between']">
+                   {{ tab }}
+                   <svg v-if="currentTab === tab" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                   </svg>
+                 </button>
+               </div>
+            </div>
           </div>
 
-          <div class="mt-8">
+          <!-- Main Content Area -->
+          <div class="lg:col-span-3 bg-white rounded-3xl border border-gray-100 shadow-xl p-8 min-h-[800px]">
+            <div class="mb-8 border-b border-gray-100 pb-4 flex justify-between items-center">
+              <div>
+                <h2 class="text-3xl font-black text-gray-900 leading-tight">{{ currentTab }}</h2>
+                <p class="text-sm text-gray-500 mt-1">Manage and monitor {{ currentTab.toLowerCase() }} settings for the ICTA POC.</p>
+              </div>
+              <div class="p-3 bg-indigo-50 rounded-2xl">
+                <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+              </div>
+            </div>
             <div v-if="currentTab === 'MDAs'">
               <MdaManager />
             </div>
@@ -421,6 +544,9 @@
             </div>
             <div v-if="currentTab === 'Users'">
               <UserManager />
+            </div>
+            <div v-if="currentTab === 'Workflow Orchestration'">
+              <WorkflowStepManager />
             </div>
             <div v-if="currentTab === 'Reports'">
               <ReportsDashboard />
@@ -445,6 +571,9 @@
             </div>
             <div v-if="currentTab === 'Whole-of-Gov Catalogue'">
               <ServiceCatalogueMatrix />
+            </div>
+            <div v-if="currentTab === 'Desktop Reviews'">
+              <DesktopReviewManager />
             </div>
             <div v-if="currentTab === 'Inter-Dept Memos'">
               <InterDepartmentalMemoView />
@@ -544,6 +673,7 @@
   import SecurityTrustView from '../components/Admin/SecurityTrustView.vue';
   import ArchitectureSimulator from '../components/Admin/ArchitectureSimulator.vue';
   import ServiceCatalogueMatrix from '../components/Admin/ServiceCatalogueMatrix.vue';
+  import DesktopReviewManager from '../components/Admin/DesktopReviewManager.vue';
   import InterDepartmentalMemoView from '../components/Admin/InterDepartmentalMemoView.vue';
 
   const authStore = useAuthStore();
@@ -576,15 +706,56 @@
   const myRequestsStatusFilter = ref('');
   const citizenCurrentTab = ref('inbox');
   const queueStatusFilter = ref('');
+  const priorityFilter = ref('');
+  const prioritySearchLocal = ref('');
+  const showPriorityDropdown = ref(false);
+
+  const selectPriority = (p) => {
+    priorityFilter.value = p;
+    prioritySearchLocal.value = p ? p.charAt(0).toUpperCase() + p.slice(1) : 'Any Priority';
+    showPriorityDropdown.value = false;
+  };
+  const mdaFilter = ref('');
+  const mdaSearchLocal = ref('');
+  const showMdaDropdown = ref(false);
   const mdaIncompleteRequests = computed(() => staffStore.mdaIncompleteRequests);
 
+  const filteredMdas = computed(() => {
+    if (!mdaSearchLocal.value) return mdas.value;
+    const q = mdaSearchLocal.value.toLowerCase();
+    return mdas.value.filter(m => m.name.toLowerCase().includes(q));
+  });
+
+  const selectMda = (mda) => {
+    if (!mda) {
+      mdaFilter.value = '';
+      mdaSearchLocal.value = '';
+    } else {
+      mdaFilter.value = mda.id;
+      mdaSearchLocal.value = mda.name;
+    }
+    showMdaDropdown.value = false;
+  };
+
   const filteredAvailableServices = computed(() => {
-    if (!serviceSearchQuery.value) return availableServices.value;
-    const q = serviceSearchQuery.value.toLowerCase();
-    return availableServices.value.filter(s =>
-      s.service_name.toLowerCase().includes(q) ||
-      getMdaName(s.mda).toLowerCase().includes(q)
-    );
+    let result = availableServices.value;
+    
+    if (mdaFilter.value) {
+      result = result.filter(s => s.mda === parseInt(mdaFilter.value));
+    }
+
+    if (priorityFilter.value) {
+      result = result.filter(s => s.priority === priorityFilter.value);
+    }
+
+    if (serviceSearchQuery.value) {
+      const q = serviceSearchQuery.value.toLowerCase();
+      result = result.filter(s =>
+        s.service_name.toLowerCase().includes(q) ||
+        getMdaName(s.mda).toLowerCase().includes(q)
+      );
+    }
+    return result;
   });
 
   const filteredMyRequests = computed(() => {
@@ -609,6 +780,10 @@
 
     if (queueStatusFilter.value) {
       result = result.filter(r => r.status === queueStatusFilter.value);
+    }
+
+    if (priorityFilter.value) {
+      result = result.filter(r => r.priority === priorityFilter.value);
     }
 
     if (queueSearchQuery.value) {
@@ -636,6 +811,10 @@
 
   const filteredUnassignedRequests = computed(() => {
     let result = unassignedRequests.value;
+    if (priorityFilter.value) {
+      result = result.filter(r => r.priority === priorityFilter.value);
+    }
+
     if (unassignedSearchQuery.value) {
       const q = unassignedSearchQuery.value.toLowerCase();
       result = result.filter(r =>
@@ -647,21 +826,28 @@
     return result;
   });
 
-  // Admin tabs
-  const adminTabs = [
-    { name: 'MDAs' },
-    { name: 'Services' },
-    { name: 'Users' },
-    { name: 'Roles' },
-    { name: 'Reports' },
-    { name: 'API Docs' },
-    { name: 'Audit Logs' },
-    { name: 'System Health' },
-    { name: 'Security & Trust' },
-    { name: 'Architecture Pilot' },
-    { name: 'Whole-of-Gov Catalogue' },
-    { name: 'Inter-Dept Memos' },
-    { name: 'System Docs' }
+  // Admin tabs grouped by function
+  const adminTabGroups = [
+    {
+      title: 'Entity Management',
+      icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
+      tabs: ['Users', 'Roles', 'MDAs']
+    },
+    {
+      title: 'Operations',
+      icon: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745V6c0-1.1.9-2 2-2h14a2 2 0 012 2v7.255z',
+      tabs: ['Services', 'Whole-of-Gov Catalogue']
+    },
+    {
+      title: 'Process Engineering',
+      icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2',
+      tabs: ['Workflow Orchestration', 'Architecture Pilot', 'Desktop Reviews']
+    },
+    {
+      title: 'Governance & Comms',
+      icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+      tabs: ['Reports', 'Audit Logs', 'System Health', 'API Docs', 'Security & Trust', 'Inter-Dept Memos', 'System Docs']
+    }
   ];
   const currentTab = ref('Services');
 
@@ -725,6 +911,16 @@
       validation_failed: 'bg-red-100 text-red-800',
     };
     return classes[status] || 'bg-gray-100 text-gray-800';
+  };
+
+  const priorityClass = (priority) => {
+    const classes = {
+      low: 'bg-slate-100 text-slate-600',
+      normal: 'bg-indigo-100 text-indigo-700',
+      high: 'bg-amber-100 text-amber-700',
+      critical: 'bg-rose-100 text-rose-700 animate-pulse',
+    };
+    return classes[priority?.toLowerCase()] || 'bg-gray-100 text-gray-600';
   };
 
   const openCompleteStepModal = (request) => {

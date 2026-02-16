@@ -105,6 +105,14 @@ class ServiceConfig(models.Model):
     blocking_issues = models.TextField(blank=True, null=True)
     quick_wins = models.TextField(blank=True, null=True)
 
+    PRIORITY_CHOICES = (
+        ('low', 'Low'),
+        ('normal', 'Normal'),
+        ('high', 'High'),
+        ('critical', 'Critical'),
+    )
+    priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='normal')
+
     # Technical
     shared_services = models.JSONField(default=list, blank=True) # List of shared enablers used
     associated_systems = models.JSONField(default=list, blank=True) # e.g. ["NIIMS", "IPPD"]
@@ -169,6 +177,12 @@ class ServiceRequest(models.Model):
     current_step = models.ForeignKey(WorkflowStep, on_delete=models.SET_NULL, null=True, blank=True)
     assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='assigned_tasks')
     is_escalated = models.BooleanField(default=False)
+    priority = models.CharField(max_length=20, choices=(
+        ('low', 'Low'),
+        ('normal', 'Normal'),
+        ('high', 'High'),
+        ('critical', 'Critical'),
+    ), default='normal')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -289,3 +303,22 @@ class CorrespondenceAction(models.Model):
     completed_at = models.DateTimeField(null=True, blank=True)
     progress_notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+class DesktopReview(models.Model):
+    mda = models.ForeignKey(MDA, on_delete=models.CASCADE, related_name='desktop_reviews')
+    process_id = models.CharField(max_length=100, blank=True, null=True)
+    executive_summary = models.TextField(blank=True, null=True)
+    process_overview = models.JSONField(default=dict, blank=True)
+    stakeholders = models.JSONField(default=list, blank=True)
+    inputs_outputs_dependencies = models.JSONField(default=dict, blank=True)
+    process_maturity = models.JSONField(default=dict, blank=True)
+    as_is_narrative = models.TextField(blank=True, null=True)
+    as_is_steps = models.JSONField(default=list, blank=True)
+    pain_points_bottlenecks_risks = models.JSONField(default=list, blank=True)
+    to_be_process = models.JSONField(default=dict, blank=True)
+    digitization_opportunities = models.JSONField(default=list, blank=True)
+    metadata = models.JSONField(default=dict, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Desktop Review: {self.mda.name}"

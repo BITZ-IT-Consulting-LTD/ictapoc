@@ -10,6 +10,9 @@ export default defineConfig({
       '@store': fileURLToPath(new URL('./src/store', import.meta.url))
     }
   },
+  optimizeDeps: {
+    include: ['bpmn-js/lib/Viewer']
+  },
   server: {
     host: '0.0.0.0',
     port: 5173,

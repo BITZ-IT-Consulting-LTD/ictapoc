@@ -8,22 +8,22 @@
 
 ```mermaid
 graph TD
-    subgraph "Frontend (Vue 3)"
+    subgraph "Frontend Layer (Reactive UI)"
         CUI[Citizen UI]
         OWB[Officer Workbench]
         ADM[Admin Dashboard]
     end
 
-    subgraph "API Layer (Django Rest Framework)"
-        RA[REST API]
+    subgraph "API & Logic Layer (Service Orchestrator)"
+        RA[RESTful API Gateway]
         WE[Workflow Engine]
         VAL[Validation Module]
     end
 
-    subgraph "Infrastructure"
-        DB[(PostgreSQL)]
-        RED[Redis]
-        CEL[Celery Workers]
+    subgraph "Infrastructure & Persistence"
+        DB[(Relational Database)]
+        RED[In-Memory Cache]
+        CEL[Asynchronous Workers]
     end
 
     CUI & OWB & ADM <--> RA
@@ -36,25 +36,25 @@ graph TD
 
 **Components:**
 - Citizen UI: Service request submission and tracking
-- Frontend Vue3: Dynamic forms, dashboards, notifications
-- REST API (DRF): Handles CRUD, authentication, workflow logic
-- PostgreSQL: Persistent storage for requests, users, audit logs, MDAs
-- Celery/Redis: Asynchronous task processing (workflow automation, notifications)
-- Service Config DB: Stores JSON/YAML service definitions and MDA configurations
+- Frontend Layer: Dynamic forms, dashboards, notifications
+- API Gateway: Handles request routing, authentication, and workflow orchestration
+- Relational Database: Persistent storage for requests, users, audit logs, and MDA metadata
+- Asynchronous Workers: Handles long-running background tasks (workflow automation, notifications)
+- Service Config Store: Manages JSON/YAML service definitions and MDA configurations
 
 ---
 
 ## 2. Detailed Component Design
 
-### 2.1 Backend Components
-- **API Layer:** DRF ViewSets for ServiceRequest, ServiceConfig, User, WorkflowStep, MDA
-- **Workflow Engine:** Reads service config, executes steps, triggers tasks
-- **Validation Module:** Enforces rules defined in service config
-- **Audit Module:** Logs all actions and state changes
-- **Notification Module:** Sends emails and in-app notifications
-- **Authentication Module:** JWT-based, supports role hierarchy
-- **Service Configuration Module:** Allows adding/editing services dynamically without code changes
-- **MDA Registration Module:** Add or modify Ministries, Departments, and Agencies (MDAs) with role assignments and access control
+### 2.1 Backend Components (Service Orchestrator)
+- **API Gatekeeper:** Managed endpoints for ServiceRequest, ServiceConfig, User, WorkflowStep, and MDA entities
+- **Workflow Engine:** Reads service configuration templates, executes defined steps, and triggers automated tasks
+- **Validation Module:** Enforces data integrity and business rules defined in the service configuration
+- **Audit Module:** Immutable logging of all platform actions and state transitions
+- **Notification Module:** Asynchronous delivery of emails and in-app alerts
+- **Authentication Module:** Token-based security supporting hierarchical role-based access control
+- **Service Configuration Module:** Enables dynamic addition/editing of services via a metadata-driven approach
+- **MDA Registration Module:** Provisioning of Ministries, Departments, and Agencies (MDAs) with administrative role mapping
 
 ### 2.2 Frontend Components
 - **Dynamic Form Generator:** Reads service config and builds forms for citizens and officers

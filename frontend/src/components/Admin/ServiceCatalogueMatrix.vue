@@ -34,32 +34,69 @@
          <WogDashboardStats v-if="auditStats" :stats="auditStats" />
 
          <!-- Filters -->
-         <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+         <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             <div>
-               <label class="block text-xs font-semibold text-gray-500 mb-1">Search Services</label>
-               <input v-model="searchQuery" type="text" placeholder="e.g. Passport"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500">
+               <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Search Services</label>
+               <div class="relative">
+                 <input v-model="searchQuery" type="text" placeholder="e.g. Passport"
+                    class="w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
+                 <svg class="w-4 h-4 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                 </svg>
+               </div>
             </div>
-            <div>
-               <label class="block text-xs font-semibold text-gray-500 mb-1">Filter by Domain</label>
-               <select v-model="selectedDomain"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500">
-                  <option value="">All Domains</option>
-                  <option v-for="d in domainsList" :key="d" :value="d">{{ d }}</option>
-               </select>
+            
+            <!-- Searchable Domain Filter -->
+            <div class="relative">
+               <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Filter by Domain</label>
+               <div class="relative">
+                 <input type="text" v-model="domainSearchLocal" placeholder="Select Domain..."
+                    @focus="showDomainDropdown = true"
+                    @blur="setTimeout(() => showDomainDropdown = false, 200)"
+                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all cursor-pointer">
+                 <div v-if="showDomainDropdown" class="absolute z-[100] mt-2 w-full bg-white border border-gray-100 rounded-xl shadow-2xl max-h-60 overflow-y-auto p-1">
+                    <div @click="selectDomain('')" class="px-3 py-2 hover:bg-indigo-50 cursor-pointer text-xs font-bold text-indigo-600 rounded-lg">All Domains</div>
+                    <div v-for="d in filteredDomains" :key="d" @click="selectDomain(d)"
+                       class="px-3 py-2 hover:bg-indigo-50 cursor-pointer text-sm text-gray-700 rounded-lg transition-colors">
+                       {{ d }}
+                    </div>
+                 </div>
+                 <div class="absolute right-3 top-3 pointer-events-none">
+                   <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                   </svg>
+                 </div>
+               </div>
             </div>
-            <div>
-               <label class="block text-xs font-semibold text-gray-500 mb-1">Filter by Agency (MDA)</label>
-               <select v-model="selectedMda"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-indigo-500 focus:border-indigo-500">
-                  <option value="">All Agencies</option>
-                  <option v-for="m in mdaList" :key="m" :value="m">{{ m }}</option>
-               </select>
+
+            <!-- Searchable MDA Filter -->
+            <div class="relative">
+               <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Filter by Agency (MDA)</label>
+               <div class="relative">
+                 <input type="text" v-model="mdaSearchLocal" placeholder="Select Agency..."
+                    @focus="showMdaDropdown = true"
+                    @blur="setTimeout(() => showMdaDropdown = false, 200)"
+                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all cursor-pointer">
+                 <div v-if="showMdaDropdown" class="absolute z-[100] mt-2 w-full bg-white border border-gray-100 rounded-xl shadow-2xl max-h-60 overflow-y-auto p-1">
+                    <div @click="selectMda('')" class="px-3 py-2 hover:bg-indigo-50 cursor-pointer text-xs font-bold text-indigo-600 rounded-lg">All Agencies</div>
+                    <div v-for="m in filteredMdas" :key="m" @click="selectMda(m)"
+                       class="px-3 py-2 hover:bg-indigo-50 cursor-pointer text-sm text-gray-700 rounded-lg transition-colors">
+                       {{ m }}
+                    </div>
+                 </div>
+                 <div class="absolute right-3 top-3 pointer-events-none">
+                   <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                   </svg>
+                 </div>
+               </div>
             </div>
-            <div class="self-end">
+
+            <div class="self-end pb-0.5">
                <button @click="resetFilters"
-                  class="w-full px-4 py-2 bg-white border border-gray-300 text-gray-600 rounded-md text-sm hover:bg-gray-50 transition-colors">Reset
-                  Filters</button>
+                  class="w-full px-4 py-2.5 bg-white border border-gray-200 text-gray-600 rounded-xl text-sm font-bold hover:bg-gray-50 transition-all shadow-sm">
+                  Reset Filters
+               </button>
             </div>
          </div>
 
@@ -278,6 +315,12 @@
    const searchQuery = ref('');
    const selectedDomain = ref('');
    const selectedMda = ref('');
+   
+   const domainSearchLocal = ref('');
+   const mdaSearchLocal = ref('');
+   const showDomainDropdown = ref(false);
+   const showMdaDropdown = ref(false);
+   
    const activeLifecycle = ref('as_is'); // Default to showing current manual process friction
 
    const showWorkflowModal = ref(false);
@@ -295,6 +338,30 @@
       });
       return [...mdas].sort();
    });
+
+   const filteredDomains = computed(() => {
+      if (!domainSearchLocal.value) return domainsList.value;
+      const q = domainSearchLocal.value.toLowerCase();
+      return domainsList.value.filter(d => d.toLowerCase().includes(q));
+   });
+
+   const filteredMdas = computed(() => {
+      if (!mdaSearchLocal.value) return mdaList.value;
+      const q = mdaSearchLocal.value.toLowerCase();
+      return mdaList.value.filter(m => m.toLowerCase().includes(q));
+   });
+
+   const selectDomain = (domain) => {
+      selectedDomain.value = domain;
+      domainSearchLocal.value = domain;
+      showDomainDropdown.value = false;
+   };
+
+   const selectMda = (mda) => {
+      selectedMda.value = mda;
+      mdaSearchLocal.value = mda;
+      showMdaDropdown.value = false;
+   };
 
    const filteredMatrixData = computed(() => {
       let data = JSON.parse(JSON.stringify(matrixData.value));
@@ -431,6 +498,8 @@
       searchQuery.value = '';
       selectedDomain.value = '';
       selectedMda.value = '';
+      domainSearchLocal.value = '';
+      mdaSearchLocal.value = '';
    };
 
    onMounted(() => {

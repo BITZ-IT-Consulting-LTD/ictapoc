@@ -150,33 +150,66 @@
                    </div>
                     <div>
                       <label class="block text-[11px] font-bold text-gray-500 uppercase mb-1">Type/Purpose</label>
-                      <select v-model="newMemo.memo_type" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
-                         <option value="policy">Policy Memo</option>
-                         <option value="operational">Operational Request</option>
-                         <option value="instruction">Instruction</option>
-                         <option value="concurrence">Concurrence</option>
-                         <option value="escalation">Escalation</option>
-                         <option value="information">Information</option>
-                         <option v-if="newMemo.is_letter" value="external">External Dispatch</option>
-                      </select>
+                      <div class="relative">
+                        <input type="text" v-model="memoTypeSearchLocal" placeholder="Select Type..."
+                          readonly @focus="showMemoTypeDropdown = true" @blur="setTimeout(() => showMemoTypeDropdown = false, 200)"
+                          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm cursor-pointer">
+                        <div v-if="showMemoTypeDropdown" class="absolute z-[100] mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-2xl p-1 overflow-hidden">
+                           <div v-for="t in ['policy', 'operational', 'instruction', 'concurrence', 'escalation', 'information', 'external']" :key="t"
+                             @click="selectMemoType(t)"
+                             class="px-3 py-2 hover:bg-indigo-50 cursor-pointer text-xs text-gray-700 rounded-lg transition-colors capitalize">
+                             {{ t }}
+                           </div>
+                        </div>
+                        <div class="absolute right-3 top-2.5 pointer-events-none text-gray-400">
+                          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </div>
+                      </div>
                    </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                    <div>
                       <label class="block text-[11px] font-bold text-gray-500 uppercase mb-1">Recipient MDA</label>
-                      <select v-model="newMemo.recipient_mda" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
-                         <option value="" disabled>Select Department...</option>
-                         <option v-for="mda in mdas" :key="mda.id" :value="mda.id">{{ mda.name }}</option>
-                      </select>
+                      <div class="relative">
+                        <input type="text" v-model="recipientMdaSearchLocal" placeholder="Search MDA..."
+                          @focus="showRecipientDropdown = true" @blur="setTimeout(() => showRecipientDropdown = false, 200)"
+                          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm cursor-pointer">
+                        <div v-if="showRecipientDropdown" class="absolute z-[100] mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-2xl max-h-48 overflow-y-auto p-1">
+                           <div v-for="mda in filteredMdasForRecipient" :key="mda.id" @click="selectRecipient(mda)"
+                             class="px-3 py-2 hover:bg-indigo-50 cursor-pointer text-xs text-gray-700 rounded-lg transition-colors">
+                             {{ mda.name }}
+                           </div>
+                        </div>
+                        <div class="absolute right-3 top-2.5 pointer-events-none text-gray-400">
+                          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </div>
+                      </div>
                    </div>
                    <div>
                        <label class="block text-[11px] font-bold text-gray-500 uppercase mb-1">Priority</label>
-                       <select v-model="newMemo.priority" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
-                          <option value="normal">Normal</option>
-                          <option value="high">High</option>
-                          <option value="urgent">Urgent</option>
-                       </select>
+                       <div class="relative">
+                        <input type="text" v-model="prioritySearchLocal" placeholder="Select Priority..."
+                          readonly @focus="showPriorityDropdown = true" @blur="setTimeout(() => showPriorityDropdown = false, 200)"
+                          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm cursor-pointer">
+                        <div v-if="showPriorityDropdown" class="absolute z-[100] mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-2xl p-1 overflow-hidden">
+                           <div v-for="p in ['normal', 'high', 'urgent']" :key="p"
+                             @click="selectPriority(p)"
+                             class="px-3 py-2 hover:bg-indigo-50 cursor-pointer text-xs text-gray-700 rounded-lg transition-colors capitalize flex items-center gap-2">
+                             <span :class="[p === 'high' ? 'bg-orange-400' : p === 'urgent' ? 'bg-red-500' : 'bg-blue-400', 'w-1.5 h-1.5 rounded-full']"></span>
+                             {{ p }}
+                           </div>
+                        </div>
+                        <div class="absolute right-3 top-2.5 pointer-events-none text-gray-400">
+                          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </div>
+                      </div>
                    </div>
                 </div>
                 
@@ -339,6 +372,35 @@ const newMemo = ref({
   content: '',
   priority: 'normal'
 });
+
+const memoTypeSearchLocal = ref('Operational Request');
+const showMemoTypeDropdown = ref(false);
+const selectMemoType = (type) => {
+  newMemo.value.memo_type = type;
+  memoTypeSearchLocal.value = type.charAt(0).toUpperCase() + type.slice(1);
+  showMemoTypeDropdown.value = false;
+};
+
+const recipientMdaSearchLocal = ref('');
+const showRecipientDropdown = ref(false);
+const filteredMdasForRecipient = computed(() => {
+  if (!recipientMdaSearchLocal.value) return mdas.value;
+  const q = recipientMdaSearchLocal.value.toLowerCase();
+  return mdas.value.filter(m => m.name.toLowerCase().includes(q));
+});
+const selectRecipient = (mda) => {
+  newMemo.value.recipient_mda = mda.id;
+  recipientMdaSearchLocal.value = mda.name;
+  showRecipientDropdown.value = false;
+};
+
+const prioritySearchLocal = ref('Normal');
+const showPriorityDropdown = ref(false);
+const selectPriority = (p) => {
+  newMemo.value.priority = p;
+  prioritySearchLocal.value = p.charAt(0).toUpperCase() + p.slice(1);
+  showPriorityDropdown.value = false;
+};
 
 const user = computed(() => authStore.user);
 const mdas = computed(() => mdaStore.mdas);
