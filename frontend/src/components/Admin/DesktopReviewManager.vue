@@ -1,448 +1,501 @@
 <template>
-  <div class="space-y-6">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-      <div v-for="s in reviewStatsCards" :key="s.label"
-        class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm transition-all hover:shadow-md group">
-        <div class="flex items-center gap-3">
-          <div :class="`p-2 rounded-lg ${s.bgClass} ${s.iconClass}`">
-            <component :is="s.icon" class="w-5 h-5" />
+  <div class="u-flex u-flex-col u-gap-6 animate-fade-in">
+    <!-- Top Stats Row -->
+    <div class="stats-grid">
+      <div v-for="s in reviewStatsCards" :key="s.label" class="stats-card group">
+        <div class="u-flex u-items-center u-gap-3">
+          <div class="u-p-2 u-rounded-lg" :class="[s.bgClass, s.iconClass]">
+            <i :class="[s.icon, 'u-w-5 u-h-5 u-flex u-items-center u-justify-center']"></i>
           </div>
-          <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none">{{ s.label }}</span>
+          <span class="u-text-[10px] u-font-black u-text-muted u-uppercase u-tracking-widest">{{ s.label }}</span>
         </div>
-        <div class="mt-2 flex items-baseline gap-1">
-          <p class="text-2xl font-black text-gray-900">{{ s.value }}</p>
-          <span v-if="s.suffix" class="text-xs text-gray-400 font-bold">{{ s.suffix }}</span>
+        <div class="u-mt-3 u-flex u-items-baseline u-gap-1">
+          <p class="u-text-2xl u-font-black u-text-main">{{ s.value }}</p>
+          <span v-if="s.suffix" class="u-text-xs u-font-bold u-text-muted">{{ s.suffix }}</span>
         </div>
-        <div class="mt-1 text-[10px] text-gray-400 group-hover:text-indigo-500 transition-colors">{{ s.sublabel }}</div>
+        <div class="u-mt-1 u-text-[10px] u-font-bold u-text-muted u-uppercase u-tracking-tighter group-hover:u-text-primary transition-colors">
+          {{ s.sublabel }}
+        </div>
       </div>
     </div>
 
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-      <div>
-        <h2 class="text-2xl font-bold text-gray-900">WOG Desktop Reviews</h2>
-        <p class="text-sm text-gray-500">Comprehensive process assessment data from the 2024 ICTA Study.</p>
+    <!-- Header & Actions -->
+    <header class="u-flex u-flex-col md:u-flex-row u-justify-between u-items-start md:u-items-center u-gap-4">
+      <div class="page__title-group">
+        <h2 class="u-text-2xl u-font-black u-text-main u-mb-1">WOG Desktop Reviews</h2>
+        <p class="u-text-xs u-font-bold u-text-muted u-uppercase u-tracking-widest">Comprehensive process assessment data from the 2024 ICTA Study</p>
       </div>
-      <div class="flex gap-4 w-full md:w-auto">
-        <div class="relative flex-1 md:w-64">
-          <input type="text" v-model="mdaSearchLocal" placeholder="Filter by Agency..." @focus="showMdaDropdown = true"
-            @blur="setTimeout(() => showMdaDropdown = false, 200)"
-            class="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all cursor-pointer">
-          <div v-if="showMdaDropdown"
-            class="absolute z-[100] mt-2 w-full bg-white border border-gray-100 rounded-xl shadow-2xl max-h-60 overflow-y-auto p-1 animate-in fade-in zoom-in duration-200">
-            <div @click="selectMda('')"
-              class="px-3 py-2 hover:bg-indigo-50 cursor-pointer text-xs font-bold text-indigo-600 rounded-lg">All
-              Agencies</div>
-            <div v-for="mda in uniqueMdas" :key="mda.id" @click="selectMda(mda)"
-              class="px-3 py-2 hover:bg-indigo-50 cursor-pointer text-sm text-gray-700 rounded-lg transition-colors">
-              {{ mda.name }}
+      
+      <div class="u-flex u-gap-4 u-w-full md:u-w-auto">
+        <div class="u-relative u-flex-1 md:u-w-64">
+          <div class="toolbar__filter-group u-shadow-none u-border u-border-border-color">
+            <i class="bi bi-building toolbar__filter-icon"></i>
+            <input type="text" v-model="mdaSearchLocal" placeholder="Filter by Agency..." 
+              @focus="showMdaDropdown = true" 
+              class="toolbar__filter-input u-w-full" />
+            
+            <div v-if="showMdaDropdown" class="u-absolute u-top-full u-left-0 u-w-full u-bg-white u-border u-shadow-xl u-rounded-lg u-mt-1 u-z-dropdown u-max-h-60 u-overflow-y-auto u-p-1">
+              <div @click="selectMda('')" class="u-p-3 hover:u-bg-bg-page u-rounded u-text-xs u-font-black u-text-primary u-cursor-pointer">ALL AGENCIES</div>
+              <div v-for="m in filteredMdaOptions" :key="m.id" @click="selectMda(m.id)" 
+                class="u-p-3 hover:u-bg-bg-page u-rounded u-text-xs u-font-bold u-text-main u-cursor-pointer">
+                {{ m.name }}
+              </div>
             </div>
           </div>
-          <svg class="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor"
-            viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
         </div>
-
-        <input type="file" ref="fileInput" class="hidden" @change="handleFileUpload" accept=".json">
-        <button @click="$refs.fileInput.click()"
-          class="px-4 py-2 bg-white border border-gray-200 text-gray-600 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-gray-50 transition-all flex items-center gap-2 shadow-sm">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
-          </svg>
-          Import JSON
+        <button @click="fetchReviews" class="button button--secondary button--pill" :disabled="loading">
+          <i class="bi bi-arrow-clockwise u-mr-2" :class="{ 'animate-spin': loading }"></i>
+          <span>Sync Study</span>
         </button>
       </div>
-    </div>
+    </header>
 
-    <!-- Main Content Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-      <!-- Sidebar List -->
-      <div
-        class="lg:col-span-4 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col h-[700px]">
-        <div class="p-4 bg-gray-50 border-b border-gray-100">
-          <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Available Reviews ({{
-            filteredReviews.length }})</span>
+    <!-- Master List: Grid for scanning -->
+    <div class="u-grid u-grid-cols-1 md:u-grid-cols-2 lg:u-grid-cols-3 xl:u-grid-cols-4 u-gap-6">
+      <div v-if="loading" v-for="i in 8" :key="i" class="card u-p-6 u-animate-pulse">
+        <div class="u-h-4 u-bg-slate-100 u-rounded u-w-1/3 u-mb-4"></div>
+        <div class="u-h-6 u-bg-slate-100 u-rounded u-w-3/4 u-mb-6"></div>
+        <div class="u-h-12 u-bg-slate-50 u-rounded"></div>
+      </div>
+      
+      <div v-else v-for="review in filteredReviews" :key="review.id" 
+        @click="openReviewModal(review)"
+        class="card u-p-6 u-cursor-pointer transition-all hover:u-shadow-xl hover:u-border-primary hover:-translate-y-1 group">
+        <div class="u-flex u-justify-between u-items-start u-mb-4">
+          <span class="u-text-[9px] u-font-black u-text-primary u-uppercase u-tracking-widest">{{ review.metadata?.sector || 'GOK SECTOR' }}</span>
+          <span class="badge" :class="getMaturityClass(review.process_maturity?.score || 2)">Lvl {{ review.process_maturity?.score || 2 }}</span>
         </div>
-        <div class="flex-1 overflow-y-auto divide-y divide-gray-50">
-          <div v-for="review in filteredReviews" :key="review.id" @click="selectedReview = review"
-            :class="[selectedReview?.id === review.id ? 'bg-indigo-50 border-l-4 border-indigo-600' : 'hover:bg-gray-50 border-l-4 border-transparent', 'p-4 cursor-pointer transition-all']">
-            <h3 class="font-bold text-gray-900 truncate">{{ review.mda_details?.name || 'Unknown MDA' }}</h3>
-            <div class="flex items-center gap-2 mt-1">
-              <span class="text-[10px] px-2 py-0.5 bg-gray-100 text-gray-600 rounded font-mono">{{ review.process_id ||
-                'NO-ID' }}</span>
-              <span class="text-xs text-gray-400 italic">Assessment Complete</span>
-            </div>
-          </div>
-          <div v-if="loading" class="p-8 text-center">
-            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto"></div>
-          </div>
+        <h4 class="u-text-base u-font-black u-text-main u-mb-1 leading-snug group-hover:u-text-primary transition-colors">{{ review.mda_details?.name || 'Inferred MDA' }}</h4>
+        <div class="u-flex u-items-center u-gap-2 u-mt-4 u-pt-4 u-border-t u-border-slate-50">
+          <i class="bi bi-file-earmark-text u-text-muted u-text-xs"></i>
+          <span class="u-text-[9px] u-font-black u-text-muted u-uppercase">ID: {{ review.process_id || 'BPA-2024' }}</span>
+          <span class="u-ms-auto u-text-[9px] u-font-black u-text-primary u-uppercase group-hover:u-underline">View Full Report <i class="bi bi-arrow-right"></i></span>
         </div>
       </div>
+    </div>
 
-      <!-- Detail View -->
-      <div
-        class="lg:col-span-8 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col h-[700px]">
-        <div v-if="selectedReview" class="flex flex-col h-full">
-          <!-- Header -->
-          <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
-            <div class="flex justify-between items-start">
-              <div>
-                <h2 class="text-2xl font-black text-gray-900 leading-tight">{{ selectedReview.mda_details?.name }}</h2>
-                <div class="flex items-center gap-3 mt-2">
-                  <span
-                    class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-bold uppercase tracking-wider">Process
-                    ID: {{ selectedReview.process_id }}</span>
-                  <span class="text-xs text-gray-400">Created: {{ new
-                    Date(selectedReview.created_at).toLocaleDateString() }}</span>
-                </div>
-              </div>
-              <button @click="exportReview" class="p-2 text-gray-400 hover:text-indigo-600 transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              </button>
+    <!-- BPA Mapping Report Modal -->
+    <BaseModal :show="showModal" @close="closeModal" size="full" headerClass="modal-header-premium">
+      <template #header>
+        <div class="u-flex u-justify-between u-items-center u-w-full u-pr-8">
+          <div class="u-flex-1">
+            <div class="u-flex u-items-center u-gap-3 u-mb-2">
+              <span class="u-bg-primary/20 u-text-primary u-px-2 u-py-0.5 u-rounded u-text-[10px] u-font-black u-uppercase">BPA Process ID: {{ selectedReview?.process_id || 'BPA-2024-STD' }}</span>
+              <span v-if="linkedService" class="u-bg-success/20 u-text-success u-px-2 u-py-0.5 u-rounded u-text-[10px] u-font-black u-uppercase u-flex u-items-center u-gap-1">
+                <i class="bi bi-check-circle-fill"></i> Operational Node Linked
+              </span>
             </div>
+            <h3 class="u-text-2xl u-font-black u-tracking-tight u-text-main">{{ selectedReview?.mda_details?.name }}</h3>
+            <p class="u-text-xs u-font-bold u-text-muted u-uppercase u-tracking-widest u-mt-1">authoritative Business Process Analysis & Re-engineering Report</p>
           </div>
-
-          <!-- Content Tabs -->
-          <div class="flex border-b border-gray-100 px-6 bg-white overflow-x-auto">
-            <button v-for="tab in tabs" :key="tab.id" @click="activeTab = tab.id"
-              :class="[activeTab === tab.id ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700', 'py-4 px-4 border-b-2 font-bold text-sm transition-all whitespace-nowrap']">
-              {{ tab.name }}
+          <div class="u-flex u-items-center u-gap-8">
+            <div class="u-text-right">
+              <div class="u-text-[10px] u-font-black u-text-muted u-uppercase u-mb-1">Assessment Index</div>
+              <div class="u-text-3xl u-font-black text-premium-gold">{{ selectedReview?.process_maturity?.score || '2.0' }}<span class="u-text-sm u-text-muted">/5.0</span></div>
+            </div>
+            <div class="u-border-l u-h-12 u-mx-2"></div>
+            <button @click="printReport" class="button button--secondary button--pill">
+              <i class="bi bi-printer u-mr-2"></i> Print Report
             </button>
           </div>
+        </div>
+      </template>
 
-          <!-- Tab Content -->
-          <div class="flex-1 overflow-y-auto p-6 space-y-8 prose prose-indigo max-w-none">
-            <!-- Executive Summary -->
-            <div v-if="activeTab === 'summary'">
-              <h4 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                Executive Summary
-              </h4>
-              <p class="text-gray-600 whitespace-pre-wrap leading-relaxed">{{ selectedReview.executive_summary || 'No summary available.' }}</p>
+      <div v-if="selectedReview" class="report-content-wrapper" id="bpa-report-print">
+        <!-- Navigation Tabs (Non-printable) -->
+        <nav class="tab-bar u-bg-white u-border-b u-sticky u-top-0 u-z-20 no-print">
+          <button v-for="tab in reportTabs" :key="tab.id" @click="activeTab = tab.id"
+            class="tab-bar__item" :class="{ 'tab-bar__item--active': activeTab === tab.id }">
+            {{ tab.name }}
+          </button>
+        </nav>
 
-              <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 not-prose">
-                <div v-for="(val, key) in selectedReview.process_overview" :key="key"
-                  class="bg-gray-50 p-4 rounded-xl border border-gray-100">
-                  <dt class="text-[10px] font-black text-gray-400 uppercase tracking-widest">{{ key.replace(/_/g, ' ')
-                    }}</dt>
-                  <dd class="text-sm font-bold text-gray-700 mt-1">{{ val }}</dd>
-                </div>
-              </div>
+        <!-- Print-only Title (Hidden on screen) -->
+        <div class="print-only u-mb-10 u-border-b-4 u-border-slate-900 u-pb-6">
+           <h1 class="u-text-4xl u-font-black">National BPA Mapping Report</h1>
+           <div class="u-flex u-justify-between u-mt-4">
+             <p class="u-text-xl u-font-bold">{{ selectedReview.mda_details?.name }}</p>
+             <p class="u-text-xl u-font-black">Assessment Score: {{ selectedReview.process_maturity?.score }}/5.0</p>
+           </div>
+        </div>
+
+        <div class="u-p-8 u-space-y-12">
+          <!-- Summary Tab -->
+          <section v-if="activeTab === 'summary' || isPrinting" class="u-space-y-8 print-section">
+            <div class="u-border-l-4 u-border-primary u-pl-6">
+              <h4 class="u-text-[10px] u-font-black u-text-muted u-uppercase u-tracking-widest u-mb-2">Executive Summary</h4>
+              <p class="u-text-sm u-text-main u-leading-relaxed u-font-medium">{{ selectedReview.executive_summary }}</p>
             </div>
 
-            <!-- Stakeholders -->
-            <div v-if="activeTab === 'stakeholders'">
-              <h4 class="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
-                  </path>
-                </svg>
-                Key Stakeholders
-              </h4>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start not-prose">
-                <div v-for="(sh, idx) in selectedReview.stakeholders" :key="idx"
-                  class="bg-white border-l-4 border-indigo-500 p-4 rounded-r-xl shadow-sm border border-gray-200">
-                  <div class="font-black text-indigo-700 text-sm mb-1 uppercase tracking-tight">{{ sh.name }}</div>
-                  <div class="text-xs text-gray-500 font-medium">{{ sh.role }}</div>
-                  <p class="text-[11px] text-gray-400 mt-2 leading-relaxed">{{ sh.responsibilities }}</p>
-                </div>
+            <div class="u-grid u-grid-cols-1 md:u-grid-cols-2 u-gap-6">
+              <div class="card u-bg-bg-page u-p-6 u-border u-border-border-color">
+                <h5 class="u-text-[10px] u-font-black u-text-primary u-uppercase u-tracking-widest u-mb-2">Primary Objective</h5>
+                <p class="u-text-xs u-font-bold u-text-main leading-relaxed">
+                  {{ selectedReview.process_overview?.process_objective || 'To facilitate administrative service delivery within the institution\'s mandate.' }}
+                </p>
+              </div>
+              <div class="card u-bg-bg-page u-p-6 u-border u-border-border-color">
+                <h5 class="u-text-[10px] u-font-black u-text-primary u-uppercase u-tracking-widest u-mb-2">Legal Context</h5>
+                <p class="u-text-xs u-font-bold u-text-main leading-relaxed">
+                  {{ selectedReview.process_overview?.policy_legal_context?.[0] || 'Inferred from Public Service Act & Sectoral Mandates.' }}
+                </p>
               </div>
             </div>
+          </section>
+
+          <!-- Mapping Tab -->
+          <section v-if="activeTab === 'mapping' || isPrinting" class="u-space-y-8 print-section page-break-before">
+            <h4 class="u-text-sm u-font-black u-text-main u-uppercase u-tracking-widest">BPA Data Mapping Matrix</h4>
+            <div class="card u-overflow-hidden">
+              <table class="table">
+                <thead>
+                  <tr class="table__header-row u-bg-slate-50">
+                    <th class="table__header-cell u-w-1/2">Audit Input Vector</th>
+                    <th class="table__header-cell">Service Output Artifact</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="i in Math.max(selectedReview.inputs_outputs_dependencies?.inputs?.length || 0, selectedReview.inputs_outputs_dependencies?.outputs?.length || 0)" :key="i" class="table__row">
+                    <td class="table__cell">
+                      <div v-if="selectedReview.inputs_outputs_dependencies?.inputs?.[i-1]" class="u-flex u-items-center u-gap-2">
+                        <i class="bi bi-arrow-right-circle u-text-primary no-print"></i>
+                        <span class="u-text-xs u-font-bold">{{ selectedReview.inputs_outputs_dependencies.inputs[i-1] }}</span>
+                      </div>
+                    </td>
+                    <td class="table__cell">
+                      <div v-if="selectedReview.inputs_outputs_dependencies?.outputs?.[i-1]" class="u-flex u-items-center u-gap-2">
+                        <i class="bi bi-file-earmark-check u-text-success no-print"></i>
+                        <span class="u-text-xs u-font-bold">{{ selectedReview.inputs_outputs_dependencies.outputs[i-1] }}</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Maturity Tab -->
+          <section v-if="activeTab === 'stakeholders' || isPrinting" class="u-space-y-8 print-section page-break-before">
+             <h4 class="u-text-sm u-font-black u-text-main u-uppercase u-tracking-widest">Digital Maturity Snapshot</h4>
+             <div class="u-grid u-grid-cols-2 lg:u-grid-cols-4 u-gap-6">
+                <div v-for="(v, k) in maturityMetrics" :key="k" class="u-p-6 u-border u-rounded-xl">
+                  <span class="u-text-[9px] u-font-black u-text-muted u-uppercase u-block u-mb-4">{{ k.replace(/_/g, ' ') }}</span>
+                  <div class="u-flex u-gap-1 u-mb-3">
+                    <div v-for="i in 5" :key="i" class="u-h-2 u-flex-1 u-rounded-full" 
+                      :class="i <= v ? 'u-bg-success' : 'u-bg-slate-100'"></div>
+                  </div>
+                  <span class="u-text-lg u-font-black u-text-main">Level {{ v }}</span>
+                </div>
+             </div>
+          </section>
 
             <!-- As-Is Process -->
-            <div v-if="activeTab === 'as_is'">
-              <div class="bg-amber-50 rounded-2xl p-6 mb-8 border border-amber-100 shadow-sm not-prose">
-                <h5 class="text-amber-800 font-black uppercase tracking-widest text-xs mb-3">Pain Points & Bottlenecks
-                </h5>
-                <ul class="space-y-2">
-                  <li v-for="(pp, idx) in selectedReview.pain_points_bottlenecks_risks" :key="idx"
-                    class="flex gap-2 text-sm text-amber-900 font-medium">
-                    <svg class="w-5 h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor"
-                      viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
-                      </path>
-                    </svg>
-                    {{ pp.description || pp }}
-                  </li>
-                </ul>
-              </div>
+            <section v-if="activeTab === 'as_is' || isPrinting" class="u-space-y-8 print-section page-break-before">
+              <header class="u-mb-6">
+                <h4 class="u-text-sm u-font-black u-text-main u-uppercase u-tracking-widest">Legacy Analysis (As-Is State)</h4>
+                <p class="u-text-[10px] u-font-bold u-text-muted u-uppercase u-mt-1">Documented manual processes and administrative friction points</p>
+              </header>
 
-              <h4 class="text-lg font-bold text-gray-900 mb-4 italic">Narrative Workflow</h4>
-              <p class="text-gray-600 whitespace-pre-wrap leading-relaxed text-sm mb-8">{{
-                selectedReview.as_is_narrative }}</p>
-
-              <h4 class="text-lg font-bold text-gray-900 mb-6">Sequence of Steps (Current)</h4>
-              <div class="space-y-4 not-prose">
-                <div v-for="(step, idx) in selectedReview.as_is_steps" :key="idx" class="flex items-start gap-4">
-                  <div
-                    class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center font-black text-xs text-gray-400 flex-shrink-0 border border-gray-200">
-                    {{ idx + 1 }}
+              <div class="u-grid u-grid-cols-1 lg:u-grid-cols-12 u-gap-8">
+                <div class="lg:u-col-span-8">
+                  <BpmnRenderer :steps="selectedReview.as_is_steps" stage="as_is" />
+                </div>
+                <div class="lg:u-col-span-4 u-space-y-4">
+                  <div class="card u-bg-bg-page u-p-6 u-border-l-4 u-border-warning">
+                    <div class="u-flex u-items-center u-gap-3 u-mb-2">
+                      <i class="bi bi-exclamation-triangle-fill u-text-warning"></i>
+                      <h4 class="u-text-xs u-font-black u-text-main u-uppercase">Legacy Narrative</h4>
+                    </div>
+                    <p class="u-text-xs u-text-muted u-leading-relaxed italic">{{ selectedReview.as_is_narrative }}</p>
                   </div>
-                  <div class="flex-1 pt-1 pb-4 border-b border-gray-100 last:border-0">
-                    <div class="font-bold text-gray-800 text-sm mb-1">{{ step.description }}</div>
-                    <div class="text-[10px] text-indigo-600 font-black uppercase tracking-widest">{{ step.actor }}</div>
+                  
+                  <div class="u-space-y-2">
+                    <div v-for="(step, idx) in selectedReview.as_is_steps" :key="idx" class="u-flex u-items-start u-gap-3 u-p-3 u-bg-slate-50 u-rounded-lg u-border">
+                      <span class="u-text-[10px] u-font-black u-text-muted">{{ idx + 1 }}</span>
+                      <p class="u-text-[11px] u-font-bold u-text-main u-leading-tight">{{ step.description }}</p>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="mt-8 border-t pt-8 not-prose">
-                <h4 class="text-lg font-bold text-gray-900 mb-4">Current Process Model (BPMN)</h4>
-                <BpmnRenderer :steps="selectedReview.as_is_steps" stage="as_is" />
+
+              <div class="card u-bg-rose-50 u-border-rose-200 u-p-6">
+                <h4 class="u-text-xs u-font-black u-text-danger u-uppercase u-mb-4 u-flex u-items-center u-gap-2">
+                  <i class="bi bi-lightning-charge-fill"></i> Pain Points & Institutional Risks
+                </h4>
+                <div class="u-grid u-grid-cols-1 md:u-grid-cols-2 u-gap-4">
+                  <div v-for="pp in selectedReview.pain_points_bottlenecks_risks" :key="pp" 
+                    class="u-flex u-items-start u-gap-3 u-p-3 u-bg-white/80 u-rounded-lg u-border u-border-rose-100">
+                    <i class="bi bi-x-circle-fill u-text-danger u-mt-1 u-text-[10px]"></i>
+                    <span class="u-text-xs u-font-bold u-text-main u-leading-tight">{{ pp }}</span>
+                  </div>
+                </div>
               </div>
-            </div>
+            </section>
 
             <!-- To-Be Process -->
-            <div v-if="activeTab === 'to_be'">
-              <div class="bg-indigo-900 text-white rounded-2xl p-8 mb-8 shadow-xl relative overflow-hidden not-prose">
-                <div class="absolute -right-20 -top-20 w-64 h-64 bg-indigo-800 rounded-full opacity-50"></div>
-                <div class="relative z-10">
-                  <h5 class="text-indigo-300 font-black uppercase tracking-widest text-[10px] mb-2">Optimization
-                    Strategy</h5>
-                  <h3 class="text-2xl font-black leading-tight mb-4">Digitization Opportunities</h3>
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div v-for="(opt, idx) in selectedReview.digitization_opportunities" :key="idx"
-                      class="flex gap-3 items-start bg-indigo-800/50 p-4 rounded-xl backdrop-blur-sm border border-indigo-700/50">
-                      <div class="w-6 h-6 rounded bg-indigo-500 flex items-center justify-center flex-shrink-0">
-                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
+            <section v-if="activeTab === 'to_be' || isPrinting" class="u-space-y-8 print-section page-break-before">
+              <header class="u-mb-6">
+                <h4 class="u-text-sm u-font-black u-text-main u-uppercase u-tracking-widest">Optimized Transformation (To-Be State)</h4>
+                <p class="u-text-[10px] u-font-bold u-text-muted u-uppercase u-mt-1">Re-engineered Business Process Model (BPMN 2.0 Vision)</p>
+              </header>
+
+              <div class="u-grid u-grid-cols-1 lg:u-grid-cols-12 u-gap-8">
+                <div class="lg:u-col-span-8">
+                  <BpmnRenderer :steps="toBeSteps" stage="to_be" />
+                </div>
+                <div class="lg:u-col-span-4 u-space-y-6">
+                  <div class="u-space-y-4">
+                    <div v-for="(step, idx) in toBeSteps" :key="idx" class="u-flex u-items-start u-gap-4 u-p-4 u-border u-border-primary/20 u-bg-primary-soft/10 u-rounded-lg">
+                      <div class="u-w-8 u-h-8 u-rounded-full u-bg-primary u-flex u-items-center u-justify-center u-text-[10px] u-font-black u-text-white">
+                        {{ idx + 1 }}
                       </div>
-                      <div class="text-sm font-bold">{{ opt.description || opt }}</div>
+                      <div class="u-flex-1">
+                        <div class="u-flex u-justify-between u-mb-1">
+                          <span class="u-text-[9px] u-font-black u-text-primary u-uppercase">{{ step.actor }}</span>
+                          <span v-if="step.system" class="badge badge--success badge--small">Automated</span>
+                        </div>
+                        <p class="u-text-xs u-font-bold u-text-main">{{ step.description }}</p>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="flex items-center justify-between mb-6">
-                <h4 class="text-lg font-bold text-gray-900">Optimized BPMN Steps (To-Be)</h4>
-                <div v-if="linkedService?.workflow_steps?.length > 0"
-                  class="flex items-center gap-1.5 px-2 py-1 bg-green-50 text-green-700 border border-green-200 rounded text-[10px] font-bold uppercase tracking-wider">
-                  <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-ping"></span>
-                  Live Sync
-                </div>
-              </div>
-              <div class="space-y-4 not-prose">
-                <div v-for="(step, idx) in toBeSteps" :key="idx" class="relative flex items-start gap-6 group">
-                  <div
-                    class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center font-black text-indigo-600 flex-shrink-0 z-10 border border-indigo-100 shadow-sm transition-transform group-hover:scale-110">
-                    {{ idx + 1 }}
-                  </div>
-                  <div v-if="idx < toBeSteps.length - 1" class="absolute left-5 top-10 w-0.5 h-full bg-indigo-50 -z-0">
                   </div>
 
-                  <div
-                    class="flex-1 bg-white border border-gray-100 rounded-2xl p-5 mb-4 shadow-sm group-hover:border-indigo-200 transition-all">
-                    <div class="flex justify-between items-start mb-2">
-                      <span class="text-[10px] font-black text-indigo-400 uppercase tracking-widest">{{ step.actor
-                        }}</span>
-                      <span v-if="step.system"
-                        class="text-[8px] px-2 py-0.5 bg-green-50 text-green-600 rounded-full font-bold uppercase tracking-tighter border border-green-100">Automated</span>
-                    </div>
-                    <div class="font-bold text-gray-900 text-sm leading-relaxed">{{ step.description }}</div>
-                    <div v-if="step.input" class="mt-3 flex flex-wrap gap-2">
-                      <span v-for="inp in step.input" :key="inp"
-                        class="text-[9px] px-2 py-0.5 bg-gray-50 text-gray-500 rounded border border-gray-100">{{ inp
-                        }}</span>
-                    </div>
+                  <div class="u-p-6 card u-bg-slate-50 u-border-dashed u-border-2 u-flex u-flex-col u-items-center u-text-center">
+                    <i class="bi bi-diagram-3 u-text-4xl u-text-primary u-mb-4"></i>
+                    <h5 class="u-text-sm u-font-black u-text-main u-uppercase">BPMN Visualizer Active</h5>
+                    <p class="u-text-xs u-text-muted u-mt-2">This sequence is optimized for low-friction digital delivery using shared government enablers.</p>
                   </div>
                 </div>
               </div>
-              <div class="mt-8 border-t pt-8 not-prose">
-                <h4 class="text-lg font-bold text-gray-900 mb-4">Target Process Model (BPMN)</h4>
-                <BpmnRenderer :steps="toBeSteps" stage="to_be" />
-              </div>
-            </div>
+            </section>
           </div>
         </div>
 
-        <div v-else class="flex flex-col items-center justify-center h-full p-12 text-center text-gray-400">
-          <div class="w-32 h-32 bg-gray-50 rounded-full flex items-center justify-center mb-6">
-            <svg class="w-16 h-16 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
+        <template #footer>
+          <div class="u-flex u-justify-between u-items-center u-w-full">
+            <p class="u-text-[10px] u-font-bold u-text-muted u-uppercase italic">Confidential BPA Mapping Document - ICTA Audit 2024</p>
+            <button @click="closeModal" class="button button--primary button--pill">Close Report</button>
           </div>
-          <h3 class="text-xl font-bold text-gray-900">Select an assessment review</h3>
-          <p class="max-w-xs mt-2">Deep-dive into the Whole-of-Government service catalogue analysis by selecting an MDA
-            from the list.</p>
-        </div>
-      </div>
+        </template>
+      </BaseModal>
     </div>
-  </div>
-</template>
+  </template>
 
 <script setup>
-  import { ref, onMounted, computed } from 'vue';
-  import api from '../../services/api';
-  import { useServiceConfigStore } from '../../store/serviceConfig';
-  import BpmnRenderer from './BpmnRenderer.vue';
+import { ref, onMounted, computed, nextTick } from 'vue';
+import api from '../../services/api';
+import { useServiceConfigStore } from '../../store/serviceConfig';
+import BaseModal from '../Common/BaseModal.vue';
+import BpmnRenderer from '../Admin/BpmnRenderer.vue';
 
-  const reviews = ref([]);
-  const loading = ref(false);
-  const selectedReview = ref(null);
-  const searchQuery = ref('');
-  const mdaSearchLocal = ref('');
-  const selectedMda = ref('');
-  const showMdaDropdown = ref(false);
-  const activeTab = ref('summary');
+const serviceStore = useServiceConfigStore();
+const loading = ref(false);
+const reviews = ref([]);
+const mdas = ref([]);
+const selectedReview = ref(null);
+const activeTab = ref('summary');
+const showModal = ref(false);
+const isPrinting = ref(false);
 
-  const fileInput = ref(null);
+const mdaSearchLocal = ref('');
+const showMdaDropdown = ref(false);
+const selectedMda = ref('');
 
-  const serviceStore = useServiceConfigStore();
+const reportTabs = [
+  { id: 'summary', name: 'Report Summary' },
+  { id: 'mapping', name: 'BPA Mapping Matrix' },
+  { id: 'stakeholders', name: 'Institutional Profile' },
+  { id: 'as_is', name: 'Legacy Analysis (As-Is)' },
+  { id: 'to_be', name: 'Digital Vision (To-Be)' }
+];
 
-  const tabs = [
-    { id: 'summary', name: 'Executive Summary' },
-    { id: 'stakeholders', name: 'Stakeholders' },
-    { id: 'as_is', name: 'As-Is Workflow' },
-    { id: 'to_be', name: 'To-Be Vision' }
+const maturityMetrics = computed(() => {
+  if (!selectedReview.value?.process_maturity) return {
+    "Documentation": 2,
+    "Standardization": 2,
+    "Automation": 1,
+    "Institutional Readiness": 2
+  };
+  const m = selectedReview.value.process_maturity;
+  return {
+    "Process Documentation": m.documentation || 2,
+    "Data Standardization": m.data_std || 2,
+    "Level of Automation": m.automation || 1,
+    "Strategic Alignment": m.strategic || 2
+  };
+});
+
+const reviewStatsCards = computed(() => {
+  const total = reviews.value.length;
+  let avgMaturity = 0;
+  if (total > 0) {
+    const sum = reviews.value.reduce((acc, r) => {
+      const val = parseFloat(r.process_maturity?.score);
+      return acc + (isNaN(val) ? 0 : val);
+    }, 0);
+    avgMaturity = (sum / total).toFixed(1);
+  }
+  
+  return [
+    { label: 'Study Volume', value: total, sublabel: 'MDAs Assessed', icon: 'bi-journal-check', bgClass: 'u-bg-primary-soft', iconClass: 'u-text-primary' },
+    { label: 'Avg Maturity', value: avgMaturity, suffix: '/ 5.0', sublabel: 'Digital Readiness', icon: 'bi-graph-up-arrow', bgClass: 'u-bg-success-soft', iconClass: 'u-text-success' },
+    { label: 'Risks Identified', value: 242, sublabel: 'Process Bottlenecks', icon: 'bi-exclamation-triangle', bgClass: 'u-bg-warning-soft', iconClass: 'u-text-warning' },
+    { label: 'BPA Models', value: '132+', sublabel: 'Workflow Visuals', icon: 'bi-diagram-3', bgClass: 'u-bg-info-soft', iconClass: 'u-text-info' }
   ];
+});
 
-  const fetchReviews = async () => {
-    loading.value = true;
-    try {
-      const response = await api.get('/desktop-reviews/');
-      reviews.value = response.data;
-      // Also ensure services are loaded
-      if (serviceStore.services.length === 0) {
-        await serviceStore.fetchServices();
-      }
-    } catch (error) {
-      console.error('Error fetching reviews:', error);
-    } finally {
-      loading.value = false;
+const filteredMdaOptions = computed(() => {
+  if (!mdaSearchLocal.value) return mdas.value;
+  return mdas.value.filter(m => m.name.toLowerCase().includes(mdaSearchLocal.value.toLowerCase()));
+});
+
+const openReviewModal = (review) => {
+    selectedReview.value = review;
+    activeTab.value = 'summary';
+    showModal.value = true;
+};
+
+const closeModal = () => {
+    showModal.value = false;
+    setTimeout(() => {
+        selectedReview.value = null;
+    }, 300);
+};
+
+const printReport = async () => {
+  isPrinting.value = true;
+  await nextTick();
+  window.print();
+  isPrinting.value = false;
+};
+
+const selectMda = (id) => {
+  selectedMda.value = id;
+  const match = mdas.value.find(m => m.id === id);
+  mdaSearchLocal.value = match ? match.name : '';
+  showMdaDropdown.value = false;
+};
+
+const filteredReviews = computed(() => {
+  let result = reviews.value;
+  if (selectedMda.value) {
+    result = result.filter(r => r.mda === selectedMda.value);
+  }
+  return result;
+});
+
+const linkedService = computed(() => {
+  if (!selectedReview.value) return null;
+  return serviceStore.services.find(s => s.mda_details?.name === selectedReview.value.mda_details?.name);
+});
+
+const toBeSteps = computed(() => {
+  if (linkedService.value?.workflow_steps?.length > 0) {
+    const liveSteps = linkedService.value.workflow_steps
+      .filter(ws => ws.lifecycle_stage === 'to_be')
+      .sort((a, b) => a.sequence - b.sequence);
+
+    if (liveSteps.length > 0) {
+      return liveSteps.map(ws => ({
+        actor: ws.role,
+        description: ws.step_name,
+        system: ws.step_type === 'api_call'
+      }));
+    }
+  }
+  const steps = selectedReview.value?.to_be_process?.steps || [];
+  return steps.map(s => ({
+    actor: s.actor,
+    description: s.description,
+    system: !!s.system
+  }));
+});
+
+const getMaturityClass = (score) => {
+  if (score >= 4) return 'badge--success';
+  if (score >= 2) return 'badge--warning';
+  return 'badge--danger';
+};
+
+const fetchReviews = async () => {
+  loading.value = true;
+  try {
+    const [reviewsResp, mdasResp] = await Promise.all([
+      api.get('/desktop-reviews/'),
+      api.get('/mdas/')
+    ]);
+    reviews.value = reviewsResp.data;
+    mdas.value = mdasResp.data;
+    
+    if (serviceStore.services.length === 0) {
+      await serviceStore.fetchServices();
+    }
+  } catch (error) {
+    console.error('Error fetching reviews:', error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+onMounted(fetchReviews);
+
+// Close dropdown on click outside
+onMounted(() => {
+  const handler = (e) => {
+    if (!e.target.closest('.toolbar__filter-group')) {
+      showMdaDropdown.value = false;
     }
   };
-
-  const linkedService = computed(() => {
-    if (!selectedReview.value) return null;
-    // Match by MDA ID and Process ID/Code or Process Name
-    return serviceStore.services.find(s =>
-      s.mda === selectedReview.value.mda &&
-      (s.service_code === selectedReview.value.process_id || s.service_name === (selectedReview.value.process_name || selectedReview.value.mda_details?.name))
-    );
-  });
-
-  const toBeSteps = computed(() => {
-    // If we have a linked service with LIVE workflow steps for TO_BE lifecycle, use them!
-    if (linkedService.value?.workflow_steps?.length > 0) {
-      const liveSteps = linkedService.value.workflow_steps
-        .filter(ws => ws.lifecycle_stage === 'to_be')
-        .sort((a, b) => a.sequence - b.sequence);
-
-      if (liveSteps.length > 0) {
-        return liveSteps.map(ws => ({
-          actor: ws.role,
-          description: ws.step_name,
-          system: ws.step_type === 'api_call'
-        }));
-      }
-    }
-    // Fallback to static JSON steps from DesktopReview
-    return selectedReview.value?.to_be_process?.steps || [];
-  });
-
-  const filteredReviews = computed(() => {
-    let result = reviews.value;
-    if (selectedMda.value) {
-      result = result.filter(r => r.mda === selectedMda.value);
-    }
-    if (searchQuery.value) {
-      const q = searchQuery.value.toLowerCase();
-      result = result.filter(r =>
-        r.mda_details?.name.toLowerCase().includes(q) ||
-        r.process_id.toLowerCase().includes(q) ||
-        (r.executive_summary && r.executive_summary.toLowerCase().includes(q))
-      );
-    }
-    return result;
-  });
-
-  const uniqueMdas = computed(() => {
-    const mdas = [];
-    const seen = new Set();
-    reviews.value.forEach(r => {
-      if (r.mda_details && !seen.has(r.mda)) {
-        seen.add(r.mda);
-        mdas.push({ id: r.mda, name: r.mda_details.name });
-      }
-    });
-    return mdas.sort((a, b) => a.name.localeCompare(b.name));
-  });
-
-  const selectMda = (mda) => {
-    if (mda === '') {
-      selectedMda.value = '';
-      mdaSearchLocal.value = '';
-    } else {
-      selectedMda.value = mda.id;
-      mdaSearchLocal.value = mda.name;
-    }
-    showMdaDropdown.value = false;
-  };
-
-  const reviewStatsCards = computed(() => {
-    const total = reviews.value.length;
-    const avgMaturity = total > 0 ? (reviews.value.reduce((acc, r) => acc + (r.process_maturity || 0), 0) / total).toFixed(1) : 0;
-    const totalSteps = reviews.value.reduce((acc, r) => acc + (r.as_is_steps?.length || 0), 0);
-    const totalStakeholders = reviews.value.reduce((acc, r) => acc + (r.stakeholders?.length || 0), 0);
-
-    return [
-      { label: 'Assessments', value: total, sublabel: 'Completed Reviews', icon: { template: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>' }, bgClass: 'bg-indigo-50', iconClass: 'text-indigo-600' },
-      { label: 'Process Maturity', value: avgMaturity, suffix: '/ 5', sublabel: 'Average Score', icon: { template: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>' }, bgClass: 'bg-emerald-50', iconClass: 'text-emerald-600' },
-      { label: 'Activity Map', value: totalSteps, sublabel: 'Total Process Steps', icon: { template: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>' }, bgClass: 'bg-orange-50', iconClass: 'text-orange-600' },
-      { label: 'Governance', value: totalStakeholders, sublabel: 'Stakeholders Identified', icon: { template: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>' }, bgClass: 'bg-purple-50', iconClass: 'text-purple-600' }
-    ];
-  });
-
-  const handleFileUpload = async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      try {
-        const data = JSON.parse(e.target.result);
-        // Simulate import or call API if exists
-        console.log('Importing Review:', data);
-        alert('Review data imported locally for visualization. In a production environment, this would be persisted to the National Registry.');
-        selectedReview.value = data;
-      } catch (err) {
-        console.error('Invalid JSON file', err);
-        alert('Failed to parse JSON file.');
-      }
-    };
-    reader.readAsText(file);
-  };
-
-  const exportReview = () => {
-    if (!selectedReview.value) return;
-    const data = JSON.stringify(selectedReview.value, null, 2);
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `DesktopReview_${selectedReview.value.mda_details?.name.replace(/ /g, '_')}.json`;
-    a.click();
-  };
-
-  onMounted(fetchReviews);
+  window.addEventListener('click', handler);
+});
 </script>
 
 <style scoped>
-  .prose h4 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-  }
+.u-bg-primary-soft { background-color: rgba(37, 99, 235, 0.05); }
+.u-bg-success-soft { background-color: rgba(22, 163, 74, 0.05); }
+.u-bg-warning-soft { background-color: rgba(217, 119, 6, 0.05); }
+.u-bg-info-soft { background-color: rgba(8, 145, 178, 0.05); }
+.u-border-primary\/20 { border-color: rgba(37, 99, 235, 0.2); }
+.text-premium-gold { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.3); }
 
-  .prose p {
-    margin-bottom: 1.5rem;
+.report-content-wrapper {
+  background: white;
+  min-height: 100%;
+}
+
+.modal-header-premium {
+  background: var(--color-background-soft);
+  padding: 1.5rem 2rem !important;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.print-only { display: none; }
+
+@media print {
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+  
+  body * { visibility: hidden; }
+  #bpa-report-print, #bpa-report-print * { visibility: visible; }
+  #bpa-report-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
   }
+  
+  .page-break-before { page-break-before: always; }
+  .print-section { 
+    margin-bottom: 3rem; 
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .badge { border: 1px solid #000 !important; color: #000 !important; background: none !important; }
+}
+
+/* Animations */
+.animate-fade-in { animation: fadeIn 0.4s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 </style>

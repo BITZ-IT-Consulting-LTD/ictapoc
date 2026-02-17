@@ -1,156 +1,236 @@
 <template>
-  <div class="space-y-6">
-    <!-- Header -->
-    <div class="flex justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-      <div>
-        <h3 class="text-xl font-extrabold text-slate-900">Operational Analytics</h3>
-        <p class="text-sm text-slate-500">Real-time insight into service delivery performance.</p>
-      </div>
-      <div>
-         <button @click="refreshData" class="text-indigo-600 hover:text-indigo-800 text-sm font-bold flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-            Refresh
-         </button>
-      </div>
-    </div>
-
-    <div v-if="summaryData" class="grid grid-cols-1 md:grid-cols-4 gap-6">
-      
-      <!-- Key Metric 1: Total Volume -->
-      <div class="bg-indigo-600 p-6 rounded-2xl text-white shadow-lg shadow-indigo-200">
-        <p class="text-xs font-bold text-indigo-200 uppercase tracking-wider mb-1">Total Requests</p>
-        <p class="text-4xl font-extrabold mb-1">{{ summaryData.total_requests }}</p>
-        <div class="flex items-center gap-2 mt-4 text-xs font-medium bg-indigo-500/30 p-2 rounded-lg inline-flex">
-           <span>{{ summaryData.pending_requests }} Pending</span>
-           <span class="w-px h-3 bg-indigo-400"></span>
-           <span>{{ summaryData.completed_requests }} Closed</span>
-        </div>
-      </div>
-
-      <!-- Key Metric 2: SLA Compliance -->
-      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 relative overflow-hidden">
-        <div class="absolute right-0 top-0 w-24 h-24 bg-emerald-50 rounded-bl-full -mr-4 -mt-4"></div>
-        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1 relative z-10">SLA Compliance (24h)</p>
-        <p class="text-4xl font-extrabold relative z-10" 
-           :class="summaryData.performance?.sla_compliance_rate >= 80 ? 'text-emerald-600' : 'text-amber-500'">
-            {{ summaryData.performance?.sla_compliance_rate }}%
-        </p>
-        <p class="text-xs text-slate-400 mt-2 relative z-10 font-medium">Target: > 90%</p>
-      </div>
-
-      <!-- Key Metric 3: Avg Processing Time -->
-      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Avg. Processing Time</p>
-        <p class="text-4xl font-extrabold text-slate-900">
-            {{ summaryData.performance?.avg_processing_time_hours }} <span class="text-lg text-slate-400 font-normal">hrs</span>
-        </p>
-        <p class="text-xs text-slate-400 mt-2 font-medium">Time to decision</p>
-      </div>
-
-      <!-- Key Metric 4: Approval Rate -->
-      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Approval Rate</p>
-        <p class="text-4xl font-extrabold text-slate-900">
-            {{ calculateApprovalRate() }}%
-        </p>
-         <p class="text-xs text-slate-400 mt-2 font-medium">Of completed requests</p>
-      </div>
-
-    </div>
-
-    <div v-if="summaryData" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
-        <!-- Breakdown: Status -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-            <h4 class="font-bold text-slate-800 mb-6 flex items-center gap-2">
-                <span class="w-2 h-6 bg-indigo-500 rounded-sm"></span>
-                Request Status Breakdown
-            </h4>
-            <div class="space-y-4">
-                <div v-for="(count, status) in summaryData.requests_by_status" :key="status" class="flex items-center gap-4">
-                    <div class="w-32 text-xs font-bold text-slate-500 uppercase text-right">{{ status.replace('_',' ') }}</div>
-                    <div class="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden relative">
-                        <div class="h-full rounded-full transition-all duration-1000"
-                             :class="getStatusColor(status)"
-                             :style="{ width: `${(count / summaryData.total_requests) * 100}%` }"></div>
-                    </div>
-                    <div class="w-8 text-sm font-bold text-slate-700 text-right">{{ count }}</div>
+    <div class="dashboard-analytics u-flex u-flex-col u-gap-8 animate-fade-in">
+        <!-- Operational Header -->
+        <header class="card card--dark u-mb-4 shadow-xl">
+            <div class="card__body u-flex u-justify-between u-items-center u-p-8 u-bg-gradient-dark">
+                <div class="page__title-group">
+                    <h2 class="u-text-2xl u-font-black u-text-white u-mb-1">Operational Command Suite</h2>
+                    <p class="u-text-xs u-font-black u-uppercase u-tracking-[0.2em] u-text-primary u-opacity-70">
+                        Real-time Service Delivery Intelligence
+                    </p>
                 </div>
+                <button @click="refreshData" class="button button--primary button--pill button--small shadow-lg">
+                    <i class="bi bi-arrow-clockwise"></i> Sync Analytics
+                </button>
             </div>
-        </div>
+        </header>
 
-        <!-- Breakdown: Services -->
-         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-            <h4 class="font-bold text-slate-800 mb-6 flex items-center gap-2">
-                <span class="w-2 h-6 bg-emerald-500 rounded-sm"></span>
-                Efficiency by Service
-            </h4>
-            <div class="space-y-4">
-                <div v-for="(count, service) in summaryData.requests_per_service" :key="service" class="pb-3 border-b border-slate-50 last:border-0">
-                    <div class="flex justify-between items-center mb-1">
-                        <span class="text-sm font-bold text-slate-700">{{ service }}</span>
-                        <span class="text-xs font-mono bg-slate-100 px-2 py-1 rounded text-slate-600">{{ count }} reqs</span>
+        <!-- Metric Grid -->
+        <div v-if="summaryData" class="stats-grid">
+            <!-- Key Metric 1: Total Volume -->
+            <article class="stats-card stats-card--primary">
+                <div class="stats-card__overlay"></div>
+                <div class="stats-card__content">
+                    <div class="stats-card__icon-wrapper">
+                        <div class="stats-card__icon-container">
+                            <div class="stats-card__icon-glow"></div>
+                            <div class="stats-card__icon">
+                                <i class="bi bi-activity"></i>
+                            </div>
+                        </div>
                     </div>
-                    <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                         <div class="h-full bg-slate-800 rounded-full" 
-                              :style="{ width: `${(count / summaryData.total_requests) * 100}%` }"></div>
+                    <div class="stats-card__text-content">
+                        <p class="stats-card__label">National Volume</p>
+                        <div class="stats-card__value-wrapper">
+                            <span class="stats-card__value">{{ summaryData.total_requests }}</span>
+                        </div>
+                        <p class="stats-card__sublabel">Lifecycle Requests</p>
                     </div>
                 </div>
-            </div>
+                <div class="u-px-6 u-pb-6 u-relative u-z-base">
+                    <div class="u-flex u-gap-2">
+                        <span class="badge badge--small u-bg-white/10 u-text-white u-border-0">{{ summaryData.pending_requests }} PENDING</span>
+                        <span class="badge badge--small u-bg-white/10 u-text-white u-border-0">{{ summaryData.completed_requests }} CLOSED</span>
+                    </div>
+                </div>
+                <div class="stats-card__accent-line"></div>
+            </article>
+
+            <!-- Key Metric 2: SLA Compliance -->
+            <article class="stats-card stats-card--success">
+                <div class="stats-card__overlay"></div>
+                <div class="stats-card__content">
+                    <div class="stats-card__icon-wrapper">
+                        <div class="stats-card__icon-container">
+                            <div class="stats-card__icon-glow"></div>
+                            <div class="stats-card__icon">
+                                <i class="bi bi-shield-check"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats-card__text-content">
+                        <p class="stats-card__label">Governance Level</p>
+                        <div class="stats-card__value-wrapper">
+                            <span class="stats-card__value" :class="summaryData.performance?.sla_compliance_rate >= 80 ? '' : 'u-text-warning'">
+                                {{ summaryData.performance?.sla_compliance_rate }}
+                            </span>
+                            <span class="stats-card__unit">%</span>
+                        </div>
+                        <p class="stats-card__sublabel">SLA Compliance Rate</p>
+                    </div>
+                </div>
+                <div class="u-px-6 u-pb-6 u-relative u-z-base">
+                    <div class="progress-bar progress-bar--sm u-bg-white/10">
+                        <div class="progress-bar__fill u-bg-white" :style="{ width: `${summaryData.performance?.sla_compliance_rate}%` }"></div>
+                    </div>
+                </div>
+                <div class="stats-card__accent-line"></div>
+            </article>
+
+            <!-- Key Metric 3: Processing Velocity -->
+            <article class="stats-card stats-card--info">
+                <div class="stats-card__overlay"></div>
+                <div class="stats-card__content">
+                    <div class="stats-card__icon-wrapper">
+                        <div class="stats-card__icon-container">
+                            <div class="stats-card__icon-glow"></div>
+                            <div class="stats-card__icon">
+                                <i class="bi bi-lightning-charge"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats-card__text-content">
+                        <p class="stats-card__label">Registry Velocity</p>
+                        <div class="stats-card__value-wrapper">
+                            <span class="stats-card__value">{{ summaryData.performance?.avg_processing_time_hours }}</span>
+                            <span class="stats-card__unit">HRS</span>
+                        </div>
+                        <p class="stats-card__sublabel">Avg. Processing Latency</p>
+                    </div>
+                </div>
+                <div class="u-px-6 u-pb-6 u-relative u-z-base">
+                    <p class="u-text-[10px] u-font-black u-text-muted u-uppercase tracking-widest group-hover:u-text-white transition-colors">Target: &lt; 24h</p>
+                </div>
+                <div class="stats-card__accent-line"></div>
+            </article>
+
+            <!-- Key Metric 4: Success Ratio -->
+            <article class="stats-card stats-card--warning">
+                <div class="stats-card__overlay"></div>
+                <div class="stats-card__content">
+                    <div class="stats-card__icon-wrapper">
+                        <div class="stats-card__icon-container">
+                            <div class="stats-card__icon-glow"></div>
+                            <div class="stats-card__icon">
+                                <i class="bi bi-gem"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats-card__text-content">
+                        <p class="stats-card__label">Trust Ratio</p>
+                        <div class="stats-card__value-wrapper">
+                            <span class="stats-card__value">{{ calculateApprovalRate() }}</span>
+                            <span class="stats-card__unit">%</span>
+                        </div>
+                        <p class="stats-card__sublabel">Approval Rate</p>
+                    </div>
+                </div>
+                <div class="u-px-6 u-pb-6 u-relative u-z-base">
+                    <p class="u-text-[10px] u-font-black u-text-muted u-uppercase tracking-widest group-hover:u-text-white transition-colors">On Completed Set</p>
+                </div>
+                <div class="stats-card__accent-line"></div>
+            </article>
+        </div>
+
+        <!-- Detailed Analytics Section -->
+        <div v-if="summaryData" class="u-grid u-grid-cols-1 lg:u-grid-cols-2 u-gap-8">
+            <!-- Detailed Status Matrix -->
+            <article class="card shadow-xl overflow-hidden">
+                <header class="card__header card--dark u-py-4">
+                    <h4 class="card__title u-text-lg font-black">Request Lifecycle Matrix</h4>
+                </header>
+                <div class="card__body u-p-10">
+                    <div class="u-flex u-flex-col u-gap-8">
+                        <div v-for="(count, status) in summaryData.requests_by_status" :key="status" class="group">
+                            <div class="u-flex u-justify-between u-items-center u-mb-3">
+                                <span class="u-text-[11px] u-font-black u-text-muted u-uppercase u-tracking-[0.15em] group-hover:u-text-primary transition-colors">
+                                    {{ status.replace('_', ' ') }}
+                                </span>
+                                <span class="badge badge--secondary u-font-black">{{ count }}</span>
+                            </div>
+                            <div class="progress-bar progress-bar--lg shadow-inner">
+                                <div class="progress-bar__fill shadow-sm"
+                                    :class="getStatusColor(status)"
+                                    :style="{ width: `${(count / summaryData.total_requests) * 100}%` }"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Service Efficiency Index -->
+            <article class="card shadow-xl overflow-hidden">
+                <header class="card__header u-bg-indigo-900 u-text-white u-py-4" style="background-color: #312e81">
+                    <h4 class="card__title u-text-white u-text-lg font-black">Service Efficiency Index</h4>
+                </header>
+                <div class="card__body u-p-10">
+                    <div class="u-flex u-flex-col u-gap-6">
+                        <div v-for="(count, service) in summaryData.requests_per_service" :key="service"
+                            class="u-pb-5 u-border-b u-border-border-color last:u-border-0 last:u-pb-0 group">
+                            <div class="u-flex u-justify-between u-items-center u-mb-3">
+                                <span class="u-text-sm u-font-black u-text-main group-hover:u-text-primary transition-colors">{{ service }}</span>
+                                <span class="badge badge--info badge--small">{{ count }} APPLICATIONS</span>
+                            </div>
+                            <div class="progress-bar progress-bar--sm">
+                                <div class="progress-bar__fill u-bg-main group-hover:u-bg-primary transition-colors"
+                                    :style="{ width: `${(count / summaryData.total_requests) * 100}%` }"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <!-- Loading State -->
+        <div v-else class="card u-py-32 u-flex u-flex-col u-items-center u-justify-center shadow-lg">
+            <div class="u-w-12 u-h-12 u-border-4 u-border-primary-soft u-border-t-primary u-rounded-full animate-spin u-mb-6"></div>
+            <p class="u-text-[10px] u-font-black u-uppercase u-tracking-[0.3em] u-text-primary animate-pulse">Compiling National Command Data...</p>
         </div>
     </div>
-    
-    <div v-else class="py-20 text-center text-slate-400">
-      <div class="animate-pulse flex flex-col items-center">
-          <div class="w-12 h-12 bg-slate-200 rounded-full mb-4"></div>
-          <p>Compiling Government Data Analytics...</p>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import api from '../../services/api';
+    import { ref, onMounted } from 'vue';
+    import api from '../../services/api';
 
-const summaryData = ref(null);
+    const summaryData = ref(null);
 
-const fetchData = async () => {
-    summaryData.value = null; // Trigger loading state
-    try {
-        // Quick artificial delay to show off the loading skeleton if we had one, or just feel 'computational'
-        // await new Promise(r => setTimeout(r, 600)); 
-        const response = await api.get('/reports/summary/');
-        summaryData.value = response.data;
-    } catch (error) {
-        console.error('Failed to fetch report summary:', error);
-    }
-};
-
-const refreshData = () => {
-    fetchData();
-};
-
-onMounted(() => {
-    fetchData();
-});
-
-const calculateApprovalRate = () => {
-    if (!summaryData.value || !summaryData.value.completed_requests) return 0;
-    const approved = summaryData.value.requests_by_status['approved'] || 0;
-    return Math.round((approved / summaryData.value.completed_requests) * 100);
-};
-
-const getStatusColor = (status) => {
-    const map = {
-        'approved': 'bg-emerald-500',
-        'rejected': 'bg-rose-500',
-        'in_progress': 'bg-amber-400',
-        'received': 'bg-blue-400',
-        'closed': 'bg-slate-500',
-        'escalated': 'bg-orange-500',
-        'validation_failed': 'bg-red-600'
+    const fetchData = async () => {
+        summaryData.value = null; // Trigger loading state
+        try {
+            // Quick artificial delay to show off the loading skeleton if we had one, or just feel 'computational'
+            // await new Promise(r => setTimeout(r, 600)); 
+            const response = await api.get('/reports/summary/');
+            summaryData.value = response.data;
+        } catch (error) {
+            console.error('Failed to fetch report summary:', error);
+        }
     };
-    return map[status] || 'bg-slate-300';
-};
+
+    const refreshData = () => {
+        fetchData();
+    };
+
+    onMounted(() => {
+        fetchData();
+    });
+
+    const calculateApprovalRate = () => {
+        if (!summaryData.value || !summaryData.value.completed_requests) return 0;
+        const approved = summaryData.value.requests_by_status['approved'] || 0;
+        return Math.round((approved / summaryData.value.completed_requests) * 100);
+    };
+
+    const getStatusColor = (status) => {
+        const map = {
+            'approved': 'u-bg-success',
+            'rejected': 'u-bg-danger',
+            'in_progress': 'u-bg-warning',
+            'received': 'u-bg-info',
+            'closed': 'u-bg-muted',
+            'escalated': 'u-bg-warning',
+            'validation_failed': 'u-bg-danger'
+        };
+        return map[status] || 'u-bg-muted';
+    };
 </script>

@@ -1,88 +1,108 @@
 <template>
-  <div class="bg-white p-6 rounded-lg shadow mt-4">
-    <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-      <h3 class="text-xl font-bold text-gray-900 border-l-4 border-slate-800 pl-4">System Activity & Audit Logs</h3>
-      <div class="flex gap-2">
-         <button @click="fetchLogs" class="px-3 py-1 bg-slate-100 border text-slate-600 rounded-md hover:bg-slate-200 text-sm">
-           Refresh Logs
-         </button>
+    <div class="u-flex u-flex-col u-gap-8 animate-fade-in">
+    <!-- Audit Header -->
+    <header class="u-flex u-justify-between u-items-center">
+      <div class="page__title-group">
+        <h3 class="u-text-2xl u-font-black u-text-main u-mb-1 u-border-l-4 u-border-slate-800 u-pl-4">
+          System Activity & Audit Logs
+        </h3>
+        <p class="u-text-xs u-font-bold u-text-muted u-uppercase u-tracking-widest">Permanent Ledger of Administrative Events</p>
       </div>
-    </div>
+      <button @click="fetchLogs" class="button button--secondary button--small">
+        <i class="bi bi-arrow-clockwise u-mr-1"></i> Refresh Logs
+      </button>
+    </header>
 
-    <!-- Filters -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 bg-slate-50 p-4 rounded-xl border border-slate-100">
-      <div>
-        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Search Action / Details</label>
-        <input type="text" v-model="searchQuery" placeholder="Search..." class="w-full px-3 py-2 border rounded-md text-sm" />
+    <!-- Refined Filters -->
+    <article class="card u-bg-page u-p-6 shadow-sm">
+      <div class="u-grid u-grid-cols-1 md:u-grid-cols-3 u-gap-6">
+        <div class="form-group">
+          <label class="u-block u-text-[10px] u-font-black u-text-muted u-uppercase u-mb-2 u-tracking-widest">Search Details</label>
+          <div class="toolbar__filter-group u-shadow-none u-border u-border-border-color">
+            <i class="bi bi-search toolbar__filter-icon"></i>
+            <input type="text" v-model="searchQuery" placeholder="Reference ID or keyword..." class="toolbar__filter-input u-w-full" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="u-block u-text-[10px] u-font-black u-text-muted u-uppercase u-mb-2 u-tracking-widest">Actor Identity</label>
+          <div class="toolbar__filter-group u-shadow-none u-border u-border-border-color">
+            <i class="bi bi-person toolbar__filter-icon"></i>
+            <input type="text" v-model="userFilter" placeholder="Staff Username..." class="toolbar__filter-input u-w-full" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="u-block u-text-[10px] u-font-black u-text-muted u-uppercase u-mb-2 u-tracking-widest">Legislative Action</label>
+          <select v-model="actionFilter" class="toolbar__filter-input u-w-full u-border u-border-border-color u-rounded u-px-3">
+             <option value="">All Administrative Actions</option>
+             <option value="REQUEST_ESCALATED">Request Escalated</option>
+             <option value="ESCALATION_ACKNOWLEDGED">Escalation Acknowledged</option>
+             <option value="WORKFLOW_STEP_COMPLETED">Step Completed</option>
+             <option value="USER_REGISTERED">User Registered</option>
+          </select>
+        </div>
       </div>
-      <div>
-        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Filter by User</label>
-        <input type="text" v-model="userFilter" placeholder="Username..." class="w-full px-3 py-2 border rounded-md text-sm" />
-      </div>
-      <div>
-        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Action Type</label>
-        <select v-model="actionFilter" class="w-full px-3 py-2 border rounded-md text-sm bg-white">
-          <option value="">All Actions</option>
-          <option value="REQUEST_ESCALATED">Request Escalated</option>
-          <option value="ESCALATION_ACKNOWLEDGED">Escalation Acknowledged</option>
-          <option value="WORKFLOW_STEP_COMPLETED">Step Completed</option>
-          <option value="USER_REGISTERED">User Registered</option>
-        </select>
-      </div>
-    </div>
+    </article>
 
-    <!-- Audit Table -->
-    <div class="overflow-x-auto">
-      <table class="min-w-full divide-y divide-slate-200">
-        <thead class="bg-slate-800 text-white">
-          <tr>
-            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Timestamp</th>
-            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Actor</th>
-            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Action</th>
-            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Request ID</th>
-            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Details</th>
-          </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-slate-100">
-          <tr v-for="log in filteredLogs" :key="log.id" class="hover:bg-slate-50 transition-colors">
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 font-mono">
-              {{ formatTimestamp(log.timestamp) }}
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="flex items-center">
-                <div class="h-8 w-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-bold text-xs uppercase mr-2">
-                  {{ log.actor?.username?.substring(0, 2) || 'S' }}
+    <!-- Audit Ledger Table -->
+    <article class="card shadow-lg overflow-hidden">
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr class="table__header-row u-bg-slate-800">
+              <th class="table__header-cell u-text-white u-pl-6">Timestamp</th>
+              <th class="table__header-cell u-text-white">Authoritative Actor</th>
+              <th class="table__header-cell u-text-white">Action Integrity</th>
+              <th class="table__header-cell u-text-white">Object Reference</th>
+              <th class="table__header-cell u-text-white u-pr-6">Event Context</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="log in filteredLogs" :key="log.id" class="table__row">
+              <td class="table__cell u-pl-6">
+                <span class="u-text-[11px] u-font-mono u-text-muted u-font-bold">{{ formatTimestamp(log.timestamp) }}</span>
+              </td>
+              <td class="table__cell">
+                <div class="u-flex u-items-center u-gap-3">
+                  <div class="avatar avatar--sm" :class="getActorColor(log.actor)">
+                    {{ log.actor?.username?.substring(0, 2) || 'S' }}
+                  </div>
+                  <div>
+                    <div class="u-text-xs u-font-black u-text-main">{{ log.actor?.username || 'System' }}</div>
+                    <div class="u-text-[10px] u-font-bold u-text-muted u-uppercase u-tracking-widest">{{ log.actor?.role || 'Service Account' }}</div>
+                  </div>
                 </div>
-                <div>
-                  <div class="text-sm font-bold text-slate-900">{{ log.actor?.username || 'System' }}</div>
-                  <div class="text-xs text-slate-500 uppercase tracking-tighter">{{ log.actor?.role || 'N/A' }}</div>
-                </div>
-              </div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <span :class="actionBadgeClass(log.action)" class="px-2 py-1 text-[10px] font-bold rounded uppercase border">
-                {{ log.action }}
-              </span>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-indigo-600">
-              {{ log.service_request?.request_id || 'N/A' }}
-            </td>
-            <td class="px-6 py-4 text-sm text-slate-600 max-w-xs truncate" :title="log.details">
-              {{ log.details }}
-            </td>
-          </tr>
-          <tr v-if="filteredLogs.length === 0">
-             <td colspan="5" class="px-6 py-20 text-center text-slate-400 italic">
-               No audit logs found matching the criteria.
-             </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="mt-4 text-right">
-      <p class="text-xs text-slate-400">Total logs tracked: {{ logs.length }}</p>
-    </div>
+              </td>
+              <td class="table__cell">
+                <span class="badge badge--small" :class="actionBadgeClass(log.action)">
+                  {{ log.action }}
+                </span>
+              </td>
+              <td class="table__cell">
+                <span class="table__code-badge u-text-primary">{{ log.service_request?.request_id || 'N/A' }}</span>
+              </td>
+              <td class="table__cell u-pr-6">
+                <p class="u-text-xs u-text-muted u-max-w-xs u-truncate" :title="log.details">
+                  {{ log.details }}
+                </p>
+              </td>
+            </tr>
+            <tr v-if="filteredLogs.length === 0">
+               <td colspan="5" class="table__cell u-text-center u-py-20">
+                 <div class="u-flex u-flex-col u-items-center u-gap-3">
+                    <span class="u-text-3xl u-opacity-50">📑</span>
+                    <p class="u-text-sm u-font-black u-text-muted u-uppercase u-tracking-widest">No audit signatures found in current scope</p>
+                 </div>
+               </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <footer class="card__footer u-bg-page u-py-4 u-px-6 u-text-right">
+        <span class="u-text-[10px] u-font-black u-text-muted u-uppercase u-tracking-widest">
+          Total Validated Signatures: {{ logs.length }}
+        </span>
+      </footer>
+    </article>
   </div>
 </template>
 
@@ -110,12 +130,19 @@ const formatTimestamp = (ts) => {
   return date.toLocaleString();
 };
 
+const getActorColor = (actor) => {
+  if (!actor) return 'avatar--indigo';
+  if (actor.role === 'Admin') return 'avatar--primary';
+  if (actor.role === 'Supervisor') return 'avatar--success';
+  return 'avatar--indigo';
+};
+
 const actionBadgeClass = (action) => {
-  if (action?.includes('ESCALATED')) return 'bg-orange-50 text-orange-600 border-orange-100';
-  if (action?.includes('COMPLETED')) return 'bg-green-50 text-green-600 border-green-100';
-  if (action?.includes('ACKNOWLEDGED')) return 'bg-blue-50 text-blue-600 border-blue-100';
-  if (action?.includes('REGISTERED')) return 'bg-cyan-50 text-cyan-600 border-cyan-100';
-  return 'bg-slate-50 text-slate-600 border-slate-100';
+  if (action?.includes('ESCALATED')) return 'badge--warning';
+  if (action?.includes('COMPLETED')) return 'badge--success';
+  if (action?.includes('ACKNOWLEDGED')) return 'badge--info';
+  if (action?.includes('REGISTERED')) return 'badge--primary';
+  return 'badge--secondary';
 };
 
 const filteredLogs = computed(() => {

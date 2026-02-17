@@ -76,6 +76,8 @@ def configure_awwda():
 
     print(f"Workflows configured: {svc1.id}, {svc2.id}")
 
+    # DEPRECATED: User requested clean slate without sample applications.
+    """
     # Generate test data
     citizen = User.objects.filter(role='citizen').first()
     if not citizen:
@@ -106,6 +108,9 @@ def configure_awwda():
         )
     
     print("Sample test data generated.")
+    """
+    print("✅ Sample test data generation skipped.")
+
 
 if __name__ == "__main__":
     configure_awwda()

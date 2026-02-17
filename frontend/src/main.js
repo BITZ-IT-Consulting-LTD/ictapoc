@@ -1,5 +1,5 @@
-import './index.css'
 import './assets/css/modern-forms.css' // Import Custom BEM Styles
+import './assets/service-registry-bem.css' // Import BEM Component Library
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

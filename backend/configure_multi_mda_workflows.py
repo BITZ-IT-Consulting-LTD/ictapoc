@@ -186,6 +186,8 @@ def configure_workflows():
 
     print(f"All workflows configured for MDAs 19, 52, 53, 25 and COS-HPS.")
 
+    # DEPRECATED: User requested clean slate without sample applications.
+    """
     # Generate test data
     citizen = User.objects.filter(role='citizen').first()
     if not citizen:
@@ -205,6 +207,9 @@ def configure_workflows():
             )
     
     print("Sample test data generated for all new workflows.")
+    """
+    print("✅ Sample test data generation skipped.")
+
 
 if __name__ == "__main__":
     configure_workflows()

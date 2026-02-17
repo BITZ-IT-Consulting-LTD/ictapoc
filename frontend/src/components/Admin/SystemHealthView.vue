@@ -1,126 +1,218 @@
 <template>
-  <div class="bg-white p-6 rounded-lg shadow mt-4">
-    <div class="flex justify-between items-center mb-8">
-      <h3 class="text-xl font-bold text-gray-900 border-l-4 border-green-500 pl-4">Infrastructure & Architecture Health</h3>
-      <div class="flex items-center space-x-2">
-        <span class="relative flex h-3 w-3">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-        </span>
-        <span class="text-xs font-bold text-green-600 uppercase">Live Monitoring</span>
+    <div class="u-flex u-flex-col u-gap-8 animate-fade-in">
+    <!-- Health Header -->
+    <header class="u-flex u-justify-between u-items-center">
+      <div class="page__title-group">
+        <h3 class="u-text-2xl u-font-black u-text-main u-mb-1 u-border-l-4 u-border-success u-pl-4">
+          Infrastructure & Architecture Health
+        </h3>
+        <p class="u-text-xs u-font-bold u-text-muted u-uppercase u-tracking-widest">Global G2C Services Backbone</p>
       </div>
-    </div>
+      <div class="status-indicator">
+        <span class="status-indicator__dot status-indicator__dot--online animate-pulse"></span>
+        <span class="status-indicator__label u-text-success">Live Monitoring Active</span>
+      </div>
+    </header>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+    <!-- State Grid -->
+    <div class="stats-grid">
       <!-- Frontend/UI State -->
-      <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-        <p class="text-[10px] font-bold text-slate-400 uppercase mb-1">Frontend Interface</p>
-        <div class="flex justify-between items-end">
-          <p class="text-xl font-bold text-slate-800">Operational</p>
-          <span class="text-[10px] text-green-500 font-bold">STABLE</span>
+      <article class="stats-card stats-card--primary">
+        <div class="stats-card__overlay"></div>
+        <div class="stats-card__content">
+          <div class="stats-card__icon-wrapper">
+             <div class="stats-card__icon-container">
+               <div class="stats-card__icon-glow"></div>
+               <div class="stats-card__icon"><i class="bi bi-window-stack"></i></div>
+             </div>
+          </div>
+          <div class="stats-card__text-content">
+            <p class="stats-card__label">Frontend Interface</p>
+            <div class="stats-card__value-wrapper">
+              <span class="stats-card__value">Operational</span>
+            </div>
+            <p class="stats-card__sublabel">Vue 3 + Vite Mesh</p>
+          </div>
         </div>
-        <div class="mt-2 text-[10px] text-slate-500">Vue 3 + Tailwind</div>
-      </div>
+        <div class="u-px-6 u-pb-6 u-relative u-z-base">
+          <span class="badge badge--success badge--small">STABLE RELEASE</span>
+        </div>
+        <div class="stats-card__accent-line"></div>
+      </article>
 
       <!-- Backend API State -->
-      <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-        <p class="text-[10px] font-bold text-slate-400 uppercase mb-1">Backend Engine</p>
-        <div class="flex justify-between items-end">
-          <p class="text-xl font-bold text-slate-800">Connected</p>
-          <span class="text-[10px] text-green-500 font-bold">34ms</span>
+      <article class="stats-card stats-card--success">
+        <div class="stats-card__overlay"></div>
+        <div class="stats-card__content">
+          <div class="stats-card__icon-wrapper">
+             <div class="stats-card__icon-container">
+               <div class="stats-card__icon-glow"></div>
+               <div class="stats-card__icon"><i class="bi bi-cpu-fill"></i></div>
+             </div>
+          </div>
+          <div class="stats-card__text-content">
+            <p class="stats-card__label">Backend Engine</p>
+            <div class="stats-card__value-wrapper">
+              <span class="stats-card__value">34</span>
+              <span class="stats-card__unit">ms</span>
+            </div>
+            <p class="stats-card__sublabel">Django Core Active</p>
+          </div>
         </div>
-        <div class="mt-2 text-[10px] text-slate-500">Django + DRF</div>
-      </div>
+        <div class="u-px-6 u-pb-6 u-relative u-z-base">
+          <span class="badge badge--success badge--small">LATENCY: NOMINAL</span>
+        </div>
+        <div class="stats-card__accent-line"></div>
+      </article>
 
-       <!-- Bridges Status -->
-       <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-200">
-        <p class="text-[10px] font-bold text-indigo-400 uppercase mb-1">KESEL Bridge</p>
-        <div class="flex justify-between items-end">
-          <p class="text-xl font-bold text-indigo-900">Active</p>
-          <span class="text-[10px] text-green-500 font-bold">SYNCED</span>
+      <!-- KESEL Bridge -->
+      <article class="stats-card stats-card--indigo">
+        <div class="stats-card__overlay"></div>
+        <div class="stats-card__content">
+          <div class="stats-card__icon-wrapper">
+             <div class="stats-card__icon-container">
+               <div class="stats-card__icon-glow"></div>
+               <div class="stats-card__icon"><i class="bi bi-hdd-network-fill"></i></div>
+             </div>
+          </div>
+          <div class="stats-card__text-content">
+            <p class="stats-card__label">KESEL Bridge</p>
+            <div class="stats-card__value-wrapper">
+              <span class="stats-card__value">Active</span>
+            </div>
+            <p class="stats-card__sublabel">Cross-MDA Mesh Layer</p>
+          </div>
         </div>
-        <div class="mt-2 text-[10px] text-indigo-500">Cross-MDA Mesh</div>
-      </div>
+        <div class="u-px-6 u-pb-6 u-relative u-z-base">
+          <span class="badge badge--primary badge--small u-bg-indigo-500 u-text-white">SYNCED</span>
+        </div>
+        <div class="stats-card__accent-line"></div>
+      </article>
 
-      <div class="bg-cyan-50 p-4 rounded-xl border border-cyan-200">
-        <p class="text-[10px] font-bold text-cyan-400 uppercase mb-1">Huduma Bridge</p>
-        <div class="flex justify-between items-end">
-          <p class="text-xl font-bold text-cyan-900">Online</p>
-          <span class="text-[10px] text-green-500 font-bold">Active</span>
+      <!-- Huduma Bridge -->
+      <article class="stats-card stats-card--cyan">
+        <div class="stats-card__overlay"></div>
+        <div class="stats-card__content">
+          <div class="stats-card__icon-wrapper">
+             <div class="stats-card__icon-container">
+               <div class="stats-card__icon-glow"></div>
+               <div class="stats-card__icon"><i class="bi bi-cloud-check-fill"></i></div>
+             </div>
+          </div>
+          <div class="stats-card__text-content">
+            <p class="stats-card__label">Huduma Bridge</p>
+            <div class="stats-card__value-wrapper">
+              <span class="stats-card__value">Online</span>
+            </div>
+            <p class="stats-card__sublabel">Citizen Service Hub</p>
+          </div>
         </div>
-        <div class="mt-2 text-[10px] text-cyan-500">Citizen Service Layer</div>
-      </div>
+        <div class="u-px-6 u-pb-6 u-relative u-z-base">
+          <span class="badge badge--info badge--small u-bg-cyan-500 u-text-white">HEARTBEAT: OK</span>
+        </div>
+        <div class="stats-card__accent-line"></div>
+      </article>
 
       <!-- EDRM Status -->
-      <div class="bg-blue-50 p-4 rounded-xl border border-blue-200">
-        <p class="text-[10px] font-bold text-blue-400 uppercase mb-1">EDRM Archive</p>
-        <div class="flex justify-between items-end">
-          <p class="text-xl font-bold text-blue-900">Healthy</p>
-          <span class="text-[10px] text-green-500 font-bold">99.9%</span>
+      <article class="stats-card stats-card--info">
+        <div class="stats-card__overlay"></div>
+        <div class="stats-card__content">
+          <div class="stats-card__icon-wrapper">
+             <div class="stats-card__icon-container">
+               <div class="stats-card__icon-glow"></div>
+               <div class="stats-card__icon"><i class="bi bi-archive-fill"></i></div>
+             </div>
+          </div>
+          <div class="stats-card__text-content">
+            <p class="stats-card__label">EDRMS Archive</p>
+            <div class="stats-card__value-wrapper">
+              <span class="stats-card__value">99.9</span>
+              <span class="stats-card__unit">%</span>
+            </div>
+            <p class="stats-card__sublabel">S3 Object Storage</p>
+          </div>
         </div>
-        <div class="mt-2 text-[10px] text-blue-500">Object Storage S3</div>
-      </div>
+        <div class="u-px-6 u-pb-6 u-relative u-z-base">
+          <span class="badge badge--info badge--small">AVAILABILITY</span>
+        </div>
+        <div class="stats-card__accent-line"></div>
+      </article>
     </div>
 
     <!-- External Registry Latencies -->
-    <div class="mb-8">
-      <h4 class="text-sm font-bold text-slate-700 uppercase mb-4">Authoritative Registry Latency (Real-time Simulation)</h4>
-      <div class="space-y-4">
-        <div v-for="system in latencies" :key="system.name" class="relative pt-1">
-          <div class="flex mb-2 items-center justify-between">
-            <div>
-              <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-indigo-600 bg-indigo-200">
-                {{ system.name }}
-              </span>
-            </div>
-            <div class="text-right">
-              <span class="text-xs font-semibold inline-block text-indigo-600">
-                {{ system.ms }}ms
-              </span>
-            </div>
+    <article class="card shadow-lg">
+      <header class="card__header u-bg-page u-py-4">
+        <h4 class="card__title u-text-xs u-font-black u-text-muted u-uppercase u-tracking-widest">
+          Authoritative Registry Latency (Real-time Simulation)
+        </h4>
+      </header>
+      <div class="card__body u-p-8 u-flex u-flex-col u-gap-6">
+        <div v-for="system in latencies" :key="system.name">
+          <div class="u-flex u-justify-between u-items-center u-mb-2">
+            <span class="u-text-xs u-font-black u-text-main u-uppercase u-tracking-tighter">{{ system.name }}</span>
+            <span class="u-text-xs u-font-mono u-font-black" :class="system.ms > 300 ? 'u-text-danger' : 'u-text-primary'">{{ system.ms }}ms</span>
           </div>
-          <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-indigo-100">
-            <div :style="`width: ${system.percent}%`" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-indigo-500 transition-all duration-500"></div>
+          <div class="progress-bar shadow-inner">
+            <div class="progress-bar__fill shadow-sm transition-all duration-500" 
+                 :class="system.ms > 300 ? 'u-bg-danger' : 'u-bg-primary'"
+                 :style="{ width: `${system.percent}%` }"></div>
           </div>
         </div>
       </div>
-    </div>
+    </article>
 
-    <!-- Node-RED / Workflow Engine Stats (Mocked) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div class="p-4 border rounded-xl bg-slate-900 text-white">
-        <h5 class="text-xs font-bold text-indigo-400 uppercase mb-4">Workload Distribution</h5>
-        <div class="space-y-3">
-          <div class="flex justify-between text-sm">
-             <span class="text-slate-400">Manual Verification Tasks</span>
-             <span class="font-mono text-indigo-300">142</span>
+    <!-- Node-RED / Workflow Engine Stats -->
+    <div class="u-grid u-grid-cols-1 md:u-grid-cols-2 u-gap-8">
+      <article class="card card--dark shadow-xl">
+        <header class="card__header u-bg-transparent u-py-6">
+          <h5 class="card__title u-text-xs u-font-black u-text-primary-soft u-uppercase u-tracking-widest">Workload Distribution</h5>
+        </header>
+        <div class="card__body u-p-8 u-pt-0">
+          <div class="u-flex u-flex-col u-gap-4">
+            <div class="u-flex u-justify-between u-items-center">
+               <span class="u-text-sm u-text-muted">Manual Verification Tasks</span>
+               <span class="u-text-lg u-font-black u-text-primary">{{ (142).toLocaleString() }}</span>
+            </div>
+            <div class="u-flex u-justify-between u-items-center">
+               <span class="u-text-sm u-text-muted">Automated API Steps</span>
+               <span class="u-text-lg u-font-black u-text-success">{{ (1085).toLocaleString() }}</span>
+            </div>
+            <div class="u-flex u-justify-between u-items-center">
+               <span class="u-text-sm u-text-muted">Escalated Priority</span>
+               <span class="u-text-lg u-font-black u-text-danger">12</span>
+            </div>
           </div>
-          <div class="flex justify-between text-sm">
-             <span class="text-slate-400">Automated API Steps</span>
-             <span class="font-mono text-indigo-300">1,085</span>
-          </div>
-          <div class="flex justify-between text-sm">
-             <span class="text-slate-400">Escalated Priority</span>
-             <span class="font-mono text-red-400">12</span>
-          </div>
+          <footer class="u-mt-10 u-pt-6 u-border-t u-border-white/10 u-flex u-justify-center u-gap-6">
+             <div class="u-text-center">
+                <p class="u-text-[10px] u-font-black u-text-muted u-uppercase u-mb-1">Memory</p>
+                <p class="u-text-xs u-font-bold u-text-white">4.2GB</p>
+             </div>
+             <div class="u-text-center">
+                <p class="u-text-[10px] u-font-black u-text-muted u-uppercase u-mb-1">CPU</p>
+                <p class="u-text-xs u-font-bold u-text-white">12%</p>
+             </div>
+             <div class="u-text-center">
+                <p class="u-text-[10px] u-font-black u-text-muted u-uppercase u-mb-1">Threads</p>
+                <p class="u-text-xs u-font-bold u-text-white">64</p>
+             </div>
+          </footer>
         </div>
-        <div class="mt-6 pt-6 border-t border-slate-800 flex justify-center text-[10px] uppercase font-bold text-slate-500 gap-4">
-           <span>Memory: 4.2GB</span>
-           <span>CPU: 12%</span>
-           <span>Threads: 64</span>
-        </div>
-      </div>
+      </article>
 
-       <div class="p-4 border rounded-xl bg-white shadow-sm">
-        <h5 class="text-xs font-bold text-slate-500 uppercase mb-4">System Event Log (Live Stream)</h5>
-        <div class="space-y-2 max-h-[140px] overflow-y-auto font-mono text-[10px]">
-           <div v-for="event in events" :key="event.id" class="flex gap-2 p-1 border-b border-slate-50 animate-pulse">
-              <span class="text-slate-400">{{ event.time }}</span>
-              <span class="text-green-600 font-bold">[{{ event.type }}]</span>
-              <span class="text-slate-700">{{ event.msg }}</span>
-           </div>
+      <article class="card shadow-xl overflow-hidden">
+        <header class="card__header u-bg-page u-p-6">
+          <h5 class="card__title u-text-xs u-uppercase u-tracking-widest u-text-muted">System Event Log (Live Stream)</h5>
+        </header>
+        <div class="card__body u-p-0">
+          <div class="u-p-6 u-space-y-4 max-h-[220px] u-overflow-y-auto">
+             <div v-for="event in events" :key="event.id" class="u-flex u-gap-4 u-items-start group">
+                <span class="u-text-[10px] u-font-black u-text-muted u-font-mono u-mt-1">{{ event.time }}</span>
+                <span class="badge badge--small u-flex-shrink-0" :class="event.type === 'INFO' ? 'badge--info' : 'badge--primary'">{{ event.type }}</span>
+                <span class="u-text-xs u-font-medium u-text-main group-hover:u-text-primary transition-colors">{{ event.msg }}</span>
+             </div>
+          </div>
         </div>
-      </div>
+      </article>
     </div>
   </div>
 </template>

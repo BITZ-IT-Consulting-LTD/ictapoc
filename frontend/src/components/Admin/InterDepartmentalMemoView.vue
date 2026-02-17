@@ -1,345 +1,356 @@
 <template>
-  <div class="space-y-6">
+  <div class="u-flex u-flex-col u-gap-8">
     <!-- Header -->
-    <div class="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-      <div>
-        <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
-          <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+    <header class="page__header u-bg-white u-p-6 u-rounded-lg u-shadow-sm u-border">
+      <div class="page__title-group">
+        <h1 class="page__title u-flex u-items-center u-gap-3">
+          <i class="bi bi-envelope-paper u-text-primary"></i>
           Registry & Correspondence
-        </h2>
-        <p class="text-sm text-gray-500">Authoritative Government Internal Service (G2G)</p>
+        </h1>
+        <p class="page__subtitle">Authoritative Government Internal Service (G2G)</p>
       </div>
-      <div class="flex gap-2">
-        <button @click="showComposeModal = true" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium flex items-center gap-2 transition-colors shadow-sm">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+      <div class="page__actions">
+        <button @click="showComposeModal = true" class="button button--primary button--pill">
+          <i class="bi bi-plus-lg"></i>
           Initiate Correspondence
         </button>
       </div>
-    </div>
+    </header>
 
     <!-- Stats Overview -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-       <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl">
-          <p class="text-blue-600 font-medium text-[10px] uppercase">Registry Inbox</p>
-          <p class="text-2xl font-bold text-gray-800">{{ inboundMemos.length }}</p>
+    <div class="stats-grid">
+       <div class="stats-card stats-card--info">
+          <div class="stats-card__content">
+             <div class="stats-card__icon-wrapper">
+                <i class="bi bi-inbox"></i>
+             </div>
+             <div class="stats-card__text-content">
+                <span class="stats-card__label">Registry Inbox</span>
+                <span class="stats-card__value">{{ inboundMemos.length }}</span>
+             </div>
+          </div>
        </div>
-       <div class="bg-orange-50 border border-orange-100 p-4 rounded-xl" v-if="isRegistrar">
-          <p class="text-orange-600 font-medium text-[10px] uppercase">Pending Registration</p>
-          <p class="text-2xl font-bold text-gray-800">{{ pendingRegistration.length }}</p>
+       <div v-if="isRegistrar" class="stats-card stats-card--warning">
+          <div class="stats-card__content">
+             <div class="stats-card__icon-wrapper">
+                <i class="bi bi-hourglass-split"></i>
+             </div>
+             <div class="stats-card__text-content">
+                <span class="stats-card__label">Pending Registration</span>
+                <span class="stats-card__value">{{ pendingRegistration.length }}</span>
+             </div>
+          </div>
        </div>
-       <div class="bg-indigo-50 border border-indigo-100 p-4 rounded-xl">
-          <p class="text-indigo-600 font-medium text-[10px] uppercase">Action Queue</p>
-          <p class="text-2xl font-bold text-gray-800">{{ actionQueue.length }}</p>
+       <div class="stats-card stats-card--primary">
+          <div class="stats-card__content">
+             <div class="stats-card__icon-wrapper">
+                <i class="bi bi-list-check"></i>
+             </div>
+             <div class="stats-card__text-content">
+                <span class="stats-card__label">Action Queue</span>
+                <span class="stats-card__value">{{ actionQueue.length }}</span>
+             </div>
+          </div>
        </div>
-       <div class="bg-gray-50 border border-gray-200 p-4 rounded-xl">
-          <p class="text-gray-600 font-medium text-[10px] uppercase">Signed & Issued</p>
-          <p class="text-2xl font-bold text-gray-800">{{ signedMemosCount }}</p>
+       <div class="stats-card stats-card--success">
+          <div class="stats-card__content">
+             <div class="stats-card__icon-wrapper">
+                <i class="bi bi-check-circle"></i>
+             </div>
+             <div class="stats-card__text-content">
+                <span class="stats-card__label">Signed & Issued</span>
+                <span class="stats-card__value">{{ signedMemosCount }}</span>
+             </div>
+          </div>
        </div>
     </div>
 
     <!-- Tabs -->
-    <div class="flex space-x-1 bg-gray-100 p-1 rounded-lg w-fit border border-gray-200">
-      <button @click="activeTab = 'inbox'" :class="[activeTab === 'inbox' ? 'bg-white shadow text-indigo-600' : 'text-gray-500 hover:text-gray-700', 'px-4 py-2 rounded-md text-sm font-medium transition-all']">
+    <div class="tab-bar">
+      <button @click="activeTab = 'inbox'" :class="{'tab-bar__item--active': activeTab === 'inbox'}" class="tab-bar__item">
         Inbox
       </button>
-      <button @click="activeTab = 'sent'" :class="[activeTab === 'sent' ? 'bg-white shadow text-indigo-600' : 'text-gray-500 hover:text-gray-700', 'px-4 py-2 rounded-md text-sm font-medium transition-all']">
+      <button @click="activeTab = 'sent'" :class="{'tab-bar__item--active': activeTab === 'sent'}" class="tab-bar__item">
         Sent
       </button>
-      <button v-if="isRegistrar" @click="activeTab = 'registry'" :class="[activeTab === 'registry' ? 'bg-white shadow text-orange-600' : 'text-gray-500 hover:text-gray-700', 'px-4 py-2 rounded-md text-sm font-medium transition-all']">
+      <button v-if="isRegistrar" @click="activeTab = 'registry'" :class="{'tab-bar__item--active': activeTab === 'registry'}" class="tab-bar__item">
         Registry Queue
       </button>
-      <button @click="activeTab = 'files'" :class="[activeTab === 'files' ? 'bg-white shadow text-gray-800' : 'text-gray-500 hover:text-gray-700', 'px-4 py-2 rounded-md text-sm font-medium transition-all']">
+      <button @click="activeTab = 'files'" :class="{'tab-bar__item--active': activeTab === 'files'}" class="tab-bar__item">
         File Registry
       </button>
     </div>
 
     <!-- Main List Container -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden min-h-[400px]">
-      <div v-if="loading" class="p-12 text-center text-gray-500">
-         <div class="animate-spin h-8 w-8 text-indigo-600 mx-auto mb-4 border-4 border-indigo-200 border-t-indigo-600 rounded-full"></div>
-         Syncing with GoK Registry...
+    <div class="card u-overflow-hidden" style="min-height: 400px">
+      <div v-if="loading" class="u-p-20 u-text-center u-text-muted">
+         <div class="animate-spin u-text-3xl u-text-primary u-mb-4 mx-auto">
+            <i class="bi bi-arrow-clockwise u-block"></i>
+         </div>
+         <p class="u-text-sm u-font-bold u-uppercase u-tracking-widest">Syncing with GoK Registry...</p>
       </div>
       
       <!-- Files Tab -->
-      <div v-else-if="activeTab === 'files'" class="p-0">
-          <div v-if="govFiles.length === 0" class="p-12 text-center text-gray-400 italic">No files found in registry.</div>
-          <ul class="divide-y divide-gray-100">
-             <li v-for="file in govFiles" :key="file.id" class="p-4 hover:bg-gray-50 flex justify-between items-center cursor-pointer">
-                <div class="flex items-center gap-3">
-                   <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500">
-                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
+      <div v-else-if="activeTab === 'files'" class="u-p-0">
+          <div v-if="govFiles.length === 0" class="u-p-20 u-text-center u-text-muted u-italic">No files found in registry.</div>
+          <div class="list">
+             <div v-for="file in govFiles" :key="file.id" class="list__item u-justify-between u-items-center cursor-pointer">
+                <div class="u-flex u-items-center u-gap-4">
+                   <div class="u-w-10 u-h-10 u-bg-bg-alt u-rounded-lg u-flex u-items-center u-justify-center u-text-muted">
+                      <i class="bi bi-folder2 text-xl"></i>
                    </div>
                    <div>
-                      <p class="font-bold text-gray-800">{{ file.file_number }}</p>
-                      <p class="text-xs text-gray-500">{{ file.subject }}</p>
+                      <p class="u-font-bold u-text-main">{{ file.file_number }}</p>
+                      <p class="u-text-xs u-text-muted">{{ file.subject }}</p>
                    </div>
                 </div>
-                <span class="px-2 py-1 bg-green-50 text-green-700 text-[10px] font-bold rounded border border-green-200 uppercase">{{ file.status }}</span>
-             </li>
-          </ul>
+                <span class="badge badge--success">{{ file.status.toUpperCase() }}</span>
+             </div>
+          </div>
       </div>
-
+ 
       <!-- Correspondence/Memos List -->
-      <div v-else-if="activeList.length === 0" class="p-12 text-center text-gray-400">
-        <svg class="w-12 h-12 mx-auto mb-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-        No official correspondence found in {{ activeTab }}.
+      <div v-else-if="activeList.length === 0" class="u-p-20 u-text-center u-text-muted">
+        <i class="bi bi-file-earmark-text u-text-5xl u-mb-4 u-opacity-20 u-block"></i>
+        <p class="u-text-sm u-font-bold u-uppercase u-tracking-widest">No official correspondence found in {{ activeTab }}.</p>
       </div>
 
-      <ul v-else class="divide-y divide-gray-100">
-        <li v-for="memo in activeList" :key="memo.id" 
+      <div v-else class="list">
+        <div v-for="memo in activeList" :key="memo.id" 
             @click="viewMemo(memo)"
-            class="hover:bg-indigo-50/40 cursor-pointer transition-colors p-4 flex items-start gap-4"
-            :class="{'bg-blue-50/20': memo.status === 'registered' && !memo.is_read}"
+            class="list__item u-items-start u-gap-4 cursor-pointer"
+            :class="{'u-bg-primary-soft': memo.status === 'registered' && !memo.is_read}"
         >
            <!-- Status Indicator -->
-           <div class="w-1 self-stretch rounded-full" :class="statusBg(memo.status)"></div>
-
-           <div class="flex-1 min-w-0">
-             <div class="flex justify-between mb-1">
-               <div class="flex items-center gap-2">
-                 <span class="text-[10px] font-bold px-1.5 py-0.5 rounded border" :class="memoTypeColor(memo.memo_type)">{{ memo.memo_type.toUpperCase() }}</span>
-                 <p class="text-sm font-bold text-gray-900 truncate">{{ memo.subject }}</p>
+           <div class="u-block u-self-stretch u-rounded-full" style="width: 4px" :class="statusBg(memo.status)"></div>
+ 
+           <div class="u-flex-1 u-min-w-0">
+             <div class="u-flex u-justify-between u-mb-1">
+               <div class="u-flex u-items-center u-gap-2">
+                 <span class="badge badge--small" :class="memoTypeColor(memo.memo_type)">{{ memo.memo_type.toUpperCase() }}</span>
+                 <p class="u-text-sm u-font-bold u-text-main u-truncate">{{ memo.subject }}</p>
                </div>
-               <span class="text-[10px] font-mono text-gray-400">{{ formatDate(memo.created_at) }}</span>
+               <span class="u-text-[10px] u-font-mono u-text-muted">{{ formatDate(memo.created_at) }}</span>
              </div>
              
-             <div class="flex justify-between items-end">
-                <div class="text-[11px] text-gray-500">
-                  <span v-if="activeTab === 'inbox'">From: <span class="font-medium text-gray-700">{{ memo.sender_mda?.name }}</span></span>
-                  <span v-else>To: <span class="font-medium text-gray-700">{{ memo.recipient_mda_details?.name }}</span></span>
-                  <span class="mx-2 text-gray-300">|</span>
-                  <span class="font-mono text-indigo-600 font-bold" v-if="memo.official_ref">{{ memo.official_ref }}</span>
-                  <span class="text-gray-400 italic" v-else>UNREGISTERED</span>
+             <div class="u-flex u-justify-between u-items-end">
+                <div class="u-text-[11px] u-text-muted">
+                  <span v-if="activeTab === 'inbox'">From: <span class="u-font-bold u-text-main">{{ memo.sender_mda?.name }}</span></span>
+                  <span v-else>To: <span class="u-font-bold u-text-main">{{ memo.recipient_mda_details?.name }}</span></span>
+                  <span class="u-mx-2 u-opacity-30">|</span>
+                  <span class="u-font-mono u-text-primary u-font-bold" v-if="memo.official_ref">{{ memo.official_ref }}</span>
+                  <span class="u-text-muted u-italic" v-else>UNREGISTERED</span>
                 </div>
                 
-                <div class="flex gap-2">
-                   <span v-if="memo.digitally_signed" class="flex items-center text-[10px] text-green-600 font-bold bg-green-50 px-1.5 py-0.5 rounded border border-green-200">
-                      <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                <div class="u-flex u-gap-2">
+                   <span v-if="memo.digitally_signed" class="badge badge--success u-gap-1">
+                      <i class="bi bi-patch-check-fill"></i>
                       SIGNED
                    </span>
-                   <span v-if="memo.priority === 'urgent'" class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-100 text-red-700 border border-red-200 uppercase">Urgent</span>
+                   <span v-if="memo.priority === 'urgent'" class="badge badge--danger">URGENT</span>
                 </div>
              </div>
            </div>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
 
     <!-- Initiation Modal -->
-    <Teleport to="body">
-       <div v-if="showComposeModal" class="fixed inset-0 z-[9999] bg-gray-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden border border-gray-200">
-             <div class="bg-indigo-900 px-6 py-4 border-b border-indigo-800 flex justify-between items-center text-white">
-                <div>
-                   <h3 class="font-bold">Initiate Official Correspondence</h3>
-                   <p class="text-[10px] text-indigo-300">Governed by GoK Registry Rules</p>
-                </div>
-                <button @click="showComposeModal = false" class="text-indigo-300 hover:text-white">
-                   <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-             </div>
-             
-             <form @submit.prevent="sendMemo" class="p-6 space-y-4">
-                <div class="grid grid-cols-2 gap-4">
-                   <div>
-                      <label class="block text-[11px] font-bold text-gray-500 uppercase mb-1">Correspondence Mode</label>
-                      <div class="flex bg-gray-100 p-1 rounded-lg">
-                         <button type="button" @click="newMemo.is_letter = false" :class="[!newMemo.is_letter ? 'bg-white shadow text-indigo-700' : 'text-gray-500', 'flex-1 py-1.5 text-xs font-bold rounded-md transition-all']">Internal Memo</button>
-                         <button type="button" @click="newMemo.is_letter = true" :class="[newMemo.is_letter ? 'bg-white shadow text-indigo-700' : 'text-gray-500', 'flex-1 py-1.5 text-xs font-bold rounded-md transition-all']">Official Letter</button>
-                      </div>
-                   </div>
-                    <div>
-                      <label class="block text-[11px] font-bold text-gray-500 uppercase mb-1">Type/Purpose</label>
-                      <div class="relative">
-                        <input type="text" v-model="memoTypeSearchLocal" placeholder="Select Type..."
-                          readonly @focus="showMemoTypeDropdown = true" @blur="setTimeout(() => showMemoTypeDropdown = false, 200)"
-                          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm cursor-pointer">
-                        <div v-if="showMemoTypeDropdown" class="absolute z-[100] mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-2xl p-1 overflow-hidden">
-                           <div v-for="t in ['policy', 'operational', 'instruction', 'concurrence', 'escalation', 'information', 'external']" :key="t"
-                             @click="selectMemoType(t)"
-                             class="px-3 py-2 hover:bg-indigo-50 cursor-pointer text-xs text-gray-700 rounded-lg transition-colors capitalize">
-                             {{ t }}
-                           </div>
-                        </div>
-                        <div class="absolute right-3 top-2.5 pointer-events-none text-gray-400">
-                          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                          </svg>
-                        </div>
-                      </div>
-                   </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                   <div>
-                      <label class="block text-[11px] font-bold text-gray-500 uppercase mb-1">Recipient MDA</label>
-                      <div class="relative">
-                        <input type="text" v-model="recipientMdaSearchLocal" placeholder="Search MDA..."
-                          @focus="showRecipientDropdown = true" @blur="setTimeout(() => showRecipientDropdown = false, 200)"
-                          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm cursor-pointer">
-                        <div v-if="showRecipientDropdown" class="absolute z-[100] mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-2xl max-h-48 overflow-y-auto p-1">
-                           <div v-for="mda in filteredMdasForRecipient" :key="mda.id" @click="selectRecipient(mda)"
-                             class="px-3 py-2 hover:bg-indigo-50 cursor-pointer text-xs text-gray-700 rounded-lg transition-colors">
-                             {{ mda.name }}
-                           </div>
-                        </div>
-                        <div class="absolute right-3 top-2.5 pointer-events-none text-gray-400">
-                          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                          </svg>
-                        </div>
-                      </div>
-                   </div>
-                   <div>
-                       <label class="block text-[11px] font-bold text-gray-500 uppercase mb-1">Priority</label>
-                       <div class="relative">
-                        <input type="text" v-model="prioritySearchLocal" placeholder="Select Priority..."
-                          readonly @focus="showPriorityDropdown = true" @blur="setTimeout(() => showPriorityDropdown = false, 200)"
-                          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm cursor-pointer">
-                        <div v-if="showPriorityDropdown" class="absolute z-[100] mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-2xl p-1 overflow-hidden">
-                           <div v-for="p in ['normal', 'high', 'urgent']" :key="p"
-                             @click="selectPriority(p)"
-                             class="px-3 py-2 hover:bg-indigo-50 cursor-pointer text-xs text-gray-700 rounded-lg transition-colors capitalize flex items-center gap-2">
-                             <span :class="[p === 'high' ? 'bg-orange-400' : p === 'urgent' ? 'bg-red-500' : 'bg-blue-400', 'w-1.5 h-1.5 rounded-full']"></span>
-                             {{ p }}
-                           </div>
-                        </div>
-                        <div class="absolute right-3 top-2.5 pointer-events-none text-gray-400">
-                          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                          </svg>
-                        </div>
-                      </div>
-                   </div>
-                </div>
-                
-                <div>
-                   <label class="block text-[11px] font-bold text-gray-500 uppercase mb-1">Subject</label>
-                   <input v-model="newMemo.subject" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm" placeholder="Official Subject Line">
-                </div>
-                
-                <div>
-                   <label class="block text-[11px] font-bold text-gray-500 uppercase mb-1">Content</label>
-                   <textarea v-model="newMemo.content" rows="6" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm resize-none" placeholder="Draft your memo content here..."></textarea>
-                </div>
-                
-                <div class="pt-2 flex justify-end gap-3">
-                   <button type="button" @click="showComposeModal = false" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-600 font-medium hover:bg-gray-50 text-sm">Save Draft</button>
-                   <button type="submit" class="px-6 py-2 bg-indigo-900 text-white rounded-lg font-bold hover:bg-black shadow-lg transition-all text-sm flex items-center gap-2">
-                     <span>Initiate Approval</span>
-                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                   </button>
-                </div>
-             </form>
+    <BaseModal :show="showComposeModal" 
+               @close="showComposeModal = false" 
+               size="lg"
+               headerClass="modal__header--dark">
+       <template #header>
+          <div class="u-flex u-flex-col">
+             <h3 class="modal__title">Initiate Official Correspondence</h3>
+             <p class="modal__subtitle">Governed by GoK Registry Rules</p>
           </div>
-       </div>
-    </Teleport>
+       </template>
+       
+       <form @submit.prevent="sendMemo" id="memoForm" class="u-flex u-flex-col u-gap-4">
+          <div class="u-flex u-gap-4">
+             <div class="u-flex-1">
+                <label class="u-block u-text-[11px] u-font-bold u-text-muted u-uppercase u-mb-1">Correspondence Mode</label>
+                <div class="tab-bar u-w-full">
+                   <button type="button" @click="newMemo.is_letter = false" :class="{'tab-bar__item--active': !newMemo.is_letter}" class="tab-bar__item u-flex-1">Internal Memo</button>
+                   <button type="button" @click="newMemo.is_letter = true" :class="{'tab-bar__item--active': newMemo.is_letter}" class="tab-bar__item u-flex-1">Official Letter</button>
+                </div>
+             </div>
+              <div class="u-flex-1">
+                <label class="u-block u-text-[11px] u-font-bold u-text-muted u-uppercase u-mb-1">Type/Purpose</label>
+                <div class="u-relative">
+                  <input type="text" v-model="memoTypeSearchLocal" placeholder="Select Type..."
+                    readonly @focus="showMemoTypeDropdown = true" @blur="setTimeout(() => showMemoTypeDropdown = false, 200)"
+                    class="form__input u-cursor-pointer">
+                  <div v-if="showMemoTypeDropdown" class="u-absolute u-top-full u-left-0 u-w-full bg-white u-border u-shadow-xl u-rounded-lg u-mt-1 u-z-dropdown u-p-1">
+                     <div v-for="t in ['policy', 'operational', 'instruction', 'concurrence', 'escalation', 'information', 'external']" :key="t"
+                       @click="selectMemoType(t)"
+                       class="u-p-2 hover:u-bg-bg-page u-rounded u-cursor-pointer u-text-xs u-text-main transition-colors capitalize">
+                       {{ t }}
+                     </div>
+                  </div>
+                  <i class="bi bi-chevron-down u-absolute u-right-3 u-top-2.5 u-text-muted"></i>
+                </div>
+             </div>
+          </div>
+
+          <div class="u-flex u-gap-4">
+             <div class="u-flex-1">
+                <label class="u-block u-text-[11px] u-font-bold u-text-muted u-uppercase u-mb-1">Recipient MDA</label>
+                <div class="u-relative">
+                  <input type="text" v-model="recipientMdaSearchLocal" placeholder="Search MDA..."
+                    @focus="showRecipientDropdown = true" @blur="setTimeout(() => showRecipientDropdown = false, 200)"
+                    class="form__input u-cursor-pointer">
+                  <div v-if="showRecipientDropdown" class="u-absolute u-top-full u-left-0 u-w-full bg-white u-border u-shadow-xl u-rounded-lg u-mt-1 u-z-dropdown u-p-1 u-max-h-48 u-overflow-auto">
+                     <div v-for="mda in filteredMdasForRecipient" :key="mda.id" @click="selectRecipient(mda)"
+                       class="u-p-2 hover:u-bg-bg-page u-rounded u-cursor-pointer u-text-xs u-text-main transition-colors">
+                       {{ mda.name }}
+                     </div>
+                  </div>
+                  <i class="bi bi-search u-absolute u-right-3 u-top-2.5 u-text-muted"></i>
+                </div>
+             </div>
+             <div class="u-flex-1">
+                 <label class="u-block u-text-[11px] u-font-bold u-text-muted u-uppercase u-mb-1">Priority</label>
+                 <div class="u-relative">
+                  <input type="text" v-model="prioritySearchLocal" placeholder="Select Priority..."
+                    readonly @focus="showPriorityDropdown = true" @blur="setTimeout(() => showPriorityDropdown = false, 200)"
+                    class="form__input u-cursor-pointer">
+                  <div v-if="showPriorityDropdown" class="u-absolute u-top-full u-left-0 u-w-full bg-white u-border u-shadow-xl u-rounded-lg u-mt-1 u-z-dropdown u-p-1">
+                     <div v-for="p in ['normal', 'high', 'urgent']" :key="p"
+                       @click="selectPriority(p)"
+                       class="u-p-2 hover:u-bg-bg-page u-rounded u-cursor-pointer u-text-xs u-text-main transition-colors capitalize u-flex u-items-center u-gap-2">
+                       <span class="u-block u-w-2 u-h-2 u-rounded-full" :style="{background: p === 'urgent' ? 'var(--color-danger)' : p === 'high' ? 'var(--color-warning)' : 'var(--color-info)'}"></span>
+                       {{ p }}
+                     </div>
+                  </div>
+                  <i class="bi bi-chevron-down u-absolute u-right-3 u-top-2.5 u-text-muted"></i>
+                </div>
+             </div>
+          </div>
+          
+          <div>
+             <label class="u-block u-text-[11px] u-font-bold u-text-muted u-uppercase u-mb-1">Subject</label>
+             <input v-model="newMemo.subject" type="text" required class="form__input" placeholder="Official Subject Line">
+          </div>
+          
+          <div>
+             <label class="u-block u-text-[11px] u-font-bold u-text-muted u-uppercase u-mb-1">Content</label>
+             <textarea v-model="newMemo.content" rows="6" required class="form__input" style="resize: none; min-height: 15rem" placeholder="Draft your memo content here..."></textarea>
+          </div>
+       </form>
+
+       <template #footer>
+          <button type="button" @click="showComposeModal = false" class="button button--secondary">Save Draft</button>
+          <button type="submit" form="memoForm" class="button button--primary">
+            Initiate Approval
+            <i class="bi bi-send-check"></i>
+          </button>
+       </template>
+    </BaseModal>
 
     <!-- Detailed Reader Modal -->
-    <Teleport to="body">
-       <div v-if="selectedMemo" class="fixed inset-0 z-[9999] bg-gray-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl overflow-hidden border border-gray-200 flex flex-col max-h-[90vh]">
-             <!-- Header -->
-             <div class="p-6 border-b border-gray-100 flex justify-between items-start">
-                 <div>
-                    <h2 class="text-xl font-bold text-gray-900 uppercase tracking-tight">{{ selectedMemo.subject }}</h2>
-                    <div class="flex items-center gap-2 mt-1">
-                       <span class="text-xs font-mono text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100 font-bold" v-if="selectedMemo.official_ref">REF: {{ selectedMemo.official_ref }}</span>
-                       <span class="text-xs bg-red-50 text-red-600 px-2 py-0.5 rounded font-bold" v-else>UNREGISTERED DRAFT</span>
-                       <span class="text-xs text-gray-400">&bull; {{ formatDate(selectedMemo.created_at) }}</span>
-                    </div>
-                 </div>
-                 <button @click="selectedMemo = null" class="text-gray-400 hover:text-gray-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                 </button>
+    <BaseModal :show="!!selectedMemo" 
+               @close="selectedMemo = null" 
+               size="full"
+               headerClass="modal__header--dark">
+       <template #header>
+          <div class="u-flex u-flex-col">
+             <h2 class="modal__title u-uppercase">{{ selectedMemo.subject }}</h2>
+             <div class="modal-subtitle u-flex u-items-center u-gap-2">
+                <span v-if="selectedMemo.official_ref" class="u-font-bold">REF: {{ selectedMemo.official_ref }}</span>
+                <span v-else class="u-font-bold u-text-warning">UNREGISTERED DRAFT</span>
+                <span class="u-opacity-50">&bull; {{ formatDate(selectedMemo.created_at) }}</span>
              </div>
+          </div>
+       </template>
 
-             <div class="flex-1 overflow-auto flex">
-                <!-- Main Content -->
-                <div class="flex-1 p-8 bg-white overflow-auto border-r border-gray-100">
-                   <div class="mb-8 border-b-2 border-double border-gray-200 pb-4">
-                      <div class="flex justify-between text-xs font-medium text-gray-500 uppercase tracking-widest mb-4">
-                         <span>GoK FORM 004</span>
-                         <span>CONFIDENTIAL</span>
-                      </div>
-                      <div class="space-y-2 text-sm">
-                         <p><span class="inline-block w-24 text-gray-400 font-bold uppercase text-[10px]">From:</span> <span class="font-bold">{{ selectedMemo.sender_mda?.name }}</span></p>
-                         <p><span class="inline-block w-24 text-gray-400 font-bold uppercase text-[10px]">To:</span> <span class="font-bold">{{ selectedMemo.recipient_mda_details?.name }}</span></p>
-                         <p><span class="inline-block w-24 text-gray-400 font-bold uppercase text-[10px]">Subject:</span> <span class="font-bold">{{ selectedMemo.subject }}</span></p>
-                         <p><span class="inline-block w-24 text-gray-400 font-bold uppercase text-[10px]">Type:</span> <span class="font-bold text-indigo-700">{{ selectedMemo.memo_type?.toUpperCase() }}</span></p>
-                      </div>
+       <div class="u-flex u-h-full u-overflow-hidden" style="margin: -var(--spacing-6)">
+          <div class="modal-body u-flex u-p-0 u-w-full">
+             <!-- Main Content -->
+             <div class="u-flex-1 u-p-10 u-bg-white u-overflow-auto u-border-r">
+                <div class="u-mb-8 u-border-b u-border-border-color u-pb-6">
+                   <div class="u-flex u-justify-between u-text-[10px] u-font-bold u-text-muted u-uppercase u-tracking-widest u-mb-6">
+                      <span>GoK FORM 004</span>
+                      <span>AUTHORITATIVE SYSTEM OUTPUT</span>
                    </div>
-
-                   <div class="prose prose-sm max-w-none text-gray-800 leading-relaxed whitespace-pre-wrap font-serif text-lg">
-                      {{ selectedMemo.content }}
-                   </div>
-
-                   <div class="mt-12 flex justify-end" v-if="selectedMemo.digitally_signed">
-                      <div class="text-right border-t border-gray-200 pt-4 w-64">
-                         <div class="mb-2">
-                             <svg class="w-12 h-12 text-green-600 ml-auto opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                         </div>
-                         <p class="font-bold text-gray-900 border-b border-gray-400 pb-1">DIGITALLY SIGNED</p>
-                         <p class="text-[10px] text-gray-500 mt-1">Officer: {{ selectedMemo.signed_by?.username }}</p>
-                         <p class="text-[10px] text-gray-400">{{ formatDate(selectedMemo.updated_at) }}</p>
-                      </div>
+                   <div class="u-grid u-gap-3">
+                      <div class="u-flex u-items-center"><span class="u-block u-w-24 u-text-[10px] u-font-black u-text-muted u-uppercase">From:</span> <span class="u-font-bold u-text-main">{{ selectedMemo.sender_mda?.name }}</span></div>
+                      <div class="u-flex u-items-center"><span class="u-block u-w-24 u-text-[10px] u-font-black u-text-muted u-uppercase">To:</span> <span class="u-font-bold u-text-main">{{ selectedMemo.recipient_mda_details?.name }}</span></div>
+                      <div class="u-flex u-items-center"><span class="u-block u-w-24 u-text-[10px] u-font-black u-text-muted u-uppercase">Subject:</span> <span class="u-font-black u-text-primary">{{ selectedMemo.subject }}</span></div>
+                      <div class="u-flex u-items-center"><span class="u-block u-w-24 u-text-[10px] u-font-black u-text-muted u-uppercase">Type:</span> <span class="badge badge--info">{{ selectedMemo.memo_type?.toUpperCase() }}</span></div>
                    </div>
                 </div>
 
-                <!-- Action Sidebar -->
-                <div class="w-72 bg-gray-50 p-6 space-y-6">
-                  <div class="space-y-4">
-                     <div v-if="selectedMemo.status === 'draft' && selectedMemo.sender_mda.id === user?.mda" class="p-4 bg-orange-50 border border-orange-100 rounded-xl">
-                        <label class="block text-[10px] font-bold text-orange-600 uppercase mb-2">Internal Submission</label>
-                        <p class="text-[11px] text-orange-700 mb-3">Draft complete. Send to Director for internal verification.</p>
-                        <button @click="requestReview" class="w-full py-2 bg-orange-600 text-white rounded font-bold text-xs hover:bg-orange-700">Send for Internal Review</button>
-                     </div>
+                <div class="prose u-text-lg u-leading-relaxed u-text-main" style="white-space: pre-wrap; font-family: 'Georgia', serif;">
+                   {{ selectedMemo.content }}
+                </div>
 
-                     <div v-if="selectedMemo.status === 'reviewing' && canSign && selectedMemo.sender_mda.id === user?.mda" class="p-4 bg-blue-50 border border-blue-100 rounded-xl">
-                        <label class="block text-[10px] font-bold text-blue-600 uppercase mb-2">Internal Approval</label>
-                        <p class="text-[11px] text-blue-700 mb-3">As Supervisor, you must approve the content.</p>
-                        <button @click="approveMemo" class="w-full py-2 bg-blue-600 text-white rounded font-bold text-xs hover:bg-blue-700">Grant Minute Approval</button>
-                     </div>
-
-                     <div v-if="selectedMemo.status === 'approved' && isRegistrar && selectedMemo.sender_mda.id === user?.mda" class="p-4 bg-indigo-50 border border-indigo-100 rounded-xl">
-                        <label class="block text-[10px] font-bold text-indigo-600 uppercase mb-2">Registry Registration</label>
-                        <input v-model="registrationFileNumber" placeholder="File Ref (e.g. ICTA/5/2)" class="w-full px-3 py-2 border rounded text-xs mb-2">
-                        <button @click="registerMemo" class="w-full py-2 bg-indigo-600 text-white rounded font-bold text-xs hover:bg-indigo-700">Assign Ref & Register</button>
-                     </div>
-
-                     <div v-if="selectedMemo.status === 'registered' && canSign && selectedMemo.sender_mda.id === user?.mda" class="p-4 bg-emerald-50 border border-emerald-100 rounded-xl">
-                        <label class="block text-[10px] font-bold text-emerald-600 uppercase mb-2">Issuance & Signing</label>
-                        <button @click="signMemo" class="w-full py-2 bg-emerald-600 text-white rounded font-bold text-xs hover:bg-emerald-700">Apply Digital Signature</button>
-                     </div>
-
-                     <div v-if="selectedMemo.status === 'actioning' && selectedMemo.recipient_mda === user?.mda" class="p-4 bg-violet-50 border border-violet-100 rounded-xl">
-                        <label class="block text-[10px] font-bold text-violet-600 uppercase mb-2">Action Assignment</label>
-                        <select v-model="assignmentData.user_id" class="w-full p-2 border rounded text-xs mb-2">
-                           <option v-for="staff in staffUsers" :key="staff.id" :value="staff.id">{{ staff.username }}</option>
-                        </select>
-                        <textarea v-model="assignmentData.instruction" placeholder="Instructions..." class="w-full p-2 border rounded text-xs mb-2 h-16"></textarea>
-                        <button @click="assignAction" class="w-full py-2 bg-violet-600 text-white rounded font-bold text-xs hover:bg-violet-700">Assign Task</button>
-                     </div>
-                  </div>
-
-                  <div v-if="selectedMemo.actions?.length > 0" class="space-y-3">
-                    <h4 class="text-xs font-bold text-gray-400 uppercase">Tracked Actions</h4>
-                    <div v-for="action in selectedMemo.actions" :key="action.id" class="p-3 bg-white rounded border border-gray-100 text-[10px]">
-                       <p class="font-bold">{{ action.assigned_to_details?.username }}</p>
-                       <p class="text-gray-500 my-1">{{ action.instruction }}</p>
-                       <span :class="action.is_completed ? 'text-green-600' : 'text-orange-600 font-bold'">{{ action.is_completed ? 'DONE' : 'PENDING' }}</span>
-                    </div>
-                  </div>
+                <div class="u-mt-12 u-flex u-justify-end" v-if="selectedMemo.digitally_signed">
+                   <div class="u-text-right u-border-t u-pt-4 u-w-64">
+                      <div class="u-mb-2">
+                          <i class="bi bi-patch-check-fill u-text-5xl u-text-success u-opacity-30"></i>
+                      </div>
+                      <p class="u-font-bold u-text-main u-border-b u-pb-1">DIGITALLY SIGNED</p>
+                      <p class="u-text-[10px] u-text-muted u-mt-1">Officer: {{ selectedMemo.signed_by?.username }}</p>
+                      <p class="u-text-[10px] u-text-muted">{{ formatDate(selectedMemo.updated_at) }}</p>
+                   </div>
                 </div>
              </div>
 
-             <!-- Footer -->
-             <div class="p-4 border-t border-gray-100 bg-gray-50 text-right">
-                <button @click="selectedMemo = null" class="px-6 py-2 bg-white border border-gray-300 rounded font-bold text-gray-700 hover:bg-gray-100 transition-all text-xs">Close Dossier</button>
+             <!-- Action Sidebar -->
+             <div class="u-w-80 u-bg-bg-alt u-p-6 u-flex u-flex-col u-gap-6 u-overflow-y-auto">
+                <div class="u-flex u-flex-col u-gap-4">
+                   <div v-if="selectedMemo.status === 'draft' && selectedMemo.sender_mda.id === user?.mda" class="u-p-4 u-bg-bg u-rounded-lg u-border">
+                      <label class="u-block u-text-[10px] u-font-black u-text-warning u-uppercase u-mb-2">Internal Submission</label>
+                      <p class="u-text-[11px] u-text-muted u-mb-3">Draft complete. Send to Director for internal verification.</p>
+                      <button @click="requestReview" class="button button--primary button--small u-w-full">Send for Internal Review</button>
+                   </div>
+
+                   <div v-if="selectedMemo.status === 'reviewing' && canSign && selectedMemo.sender_mda.id === user?.mda" class="u-p-4 u-bg-bg u-rounded-lg u-border">
+                      <label class="u-block u-text-[10px] u-font-black u-text-primary u-uppercase u-mb-2">Internal Approval</label>
+                      <p class="u-text-[11px] u-text-muted u-mb-3">As Supervisor, you must approve the content.</p>
+                      <button @click="approveMemo" class="button button--primary button--small u-w-full">Grant Minute Approval</button>
+                   </div>
+
+                   <div v-if="selectedMemo.status === 'approved' && isRegistrar && selectedMemo.sender_mda.id === user?.mda" class="u-p-4 u-bg-bg u-rounded-lg u-border">
+                      <label class="u-block u-text-[10px] u-font-black u-text-info u-uppercase u-mb-2">Registry Registration</label>
+                      <input v-model="registrationFileNumber" placeholder="File Ref (e.g. ICTA/5/2)" class="form__input u-mb-2">
+                      <button @click="registerMemo" class="button button--primary button--small u-w-full">Assign Ref & Register</button>
+                   </div>
+
+                   <div v-if="selectedMemo.status === 'registered' && canSign && selectedMemo.sender_mda.id === user?.mda" class="u-p-4 u-bg-bg u-rounded-lg u-border">
+                      <label class="u-block u-text-[10px] u-font-black u-text-success u-uppercase u-mb-2">Issuance & Signing</label>
+                      <button @click="signMemo" class="button button--success button--small u-w-full">Apply Digital Signature</button>
+                   </div>
+
+                   <div v-if="selectedMemo.status === 'actioning' && selectedMemo.recipient_mda === user?.mda" class="u-p-4 u-bg-bg u-rounded-lg u-border">
+                      <label class="u-block u-text-[10px] u-font-black u-text-primary u-uppercase u-mb-2">Action Assignment</label>
+                      <select v-model="assignmentData.user_id" class="form__input u-mb-2">
+                         <option v-for="staff in staffUsers" :key="staff.id" :value="staff.id">{{ staff.username }}</option>
+                      </select>
+                      <textarea v-model="assignmentData.instruction" placeholder="Instructions..." class="form__input u-mb-2" style="resize: none; height: 5rem"></textarea>
+                      <button @click="assignAction" class="button button--primary button--small u-w-full">Assign Task</button>
+                   </div>
+                </div>
+
+                <div v-if="selectedMemo.actions?.length > 0" class="u-flex u-flex-col u-gap-3">
+                  <h4 class="u-text-[10px] u-font-black u-text-muted u-uppercase u-tracking-widest">Tracked Actions</h4>
+                  <div v-for="action in selectedMemo.actions" :key="action.id" class="u-p-3 u-bg-bg u-rounded u-border u-text-[10px]">
+                     <p class="u-font-bold u-text-main">{{ action.assigned_to_details?.username }}</p>
+                     <p class="u-text-muted u-my-1">{{ action.instruction }}</p>
+                     <span :class="action.is_completed ? 'u-text-success' : 'u-text-warning u-font-bold'">{{ action.is_completed ? 'DONE' : 'PENDING' }}</span>
+                  </div>
+                </div>
              </div>
           </div>
        </div>
-    </Teleport>
+
+       <template #footer>
+          <div></div>
+          <button @click="selectedMemo = null" class="button button--secondary">Close Dossier</button>
+       </template>
+    </BaseModal>
   </div>
 </template>
 
@@ -348,6 +359,7 @@ import { ref, computed, onMounted } from 'vue';
 import api from '../../services/api';
 import { useAuthStore } from '../../store/auth';
 import { useMdaStore } from '../../store/mda';
+import BaseModal from '../Common/BaseModal.vue';
 
 const authStore = useAuthStore();
 const mdaStore = useMdaStore();

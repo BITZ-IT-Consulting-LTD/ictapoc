@@ -53,6 +53,8 @@ def seed_test_requests():
            )
 
     # Create Requests (Idempotent check)
+    # DEPRECATED: User requested to remove service request seeding data
+    """
     if ServiceRequest.objects.filter(service_config=svc_health).count() < 5:
         for i in range(5):
             # Health Requests
@@ -78,6 +80,9 @@ def seed_test_requests():
             )
     
     print(f"✅ Created 10 requests (5 MOH, 5 MOE).")
+    """
+    print("✅ Skipped service request seeding as per request.")
+
 
 if __name__ == "__main__":
     seed_test_requests()

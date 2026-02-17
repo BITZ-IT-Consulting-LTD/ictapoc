@@ -137,6 +137,8 @@ def seed_data():
         {
             'username': 'admin', 
             'email': 'admin@example.com', 
+            'first_name': 'System',
+            'last_name': 'Administrator',
             'role': 'admin', 
             'rbac': 'admin', 
             'is_staff': True, 
@@ -145,9 +147,12 @@ def seed_data():
         {
             'username': 'citizen1', 
             'email': 'citizen1@example.com', 
+            'first_name': 'James',
+            'last_name': 'Bond',
             'role': 'citizen', 
             'rbac': 'citizen',
             'id_number': '12345678',
+
             'saved_documents': [
                 {
                     "name": "Birth Certificate",
@@ -189,6 +194,8 @@ def seed_data():
         {
             'username': 'maggy1', 
             'email': 'maggy1@example.com', 
+            'first_name': 'Maggy',
+            'last_name': 'One',
             'role': 'citizen', 
             'rbac': 'citizen',
             'id_number': '555555',
@@ -217,8 +224,29 @@ def seed_data():
             ]
         },
         {
+            'username': 'mary',
+            'email': 'mary@example.com',
+            'first_name': 'Mary',
+            'last_name': 'Mother',
+            'role': 'citizen',
+            'rbac': 'citizen',
+            'id_number': 'ID-MOTHER-001'
+        },
+        {
+            'username': 'joseph',
+            'email': 'joseph@example.com',
+            'first_name': 'Joseph',
+            'last_name': 'Father',
+            'role': 'citizen',
+            'rbac': 'citizen',
+            'id_number': 'ID-FATHER-001'
+        },
+
+        {
             'username': 'officer1', 
             'email': 'officer1@example.com', 
+            'first_name': 'Officer',
+            'last_name': 'One',
             'role': 'officer', 
             'rbac': 'officer',
             'mda_name': 'Ministry of Interior'
@@ -226,6 +254,8 @@ def seed_data():
         {
             'username': 'officer2', 
             'email': 'officer2@example.com', 
+            'first_name': 'Officer',
+            'last_name': 'Two',
             'role': 'officer', 
             'rbac': 'registrar',
             'mda_name': 'Ministry of Interior'
@@ -233,18 +263,24 @@ def seed_data():
         {
             'username': 'supervisor1', 
             'email': 'supervisor1@example.com', 
+            'first_name': 'Supervisor',
+            'last_name': 'One',
             'role': 'supervisor', 
             'rbac': 'supervisor',
             'mda_name': 'Ministry of Interior'
         },
+
     ]
 
     for u_data in users:
         defaults = {
             'email': u_data['email'], 
+            'first_name': u_data.get('first_name', ''),
+            'last_name': u_data.get('last_name', ''),
             'role': u_data['role'],
             'id_number': u_data.get('id_number'),
         }
+
         if u_data.get('is_staff'):
             defaults['is_staff'] = True
         if u_data.get('is_superuser'):
@@ -266,6 +302,8 @@ def seed_data():
             print(f"Created user: {user.username}")
         else:
             user.user_role = rbac_role
+            user.first_name = u_data.get('first_name', user.first_name)
+            user.last_name = u_data.get('last_name', user.last_name)
             if u_data.get('id_number'):
                 user.id_number = u_data['id_number']
             if u_data.get('mda_name'):
@@ -273,6 +311,7 @@ def seed_data():
             if u_data.get('saved_documents'):
                 user.saved_documents = u_data['saved_documents']
             user.save()
+
             if u_data.get('is_superuser') and not user.is_superuser:
                 user.is_staff = True
                 user.is_superuser = True

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenya DSAP Architecture – Huduma Bridge (with NPKI & Decentralized Mediation)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f5f7fa;
+            color: #2c3e50;
+            padding: 10px 6px;
+            font-size: 14px;
+            line-height: 1.3;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+
+        .diagram { display: flex; flex-direction: column; gap: 6px; }
+
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+            border-left: 4px solid;
+        }
+        .section-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-desc {
+            font-size: 0.78rem;
+            color: #555;
+            margin-bottom: 8px;
+            padding-left: 28px;
+        }
+
+        .components {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 8px;
+        }
+        .component {
+            background: #f8f9ff;
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #e0e6ed;
+        }
+        .component i {
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+            display: block;
+            color: #3498db;
+        }
+        .component-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        .component-desc {
+            font-size: 0.73rem;
+            color: #555;
+        }
+
+        .arrow {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #3498db;
+            margin: 2px 0;
+            font-weight: bold;
+        }
+
+        .access { border-left-color: #7f8c8d; }
+        .mediation { border-left-color: #3498db; }
+        .pki     { border-left-color: #e67e22; }
+        .workflow { border-left-color: #9b59b6; }
+        .huduma  { border-left-color: #27ae60; } /* Green for Huduma brand */
+        .shared { border-left-color: #e74c3c; }
+        .innovation { border-left-color: #f39c12; }
+
+        .decentral-note {
+            text-align:center; margin-top:4px; font-size:0.78rem; color:#27ae60; font-style:italic; font-weight:bold;
+        }
+
+        .huduma-badge {
+            text-align:center; margin:8px 0; font-size:0.95rem; color:#27ae60; font-weight:bold; background:#e8f5e9; padding:6px; border-radius:6px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.73rem;
+            color: #7f8c8d;
+        }
+
+        @media (max-width: 768px) {
+            .components { grid-template-columns: repeat(2, 1fr); }
+            body { padding: 6px; }
+        }
+        @media (max-width: 480px) {
+            .components { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="diagram">
+            <!-- Access Channels -->
+            <div class="section access">
+                <div class="section-title"><i class="fas fa-users"></i> Access Channels</div>
+                <div class="components">
+                    <div class="component"><i class="fas fa-globe"></i><div class="component-title">Citizen/Business Portals</div></div>
+                    <div class="component"><i class="fas fa-mobile-alt"></i><div class="component-title">Mobile/USSD</div></div>
+                    <div class="component"><i class="fas fa-headset"></i><div class="component-title">Officer Workbench</div></div>
+                    <div class="component"><i class="fas fa-building"></i><div class="component-title">Service Centers</div></div>
+                </div>
+            </div>
+
+            <div class="arrow">↓</div>
+
+            <!-- Distributed Security Mediation -->
+            <div class="section mediation">
+                <div class="section-title"><i class="fas fa-shield-alt"></i> Distributed Security Mediation</div>
+                <div class="section-desc">Each agency runs its own Security Server for message signing, encryption, authentication & logging – no central data bottleneck</div>
+                <div class="components">
+                    <div class="component"><i class="fas fa-server"></i><div class="component-title">Agency Security Servers</div><div class="component-desc">On-premise/cloud per entity</div></div>
+                    <div class="component"><i class="fas fa-network-wired"></i><div class="component-title">Peer-to-Peer Exchange</div><div class="component-desc">Direct between servers</div></div>
+                    <div class="component"><i class="fas fa-chart-line"></i><div class="component-title">Distributed Observability</div><div class="component-desc">Local logs + central audit sync</div></div>
+                </div>
+                <div style="text-align:center; margin-top:4px; font-size:0.78rem; color:#3498db; font-style:italic;">
+                    Reduces centralization risks: No single point of failure for data flow
+                </div>
+            </div>
+
+            <div class="arrow">↓</div>
+
+            <!-- PKI / Trust Layer -->
+            <div class="section pki">
+                <div class="section-title"><i class="fas fa-certificate"></i> National PKI (NPKI) – Trust Foundation</div>
+                <div class="section-desc">Root CA (CA) + Government CA (ICTA) – issues & manages digital certificates for all Security Servers</div>
+                <div class="components">
+                    <div class="component"><i class="fas fa-lock"></i><div class="component-title">Digital Certificates</div><div class="component-desc">For authentication, signing & encryption</div></div>
+                    <div class="component"><i class="fas fa-key"></i><div class="component-title">Certificate Authority (GCA)</div><div class="component-desc">ICTA – Government trust anchor</div></div>
+                    <div class="component"><i class="fas fa-shield-virus"></i><div class="component-title">Root CA</div><div class="component-desc">Communications Authority – national root</div></div>
+                    <div class="component"><i class="fas fa-file-signature"></i><div class="component-title">Digital Signatures</div><div class="component-desc">Legally binding e-signatures</div></div>
+                </div>
+                <div style="text-align:center; margin-top:4px; font-size:0.78rem; color:#e67e22; font-style:italic;">
+                    Enables trust, non-repudiation & secure identity across all layers
+                </div>
+            </div>
+
+            <div class="arrow">↔ (PKI anchors security & identity for Huduma Bridge)</div>
+
+            <!-- Workflow Engine -->
+            <div class="section workflow">
+                <div class="section-title"><i class="fas fa-cogs"></i> Configurable Workflow Engine</div>
+                <div class="section-desc">Core automation with forms, workflow design & orchestration – certificate-backed auth</div>
+                <div class="components">
+                    <div class="component"><i class="fas fa-globe"></i><div class="component-title">eCitizen Portal</div><div class="component-desc">Unified web access</div></div>
+                    <div class="component"><i class="fas fa-mobile-alt"></i><div class="component-title">Mobile App</div><div class="component-desc">Biometrics & notifications</div></div>
+                    <div class="component"><i class="fas fa-comment-alt"></i><div class="component-title">USSD & SMS</div><div class="component-desc">Low-bandwidth access</div></div>
+                    <div class="component"><i class="fas fa-building"></i><div class="component-title">Service Centers</div><div class="component-desc">Assisted services</div></div>
+                </div>
+                <div style="text-align:center; margin-top:4px; font-size:0.78rem; color:#9b59b6; font-style:italic;">
+                    Huduma Bridge Secure Exchange – PKI signed/encrypted messages
+                </div>
+            </div>
+
+            <div class="arrow">↓</div>
+
+            <!-- Huduma Bridge -->
+            <div class="section huduma">
+                <div class="section-title"><i class="fas fa-sitemap"></i> Huduma Bridge</div>
+                <div class="huduma-badge">Kenya Secure Exchange Layer (KeSEL) – Secure Decentralized Data Exchange (X-Road Inspired)</div>
+                <div class="section-desc">Secure interoperability across agencies under Government Enterprise Architecture (GEA) – PKI trust backbone</div>
+                <div class="components">
+                    <div class="component"><i class="fas fa-lock"></i><div class="component-title">Secure Data Exchange</div><div class="component-desc">Encrypted pipelines, PKI signatures & audit – decentralized</div></div>
+                    <div class="component"><i class="fas fa-passport"></i><div class="component-title">Identity Federation</div><div class="component-desc">National ID / Digital ID via NPKI certificates</div></div>
+                    <div class="component"><i class="fas fa-book"></i><div class="component-title">Service Directory</div><div class="component-desc">API registry (distributed metadata)</div></div>
+                </div>
+                <div class="decentral-note">Fully Decentralized Exchange: Peer-to-Peer via Agency Security Servers (No central data hub)</div>
+            </div>
+
+            <div class="arrow">↓</div>
+
+            <!-- Shared Services -->
+            <div class="section shared">
+                <div class="section-title"><i class="fas fa-server"></i> Shared Services & Authoritative Registries</div>
+                <div class="section-desc">Reusable common services & master data sources via APIs – PKI-authenticated access</div>
+                <div class="components">
+                    <div class="component"><i class="fas fa-id-card"></i><div class="component-title">Maisha Namba / Master Population Register</div><div class="component-desc">National ID hub (IPRS/Maisha)</div></div>
+                    <div class="component"><i class="fas fa-baby"></i><div class="component-title">Civil Registration (Births/Deaths)</div><div class="component-desc">CRS – vital events & UPI source</div></div>
+                    <div class="component"><i class="fas fa-landmark"></i><div class="component-title">Land Registry</div><div class="component-desc">NLIMS – property & ownership</div></div>
+                    <div class="component"><i class="fas fa-heartbeat"></i><div class="component-title">NHIF / SHIF</div><div class="component-desc">Health insurance & coverage</div></div>
+                    <div class="component"><i class="fas fa-briefcase"></i><div class="component-title">NSSF</div><div class="component-desc">Social security & pensions</div></div>
+                    <div class="component"><i class="fas fa-car"></i><div class="component-title">NTSA / Drivers & Vehicles</div><div class="component-desc">Licenses & vehicle registry</div></div>
+                    <div class="component"><i class="fas fa-credit-card"></i><div class="component-title">Payment Hub</div><div class="component-desc">M-Pesa, banks, cards, payment aggregators/gateways</div></div>
+                    <div class="component"><i class="fas fa-university"></i><div class="component-title">Business Registry</div><div class="component-desc">Company data (BRS)</div></div>
+                    <div class="component"><i class="fas fa-gavel"></i><div class="component-title">Other Authoritative Registries</div><div class="component-desc">IEBC (voters), Judiciary (cases), DCI (criminal), etc.</div></div>
+                    <div class="component"><i class="fas fa-file-alt"></i><div class="component-title">EDMRS</div><div class="component-desc">Electronic Document & Records Management System – secure archiving & workflows</div></div>
+                </div>
+            </div>
+
+            <div class="arrow">↓</div>
+
+            <!-- Innovation -->
+            <div class="section innovation">
+                <div class="section-title"><i class="fas fa-lightbulb"></i> Innovation Sandbox & Ecosystem</div>
+                <div class="section-desc">Tools for developers and innovators – PKI test certificates available</div>
+                <div class="components">
+                    <div class="component"><i class="fas fa-code"></i><div class="component-title">API Marketplace</div><div class="component-desc">Docs & catalog</div></div>
+                    <div class="component"><i class="fas fa-vial"></i><div class="component-title">Testing Sandbox</div><div class="component-desc">Sample data + PKI certs</div></div>
+                    <div class="component"><i class="fas fa-trophy"></i><div class="component-title">Challenges</div><div class="component-desc">Funding & support</div></div>
+                    <div class="component"><i class="fas fa-hands-helping"></i><div class="component-title">Developer Support</div><div class="component-desc">SDKs & training</div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Kenya Digital Service Automation Platform • Huduma Bridge – Secure Decentralized Exchange Layer<br>
+            Ministry of ICT • Vision 2030 • Integrated with National PKI (NPKI) & Authoritative Registries<br>
+            Connecting Services, Empowering Lives
+        </div>
+    </div>
+</body>
+</html>

@@ -1,184 +1,180 @@
 <template>
-  <div class="o-page">
-    <div v-if="service" class="u-animate-slide">
-      <!-- Glass Header -->
-      <div
-        class="u-glass p-8 rounded-2xl mb-8 shadow-xl border-indigo-100 flex flex-col md:flex-row justify-between items-center gap-6">
-        <div class="text-left">
-          <h1 class="text-3xl font-bold text-slate-900 mb-2">{{ service.service_name }}</h1>
-          <p class="text-slate-500 font-medium">Authoritative Government Service Application</p>
+  <main class="page service-application-page">
+    <div v-if="service" class="animate-fade-in space-y-8">
+      <!-- Premium Glass Header -->
+      <header
+        class="page__header page__header--glass p-8 rounded-3xl shadow-2xl border border-white/40 flex flex-col md:flex-row justify-between items-center gap-8 bg-white/40 backdrop-blur-xl">
+        <div class="page__title-group">
+          <h1 class="page__title text-3xl">{{ service.service_name }}</h1>
+          <p class="page__subtitle font-black uppercase tracking-[0.2em] text-indigo-500">Authoritative Institutional
+            Gateway</p>
         </div>
-        <div class="flex items-center gap-4 bg-white/50 p-2 rounded-xl border border-white">
-          <div class="w-12 h-12 bg-indigo-600 rounded-lg flex items-center justify-center text-white shadow-lg">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
+        <div class="flex items-center gap-4 bg-white/60 p-3 rounded-2xl border border-white shadow-sm">
+          <div class="w-14 h-14 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg">
+            <i class="bi bi-shield-lock-fill text-2xl"></i>
           </div>
           <div>
-            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Digital Trust</div>
-            <div class="text-sm font-bold text-indigo-900">Verified identity required</div>
+            <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">National Trust Level</div>
+            <div class="text-sm font-black text-indigo-900">Verified Identity Required</div>
           </div>
         </div>
-      </div>
+      </header>
 
       <!-- Wizard Progress -->
-      <div v-if="formSteps.length > 1" class="c-wizard-progress px-10">
-        <div v-for="(step, index) in formSteps" :key="index" class="c-wizard-step"
-          :class="{ 'c-wizard-step--active': currentStepIndex === index, 'c-wizard-step--completed': currentStepIndex > index }">
-          <div class="c-wizard-dot">
+      <section v-if="formSteps.length > 1" class="wizard px-10">
+        <div v-for="(step, index) in formSteps" :key="index" class="wizard__step"
+          :class="{ 'wizard__step--active': currentStepIndex === index, 'wizard__step--completed': currentStepIndex > index }">
+          <div class="wizard__dot">
             <template v-if="currentStepIndex > index">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
-              </svg>
+              <i class="bi bi-check-lg text-lg"></i>
             </template>
             <template v-else>{{ index + 1 }}</template>
           </div>
-          <span class="c-wizard-label hidden md:block">{{ step.title }}</span>
+          <span class="wizard__label">{{ step.title }}</span>
         </div>
-      </div>
+      </section>
 
       <!-- Form Body -->
-      <div class="c-card u-glass border-none shadow-2xl relative overflow-visible">
-        <div class="c-card__body p-10">
-          <form @submit.prevent="handleSubmit" class="space-y-8">
-            <div v-if="currentStep" class="u-animate-slide" :key="currentStepIndex">
-              <div class="mb-8">
-                <h2 class="text-2xl font-bold text-slate-900">{{ currentStep.title }}</h2>
-                <p v-if="currentStep.description" class="text-slate-500 mt-1">{{ currentStep.description }}</p>
-                <div class="h-1 w-20 bg-indigo-600 mt-4 rounded-full"></div>
+      <div class="card card--glass border-0 shadow-2xl overflow-visible">
+        <div class="card__body p-10">
+          <form @submit.prevent="handleSubmit" class="form space-y-10">
+            <div v-if="currentStep" class="animate-slide-in" :key="currentStepIndex">
+              <div class="mb-10 border-b pb-6 border-slate-100">
+                <h2 class="text-2xl font-black text-gray-900 mb-2">{{ currentStep.title }}</h2>
+                <p v-if="currentStep.description" class="text-slate-500 text-sm italic">{{ currentStep.description }}
+                </p>
               </div>
 
-              <div class="space-y-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Explicit Field Rendering for maximal reliability -->
-                <div v-for="key in currentStep.fields" :key="key" class="c-field">
-                  <label :for="key" class="c-field__label flex items-center justify-between">
-                    <span>{{ schema.properties[key].title }}</span>
+                <div v-for="key in currentStep.fields" :key="key" class="form__group"
+                  :class="{ 'md:col-span-2': schema.properties[key].format === 'textarea' || schema.properties[key].widget === 'checkbox-group' }">
+
+                  <div class="flex justify-between items-center mb-2">
+                    <label :for="key" class="form__label mb-0">
+                      {{ schema.properties[key].title }}
+                    </label>
                     <span v-if="isRequired(key)"
-                      class="text-[10px] text-rose-500 font-bold bg-rose-50 px-1.5 py-0.5 rounded">REQUIRED</span>
-                  </label>
+                      class="badge badge--danger badge--small scale-75 origin-right">MANDATORY</span>
+                  </div>
 
                   <!-- Select / Dropdown -->
-                  <select v-if="schema.properties[key].enum" :id="key" v-model="formData[key]"
-                    class="c-select w-full outline-none focus:ring-2 focus:ring-indigo-500/20"
+                  <select v-if="schema.properties[key].enum" :id="key" v-model="formData[key]" class="form__select"
                     :class="{ 'opacity-60 bg-slate-100 cursor-not-allowed': schema.properties[key].readOnly }"
                     :disabled="schema.properties[key].readOnly" :required="isRequired(key)">
-                    <option value="" disabled>Select option...</option>
+                    <option value="" disabled>Select authoritative option...</option>
                     <option v-for="opt in schema.properties[key].enum" :key="opt" :value="opt">{{ opt }}</option>
                   </select>
 
                   <!-- File Upload -->
-                  <label v-else-if="schema.properties[key].format === 'data-url'"
-                    class="c-file-upload group h-32 flex flex-col justify-center items-center bg-indigo-50/20 border-indigo-200 border-2 border-dashed rounded-xl hover:bg-indigo-50 hover:border-indigo-400 transition-all cursor-pointer">
-                    <input type="file" @change="handleFileUpload($event, key)" class="hidden">
-                    <svg class="w-8 h-8 text-indigo-400 mb-2 group-hover:scale-110 transition-transform" fill="none"
-                      stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                    </svg>
-                    <span class="text-indigo-600 font-bold text-sm">
-                      {{ formData[key]?.name || 'Upload document' }}
+                  <div v-else-if="schema.properties[key].format === 'data-url'"
+                    class="relative group h-32 flex flex-col justify-center items-center bg-indigo-50/20 border-indigo-200 border-2 border-dashed rounded-2xl hover:bg-white hover:border-primary transition-all cursor-pointer">
+                    <input type="file" @change="handleFileUpload($event, key)"
+                      class="absolute inset-0 opacity-0 cursor-pointer z-10">
+                    <i
+                      class="bi bi-cloud-arrow-up text-3xl text-indigo-400 mb-2 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-indigo-600 font-black text-xs uppercase tracking-widest">
+                      {{ formData[key]?.name || 'Attach Digital Copy' }}
                     </span>
-                  </label>
+                  </div>
 
                   <!-- Textarea -->
                   <textarea v-else-if="schema.properties[key].format === 'textarea'" :id="key" v-model="formData[key]"
-                    class="c-editor h-32 w-full outline-none focus:ring-2 focus:ring-indigo-500/20"
+                    class="form__input form__textarea h-40"
                     :class="{ 'opacity-60 bg-slate-100 cursor-not-allowed': schema.properties[key].readOnly }"
-                    :disabled="schema.properties[key].readOnly" :required="isRequired(key)"></textarea>
+                    :disabled="schema.properties[key].readOnly" :required="isRequired(key)"
+                    placeholder="Enter detailed records..."></textarea>
 
                   <!-- Radio Buttons -->
-                  <div v-else-if="schema.properties[key].widget === 'radio'" class="flex gap-4 p-2">
+                  <div v-else-if="schema.properties[key].widget === 'radio'"
+                    class="flex gap-6 p-2 bg-gray-50 rounded-xl border border-gray-100">
                     <label v-for="opt in schema.properties[key].enum" :key="opt"
-                      class="flex items-center gap-2 cursor-pointer">
+                      class="flex items-center gap-3 cursor-pointer group">
                       <input type="radio" :name="key" :value="opt" v-model="formData[key]"
-                        class="w-4 h-4 accent-indigo-600">
-                      <span class="text-sm text-slate-600">{{ opt }}</span>
+                        class="w-5 h-5 accent-primary cursor-pointer">
+                      <span
+                        class="text-xs font-bold text-slate-600 uppercase tracking-tight group-hover:text-primary transition-colors">{{
+                          opt }}</span>
                     </label>
                   </div>
 
                   <!-- Checkbox Group (Multi-select) -->
                   <div v-else-if="schema.properties[key].widget === 'checkbox-group'"
-                    class="grid grid-cols-2 gap-3 p-2">
+                    class="grid grid-cols-2 lg:grid-cols-3 gap-4 p-2">
                     <label v-for="opt in (schema.properties[key].items?.enum || schema.properties[key].enum)" :key="opt"
-                      class="flex items-center gap-2 cursor-pointer p-3 bg-slate-50 border border-slate-200 rounded-lg hover:bg-white transition-all">
+                      class="flex items-center gap-3 cursor-pointer p-4 bg-gray-50 border border-gray-100 rounded-2xl hover:bg-white hover:border-primary transition-all group"
+                      :class="{ 'bg-white border-primary !border-2 shadow-sm': formData[key]?.includes(opt) }">
                       <input type="checkbox" :value="opt" v-model="formData[key]"
-                        class="w-4 h-4 accent-indigo-600 rounded">
-                      <span class="text-xs font-medium text-slate-700">{{ opt }}</span>
+                        class="w-5 h-5 accent-primary rounded cursor-pointer">
+                      <span
+                        class="text-xs font-black text-slate-700 uppercase tracking-tighter group-hover:text-primary transition-colors">{{
+                          opt }}</span>
                     </label>
                   </div>
 
                   <!-- Boolean Checkbox (Single) -->
                   <label v-else-if="schema.properties[key].type === 'boolean'"
-                    class="flex items-center gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-100">
-                    <input type="checkbox" class="w-5 h-5 accent-indigo-600" v-model="formData[key]"
+                    class="flex items-center gap-4 p-6 bg-gray-50 border border-gray-100 rounded-2xl cursor-pointer hover:bg-white hover:border-primary transition-all group"
+                    :class="{ 'bg-white border-primary !border-2 shadow-sm': formData[key] }">
+                    <input type="checkbox" class="w-6 h-6 accent-primary rounded cursor-pointer" v-model="formData[key]"
                       :required="isRequired(key)">
-                    <span class="text-sm font-medium text-slate-700">{{ schema.properties[key].title }}</span>
+                    <span
+                      class="text-xs font-black text-slate-700 uppercase tracking-widest group-hover:text-primary transition-colors">{{
+                        schema.properties[key].title }}</span>
                   </label>
 
                   <!-- Standard Input (Date, Number, Text) with Lookup Support -->
-                  <div class="relative flex gap-2">
+                  <div v-else class="relative flex gap-2">
                     <input :type="getFieldType(schema.properties[key])" :id="key" v-model="formData[key]"
-                      class="c-input flex-1 outline-none focus:ring-2 focus:ring-indigo-500/20"
-                      :class="{ 'opacity-60 bg-slate-100 cursor-not-allowed': schema.properties[key].readOnly }"
+                      class="form__input flex-1"
+                      :class="{ 'opacity-60 bg-gray-50 cursor-not-allowed': schema.properties[key].readOnly }"
                       :required="isRequired(key)" :placeholder="schema.properties[key].title"
                       :disabled="schema.properties[key].readOnly" @input="clearVerification(key)">
                     <button v-if="schema.properties[key].lookup_service" type="button"
                       @click="performLookup(key, schema.properties[key])"
-                      class="px-4 py-2 bg-indigo-50 text-indigo-600 rounded-xl text-xs font-bold hover:bg-indigo-100 transition-colors whitespace-nowrap flex items-center gap-1">
-                      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                      Fetch Record
+                      class="button button--secondary button--small whitespace-nowrap">
+                      <i class="bi bi-search me-1"></i> Fetch Record
                     </button>
                   </div>
 
-                  <p v-if="schema.properties[key].description" class="text-xs text-slate-400 mt-1">
-                    {{ schema.properties[key].description }}
+                  <p v-if="schema.properties[key].description" class="text-[10px] text-slate-400 mt-2 italic">
+                    <i class="bi bi-info-circle me-1"></i> {{ schema.properties[key].description }}
                   </p>
                 </div>
               </div>
             </div>
 
             <!-- Navigation -->
-            <div class="flex items-center justify-between pt-10 border-t border-slate-100 mt-10">
+            <footer class="flex items-center justify-between pt-10 border-t border-slate-100 mt-10">
               <button type="button" v-if="currentStepIndex > 0" @click="prevStep"
-                class="px-8 py-3 bg-slate-100 text-slate-600 rounded-xl font-bold hover:bg-slate-200 transition-all flex items-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                </svg>
-                Back
+                class="button button--secondary button--pill">
+                <i class="bi bi-arrow-left me-2"></i> Previous Section
               </button>
               <div v-else></div>
 
               <button v-if="currentStepIndex < formSteps.length - 1" type="button" @click="handleNext"
-                class="px-10 py-3 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 shadow-lg shadow-indigo-200 transition-all flex items-center gap-2">
-                Continue
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
+                class="button button--primary button--pill px-12">
+                Continue to Next Stage <i class="bi bi-arrow-right ms-2"></i>
               </button>
 
               <button v-else type="submit"
-                class="px-12 py-4 bg-emerald-600 text-white rounded-xl font-bold hover:bg-emerald-700 shadow-lg shadow-emerald-200 transition-all flex items-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
-                Finalize & Submit
+                class="button button--primary button--pill px-16 bg-emerald-600 hover:bg-emerald-700 border-emerald-600 shadow-xl shadow-emerald-100">
+                <i class="bi bi-shield-check me-2 text-lg"></i> Finalize & Commit Application
               </button>
-            </div>
+            </footer>
           </form>
         </div>
       </div>
     </div>
 
     <!-- Loading State -->
-    <div v-else class="flex flex-col items-center justify-center py-20">
-      <div class="w-16 h-16 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin mb-4"></div>
-      <p class="text-slate-500 font-bold animate-pulse">Initializing Secure Portal...</p>
+    <div v-else class="flex flex-col items-center justify-center py-40">
+      <div class="w-16 h-16 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin mb-6"></div>
+      <p class="text-xs font-black uppercase tracking-[0.4em] text-indigo-500 animate-pulse">Initializing Secure
+        Portal...
+      </p>
     </div>
-  </div>
+  </main>
 </template>
 
 <script setup>

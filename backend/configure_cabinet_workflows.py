@@ -101,6 +101,8 @@ def configure():
     # Generate test users if missing
     # ... logic already handled in seed_priority_mdas but let's ensure we have some specific ones
     
+    # DEPRECATED: User requested clean slate without sample applications.
+    """
     # Generate Sample Data (5 instances per workflow)
     citizen = User.objects.filter(role='citizen').first()
     if not citizen:
@@ -117,6 +119,9 @@ def configure():
                 payload={"sample_id": i, "notes": "POC Automated Test Entry"}
             )
     print("Sample test data generated.")
+    """
+    print("✅ Sample test data generation skipped.")
+
 
 if __name__ == "__main__":
     configure()

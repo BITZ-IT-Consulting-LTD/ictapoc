@@ -1,351 +1,1035 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-slate-50 relative overflow-hidden">
-    <!-- Decorative Background Elements -->
-    <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
-      <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-200/30 rounded-full blur-3xl animate-pulse"></div>
-      <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-200/30 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+  <main class="login-page">
+    <!-- Skip Link for Accessibility -->
+    <a href="#login-form" class="skip-link">Skip to login form</a>
+
+    <!-- Decorative Background -->
+    <div class="login-page__background">
+      <div class="login-page__blob login-page__blob--primary"></div>
+      <div class="login-page__blob login-page__blob--success"></div>
     </div>
 
-    <div class="w-full max-w-5xl z-10 grid grid-cols-1 md:grid-cols-2 gap-0 shadow-2xl rounded-2xl overflow-hidden animate-fade-in-up">
-      
-      <!-- Left Panel: Branding & Information -->
-      <div class="bg-gradient-to-br from-indigo-900 to-slate-900 p-12 text-white flex flex-col justify-between relative">
-        <div class="absolute inset-0 bg-[url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonalds_Golden_Arches.svg/1024px-McDonalds_Golden_Arches.svg.png')] bg-cover opacity-5"></div> <!-- Placeholder Pattern -->
-        
-        <div>
-           <div class="flex items-center gap-3 mb-8">
-              <div class="w-12 h-12 bg-white/10 backdrop-blur rounded-lg flex items-center justify-center border border-white/20">
-                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+    <div class="login-container">
+      <div class="login-card">
+        <!-- Left Panel: Branding -->
+        <section class="login-brand">
+          <div class="login-brand__pattern"></div>
+
+          <div class="login-brand__content">
+            <header class="login-brand__header">
+              <div class="login-brand__logo">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
               </div>
               <div>
-                <h1 class="font-bold text-xl tracking-wide uppercase">Huduma Digital</h1>
-                <p class="text-indigo-200 text-xs">Republic of Kenya</p>
+                <h1 class="login-brand__title">Huduma Digital</h1>
+                <p class="login-brand__subtitle">Republic of Kenya</p>
               </div>
-           </div>
-           
-           <h2 class="text-4xl font-bold mb-6 leading-tight">Secure Access to Government Services</h2>
-           <p class="text-indigo-100/80 leading-relaxed mb-8">
-             Access over 5,000 government services securely using your Maisha Digital ID or Government PKI credentials.
-           </p>
+            </header>
 
-           <div class="space-y-4">
-              <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/10">
-                <div class="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
-                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <h2 class="login-brand__hero">Secure Access to Government Services</h2>
+            <p class="login-brand__description">
+              Access over 5,000 government services securely using your Maisha Digital ID or Government PKI credentials.
+              One platform for all your civic needs.
+            </p>
+
+            <div class="login-features">
+              <div class="login-feature">
+                <div class="login-feature__icon login-feature__icon--success">
+                  <i class="bi bi-shield-lock-fill"></i>
                 </div>
                 <div>
-                  <div class="font-bold text-sm">Verified Identity</div>
-                  <div class="text-xs text-indigo-200">Biometric & PKI Security</div>
+                  <div class="login-feature__title">Verified Identity</div>
+                  <div class="login-feature__desc">Biometric & PKI Security</div>
                 </div>
               </div>
 
-              <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/10">
-                 <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
-                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
+              <div class="login-feature">
+                <div class="login-feature__icon login-feature__icon--info">
+                  <i class="bi bi-lightning-charge-fill"></i>
                 </div>
                 <div>
-                  <div class="font-bold text-sm">Single Sign-On</div>
-                  <div class="text-xs text-indigo-200">One credential for all MDAs</div>
+                  <div class="login-feature__title">Single Sign-On</div>
+                  <div class="login-feature__desc">One credential for all MDAs</div>
                 </div>
               </div>
-           </div>
-        </div>
 
-        <div class="text-xs text-indigo-400 mt-12">
-          &copy; 2026 ICT Authority. All Rights Reserved.
-        </div>
-      </div>
-
-      <!-- Right Panel: Login Methods -->
-      <div class="bg-white p-12 flex flex-col justify-center relative">
-        <div class="absolute top-4 right-4 group">
-           <button @click="showLegacy = !showLegacy" class="text-slate-300 hover:text-slate-500 transition-colors">
-             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-           </button>
-           <div class="absolute right-0 top-8 bg-slate-800 text-white text-xs p-2 rounded hidden group-hover:block w-32 text-center z-50">
-             Toggle Developer Login
-           </div>
-        </div>
-
-        <div v-if="!showLegacy" class="max-w-sm mx-auto w-full">
-           <h3 class="text-2xl font-bold text-slate-800 mb-2">Welcome Back</h3>
-           <p class="text-slate-500 mb-8">Choose your secure login method</p>
-
-           <!-- SSO Login Button -->
-           <button @click="startSSOFlow" class="w-full group relative flex items-center justify-between p-4 mb-4 bg-indigo-50 border-2 border-indigo-100 rounded-xl hover:bg-indigo-600 hover:border-indigo-600 hover:shadow-lg transition-all duration-300">
-             <div class="flex items-center gap-4">
-                <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm group-hover:bg-indigo-500">
-                  <svg class="w-6 h-6 text-indigo-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <div class="login-feature">
+                <div class="login-feature__icon login-feature__icon--warning">
+                  <i class="bi bi-clock-history"></i>
                 </div>
-                <div class="text-left">
-                  <div class="font-bold text-slate-700 group-hover:text-white">Maisha Digital ID</div>
-                  <div class="text-xs text-slate-500 group-hover:text-indigo-100">Citizen & Resident SSO</div>
+                <div>
+                  <div class="login-feature__title">24/7 Availability</div>
+                  <div class="login-feature__desc">Access services anytime</div>
                 </div>
-             </div>
-             <svg class="w-5 h-5 text-slate-300 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-           </button>
-
-           <!-- PKI Login Button -->
-           <button @click="startPKIFlow" class="w-full group relative flex items-center justify-between p-4 mb-8 bg-slate-50 border-2 border-slate-100 rounded-xl hover:bg-slate-800 hover:border-slate-800 hover:shadow-lg transition-all duration-300">
-             <div class="flex items-center gap-4">
-                <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm group-hover:bg-slate-700">
-                  <svg class="w-6 h-6 text-slate-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" /></svg>
-                </div>
-                <div class="text-left">
-                  <div class="font-bold text-slate-700 group-hover:text-white">Gov PKI / Smart Card</div>
-                  <div class="text-xs text-slate-500 group-hover:text-slate-300">Officers & Government Staff</div>
-                </div>
-             </div>
-             <svg class="w-5 h-5 text-slate-300 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-           </button>
-
-           <div class="text-center text-xs text-slate-400 mb-8">
-              <span class="inline-flex items-center gap-1">
-                <svg class="w-3 h-3 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
-                System Operational
-              </span>
-              <span class="mx-2">•</span>
-              <span class="hover:underline cursor-pointer">Help & Support</span>
-           </div>
-
-           <!-- Quick Login Section -->
-           <div class="border-t border-slate-100 pt-6">
-               <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-                   <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                   POC Quick Access (RBAC Testing)
-               </p>
-               <div class="grid grid-cols-2 gap-2">
-                   <button @click="quickLogin('global.officer')" class="text-[10px] bg-indigo-50 text-indigo-700 font-bold py-2 rounded-lg hover:bg-indigo-100 transition-colors border border-indigo-100">Global Officer</button>
-                   <button @click="quickLogin('global.supervisor')" class="text-[10px] bg-indigo-50 text-indigo-700 font-bold py-2 rounded-lg hover:bg-indigo-100 transition-colors border border-indigo-100">Global Supervisor</button>
-                   <button @click="quickLogin('moh.officer')" class="text-[10px] bg-emerald-50 text-emerald-700 font-bold py-2 rounded-lg hover:bg-emerald-100 transition-colors border border-emerald-100">MOH Officer</button>
-                   <button @click="quickLogin('moh.supervisor')" class="text-[10px] bg-emerald-50 text-emerald-700 font-bold py-2 rounded-lg hover:bg-emerald-100 transition-colors border border-emerald-100">MOH Supervisor</button>
-                   <button @click="quickLogin('moe.officer')" class="text-[10px] bg-blue-50 text-blue-700 font-bold py-2 rounded-lg hover:bg-blue-100 transition-colors border border-blue-100">MOE Officer</button>
-                   <button @click="quickLogin('maggy1')" class="text-[10px] bg-slate-100 text-slate-700 font-bold py-2 rounded-lg hover:bg-slate-200 transition-colors border border-slate-200">Citizen (Maggy)</button>
-               </div>
-           </div>
-        </div>
-
-        <!-- Legacy Login Form (Hidden by default, for fallback) -->
-        <div v-else class="max-w-sm mx-auto w-full animate-fade-in">
-           <div class="flex items-center justify-between mb-6">
-              <h3 class="text-xl font-bold text-slate-800">System Login</h3>
-              <button @click="showLegacy = false" class="text-sm text-slate-500 hover:text-indigo-600">Back to SSO</button>
-           </div>
-           
-           <form @submit.prevent="handleLegacyLogin">
-              <div class="mb-4">
-                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Username / Email</label>
-                <input type="text" v-model="username" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500/20 outline-none transition-all" required>
               </div>
-              <div class="mb-6">
-                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Password</label>
-                <input type="password" v-model="password" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500/20 outline-none transition-all" required>
-              </div>
-              <button type="submit" class="w-full bg-slate-800 text-white py-3 rounded-lg font-bold hover:bg-slate-700 hover:shadow-lg transition-all">
-                Authenticate
+            </div>
+          </div>
+
+          <footer class="login-brand__footer">
+            © 2026 ICT Authority • National GOK Enterprise Platform
+          </footer>
+        </section>
+
+        <!-- Right Panel: Authentication -->
+        <section class="login-auth" id="login-form">
+          <!-- Developer Toggle -->
+          <button @click="showLegacy = !showLegacy" class="dev-toggle" aria-label="Toggle developer login"
+            title="Toggle Developer Login">
+            <i class="bi bi-terminal"></i>
+          </button>
+
+          <!-- SSO/PKI Login Options -->
+          <div v-if="!showLegacy" class="auth-options">
+            <header class="auth-header">
+              <h3 class="auth-title">Portal Gateway</h3>
+              <p class="auth-subtitle">Select your secure authentication method</p>
+            </header>
+
+            <div class="auth-buttons">
+              <!-- SSO Login -->
+              <button @click="startSSOFlow" class="auth-button auth-button--primary"
+                aria-label="Login with Maisha Digital ID">
+                <div class="auth-button__content">
+                  <div class="auth-button__icon auth-button__icon--primary">
+                    <i class="bi bi-person-badge-fill"></i>
+                  </div>
+                  <div class="auth-button__text">
+                    <div class="auth-button__title">Maisha Digital ID</div>
+                    <div class="auth-button__subtitle">Citizen & Resident SSO</div>
+                  </div>
+                </div>
+                <i class="bi bi-arrow-right auth-button__arrow"></i>
               </button>
-              <div class="mt-4 text-center">
-                <router-link to="/register" class="text-sm text-indigo-600 font-bold hover:text-indigo-500">
-                    Register New Account
+
+              <!-- PKI Login -->
+              <button @click="startPKIFlow" class="auth-button auth-button--secondary"
+                aria-label="Login with Government PKI Smart Card">
+                <div class="auth-button__content">
+                  <div class="auth-button__icon auth-button__icon--secondary">
+                    <i class="bi bi-cpu-fill"></i>
+                  </div>
+                  <div class="auth-button__text">
+                    <div class="auth-button__title">Gov PKI / Smart Card</div>
+                    <div class="auth-button__subtitle">Staff & Officer Token</div>
+                  </div>
+                </div>
+                <i class="bi bi-arrow-right auth-button__arrow"></i>
+              </button>
+            </div>
+
+            <!-- System Status -->
+            <div class="system-status">
+              <span class="badge badge--success">
+                <i class="bi bi-check-circle-fill"></i> System Operational
+              </span>
+              <span class="system-status__separator">|</span>
+              <button class="button button--ghost button--small">Registry Support</button>
+            </div>
+
+            <!-- Quick Access -->
+            <div class="quick-access">
+              <p class="quick-access__title">
+                <i class="bi bi-lightning-fill"></i> Architectural Pilot Quick Access
+              </p>
+              <div class="quick-access__grid">
+                <button @click="quickLogin('global.officer')" class="quick-button">Global Officer</button>
+                <button @click="quickLogin('global.supervisor')" class="quick-button">Global Supervisor</button>
+                <button @click="quickLogin('moh.officer')" class="quick-button">MOH Officer</button>
+                <button @click="quickLogin('moe.officer')" class="quick-button">MOE Officer</button>
+                <button @click="quickLogin('maggy1')" class="quick-button quick-button--full">Mock Citizen
+                  (Maggy)</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Legacy Login Form -->
+          <div v-else class="legacy-login">
+            <header class="legacy-header">
+              <h3 class="auth-title">Authenticator</h3>
+              <button @click="showLegacy = false" class="button button--ghost button--small">
+                <i class="bi bi-arrow-left"></i> Use SSO
+              </button>
+            </header>
+
+            <form @submit.prevent="handleLegacyLogin" class="form">
+              <div class="form__group">
+                <label for="username" class="form__label form__label--required">Identity Identifier</label>
+                <input id="username" type="text" v-model="username" class="form__input" required aria-required="true"
+                  placeholder="UID / Registered Email">
+              </div>
+
+              <div class="form__group">
+                <label for="password" class="form__label form__label--required">Security Key</label>
+                <input id="password" type="password" v-model="password" class="form__input" required
+                  aria-required="true" placeholder="••••••••">
+              </div>
+
+              <div v-if="errorMessage" class="status-message status-message--error" role="alert">
+                <i class="bi bi-shield-exclamation" aria-hidden="true"></i>
+                <span>{{ errorMessage }}</span>
+              </div>
+
+              <button type="submit" class="button button--primary w-full">
+                Establish Session
+              </button>
+
+              <div class="text-center mt-4">
+                <router-link to="/register" class="link link--primary">
+                  Require System Credentials? <span class="link--underline">Register Account</span>
                 </router-link>
               </div>
-              <p v-if="errorMessage" class="mt-4 text-sm text-rose-500 text-center bg-rose-50 p-2 rounded border border-rose-100">{{ errorMessage }}</p>
-           </form>
+            </form>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- SSO Modal -->
+    <BaseModal v-model:show="ssoModalOpen" title="Maisha Namba Identity Federation"
+      subtitle="Federated authentication for GOK Digital Services" icon="bi-person-badge" size="md">
+      <div class="modal-content">
+        <div class="identity-list">
+          <button @click="simulateSSOLogin('maggy1', 'citizen')" class="identity-card">
+            <div class="identity-card__avatar identity-card__avatar--success">M</div>
+            <div class="identity-card__info">
+              <div class="identity-card__name">Maggy One</div>
+              <div class="identity-card__meta">Verified Citizen • ID 555555</div>
+            </div>
+            <i class="bi bi-chevron-right identity-card__arrow"></i>
+          </button>
+
+          <button @click="simulateSSOLogin('citizen1', 'citizen')" class="identity-card">
+            <div class="identity-card__avatar identity-card__avatar--success">C</div>
+            <div class="identity-card__info">
+              <div class="identity-card__name">Test Citizen</div>
+              <div class="identity-card__meta">Registry Sample • ID 100</div>
+            </div>
+            <i class="bi bi-chevron-right identity-card__arrow"></i>
+          </button>
+
+          <div class="identity-divider">
+            <span>Institutional Staff</span>
+          </div>
+
+          <button @click="simulateSSOLogin('officer1', 'officer')" class="identity-card">
+            <div class="identity-card__avatar identity-card__avatar--info">O</div>
+            <div class="identity-card__info">
+              <div class="identity-card__name">Officer One</div>
+              <div class="identity-card__meta">Civil Registration Specialist</div>
+            </div>
+            <i class="bi bi-chevron-right identity-card__arrow"></i>
+          </button>
         </div>
       </div>
-    </div>
+      <template #footer>
+        <span class="modal-footer-text">
+          <i class="bi bi-lock-fill"></i> Secure OpenID Connect Handshake Active
+        </span>
+      </template>
+    </BaseModal>
 
-    <!-- SIMULATION MODALS -->
-    
-    <!-- 1. SSO Identity Provider Simulation -->
-    <div v-if="ssoModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/80 backdrop-blur-sm animate-fade-in">
-      <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden transform scale-100 transition-all">
-         <!-- IdP Header -->
-         <div class="bg-[#009639] p-4 text-white flex items-center justify-between">
-            <div class="flex items-center gap-2">
-               <!-- Kenya Flag Colors Simulation -->
-               <div class="h-4 w-6 bg-black border border-white/20"></div> 
-               <span class="font-bold tracking-wide">Maisha Namba Identity Provider</span>
+    <!-- PKI Modal -->
+    <BaseModal v-model:show="pkiModalOpen"
+      :title="pkiPhase === 'scanning' ? 'Communicating with Smart Card...' : 'Cryptographic Proof Verified'"
+      subtitle="Validating institutional private key residency" icon="bi-shield-shaded" size="sm">
+      <div class="pki-container">
+        <!-- Scanning Phase -->
+        <div v-if="pkiPhase === 'scanning'" class="pki-scanning">
+          <div class="pki-scanner">
+            <div class="pki-scanner__ping"></div>
+            <div class="pki-scanner__icon">
+              <i class="bi bi-cpu"></i>
             </div>
-            <button @click="ssoModalOpen = false" class="text-white/70 hover:text-white">&times;</button>
-         </div>
-         
-         <div class="p-8">
-            <h3 class="text-lg font-bold text-slate-800 mb-2">Select Digital Identity</h3>
-            <p class="text-sm text-slate-500 mb-6">Redirected from <strong>Huduma Service Portal</strong>. Choose an identity to continue.</p>
-            
-            <div class="space-y-3">
-               <button @click="simulateSSOLogin('maggy1', 'citizen')" class="w-full flex items-center gap-4 p-3 border border-slate-200 rounded-xl hover:bg-emerald-50 hover:border-emerald-200 transition-colors text-left group">
-                  <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-500 group-hover:bg-emerald-100 group-hover:text-emerald-700">M</div>
-                  <div>
-                     <div class="font-bold text-slate-700">Maggy One</div>
-                     <div class="text-xs text-slate-400">Citizen • ID 555555</div>
-                  </div>
-               </button>
+          </div>
+          <p class="pki-status">Reading Chip Data...</p>
+        </div>
 
-                <button @click="simulateSSOLogin('citizen1', 'citizen')" class="w-full flex items-center gap-4 p-3 border border-slate-200 rounded-xl hover:bg-emerald-50 hover:border-emerald-200 transition-colors text-left group">
-                  <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-500 group-hover:bg-emerald-100 group-hover:text-emerald-700">C</div>
-                  <div>
-                     <div class="font-bold text-slate-700">Citizen One (Test)</div>
-                     <div class="text-xs text-slate-400">Citizen • ID 100</div>
-                  </div>
-               </button>
+        <!-- PIN Phase -->
+        <div v-if="pkiPhase === 'pin'" class="pki-pin">
+          <div class="pki-success">
+            <i class="bi bi-patch-check-fill"></i>
+          </div>
+          <p class="pki-identity">
+            Identity: Officer One (MOI)<br>
+            Issuer: GOK Root CA 01
+          </p>
 
-               <div class="border-t border-slate-100 my-2"></div>
-               
-               <button @click="simulateSSOLogin('officer1', 'officer')" class="w-full flex items-center gap-4 p-3 border border-slate-200 rounded-xl hover:bg-blue-50 hover:border-blue-200 transition-colors text-left group">
-                  <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-500 group-hover:bg-blue-100 group-hover:text-blue-700">O</div>
-                  <div>
-                     <div class="font-bold text-slate-700">Officer One</div>
-                     <div class="text-xs text-slate-400">Civil Registration Officer</div>
-                  </div>
-               </button>
-            </div>
-         </div>
-         <div class="bg-slate-50 p-4 border-t border-slate-100 text-center text-xs text-slate-400">
-            Secure OpenID Connect Federation
-         </div>
+          <div class="form__group">
+            <label for="pin" class="form__label text-center">Secure PIN</label>
+            <input id="pin" type="password" placeholder="••••" class="form__input text-center pin-input" autofocus
+              aria-label="Enter your secure PIN">
+          </div>
+
+          <button @click="verifyPinAndLogin" class="button button--primary w-full">
+            Unlock & Authenticate
+          </button>
+        </div>
       </div>
-    </div>
-
-    <!-- 2. PKI Smart Card Simulation -->
-    <div v-if="pkiModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/90 backdrop-blur-sm animate-fade-in">
-       <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl p-8 text-center">
-          
-          <!-- Phase 1: Scanning -->
-          <div v-if="pkiPhase === 'scanning'" class="py-8">
-             <div class="w-20 h-20 mx-auto bg-indigo-50 rounded-full flex items-center justify-center mb-6 relative">
-                <div class="absolute inset-0 border-4 border-indigo-500/20 rounded-full animate-ping"></div>
-                <svg class="w-10 h-10 text-indigo-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.131A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" /></svg>
-             </div>
-             <h3 class="text-lg font-bold text-slate-800">Reading Smart Card...</h3>
-             <p class="text-sm text-slate-500 mt-2">Please keep your device connected.</p>
-          </div>
-
-          <!-- Phase 2: PIN Entry -->
-          <div v-if="pkiPhase === 'pin'">
-             <div class="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center mb-4">
-                <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-             </div>
-             <h3 class="text-lg font-bold text-slate-800 mb-1">Certificate Verified</h3>
-             <p class="text-sm text-slate-500 mb-6">Subject: <strong>Officer One (MOI)</strong><br>Issuer: GOK Root CA</p>
-             
-             <div class="mb-6">
-                <input type="password" placeholder="Enter Card PIN" class="w-full text-center text-2xl tracking-[0.5em] font-mono px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none" autofocus>
-             </div>
-             
-             <button @click="verifyPinAndLogin" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700 transition-colors">
-               Unlock Private Key & Login
-             </button>
-          </div>
-
-       </div>
-    </div>
-
-  </div>
+    </BaseModal>
+  </main>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { useAuthStore } from '../store/auth'
+  import { ref } from 'vue'
+  import { useRouter } from 'vue-router'
+  import { useAuthStore } from '../store/auth'
+  import BaseModal from '../components/Common/BaseModal.vue'
 
-const router = useRouter()
-const authStore = useAuthStore()
+  const router = useRouter()
+  const authStore = useAuthStore()
 
-// State
-const showLegacy = ref(false)
-const username = ref('')
-const password = ref('')
-const errorMessage = ref('')
+  // State
+  const showLegacy = ref(false)
+  const username = ref('')
+  const password = ref('')
+  const errorMessage = ref('')
 
-// Simulation State
-const ssoModalOpen = ref(false)
-const pkiModalOpen = ref(false)
-const pkiPhase = ref('scanning')
+  // Simulation State
+  const ssoModalOpen = ref(false)
+  const pkiModalOpen = ref(false)
+  const pkiPhase = ref('scanning')
 
-// --- SSO Logic ---
-const startSSOFlow = () => {
-  // Simulate Redirect delay
-  const btn = document.activeElement;
-  if(btn) btn.blur(); // Remove focus
-  
-  // Show "Redirecting..." spinner? For now just open modal after brief delay
-  setTimeout(() => {
-    ssoModalOpen.value = true;
-  }, 300);
-}
+  // SSO Logic
+  const startSSOFlow = () => {
+    setTimeout(() => {
+      ssoModalOpen.value = true;
+    }, 300);
+  }
 
-const simulateSSOLogin = async (simUser, role) => {
-  ssoModalOpen.value = false; // Close modal
-  await quickLogin(simUser);
-}
+  const simulateSSOLogin = async (simUser, role) => {
+    ssoModalOpen.value = false;
+    await quickLogin(simUser);
+  }
 
-const quickLogin = async (usr) => {
-    // All POC users now use the standardized password
+  const quickLogin = async (usr) => {
     const pwd = 'Starten1@';
     await performLogin(usr, pwd);
-}
+  }
 
-// --- PKI Logic ---
-const startPKIFlow = () => {
-  pkiModalOpen.value = true;
-  pkiPhase.value = 'scanning';
-  
-  // Simulate Card Read Time
-  setTimeout(() => {
-    pkiPhase.value = 'pin';
-  }, 2000); // 2 second scan
-}
+  // PKI Logic
+  const startPKIFlow = () => {
+    pkiModalOpen.value = true;
+    pkiPhase.value = 'scanning';
 
-const verifyPinAndLogin = async () => {
-    // Simulate PIN Verification (Instant)
-    pkiPhase.value = 'scanning'; // Reset for next time
+    setTimeout(() => {
+      pkiPhase.value = 'pin';
+    }, 2000);
+  }
+
+  const verifyPinAndLogin = async () => {
+    pkiPhase.value = 'scanning';
     pkiModalOpen.value = false;
-    
-    // Auth as Officer1
     await performLogin('officer1', 'Starten1@');
-}
+  }
 
-// --- Core Auth ---
-const performLogin = async (usr, pwd) => {
+  // Core Auth
+  const performLogin = async (usr, pwd) => {
     errorMessage.value = '';
     try {
-        await authStore.login(usr, pwd);
-        router.push('/dashboard');
+      await authStore.login(usr, pwd);
+      router.push('/dashboard');
     } catch (error) {
-         if (error.response?.status === 401) {
-            errorMessage.value = 'Authentication Failed. Please try again.';
-        } else {
-            errorMessage.value = 'System Error. Check connection.';
-        }
-        // If SSO/PKI fail (e.g. backend reset), show legacy form to see error
-        showLegacy.value = true;
+      if (error.response?.status === 401) {
+        errorMessage.value = 'Authentication Failed. Please try again.';
+      } else {
+        errorMessage.value = 'System Error. Check connection.';
+      }
+      showLegacy.value = true;
     }
-}
+  }
 
-const handleLegacyLogin = async () => {
-  await performLogin(username.value, password.value);
-}
+  const handleLegacyLogin = async () => {
+    await performLogin(username.value, password.value);
+  }
 </script>
 
 <style scoped>
-/* Animations */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
 
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out forwards;
-}
+  /* Login Page Layout */
+  .login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-page);
+    position: relative;
+    overflow: hidden;
+    padding: 2rem 1rem;
+  }
 
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-out forwards;
-}
+  .login-page__background {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+  }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+  .login-page__blob {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.3;
+    animation: float 20s ease-in-out infinite;
+  }
+
+  .login-page__blob--primary {
+    top: -10%;
+    left: -10%;
+    background: var(--primary);
+  }
+
+  .login-page__blob--success {
+    bottom: -10%;
+    right: -10%;
+    background: var(--success);
+    animation-delay: 10s;
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+      transform: translate(30px, -50px) scale(1.1);
+    }
+
+    66% {
+      transform: translate(-20px, 20px) scale(0.9);
+    }
+  }
+
+  /* Login Container */
+  .login-container {
+    width: 100%;
+    max-width: 1100px;
+    z-index: 10;
+  }
+
+  .login-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+    animation: slideUp 0.6s ease-out;
+  }
+
+  @media (min-width: 768px) {
+    .login-card {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Brand Panel */
+  .login-brand {
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-light) 100%);
+    color: var(--text-on-dark);
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    min-height: 600px;
+  }
+
+  .login-brand__pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    opacity: 0.5;
+  }
+
+  .login-brand__content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .login-brand__header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .login-brand__logo {
+    width: 3.5rem;
+    height: 3.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .login-brand__logo svg {
+    width: 2rem;
+    height: 2rem;
+    color: white;
+  }
+
+  .login-brand__title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .login-brand__subtitle {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.8;
+    margin: 0;
+  }
+
+  .login-brand__hero {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.03em;
+  }
+
+  .login-brand__description {
+    font-size: 1rem;
+    line-height: 1.7;
+    opacity: 0.9;
+    margin-bottom: 2.5rem;
+  }
+
+  .login-features {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .login-feature {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+  }
+
+  .login-feature__icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .login-feature__icon--success {
+    background: var(--success-soft);
+    color: var(--success);
+  }
+
+  .login-feature__icon--info {
+    background: var(--info-soft);
+    color: var(--info);
+  }
+
+  .login-feature__icon--warning {
+    background: var(--warning-soft);
+    color: var(--warning);
+  }
+
+  .login-feature__title {
+    font-weight: 700;
+    font-size: 0.9375rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .login-feature__desc {
+    font-size: 0.8125rem;
+    opacity: 0.8;
+  }
+
+  .login-brand__footer {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Auth Panel */
+  .login-auth {
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: white;
+  }
+
+  .dev-toggle {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: var(--bg-hover);
+    color: var(--text-muted);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+  }
+
+  .dev-toggle:hover {
+    background: var(--bg-active);
+    color: var(--text-main);
+  }
+
+  .auth-options,
+  .legacy-login {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .auth-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+  }
+
+  .auth-subtitle {
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+  }
+
+  .auth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .auth-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--border-color);
+    background: white;
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: left;
+    width: 100%;
+  }
+
+  .auth-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .auth-button--primary:hover {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+  }
+
+  .auth-button--secondary:hover {
+    border-color: var(--secondary);
+    background: var(--bg-hover);
+  }
+
+  .auth-button__content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .auth-button__icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .auth-button__icon--primary {
+    background: var(--primary-soft);
+    color: var(--primary);
+  }
+
+  .auth-button__icon--secondary {
+    background: var(--bg-hover);
+    color: var(--secondary);
+  }
+
+  .auth-button__title {
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.25rem;
+  }
+
+  .auth-button__subtitle {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .auth-button__arrow {
+    color: var(--border-color);
+    font-size: 1.25rem;
+    transition: var(--transition);
+  }
+
+  .auth-button:hover .auth-button__arrow {
+    color: var(--primary);
+    transform: translateX(4px);
+  }
+
+  /* System Status */
+  .system-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+  }
+
+  .system-status__separator {
+    color: var(--border-color);
+  }
+
+  /* Quick Access */
+  .quick-access {
+    padding-top: 1.5rem;
+  }
+
+  .quick-access__title {
+    font-size: 0.625rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .quick-access__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .quick-button {
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    background: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .quick-button:hover {
+    background: var(--bg-hover);
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .quick-button--full {
+    grid-column: span 2;
+  }
+
+  /* Legacy Login */
+  .legacy-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+
+  /* Identity Cards */
+  .identity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .identity-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: white;
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: left;
+    width: 100%;
+  }
+
+  .identity-card:hover {
+    background: var(--bg-hover);
+    border-color: var(--primary);
+  }
+
+  .identity-card__avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .identity-card__avatar--success {
+    background: var(--success-soft);
+    color: var(--success-text);
+  }
+
+  .identity-card__avatar--info {
+    background: var(--info-soft);
+    color: var(--info-text);
+  }
+
+  .identity-card__info {
+    flex: 1;
+  }
+
+  .identity-card__name {
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.25rem;
+  }
+
+  .identity-card__meta {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .identity-card__arrow {
+    color: var(--border-color);
+    transition: var(--transition);
+  }
+
+  .identity-card:hover .identity-card__arrow {
+    color: var(--primary);
+    transform: translateX(4px);
+  }
+
+  .identity-divider {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 1rem 0;
+    position: relative;
+  }
+
+  .identity-divider::before,
+  .identity-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background: var(--border-color);
+  }
+
+  .identity-divider::before {
+    left: 0;
+  }
+
+  .identity-divider::after {
+    right: 0;
+  }
+
+  /* PKI Components */
+  .pki-container {
+    padding: 2rem 0;
+    text-align: center;
+  }
+
+  .pki-scanning,
+  .pki-pin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pki-scanner {
+    width: 5rem;
+    height: 5rem;
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  .pki-scanner__ping {
+    position: absolute;
+    inset: 0;
+    border: 4px solid var(--primary);
+    border-radius: 50%;
+    opacity: 0.25;
+    animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  @keyframes ping {
+
+    75%,
+    100% {
+      transform: scale(2);
+      opacity: 0;
+    }
+  }
+
+  .pki-scanner__icon {
+    position: absolute;
+    inset: 0;
+    background: var(--primary-soft);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: var(--primary);
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .pki-status {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+
+  .pki-success {
+    width: 4rem;
+    height: 4rem;
+    background: var(--success-soft);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--success);
+    margin-bottom: 1rem;
+  }
+
+  .pki-identity {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .pin-input {
+    font-size: 2rem;
+    letter-spacing: 1em;
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+  }
+
+  /* Modal Footer */
+  .modal-footer-text {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+
+  /* Utilities */
+  .link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  .link--primary {
+    color: var(--text-muted);
+  }
+
+  .link--primary:hover {
+    color: var(--primary);
+  }
+
+  .link--underline {
+    color: var(--primary);
+    text-decoration: underline;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .w-full {
+    width: 100%;
+  }
+
+  .mt-4 {
+    margin-top: 1rem;
+  }
 </style>

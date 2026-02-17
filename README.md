@@ -24,9 +24,32 @@ This is a Production-Centric Proof-of-Concept (POC) for a Repeatable Government 
 ├── frontend/                 # Vue 3 Frontend
 │   ├── src/                  # Vue source code (components, views, router, store, services)
 ├── docker/                   # Docker configurations
+├── docs/                     # Project Documentation Library
+├── data/                     # Seed data and CSV exports
 ├── .env                      # Environment variables
 └── docker-compose.yml        # Docker Compose setup
 ```
+
+## 📖 Documentation Index
+
+The project documentation is organized into specialized directories for better maintainability:
+
+*   **[Architecture](./docs/architecture/)**: Technical design, RBAC, and Workflow logic.
+    *   [System Architecture](./docs/architecture/architecture_three.md)
+    *   [RBAC Summary](./docs/architecture/RBAC_IMPLEMENTATION_SUMMARY.md)
+    *   [Workflow Engine](./docs/architecture/poc_algorithm_workflow_documentation.md)
+*   **[POC Core Documents](./docs/poc/)**: Requirements, Design, and Test plans.
+    *   [Project Overview](./docs/poc/poc_project_overview_concept_note.md)
+    *   [Functional Requirements](./docs/poc/poc_functional_non_functional_requirements.md)
+*   **[Guides](./docs/guides/)**: Deployment and integration instructions.
+    *   [Deployment Plan](./docs/guides/poc_deployment_dev_ops_plan.md)
+    *   [Huduma Bridge Instructions](./docs/guides/huduma_bridge_instructions.md)
+*   **[Style Guide](./docs/style-guide/)**: BEM naming conventions and UI patterns.
+    *   [BEM Documentation](./docs/style-guide/BEM-DOCUMENTATION.md)
+*   **[Reports](./docs/reports/)**: Progress reports and meeting actions.
+    *   [Comprehensive POC Report](./docs/reports/ICTA_POC_Comprehensive_Report.md)
+    *   [Consolidated Actions](./docs/reports/ICTA_WB_CONSOLIDATED_ACTIONS.md)
+*   **Live Catalogue**: Accessible via the **Admin Dashboard > Operations > Whole-of-Gov Catalogue** tab.
 
 ## Getting Started
 

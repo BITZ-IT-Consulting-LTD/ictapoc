@@ -1,137 +1,204 @@
 <template>
-  <div class="bg-white p-6 rounded-lg shadow mt-4">
-    <div class="flex justify-between items-center mb-8 pb-4 border-b">
-      <div>
-        <h3 class="text-xl font-bold text-gray-900 flex items-center">
-          <span class="mr-2 text-indigo-600">🛡️</span>
-          Security & Trust Enforcement Layer
-        </h3>
-        <p class="text-xs text-gray-500 mt-1 uppercase tracking-widest font-semibold">Zero-Trust Architecture | AES-256 | RSA-4096</p>
-      </div>
-      <div class="flex items-center space-x-4">
-        <div class="text-right">
-          <p class="text-[10px] font-bold text-gray-400 uppercase">System Security Score</p>
-          <p class="text-2xl font-black text-green-600">A+</p>
+    <div class="u-flex u-flex-col u-gap-8 animate-fade-in">
+    <!-- Security Header -->
+    <header class="card card--dark shadow-xl">
+      <div class="card__body u-flex u-justify-between u-items-center u-p-8 u-bg-gradient-dark">
+        <div class="page__title-group">
+          <h3 class="u-text-2xl u-font-black u-text-white u-mb-1 flex items-center">
+            <span class="u-mr-3 text-primary">🛡️</span>
+            Security & Trust Enforcement Layer
+          </h3>
+          <p class="u-text-xs u-font-bold u-uppercase u-tracking-[0.2em] u-text-primary u-opacity-70">
+            Zero-Trust Architecture | AES-256 | RSA-4096
+          </p>
+        </div>
+        <div class="u-text-right">
+          <p class="u-text-[10px] u-font-black u-text-muted u-uppercase u-tracking-widest">Global Security Score</p>
+          <div class="u-flex u-items-baseline u-gap-2">
+            <span class="u-text-4xl u-font-black u-text-success">A+</span>
+            <span class="u-text-xs u-text-success-dark u-font-bold">STANDARDS MET</span>
+          </div>
         </div>
       </div>
-    </div>
+    </header>
 
-    <!-- Security Summary Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <!-- Security Summary Grid -->
+    <div class="stats-grid">
       <!-- Encryption at Rest -->
-      <div class="bg-slate-900 p-5 rounded-2xl shadow-xl text-white border border-slate-700">
-        <div class="flex justify-between items-start mb-4">
-          <div class="p-2 bg-slate-800 rounded-lg">🔒</div>
-          <span class="text-[10px] font-bold text-green-400 border border-green-400/30 px-2 py-0.5 rounded">ACTIVE</span>
+      <article class="stats-card stats-card--primary">
+        <div class="stats-card__overlay"></div>
+        <div class="stats-card__content">
+          <div class="stats-card__icon-wrapper">
+            <div class="stats-card__icon-container">
+              <div class="stats-card__icon-glow"></div>
+              <div class="stats-card__icon"><i class="bi bi-shield-lock-fill"></i></div>
+            </div>
+          </div>
+          <div class="stats-card__text-content">
+            <p class="stats-card__label">Data Encryption</p>
+            <div class="stats-card__value-wrapper">
+              <span class="stats-card__value">AES-256</span>
+            </div>
+            <p class="stats-card__sublabel">100% Volume Encrypted</p>
+          </div>
         </div>
-        <p class="text-[10px] font-bold text-slate-400 uppercase">Data Encryption</p>
-        <p class="text-xl font-bold mt-1">AES-256 GCM</p>
-        <div class="mt-4 h-1 w-full bg-slate-800 rounded-full overflow-hidden">
-          <div class="h-full bg-indigo-500 w-full"></div>
+        <div class="u-px-6 u-pb-6 u-relative u-z-base">
+          <div class="progress-bar progress-bar--sm u-bg-white/10">
+            <div class="progress-bar__fill u-bg-white" style="width: 100%"></div>
+          </div>
         </div>
-        <p class="text-[10px] text-slate-500 mt-2">100% of Document Store Encrypted</p>
-      </div>
+        <div class="stats-card__accent-line"></div>
+      </article>
 
       <!-- Identity Trust -->
-      <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-        <div class="flex justify-between items-start mb-4">
-          <div class="p-2 bg-indigo-50 rounded-lg text-indigo-600">👤</div>
-          <span class="text-[10px] font-bold text-indigo-600 border border-indigo-200 px-2 py-0.5 rounded">SECURE</span>
+      <article class="stats-card stats-card--success">
+        <div class="stats-card__overlay"></div>
+        <div class="stats-card__content">
+          <div class="stats-card__icon-wrapper">
+            <div class="stats-card__icon-container">
+              <div class="stats-card__icon-glow"></div>
+              <div class="stats-card__icon"><i class="bi bi-person-check-fill"></i></div>
+            </div>
+          </div>
+          <div class="stats-card__text-content">
+            <p class="stats-card__label">Identity Trust</p>
+            <div class="stats-card__value-wrapper">
+              <span class="stats-card__value">mTLS + OIDC</span>
+            </div>
+            <p class="stats-card__sublabel">MFA Enforced Region-wide</p>
+          </div>
         </div>
-        <p class="text-[10px] font-bold text-slate-400 uppercase">Identity Verification</p>
-        <p class="text-xl font-bold mt-1">OIDC/JWT 2.0</p>
-        <p class="text-[10px] text-slate-500 mt-4">Multi-Factor Authentication Enforced</p>
-        <p class="text-[10px] text-slate-500">Mutual TLS for Bridge Connections</p>
-      </div>
+        <div class="u-px-6 u-pb-6 u-relative u-z-base">
+          <span class="badge badge--success badge--small">SECURE CONNECTION</span>
+        </div>
+        <div class="stats-card__accent-line"></div>
+      </article>
 
       <!-- Audit Integrity -->
-      <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-        <div class="flex justify-between items-start mb-4">
-          <div class="p-2 bg-emerald-50 rounded-lg text-emerald-600">📜</div>
-          <span class="text-[10px] font-bold text-emerald-600 border border-emerald-200 px-2 py-0.5 rounded">VERIFIED</span>
+      <article class="stats-card stats-card--info">
+        <div class="stats-card__overlay"></div>
+        <div class="stats-card__content">
+          <div class="stats-card__icon-wrapper">
+            <div class="stats-card__icon-container">
+              <div class="stats-card__icon-glow"></div>
+              <div class="stats-card__icon"><i class="bi bi-journal-check"></i></div>
+            </div>
+          </div>
+          <div class="stats-card__text-content">
+            <p class="stats-card__label">Log Integrity</p>
+            <div class="stats-card__value-wrapper">
+              <span class="stats-card__value">SHA-512</span>
+            </div>
+            <p class="stats-card__sublabel">Chain of Trust Validated</p>
+          </div>
         </div>
-        <p class="text-[10px] font-bold text-slate-400 uppercase">Log Integrity</p>
-        <p class="text-xl font-bold mt-1">SHA-512 Hash</p>
-        <div class="flex items-center mt-4 text-[10px] text-emerald-600 font-bold italic">
-          <span class="mr-1">✓</span> Chain of Trust Validated
+        <div class="u-px-6 u-pb-6 u-relative u-z-base u-flex u-items-center u-gap-2">
+           <i class="bi bi-patch-check-fill u-text-info"></i>
+           <span class="u-text-[10px] u-font-black u-text-info u-uppercase">Verified Audit Trail</span>
         </div>
-      </div>
+        <div class="stats-card__accent-line"></div>
+      </article>
 
       <!-- Token Lifecycle -->
-      <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-        <div class="flex justify-between items-start mb-4">
-          <div class="p-2 bg-orange-50 rounded-lg text-orange-600">🔑</div>
-          <span class="text-[10px] font-bold text-orange-600 border border-orange-200 px-2 py-0.5 rounded">MONITORING</span>
+      <article class="stats-card stats-card--warning">
+        <div class="stats-card__overlay"></div>
+        <div class="stats-card__content">
+          <div class="stats-card__icon-wrapper">
+            <div class="stats-card__icon-container">
+              <div class="stats-card__icon-glow"></div>
+              <div class="stats-card__icon"><i class="bi bi-key-fill"></i></div>
+            </div>
+          </div>
+          <div class="stats-card__text-content">
+            <p class="stats-card__label">Active Sessions</p>
+            <div class="stats-card__value-wrapper">
+              <span class="stats-card__value">{{ activeSessions }}</span>
+              <span class="stats-card__unit">LIVE</span>
+            </div>
+            <p class="stats-card__sublabel">Real-time Anomaly Detection</p>
+          </div>
         </div>
-        <p class="text-[10px] font-bold text-slate-400 uppercase">Active Sessions</p>
-        <p class="text-xl font-bold mt-1">{{ activeSessions }} Live</p>
-        <p class="text-[10px] text-slate-500 mt-4">Auto-revoked on anomaly detection</p>
-      </div>
+        <div class="u-px-6 u-pb-6 u-relative u-z-base">
+          <div class="u-flex u-items-center u-gap-2">
+            <span class="u-w-2 u-h-2 u-bg-warning u-rounded-full animate-pulse"></span>
+            <span class="u-text-[10px] u-font-black u-text-warning u-uppercase">Active Monitoring</span>
+          </div>
+        </div>
+        <div class="stats-card__accent-line"></div>
+      </article>
     </div>
 
     <!-- Threat Map & Consent Registry -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="u-grid u-grid-cols-1 lg:u-grid-cols-3 u-gap-8">
       <!-- Consent Monitor -->
-      <div class="lg:col-span-2 bg-slate-50 rounded-2xl p-6 border border-slate-200">
-        <h4 class="text-sm font-bold text-gray-700 uppercase mb-6 flex items-center">
-          <span class="w-2 h-2 bg-indigo-500 rounded-full mr-2"></span>
-          Citizen Data Consent Registry
-        </h4>
-        <div class="space-y-4">
-          <div v-for="consent in consentLogs" :key="consent.id" class="bg-white p-4 rounded-xl border border-slate-100 flex justify-between items-center shadow-sm">
-            <div class="flex items-center space-x-4">
-              <div class="h-10 w-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-700 font-bold text-xs uppercase">
-                {{ consent.mda }}
+      <article class="lg:u-col-span-2 card shadow-xl overflow-hidden">
+        <header class="card__header u-bg-page u-py-4">
+          <h4 class="card__title u-text-xs u-uppercase u-tracking-widest u-text-muted u-flex u-items-center">
+            <span class="u-w-2 u-h-2 u-bg-primary u-rounded-full u-mr-2"></span>
+            Citizen Data Consent Registry
+          </h4>
+        </header>
+        <div class="card__body u-p-0">
+          <div class="u-divide-y">
+            <div v-for="consent in consentLogs" :key="consent.id" class="u-p-6 u-flex u-justify-between u-items-center hover:u-bg-primary-soft transition-colors">
+              <div class="u-flex u-items-center u-gap-4">
+                <div class="u-w-12 u-h-12 u-bg-primary-soft u-text-primary u-rounded-full u-flex u-items-center u-justify-center u-font-black u-text-xs">
+                  {{ consent.mda }}
+                </div>
+                <div>
+                  <p class="u-text-sm u-font-black u-text-main u-mb-1">{{ consent.service }}</p>
+                  <p class="u-text-xs u-text-muted">Citizen: <span class="u-font-bold">{{ consent.citizen }}</span> | Issued: {{ consent.date }}</p>
+                </div>
               </div>
-              <div>
-                <p class="text-sm font-bold text-gray-800">{{ consent.service }}</p>
-                <p class="text-[10px] text-gray-500">Citizen: {{ consent.citizen }} | Granted: {{ consent.date }}</p>
-              </div>
-            </div>
-            <div class="text-right">
-              <span class="px-3 py-1 bg-green-50 text-green-700 text-[10px] font-bold rounded-full border border-green-100">
-                ACTIVE CONSENT
-              </span>
+              <span class="badge badge--success badge--pill">ACTIVE CONSENT</span>
             </div>
           </div>
         </div>
-      </div>
+      </article>
 
-      <!-- Security Policies -->
-      <div class="bg-slate-900 rounded-2xl p-6 text-white overflow-hidden relative">
-        <div class="absolute -right-10 -bottom-10 h-40 w-40 bg-indigo-500/10 rounded-full blur-3xl"></div>
-        <h4 class="text-sm font-bold text-indigo-400 uppercase mb-6">Policy Enforcement</h4>
-        <div class="space-y-6">
-          <div v-for="policy in policies" :key="policy.name">
-            <div class="flex justify-between items-center mb-2">
-              <span class="text-xs font-medium">{{ policy.name }}</span>
-              <span class="text-[10px] font-bold text-green-400">ENFORCED</span>
-            </div>
-            <div class="h-1.5 w-full bg-slate-800 rounded-full">
-              <div class="h-full bg-indigo-400 rounded-full" :style="`width: ${policy.strength}%`"></div>
+      <!-- Policy Enforcement -->
+      <article class="card card--dark shadow-xl u-overflow-hidden relative">
+        <div class="u-absolute -u-right-10 -u-bottom-10 u-w-40 u-h-40 u-bg-primary/10 u-rounded-full u-blur-3xl"></div>
+        <header class="card__header u-bg-transparent u-py-6">
+          <h4 class="card__title u-text-xs u-uppercase u-tracking-widest u-text-primary-soft">Policy Enforcement</h4>
+        </header>
+        <div class="card__body u-p-8 u-pt-0">
+          <div class="u-flex u-flex-col u-gap-8">
+            <div v-for="policy in policies" :key="policy.name" class="group">
+              <div class="u-flex u-justify-between u-items-center u-mb-2">
+                <span class="u-text-xs u-font-bold u-text-white u-opacity-80">{{ policy.name }}</span>
+                <span class="u-text-[10px] u-font-black u-text-success">ENFORCED</span>
+              </div>
+              <div class="progress-bar progress-bar--sm u-bg-slate-800">
+                <div class="progress-bar__fill u-bg-primary shadow-sm" :style="{ width: `${policy.strength}%` }"></div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="mt-12 p-4 bg-slate-800 rounded-xl border border-slate-700">
-          <p class="text-[10px] font-bold text-indigo-400 uppercase mb-2">Bridge Digital Signature</p>
-          <code class="text-[10px] text-gray-400 font-mono break-all">
-            RS256_TRUST_KEY_0x77...9f22_ICTA_SIG
-          </code>
+          <div class="u-mt-12 u-p-5 u-bg-slate-800 u-rounded-xl u-border u-border-white/10">
+            <p class="u-text-[10px] u-font-black u-text-primary u-uppercase u-tracking-widest u-mb-3">Bridge Digital Signature</p>
+            <code class="u-text-[10px] u-font-mono u-text-muted u-break-all">
+              RS256_TRUST_KEY_0x77...9f22_ICTA_SIG
+            </code>
+          </div>
         </div>
-      </div>
+      </article>
     </div>
 
     <!-- Security Warnings -->
-    <div class="mt-8 p-4 bg-amber-50 border border-amber-200 rounded-xl flex items-center justify-between">
-      <div class="flex items-center">
-        <span class="text-2xl mr-4">⚠️</span>
+    <div class="card u-bg-warning-soft u-border u-border-warning/20 u-p-6 u-flex u-flex-col u-md-flex-row u-items-center u-justify-between u-gap-6 shadow-lg">
+      <div class="u-flex u-items-center u-gap-6">
+        <div class="u-w-14 u-h-14 u-bg-warning u-text-white u-rounded-2xl u-flex u-items-center u-justify-center u-text-3xl shadow-lg">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+        </div>
         <div>
-          <p class="text-sm font-bold text-amber-800">Anomaly Detection Alert</p>
-          <p class="text-xs text-amber-700">3 failed login attempts detected from unusual IP: 192.168.x.x. Source blocked for 15 mins.</p>
+          <p class="u-text-lg u-font-black u-text-warning-dark u-mb-1">Anomaly Detection Alert</p>
+          <p class="u-text-sm u-font-medium u-text-warning-dark u-opacity-80">
+            3 failed login attempts detected from unusual IP: 192.168.x.x. Source blocked for 15 mins.
+          </p>
         </div>
       </div>
-      <button class="px-4 py-2 bg-amber-200 text-amber-800 text-xs font-bold rounded-lg hover:bg-amber-300 transition-colors">
+      <button class="button button--warning button--pill shadow-md">
         View Threat Details
       </button>
     </div>

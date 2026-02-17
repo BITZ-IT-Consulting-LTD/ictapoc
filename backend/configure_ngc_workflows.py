@@ -56,6 +56,8 @@ def configure_ngc_workflow():
 
     print(f"Workflow configured: {svc.id}")
 
+    # DEPRECATED: User requested clean slate without sample applications.
+    """
     # Generate test data
     citizen = User.objects.filter(role='citizen').first()
     if not citizen:
@@ -89,6 +91,9 @@ def configure_ngc_workflow():
         )
     
     print("Sample test data (10 projects, 20 site visits) generated.")
+    """
+    print("✅ Sample test data generation skipped.")
+
 
 if __name__ == "__main__":
     configure_ngc_workflow()

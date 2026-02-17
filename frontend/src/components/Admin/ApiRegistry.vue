@@ -1,67 +1,86 @@
 <template>
-  <div class="bg-white p-6 rounded-lg shadow mt-4">
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-      <div>
-        <h3 class="text-xl font-bold text-gray-900">Authoritative Service Registry</h3>
-        <div class="text-sm text-gray-500 bg-gray-100 px-3 py-0.5 rounded-full border inline-block mt-1">
-          Connected to KESEL & Huduma Bridges
+    <div class="u-flex u-flex-col u-gap-8 animate-fade-in">
+    <!-- Registry Header -->
+    <header class="u-flex u-flex-col md:u-flex-row u-justify-between u-items-start md:u-items-center u-gap-6">
+      <div class="page__title-group">
+        <h3 class="u-text-2xl u-font-black u-text-main u-mb-2">Authoritative Service Registry</h3>
+        <div class="status-indicator">
+          <span class="status-indicator__dot status-indicator__dot--online"></span>
+          <span class="status-indicator__label u-text-muted">KESEL & Huduma Infrastructure Connected</span>
         </div>
       </div>
-      <div class="relative w-full md:w-80">
+      <div class="toolbar__filter-group u-w-full md:u-w-96 u-shadow-sm">
+        <i class="bi bi-search toolbar__filter-icon"></i>
         <input 
           type="text" 
           v-model="searchQuery" 
-          placeholder="Search endpoints by name, URL, or category..." 
-          class="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder="Search endpoints, category, or url..." 
+          class="toolbar__filter-input u-w-full"
         />
-        <span class="absolute right-3 top-2 text-gray-400">🔍</span>
       </div>
+    </header>
+
+    <!-- Contextual Intelligence -->
+    <div class="card u-bg-primary-soft u-border-primary/10 u-p-6 shadow-sm">
+      <p class="u-text-sm u-font-medium u-text-primary-dark max-w-4xl u-mb-0">
+        The following services are authoritative system endpoints available for use in <strong class="u-font-black">Automated API Call</strong> workflow steps. 
+        These govern integration with national registries, document archives, and federated government systems.
+      </p>
     </div>
 
-    <p class="text-gray-600 mb-8 max-w-3xl">
-      The following services are authoritative system endpoints available for use in <strong>Automated API Call</strong> workflow steps. 
-      Use these to integrate with national registries, document archives, and external government systems.
-    </p>
-
-    <div v-if="filteredRegistry.length > 0" class="grid grid-cols-1 gap-6">
-      <div v-for="service in filteredRegistry" :key="service.id" class="border rounded-xl overflow-hidden hover:border-indigo-300 transition-colors shadow-sm bg-slate-50">
-        <div class="p-4 bg-white border-b flex justify-between items-center">
+    <!-- Endpoint Grid -->
+    <div v-if="filteredRegistry.length > 0" class="u-grid u-grid-cols-1 lg:u-grid-cols-2 u-gap-6">
+      <article v-for="service in filteredRegistry" :key="service.id" 
+        class="card hover:u-border-primary transition-all duration-300 shadow-md group">
+        <header class="card__header u-bg-page u-p-5 u-flex u-justify-between u-items-center">
           <div>
-            <h4 class="text-lg font-bold text-gray-800">{{ service.name }}</h4>
-            <span class="text-xs font-mono text-gray-400 uppercase tracking-tighter">{{ service.category }}</span>
+            <h4 class="u-text-base u-font-black u-text-main u-mb-1 group-hover:u-text-primary transition-colors">
+              {{ service.name }}
+            </h4>
+            <span class="table__code-badge">{{ service.category }}</span>
           </div>
-          <span :class="service.status === 'online' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'" class="px-2 py-1 text-xs font-bold rounded uppercase">
-            {{ service.status }}
-          </span>
-        </div>
+          <div class="status-indicator">
+             <span class="u-text-[10px] u-font-black u-text-success u-uppercase u-tracking-widest">{{ service.status }}</span>
+             <span class="status-indicator__dot status-indicator__dot--online"></span>
+          </div>
+        </header>
         
-        <div class="p-4 space-y-4">
-          <p class="text-sm text-gray-600">{{ service.description }}</p>
+        <div class="card__body u-p-6 u-flex u-flex-col u-gap-6">
+          <p class="u-text-sm u-text-muted u-line-clamp-2">{{ service.description }}</p>
           
-          <div class="bg-slate-900 rounded-lg p-3 overflow-x-auto">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-indigo-400 uppercase">Endpoint URL</span>
-              <button @click="copyToClipboard(service.url)" class="text-[10px] text-gray-400 hover:text-white underline">Copy URL</button>
+          <!-- Endpoint URL Block -->
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__label">Endpoint URL</span>
+              <button @click="copyToClipboard(service.url)" class="button button--ghost button--small p-0 u-text-[10px] u-font-black u-uppercase">
+                <i class="bi bi-files u-mr-1"></i> Copy
+              </button>
             </div>
-            <code class="text-indigo-300 text-sm font-mono">{{ service.url }}</code>
+            <code class="code-block__content code-block__content--primary">{{ service.url }}</code>
           </div>
 
-          <div>
-             <h5 class="text-xs font-bold text-gray-500 uppercase mb-2">Documentation / Expected Payload</h5>
-             <pre class="bg-white border rounded p-3 text-xs font-mono text-gray-700 overflow-x-auto">{{ JSON.stringify(service.payload, null, 2) }}</pre>
+          <!-- Documentation Fragment -->
+          <div class="u-space-y-3">
+             <h5 class="u-text-[10px] u-font-black u-text-muted u-uppercase u-tracking-widest">Expected Payload Schema</h5>
+             <pre class="u-bg-page u-p-4 u-rounded u-text-[11px] u-font-mono u-text-main u-border u-border-border-color u-overflow-x-auto">{{ JSON.stringify(service.payload, null, 2) }}</pre>
           </div>
 
-          <div class="flex space-x-4 pt-2">
+          <!-- Metadata Ribbon -->
+          <footer class="u-flex u-flex-wrap u-gap-6 u-pt-4 u-border-t u-border-border-color">
             <div v-for="(detail, label) in service.details" :key="label">
-              <span class="text-[10px] uppercase font-bold text-gray-400 block">{{ label }}</span>
-              <span class="text-sm text-gray-700">{{ detail }}</span>
+              <span class="u-text-[10px] u-font-black u-text-muted u-uppercase u-tracking-tighter u-block u-mb-1">{{ label }}</span>
+              <span class="u-text-xs u-font-bold u-text-main">{{ detail }}</span>
             </div>
-          </div>
+          </footer>
         </div>
-      </div>
+      </article>
     </div>
-    <div v-else class="text-center py-12 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
-      <p class="text-gray-500 italic">No authoritative services found matching your search.</p>
+
+    <!-- Zero State -->
+    <div v-else class="card u-py-24 u-text-center u-bg-page u-border-2 u-border-dashed u-border-border-color shadow-inner">
+      <div class="u-text-4xl u-mb-4">🔍</div>
+      <p class="u-text-sm u-font-black u-text-muted u-uppercase u-tracking-widest">No matching authoritative services found</p>
+      <button @click="searchQuery = ''" class="button button--secondary button--small u-mt-4">Clear Filters</button>
     </div>
   </div>
 </template>

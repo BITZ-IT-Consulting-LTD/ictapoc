@@ -1,17 +1,17 @@
 <template>
    <div class="space-y-6">
-      <div class="flex justify-between items-center">
-         <div>
-            <h2 class="text-2xl font-bold text-gray-900">Whole-of-Government Service Catalogue</h2>
-            <p class="text-sm text-gray-500">Business Process → Services → Systems → Actors Mapping</p>
+      <header class="page__header u-mb-8">
+         <div class="page__title-group">
+            <h1 class="page__title">Whole-of-Government Service Catalogue</h1>
+            <p class="page__subtitle">Business Process → Services → Systems → Actors Mapping</p>
          </div>
-         <div>
+         <div class="page__actions">
             <button @click="fetchMatrix"
-               class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-sm">
-               Refresh Data
+               class="button button--secondary button--small button--pill">
+               <i class="bi bi-arrow-clockwise"></i> Refresh Data
             </button>
          </div>
-      </div>
+      </header>
 
       <div v-if="loading" class="text-center py-12">
          <svg class="animate-spin h-8 w-8 text-indigo-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -34,186 +34,147 @@
          <WogDashboardStats v-if="auditStats" :stats="auditStats" />
 
          <!-- Filters -->
-         <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div>
-               <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Search Services</label>
-               <div class="relative">
-                 <input v-model="searchQuery" type="text" placeholder="e.g. Passport"
-                    class="w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
-                 <svg class="w-4 h-4 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                 </svg>
+         <!-- Filters -->
+         <div class="toolbar u-mb-8">
+            <div class="toolbar__filters">
+               <div class="toolbar__filter-group">
+                  <i class="bi bi-search toolbar__filter-icon"></i>
+                  <input v-model="searchQuery" type="text" placeholder="Search Services..."
+                     class="toolbar__filter-input">
                </div>
-            </div>
-            
-            <!-- Searchable Domain Filter -->
-            <div class="relative">
-               <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Filter by Domain</label>
-               <div class="relative">
-                 <input type="text" v-model="domainSearchLocal" placeholder="Select Domain..."
-                    @focus="showDomainDropdown = true"
-                    @blur="setTimeout(() => showDomainDropdown = false, 200)"
-                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all cursor-pointer">
-                 <div v-if="showDomainDropdown" class="absolute z-[100] mt-2 w-full bg-white border border-gray-100 rounded-xl shadow-2xl max-h-60 overflow-y-auto p-1">
-                    <div @click="selectDomain('')" class="px-3 py-2 hover:bg-indigo-50 cursor-pointer text-xs font-bold text-indigo-600 rounded-lg">All Domains</div>
-                    <div v-for="d in filteredDomains" :key="d" @click="selectDomain(d)"
-                       class="px-3 py-2 hover:bg-indigo-50 cursor-pointer text-sm text-gray-700 rounded-lg transition-colors">
-                       {{ d }}
-                    </div>
-                 </div>
-                 <div class="absolute right-3 top-3 pointer-events-none">
-                   <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                   </svg>
-                 </div>
+               
+               <!-- Searchable Domain Filter -->
+               <div class="toolbar__filter-group">
+                  <i class="bi bi-diagram-2 toolbar__filter-icon"></i>
+                  <input type="text" v-model="domainSearchLocal" placeholder="Filter by Domain..."
+                     @focus="showDomainDropdown = true"
+                     @blur="setTimeout(() => showDomainDropdown = false, 200)"
+                     class="toolbar__filter-input toolbar__filter-input--with-arrow" style="cursor: pointer">
+                  <i class="bi bi-chevron-down toolbar__filter-arrow" :class="{'toolbar__filter-arrow--open': showDomainDropdown}"></i>
+                  
+                  <div v-if="showDomainDropdown" class="u-absolute u-top-full u-left-0 u-w-full bg-white u-border u-shadow-xl u-rounded-lg u-mt-2 u-z-dropdown u-overflow-auto u-p-2" style="max-height: 240px">
+                     <div @click="selectDomain('')" class="u-p-3 hover:bg-bg-page u-rounded u-font-bold u-text-primary u-mb-1" style="cursor: pointer">All Domains</div>
+                     <div v-for="d in filteredDomains" :key="d" @click="selectDomain(d)"
+                        class="u-p-3 hover:bg-bg-page u-rounded u-flex u-items-center u-gap-3 u-font-medium transition-colors" style="cursor: pointer; font-size: 14px">
+                        {{ d }}
+                     </div>
+                  </div>
                </div>
-            </div>
 
-            <!-- Searchable MDA Filter -->
-            <div class="relative">
-               <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Filter by Agency (MDA)</label>
-               <div class="relative">
-                 <input type="text" v-model="mdaSearchLocal" placeholder="Select Agency..."
-                    @focus="showMdaDropdown = true"
-                    @blur="setTimeout(() => showMdaDropdown = false, 200)"
-                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all cursor-pointer">
-                 <div v-if="showMdaDropdown" class="absolute z-[100] mt-2 w-full bg-white border border-gray-100 rounded-xl shadow-2xl max-h-60 overflow-y-auto p-1">
-                    <div @click="selectMda('')" class="px-3 py-2 hover:bg-indigo-50 cursor-pointer text-xs font-bold text-indigo-600 rounded-lg">All Agencies</div>
-                    <div v-for="m in filteredMdas" :key="m" @click="selectMda(m)"
-                       class="px-3 py-2 hover:bg-indigo-50 cursor-pointer text-sm text-gray-700 rounded-lg transition-colors">
-                       {{ m }}
-                    </div>
-                 </div>
-                 <div class="absolute right-3 top-3 pointer-events-none">
-                   <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                   </svg>
-                 </div>
+               <!-- Searchable MDA Filter -->
+               <div class="toolbar__filter-group">
+                  <i class="bi bi-building toolbar__filter-icon"></i>
+                  <input type="text" v-model="mdaSearchLocal" placeholder="Filter by Agency (MDA)..."
+                     @focus="showMdaDropdown = true"
+                     @blur="setTimeout(() => showMdaDropdown = false, 200)"
+                     class="toolbar__filter-input toolbar__filter-input--with-arrow" style="cursor: pointer">
+                  <i class="bi bi-chevron-down toolbar__filter-arrow" :class="{'toolbar__filter-arrow--open': showMdaDropdown}"></i>
+                  
+                  <div v-if="showMdaDropdown" class="u-absolute u-top-full u-left-0 u-w-full bg-white u-border u-shadow-xl u-rounded-lg u-mt-2 u-z-dropdown u-overflow-auto u-p-2" style="max-height: 240px">
+                     <div @click="selectMda('')" class="u-p-3 hover:bg-bg-page u-rounded u-font-bold u-text-primary u-mb-1" style="cursor: pointer">All Agencies</div>
+                     <div v-for="m in filteredMdas" :key="m" @click="selectMda(m)"
+                        class="u-p-3 hover:bg-bg-page u-rounded u-flex u-items-center u-gap-3 u-font-medium transition-colors" style="cursor: pointer; font-size: 14px">
+                        {{ m }}
+                     </div>
+                  </div>
                </div>
-            </div>
 
-            <div class="self-end pb-0.5">
-               <button @click="resetFilters"
-                  class="w-full px-4 py-2.5 bg-white border border-gray-200 text-gray-600 rounded-xl text-sm font-bold hover:bg-gray-50 transition-all shadow-sm">
-                  Reset Filters
-               </button>
+               <div class="u-flex u-items-end">
+                  <button @click="resetFilters"
+                     class="button button--secondary u-w-full">
+                     Reset Filters
+                  </button>
+               </div>
             </div>
          </div>
 
          <div v-for="domain in filteredMatrixData" :key="domain.domain_name"
-            class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
-            <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-               <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
-                  <span class="w-2 h-8 bg-indigo-600 rounded-full"></span>
+            class="card u-overflow-hidden u-mb-8">
+            <header class="card__header u-justify-between u-items-center" style="background: var(--color-background-hover); border-bottom: 1px solid var(--color-border);">
+               <h3 class="card__title u-flex u-items-center u-gap-2">
+                  <span class="u-block u-rounded-full" style="width: 0.5rem; height: 2rem; background: var(--color-primary);"></span>
                   {{ domain.domain_name }}
                </h3>
-               <span
-                  class="text-xs font-mono bg-white border border-gray-300 px-2 py-1 rounded text-gray-500">Domain</span>
-            </div>
+               <span class="table__code-badge">Domain</span>
+            </header>
 
-            <div class="divide-y divide-gray-100">
-               <div v-for="process in domain.processes" :key="process.process_name" class="p-6">
-                  <div class="mb-4">
-                     <h4 class="text-md font-semibold text-indigo-700 flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
-                           </path>
-                        </svg>
+            <div class="u-p-6">
+               <div v-for="process in domain.processes" :key="process.process_name" class="u-mb-8 last:u-mb-0">
+                  <div class="u-mb-4">
+                     <h4 class="u-flex u-items-center u-gap-2 u-text-primary u-font-bold">
+                        <i class="bi bi-diagram-3"></i>
                         {{ process.process_name }}
                      </h4>
-                     <p class="text-xs text-gray-400 ml-7">Business Process</p>
+                     <p class="u-text-xs u-text-muted u-ml-7">Business Process</p>
                   </div>
 
-                  <div class="ml-7 overflow-x-auto">
-                     <table class="min-w-full divide-y divide-gray-200 border border-gray-100 rounded-lg">
-                        <thead class="bg-gray-50">
-                           <tr>
-                              <th scope="col"
-                                 class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                 Service Name</th>
-                              <th scope="col"
-                                 class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                 Type / Maturity</th>
-                              <th scope="col"
-                                 class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                 Complexity / Channels</th>
-                              <th scope="col"
-                                 class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                 Pain Points</th>
-                              <th scope="col"
-                                 class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                 Workflow Config</th>
-                              <th scope="col"
-                                 class="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                 Actions</th>
+                  <div class="table-container u-ml-7 u-border u-rounded">
+                     <table class="table">
+                        <thead>
+                           <tr class="table__header-row">
+                              <th class="table__header-cell" style="padding-left: 1rem;">Service Name</th>
+                              <th class="table__header-cell">Type / Maturity</th>
+                              <th class="table__header-cell">Complexity / Channels</th>
+                              <th class="table__header-cell">Pain Points</th>
+                              <th class="table__header-cell">Workflow Config</th>
+                              <th class="table__header-cell table__header-cell--align-right" style="padding-right: 1rem;">Actions</th>
                            </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tbody>
                            <tr v-for="service in process.services" :key="service.service_name"
-                              class="hover:bg-gray-50 transition-colors">
-                              <td class="px-4 py-3 text-sm">
-                                 <div class="font-medium text-gray-900">{{ service.service_name }}</div>
-                                 <div class="text-[10px] text-gray-400 mt-0.5">{{ service.mda }}</div>
-                                 <div v-if="service.description"
-                                    class="text-[10px] text-gray-500 mt-1 italic line-clamp-1"
-                                    :title="service.description">{{ service.description }}</div>
+                              class="table__row">
+                              <td class="table__cell" style="padding-left: 1rem;">
+                                 <div class="table__cell--bold">{{ service.service_name }}</div>
+                                 <div class="u-text-xs u-text-muted u-mt-0.5">{{ service.mda }}</div>
                               </td>
-                              <td class="px-4 py-3 text-sm text-gray-500">
-                                 <div class="flex flex-col gap-1">
-                                    <span class="text-xs font-semibold text-indigo-600">{{ service.service_type || 'N/A'
-                                       }}</span>
-                                    <div class="flex items-center gap-1">
-                                       <div class="flex gap-0.5">
+                              <td class="table__cell">
+                                 <div class="u-flex u-flex-col u-gap-1">
+                                    <span class="u-text-xs u-font-bold u-text-primary">{{ service.service_type || 'N/A' }}</span>
+                                    <div class="u-flex u-items-center u-gap-1">
+                                       <div class="u-flex u-gap-0.5">
                                           <template v-for="i in 5" :key="i">
-                                             <div :class="i <= service.maturity ? 'bg-green-500' : 'bg-gray-200'"
-                                                class="w-2.5 h-1 rounded-full"></div>
+                                             <div :class="i <= service.maturity ? 'u-text-success' : 'u-text-muted'"
+                                                class="u-block u-rounded-full" style="width: 0.625rem; height: 0.25rem; background: currentColor;"></div>
                                           </template>
                                        </div>
-                                       <span class="text-[10px] text-gray-400">Level {{ service.maturity }}</span>
+                                       <span class="u-text-xs u-text-muted">Level {{ service.maturity }}</span>
                                     </div>
                                  </div>
                               </td>
-                              <td class="px-4 py-3 text-sm text-gray-500">
-                                 <div class="flex flex-col gap-1">
-                                    <span class="text-xs">{{ service.process_complexity || 'Normal' }}</span>
-                                    <div class="flex flex-wrap gap-1">
+                              <td class="table__cell">
+                                 <div class="u-flex u-flex-col u-gap-1">
+                                    <span class="u-text-xs">{{ service.process_complexity || 'Normal' }}</span>
+                                    <div class="u-flex u-flex-wrap u-gap-1">
                                        <span v-for="ch in service.delivery_channels" :key="ch"
-                                          class="px-1.5 py-0.5 bg-gray-100 text-gray-600 rounded text-[10px]">
+                                          class="table__code-badge" style="font-size: 10px; padding: 2px 6px;">
                                           {{ ch }}
                                        </span>
                                     </div>
                                  </div>
                               </td>
-                              <td class="px-4 py-3 text-sm text-gray-500">
-                                 <div class="flex flex-wrap gap-1 max-w-[200px]">
+                              <td class="table__cell">
+                                 <div class="u-flex u-flex-wrap u-gap-1" style="max-width: 200px">
                                     <span v-for="pp in service.pain_points" :key="pp"
-                                       class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-red-50 text-red-700 border border-red-100">
+                                       class="badge badge--danger" style="font-size: 10px; padding: 2px 6px;">
                                        {{ pp }}
                                     </span>
                                     <span v-if="!service.pain_points || service.pain_points.length === 0"
-                                       class="text-gray-400 italic text-[10px]">None reported</span>
+                                       class="u-text-muted u-text-xs" style="font-style: italic">None reported</span>
                                  </div>
                               </td>
-                              <td class="px-4 py-3 text-sm">
+                              <td class="table__cell">
                                  <span v-if="service.workflow_configured"
-                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                    <svg class="mr-1.5 h-2 w-2 text-green-400" fill="currentColor" viewBox="0 0 8 8">
-                                       <circle cx="4" cy="4" r="3" />
-                                    </svg>
+                                    class="badge badge--success">
                                     Active
                                  </span>
                                  <span v-else
-                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-200">
-                                    <svg class="mr-1.5 h-2 w-2 text-red-400" fill="currentColor" viewBox="0 0 8 8">
-                                       <circle cx="4" cy="4" r="3" />
-                                    </svg>
+                                    class="badge badge--danger">
                                     Missing
                                  </span>
                               </td>
-                              <td class="px-4 py-3 text-right text-sm">
+                              <td class="table__cell table__cell--align-right" style="padding-right: 1rem;">
                                  <button v-if="service.workflow_configured" @click="visualizeWorkflow(service)"
-                                    class="text-indigo-600 hover:text-indigo-900 font-bold text-[10px] uppercase tracking-wider border border-indigo-200 px-3 py-1.5 rounded-lg hover:bg-indigo-50 transition-all shadow-sm">
+                                    class="button button--secondary button--small" style="font-size: 10px; padding: 4px 8px;">
                                     BPMN Model
                                  </button>
                               </td>
@@ -232,70 +193,66 @@
       </div>
 
       <!-- Workflow Modal -->
-      <Teleport to="body">
-         <div v-if="showWorkflowModal"
-            class="fixed inset-0 z-[9999] overflow-y-auto h-full w-full flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm">
-            <div
-               class="relative mx-auto p-0 border w-full max-w-5xl shadow-2xl rounded-2xl bg-white transform transition-all scale-100 overflow-hidden flex flex-col max-h-[90vh]">
-               <div
-                  class="bg-indigo-900 px-6 py-4 flex flex-col md:flex-row justify-between items-center text-white gap-4">
-                  <div>
-                     <h3 class="text-xl font-bold">{{ selectedService?.service_name }}</h3>
-                     <p class="text-xs text-indigo-200 font-mono tracking-widest uppercase mt-0.5">BPMN 2.0 Process
-                        Orchestration Model</p>
-                  </div>
+      <BaseModal :show="showWorkflowModal" 
+                 @close="closeWorkflowModal" 
+                 size="full"
+                 headerClass="modal__header--dark">
+         <template #header>
+            <div class="u-flex-1">
+               <h3 class="modal__title">{{ selectedService?.service_name }}</h3>
+               <p class="modal__subtitle u-font-mono u-uppercase" style="letter-spacing: 0.1em">BPMN 2.0 Process Orchestration Model</p>
+            </div>
 
-                  <div class="flex bg-indigo-950/50 p-1 rounded-lg border border-indigo-700">
-                     <button @click="switchStage('as_is')"
-                        :class="activeLifecycle === 'as_is' ? 'bg-indigo-600 text-white' : 'text-indigo-300 hover:text-white'"
-                        class="px-4 py-1.5 rounded-md text-xs font-bold transition-all uppercase tracking-tighter">
-                        As-Is Model
-                     </button>
-                     <button @click="switchStage('to_be')"
-                        :class="activeLifecycle === 'to_be' ? 'bg-indigo-600 text-white' : 'text-indigo-300 hover:text-white'"
-                        class="px-4 py-1.5 rounded-md text-xs font-bold transition-all uppercase tracking-tighter">
-                        To-Be (Optimized)
-                     </button>
-                  </div>
+            <div class="tab-bar" style="background: rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.1)">
+               <button @click="switchStage('as_is')"
+                  :class="{'tab-bar__item--active': activeLifecycle === 'as_is'}"
+                  class="tab-bar__item u-text-xs u-py-1.5" style="border: none">
+                  As-Is
+               </button>
+               <button @click="switchStage('to_be')"
+                  :class="{'tab-bar__item--active': activeLifecycle === 'to_be'}"
+                  class="tab-bar__item u-text-xs u-py-1.5" style="border: none">
+                  To-Be
+               </button>
+            </div>
+         </template>
 
-                  <button @click="closeWorkflowModal"
-                     class="text-white hover:text-gray-200 absolute top-4 right-4 md:static">
-                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                        </path>
-                     </svg>
-                  </button>
-               </div>
-               <div class="flex-1 p-8 bg-slate-50 overflow-auto border-b border-gray-100">
-                  <div class="mb-4 flex items-center justify-center gap-6">
-                     <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-green-500"></span><span
-                           class="text-[10px] uppercase font-bold text-gray-400">Start</span></div>
-                     <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-md bg-blue-500"></span><span
-                           class="text-[10px] uppercase font-bold text-gray-400">User Task</span></div>
-                     <div class="flex items-center gap-2"><span
-                           class="w-3 h-3 rounded-md border-2 border-dashed border-purple-500"></span><span
-                           class="text-[10px] uppercase font-bold text-gray-400">Service Task</span></div>
-                     <div class="flex items-center gap-2"><span
-                           class="w-4 h-4 rotate-45 border-2 border-orange-500"></span><span
-                           class="text-[10px] uppercase font-bold text-gray-400">Gateway</span></div>
-                     <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-red-500"></span><span
-                           class="text-[10px] uppercase font-bold text-gray-400">End</span></div>
-                  </div>
-                  <div class="mermaid flex justify-center" ref="mermaidContainer">
-                     {{ mermaidDefinition }}
-                  </div>
-               </div>
-               <div class="bg-white px-6 py-4 flex justify-between items-center sticky bottom-0">
-                  <div class="text-[10px] text-gray-400 font-mono italic">
-                     Mapping Level: {{ activeLifecycle === 'to_be' ? 'Optimized digital flow' : 'Documented current state' }}
-                  </div>
-                  <button @click="closeWorkflowModal"
-                     class="px-6 py-2 bg-gray-900 text-white rounded-lg hover:bg-black font-bold text-xs uppercase tracking-widest transition-all">Close
-                     Model</button>
-               </div>
+         <div class="u-mb-6 u-flex u-items-center u-justify-center u-gap-6">
+            <div class="u-flex u-items-center u-gap-2">
+               <span class="u-block u-rounded-full" style="width: 0.75rem; height: 0.75rem; background: var(--color-success);"></span>
+               <span class="u-text-xs u-font-bold u-text-muted u-uppercase">Start</span>
+            </div>
+            <div class="u-flex u-items-center u-gap-2">
+               <span class="u-block u-rounded" style="width: 0.75rem; height: 0.75rem; background: var(--color-primary);"></span>
+               <span class="u-text-xs u-font-bold u-text-muted u-uppercase">User Task</span>
+            </div>
+            <div class="u-flex u-items-center u-gap-2">
+               <span class="u-block u-rounded u-border" style="width: 0.75rem; height: 0.75rem; border-color: var(--color-info); border-style: dashed; border-width: 2px"></span>
+               <span class="u-text-xs u-font-bold u-text-muted u-uppercase">Service Task</span>
+            </div>
+            <div class="u-flex u-items-center u-gap-2">
+               <div class="u-block u-border" style="width: 0.8rem; height: 0.8rem; border-color: var(--color-warning); border-width: 2px; transform: rotate(45deg)"></div>
+               <span class="u-text-xs u-font-bold u-text-muted u-uppercase">Gateway</span>
+            </div>
+            <div class="u-flex u-items-center u-gap-2">
+               <span class="u-block u-rounded-full" style="width: 0.75rem; height: 0.75rem; background: var(--color-danger);"></span>
+               <span class="u-text-xs u-font-bold u-text-muted u-uppercase">End</span>
             </div>
          </div>
-      </Teleport>
+         
+         <div class="mermaid u-flex u-justify-center" ref="mermaidContainer">
+            {{ mermaidDefinition }}
+         </div>
+
+         <template #footer>
+            <div class="u-text-xs u-text-muted u-font-mono" style="font-style: italic">
+               Mapping Level: {{ activeLifecycle === 'to_be' ? 'Optimized digital flow' : 'Documented current state' }}
+            </div>
+            <button @click="closeWorkflowModal" class="button button--secondary button--pill">
+               Close Model
+            </button>
+         </template>
+      </BaseModal>
    </div>
 </template>
 
@@ -305,6 +262,7 @@
    import mermaid from 'mermaid';
    import { useServiceConfigStore } from '../../store/serviceConfig';
    import WogDashboardStats from './WogDashboardStats.vue';
+   import BaseModal from '../Common/BaseModal.vue';
 
    const serviceConfigStore = useServiceConfigStore();
    const matrixData = ref([]);

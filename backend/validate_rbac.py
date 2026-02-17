@@ -101,12 +101,12 @@ def run_rbac_validation():
         print(f"  Result: {result} - {reason}")
         print(f"  Status: {status_mark}")
 
-    # 3. Check Audit Logs
-    print("\n" + "-" * 40)
-    print("📋 AUDIT LOG VERIFICATION (Recent Attempts)")
-    logs = AuditLog.objects.filter(action="CLAIM_PROCESS_ATTEMPT").order_by('-timestamp')[:5]
-    for log in logs:
-        print(f"[{log.timestamp}] {log.actor_role} | {log.action} | {log.decision} | {log.details}")
+    # Cleanup Test Data (Optional, but keeps DB clean as requested)
+    print("\n🧹 Cleaning up validation data...")
+    req_a.delete()
+    req_b.delete()
+    print("✓ Cleanup complete.")
 
 if __name__ == "__main__":
     run_rbac_validation()
+

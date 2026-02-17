@@ -542,7 +542,42 @@ class RegistryQueryView(APIView):
     """
     permission_classes = [permissions.IsAuthenticated]
 
+    def get(self, request):
+        """
+        Admins can dump all mock records for testing/monitoring.
+        """
+        if request.user.role != 'admin':
+            return Response({"detail": "Only admins can view registry dumps."}, status=403)
+        
+        from .registries import REGISTRY_MAP
+        dump = {}
+        for name, reg in REGISTRY_MAP.items():
+            # Dynamically look for common data attributes
+            data_attrs = [
+                'CITIZENS', 'BIRTH_RECORDS', 'ENTITIES', 'VEHICLES', 
+                'INSTITUTIONS', 'ADMISSIONS', 'TITLES', 'BENEFICIARIES',
+                'CASES', 'VOTERS', 'PINS', 'MEMBERS', 'NOTICES', 'CARDS', 
+                'PASSPORTS', 'RECORDS', 'DOCUMENTS', 'ASSETS', 'AIRCRAFT', 'LEARNERS'
+            ]
+            
+            reg_data = {}
+            found = False
+            for attr in data_attrs:
+                if hasattr(reg, attr):
+                    val = getattr(reg, attr)
+                    if isinstance(val, dict):
+                        reg_data[attr] = val
+                        found = True
+            
+            if found:
+                dump[name] = reg_data
+            else:
+                dump[name] = "Operational (Mock)"
+        
+        return Response(dump)
+
     def post(self, request):
+
         registry_name = request.data.get('registry')
         params = request.data.get('params', {})
         

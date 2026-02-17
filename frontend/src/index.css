@@ -1,3 +1,413 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&display=swap');
+@import './assets/base.css';
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* ICTA Global Design System */
+:root {
+  /* Core ICTA Palette */
+  --icta-red: #EC232A;
+  --icta-red-light: #FFEBEC;
+  --icta-red-dark: #A8181D;
+  --icta-green: #01A64E;
+  --icta-green-light: #E6F6EF;
+  --icta-dark: #1A1C1B;
+  --icta-text: #2D2F2E;
+  --icta-grey: #6B7280;
+  --icta-light: #F9FAFB;
+  --icta-border: #E5E7EB;
+  --icta-white: #FFFFFF;
+  
+  /* Gradients */
+  --grad-premium: linear-gradient(135deg, #1A1C1B 0%, #393B3A 100%);
+  --grad-icta: linear-gradient(135deg, #EC232A 0%, #A8181D 100%);
+  --grad-citizen: linear-gradient(135deg, #1E3A8A 0%, #1E40AF 100%);
+  
+  /* Elevation */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-premium: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* Glassmorphism */
+  --glass: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  
+  /* Typography */
+  --raleway: 'Raleway', sans-serif;
+  
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 9999px;
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--raleway);
+  background-color: var(--icta-light-grey);
+  color: var(--icta-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--icta-dark);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+}
+
+button {
+  font-family: var(--raleway);
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: all 0.2s ease;
+}
+
+/* Layout Core */
+.icta-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.icta-section {
+  padding: 2rem 0;
+}
+
+.icta-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ICTA Component Architecture (Vanilla) */
+
+/* 1. Buttons */
+.icta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.8rem 1.75rem;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.icta-btn.pill { border-radius: var(--radius-pill); }
+.icta-btn.tiny { padding: 0.4rem 1rem; font-size: 0.75rem; }
+
+.icta-btn.primary, .icta-btn-primary {
+  background: var(--icta-red);
+  color: var(--icta-white);
+  box-shadow: 0 4px 12px rgba(236, 35, 42, 0.2);
+}
+
+.icta-btn.primary:hover, .icta-btn-primary:hover {
+  background: var(--icta-red-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(236, 35, 42, 0.3);
+}
+
+.icta-btn.secondary, .icta-btn-secondary {
+  background: var(--icta-white);
+  color: var(--icta-dark);
+  border: 2px solid var(--icta-border);
+}
+
+.icta-btn.secondary:hover, .icta-btn-secondary:hover {
+  border-color: var(--icta-red);
+  color: var(--icta-red);
+}
+
+/* 2. Cards */
+.icta-card {
+  background: var(--icta-white);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  border: 1px solid var(--icta-border);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.icta-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* 3. Inputs */
+.icta-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.icta-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--icta-grey);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.icta-input, .icta-select {
+  box-sizing: border-box;
+  /* width: 100% removed to fix lint */
+  padding: 0.9rem 1.25rem;
+  border: 2px solid var(--icta-border);
+  border-radius: var(--radius-sm);
+  font-family: var(--raleway);
+  font-weight: 600;
+  outline: none;
+  background: var(--icta-white);
+}
+
+.icta-input:focus, .icta-select:focus {
+  border-color: var(--icta-red);
+}
+
+/* 4. Status Badges */
+.icta-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.icta-badge-received { background: #e0f2fe; color: #0369a1; }
+.icta-badge-progress { background: #fef3c7; color: #b45309; }
+.icta-badge-approved { background: #dcfce7; color: #15803d; }
+.icta-badge-rejected { background: #fee2e2; color: #b91c1c; }
+
+/* 5. Navigation Tabs */
+.icta-tab-container {
+  display: flex;
+  border-bottom: 2px solid var(--icta-border);
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.icta-tab-link {
+  padding: 1rem 0.5rem;
+  font-weight: 800;
+  color: var(--icta-grey);
+  border-bottom: 3px solid transparent;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+.icta-tab-link.active {
+  color: var(--icta-red);
+  border-bottom-color: var(--icta-red);
+}
+
+/* Glassmorphism Utilities */
+.icta-glass {
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+}
+
+.icta-glass-premium {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow-premium);
+}
+
+/* Premium Typography */
+.text-premium {
+  background: var(--grad-premium);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.icta-fade-in {
+  animation: ictaFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes ictaFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Container Refinement */
+@media (max-width: 640px) {
+  .icta-container {
+    padding: 0 1rem;
+  }
+}
+/* 6. Modals Design System */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.modal-card {
+  background: var(--icta-white);
+  border-radius: var(--radius-lg);
+  box-sizing: border-box;
+  /* width: 100% removed to fix lint */
+  max-width: 500px;
+  box-shadow: var(--shadow-premium);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  border: 1px solid var(--icta-border);
+  outline: none;
+}
+
+.modal-card--sm { max-width: 400px; }
+.modal-card--md { max-width: 600px; }
+.modal-card--lg { max-width: 800px; }
+.modal-card--full { max-width: 95vw; height: 90vh; }
+
+.modal-header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--icta-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+}
+
+.modal-header__content {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.modal-header__icon-wrapper {
+  box-sizing: border-box;
+  width: 3rem;
+  height: 3rem;
+  background: white;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--icta-border);
+  color: var(--icta-red);
+  font-size: 1.5rem;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.modal-subtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.modal-close-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #94a3b8;
+  transition: all 0.2s;
+}
+
+.modal-close-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.modal-body {
+  padding: 2rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-footer {
+  padding: 1.5rem 2rem;
+  background: #f8fafc;
+  border-top: 1px solid var(--icta-border);
+  border-bottom-left-radius: var(--radius-lg);
+  border-bottom-right-radius: var(--radius-lg);
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* Animations */
+.modal-fade-enter-active {
+  transition: opacity 0.3s ease;
+}
+.modal-fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+  opacity: 0;
+}
+
+.modal-fade-enter-active .modal-card {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.modal-fade-leave-active .modal-card {
+  transition: transform 0.2s ease-in;
+}
+.modal-fade-enter-from .modal-card {
+  transform: scale(0.9) translateY(20px);
+}
+.modal-fade-leave-to .modal-card {
+  transform: scale(0.95);
+}
+
+/* Modal specific form spacing */
+.modal-form .form-group {
+  margin-bottom: 1.5rem;
+}
+.modal-form .form-group:last-child {
+  margin-bottom: 0;
+}
