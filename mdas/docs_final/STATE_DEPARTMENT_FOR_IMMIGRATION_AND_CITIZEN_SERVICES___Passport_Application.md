@@ -3,7 +3,7 @@
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** STATE DEPARTMENT FOR IMMIGRATION AND CITIZEN SERVICES
 - **Process Name:** Passport Application & Issuance
-- **Document Version:** 1.2
+- **Document Version:** 1.3
 - **Date:** 2026-02-19
 - **Classification:** Official
 
@@ -177,6 +177,22 @@ The process is **Shared-Service Driven** and **Logistics-Integrated**.
 | 3 | Immigration | Auto-approves application. | Workflow Engine |
 | 4 | Factory | Prints booklet. | Production System |
 | 5 | Posta | Delivers passport to citizen's doorstep. | Logistics Tracking |
+
+---
+
+## 3. Standard Data Inputs
+*Required fields for the WoG Digital Service.*
+
+### A. Passport Application (Renewal/New)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Citizen ID (Maisha) | String | System Fetch (NRB) | Read-only |
+| Passport Type | Enum | User Input | 32/50/66 Pages |
+| Current Photo | Image | User Capture (App) | AI ICAO Check |
+| Delivery Address | Geo-Loc | User Input | Verified via Google Maps |
+| Recommender ID | String | User Input | Optional (if NRB verified) |
+| Reason for Travel | Enum | User Input | Tourism / Business / Medical |
+| Emergency Contact | String | User Input | Validated vs IPRS |
 
 ---
 

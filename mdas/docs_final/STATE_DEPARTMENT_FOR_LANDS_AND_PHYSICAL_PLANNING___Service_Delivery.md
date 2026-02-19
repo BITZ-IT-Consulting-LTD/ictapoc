@@ -3,7 +3,7 @@
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** MINISTRY OF LANDS AND PHYSICAL PLANNING
 - **Process Name:** Land Transaction (Transfer, Charge, Search)
-- **Document Version:** 1.2
+- **Document Version:** 1.3
 - **Date:** 2026-02-19
 - **Classification:** Official
 
@@ -179,6 +179,28 @@ The process is **Secure** and **Trustless**.
 | 3 | Seller | Consents via Biometric Scan. | Maisha App |
 | 4 | Blockchain | Swaps Title for Cash instantly. | Ledger |
 | 5 | Buyer | Receives Digital Title. | eCitizen Wallet |
+
+---
+
+## 3. Standard Data Inputs
+*Required fields for the WoG Digital Service.*
+
+### A. Official Search (Instant)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Parcel Number | String | User Input | Must exist in Registry |
+| Search Purpose | Enum | User Input | Sale / Charge / Due Diligence |
+| Requester ID | String | System (Auth) | Must be Active |
+
+### B. Smart Contract Transfer (TR1-Digital)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Parcel Number | String | User Input | Must match Search |
+| Buyer ID | String | User Input | Must be Active (IPRS) |
+| Sale Price | Currency | User Input | Must be > 0 |
+| Seller Consent | Boolean | Biometric (App) | Face ID Match |
+| Spousal Consent | Boolean | Biometric (App) | If Married (AG Link) |
+| Stamp Duty | Currency | System Calculated | GIS Zonal Value |
 
 ---
 

@@ -3,7 +3,7 @@
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** ·       CIVIL REGISTRATION SERVICES (CRS)
 - **Process Name:** Service Delivery (Birth & Death Registration)
-- **Document Version:** 1.2
+- **Document Version:** 1.3
 - **Date:** 2026-02-19
 - **Classification:** Official
 
@@ -169,6 +169,32 @@ The process is **Event-Driven** and **Interoperable**.
 | 3 | Citizen | Receives SMS, reviews details, and pays fee. | Notification / GPA |
 | 4 | CRS System | Auto-approves (if low risk) and generates Digital Certificate. | Workflow Engine |
 | 5 | Citizen | Downloads official certificate from eCitizen. | eCitizen Portal |
+
+---
+
+## 3. Standard Data Inputs
+*Required fields for the WoG Digital Service.*
+
+### A. Birth Registration Input (B1)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Child Name | String | User Input (Hospital) | Min 3 chars |
+| Date of Birth | Date | User Input (Hospital) | Cannot be future |
+| Gender | Enum (M/F) | User Input | Required |
+| Place of Birth | String | System (Facility Name) | Auto-filled |
+| Mother's ID | String | User Input | Validated vs IPRS |
+| Father's ID | String | User Input (Optional) | Validated vs IPRS |
+| Notification No | String | System Generated | Unique B-Series |
+
+### B. Death Registration Input (D1)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Deceased Name | String | System Fetch (IPRS) | Read-only |
+| Deceased ID | String | User Input | Must exist in IPRS |
+| Date of Death | Date | User Input | Cannot be future |
+| Cause of Death | String | ICD-11 Code | Medical Personnel Only |
+| Informant ID | String | User Input | Validated vs IPRS |
+| Notification No | String | System Generated | Unique D-Series |
 
 ---
 

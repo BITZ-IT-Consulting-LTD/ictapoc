@@ -3,7 +3,7 @@
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** ·       NATIONAL REGISTRATION BUREAU (NRB)
 - **Process Name:** Service Delivery (National Identity Card Registration)
-- **Document Version:** 1.2
+- **Document Version:** 1.3
 - **Date:** 2026-02-19
 - **Classification:** Official
 
@@ -177,6 +177,21 @@ The process is **Seamless** and **Digital-First**.
 | 2 | WoG Platform | Auto-verifies birth record via X-Road. | IPRS / CRS |
 | 3 | Citizen | Visits local hub for quick fingerprint scan. | Biometric Kit |
 | 4 | NRB System | Issues Virtual ID instantly. | Maisha Wallet |
+
+---
+
+## 3. Standard Data Inputs
+*Required fields for the WoG Digital Service.*
+
+### A. Adult ID Upgrade (Form 136-Digital)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Maisha Namba (UPI) | String | System Fetch (CRS) | Must exist & be >18 years |
+| Current Photo | Image | User Capture (App) | ICAO Compliance AI Check |
+| Fingerprints | Binary (WSQ) | Biometric Kit | AFIS Uniqueness Check |
+| Physical Address | String | User Input | Geo-tagged |
+| Mobile Number | String | User Input | Must differ from Parent |
+| Signature | Image | User Capture (Pad) | Required |
 
 ---
 

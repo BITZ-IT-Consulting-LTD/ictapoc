@@ -3,7 +3,7 @@
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** STATE LAW OFFICE (ATTORNEY GENERAL)
 - **Process Name:** Marriage Registration
-- **Document Version:** 1.2
+- **Document Version:** 1.3
 - **Date:** 2026-02-19
 - **Classification:** Official
 
@@ -165,6 +165,28 @@ The process is **Decentralized** and **Secure**.
 | 3 | Public | Can view notice and file objection online. | Public Portal |
 | 4 | Officiant | Scans QR code to finalize marriage. | Officiant App |
 | 5 | Registry | Updates status and issues Digital Cert. | X-Road |
+
+---
+
+## 3. Standard Data Inputs
+*Required fields for the WoG Digital Service.*
+
+### A. Notice of Marriage (Joint)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Groom ID | String | User Input | Must be 'Single' (IPRS) |
+| Bride ID | String | User Input | Must be 'Single' (IPRS) |
+| Marriage Type | Enum | User Input | Civil / Christian / Customary |
+| Proposed Date | Date | User Input | > 21 days from today |
+| Venue | String | User Input | Licensed Venue List |
+
+### B. Officiation (Ceremony)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| License QR | String | Scanned (App) | Valid & Not Expired |
+| Officiant License | String | System (Auth) | Must be Active |
+| Witness 1 ID | String | User Input | Valid ID (IPRS) |
+| Witness 2 ID | String | User Input | Valid ID (IPRS) |
 
 ---
 

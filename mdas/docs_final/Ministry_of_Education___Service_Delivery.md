@@ -3,7 +3,7 @@
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** MINISTRY OF EDUCATION
 - **Process Name:** Student Registration & Transition (NEMIS)
-- **Document Version:** 1.2
+- **Document Version:** 1.3
 - **Date:** 2026-02-19
 - **Classification:** Official
 
@@ -155,6 +155,30 @@ The process is **Identity-Driven** and **Automated**.
 | 2 | WoG Platform | Validates UPI (CRS) and checks school capacity. | X-Road / NEMIS |
 | 3 | School | Receives digital enrollment notification. | School Dashboard |
 | 4 | MoE System | Disburses capitation funds instantly. | GPA / IFMIS |
+
+---
+
+## 3. Standard Data Inputs
+*Required fields for the WoG Digital Service.*
+
+### A. School Enrollment (New Admission)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Child UPI | String | System Fetch (CRS) | Must exist in CRS |
+| Parent ID | String | User Input (Auth) | Must match CRS Parent |
+| School Code | String | User Input / List | Must be Active School |
+| Admission Date | Date | System (Today) | Auto-filled |
+| Grade Level | Enum | System Calculated | Based on Age (DOB) |
+| Disability Status | Enum | User Input | Optional |
+
+### B. Student Transfer Request
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Child UPI | String | User Input | Must be currently enrolled |
+| From School | String | System Fetch | Read-only |
+| To School Code | String | User Input | Must have capacity |
+| Reason | String | Enum (Relocation, etc.) | Required |
+| Transfer Date | Date | User Input | Cannot be past |
 
 ---
 

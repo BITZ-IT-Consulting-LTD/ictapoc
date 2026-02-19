@@ -3,7 +3,7 @@
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** BUSINESS REGISTRATION SERVICE (BRS)
 - **Process Name:** Business Name & Company Registration
-- **Document Version:** 1.2
+- **Document Version:** 1.3
 - **Date:** 2026-02-19
 - **Classification:** Official
 
@@ -169,6 +169,28 @@ The process is **Algorithmic** and **Bundled**.
 | 3 | Directors | Consent via App notification. | eCitizen App |
 | 4 | Entrepreneur | Pays single bundled fee. | GPA |
 | 5 | Integrated Systems | Issue all certificates instantly. | X-Road |
+
+---
+
+## 3. Standard Data Inputs
+*Required fields for the WoG Digital Service.*
+
+### A. Name Reservation (Instant)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Proposed Name | String | User Input | AI Check (Phonetic/Forbidden) |
+| Entity Type | Enum | User Input | Private Ltd / Business Name |
+| Nature of Business | String | User Input | ISIC Codes |
+
+### B. Company Registration (Form CR1-Digital)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Reserved Name | String | System Fetch | Must be 'Available' |
+| Director 1 ID | String | User Input | Must exist in IPRS |
+| Director 1 Consent | Boolean | System (OTP/App) | Biometric/Pin |
+| Share Capital | Currency | User Input | Min KES 0 |
+| Reg Office | Geo-Loc | User Input | Google Maps Verified |
+| Email | String | User Input | OTP Verified |
 
 ---
 

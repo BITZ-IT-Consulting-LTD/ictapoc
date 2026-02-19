@@ -3,7 +3,7 @@
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** THE JUDICIARY
 - **Process Name:** Succession & Probate Administration
-- **Document Version:** 1.2
+- **Document Version:** 1.3
 - **Date:** 2026-02-19
 - **Classification:** Official
 
@@ -171,6 +171,28 @@ The process is **Proactive** and **Data-Driven**.
 | 3 | Heir | Claims estate and proposes distribution on App. | eCitizen App |
 | 4 | Judiciary | Publishes e-Gazette notice instantly. | Online Gazette |
 | 5 | Court AI | Validates proposal and issues Grant. | Case Management |
+
+---
+
+## 3. Standard Data Inputs
+*Required fields for the WoG Digital Service.*
+
+### A. Estate Claim (Initial Filing)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Deceased UPI | String | System Fetch (CRS) | Must be Deceased |
+| Claimant ID | String | User Input | Must match Heir List |
+| Claimant Relation | Enum | System Fetch (Marriage/Birth) | Spouse/Child |
+| Asset List | JSON | System Fetch (Lands/Banks) | Verified Owners |
+| Other Assets | Text | User Input | Optional (Household) |
+
+### B. Distribution Proposal (P&A 80-Digital)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Case ID | String | System Generated | Unique Case No |
+| Beneficiary 1 | String | User Selection | Valid ID (IPRS) |
+| Asset Share | Percentage | User Input | Total = 100% |
+| Sureties (2) | String | User Input | Valid ID + Consent |
 
 ---
 

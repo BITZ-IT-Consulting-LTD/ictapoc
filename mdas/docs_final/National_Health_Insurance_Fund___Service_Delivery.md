@@ -3,7 +3,7 @@
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** NATIONAL HEALTH INSURANCE FUND (NHIF) / SOCIAL HEALTH AUTHORITY (SHA)
 - **Process Name:** Member Registration & Claims (Health Insurance)
-- **Document Version:** 1.2
+- **Document Version:** 1.3
 - **Date:** 2026-02-19
 - **Classification:** Official
 
@@ -174,6 +174,27 @@ The process is **Seamless** and **Intelligent**.
 | 3 | Doctor | Enters diagnosis. AI approves treatment plan instantly. | SHA AI Engine |
 | 4 | Hospital | Submits e-Claim upon discharge. | Hospital HIS |
 | 5 | GPA | Settles payment to hospital account. | Payment Gateway |
+
+---
+
+## 3. Standard Data Inputs
+*Required fields for the WoG Digital Service.*
+
+### A. Patient Check-In
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Biometric Token | Binary (Face) | Biometric Scanner | Match vs IPRS |
+| Patient UPI | String | System Fetch (NRB) | Must be Active |
+| Benefit Package | Enum | System Fetch (SHA) | UHC / Enhanced |
+
+### B. e-Claim Submission (Provider)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Patient UPI | String | System Fetch (Check-in) | Verified Session |
+| Diagnosis Code | String | User Input (Dr.) | ICD-11 Standard |
+| Procedure Code | String | User Input (Dr.) | SHA Tariff Code |
+| Bill Amount | Currency | System Calculated | Tariff Rate (Fixed) |
+| Discharge Summary | Text | User Input | Required |
 
 ---
 

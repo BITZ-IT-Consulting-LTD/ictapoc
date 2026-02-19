@@ -3,7 +3,7 @@
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** KENYA REVENUE AUTHORITY (KRA)
 - **Process Name:** Tax Compliance (PIN Registration & Filing)
-- **Document Version:** 1.2
+- **Document Version:** 1.3
 - **Date:** 2026-02-19
 - **Classification:** Official
 
@@ -169,6 +169,30 @@ The process is **Invisible** and **Automated**.
 | 3 | Citizen | Receives "Tax Statement" notification on App. | eCitizen App |
 | 4 | Citizen | Confirms statement and pays balance via GPA. | Payment Gateway |
 | 5 | KRA System | Instantly updates TCC status to "Compliant". | Ledger |
+
+---
+
+## 3. Standard Data Inputs
+*Required fields for the WoG Digital Service.*
+
+### A. Annual Tax Statement (System Generated)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Taxpayer PIN | String | System Fetch (NRB) | Must be Active |
+| Assessment Year | Year | System | Current - 1 |
+| Employment Income | Currency | System Fetch (Employers) | Aggregated |
+| Withholding Tax | Currency | System Fetch (Banks) | Aggregated |
+| Tax Liability | Currency | System Calculated | Income Tax Bands |
+| Tax Paid (PAYE) | Currency | System Fetch (Employer) | Read-only |
+| Balance Due | Currency | System Calculated | Must be >= 0 |
+
+### B. User Action (One-Click)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Action | Enum | User Input | Accept / Dispute |
+| Payment Method | Enum | User Input | M-Pesa / Card (GPA) |
+| Dispute Reason | String | User Input | Required if Dispute |
+| Supporting Doc | File | User Upload | Required if Dispute |
 
 ---
 
