@@ -322,3 +322,106 @@ class DesktopReview(models.Model):
 
     def __str__(self):
         return f"Desktop Review: {self.mda.name}"
+
+class RegistryAdapter(models.Model):
+    """
+    GEA-Compliant Registry Adapter configuration.
+    Allows decoupling of registry logic from hardcoded mocks to DB-driven API integrations.
+    """
+    code = models.CharField(max_length=50, unique=True, help_text="Unique code (e.g., IPRS, KRA, CRS)")
+    name = models.CharField(max_length=255)
+    base_url = models.URLField(blank=True, null=True, help_text="Authoritative API Base URL")
+    auth_config = models.JSONField(default=dict, blank=True, help_text="Headers, API Keys, or Certificates")
+    data_mapping = models.JSONField(default=dict, blank=True, help_text="Field mapping from Registry -> Platform")
+    
+    is_mock = models.BooleanField(default=True)
+    mock_data = models.JSONField(default=dict, blank=True, help_text="JSON dump of original authoritative dictionaries")
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.code} - {self.name}"
+
+class PaymentProvider(models.Model):
+    name = models.CharField(max_length=100)
+    code = models.CharField(max_length=20, unique=True) # e.g. MPESA, VISA, KCB
+    config = models.JSONField(default=dict, blank=True) # API keys, Paybill numbers, etc.
+    is_active = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return self.name
+
+class PaymentTransaction(models.Model):
+    STATUS_CHOICES = (
+        ('PENDING', 'Pending'),
+        ('SUCCESS', 'Success'),
+        ('FAILED', 'Failed'),
+        ('CANCELLED', 'Cancelled'),
+    )
+    
+    service_request = models.ForeignKey(ServiceRequest, on_delete=models.CASCADE, related_name='payments')
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    currency = models.CharField(max_length=3, default='KES')
+    provider = models.ForeignKey(PaymentProvider, on_delete=models.PROTECT)
+    provider_ref = models.CharField(max_length=100, unique=True, null=True, blank=True) # e.g. M-Pesa Code
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f"TXN-{self.id}: {self.amount} {self.currency} ({self.status})"
+
+class RevenueSplit(models.Model):
+    transaction = models.ForeignKey(PaymentTransaction, on_delete=models.CASCADE, related_name='splits')
+    beneficiary_mda = models.ForeignKey(MDA, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    percentage = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    account_number = models.CharField(max_length=100, blank=True, null=True) # Destination Account
+
+    def __str__(self):
+        return f"Split: {self.beneficiary_mda.name} - {self.amount}"
+
+class DataPurpose(models.Model):
+    """Legal grounds for data processing."""
+    code = models.CharField(max_length=50, unique=True) # e.g. SERVICE_DELIVERY, LAW_ENFORCEMENT
+    description = models.TextField()
+
+    def __str__(self):
+        return self.code
+
+class ConsentRecord(models.Model):
+    """
+    Tracks explicit citizen consent for data sharing according to the Data Protection Act.
+    """
+    STATUS_CHOICES = (
+        ('ACTIVE', 'Active'),
+        ('REVOKED', 'Revoked'),
+        ('EXPIRED', 'Expired'),
+    )
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='consents')
+    requester = models.ForeignKey(MDA, on_delete=models.CASCADE, related_name='requested_consents')
+    data_scope = models.CharField(max_length=255) # e.g. "identity.read", "tax_compliance.verify"
+    purpose = models.ForeignKey(DataPurpose, on_delete=models.PROTECT)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='ACTIVE')
+    
+    granted_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField(null=True, blank=True)
+    revoked_at = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Consent: {self.user.username} -> {self.requester.name} ({self.data_scope})"
+
+class ConsentAccessLog(models.Model):
+    """
+    Immutable audit log for every time data is accessed under a consent record.
+    """
+    consent = models.ForeignKey(ConsentRecord, on_delete=models.CASCADE, related_name='access_logs')
+    accessed_at = models.DateTimeField(auto_now_add=True)
+    accessed_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    resource_id = models.CharField(max_length=100, blank=True, null=True) # e.g. Request ID
+
+    def __str__(self):
+        return f"Access: {self.consent.id} at {self.accessed_at}"

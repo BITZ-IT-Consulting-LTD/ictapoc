@@ -1,105 +1,120 @@
 # Repeatable Government Services Platform (POC)
 
-This is a Production-Centric Proof-of-Concept (POC) for a Repeatable Government Services Platform, built with Django REST Framework for the backend and Vue 3 for the frontend, deployed using Docker.
+This is a **Proof-of-Concept (POC)** for a Repeatable Government Services Platform, built with Django REST Framework (Backend) and Vue 3 (Frontend).
+
+> **⚠️ ARCHITECTURE NOTICE:**
+> This codebase represents the **Functional Prototype** of the platform.
+> For the **Target Production Architecture** (GEA Compliant), please refer to [System Architecture](./docs/architecture/architecture_three.md).
+>
+> **Current Compliance Status:**
+> - **Service Configuration:** ✅ GEA Compliant (JSON-driven)
+> - **RBAC:** ✅ GEA Compliant (Granular Roles)
+> - **Interoperability:** ⚠️ **Mocked** (Requires X-Road Integration)
+> - **Payments:** 🔴 **Missing** (Requires Govt Payment Aggregator)
+> - **Identity:** ⚠️ **Local Auth** (Requires Maisha Namba SSO)
+
+---
 
 ## Key Features (Implemented)
-*   **Dynamic Service Configuration:** Define services and schemas via JSON.
-*   **Workflow Engine:** Configurable state machine for workflows (Steps, Roles, Actions).
-*   **RBAC (Role-Based Access Control):** Granular permissions and Roles (Citizen, Officer, Supervisor, Admin).
-*   **Public Registration:** Citizens can self-register.
-*   **Profile Management:** Citizens can manage persistent profile data (ID, Passport) and Document Wallet.
-*   **Verification Workflow:** Sensitive profile updates trigger a review workflow (Officer Verify -> Supervisor Approve).
-*   **Document Preview:** Integrated document viewer for PDFs and images.
-*   **Admin Dashboard:** Tools for managing MDAs, Services, and Roles.
+*   **Dynamic Service Engine:** Define services, forms, and workflows via JSON configuration.
+*   **Workflow Automation:** Configurable state machine for multi-step approvals (Citizen -> Officer -> Supervisor).
+*   **Role-Based Access Control (RBAC):** Granular permissions for Citizens, Officers, Supervisors, and Admins.
+*   **Service Catalogue:** Centralized registry of government services with metadata.
+*   **G2G Communication:** Digital memos and official correspondence between MDAs.
+*   **Audit Trail:** Comprehensive logging of all actions for accountability.
 
 ## Project Structure
 
 ```
 .
-├── backend/                  # Django REST Framework Backend
-│   ├── project/              # Django Project settings and URLs
-│   ├── service_api/          # Django App for services, workflows, models, views, serializers
-│   ├── manage.py             # Django management script
-│   └── seed_data.py          # Seeding script for Demo Data
+├── backend/                  # Django REST Framework (Monolithic Prototype)
+│   ├── project/              # Settings & Configuration
+│   ├── service_api/          # Core App (Services, Workflows, Models)
+│   ├── manage.py             # Management Script
+│   └── seed_data.py          # Data Seeding Scripts
 ├── frontend/                 # Vue 3 Frontend
-│   ├── src/                  # Vue source code (components, views, router, store, services)
-├── docker/                   # Docker configurations
-├── docs/                     # Project Documentation Library
-├── data/                     # Seed data and CSV exports
-├── .env                      # Environment variables
-└── docker-compose.yml        # Docker Compose setup
+│   ├── src/                  # Components, Views, Router
+├── docker/                   # Docker Configuration
+├── docs/                     # 📚 Architecture & Design Documentation
+├── data/                     # Seed Data (CSVs, JSONs)
+└── docker-compose.yml        # Container Orchestration
 ```
 
-## 📖 Documentation Index
+## 📚 Documentation Library
 
-The project documentation is organized into specialized directories for better maintainability:
+The project documentation is the **Single Source of Truth** for the target state architecture:
 
-*   **[Architecture](./docs/architecture/)**: Technical design, RBAC, and Workflow logic.
-    *   [System Architecture](./docs/architecture/architecture_three.md)
-    *   [RBAC Summary](./docs/architecture/RBAC_IMPLEMENTATION_SUMMARY.md)
-    *   [Workflow Engine](./docs/architecture/poc_algorithm_workflow_documentation.md)
-*   **[POC Core Documents](./docs/poc/)**: Requirements, Design, and Test plans.
-    *   [Project Overview](./docs/poc/poc_project_overview_concept_note.md)
+*   **[Architecture Design](./docs/architecture/)**
+    *   [Target System Architecture (GEA Compliant)](./docs/architecture/architecture_three.md)
+    *   [Workflow Logic & BPMN](./docs/architecture/poc_algorithm_workflow_documentation.md)
+*   **[Technical Specifications](./docs/poc/)**
+    *   [System Design Documents](./docs/poc/poc_system_design_documents.md)
     *   [Functional Requirements](./docs/poc/poc_functional_non_functional_requirements.md)
-*   **[Guides](./docs/guides/)**: Deployment and integration instructions.
-    *   [Deployment Plan](./docs/guides/poc_deployment_dev_ops_plan.md)
-    *   [Huduma Bridge Instructions](./docs/guides/huduma_bridge_instructions.md)
-*   **[Style Guide](./docs/style-guide/)**: BEM naming conventions and UI patterns.
-    *   [BEM Documentation](./docs/style-guide/BEM-DOCUMENTATION.md)
-*   **[Reports](./docs/reports/)**: Progress reports and meeting actions.
+*   **[Reports & Analysis](./docs/reports/)**
     *   [Comprehensive POC Report](./docs/reports/ICTA_POC_Comprehensive_Report.md)
-    *   [Consolidated Actions](./docs/reports/ICTA_WB_CONSOLIDATED_ACTIONS.md)
-*   **Live Catalogue**: Accessible via the **Admin Dashboard > Operations > Whole-of-Gov Catalogue** tab.
+
+---
+
+## Production Roadmap (GEA Compliance)
+
+To transition this POC to a **Live National Platform**, the following modules must be integrated:
+
+1.  **Government Payment Aggregator (GPA):**
+    *   Integrate with M-Pesa/Banks for real-time payments.
+    *   Implement **Revenue Splitting** logic (County/National Treasury).
+2.  **Interoperability Layer (KeSEL / X-Road):**
+    *   Replace mock registries with **X-Road Security Server** adapters.
+    *   Connect to **IPRS (Identity)**, **BRS (Business)**, and **NLIMS (Land)**.
+3.  **Data Protection & Consent:**
+    *   Implement a **Consent Manager** to capture citizen authorization for data sharing.
+4.  **Identity Federation:**
+    *   Replace local JWT auth with **Maisha Namba (OIDC)** Single Sign-On.
+
+---
 
 ## Getting Started
 
 ### Prerequisites
-*   Docker and Docker Compose installed.
+*   Docker & Docker Compose installed.
 
-### Setup and Deployment
+### Quick Start
 
-1.  **Clone the repository & Configure .env** (Using example provided).
-
-2.  **Build and Run:**
+1.  **Clone & Build:**
     ```bash
+    git clone <repo_url>
+    cd ictapoc
     docker-compose up --build -d
     ```
 
-3.  **Apply Migrations & Seed Data:**
-    This script wipes the DB and provisions:
-    - Users: `admin`, `citizen1`, `officer1`, `supervisor1`
-    - Roles & Permissions
-    - Services: Birth Registration, Profile Update, etc.
-    
+2.  **Seed Data:**
     ```bash
-    # Run in backend container
     docker exec -it ictapoc-backend-1 python manage.py migrate
     docker exec -it ictapoc-backend-1 python seed_data.py
     ```
-    *(Note: `seed_data.py` sets password `Starten1@` for all demo users)*
+    *(Creates demo users: `admin`, `citizen1`, `officer1` with password `Starten1@`)*
 
-### Accessing the Application
+3.  **Access the App:**
+    *   **Frontend:** [http://localhost:5173](http://localhost:5173)
+    *   **API:** [http://localhost:80/api/](http://localhost:80/api/)
+    *   **Admin Panel:** [http://localhost:80/admin/](http://localhost:80/admin/)
 
-*   **Frontend:** `http://localhost:5173` (Dev Mode) or `http://localhost:80` (Nginx).
-*   **Backend API:** `http://localhost:80/api/` (Proxied).
+---
 
-**Demo Credentials:**
-*   **Citizen:** `citizen1` / `Starten1@`
-*   **Officer:** `officer1` / `Starten1@`
-*   **Supervisor:** `supervisor1` / `Starten1@`
-*   **Admin:** `admin` / `Starten1@`
+## Demo Scenarios
 
-## Workflow Demo
-1.  **Register/Login** as Citizen.
-2.  **Apply** for Birth Registration (Auto-fills from profile).
-3.  **Logout**, Login as Officer (`officer1`).
-4.  **View Request**, Verify Documents, Approve/Next.
-5.  Login as Supervisor (`supervisor1`) for final approvals if required.
+### 1. Citizen Application
+*   Login as **citizen1**.
+*   Select **"Business Permit"** from the Catalogue.
+*   Fill the form (Auto-fills from Profile).
+*   Submit Application.
 
-## Profile Update Demo
-1.  Login as Citizen.
-2.  Go to **Profile**.
-3.  Update Phone/ID and Attach Proof.
-4.  Submit.
-5.  Login as Officer to Verify.
-6.  Login as Supervisor to Approve.
+### 2. Officer Review
+*   Login as **officer1**.
+*   Go to **"My Tasks"**.
+*   Review the application and documents.
+*   Click **"Approve"** to forward to Supervisor.
+
+### 3. G2G Memo
+*   Login as **admin** (MDA Admin).
+*   Go to **"Office Automation"** > **"New Memo"**.
+*   Draft a memo to another department and send for internal review.

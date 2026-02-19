@@ -13,7 +13,11 @@ class IPRS(MockRegistry):
         "ID-MOTHER-001": {"full_name": "MARY MOTHER", "status": "ALIVE", "dob": "1980-05-10", "gender": "FEMALE"},
         "ID-FATHER-001": {"full_name": "JOSEPH FATHER", "status": "ALIVE", "dob": "1978-08-15", "gender": "MALE"},
     }
-    def query(self, params): return {"status": "SUCCESS"}
+    def query(self, params):
+        cid = params.get('id_number') or params.get('identifier')
+        if cid in self.CITIZENS:
+            return {"status": "SUCCESS", "source": "IPRS", "data": self.CITIZENS[cid]}
+        return {"status": "NOT_FOUND", "message": f"ID {cid} not found in IPRS"}
 
 class NRB(MockRegistry):
     """National Registration Bureau (ID Cards)."""
@@ -21,7 +25,11 @@ class NRB(MockRegistry):
         "12345678": {"serial_no": "99887766", "issue_date": "2010-01-01", "station": "NAIROBI CENTRAL", "status": "ISSUED"},
         "22222222": {"serial_no": "11223344", "issue_date": "2015-05-05", "station": "MOMBASA EAST", "status": "ISSUED"}
     }
-    def query(self, params): return {"status": "SUCCESS"}
+    def query(self, params):
+        cid = params.get('id_number') or params.get('identifier')
+        if cid in self.CARDS:
+            return {"status": "SUCCESS", "source": "NRB", "data": self.CARDS[cid]}
+        return {"status": "NOT_FOUND", "message": f"ID {cid} not found in NRB"}
 
 class CRS(MockRegistry):
     """Civil Registration Services (Births/Deaths)."""
@@ -29,7 +37,11 @@ class CRS(MockRegistry):
         "BC-111": {"full_name": "JAMES DOE JNR", "event": "BIRTH", "date": "2006-05-15", "mother": "MARY MOTHER"},
         "DC-999": {"full_name": "SARAH LATE", "event": "DEATH", "date": "2024-01-01", "cert_no": "D-1234"}
     }
-    def query(self, params): return {"status": "SUCCESS"}
+    def query(self, params):
+        bid = params.get('birth_certificate_number') or params.get('identifier')
+        if bid in self.RECORDS:
+            return {"status": "SUCCESS", "source": "CRS", "data": self.RECORDS[bid]}
+        return {"status": "NOT_FOUND", "message": f"Record {bid} not found in CRS"}
 
 class Immigration(MockRegistry):
     """Department of Immigration Services."""
@@ -45,7 +57,11 @@ class BRS(MockRegistry):
         "PVT-123": {"name": "TECH SOLUTIONS LTD", "type": "COMPANY", "inc_date": "2020-01-01", "status": "ACTIVE"},
         "BN-987": {"name": "MAMA MBOGA SHOP", "type": "BUSINESS NAME", "owner": "JANE DOE", "status": "ACTIVE"}
     }
-    def query(self, params): return {"status": "SUCCESS"}
+    def query(self, params):
+        eid = params.get('entity_id') or params.get('identifier')
+        if eid in self.ENTITIES:
+            return {"status": "SUCCESS", "source": "BRS", "data": self.ENTITIES[eid]}
+        return {"status": "NOT_FOUND", "message": f"Entity {eid} not found in BRS"}
 
 class KRA(MockRegistry):
     """Kenya Revenue Authority."""
@@ -53,7 +69,11 @@ class KRA(MockRegistry):
         "A001234567Z": {"name": "JOHN DOE", "pin_type": "INDIVIDUAL", "status": "COMPLIANT"},
         "P098765432W": {"name": "JANE DOE", "pin_type": "INDIVIDUAL", "status": "NON_COMPLIANT"}
     }
-    def query(self, params): return {"status": "SUCCESS"}
+    def query(self, params):
+        pin = params.get('pin') or params.get('identifier')
+        if pin in self.PINS:
+            return {"status": "SUCCESS", "source": "KRA", "data": self.PINS[pin]}
+        return {"status": "NOT_FOUND", "message": f"PIN {pin} not found in KRA"}
 
 class NGOBoard(MockRegistry):
     """NGO Coordination Board."""
@@ -98,7 +118,11 @@ class NEMIS(MockRegistry):
         "UPI-1122": {"name": "JAMES DOE JNR", "school": "NAIROBI SCHOOL", "status": "ENROLLED"},
         "UPI-3344": {"name": "LUCY SMITH", "school": "ALLIANCE GIRLS", "status": "ACTIVE"}
     }
-    def query(self, params): return {"status": "SUCCESS"}
+    def query(self, params):
+        upi = params.get('upi') or params.get('identifier')
+        if upi in self.LEARNERS:
+            return {"status": "SUCCESS", "source": "NEMIS", "data": self.LEARNERS[upi]}
+        return {"status": "NOT_FOUND", "message": f"Learner {upi} not found in NEMIS"}
 
 class ProfessionalBodies(MockRegistry):
     """EBK, KMPDC, LSK."""

@@ -130,6 +130,8 @@ class RBACScopeManager:
         # 1. Resolve role name
         role_name = user.user_role.name if user.user_role else user.role
         assigned_mdas = list(user.assigned_mdas.values_list('id', flat=True))
+        if user.mda:
+            assigned_mdas.append(user.mda.id)
         
         # Metadata for auditing
         audit_context = {
@@ -146,11 +148,14 @@ class RBACScopeManager:
         decision = "DENY"
         details = ""
 
-        if role_name in ["GLOBAL_OFFICER", "GLOBAL_SUPERVISOR", "system_admin", "admin"]:
+        # Normalize role name for check
+        normalized_role = role_name.lower() if role_name else ""
+
+        if role_name in ["GLOBAL_OFFICER", "GLOBAL_SUPERVISOR", "system_admin", "admin"] or normalized_role == 'admin':
             decision = "ALLOW"
             details = "Global scope authorization"
         
-        elif role_name in ["MDA_OFFICER", "MDA_SUPERVISOR", "mda_admin"]:
+        elif role_name in ["MDA_OFFICER", "MDA_SUPERVISOR", "mda_admin"] or normalized_role in ['officer', 'supervisor', 'registrar', 'mda_admin']:
             if service_request.service_config.mda.id in assigned_mdas:
                 decision = "ALLOW"
                 details = f"MDA scope authorized for MDA ID: {service_request.service_config.mda.id}"

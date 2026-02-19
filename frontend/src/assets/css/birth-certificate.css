@@ -1,0 +1,334 @@
+/* 
+  Birth Certificate Styling - Digital Registry
+  Methodology: BEM (Block Element Modifier)
+  Theme: Official Government Document (Cream, Gold, Black)
+  Print-Ready: A4 Size
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:wght@400;500&display=swap');
+
+:root {
+  --cert-bg: #fffbf0; /* Cream / Off-white */
+  --cert-border: #1a1a1a; /* Dark / Black */
+  --cert-gold: #D4AF37; /* Metallic Gold */
+  --cert-text: #2c2c2c; /* Charcoal */
+  --cert-accent: #8B0000; /* Deep Red/Burgundy for seals */
+  
+  --font-serif: 'Playfair Display', 'Times New Roman', serif;
+  --font-sans: 'Raleway', 'Helvetica', sans-serif;
+  --font-mono: 'Roboto Mono', monospace;
+}
+
+/* --- Block: birth-certificate --- */
+
+.birth-certificate {
+  position: relative;
+  width: 210mm; /* A4 Width */
+  min-height: 297mm; /* A4 Height */
+  margin: 2rem auto;
+  padding: 15mm;
+  background-color: var(--cert-bg);
+  background-image: 
+    radial-gradient(circle at center, rgba(212, 175, 55, 0.03) 0%, transparent 70%); /* Subtle gold watermark */
+  color: var(--cert-text);
+  font-family: var(--font-serif);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15); /* Screen-only shadow */
+  border: 2px solid var(--cert-border);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Decorative Inner Border (Guilloche effect simulation) */
+.birth-certificate::before {
+  content: '';
+  position: absolute;
+  top: 5mm;
+  left: 5mm;
+  right: 5mm;
+  bottom: 5mm;
+  border: 3px double var(--cert-gold);
+  pointer-events: none;
+}
+
+.birth-certificate::after {
+  content: '';
+  position: absolute;
+  top: 7mm;
+  left: 7mm;
+  right: 7mm;
+  bottom: 7mm;
+  border: 1px solid var(--cert-border);
+  pointer-events: none;
+}
+
+/* --- Element: Header --- */
+
+.birth-certificate__header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-top: 1rem;
+  z-index: 1;
+}
+
+.birth-certificate__coat-of-arms {
+  font-size: 4rem;
+  color: var(--cert-border);
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Using an icon as placeholder, but image would be preferred */
+.birth-certificate__coat-of-arms i {
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.birth-certificate__title {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--cert-border);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.birth-certificate__subtitle {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--cert-gold);
+  margin-top: 0.5rem;
+  border-bottom: 2px solid var(--cert-gold);
+  display: inline-block;
+  padding-bottom: 0.25rem;
+}
+
+/* --- Element: Content --- */
+
+.birth-certificate__content {
+  flex: 1;
+  padding: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  z-index: 1;
+}
+
+.birth-certificate__text {
+  font-size: 1.1rem;
+  font-style: italic;
+  margin-bottom: 0.5rem;
+  color: #555;
+  font-family: var(--font-serif);
+}
+
+.birth-certificate__field {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--cert-text);
+  border-bottom: 1px dashed #aaa;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  min-height: 2.5rem; /* Ensure space even if empty */
+}
+
+.birth-certificate__field--highlight {
+  font-size: 2.5rem;
+  color: var(--cert-border);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: var(--font-serif);
+  border-bottom: 2px solid var(--cert-border); /* Solid line for names */
+}
+
+/* Grid for Details */
+.birth-certificate__details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.birth-certificate__label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 0.25rem;
+  font-weight: 700;
+}
+
+.birth-certificate__value {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.25rem;
+}
+
+/* --- Element: Footer --- */
+
+.birth-certificate__footer {
+  margin-top: auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  gap: 2rem;
+  z-index: 1;
+}
+
+.birth-certificate__signature-block {
+  text-align: center;
+}
+
+.birth-certificate__signature-image {
+  height: 60px;
+  display: block;
+  margin: 0 auto;
+  opacity: 0.8;
+  /* Simulating a signature font content if image not present */
+  font-family: 'Cursive', cursive; 
+  font-size: 2rem;
+  color: navy;
+}
+
+.birth-certificate__signature-line {
+  border-top: 1px solid var(--cert-border);
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* --- Element: Metadata & Security --- */
+
+.birth-certificate__security {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #666;
+  opacity: 0.7;
+}
+
+.birth-certificate__qr {
+  width: 80px;
+  height: 80px;
+  background: white;
+  border: 1px solid #000;
+  padding: 5px;
+}
+
+.birth-certificate__seal {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px double var(--cert-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--cert-gold);
+  font-weight: 700;
+  transform: rotate(-15deg);
+  opacity: 0.8;
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.3);
+  position: absolute;
+  bottom: 120px;
+  right: 60px;
+}
+
+/* --- Element: Controls (Screen Only) --- */
+
+.birth-certificate__controls {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+}
+
+.birth-certificate__close-button {
+  background: rgba(0,0,0,0.8);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.birth-certificate__close-button:hover {
+  background: black;
+  transform: translateY(-1px);
+}
+
+.birth-certificate__close-button:focus {
+  outline: 2px solid var(--cert-gold);
+  outline-offset: 2px;
+}
+
+/* --- Media: Print --- */
+
+@media print {
+  @page {
+    margin: 0;
+    size: A4 portrait;
+  }
+
+  body {
+    background: white;
+    margin: 0;
+    padding: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .birth-certificate {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    box-shadow: none;
+    border: none; /* Let the inner borders define the frame or rely on paper edge */
+    background-color: white !important; /* Save Ink or use Cream if printer supports */
+  }
+
+  /* Force background graphics if needed */
+  .birth-certificate {
+    background-color: var(--cert-bg) !important; 
+    -webkit-print-color-adjust: exact;
+  }
+
+  .birth-certificate__controls {
+    display: none;
+  }
+
+  .birth-certificate__field,
+  .birth-certificate__field--highlight {
+    border-bottom: none; /* Cleaner look for print, or keep if form-style desired */
+    /* Often certificates don't print the dashed lines, just the names */
+  }
+}

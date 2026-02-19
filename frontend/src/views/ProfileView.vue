@@ -5,13 +5,16 @@
         <h1 class="page__title">Authentic Citizen Profile</h1>
         <p class="page__subtitle">Manage your verified credentials and authoritative digital identity</p>
       </div>
+      <div class="page__actions">
+        <router-link to="/profile/consent" class="button button--secondary button--pill button--small">
+          <i class="bi bi-shield-check u-mb-1"></i> Privacy & Consents
+        </router-link>
+      </div>
     </header>
 
     <!-- Document View Modal -->
-    <BaseModal :show="!!selectedPreviewDoc" 
-               @close="selectedPreviewDoc = null" 
-               size="lg"
-               :title="selectedPreviewDoc?.name">
+    <BaseModal :show="!!selectedPreviewDoc" @close="selectedPreviewDoc = null" size="lg"
+      :title="selectedPreviewDoc?.name">
       <template #header v-if="selectedPreviewDoc?.authoritative_id">
         <div class="modal__header-content">
           <h3 class="modal__title">{{ selectedPreviewDoc.name }}</h3>
@@ -21,68 +24,65 @@
         </div>
       </template>
 
-      <div class="u-bg-bg-page u-flex u-justify-center u-overflow-y-auto" style="margin: -var(--spacing-6); min-height: 60vh;">
+      <div class="u-bg-bg-page u-flex u-justify-center u-overflow-y-auto"
+        style="margin: -var(--spacing-6); min-height: 60vh;">
         <!-- Simulated Certificate Layout -->
-        <div v-if="selectedPreviewDoc?.type === 'AUTHORITATIVE_OUTPUT'"
-          class="u-bg-white u-w-[595px] u-min-h-[842px] u-shadow-xl u-p-16 u-relative u-border-[12px] u-border-double u-border-primary-soft u-scale-90 sm:u-scale-100 u-origin-top u-my-8">
-          <!-- Ornamental Border -->
-          <div class="u-absolute u-inset-4 u-border-2 u-border-primary-soft u-pointer-events-none"></div>
-
-          <div class="u-text-center u-mb-16">
-            <div class="u-flex u-justify-center u-mb-6">
+        <div v-if="selectedPreviewDoc?.type === 'AUTHORITATIVE_OUTPUT'" class="birth-certificate">
+          <div class="birth-certificate__header">
+            <div class="birth-certificate__coat-of-arms">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Coat_of_arms_of_Kenya_%28Official%29.svg/1200px-Coat_of_arms_of_Kenya_%28Official%29.svg.png"
-                class="u-h-28 u-grayscale u-opacity-80" alt="GOK Coat of Arms">
+                alt="Coat of Arms" style="height: 80px; opacity: 0.8;">
             </div>
-            <h1 class="u-text-2xl u-font-serif u-font-black u-text-main u-uppercase u-tracking-[0.2em] u-mb-2">{{
-              selectedPreviewDoc.issued_by }}</h1>
-            <h2 class="u-text-lg u-font-serif u-text-primary u-italic">Official Certificate of Registry Action</h2>
+            <h1 class="birth-certificate__title">{{ selectedPreviewDoc.issued_by || 'Civil Registration Services' }}
+            </h1>
+            <h2 class="birth-certificate__subtitle">Official Certificate of Registry Action</h2>
           </div>
 
-          <div class="u-space-y-10 u-text-main">
-            <div class="u-text-center">
-              <p class="u-text-xs u-uppercase u-tracking-[0.3em] u-text-muted u-mb-4">This is to officially certify that
-              </p>
-              <p class="u-text-4xl u-font-serif u-font-black u-text-primary-darker">{{ selectedPreviewDoc.issued_to }}</p>
+          <div class="birth-certificate__content">
+            <p class="birth-certificate__text">This is to officially certify that</p>
+            <div class="birth-certificate__field birth-certificate__field--highlight">{{ selectedPreviewDoc.issued_to ||
+              user.username }}</div>
+
+            <p class="birth-certificate__text">Has successfully completed the statutory requirement for</p>
+            <div class="birth-certificate__field birth-certificate__field--highlight">{{ selectedPreviewDoc.name }}
             </div>
 
-            <div class="u-text-center u-border-y u-border-border-color u-py-10">
-              <p class="u-text-sm u-font-bold u-text-muted u-mb-2 u-uppercase u-tracking-widest">Has successfully completed
-                the statutory requirement for</p>
-              <p class="u-text-2xl u-font-black u-text-main">{{ selectedPreviewDoc.name.split('-')[0] }}</p>
-            </div>
-
-            <div class="u-grid u-grid-cols-2 u-gap-12 u-text-sm u-border-b u-border-border-color u-pb-10">
-              <div>
-                <p class="u-text-[10px] u-text-muted u-uppercase u-font-black u-tracking-widest u-mb-1">Authoritative
-                  Reference</p>
-                <p class="u-font-mono u-font-black u-text-primary">{{ selectedPreviewDoc.authoritative_id }}</p>
-              </div>
-              <div>
-                <p class="u-text-[10px] u-text-muted u-uppercase u-font-black u-tracking-widest u-mb-1">Cryptographic Issue
-                  Date</p>
-                <p class="u-font-black">{{ new Date(selectedPreviewDoc.issue_date).toLocaleDateString() }}</p>
+            <div class="birth-certificate__details-grid" v-if="selectedPreviewDoc.metadata">
+              <!-- Basic details if metadata exists -->
+              <div v-for="(value, key) in selectedPreviewDoc.metadata" :key="key">
+                <span class="birth-certificate__label">{{ key.replace(/_/g, ' ') }}</span>
+                <span class="birth-certificate__value">{{ value }}</span>
               </div>
             </div>
+          </div>
 
-            <!-- Signature Section -->
-            <div class="u-pt-16 u-flex u-justify-between u-items-end">
-              <div class="u-max-w-[240px]">
-                <div class="u-h-[1px] u-w-full u-bg-border-color u-mb-4"></div>
-                <p class="u-text-[10px] u-uppercase u-font-black u-text-muted u-tracking-widest u-mb-2">Electronic Registrar
-                  Signature</p>
-                <p class="u-text-[9px] font-mono u-text-primary-soft u-break-all u-leading-tight">{{
-                  selectedPreviewDoc.metadata?.digital_signature }}</p>
+          <div class="birth-certificate__footer">
+            <div class="birth-certificate__signature-block">
+              <div class="birth-certificate__signature-image"
+                style="font-family: 'Dancing Script', cursive; font-size: 24px; color: #000080;">
+                Digitally Signed
               </div>
-              <!-- Mock Barcode -->
-              <div class="u-text-right">
-                <div class="u-bg-main u-w-36 u-h-12 u-flex u-gap-1 u-p-1 u-px-2 u-items-center u-justify-center u-rounded-sm">
-                  <div class="u-bg-white u-w-0.5 u-h-full" v-for="i in 18" :key="i"
-                    :style="{ width: Math.random() * 4 + 'px' }"></div>
-                </div>
-                <p class="u-text-[8px] u-font-mono u-mt-2 u-tracking-[0.2em] u-text-muted u-uppercase">{{
-                  selectedPreviewDoc.authoritative_id }}</p>
+              <div class="birth-certificate__signature-line">Registrar of Persons</div>
+            </div>
+
+            <div style="text-align: right;">
+              <div class="birth-certificate__auth-id"
+                style="font-family: monospace; font-size: 0.8rem; margin-bottom: 5px;">
+                REF: {{ selectedPreviewDoc.authoritative_id }}
               </div>
+              <div class="birth-certificate__date" style="font-weight: bold;">
+                ISSUED: {{ new Date(selectedPreviewDoc.issue_date || Date.now()).toLocaleDateString() }}
+              </div>
+            </div>
+          </div>
+
+          <div class="birth-certificate__security">
+            <div class="birth-certificate__qr">
+              <i class="bi bi-qr-code" style="font-size: 60px; color: #000;"></i>
+            </div>
+            <div class="birth-certificate__seal">
+              Official<br>Seal
             </div>
           </div>
         </div>
@@ -179,78 +179,157 @@
       </section>
 
       <!-- Right: Wallet Sidebar -->
+      <!-- Right: Wallet Sidebar -->
       <section class="space-y-8">
-        <div class="card card--primary">
-          <header class="card__header border-indigo-800">
-            <div class="card__title-group">
-              <h2 class="card__title text-white">Digital Wallet</h2>
-              <p class="card__subtitle text-indigo-300">Authored Vault for Official Credentials</p>
+        <div class="card shadow-2xl overflow-hidden border-0" style="background: var(--grad-premium);">
+          <header class="p-6 border-b flex justify-between items-start" style="border-color: rgba(255,255,255,0.1);">
+            <div>
+              <h2 class="text-xl font-black tracking-tight flex items-center gap-2" style="color: white !important;">
+                <i class="bi bi-wallet2" style="color: var(--icta-red) !important;"></i> Digital Wallet
+              </h2>
+              <p class="text-xs mt-1 font-medium" style="color: #9ca3af !important;">Secure Credential Vault</p>
             </div>
             <button @click="showUpload = !showUpload"
-              class="button button--pill button--small bg-white/10 hover:bg-white/20 text-white border-0">
-              <i class="bi bi-plus-lg"></i>
+              class="w-10 h-10 rounded-xl hover:bg-white/10 text-white transition-all flex items-center justify-center border"
+              style="background-color: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1);"
+              :aria-label="showUpload ? 'Close upload form' : 'Upload new document'" :aria-expanded="showUpload">
+              <i class="bi" :class="showUpload ? 'bi-x-lg' : 'bi-plus-lg'"></i>
             </button>
           </header>
 
-          <div v-if="showUpload" class="p-6 bg-indigo-800/50 border-b border-indigo-800 space-y-4">
-            <div class="form__group">
-              <label class="form__label text-white/70">Credential Alias</label>
-              <input type="text" v-model="newDocName" placeholder="e.g. Birth Certificate"
-                class="form__input bg-white/5 border-white/10 text-white placeholder:text-white/30">
+          <!-- Upload Form (Collapsible) -->
+          <div v-show="showUpload" class="p-6 bg-black/20 border-b border-indigo-500/30 space-y-4 transition-all"
+            role="region" aria-label="Upload Document Form">
+            <div class="space-y-1">
+              <label class="text-[10px] uppercase font-black tracking-widest text-indigo-300" for="docName">Credential
+                Name</label>
+              <input id="docName" type="text" v-model="newDocName" placeholder="e.g. Tax Clearance"
+                class="w-full bg-indigo-950/50 border border-indigo-500/30 rounded-lg px-3 py-2 text-sm text-white placeholder-indigo-400/50 focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 transition-colors">
             </div>
 
-            <div class="form__group">
-              <label class="form__label text-white/70">Credential File</label>
-              <div class="relative overflow-hidden">
-                <button class="button button--secondary button--small w-full">Select Authoritative File</button>
-                <input type="file" @change="handleFileSelect" class="absolute inset-0 opacity-0 cursor-pointer">
+            <div class="space-y-1">
+              <label class="text-[10px] uppercase font-black tracking-widest text-indigo-300" for="docFile">File
+                Upload</label>
+              <div class="relative group">
+                <input id="docFile" type="file" @change="handleFileSelect"
+                  class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                  aria-label="Choose file to upload">
+                <div
+                  class="w-full bg-indigo-950/50 border border-dashed border-indigo-500/40 rounded-lg px-3 py-3 text-center group-hover:border-indigo-400 transition-colors">
+                  <p v-if="newDocFile"
+                    class="text-xs text-emerald-400 font-bold truncate flex items-center justify-center gap-2">
+                    <i class="bi bi-file-earmark-check"></i> {{ newDocFile.name }}
+                  </p>
+                  <p v-else class="text-xs text-indigo-400">
+                    <i class="bi bi-cloud-arrow-up mr-1.5"></i> Select PDF or Image
+                  </p>
+                </div>
               </div>
-              <p v-if="newDocFile" class="text-[10px] text-indigo-200 mt-2 font-mono truncate">{{ newDocFile.name }}</p>
             </div>
 
             <button @click="uploadDocument" :disabled="!newDocFile || !newDocName"
-              class="button button--primary button--pill w-full">
-              <i class="bi bi-cloud-upload me-2"></i> Vault Document
+              class="w-full py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-black uppercase tracking-wider shadow-lg shadow-emerald-900/20 transition-all flex items-center justify-center gap-2"
+              aria-label="Save document to wallet">
+              <i class="bi bi-lock-fill"></i> Secure to Vault
             </button>
           </div>
 
-          <div class="card__body p-0 max-h-[600px] overflow-y-auto">
-            <div class="list list--compact">
-              <div v-for="(doc, index) in savedDocs" :key="index"
-                class="list__item hover:bg-indigo-800 transition-colors border-indigo-800/50">
-                <div class="list__content flex items-center gap-4">
-                  <div class="avatar-sm avatar-sm--square bg-indigo-700 text-white">
-                    <i v-if="doc.type === 'AUTHORITATIVE_OUTPUT' || doc.doctype === 'BIRTH_CERTIFICATE'"
-                      class="bi bi-patch-check-fill text-emerald-400"></i>
-                    <i v-else class="bi bi-file-earmark-text"></i>
+          <!-- Document List -->
+          <div class="max-h-[600px] overflow-y-auto custom-scrollbar p-2" role="list" aria-label="Saved Documents List">
+            <div v-if="savedDocs.length === 0" class="p-8 text-center text-indigo-300/50">
+              <i class="bi bi-safe text-4xl mb-2 block opacity-50"></i>
+              <p class="text-xs font-black uppercase tracking-widest leading-relaxed">Vault is empty</p>
+            </div>
+
+            <div v-for="(doc, index) in savedDocs" :key="index" class="mb-4 relative group" role="listitem">
+
+              <!-- Premium Credential Card for Authoritative Documents -->
+              <div
+                v-if="doc.type === 'AUTHORITATIVE_OUTPUT' || doc.doctype === 'BIRTH_CERTIFICATE' || doc.doctype === 'NEMIS_CARD' || doc.name?.includes('NEMIS')"
+                class="credential-card w-full mb-2 cursor-pointer relative" @click="viewDoc(doc)"
+                style="height: auto; min-height: 160px; --card-width: 100%;">
+
+                <div class="credential-card__header">
+                  <div class="credential-card__logo-group">
+                    <span class="credential-card__wallet-name">Digital Wallet</span>
+                    <span class="credential-card__vault-badge">
+                      <i class="bi bi-shield-lock-fill credential-card__icon"></i> Secure Vault
+                    </span>
                   </div>
-                  <div class="overflow-hidden">
-                    <div class="flex items-center gap-2">
-                      <span class="text-sm font-black text-white truncate">{{ doc.name || doc.title }}</span>
-                      <span v-if="doc.type === 'AUTHORITATIVE_OUTPUT'"
-                        class="badge badge--success badge--small scale-75 origin-left">Verified</span>
-                    </div>
-                    <div class="text-[10px] text-indigo-400 font-mono truncate">
-                      {{ doc.authoritative_id ? 'ID: ' + doc.authoritative_id : (doc.size / 1024).toFixed(1) + ' KB' }}
-                    </div>
+                  <div class="credential-card__qr">
+                    <i class="bi bi-qr-code"></i>
                   </div>
                 </div>
-                <div class="list__actions">
-                  <button @click="viewDoc(doc)"
-                    class="button button--ghost button--small text-white/70 hover:text-white">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button v-if="doc.type !== 'AUTHORITATIVE_OUTPUT' && doc.doctype !== 'BIRTH_CERTIFICATE'"
-                    @click="removeDoc(index)"
-                    class="button button--ghost button--small text-red-400 hover:text-red-500">
-                    <i class="bi bi-trash"></i>
-                  </button>
+
+                <div class="credential-card__content">
+                  <div class="credential-card__status">
+                    <!-- Dynamic Icon based on Credential Type -->
+                    <span class="credential-card__status-icon">
+                      <i v-if="doc.name?.includes('NEMIS') || doc.doctype === 'NEMIS_CARD'"
+                        class="bi bi-mortarboard-fill"></i>
+                      <i v-else class="bi bi-check-circle-fill"></i>
+                    </span>
+
+                    <!-- Dynamic Text based on Credential Type -->
+                    <span class="credential-card__status-text">
+                      {{ (doc.name?.includes('NEMIS') || doc.doctype === 'NEMIS_CARD') ? 'Education' : 'Official' }}
+                    </span>
+
+                    <span class="credential-card__verified-badge">Verified</span>
+                  </div>
+                  <div class="credential-card__document">
+                    <h2 class="credential-card__document-title">{{ doc.name }}</h2>
+                  </div>
+                </div>
+
+                <div class="credential-card__footer">
+                  <div class="credential-card__details">
+                    <span class="credential-card__label">
+                      {{ (doc.name?.includes('NEMIS') || doc.doctype === 'NEMIS_CARD') ? 'UPI / Admission No' :
+                      'Authoritative ID' }}
+                    </span>
+                    <div class="credential-card__id">{{ doc.authoritative_id || 'PENDING-GEN' }}</div>
+                  </div>
+                  <div class="credential-card__details text-right">
+                    <span class="credential-card__label">Issued Date</span>
+                    <div class="credential-card__date">{{ new Date(doc.issue_date || Date.now()).toLocaleDateString() }}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div v-if="savedDocs.length === 0" class="p-12 text-center text-indigo-400">
-                <i class="bi bi-inboxes text-4xl mb-4 block opacity-30"></i>
-                <p class="text-xs font-black uppercase tracking-widest leading-relaxed">Your authoritative digital vault
-                  is empty</p>
+
+              <!-- Standard List Item for Non-Authoritative / Uploaded Docs -->
+              <div v-else
+                class="p-3 rounded-xl hover:bg-white/5 transition-colors border border-transparent hover:border-indigo-500/30 flex items-start gap-4 cursor-pointer relative"
+                @click="viewDoc(doc)">
+                <!-- Icon/Thumbnail -->
+                <div
+                  class="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center text-lg shadow-inner bg-indigo-950/50 border border-indigo-500/20">
+                  <i class="bi bi-file-earmark-text-fill" style="color: var(--icta-red);" aria-hidden="true"></i>
+                </div>
+
+                <!-- Content -->
+                <div class="flex-1 min-w-0 pt-0.5">
+                  <div class="flex items-center justify-between mb-0.5">
+                    <h3 class="text-sm font-bold truncate pr-2" style="color: white !important;">{{ doc.name ||
+                      doc.title }}
+                    </h3>
+                  </div>
+
+                  <div class="flex items-center gap-2 text-[10px] font-mono" style="color: #e2e8f0 !important;">
+                    <span class="truncate max-w-[120px]">
+                      {{ (doc.size / 1024).toFixed(1) + ' KB' }}
+                    </span>
+                    <span class="w-0.5 h-0.5 rounded-full" style="background-color: var(--icta-red);"></span>
+                    <span>{{ new Date(doc.issue_date || Date.now()).toLocaleDateString() }}</span>
+                  </div>
+                </div>
+
+                <!-- Hover Indicator -->
+                <div
+                  class="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                  <i class="bi bi-chevron-right text-indigo-400 text-xs"></i>
+                </div>
               </div>
             </div>
           </div>

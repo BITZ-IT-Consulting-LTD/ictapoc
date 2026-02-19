@@ -356,17 +356,11 @@
         });
 
         // Explicit Parent Mapping for Birth Certificate Lookups (BEN)
-        // This ensures that when a BEN is fetched, the parent IDs are automatically populated
         if (key.includes('birth_entry') || key.includes('birth_cert') || key === 'ben') {
-          // Expanded list to include Applicant's own details from the Birth Certificate
-          const directMaps = [
-            'mother_id', 'father_id', 'mother_name', 'father_name',
-            'date_of_birth', 'full_name', 'gender'
-          ];
+          const directMaps = ['mother_id', 'father_id', 'mother_name', 'father_name', 'date_of_birth', 'full_name', 'gender'];
           directMaps.forEach(dm => {
             if (result.data[dm]) {
               formData.value[dm] = result.data[dm];
-              // Mark these as verified too since they came from a trusted source
               verifiedFields.value.add(dm);
             }
           });

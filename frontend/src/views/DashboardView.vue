@@ -40,6 +40,11 @@
                     <span class="sidebar-nav__text">Apply for Services</span>
                     <i v-if="citizenCurrentTab === 'services'" class="bi bi-chevron-right sidebar-nav__arrow"></i>
                   </button>
+
+                  <router-link to="/profile/consent" class="sidebar-nav__item">
+                    <i class="bi bi-shield-check sidebar-nav__icon"></i>
+                    <span class="sidebar-nav__text">Privacy & Consents</span>
+                  </router-link>
                 </nav>
               </div>
             </div>
@@ -49,31 +54,81 @@
           <div class="dashboard-content">
             <div v-if="citizenCurrentTab === 'inbox'" class="tab-content flex flex-col gap-8">
               <!-- Digital Wallet Component -->
-              <div v-if="user.saved_documents?.length"
-                class="wallet-card card bg-secondary text-white overflow-hidden relative border-0 shadow-xl">
-                <div class="card__body flex flex-col md:flex-row justify-between items-center p-8 relative z-10 gap-6">
-                  <div>
-                    <h2 class="text-2xl font-black mb-2 text-white">Authoritative Digital Wallet</h2>
-                    <p class="opacity-80">Secure access to {{ user.saved_documents.length }} verified government
-                      credentials.</p>
-                    <router-link to="/profile"
-                      class="button button--pill button--small mt-6 bg-white text-secondary hover:bg-slate-100 border-0">
-                      <i class="bi bi-wallet2 me-2"></i> Open Wallet
-                    </router-link>
+              <!-- Digital Wallet Component (Enhanced) -->
+              <div v-if="user.saved_documents?.length" class="card border-0 shadow-2xl overflow-hidden relative"
+                style="background: var(--grad-premium); color: white; border-radius: 1rem;" role="region"
+                aria-label="Digital Wallet Section">
+
+                <!-- Background Decor -->
+                <div
+                  class="absolute top-0 right-0 p-0 transform translate-x-1/3 -translate-y-1/3 opacity-5 pointer-events-none">
+                  <i class="bi bi-wallet2" style="font-size: 20rem; color: white;"></i>
+                </div>
+                <!-- Ambient Glow -->
+                <div class="absolute top-1/2 left-0 w-64 h-64 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"
+                  style="background-color: rgba(236, 35, 42, 0.1);">
+                </div>
+
+                <div class="card__body p-8 relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                  <div class="flex-1 text-center md:text-left">
+                    <div
+                      class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest mb-4 backdrop-blur-sm"
+                      style="color: var(--icta-green);">
+                      <i class="bi bi-shield-check"></i> Identity Verified
+                    </div>
+                    <h2 class="text-3xl font-black mb-2 text-white tracking-tight">Authoritative <span
+                        style="color: var(--icta-red);">Wallet</span></h2>
+                    <p class="text-slate-400 text-sm mb-6 leading-relaxed max-w-lg">
+                      Secure access to your {{ user.saved_documents.length }} official government credentials.
+                      Documents are cryptographically signed for offline verification and sharing.
+                    </p>
+                    <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+                      <router-link to="/profile"
+                        class="button button--pill px-8 shadow-lg transition-transform flex items-center gap-2"
+                        style="border: none; background: var(--icta-red); color: white; font-weight: 700; box-shadow: 0 4px 12px rgba(236, 35, 42, 0.3);"
+                        aria-label="Open Digital Wallet to view documents">
+                        <i class="bi bi-wallet2"></i> Open Wallet
+                      </router-link>
+                    </div>
                   </div>
-                  <div class="flex -space-x-4">
+
+                  <!-- Stacked Cards Visual -->
+                  <div class="relative w-64 h-48 flex-shrink-0 perspective md:mr-8 hidden md:block" aria-hidden="true">
                     <div v-for="(doc, i) in user.saved_documents.slice(0, 3)" :key="i"
-                      class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-xl border-4 border-secondary/50"
-                      :style="{ transform: `rotate(${i * 10 - 10}deg)` }">
-                      <i v-if="doc.type === 'AUTHORITATIVE_OUTPUT'" class="bi bi-patch-check-fill text-primary"></i>
-                      <i v-else class="bi bi-file-earmark-text text-muted"></i>
+                      class="absolute top-0 left-0 w-full h-40 bg-white rounded-xl shadow-2xl border border-slate-200 p-4 transition-all duration-500"
+                      :style="{
+                        transform: `translateY(${i * 12}px) scale(${1 - (i * 0.05)})`,
+                        zIndex: 3 - i,
+                        opacity: 0.95 + (i * 0.02),
+                        filter: 'drop-shadow(0 10px 15px rgba(0,0,0,0.2))'
+                      }">
+                      <div class="flex items-center gap-3 mb-3 border-b border-slate-100 pb-2">
+                        <div
+                          class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100">
+                          <i :class="doc.type === 'AUTHORITATIVE_OUTPUT' ? 'bi bi-patch-check-fill' : 'bi bi-file-text-fill'"
+                            class="text-sm"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                          <div class="h-2 bg-slate-800 rounded w-3/4 mb-1"></div>
+                          <div class="h-1.5 bg-slate-300 rounded w-1/2"></div>
+                        </div>
+                      </div>
+                      <div class="space-y-2 opacity-50">
+                        <div class="h-1.5 bg-slate-200 rounded w-full"></div>
+                        <div class="h-1.5 bg-slate-200 rounded w-5/6"></div>
+                        <div class="h-1.5 bg-slate-200 rounded w-4/6"></div>
+                      </div>
+
+                      <!-- Type Badge -->
+                      <div
+                        class="absolute bottom-3 right-3 px-2 py-0.5 bg-slate-50 text-slate-400 border border-slate-100 rounded text-[8px] font-bold uppercase tracking-wider">
+                        GOK-VERIFIED
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
-                <div class="absolute -left-20 -top-20 w-64 h-64 bg-primary/20 rounded-full blur-3xl"></div>
               </div>
-
+              <!-- National Lifecycle Journey (Cradle-to-Grave) -->
               <!-- Application Tracking Section -->
               <div class="card shadow-lg">
                 <header class="card__header u-flex-col u-md-flex-row u-gap-4 u-items-start u-md-items-center">
@@ -707,14 +762,15 @@
 
   onMounted(async () => {
     const role = user.value?.role;
-    if (role === 'citizen') await authStore.fetchCurrentUser();
+    if (role === 'citizen') {
+      await authStore.fetchCurrentUser();
+    }
 
     if (['citizen', 'officer', 'supervisor', 'registrar', 'mda_admin', 'GLOBAL_OFFICER', 'GLOBAL_SUPERVISOR', 'MDA_OFFICER', 'MDA_SUPERVISOR'].includes(role)) {
       citizenStore.fetchAvailableServices();
       citizenStore.fetchMyRequests();
       mdaStore.fetchMdas();
     }
-
     if (['officer', 'supervisor', 'registrar', 'mda_admin', 'GLOBAL_OFFICER', 'GLOBAL_SUPERVISOR', 'MDA_OFFICER', 'MDA_SUPERVISOR'].includes(role)) {
       staffStore.fetchIncompleteMdaRequests();
       staffStore.fetchUnassignedRequests();
