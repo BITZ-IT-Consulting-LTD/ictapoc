@@ -149,7 +149,9 @@ class WorkflowStep(models.Model):
     role = models.CharField(max_length=50, blank=True, null=True) # Role responsible for this step
     target_mda = models.ForeignKey('MDA', on_delete=models.SET_NULL, null=True, blank=True, related_name='assigned_steps')
     action = models.CharField(max_length=50, blank=True, null=True)
+    registry_endpoint = models.ForeignKey('RegistryEndpoint', on_delete=models.SET_NULL, null=True, blank=True, related_name='configured_steps')
     api_config = models.JSONField(blank=True, null=True) # For API call steps
+    logic_config = models.JSONField(default=dict, blank=True)
     sequence = models.IntegerField()
 
     class Meta:
@@ -331,6 +333,7 @@ class RegistryAdapter(models.Model):
     code = models.CharField(max_length=50, unique=True, help_text="Unique code (e.g., IPRS, KRA, CRS)")
     name = models.CharField(max_length=255)
     base_url = models.URLField(blank=True, null=True, help_text="Authoritative API Base URL")
+    auth_type = models.CharField(max_length=50, default='API_KEY', help_text="API_KEY, OAUTH2, CERTIFICATE, etc.")
     auth_config = models.JSONField(default=dict, blank=True, help_text="Headers, API Keys, or Certificates")
     data_mapping = models.JSONField(default=dict, blank=True, help_text="Field mapping from Registry -> Platform")
     
@@ -342,6 +345,32 @@ class RegistryAdapter(models.Model):
 
     def __str__(self):
         return f"{self.code} - {self.name}"
+
+class RegistryEndpoint(models.Model):
+    """
+    Specific API operations available on a Registry Adapter.
+    e.g., "Create Birth Record", "Verify ID", "Check Tax Status".
+    """
+    HTTP_METHODS = (
+        ('GET', 'GET'),
+        ('POST', 'POST'),
+        ('PUT', 'PUT'),
+        ('PATCH', 'PATCH'),
+        ('DELETE', 'DELETE'),
+    )
+
+    adapter = models.ForeignKey(RegistryAdapter, on_delete=models.CASCADE, related_name='endpoints')
+    name = models.CharField(max_length=255, help_text="Human-readable action name")
+    path = models.CharField(max_length=255, help_text="Endpoint path (e.g., /api/births)")
+    method = models.CharField(max_length=10, choices=HTTP_METHODS, default='POST')
+    payload_schema = models.JSONField(default=dict, blank=True, help_text="JSON Schema for the expected payload")
+    
+    # Schema Field Discovery
+    input_schema = models.JSONField(default=list, blank=True, help_text="List of required inputs: [{'key': 'id', 'label': 'ID', 'type': 'string'}]")
+    output_schema = models.JSONField(default=list, blank=True, help_text="List of available outputs: [{'key': 'name', 'label': 'Name', 'type': 'string'}]")
+    
+    def __str__(self):
+        return f"{self.adapter.code}: {self.name} ({self.method})"
 
 class PaymentProvider(models.Model):
     name = models.CharField(max_length=100)

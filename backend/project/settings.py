@@ -167,3 +167,18 @@ LOGGING = {
         },
     },
 }
+
+SWAGGER_SETTINGS = {
+    'DEFAULT_INFO': 'project.urls.api_info',
+    'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'Basic': {
+            'type': 'basic'
+        },
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}

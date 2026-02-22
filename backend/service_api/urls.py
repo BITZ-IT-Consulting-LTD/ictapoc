@@ -23,6 +23,10 @@ router.register(r'payments', views.PaymentViewSet, basename='payments')
 router.register(r'consent', views.ConsentViewSet, basename='consent')
 router.register(r'lifecycle', views.LifecycleViewSet, basename='lifecycle')
 
+# Registry Config
+router.register(r'registries', views.RegistryAdapterViewSet)
+router.register(r'registry-endpoints', views.RegistryEndpointViewSet, basename='registry-endpoints')
+
 
 
 urlpatterns = [

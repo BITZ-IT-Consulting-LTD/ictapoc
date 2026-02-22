@@ -141,6 +141,8 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS(f'Starting seeding of {len(registries)} authoritative registries...'))
 
+        from service_api.models import RegistryEndpoint
+
         for reg_data in registries:
             adapter, created = RegistryAdapter.objects.update_or_create(
                 code=reg_data["code"],
@@ -158,8 +160,76 @@ class Command(BaseCommand):
             )
             
             if created:
-                self.stdout.write(f'  - Created: {adapter.code}')
+                self.stdout.write(f'  - Created Adapter: {adapter.code}')
             else:
-                self.stdout.write(f'  - Updated: {adapter.code}')
+                self.stdout.write(f'  - Updated Adapter: {adapter.code}')
+
+            # Seed specific endpoints for key registries
+            endpoints = []
+            if adapter.code == 'IPRS':
+                endpoints = [
+                    {
+                        "name": "Verify Citizen Identity",
+                        "path": "/api/v1/citizens/verify",
+                        "method": "POST",
+                        "input_schema": [
+                            {"key": "id_number", "label": "National ID Number", "type": "string", "required": True}
+                        ],
+                        "output_schema": [
+                            {"key": "full_name", "label": "Full Name", "type": "string"},
+                            {"key": "gender", "label": "Gender", "type": "string"},
+                            {"key": "dob", "label": "Date of Birth", "type": "date"},
+                            {"key": "photo", "label": "Passport Photo", "type": "base64"}
+                        ]
+                    }
+                ]
+            elif adapter.code == 'KRA':
+                endpoints = [
+                    {
+                        "name": "Check Tax Compliance",
+                        "path": "/tax/compliance/status",
+                        "method": "GET",
+                        "input_schema": [
+                            {"key": "national_id", "label": "National ID / Certificate No", "type": "string", "required": True}
+                        ],
+                        "output_schema": [
+                            {"key": "kra_pin", "label": "KRA PIN", "type": "string"},
+                            {"key": "tax_status", "label": "Compliance Status", "type": "string"},
+                            {"key": "last_filing_date", "label": "Last Filing", "type": "date"}
+                        ]
+                    }
+                ]
+            elif adapter.code == 'CRS':
+                endpoints = [
+                    {
+                        "name": "Verify Birth Certificate",
+                        "path": "/births/verify",
+                        "method": "POST",
+                        "input_schema": [
+                            {"key": "entry_number", "label": "Birth Entry Number (BEN)", "type": "string", "required": True}
+                        ],
+                        "output_schema": [
+                            {"key": "child_name", "label": "Child Name", "type": "string"},
+                            {"key": "dob", "label": "Date of Birth", "type": "date"},
+                            {"key": "mother_name", "label": "Mother's Name", "type": "string"}
+                        ]
+                    }
+                ]
+
+            for ep_data in endpoints:
+                ep, ep_created = RegistryEndpoint.objects.update_or_create(
+                    adapter=adapter,
+                    path=ep_data['path'],
+                    defaults={
+                        "name": ep_data['name'],
+                        "method": ep_data['method'],
+                        "input_schema": ep_data['input_schema'],
+                        "output_schema": ep_data['output_schema']
+                    }
+                )
+                if ep_created:
+                    self.stdout.write(f'    + Created Endpoint: {ep.name}')
+                else:
+                    self.stdout.write(f'    + Updated Endpoint: {ep.name}')
 
         self.stdout.write(self.style.SUCCESS('Seeding complete!'))

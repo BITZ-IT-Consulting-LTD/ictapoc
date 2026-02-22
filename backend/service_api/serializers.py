@@ -4,7 +4,7 @@ from .models import (
     ServiceDomain, ServiceCategory, InterDepartmentalMemo, GovernmentFile, 
     OfficialLetter, CorrespondenceAction, DesktopReview,
     PaymentProvider, PaymentTransaction, RevenueSplit,
-    DataPurpose, ConsentRecord, ConsentAccessLog
+    DataPurpose, ConsentRecord, ConsentAccessLog, RegistryAdapter, RegistryEndpoint
 )
 
 class RoleSerializer(serializers.ModelSerializer):
@@ -47,7 +47,20 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+class RegistryEndpointSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RegistryEndpoint
+        fields = '__all__'
+
+class RegistryAdapterSerializer(serializers.ModelSerializer):
+    endpoints = RegistryEndpointSerializer(many=True, read_only=True)
+    class Meta:
+        model = RegistryAdapter
+        fields = '__all__'
+
 class WorkflowStepSerializer(serializers.ModelSerializer):
+    registry_endpoint_details = RegistryEndpointSerializer(source='registry_endpoint', read_only=True)
+    
     class Meta:
         model = WorkflowStep
         fields = '__all__'

@@ -29,15 +29,14 @@ class KeSEL:
             # For POC, we might allow it but log it. Real system would block.
         
         # 2. Service Directory Lookup
-        registry = get_registry(target_registry_name)
-        if not registry:
-            return {"status": "ERROR", "message": f"Registry '{target_registry_name}' not reachable via Huduma Bridge."}
-
+        from .services import RegistryService
+        
         # 3. Encrypted Data Output (Simulated)
-        print(f"[KeSEL] Routing encrypted packet to {target_registry_name}...")
+        print(f"[KeSEL] Routing encrypted packet to {target_registry_name} via DB-driven Registry Adapter...")
         
         # 4. Query Registry
-        response = registry.query(payload)
+        identifier = payload.get('identifier') or payload.get('id_number') or payload.get('pin') or payload.get('upi') or payload.get('birth_certificate_number') or payload.get('notification_number') or payload.get('mother_id') or payload.get('father_id')
+        response = RegistryService.query(target_registry_name, identifier)
         
         # 5. Return Response (Signed by Registry's Security Server)
         print(f"[KeSEL] Received response from {target_registry_name}. Verifying signature...")

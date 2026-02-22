@@ -1,394 +1,253 @@
 {
-  "process_id": "PROC-CRS-LIFECYCLE-001",
-  "service_id": "SVC-CRS-LIFECYCLE",
-  "mda_id": "MDA-CRS-001",
-  "mda_name": "CIVIL REGISTRATION SERVICES (CRS)",
-  "service_name": "Kenya Citizen Lifecycle (Birth to Death)",
-  "sector": "Social Protection & Security",
+  "process_id": "PROC-WoG-LIFECYCLE-001",
+  "service_id": "SVC-WoG-LIFECYCLE",
+  "mda_id": "MDA-WoG-001",
+  "mda_name": "WHOLE OF GOVERNMENT (WoG)",
+  "service_name": "Kenya Citizen Lifecycle (Cradle to Death)",
+  "sector": "Social Protection & Governance",
   "cover_page": {
     "process_name": "KENYA CITIZEN LIFECYCLE MANAGEMENT",
-    "document_version": "2.0",
-    "publication_date": "2026-02-18",
+    "document_version": "3.0",
+    "publication_date": "2026-02-19",
     "classification": "CONFIDENTIAL"
   },
   "document_control": [],
-  "executive_summary": "Civil Registration Services (CRS) is the sole government entity mandated to register all births and deaths occurring in Kenya and of Kenyan citizens abroad. It provides the primary identity document (Birth Certificate) which is the foundation of the National Identity System. This lifecycle service integrates Birth, Education, ID, Tax, Business, and Death registration into a single, interoperable workflow.",
+  "executive_summary": "This Unified Citizen Lifecycle integrates 10 key government registries into a single, event-driven workflow. It spans from Birth (CRS) through Education (MoE), Adulthood (NRB), Economic Life (KRA, BRS, Lands), Health (SHA), Marriage (AG), Travel (Immigration), to Death and Succession (Judiciary).",
   "process_overview": {
     "service_category": "G2C",
-    "process_objective": "To ensure universal and timely registration of births and deaths, issue birth and death certificates, and maintain a secure, comprehensive Civil Registration System that feeds into Education (NEMIS), Identity (IPRS), Tax (KRA), and Business (BRS) registries.",
+    "process_objective": "To provide a seamless, proactive government experience where life events trigger automated services across MDAs without redundant data entry.",
     "scope": {
       "in_scope": [
-        "Birth Registration",
-        "Education Enrollment (NEMIS)",
-        "National ID Issuance",
-        "Tax PIN Generation",
-        "Business Incorporation",
-        "Death Registration"
+        "Birth Registration (CRS)",
+        "Health Coverage (SHA)",
+        "Education Enrollment (MoE)",
+        "National ID Upgrade (NRB)",
+        "Tax Compliance (KRA)",
+        "Passport Issuance (Immigration)",
+        "Business Registration (BRS)",
+        "Marriage Registration (AG)",
+        "Land Transfer (Lands)",
+        "Death & Succession (Judiciary)"
       ],
-      "out_of_scope": ["Passport Issuance", "Driving License"]
+      "out_of_scope": ["Visa Processing", "Civil Litigation"]
     },
     "triggers": [
       "Birth Notification",
-      "School Admission",
-      "Age of Majority (18 years)",
-      "Business Commencement",
+      "Age Milestones (4, 18 years)",
+      "Marriage Notice",
+      "Property Transaction",
       "Death Notification"
     ],
     "end_states": {
       "successful": [
-        "Birth Certificate Issued",
-        "NEMIS UPI Generated",
-        "National ID Issued",
-        "KRA PIN Generated",
-        "Business Registered",
-        "Death Certificate Issued"
-      ],
-      "unsuccessful": [
-        "Registration Rejected",
-        "Duplicate Record Found",
-        "Validation Failed"
+        "UPI Generated",
+        "Digital ID Issued",
+        "Asset Transferred",
+        "Estate Distributed"
       ]
-    },
-    "policy_legal_context": [
-      "Births and Deaths Registration Act (Cap 149)",
-      "Kenya Citizenship and Immigration Act, 2011",
-      "Registration of Persons Act (Cap 107)",
-      "Basic Education Act, 2013",
-      "Tax Procedures Act, 2015",
-      "Companies Act, 2015"
-    ]
-  },
-  "registry": "Civil Registration Services (CRS)",
-  "dependencies": ["NEMIS", "IPRS", "KRA", "BRS"],
-  "stakeholders": [
-    {
-      "stakeholder": "Kenyan Citizens",
-      "role": "Rights holders requiring identity documentation",
-      "responsibilities": "Provide accurate information, register life events timely."
-    },
-    {
-      "stakeholder": "Ministry of Education",
-      "role": "Consumer of birth data for learner management",
-      "responsibilities": "Enroll students using Birth Entry Numbers."
-    },
-    {
-      "stakeholder": "National Registration Bureau (IPRS)",
-      "role": "Partner in identity management",
-      "responsibilities": "Issue National IDs based on Birth Certificates."
-    },
-    {
-      "stakeholder": "Kenya Revenue Authority",
-      "role": "Tax authority",
-      "responsibilities": "Issue PINs linked to National IDs."
     }
+  },
+  "registry": "Integrated Population Registration System (IPRS)",
+  "dependencies": [
+    "CRS",
+    "NEMIS",
+    "NRB",
+    "KRA",
+    "BRS",
+    "SHA",
+    "AG",
+    "LANDS",
+    "JUDICIARY"
   ],
-  "inputs_outputs_dependencies": {
-    "inputs": [
-      "Birth Notification Number",
-      "Parent ID Details",
-      "Biometrics",
-      "Business Details",
-      "Death Notification"
-    ],
-    "outputs": [
-      "Birth Certificate",
-      "NEMIS UPI",
-      "National ID Card",
-      "KRA PIN Certificate",
-      "Certificate of Incorporation",
-      "Death Certificate"
-    ],
-    "external_dependencies": [
-      "IPRS (Identity Verification)",
-      "NEMIS (Education Data)",
-      "KRA (Tax Data)",
-      "BRS (Business Data)"
-    ]
-  },
-  "process_maturity": {
-    "documentation_status": "Optimized (Lifecycle Integrated)",
-    "level_of_automation": "High"
-  },
-  "as_is_narrative": "Historically, these processes were siloed. Birth registration happened at CRS, school enrollment at MoE, ID at NRB, tax at KRA, and business at BRS, with little to no data sharing, leading to duplication and fraud.",
-  "as_is_steps": [],
   "workflow": {
     "steps": [
       {
         "step_id": "WF-STEP-01",
         "step_name": "Birth Registration",
-        "description": "Registration of birth and issuance of Birth Certificate.",
-        "actor": "Parent / CRS Officer",
-        "system": "CRS Registry",
-        "execution_type": "manual",
-        "input": [
-          "child_name",
-          "date_of_birth",
-          "place_of_birth",
-          "mother_id",
-          "father_id",
-          "birth_notification_number"
-        ],
-        "process": "Validate birth notification against hospital records and generate Birth Entry Number.",
-        "output": "birth_entry_no",
+        "description": "Hospital captures birth; System mints Maisha Namba (UPI).",
+        "actor": "System / Hospital",
+        "system": "CRS",
+        "execution_type": "event_driven",
+        "input": ["birth_notification", "mother_id"],
+        "output": "upi",
+        "category": "Civil Status & Identity",
+        "life_event": "Birth",
         "next_step": "WF-STEP-02",
-        "registry_update": "CRS: Create Record"
+        "registry_update": "CRS: Create Record; IPRS: Mint UPI"
       },
       {
         "step_id": "WF-STEP-02",
-        "step_name": "Education Registration",
-        "description": "Enrollment of child into the National Education Management Information System (NEMIS).",
-        "actor": "School Head / System",
-        "system": "NEMIS",
+        "step_name": "Health Activation",
+        "description": "Newborn auto-enrolled into SHA (Linda Mama).",
+        "actor": "System",
+        "system": "SHA",
         "execution_type": "automatic",
-        "input": ["birth_entry_no"],
-        "process": "Query CRS using Birth Entry Number to validate child details and generate NEMIS UPI.",
-        "output": "upi",
+        "input": ["upi"],
+        "output": "sha_number",
+        "category": "Health & Social Protection",
+        "life_event": "Health",
         "next_step": "WF-STEP-03",
-        "registry_update": "NEMIS: Generate UPI"
+        "registry_update": "SHA: Activate Cover"
       },
       {
         "step_id": "WF-STEP-03",
-        "step_name": "National ID Registration",
-        "description": "Issuance of National Identity Card at age 18.",
-        "actor": "Applicant / NRB Officer",
-        "system": "IPRS",
-        "execution_type": "biometric",
-        "input": ["birth_entry_no", "biometrics", "parent_id"],
-        "process": "Verify identity against birth record, capture biometrics, and issue ID Number.",
-        "output": "id_number",
+        "step_name": "Education Enrollment",
+        "description": "Child enrolled in School using UPI.",
+        "actor": "Parent",
+        "system": "MoE (NEMIS)",
+        "execution_type": "manual",
+        "input": ["upi", "school_code"],
+        "output": "enrollment_id",
+        "category": "Education & Skills",
+        "life_event": "Education",
         "next_step": "WF-STEP-04",
-        "registry_update": "IPRS: Create ID Record"
+        "registry_update": "NEMIS: Assign School"
       },
       {
         "step_id": "WF-STEP-04",
-        "step_name": "Tax PIN Registration",
-        "description": "Generation of KRA PIN for tax purposes.",
-        "actor": "Applicant / System",
-        "system": "KRA iTax",
-        "execution_type": "automatic",
-        "input": ["id_number"],
-        "process": "Auto-generate Personal Identification Number (PIN) based on valid National ID.",
-        "output": "pin",
+        "step_name": "ID Upgrade (Age 18)",
+        "description": "UPI upgraded to Adult ID via Biometric Update.",
+        "actor": "Citizen",
+        "system": "NRB",
+        "execution_type": "biometric",
+        "input": ["upi", "fingerprints", "photo"],
+        "output": "virtual_id",
+        "category": "Civil Status & Identity",
+        "life_event": "Adulthood",
         "next_step": "WF-STEP-05",
-        "registry_update": "KRA: Generate PIN"
+        "registry_update": "NRB: Update Biometrics; KRA: Auto-Gen PIN"
       },
       {
         "step_id": "WF-STEP-05",
-        "step_name": "Business Registration",
-        "description": "Incorporation of a business entity.",
-        "actor": "Applicant",
-        "system": "BRS",
-        "execution_type": "manual",
-        "input": ["id_number", "pin"],
-        "process": "Verify Director IDs and Tax Compliance, then register business.",
-        "output": "company_number",
+        "step_name": "Tax Compliance",
+        "description": "KRA PIN auto-generated; Compliance is invisible.",
+        "actor": "System",
+        "system": "KRA",
+        "execution_type": "automatic",
+        "input": ["virtual_id"],
+        "output": "kra_pin",
+        "category": "Economic & Tax",
+        "life_event": "Employment",
         "next_step": "WF-STEP-06",
-        "registry_update": "BRS: Incorporate Entity"
+        "registry_update": "KRA: Create Ledger"
       },
       {
         "step_id": "WF-STEP-06",
-        "step_name": "Death Registration",
-        "description": "Official recording of death and retirement of identity.",
-        "actor": "Next of Kin / CRS Officer",
-        "system": "CRS Registry",
-        "execution_type": "administrative",
-        "input": ["id_number", "death_notification"],
-        "process": "Verify deceased identity, issue Death Certificate, and mark ID as 'Deceased' in IPRS.",
-        "output": "death_entry_no",
+        "step_name": "Passport Issuance",
+        "description": "Passport issued reusing NRB biometrics.",
+        "actor": "Citizen",
+        "system": "Immigration",
+        "execution_type": "manual",
+        "input": ["virtual_id", "photo_selfie"],
+        "output": "passport_no",
+        "category": "Travel & Immigration",
+        "life_event": "Travel",
+        "next_step": "WF-STEP-07",
+        "registry_update": "Immigration: Issue DTC"
+      },
+      {
+        "step_id": "WF-STEP-07",
+        "step_name": "Business Registration",
+        "description": "Entity incorporation via AI Name Search.",
+        "actor": "Entrepreneur",
+        "system": "BRS",
+        "execution_type": "manual",
+        "input": ["virtual_id", "business_name"],
+        "output": "incorporation_cert",
+        "category": "Business & Commerce",
+        "life_event": "Entrepreneurship",
+        "next_step": "WF-STEP-08",
+        "registry_update": "BRS: Create Entity"
+      },
+      {
+        "step_id": "WF-STEP-08",
+        "step_name": "Marriage Registration",
+        "description": "Civil Union registration via Smart Notice.",
+        "actor": "Couple",
+        "system": "AG (State Law)",
+        "execution_type": "manual",
+        "input": ["groom_id", "bride_id", "officiant_qr"],
+        "output": "marriage_cert",
+        "category": "Civil Status & Identity",
+        "life_event": "Marriage",
+        "next_step": "WF-STEP-09",
+        "registry_update": "AG: Link Spouses"
+      },
+      {
+        "step_id": "WF-STEP-09",
+        "step_name": "Property Acquisition",
+        "description": "Land transfer via Smart Contract.",
+        "actor": "Buyer",
+        "system": "Lands (Ardhisasa)",
+        "execution_type": "blockchain",
+        "input": ["virtual_id", "parcel_no", "consent_bio"],
+        "output": "title_deed_token",
+        "category": "Property & Assets",
+        "life_event": "Property",
+        "next_step": "WF-STEP-10",
+        "registry_update": "Lands: Transfer Ownership"
+      },
+      {
+        "step_id": "WF-STEP-10",
+        "step_name": "Succession (Death)",
+        "description": "Death triggers Estate Distribution.",
+        "actor": "System / Judiciary",
+        "system": "Judiciary",
+        "execution_type": "event_driven",
+        "input": ["death_notification", "asset_inventory"],
+        "output": "confirmed_grant",
+        "category": "Legal & Judiciary",
+        "life_event": "Succession",
         "next_step": "END",
-        "registry_update": "CRS: Create Death Record; IPRS: Deactivate ID"
+        "registry_update": "CRS: Retire ID; Judiciary: Distribute Assets"
       }
     ]
   },
   "input_form": [
     {
-      "field_id": "FLD-001",
-      "field_name": "child_name",
-      "field_label": "Child's Full Name",
-      "field_type": "text",
-      "required": true,
-      "validation": "min_length:3",
-      "data_source": "user_input",
-      "example": "Jane Doe",
-      "maps_to_registry_field": "CRS.child_name"
+      "field_id": "FLD-B1-001",
+      "field_name": "birth_notification",
+      "label": "Notification Number",
+      "type": "string",
+      "source": "Hospital_HIS",
+      "validation": "format:B-#####"
     },
     {
-      "field_id": "FLD-002",
-      "field_name": "date_of_birth",
-      "field_label": "Date of Birth",
-      "field_type": "date",
-      "required": true,
-      "validation": "past_date",
-      "data_source": "user_input",
-      "example": "2024-01-01",
-      "maps_to_registry_field": "CRS.dob"
+      "field_id": "FLD-NRB-001",
+      "field_name": "fingerprints",
+      "label": "Biometric Template",
+      "type": "binary",
+      "source": "LiveScan_Kit",
+      "validation": "wsq_quality>80"
     },
     {
-      "field_id": "FLD-003",
-      "field_name": "place_of_birth",
-      "field_label": "Place of Birth",
-      "field_type": "text",
-      "required": true,
-      "validation": "valid_location",
-      "data_source": "user_input",
-      "example": "Nairobi Hospital",
-      "maps_to_registry_field": "CRS.place_of_birth"
+      "field_id": "FLD-IMM-001",
+      "field_name": "photo_selfie",
+      "label": "ICAO Photo",
+      "type": "image",
+      "source": "eCitizen_App",
+      "validation": "icao_check:pass"
     },
     {
-      "field_id": "FLD-004",
-      "field_name": "mother_id",
-      "field_label": "Mother's National ID",
-      "field_type": "text",
-      "required": true,
-      "validation": "numeric,length:8",
-      "data_source": "user_input",
-      "example": "12345678",
-      "maps_to_registry_field": "CRS.mother_params.id_number"
+      "field_id": "FLD-BRS-001",
+      "field_name": "business_name",
+      "label": "Proposed Name",
+      "type": "string",
+      "source": "User_Input",
+      "validation": "ai_check:available"
     },
     {
-      "field_id": "FLD-005",
-      "field_name": "father_id",
-      "field_label": "Father's National ID",
-      "field_type": "text",
-      "required": false,
-      "validation": "numeric,length:8",
-      "data_source": "user_input",
-      "example": "87654321",
-      "maps_to_registry_field": "CRS.father_params.id_number"
-    },
-    {
-      "field_id": "FLD-006",
-      "field_name": "birth_notification_number",
-      "field_label": "Birth Notification Number",
-      "field_type": "text",
-      "required": true,
-      "validation": "format:B-#####",
-      "data_source": "hospital_record",
-      "example": "B-109283",
-      "maps_to_registry_field": "CRS.notification_no"
-    },
-    {
-      "field_id": "FLD-007",
-      "field_name": "birth_certificate_number",
-      "field_label": "Birth Certificate Number",
-      "field_type": "text",
-      "required": true,
-      "validation": "format:BC-####",
-      "data_source": "CRS",
-      "example": "BC-29384729",
-      "maps_to_registry_field": "IPRS.birth_cert_no"
-    },
-    {
-      "field_id": "FLD-008",
-      "field_name": "biometrics",
-      "field_label": "Biometric Data (Fingerprints)",
-      "field_type": "binary",
-      "required": true,
-      "validation": "wsq_format",
-      "data_source": "device_capture",
-      "example": "[Binary Data]",
-      "maps_to_registry_field": "IPRS.fingerprints"
-    },
-    {
-      "field_id": "FLD-009",
-      "field_name": "national_id_number",
-      "field_label": "National ID Number",
-      "field_type": "text",
-      "required": true,
-      "validation": "numeric,length:8",
-      "data_source": "IPRS",
-      "example": "22334455",
-      "maps_to_registry_field": "KRA.id_number"
-    },
-    {
-      "field_id": "FLD-010",
-      "field_name": "kra_pin",
-      "field_label": "KRA PIN",
-      "field_type": "text",
-      "required": true,
-      "validation": "format:A#########Z",
-      "data_source": "KRA",
-      "example": "A123456789Z",
-      "maps_to_registry_field": "BRS.director_pin"
-    },
-    {
-      "field_id": "FLD-011",
-      "field_name": "death_notification",
-      "field_label": "Death Notification Number",
-      "field_type": "text",
-      "required": true,
-      "validation": "format:D-#####",
-      "data_source": "hospital_record",
-      "example": "D-998877",
-      "maps_to_registry_field": "CRS.death_notification_no"
+      "field_id": "FLD-LND-001",
+      "field_name": "consent_bio",
+      "label": "Seller Consent",
+      "type": "binary",
+      "source": "Maisha_Auth",
+      "validation": "match_owner"
     }
   ],
-  "to_be_process": {
-    "narrative": "The Kenya Citizen Lifecycle integrates all major registries (CRS, NEMIS, IPRS, KRA, BRS). Triggered by birth notification, the system auto-creates a Unique Personal Identifier (UPI) which evolves through education, adulthood, taxation, business, and finally death registration, ensuring a single source of truth across the citizen's lifetime.",
-    "steps": [
-      {
-        "step_number": 1,
-        "description": "Birth Registration: Hospital records birth, System pushes to CRS, Parent verifies, CRS issues Birth Certificate.",
-        "actor": "System",
-        "system": "CRS"
-      },
-      {
-        "step_number": 2,
-        "description": "Education: Child uses Birth Certificate to enroll in NEMIS and get UPI.",
-        "actor": "School",
-        "system": "NEMIS"
-      },
-      {
-        "step_number": 3,
-        "description": "National ID: At 18, IPRS retrieves Birth details, captures biometrics, issues ID.",
-        "actor": "Applicant",
-        "system": "IPRS"
-      },
-      {
-        "step_number": 4,
-        "description": "Tax: KRA auto-generates PIN based on National ID.",
-        "actor": "System",
-        "system": "KRA"
-      },
-      {
-        "step_number": 5,
-        "description": "Business: BRS verifies ID and PIN for business incorporation.",
-        "actor": "Entrepreneur",
-        "system": "BRS"
-      },
-      {
-        "step_number": 6,
-        "description": "Death: CRS records death, IPRS retires ID.",
-        "actor": "System",
-        "system": "CRS/IPRS"
-      }
-    ]
-  },
-  "digitization_opportunities": [
-    "One-Person-One-Identity",
-    "Automated Data Inheritance (Birth -> ID -> Death)",
-    "Real-time Registry Interoperability",
-    "Fraud Reduction via Biometrics"
-  ],
-  "kpis": [],
-  "change_impact": {
-    "people": "Citizens have a seamless lifecycle experience.",
-    "process": "Elimination of redundant data entry.",
-    "technology": "Unified Government Service Bus.",
-    "policy": "Data Protection and Once-Only Policy."
-  },
-  "assumptions_gaps_open_issues": {
-    "assumptions": [],
-    "gaps": [],
-    "open_issues": []
-  },
-  "data_elements": [],
-  "glossary": [],
   "metadata": {
-    "source_url": "",
-    "confidence_level": "High (Optimized for Kenya Citizen Lifecycle)",
-    "enrichment_method": "expert_optimization",
-    "source_urls": ["https://services.go.ke"],
-    "last_enriched_date": "2026-02-18"
+    "version": "3.0",
+    "architecture": "Repeatable WoG (X-Road + GPA)",
+    "last_updated": "2026-02-19"
   }
 }

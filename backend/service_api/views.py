@@ -24,7 +24,7 @@ from .models import (
     ServiceDomain, ServiceCategory, InterDepartmentalMemo, GovernmentFile, 
     OfficialLetter, CorrespondenceAction, DesktopReview,
     PaymentProvider, PaymentTransaction, RevenueSplit,
-    ConsentRecord, DataPurpose, ConsentAccessLog
+    ConsentRecord, DataPurpose, ConsentAccessLog, RegistryAdapter, RegistryEndpoint
 )
 from .serializers import (
     ServiceRequestSerializer, ServiceConfigSerializer, WorkflowStepSerializer, 
@@ -33,11 +33,35 @@ from .serializers import (
     InterDepartmentalMemoSerializer, GovernmentFileSerializer,
     OfficialLetterSerializer, CorrespondenceActionSerializer,
     DesktopReviewSerializer, PaymentProviderSerializer, PaymentTransactionSerializer,
-    ConsentRecordSerializer, DataPurposeSerializer, ConsentAccessLogSerializer
+    ConsentRecordSerializer, DataPurposeSerializer, ConsentAccessLogSerializer,
+    RegistryAdapterSerializer, RegistryEndpointSerializer
 )
 from .services import PaymentService, ConsentService
 from .permissions import IsAdminOrAuthenticatedReadOnly, IsParticipantOrAdmin, AuditLogPermission, IsSystemAdmin, IsClaimAuthorized
 from .workflow import WorkflowEngine, send_notification
+
+class RegistryAdapterViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    Lists available Registry Adapters (e.g., CRS, IPRS) for configuration.
+    """
+    queryset = RegistryAdapter.objects.all()
+    serializer_class = RegistryAdapterSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class RegistryEndpointViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    Lists API operations available on registries.
+    Filterable by ?adapter_id=...
+    """
+    serializer_class = RegistryEndpointSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = RegistryEndpoint.objects.all()
+        adapter_id = self.request.query_params.get('adapter_id')
+        if adapter_id:
+            queryset = queryset.filter(adapter_id=adapter_id)
+        return queryset
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -224,6 +248,8 @@ class ServiceCatalogViewSet(viewsets.ReadOnlyModelViewSet):
                         "mda": service.mda.name,
                         "mda_code": service.mda.code if service.mda.code else "",
                         "service_type": service.service_type,
+                        "service_category": category.name,
+                        "life_event_group": service.life_event_group,
                         "maturity": service.digitization_level,
                         "delivery_channels": service.delivery_channels,
                         "process_complexity": service.process_complexity,
@@ -310,18 +336,20 @@ class ServiceRequestViewSet(viewsets.ModelViewSet):
             # Standard Officers - Restricted Pool
             elif user.role in ['officer', 'MDA_OFFICER']:
                 if self.request.query_params.get('assigned_to_me'):
-                    queryset = queryset.filter(mda_filter, assigned_to=user).exclude(status='closed')
+                    queryset = queryset.filter(mda_filter, assigned_to=user).exclude(status__in=['closed', 'approved', 'rejected'])
                 elif self.request.query_params.get('unassigned'):
-                    queryset = queryset.filter(mda_filter, assigned_to__isnull=True, current_step__role__icontains='officer').exclude(status='closed')
+                    queryset = queryset.filter(mda_filter, assigned_to__isnull=True, current_step__role__icontains='officer').exclude(status__in=['closed', 'approved', 'rejected'])
                 else:
-                    # Default: See own citizen requests + available tasks for their role
-                    queryset = queryset.filter(Q(citizen=user) | (mda_filter & Q(current_step__role__icontains='officer'))).exclude(status='closed')
+                    # DEFAULT (Inbox): Only show what is assigned to ME
+                    # Unless it's their own citizen request
+                    queryset = queryset.filter(mda_filter).filter(Q(assigned_to=user) | Q(citizen=user)).exclude(status__in=['closed', 'approved', 'rejected'])
             
             else:
                 # Catch-all for other MDA roles: basic visibility of assigned MDA requests
-                queryset = queryset.filter(mda_filter)
+                # Default to assigned to ME for Inbox consistency
+                queryset = queryset.filter(mda_filter, assigned_to=user).exclude(status__in=['closed', 'approved', 'rejected'])
 
-            return queryset.order_by('-created_at')
+            return queryset.order_by('-created_at', '-updated_at')
 
         return queryset.none()
 
@@ -534,7 +562,7 @@ from .registries import get_registry
 
 class RegistryQueryView(APIView):
     """
-    Allow authenticated users to query registries (e.g., look up BEN from CRS).
+    Allow authenticated users to query registries (e.g., look up BEN or Notification Number from CRS).
     Refactored to use database-driven RegistryAdapter.
     """
     permission_classes = [permissions.IsAuthenticated]
@@ -594,6 +622,49 @@ class RegistryQueryView(APIView):
     def post(self, request):
         from .services import RegistryService
         
+        # New Schematic Lookup Logic
+        adapter_id = request.data.get('adapter_id')
+        endpoint_id = request.data.get('endpoint_id')
+        params = request.data.get('params')
+
+        if adapter_id and endpoint_id:
+            try:
+                # Find the adapter and endpoint
+                adapter = RegistryAdapter.objects.get(id=adapter_id)
+                endpoint = RegistryEndpoint.objects.get(id=endpoint_id, adapter=adapter)
+
+                # For POC, we'll map the 'query' or first param to the identifier logic 
+                # or just pass through to the mockup logic.
+                # In a real scenario, we'd construct the URL and headers based on endpoint.path/method
+                
+                # Simplified: Use the 'query' key from params as the main identifier
+                identifier = params.get('query')
+                if not identifier and params:
+                    # Fallback: take first value
+                    identifier = list(params.values())[0]
+
+                if not identifier:
+                     return Response({"detail": "Missing query parameter for lookup."}, status=400)
+
+                # Execute query via service
+                # We reuse RegistryService.query but mapped by Code from Adapter
+                # We assume the mocked data structure handles the specific endpoint variation via 'field' 
+                # or just general lookup.
+                result = RegistryService.query(adapter.code, identifier)
+
+                if result['status'] == 'NOT_FOUND':
+                    # Fallback error message if mocked data misses
+                    return Response({"status": "NOT_FOUND", "message": f"No record found in {adapter.name} for {identifier}"}, status=200) # Return 200 to let frontend handle 'not found' gracefully
+
+                # Success
+                return Response({"success": True, "status": "SUCCESS", "data": result.get('data', {})})
+
+            except (RegistryAdapter.DoesNotExist, RegistryEndpoint.DoesNotExist):
+                 return Response({"detail": "Invalid Registry or Endpoint configuration."}, status=404)
+            except Exception as e:
+                 return Response({"detail": str(e)}, status=500)
+
+        # Legacy Logic (Keep for backward compatibility)
         registry_name = request.data.get('registry')
         identifier = request.data.get('identifier')
         field = request.data.get('field', 'id')

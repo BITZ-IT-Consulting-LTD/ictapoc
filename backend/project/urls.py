@@ -6,15 +6,17 @@ from drf_yasg import openapi
 from rest_framework_simplejwt.views import TokenRefreshView
 from service_api.views import CustomTokenObtainPairView, health_check, ready_check
 
+api_info = openapi.Info(
+    title="GoK Digital Services API",
+    default_version='v1',
+    description="API documentation for the Whole-of-Government Service Platform",
+    terms_of_service="https://www.google.com/policies/terms/",
+    contact=openapi.Contact(email="contact@ict.go.ke"),
+    license=openapi.License(name="MIT License"),
+)
+
 schema_view = get_schema_view(
-    openapi.Info(
-        title="GoK Digital Services API",
-        default_version='v1',
-        description="API documentation for the Whole-of-Government Service Platform",
-        terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="contact@ict.go.ke"),
-        license=openapi.License(name="MIT License"),
-    ),
+    api_info,
     public=True,
     permission_classes=(permissions.AllowAny,),
 )

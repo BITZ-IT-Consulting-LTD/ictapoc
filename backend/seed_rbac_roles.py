@@ -28,6 +28,11 @@ def seed_rbac_roles():
             "description": "Restricted authority to view, claim, and supervise processes within assigned MDAs.",
             "permissions": ["mda.view", "mda.claim", "mda.supervise"]
         },
+        {
+            "name": "Hospital_Staff",
+            "description": "Specialized role for hospital personnel to initiate notifications.",
+            "permissions": ["mda.view", "mda.claim", "mda.initiate"]
+        },
     ]
 
     for role_data in roles_to_create:

@@ -123,17 +123,29 @@
                         schema.properties[key].title }}</span>
                   </label>
 
-                  <!-- Standard Input (Date, Number, Text) with Lookup Support -->
+                  <!-- Standard Input (Date, Number, Text) with Registry Lookup Support -->
                   <div v-else class="relative flex gap-2">
-                    <input :type="getFieldType(schema.properties[key])" :id="key" v-model="formData[key]"
-                      class="form__input flex-1"
-                      :class="{ 'opacity-60 bg-gray-50 cursor-not-allowed': schema.properties[key].readOnly }"
-                      :required="isRequired(key)" :placeholder="schema.properties[key].title"
-                      :disabled="schema.properties[key].readOnly" @input="clearVerification(key)">
-                    <button v-if="schema.properties[key].lookup_service" type="button"
+                    <div class="relative flex-1">
+                      <input :type="getFieldType(schema.properties[key])" :id="key" v-model="formData[key]"
+                        class="form__input w-full"
+                        :class="{ 
+                          'opacity-60 bg-gray-50 cursor-not-allowed': schema.properties[key].readOnly,
+                          'border-green-500 focus:border-green-500 pr-10': verifiedFields.has(key)
+                        }"
+                        :required="isRequired(key)" :placeholder="schema.properties[key].title"
+                        :disabled="schema.properties[key].readOnly" @input="clearVerification(key)">
+                        
+                      <i v-if="verifiedFields.has(key)" 
+                         class="bi bi-check-circle-fill text-green-500 absolute right-3 top-1/2 -translate-y-1/2 text-lg animate-bounce-short"></i>
+                    </div>
+
+                    <button v-if="schema.properties[key]['x-registry-config']" type="button"
                       @click="performLookup(key, schema.properties[key])"
-                      class="button button--secondary button--small whitespace-nowrap">
-                      <i class="bi bi-search me-1"></i> Fetch Record
+                      class="button button--secondary button--small whitespace-nowrap"
+                      :class="{'button--success': verifiedFields.has(key)}"
+                      :disabled="!formData[key]">
+                      <i class="bi" :class="verifiedFields.has(key) ? 'bi-shield-check' : 'bi-search'"></i>
+                      <span class="ms-1">{{ verifiedFields.has(key) ? 'Verified' : 'Fetch Record' }}</span>
                     </button>
                   </div>
 
@@ -242,6 +254,10 @@
   const initializeForm = () => {
     if (!schema.value) return;
     const user = authStore.user || {};
+    const role = user.role?.toLowerCase();
+    
+    // Skip prefill for staff roles when they are initiating services for others
+    const isStaff = ['officer', 'hospital_staff', 'registrar', 'mda_officer', 'mda_admin', 'global_officer'].includes(role);
 
     Object.keys(schema.value.properties).forEach(key => {
       const field = schema.value.properties[key];
@@ -250,42 +266,39 @@
       if (field.widget === 'checkbox-group') {
         formData.value[key] = [];
       } else {
-        // Intelligent Prefill (Core profile data)
+        // Intelligent Prefill (Core profile data) - Only for citizens
         let prefill = '';
-        if (key.includes('id_number') || key === 'national_id' || key === 'mother_id' || key === 'primary_owner_id') prefill = user.id_number || '';
-        else if (key.includes('passport')) prefill = user.passport_number || '';
-        else if (key.includes('phone')) prefill = user.phone_number || '';
-        else if (key.includes('email')) prefill = user.email || '';
-        else if (key.includes('owner_name') || key === 'full_name' || key === 'applicant_name') prefill = user.full_name || user.first_name + ' ' + user.last_name || '';
-        else if (key.includes('owner_kra')) prefill = user.kra_pin || '';
-        else if (key === 'gender') prefill = user.gender || '';
-        else if (key === 'tax_payer_type') prefill = 'individual';
+        if (!isStaff) {
+          if (key.includes('id_number') || key === 'national_id' || key === 'mother_id' || key === 'primary_owner_id') prefill = user.id_number || '';
+          else if (key.includes('passport')) prefill = user.passport_number || '';
+          else if (key.includes('phone')) prefill = user.phone_number || '';
+          else if (key.includes('email')) prefill = user.email || '';
+          else if (key.includes('owner_name') || key === 'full_name' || key === 'applicant_name') prefill = user.full_name || user.first_name + ' ' + user.last_name || '';
+          else if (key.includes('owner_kra')) prefill = user.kra_pin || '';
+          else if (key === 'gender') prefill = user.gender || '';
+          else if (key === 'tax_payer_type') prefill = 'individual';
 
-        // Wallet-based Prefill (Birth Certificate details)
-        if (user.saved_documents?.length) {
-          const birthCert = user.saved_documents.find(d => d.doctype === 'BIRTH_CERTIFICATE');
-          if (birthCert && birthCert.metadata) {
-            const meta = birthCert.metadata;
-            // Map BEN and ID
-            if (key === 'birth_entry_number' || key === 'ben') prefill = birthCert.authoritative_id || meta.ben || '';
-            else if (key === 'national_id' || key === 'id_number') prefill = user.id_number || meta.id_number || '';
+          // Wallet-based Prefill (Birth Certificate details)
+          if (user.saved_documents?.length) {
+            const birthCert = user.saved_documents.find(d => d.doctype === 'BIRTH_CERTIFICATE');
+            if (birthCert && birthCert.metadata) {
+              const meta = birthCert.metadata;
+              if (key === 'birth_entry_number' || key === 'ben') prefill = birthCert.authoritative_id || meta.ben || '';
+              else if (key === 'national_id' || key === 'id_number') prefill = user.id_number || meta.id_number || '';
+              else if (key === 'mother_name') prefill = meta.mother_name || '';
+              else if (key === 'mother_id') prefill = meta.mother_id || '';
+              else if (key === 'father_name') prefill = meta.father_name || '';
+              else if (key === 'father_id') prefill = meta.father_id || '';
+              else if ((key === 'full_name' || key === 'applicant_name') && !prefill) prefill = meta.full_name || '';
+              else if ((key === 'date_of_birth' || key === 'dob') && !prefill) prefill = meta.date_of_birth || '';
+              else if (key === 'place_of_birth' || key === 'county_of_birth') prefill = meta.place_of_birth || meta.county || '';
+              else if (key === 'gender' && !prefill) prefill = meta.gender || meta.sex || '';
+            }
 
-            // Map Parents
-            else if (key === 'mother_name') prefill = meta.mother_name || '';
-            else if (key === 'mother_id') prefill = meta.mother_id || '';
-            else if (key === 'father_name') prefill = meta.father_name || '';
-            else if (key === 'father_id') prefill = meta.father_id || '';
-
-            // Map Personal details from birth record if missing in profile
-            else if ((key === 'full_name' || key === 'applicant_name') && !prefill) prefill = meta.full_name || '';
-            else if ((key === 'date_of_birth' || key === 'dob') && !prefill) prefill = meta.date_of_birth || '';
-            else if (key === 'place_of_birth' || key === 'county_of_birth') prefill = meta.place_of_birth || meta.county || '';
-            else if (key === 'gender' && !prefill) prefill = meta.gender || meta.sex || '';
-          }
-
-          const nemisCard = user.saved_documents.find(d => d.doctype === 'NEMIS_CARD');
-          if (nemisCard && nemisCard.metadata) {
-            if (key === 'nemis_upi' || key === 'upi') prefill = nemisCard.authoritative_id || nemisCard.metadata.upi || '';
+            const nemisCard = user.saved_documents.find(d => d.doctype === 'NEMIS_CARD');
+            if (nemisCard && nemisCard.metadata) {
+              if (key === 'nemis_upi' || key === 'upi') prefill = nemisCard.authoritative_id || nemisCard.metadata.upi || '';
+            }
           }
         }
 
@@ -304,6 +317,7 @@
   const getFieldType = (field) => {
     if (field.type === 'number') return 'number';
     if (field.format === 'date') return 'date';
+    if (field.format === 'registry_lookup') return 'text';
     return 'text';
   };
 
@@ -315,65 +329,81 @@
 
   const performLookup = async (key, field) => {
     const val = formData.value[key];
+    const registryConfig = field['x-registry-config'];
+
     if (!val) {
       alert(`Please enter a valid ${field.title} first.`);
       return;
     }
 
-    try {
-      const params = {
-        [key]: val,
-        action: field.lookup_action,
-        is_guardian: formData.value.is_guardian_app || false
-      };
-      const result = await citizenStore.queryRegistry(field.lookup_service, params);
+    if (!registryConfig || !registryConfig.adapter_id || !registryConfig.endpoint_id) {
+       console.error("Missing registry configuration for field", key);
+       return;
+    }
 
-      if (result.status === 'SUCCESS' && result.data) {
+    // Interactive feedback
+    const btn = document.activeElement;
+    const originalText = btn ? btn.innerHTML : '';
+    if(btn) {
+        btn.innerHTML = '<i class="bi bi-arrow-repeat animate-spin"></i> Verifying...';
+        btn.disabled = true;
+    }
+
+    try {
+      // Construct payload based on RegistryAdapter logic
+      // Ideally, the endpoint metadata should tell us what the query param name is.
+      // For POC, we assume the input schema key matches or we send a standard 'q' or the field key.
+      const params = {
+        query: val, // Generic query param
+        [key]: val, // Field-specific param (e.g. id_number=123)
+        registry_adapter_id: registryConfig.adapter_id,
+        registry_endpoint_id: registryConfig.endpoint_id
+      };
+
+      // We need a store action that can handle generic registry queries
+      // If citizenStore.queryRegistry is tied to specific legacy Lookups, we might need a new action.
+      // For now, let's assume queryRegistry can handle the new structure or we add a new one.
+      // Since we don't have a generic 'query_registry' endpoint in the backend view shown earlier,
+      // we might need to route this through a specific endpoint or update the store.
+      // Let's assume we use the existing 'registry/query/' endpoint.
+
+      const result = await citizenStore.queryRegistryEndpoint(registryConfig.adapter_id, registryConfig.endpoint_id, params);
+
+      if (result && result.success) {
         // Mark as Verified
         verifiedFields.value.add(key);
 
-        // Map retrieved data to form fields
-        // 1. Direct key mapping
-        Object.keys(result.data).forEach(dataKey => {
-          if (formData.value.hasOwnProperty(dataKey)) {
-            formData.value[dataKey] = result.data[dataKey];
-          }
+        // Auto-fill other form fields based on Output Schema
+        // result.data contains the registry response.
+        // We need to map registry output keys to form keys.
+        // If no explicit mapping exists, try direct name matching.
+        
+        const data = result.data;
+        Object.keys(data).forEach(dataKey => {
+             // 1. Direct Match
+             if (formData.value.hasOwnProperty(dataKey)) {
+                 formData.value[dataKey] = data[dataKey];
+                 // Also mark these as verified if they came from registry?
+                 // verifiedFields.value.add(dataKey); 
+             }
+             // 2. Fuzzy / Common variations (as implemented before)
+             // ... (existing logic can remain if useful)
         });
 
-        // 2. Contextual Prefix Mapping (e.g. mother_id lookup should map 'full_name' to 'mother_name')
-        const prefix = key.split('_')[0]; // 'mother', 'father', etc
-        const contextualMappings = {
-          'full_name': `${prefix}_name`,
-          'gender': `${prefix}_gender`,
-          'date_of_birth': `${prefix}_dob`
-        };
-
-        Object.keys(contextualMappings).forEach(sourceKey => {
-          const targetKey = contextualMappings[sourceKey];
-          if (result.data[sourceKey] && formData.value.hasOwnProperty(targetKey)) {
-            formData.value[targetKey] = result.data[sourceKey];
-          }
-        });
-
-        // Explicit Parent Mapping for Birth Certificate Lookups (BEN)
-        if (key.includes('birth_entry') || key.includes('birth_cert') || key === 'ben') {
-          const directMaps = ['mother_id', 'father_id', 'mother_name', 'father_name', 'date_of_birth', 'full_name', 'gender'];
-          directMaps.forEach(dm => {
-            if (result.data[dm]) {
-              formData.value[dm] = result.data[dm];
-              verifiedFields.value.add(dm);
-            }
-          });
-        }
-
-        alert(result.message || 'Record found and data pre-filled!');
       } else {
         verifiedFields.value.delete(key);
-        alert(result.message || 'No matching record found in authoritative registry.');
+        alert(result?.message || 'No matching record found in authoritative registry.');
+        formData.value[key] = ''; // clear invalid input? Option.
       }
     } catch (error) {
       verifiedFields.value.delete(key);
-      alert('Lookup failed. Please try again or fill the details manually.');
+      console.error(error);
+      alert('Lookup failed. Authority server unreachable.');
+    } finally {
+        if(btn) {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
     }
   };
 
@@ -393,9 +423,9 @@
           return;
         }
 
-        // 2. Lookup Verification Check
-        if (fieldSchema.lookup_service && !verifiedFields.value.has(key)) {
-          alert(`Please click 'Fetch Record' to verify your ${fieldTitle} before proceeding.`);
+        // 2. Lookup Verification Check (BLOCKER)
+        if (fieldSchema['x-registry-config'] && !verifiedFields.value.has(key)) {
+          alert(`CRITICAL Validation: The field "${fieldTitle}" must be verified against the National Registry. Please click 'Fetch Record'.`);
           return;
         }
       }

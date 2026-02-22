@@ -8,8 +8,7 @@
         <p class="page__subtitle">Centralized configuration for government services and data schemas</p>
       </div>
       <div class="page__actions">
-        <button @click="openCreateModal"
-          class="button button--primary button--pill">
+        <button @click="openCreateModal" class="button button--primary button--pill">
           <i class="bi bi-plus-lg"></i> Register New Service
         </button>
       </div>
@@ -34,13 +33,15 @@
             :class="{ 'toolbar__filter-arrow--open': showMdaFilterDropdown }"></i>
 
           <div v-if="showMdaFilterDropdown"
-            class="u-absolute u-top-full u-left-0 u-w-full bg-white u-border u-shadow-xl u-rounded-lg u-mt-2 u-z-dropdown u-overflow-auto u-p-2" style="max-height: 240px">
-            <div @click="selectMdaFilter('')"
-              class="u-p-3 hover:bg-bg-page u-rounded u-font-bold u-text-primary u-mb-1" style="cursor: pointer">
+            class="u-absolute u-top-full u-left-0 u-w-full bg-white u-border u-shadow-xl u-rounded-lg u-mt-2 u-z-dropdown u-overflow-auto u-p-2"
+            style="max-height: 240px">
+            <div @click="selectMdaFilter('')" class="u-p-3 hover:bg-bg-page u-rounded u-font-bold u-text-primary u-mb-1"
+              style="cursor: pointer">
               All Institutions
             </div>
             <div v-for="mda in filteredMdasForFilter" :key="mda.id" @click="selectMdaFilter(mda)"
-              class="u-p-3 hover:bg-bg-page u-rounded u-flex u-items-center u-gap-3 u-font-medium transition-colors" style="cursor: pointer; font-size: 14px">
+              class="u-p-3 hover:bg-bg-page u-rounded u-flex u-items-center u-gap-3 u-font-medium transition-colors"
+              style="cursor: pointer; font-size: 14px">
               <i class="bi bi-building u-text-muted"></i> {{ mda.name }}
             </div>
           </div>
@@ -57,12 +58,12 @@
               <th class="table__header-cell table__header-cell--with-left-padding">Registry Code</th>
               <th class="table__header-cell">Official Service Name</th>
               <th class="table__header-cell">Institutional Owner (MDA)</th>
-              <th class="table__header-cell table__header-cell--align-right table__header-cell--with-right-padding">Management</th>
+              <th class="table__header-cell table__header-cell--align-right table__header-cell--with-right-padding">
+                Management</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="service in filteredServices" :key="service.id"
-              class="table__row">
+            <tr v-for="service in filteredServices" :key="service.id" class="table__row">
               <td class="table__cell table__cell--with-left-padding">
                 <span class="table__code-badge">
                   {{ service.service_code }}
@@ -76,12 +77,10 @@
               </td>
               <td class="table__cell table__cell--align-right table__cell--with-right-padding">
                 <div class="table__actions">
-                  <button @click="openEditModal(service)"
-                    class="button button--secondary button--small">
+                  <button @click="openEditModal(service)" class="button button--secondary button--small">
                     <i class="bi bi-sliders"></i> Configure
                   </button>
-                  <button @click="deleteService(service.id)"
-                    class="button button--ghost button--small">
+                  <button @click="deleteService(service.id)" class="button button--ghost button--small">
                     <i class="bi bi-trash"></i>
                   </button>
                 </div>
@@ -102,193 +101,77 @@
       :title="editForm.id ? 'Modify Service Configuration' : 'Onboard New National Service'"
       subtitle="Define technical data schemas and internal agency workflows" icon="bi-gear-wide-connected" size="full">
       <form @submit.prevent="handleUpdate" class="form flex flex-col gap-6">
-        <!-- Vertical Tab Layout -->
-        <div class="flex gap-8">
-          <!-- Left Sidebar Navigation -->
-          <aside class="w-72 flex-shrink-0">
-            <div class="sticky top-6">
-              <!-- Sidebar Header -->
-              <div class="mb-6 px-4">
-                <div class="flex items-center gap-2 mb-2">
-                  <div class="w-1 h-6 bg-gradient-to-b from-primary to-secondary rounded-full"></div>
-                  <h4 class="text-xs font-black uppercase tracking-widest text-muted">
-                    Configuration Steps
+        <!-- High-Fidelity Configuration Journey -->
+        <div class="u-flex u-gap-10">
+          <!-- Strategic Navigation Sidebar -->
+          <aside class="u-w-80 u-flex-shrink-0">
+            <div class="u-sticky u-top-4">
+              <div class="u-mb-8">
+                <div class="u-flex u-items-center u-gap-3 u-mb-2">
+                  <div class="u-w-1.5 u-h-6 u-bg-primary u-rounded-full"></div>
+                  <h4 class="u-text-[11px] u-font-black u-text-muted u-uppercase u-tracking-[0.2em]">Config Registry
                   </h4>
                 </div>
-                <p class="text-xs text-muted/70 ml-3">Complete each section to onboard the service</p>
+                <p class="u-text-[11px] u-text-muted/60 u-pl-4">Administrative Service Lifecycle</p>
               </div>
 
-              <!-- Navigation Items -->
-              <nav class="space-y-2">
-                <!-- Service Identity -->
-                <button type="button" @click="currentConfigTab = 'identity'"
-                  class="group w-full relative overflow-hidden rounded-xl text-left transition-all duration-300"
-                  :class="currentConfigTab === 'identity'
-                    ? 'bg-gradient-to-br from-primary to-primary-dark text-white shadow-xl shadow-primary/40 scale-105'
-                    : 'bg-white border-2 border-slate-100 text-muted hover:border-primary/30 hover:shadow-lg hover:scale-102'">
-
-                  <!-- Decorative gradient overlay for active state -->
-                  <div v-if="currentConfigTab === 'identity'"
-                    class="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent"></div>
-
-                  <div class="relative flex items-center gap-4 p-4">
-                    <!-- Icon Container -->
-                    <div class="flex items-center justify-center w-12 h-12 rounded-xl transition-all"
-                      :class="currentConfigTab === 'identity'
-                        ? 'bg-white/20 shadow-lg'
-                        : 'bg-gradient-to-br from-primary/10 to-primary/5 group-hover:from-primary/20 group-hover:to-primary/10'">
-                      <i class="bi bi-card-heading text-xl"
-                        :class="currentConfigTab === 'identity' ? 'text-white' : 'text-primary'"></i>
-                    </div>
-
-                    <!-- Text Content -->
-                    <div class="flex-1 min-w-0">
-                      <div class="font-bold text-sm mb-0.5"
-                        :class="currentConfigTab === 'identity' ? 'text-white' : 'text-main'">
-                        Service Identity
-                      </div>
-                      <div class="text-xs" :class="currentConfigTab === 'identity' ? 'text-white/80' : 'text-muted'">
-                        Basic info & MDA mapping
-                      </div>
-                    </div>
-
-                    <!-- Status Indicator -->
-                    <div class="flex items-center gap-2">
-                      <div v-if="currentConfigTab === 'identity'" class="w-2 h-2 bg-white rounded-full animate-pulse">
-                      </div>
-                      <i v-if="currentConfigTab === 'identity'" class="bi bi-chevron-right text-white text-sm"></i>
-                    </div>
+              <div class="u-flex u-flex-col u-gap-3">
+                <!-- Identity Step -->
+                <button type="button" @click="currentConfigTab = 'identity'" class="config-nav-item"
+                  :class="{ 'config-nav-item--active': currentConfigTab === 'identity' }">
+                  <div class="config-nav-item__index">01</div>
+                  <div class="config-nav-item__content">
+                    <span class="config-nav-item__title">Service Identity</span>
+                    <span class="config-nav-item__desc">Registry Mapping</span>
                   </div>
-
-                  <!-- Step Number Badge -->
-                  <div class="absolute top-2 right-2">
-                    <div class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold" :class="currentConfigTab === 'identity'
-                      ? 'bg-white/20 text-white'
-                      : 'bg-slate-100 text-muted'">
-                      1
-                    </div>
-                  </div>
+                  <i v-if="currentConfigTab === 'identity'"
+                    class="bi bi-chevron-right u-ml-auto u-text-primary u-text-sm"></i>
                 </button>
 
-                <!-- Form Schema -->
-                <button type="button" @click="currentConfigTab = 'schema'"
-                  class="group w-full relative overflow-hidden rounded-xl text-left transition-all duration-300"
-                  :class="currentConfigTab === 'schema'
-                    ? 'bg-gradient-to-br from-success to-success-dark text-white shadow-xl shadow-success/40 scale-105'
-                    : 'bg-white border-2 border-slate-100 text-muted hover:border-success/30 hover:shadow-lg hover:scale-102'">
-
-                  <!-- Decorative gradient overlay for active state -->
-                  <div v-if="currentConfigTab === 'schema'"
-                    class="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent"></div>
-
-                  <div class="relative flex items-center gap-4 p-4">
-                    <!-- Icon Container -->
-                    <div class="flex items-center justify-center w-12 h-12 rounded-xl transition-all"
-                      :class="currentConfigTab === 'schema'
-                        ? 'bg-white/20 shadow-lg'
-                        : 'bg-gradient-to-br from-success/10 to-success/5 group-hover:from-success/20 group-hover:to-success/10'">
-                      <i class="bi bi-ui-checks-grid text-xl"
-                        :class="currentConfigTab === 'schema' ? 'text-white' : 'text-success'"></i>
-                    </div>
-
-                    <!-- Text Content -->
-                    <div class="flex-1 min-w-0">
-                      <div class="font-bold text-sm mb-0.5"
-                        :class="currentConfigTab === 'schema' ? 'text-white' : 'text-main'">
-                        Form Schema
-                      </div>
-                      <div class="text-xs" :class="currentConfigTab === 'schema' ? 'text-white/80' : 'text-muted'">
-                        Define data collection fields
-                      </div>
-                    </div>
-
-                    <!-- Status Indicator -->
-                    <div class="flex items-center gap-2">
-                      <div v-if="currentConfigTab === 'schema'" class="w-2 h-2 bg-white rounded-full animate-pulse">
-                      </div>
-                      <i v-if="currentConfigTab === 'schema'" class="bi bi-chevron-right text-white text-sm"></i>
-                    </div>
+                <!-- Schema Step -->
+                <button type="button" @click="currentConfigTab = 'schema'" class="config-nav-item"
+                  :class="{ 'config-nav-item--active': currentConfigTab === 'schema' }">
+                  <div class="config-nav-item__index">02</div>
+                  <div class="config-nav-item__content">
+                    <span class="config-nav-item__title">Technical Schema</span>
+                    <span class="config-nav-item__desc">Data Intake Definition</span>
                   </div>
-
-                  <!-- Step Number Badge -->
-                  <div class="absolute top-2 right-2">
-                    <div class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold" :class="currentConfigTab === 'schema'
-                      ? 'bg-white/20 text-white'
-                      : 'bg-slate-100 text-muted'">
-                      2
-                    </div>
-                  </div>
+                  <i v-if="currentConfigTab === 'schema'"
+                    class="bi bi-chevron-right u-ml-auto u-text-success u-text-sm"></i>
                 </button>
 
-                <!-- Workflow Pipeline -->
+                <!-- Workflow Step -->
                 <button type="button" @click="currentConfigTab = 'workflow'" :disabled="!editForm.id"
-                  class="group w-full relative overflow-hidden rounded-xl text-left transition-all duration-300" :class="[
-                    currentConfigTab === 'workflow'
-                      ? 'bg-gradient-to-br from-secondary to-secondary-dark text-white shadow-xl shadow-secondary/40 scale-105'
-                      : 'bg-white border-2 border-slate-100 text-muted hover:border-secondary/30 hover:shadow-lg hover:scale-102',
-                    !editForm.id ? 'opacity-60 cursor-not-allowed hover:scale-100 hover:shadow-none' : ''
-                  ]">
-
-                  <!-- Decorative gradient overlay for active state -->
-                  <div v-if="currentConfigTab === 'workflow'"
-                    class="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent"></div>
-
-                  <div class="relative flex items-center gap-4 p-4">
-                    <!-- Icon Container -->
-                    <div class="flex items-center justify-center w-12 h-12 rounded-xl transition-all"
-                      :class="currentConfigTab === 'workflow'
-                        ? 'bg-white/20 shadow-lg'
-                        : 'bg-gradient-to-br from-secondary/10 to-secondary/5 group-hover:from-secondary/20 group-hover:to-secondary/10'">
-                      <i class="bi bi-diagram-3 text-xl"
-                        :class="currentConfigTab === 'workflow' ? 'text-white' : 'text-secondary'"></i>
-                    </div>
-
-                    <!-- Text Content -->
-                    <div class="flex-1 min-w-0">
-                      <div class="font-bold text-sm mb-0.5"
-                        :class="currentConfigTab === 'workflow' ? 'text-white' : 'text-main'">
-                        Workflow Pipeline
-                      </div>
-                      <div class="text-xs" :class="currentConfigTab === 'workflow' ? 'text-white/80' : 'text-muted'">
-                        <span v-if="!editForm.id" class="flex items-center gap-1">
-                          <i class="bi bi-lock-fill text-warning"></i>
-                          <span class="text-warning font-medium">Save service first</span>
-                        </span>
-                        <span v-else>Configure process stages</span>
-                      </div>
-                    </div>
-
-                    <!-- Status Indicator -->
-                    <div class="flex items-center gap-2">
-                      <div v-if="currentConfigTab === 'workflow' && editForm.id"
-                        class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                      <i v-if="currentConfigTab === 'workflow' && editForm.id"
-                        class="bi bi-chevron-right text-white text-sm"></i>
-                    </div>
+                  class="config-nav-item" :class="{
+                    'config-nav-item--active': currentConfigTab === 'workflow',
+                    'config-nav-item--disabled': !editForm.id
+                  }">
+                  <div class="config-nav-item__index">03</div>
+                  <div class="config-nav-item__content">
+                    <span class="config-nav-item__title">Process Pipeline</span>
+                    <span class="config-nav-item__desc">Orchestration Nodes</span>
+                    <span v-if="!editForm.id" class="u-text-[9px] u-text-warning u-font-black u-uppercase u-mt-1">
+                      <i class="bi bi-lock-fill"></i> Save Identity First
+                    </span>
                   </div>
-
-                  <!-- Step Number Badge -->
-                  <div class="absolute top-2 right-2">
-                    <div class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold" :class="currentConfigTab === 'workflow'
-                      ? 'bg-white/20 text-white'
-                      : 'bg-slate-100 text-muted'">
-                      3
-                    </div>
-                  </div>
+                  <i v-if="currentConfigTab === 'workflow'"
+                    class="bi bi-chevron-right u-ml-auto u-text-secondary u-text-sm"></i>
                 </button>
-              </nav>
+              </div>
 
-              <!-- Progress Indicator -->
-              <div class="mt-6 px-4">
-                <div class="bg-slate-100 rounded-full h-2 overflow-hidden">
-                  <div
-                    class="h-full bg-gradient-to-r from-primary via-success to-secondary transition-all duration-500 rounded-full"
+              <!-- Journey Progress Summary -->
+              <div
+                class="u-mt-10 u-p-5 u-bg-bg-page u-rounded-2xl u-border u-border-border-color u-relative u-overflow-hidden">
+                <div class="u-absolute u-top-0 u-left-0 u-w-full u-h-1 u-bg-slate-100">
+                  <div class="u-h-full u-bg-primary transition-all duration-700"
                     :style="{ width: currentConfigTab === 'identity' ? '33%' : currentConfigTab === 'schema' ? '66%' : '100%' }">
                   </div>
                 </div>
-                <p class="text-xs text-muted text-center mt-2">
-                  Step {{ currentConfigTab === 'identity' ? '1' : currentConfigTab === 'schema' ? '2' : '3' }} of 3
-                </p>
+                <div class="u-flex u-justify-between u-items-center">
+                  <span class="u-text-[10px] u-font-black u-text-muted u-uppercase">Onboarding Progress</span>
+                  <span class="u-text-[10px] u-font-black u-text-primary">{{ currentConfigTab === 'identity' ? '33%' :
+                    currentConfigTab === 'schema' ? '66%' : '100%' }}</span>
+                </div>
               </div>
             </div>
           </aside>
@@ -366,45 +249,40 @@
               </div>
             </div>
 
-            <!-- Workflow Tab -->
-            <div v-show="currentConfigTab === 'workflow'" class="tab-content animate-fade-in">
-              <div v-if="editForm.id" class="card border-0 shadow-sm">
-                <div class="card__header bg-gradient-to-r from-secondary/5 to-secondary/10">
-                  <h3 class="card__title flex items-center gap-2">
-                    <i class="bi bi-diagram-3 text-secondary"></i>
-                    Workflow Orchestration
-                  </h3>
-                  <p class="card__subtitle">Configure processing stages and approvals</p>
-                </div>
-                <div class="card__body p-0">
-                  <WorkflowStepManager :service-config-id="editForm.id" />
-                </div>
+            <!-- Workflow Tab: Strategic Orchestration -->
+            <div v-show="currentConfigTab === 'workflow'" class="tab-content u-animate-fade-in">
+              <div v-if="editForm.id" class="u-mt-4">
+                <WorkflowStepManager :service-config-id="editForm.id" />
               </div>
-              <div v-else class="card border-2 border-dashed border-warning/30 bg-warning/5">
-                <div class="card__body text-center py-12">
-                  <i class="bi bi-exclamation-triangle text-6xl text-warning mb-4 opacity-50"></i>
-                  <h4 class="font-black text-xl text-main mb-2">Save Service First</h4>
-                  <p class="text-muted mb-6">You must save the service identity before configuring the workflow
-                    pipeline.
-                  </p>
-                  <button type="button" @click="currentConfigTab = 'identity'" class="button button--warning">
-                    <i class="bi bi-arrow-left me-2"></i>Back to Identity
-                  </button>
-                </div>
+              <div v-else
+                class="u-p-12 u-text-center u-bg-warning/5 u-rounded-3xl u-border-2 u-border-dashed u-border-warning/20">
+                <i class="bi bi-shield-lock u-text-6xl u-text-warning u-opacity-30 u-mb-4 u-block"></i>
+                <h4 class="u-font-black u-text-main u-uppercase u-tracking-widest u-mb-2">Identity Locked</h4>
+                <p class="u-text-xs u-text-muted/60 u-mb-8">Complete the service identity registration to unlock the
+                  orchestration pipeline.</p>
+                <button type="button" @click="currentConfigTab = 'identity'"
+                  class="u-text-xs u-font-black u-uppercase u-text-primary u-tracking-widest hover:u-underline">
+                  Return to Identity 01
+                </button>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Form Actions -->
-        <div class="flex justify-between items-center pt-4 border-t border-border-color mt-4">
-          <button type="button" @click="closeModal" class="button button--secondary">
-            <i class="bi bi-x-lg me-2"></i>Discard Changes
+        <!-- Strategic Action Footer -->
+        <div class="u-flex u-justify-between u-items-center u-mt-10 u-pt-8 u-border-t">
+          <button type="button" @click="closeModal"
+            class="button button--ghost u-text-xs u-font-black u-uppercase u-tracking-widest">
+            <i class="bi bi-x-circle u-mr-2"></i> Discard Configuration
           </button>
-          <button type="submit"
-            class="button button--primary shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all">
-            <i class="bi bi-cloud-check me-2"></i> Commit Registry Update
-          </button>
+
+          <div class="u-flex u-gap-4">
+            <button type="submit"
+              class="button button--primary u-px-10 u-py-4 u-rounded-xl u-text-xs u-font-black u-uppercase u-tracking-[0.2em]">
+              <i class="bi bi-shield-check-fill u-text-sm"></i>
+              Commit Registry Update
+            </button>
+          </div>
         </div>
       </form>
     </BaseModal>
@@ -525,7 +403,7 @@
   const openEditModal = (service) => {
     // Deep copy to avoid reactive mutations outside of the store
     editForm.value = JSON.parse(JSON.stringify(service));
-    if (!editForm.value.config) {
+    if (!editForm.value.config || !editForm.value.config.rules || !editForm.value.config.rules.schema) {
       editForm.value.config = { rules: { schema: { properties: {}, required: [] } } };
     }
     showModal.value = true;
@@ -565,5 +443,84 @@
 
   .border-border-color {
     border-color: var(--border-color);
+  }
+
+  /* Configuration Journey Navigation */
+  .config-nav-item {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1rem 1.25rem;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    text-align: left;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .config-nav-item:hover:not(.config-nav-item--disabled) {
+    border-color: var(--primary);
+    transform: translateX(4px);
+    box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.1);
+  }
+
+  .config-nav-item--active {
+    background: var(--bg-page);
+    border-color: var(--primary);
+    border-width: 2px;
+    box-shadow: 0 10px 25px -10px rgba(var(--primary-rgb), 0.2);
+  }
+
+  .config-nav-item--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #f8fafc;
+  }
+
+  .config-nav-item__index {
+    width: 2.25rem;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f1f5f9;
+    border-radius: 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 900;
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+  }
+
+  .config-nav-item--active .config-nav-item__index {
+    background: var(--primary);
+    color: white;
+    transform: scale(1.1);
+  }
+
+  .config-nav-item__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .config-nav-item__title {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--text-main);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+
+  .config-nav-item__desc {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    opacity: 0.7;
+  }
+
+  .config-nav-item--active .config-nav-item__title {
+    color: var(--primary);
   }
 </style>

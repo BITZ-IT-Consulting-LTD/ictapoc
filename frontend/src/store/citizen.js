@@ -52,6 +52,25 @@ export const useCitizenStore = defineStore('citizen', {
         console.error('Registry query failed:', error);
         throw error;
       }
+    },
+    async queryRegistryEndpoint(adapterId, endpointId, params) {
+      try {
+        // Updated endpoint to support direct registry proxying
+        // Constructing URL based on available patterns. 
+        // The backend views.RegistryQueryView handles ?registry_code=... or path params.
+        // But we have adapter ID and endpoint ID.
+        // We might need a new general proxy endpoint or use the existing one with richer payload.
+        // Let's assume we post to /registry/query/ but pass explicit IDs.
+        const response = await api.post('/registry/query/', {
+          adapter_id: adapterId,
+          endpoint_id: endpointId,
+          params: params
+        });
+        return response.data;
+      } catch (error) {
+        console.error('Registry Endpoint query failed:', error);
+        throw error;
+      }
     }
   },
 });

@@ -79,6 +79,60 @@
                   </div>
                </div>
 
+               <!-- Searchable Life Event Filter -->
+               <div class="toolbar__filter-group">
+                  <i class="bi bi-calendar-event toolbar__filter-icon"></i>
+                  <input type="text" v-model="lifeEventSearchLocal" placeholder="Filter by Life Event..."
+                     @focus="showLifeEventDropdown = true"
+                     @blur="setTimeout(() => showLifeEventDropdown = false, 200)"
+                     class="toolbar__filter-input toolbar__filter-input--with-arrow" style="cursor: pointer">
+                  <i class="bi bi-chevron-down toolbar__filter-arrow" :class="{'toolbar__filter-arrow--open': showLifeEventDropdown}"></i>
+                  
+                  <div v-if="showLifeEventDropdown" class="u-absolute u-top-full u-left-0 u-w-full bg-white u-border u-shadow-xl u-rounded-lg u-mt-2 u-z-dropdown u-overflow-auto u-p-2" style="max-height: 240px">
+                     <div @click="selectLifeEvent('')" class="u-p-3 hover:bg-bg-page u-rounded u-font-bold u-text-primary u-mb-1" style="cursor: pointer">All Life Events</div>
+                     <div v-for="e in filteredLifeEvents" :key="e" @click="selectLifeEvent(e)"
+                        class="u-p-3 hover:bg-bg-page u-rounded u-flex u-items-center u-gap-3 u-font-medium transition-colors" style="cursor: pointer; font-size: 14px">
+                        {{ e }}
+                     </div>
+                  </div>
+               </div>
+
+               <!-- Searchable Category Filter -->
+               <div class="toolbar__filter-group">
+                  <i class="bi bi-tag toolbar__filter-icon"></i>
+                  <input type="text" v-model="categorySearchLocal" placeholder="Filter by Category..."
+                     @focus="showCategoryDropdown = true"
+                     @blur="setTimeout(() => showCategoryDropdown = false, 200)"
+                     class="toolbar__filter-input toolbar__filter-input--with-arrow" style="cursor: pointer">
+                  <i class="bi bi-chevron-down toolbar__filter-arrow" :class="{'toolbar__filter-arrow--open': showCategoryDropdown}"></i>
+                  
+                  <div v-if="showCategoryDropdown" class="u-absolute u-top-full u-left-0 u-w-full bg-white u-border u-shadow-xl u-rounded-lg u-mt-2 u-z-dropdown u-overflow-auto u-p-2" style="max-height: 240px">
+                     <div @click="selectCategory('')" class="u-p-3 hover:bg-bg-page u-rounded u-font-bold u-text-primary u-mb-1" style="cursor: pointer">All Categories</div>
+                     <div v-for="c in filteredCategories" :key="c" @click="selectCategory(c)"
+                        class="u-p-3 hover:bg-bg-page u-rounded u-flex u-items-center u-gap-3 u-font-medium transition-colors" style="cursor: pointer; font-size: 14px">
+                        {{ c }}
+                     </div>
+                  </div>
+               </div>
+
+               <!-- Searchable Type Filter -->
+               <div class="toolbar__filter-group">
+                  <i class="bi bi-layers toolbar__filter-icon"></i>
+                  <input type="text" v-model="typeSearchLocal" placeholder="Filter by Type..."
+                     @focus="showTypeDropdown = true"
+                     @blur="setTimeout(() => showTypeDropdown = false, 200)"
+                     class="toolbar__filter-input toolbar__filter-input--with-arrow" style="cursor: pointer">
+                  <i class="bi bi-chevron-down toolbar__filter-arrow" :class="{'toolbar__filter-arrow--open': showTypeDropdown}"></i>
+                  
+                  <div v-if="showTypeDropdown" class="u-absolute u-top-full u-left-0 u-w-full bg-white u-border u-shadow-xl u-rounded-lg u-mt-2 u-z-dropdown u-overflow-auto u-p-2" style="max-height: 240px">
+                     <div @click="selectType('')" class="u-p-3 hover:bg-bg-page u-rounded u-font-bold u-text-primary u-mb-1" style="cursor: pointer">All Types</div>
+                     <div v-for="t in filteredTypes" :key="t" @click="selectType(t)"
+                        class="u-p-3 hover:bg-bg-page u-rounded u-flex u-items-center u-gap-3 u-font-medium transition-colors" style="cursor: pointer; font-size: 14px">
+                        {{ t }}
+                     </div>
+                  </div>
+               </div>
+
                <div class="u-flex u-items-end">
                   <button @click="resetFilters"
                      class="button button--secondary u-w-full">
@@ -273,11 +327,21 @@
    const searchQuery = ref('');
    const selectedDomain = ref('');
    const selectedMda = ref('');
+   const selectedCategory = ref('');
+   const selectedType = ref('');
+   const selectedLifeEvent = ref('');
    
    const domainSearchLocal = ref('');
    const mdaSearchLocal = ref('');
+   const categorySearchLocal = ref('');
+   const typeSearchLocal = ref('');
+   const lifeEventSearchLocal = ref('');
+
    const showDomainDropdown = ref(false);
    const showMdaDropdown = ref(false);
+   const showCategoryDropdown = ref(false);
+   const showTypeDropdown = ref(false);
+   const showLifeEventDropdown = ref(false);
    
    const activeLifecycle = ref('as_is'); // Default to showing current manual process friction
 
@@ -297,6 +361,42 @@
       return [...mdas].sort();
    });
 
+   const categoryList = computed(() => {
+      const cats = new Set();
+      matrixData.value.forEach(d => {
+         d.processes.forEach(p => {
+            p.services.forEach(s => {
+               if (s.service_category) cats.add(s.service_category);
+            });
+         });
+      });
+      return [...cats].sort();
+   });
+
+   const typeList = computed(() => {
+      const types = new Set();
+      matrixData.value.forEach(d => {
+         d.processes.forEach(p => {
+            p.services.forEach(s => {
+               if (s.service_type) types.add(s.service_type);
+            });
+         });
+      });
+      return [...types].sort();
+   });
+
+   const lifeEventList = computed(() => {
+      const events = new Set();
+      matrixData.value.forEach(d => {
+         d.processes.forEach(p => {
+            p.services.forEach(s => {
+               if (s.life_event_group) events.add(s.life_event_group);
+            });
+         });
+      });
+      return [...events].sort();
+   });
+
    const filteredDomains = computed(() => {
       if (!domainSearchLocal.value) return domainsList.value;
       const q = domainSearchLocal.value.toLowerCase();
@@ -307,6 +407,24 @@
       if (!mdaSearchLocal.value) return mdaList.value;
       const q = mdaSearchLocal.value.toLowerCase();
       return mdaList.value.filter(m => m.toLowerCase().includes(q));
+   });
+
+   const filteredCategories = computed(() => {
+      if (!categorySearchLocal.value) return categoryList.value;
+      const q = categorySearchLocal.value.toLowerCase();
+      return categoryList.value.filter(c => c.toLowerCase().includes(q));
+   });
+
+   const filteredTypes = computed(() => {
+      if (!typeSearchLocal.value) return typeList.value;
+      const q = typeSearchLocal.value.toLowerCase();
+      return typeList.value.filter(t => t.toLowerCase().includes(q));
+   });
+
+   const filteredLifeEvents = computed(() => {
+      if (!lifeEventSearchLocal.value) return lifeEventList.value;
+      const q = lifeEventSearchLocal.value.toLowerCase();
+      return lifeEventList.value.filter(l => l.toLowerCase().includes(q));
    });
 
    const selectDomain = (domain) => {
@@ -321,6 +439,24 @@
       showMdaDropdown.value = false;
    };
 
+   const selectCategory = (category) => {
+      selectedCategory.value = category;
+      categorySearchLocal.value = category;
+      showCategoryDropdown.value = false;
+   };
+
+   const selectType = (type) => {
+      selectedType.value = type;
+      typeSearchLocal.value = type;
+      showTypeDropdown.value = false;
+   };
+
+   const selectLifeEvent = (event) => {
+      selectedLifeEvent.value = event;
+      lifeEventSearchLocal.value = event;
+      showLifeEventDropdown.value = false;
+   };
+
    const filteredMatrixData = computed(() => {
       let data = JSON.parse(JSON.stringify(matrixData.value));
 
@@ -333,10 +469,13 @@
          const matchingProcesses = d.processes.map(p => {
             const matchingServices = p.services.filter(s => {
                const matchesMda = !selectedMda.value || s.mda === selectedMda.value;
+               const matchesCategory = !selectedCategory.value || s.service_category === selectedCategory.value;
+               const matchesType = !selectedType.value || s.service_type === selectedType.value;
+               const matchesLifeEvent = !selectedLifeEvent.value || s.life_event_group === selectedLifeEvent.value;
                const matchesSearch = !searchQuery.value ||
                   s.service_name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
                   s.mda.toLowerCase().includes(searchQuery.value.toLowerCase());
-               return matchesMda && matchesSearch;
+               return matchesMda && matchesCategory && matchesType && matchesLifeEvent && matchesSearch;
             });
 
             if (matchingServices.length > 0) {
@@ -456,8 +595,14 @@
       searchQuery.value = '';
       selectedDomain.value = '';
       selectedMda.value = '';
+      selectedCategory.value = '';
+      selectedType.value = '';
+      selectedLifeEvent.value = '';
       domainSearchLocal.value = '';
       mdaSearchLocal.value = '';
+      categorySearchLocal.value = '';
+      typeSearchLocal.value = '';
+      lifeEventSearchLocal.value = '';
    };
 
    onMounted(() => {

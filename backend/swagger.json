@@ -1,0 +1,4806 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "GoK Digital Services API",
+        "description": "API documentation for the Whole-of-Government Service Platform",
+        "termsOfService": "https://www.google.com/policies/terms/",
+        "contact": {
+            "email": "contact@ict.go.ke"
+        },
+        "license": {
+            "name": "MIT License"
+        },
+        "version": "v1"
+    },
+    "basePath": "/api",
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "securityDefinitions": {
+        "Basic": {
+            "type": "basic"
+        },
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    },
+    "security": [
+        {
+            "Basic": []
+        },
+        {
+            "Bearer": []
+        }
+    ],
+    "paths": {
+        "/audit-logs/": {
+            "get": {
+                "operationId": "audit-logs_list",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/AuditLog"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "audit-logs"
+                ]
+            },
+            "parameters": []
+        },
+        "/audit-logs/{id}/": {
+            "get": {
+                "operationId": "audit-logs_read",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/AuditLog"
+                        }
+                    }
+                },
+                "tags": [
+                    "audit-logs"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this audit log.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/catalog/categories/": {
+            "get": {
+                "operationId": "catalog_categories_list",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ServiceCategory"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "catalog"
+                ]
+            },
+            "parameters": []
+        },
+        "/catalog/categories/{id}/": {
+            "get": {
+                "operationId": "catalog_categories_read",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceCategory"
+                        }
+                    }
+                },
+                "tags": [
+                    "catalog"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this service category.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/catalog/domains/": {
+            "get": {
+                "operationId": "catalog_domains_list",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ServiceDomain"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "catalog"
+                ]
+            },
+            "parameters": []
+        },
+        "/catalog/domains/{id}/": {
+            "get": {
+                "operationId": "catalog_domains_read",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceDomain"
+                        }
+                    }
+                },
+                "tags": [
+                    "catalog"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this service domain.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/catalog/services/": {
+            "get": {
+                "operationId": "catalog_services_list",
+                "description": "Public facing API for the Service Catalogue.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ServiceConfig"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "catalog"
+                ]
+            },
+            "parameters": []
+        },
+        "/catalog/services/process_matrix/": {
+            "get": {
+                "operationId": "catalog_services_process_matrix",
+                "description": "Returns a hierarchical view: Domain -> Process (Category) -> Service -> Systems & Actors",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ServiceConfig"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "catalog"
+                ]
+            },
+            "parameters": []
+        },
+        "/catalog/services/{id}/": {
+            "get": {
+                "operationId": "catalog_services_read",
+                "description": "Public facing API for the Service Catalogue.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceConfig"
+                        }
+                    }
+                },
+                "tags": [
+                    "catalog"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this service config.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/consent/": {
+            "get": {
+                "operationId": "consent_list",
+                "description": "Manages citizen data processing consents.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ConsentRecord"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "consent"
+                ]
+            },
+            "post": {
+                "operationId": "consent_create",
+                "description": "Manages citizen data processing consents.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ConsentRecord"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ConsentRecord"
+                        }
+                    }
+                },
+                "tags": [
+                    "consent"
+                ]
+            },
+            "parameters": []
+        },
+        "/consent/check/": {
+            "get": {
+                "operationId": "consent_check",
+                "description": "GET /api/consent/check/?scope=...&requester_code=...",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ConsentRecord"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "consent"
+                ]
+            },
+            "parameters": []
+        },
+        "/consent/grant/": {
+            "post": {
+                "operationId": "consent_grant",
+                "description": "POST /api/consent/grant/\n{\n    \"requester_id\": 1,\n    \"scope\": \"identity.read\",\n    \"purpose_code\": \"SERVICE_DELIVERY\",\n    \"expires_in_days\": 30\n}",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ConsentRecord"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ConsentRecord"
+                        }
+                    }
+                },
+                "tags": [
+                    "consent"
+                ]
+            },
+            "parameters": []
+        },
+        "/consent/{id}/": {
+            "get": {
+                "operationId": "consent_read",
+                "description": "Manages citizen data processing consents.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ConsentRecord"
+                        }
+                    }
+                },
+                "tags": [
+                    "consent"
+                ]
+            },
+            "put": {
+                "operationId": "consent_update",
+                "description": "Manages citizen data processing consents.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ConsentRecord"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ConsentRecord"
+                        }
+                    }
+                },
+                "tags": [
+                    "consent"
+                ]
+            },
+            "patch": {
+                "operationId": "consent_partial_update",
+                "description": "Manages citizen data processing consents.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ConsentRecord"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ConsentRecord"
+                        }
+                    }
+                },
+                "tags": [
+                    "consent"
+                ]
+            },
+            "delete": {
+                "operationId": "consent_delete",
+                "description": "Manages citizen data processing consents.",
+                "parameters": [],
+                "responses": {
+                    "204": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "consent"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/consent/{id}/revoke/": {
+            "post": {
+                "operationId": "consent_revoke",
+                "description": "POST /api/consent/{id}/revoke/",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ConsentRecord"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ConsentRecord"
+                        }
+                    }
+                },
+                "tags": [
+                    "consent"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/correspondence-actions/": {
+            "get": {
+                "operationId": "correspondence-actions_list",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/CorrespondenceAction"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "correspondence-actions"
+                ]
+            },
+            "post": {
+                "operationId": "correspondence-actions_create",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CorrespondenceAction"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/CorrespondenceAction"
+                        }
+                    }
+                },
+                "tags": [
+                    "correspondence-actions"
+                ]
+            },
+            "parameters": []
+        },
+        "/correspondence-actions/{id}/": {
+            "get": {
+                "operationId": "correspondence-actions_read",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/CorrespondenceAction"
+                        }
+                    }
+                },
+                "tags": [
+                    "correspondence-actions"
+                ]
+            },
+            "put": {
+                "operationId": "correspondence-actions_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CorrespondenceAction"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/CorrespondenceAction"
+                        }
+                    }
+                },
+                "tags": [
+                    "correspondence-actions"
+                ]
+            },
+            "patch": {
+                "operationId": "correspondence-actions_partial_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CorrespondenceAction"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/CorrespondenceAction"
+                        }
+                    }
+                },
+                "tags": [
+                    "correspondence-actions"
+                ]
+            },
+            "delete": {
+                "operationId": "correspondence-actions_delete",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "204": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "correspondence-actions"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this correspondence action.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/desktop-reviews/": {
+            "get": {
+                "operationId": "desktop-reviews_list",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/DesktopReview"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "desktop-reviews"
+                ]
+            },
+            "post": {
+                "operationId": "desktop-reviews_create",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/DesktopReview"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/DesktopReview"
+                        }
+                    }
+                },
+                "tags": [
+                    "desktop-reviews"
+                ]
+            },
+            "parameters": []
+        },
+        "/desktop-reviews/{id}/": {
+            "get": {
+                "operationId": "desktop-reviews_read",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/DesktopReview"
+                        }
+                    }
+                },
+                "tags": [
+                    "desktop-reviews"
+                ]
+            },
+            "put": {
+                "operationId": "desktop-reviews_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/DesktopReview"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/DesktopReview"
+                        }
+                    }
+                },
+                "tags": [
+                    "desktop-reviews"
+                ]
+            },
+            "patch": {
+                "operationId": "desktop-reviews_partial_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/DesktopReview"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/DesktopReview"
+                        }
+                    }
+                },
+                "tags": [
+                    "desktop-reviews"
+                ]
+            },
+            "delete": {
+                "operationId": "desktop-reviews_delete",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "204": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "desktop-reviews"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this desktop review.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/government-files/": {
+            "get": {
+                "operationId": "government-files_list",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/GovernmentFile"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "government-files"
+                ]
+            },
+            "post": {
+                "operationId": "government-files_create",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/GovernmentFile"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/GovernmentFile"
+                        }
+                    }
+                },
+                "tags": [
+                    "government-files"
+                ]
+            },
+            "parameters": []
+        },
+        "/government-files/{id}/": {
+            "get": {
+                "operationId": "government-files_read",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/GovernmentFile"
+                        }
+                    }
+                },
+                "tags": [
+                    "government-files"
+                ]
+            },
+            "put": {
+                "operationId": "government-files_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/GovernmentFile"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/GovernmentFile"
+                        }
+                    }
+                },
+                "tags": [
+                    "government-files"
+                ]
+            },
+            "patch": {
+                "operationId": "government-files_partial_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/GovernmentFile"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/GovernmentFile"
+                        }
+                    }
+                },
+                "tags": [
+                    "government-files"
+                ]
+            },
+            "delete": {
+                "operationId": "government-files_delete",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "204": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "government-files"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/lifecycle/journey_summary/": {
+            "get": {
+                "operationId": "lifecycle_journey_summary",
+                "description": "GET /api/lifecycle/journey_summary/\nReturns a high-level view of the citizen's life journey across registries.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "lifecycle"
+                ]
+            },
+            "parameters": []
+        },
+        "/lifecycle/prefill/": {
+            "post": {
+                "operationId": "lifecycle_prefill",
+                "description": "POST /api/lifecycle/prefill/\n{\n    \"service_code\": \"IPRS-ID-001\",\n    \"inputs\": {\n        \"birth_certificate_number\": \"BC-111\"\n    }\n}",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "lifecycle"
+                ]
+            },
+            "parameters": []
+        },
+        "/mdas/": {
+            "get": {
+                "operationId": "mdas_list",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/MDA"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "mdas"
+                ]
+            },
+            "post": {
+                "operationId": "mdas_create",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/MDA"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/MDA"
+                        }
+                    }
+                },
+                "tags": [
+                    "mdas"
+                ]
+            },
+            "parameters": []
+        },
+        "/mdas/{id}/": {
+            "get": {
+                "operationId": "mdas_read",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/MDA"
+                        }
+                    }
+                },
+                "tags": [
+                    "mdas"
+                ]
+            },
+            "put": {
+                "operationId": "mdas_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/MDA"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/MDA"
+                        }
+                    }
+                },
+                "tags": [
+                    "mdas"
+                ]
+            },
+            "patch": {
+                "operationId": "mdas_partial_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/MDA"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/MDA"
+                        }
+                    }
+                },
+                "tags": [
+                    "mdas"
+                ]
+            },
+            "delete": {
+                "operationId": "mdas_delete",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "204": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "mdas"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this mda.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/memos/": {
+            "get": {
+                "operationId": "memos_list",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/InterDepartmentalMemo"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "memos"
+                ]
+            },
+            "post": {
+                "operationId": "memos_create",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/InterDepartmentalMemo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/InterDepartmentalMemo"
+                        }
+                    }
+                },
+                "tags": [
+                    "memos"
+                ]
+            },
+            "parameters": []
+        },
+        "/memos/{id}/": {
+            "get": {
+                "operationId": "memos_read",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/InterDepartmentalMemo"
+                        }
+                    }
+                },
+                "tags": [
+                    "memos"
+                ]
+            },
+            "put": {
+                "operationId": "memos_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/InterDepartmentalMemo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/InterDepartmentalMemo"
+                        }
+                    }
+                },
+                "tags": [
+                    "memos"
+                ]
+            },
+            "patch": {
+                "operationId": "memos_partial_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/InterDepartmentalMemo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/InterDepartmentalMemo"
+                        }
+                    }
+                },
+                "tags": [
+                    "memos"
+                ]
+            },
+            "delete": {
+                "operationId": "memos_delete",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "204": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "memos"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/memos/{id}/approve_memo/": {
+            "post": {
+                "operationId": "memos_approve_memo",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/InterDepartmentalMemo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/InterDepartmentalMemo"
+                        }
+                    }
+                },
+                "tags": [
+                    "memos"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/memos/{id}/assign_action/": {
+            "post": {
+                "operationId": "memos_assign_action",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/InterDepartmentalMemo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/InterDepartmentalMemo"
+                        }
+                    }
+                },
+                "tags": [
+                    "memos"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/memos/{id}/mark_read/": {
+            "post": {
+                "operationId": "memos_mark_read",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/InterDepartmentalMemo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/InterDepartmentalMemo"
+                        }
+                    }
+                },
+                "tags": [
+                    "memos"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/memos/{id}/register_memo/": {
+            "post": {
+                "operationId": "memos_register_memo",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/InterDepartmentalMemo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/InterDepartmentalMemo"
+                        }
+                    }
+                },
+                "tags": [
+                    "memos"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/memos/{id}/request_review/": {
+            "post": {
+                "operationId": "memos_request_review",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/InterDepartmentalMemo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/InterDepartmentalMemo"
+                        }
+                    }
+                },
+                "tags": [
+                    "memos"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/memos/{id}/sign_memo/": {
+            "post": {
+                "operationId": "memos_sign_memo",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/InterDepartmentalMemo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/InterDepartmentalMemo"
+                        }
+                    }
+                },
+                "tags": [
+                    "memos"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/official-letters/": {
+            "get": {
+                "operationId": "official-letters_list",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/OfficialLetter"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "official-letters"
+                ]
+            },
+            "post": {
+                "operationId": "official-letters_create",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/OfficialLetter"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/OfficialLetter"
+                        }
+                    }
+                },
+                "tags": [
+                    "official-letters"
+                ]
+            },
+            "parameters": []
+        },
+        "/official-letters/{id}/": {
+            "get": {
+                "operationId": "official-letters_read",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/OfficialLetter"
+                        }
+                    }
+                },
+                "tags": [
+                    "official-letters"
+                ]
+            },
+            "put": {
+                "operationId": "official-letters_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/OfficialLetter"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/OfficialLetter"
+                        }
+                    }
+                },
+                "tags": [
+                    "official-letters"
+                ]
+            },
+            "patch": {
+                "operationId": "official-letters_partial_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/OfficialLetter"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/OfficialLetter"
+                        }
+                    }
+                },
+                "tags": [
+                    "official-letters"
+                ]
+            },
+            "delete": {
+                "operationId": "official-letters_delete",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "204": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "official-letters"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this official letter.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/payments/": {
+            "get": {
+                "operationId": "payments_list",
+                "description": "Exposes Payment Aggregator (GPA) functionalities.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/PaymentTransaction"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "payments"
+                ]
+            },
+            "parameters": []
+        },
+        "/payments/callback/": {
+            "post": {
+                "operationId": "payments_callback",
+                "description": "Public endpoint for Payment Gateway webhooks.\nPOST /api/payments/callback/\n{\n    \"provider_ref\": \"GPA-X\",\n    \"status\": \"SUCCESS\",\n    \"amount\": 1500\n}",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/PaymentTransaction"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/PaymentTransaction"
+                        }
+                    }
+                },
+                "tags": [
+                    "payments"
+                ]
+            },
+            "parameters": []
+        },
+        "/payments/initiate/": {
+            "post": {
+                "operationId": "payments_initiate",
+                "description": "POST /api/payments/initiate/\n{\n    \"request_id\": \"REQ-123\",\n    \"phone_number\": \"254700000000\",\n    \"amount\": 1500,\n    \"provider\": \"MPESA\"\n}",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/PaymentTransaction"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/PaymentTransaction"
+                        }
+                    }
+                },
+                "tags": [
+                    "payments"
+                ]
+            },
+            "parameters": []
+        },
+        "/payments/{id}/": {
+            "get": {
+                "operationId": "payments_read",
+                "description": "Exposes Payment Aggregator (GPA) functionalities.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/PaymentTransaction"
+                        }
+                    }
+                },
+                "tags": [
+                    "payments"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this payment transaction.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/payments/{id}/status/": {
+            "get": {
+                "operationId": "payments_status",
+                "description": "GET /api/payments/<id>/status/\nChecks the status of a specific transaction.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/PaymentTransaction"
+                        }
+                    }
+                },
+                "tags": [
+                    "payments"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this payment transaction.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/registries/brs/{identifier}/": {
+            "get": {
+                "operationId": "registries_brs_read",
+                "description": "Supports both:\n1. Admin dump (GET /api/registry/query/)\n2. Individual lookup (GET /api/registries/<code|mda>/<identifier>/)",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "registries"
+                ]
+            },
+            "post": {
+                "operationId": "registries_brs_create",
+                "description": "Allow authenticated users to query registries (e.g., look up BEN or Notification Number from CRS).\nRefactored to use database-driven RegistryAdapter.",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "registries"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "identifier",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/registries/crs/{identifier}/": {
+            "get": {
+                "operationId": "registries_crs_read",
+                "description": "Supports both:\n1. Admin dump (GET /api/registry/query/)\n2. Individual lookup (GET /api/registries/<code|mda>/<identifier>/)",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "registries"
+                ]
+            },
+            "post": {
+                "operationId": "registries_crs_create",
+                "description": "Allow authenticated users to query registries (e.g., look up BEN or Notification Number from CRS).\nRefactored to use database-driven RegistryAdapter.",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "registries"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "identifier",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/registries/immigration/{identifier}/": {
+            "get": {
+                "operationId": "registries_immigration_read",
+                "description": "Supports both:\n1. Admin dump (GET /api/registry/query/)\n2. Individual lookup (GET /api/registries/<code|mda>/<identifier>/)",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "registries"
+                ]
+            },
+            "post": {
+                "operationId": "registries_immigration_create",
+                "description": "Allow authenticated users to query registries (e.g., look up BEN or Notification Number from CRS).\nRefactored to use database-driven RegistryAdapter.",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "registries"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "identifier",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/registries/iprs/{identifier}/": {
+            "get": {
+                "operationId": "registries_iprs_read",
+                "description": "Supports both:\n1. Admin dump (GET /api/registry/query/)\n2. Individual lookup (GET /api/registries/<code|mda>/<identifier>/)",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "registries"
+                ]
+            },
+            "post": {
+                "operationId": "registries_iprs_create",
+                "description": "Allow authenticated users to query registries (e.g., look up BEN or Notification Number from CRS).\nRefactored to use database-driven RegistryAdapter.",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "registries"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "identifier",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/registries/kra/{identifier}/": {
+            "get": {
+                "operationId": "registries_kra_read",
+                "description": "Supports both:\n1. Admin dump (GET /api/registry/query/)\n2. Individual lookup (GET /api/registries/<code|mda>/<identifier>/)",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "registries"
+                ]
+            },
+            "post": {
+                "operationId": "registries_kra_create",
+                "description": "Allow authenticated users to query registries (e.g., look up BEN or Notification Number from CRS).\nRefactored to use database-driven RegistryAdapter.",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "registries"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "identifier",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/registries/lands/{identifier}/": {
+            "get": {
+                "operationId": "registries_lands_read",
+                "description": "Supports both:\n1. Admin dump (GET /api/registry/query/)\n2. Individual lookup (GET /api/registries/<code|mda>/<identifier>/)",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "registries"
+                ]
+            },
+            "post": {
+                "operationId": "registries_lands_create",
+                "description": "Allow authenticated users to query registries (e.g., look up BEN or Notification Number from CRS).\nRefactored to use database-driven RegistryAdapter.",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "registries"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "identifier",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/registries/nemis/{identifier}/": {
+            "get": {
+                "operationId": "registries_nemis_read",
+                "description": "Supports both:\n1. Admin dump (GET /api/registry/query/)\n2. Individual lookup (GET /api/registries/<code|mda>/<identifier>/)",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "registries"
+                ]
+            },
+            "post": {
+                "operationId": "registries_nemis_create",
+                "description": "Allow authenticated users to query registries (e.g., look up BEN or Notification Number from CRS).\nRefactored to use database-driven RegistryAdapter.",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "registries"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "identifier",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/registries/ntsa/{identifier}/": {
+            "get": {
+                "operationId": "registries_ntsa_read",
+                "description": "Supports both:\n1. Admin dump (GET /api/registry/query/)\n2. Individual lookup (GET /api/registries/<code|mda>/<identifier>/)",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "registries"
+                ]
+            },
+            "post": {
+                "operationId": "registries_ntsa_create",
+                "description": "Allow authenticated users to query registries (e.g., look up BEN or Notification Number from CRS).\nRefactored to use database-driven RegistryAdapter.",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "registries"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "identifier",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/registry/query/": {
+            "get": {
+                "operationId": "registry_query_list",
+                "description": "Supports both:\n1. Admin dump (GET /api/registry/query/)\n2. Individual lookup (GET /api/registries/<code|mda>/<identifier>/)",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "registry"
+                ]
+            },
+            "post": {
+                "operationId": "registry_query_create",
+                "description": "Allow authenticated users to query registries (e.g., look up BEN or Notification Number from CRS).\nRefactored to use database-driven RegistryAdapter.",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "registry"
+                ]
+            },
+            "parameters": []
+        },
+        "/reports/summary/": {
+            "get": {
+                "operationId": "reports_summary_list",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "reports"
+                ]
+            },
+            "parameters": []
+        },
+        "/roles/": {
+            "get": {
+                "operationId": "roles_list",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Role"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "roles"
+                ]
+            },
+            "post": {
+                "operationId": "roles_create",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Role"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/Role"
+                        }
+                    }
+                },
+                "tags": [
+                    "roles"
+                ]
+            },
+            "parameters": []
+        },
+        "/roles/{id}/": {
+            "get": {
+                "operationId": "roles_read",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/Role"
+                        }
+                    }
+                },
+                "tags": [
+                    "roles"
+                ]
+            },
+            "put": {
+                "operationId": "roles_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Role"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/Role"
+                        }
+                    }
+                },
+                "tags": [
+                    "roles"
+                ]
+            },
+            "patch": {
+                "operationId": "roles_partial_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Role"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/Role"
+                        }
+                    }
+                },
+                "tags": [
+                    "roles"
+                ]
+            },
+            "delete": {
+                "operationId": "roles_delete",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "204": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "roles"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this role.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/service-configs/": {
+            "get": {
+                "operationId": "service-configs_list",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ServiceConfig"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "service-configs"
+                ]
+            },
+            "post": {
+                "operationId": "service-configs_create",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ServiceConfig"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceConfig"
+                        }
+                    }
+                },
+                "tags": [
+                    "service-configs"
+                ]
+            },
+            "parameters": []
+        },
+        "/service-configs/{id}/": {
+            "get": {
+                "operationId": "service-configs_read",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceConfig"
+                        }
+                    }
+                },
+                "tags": [
+                    "service-configs"
+                ]
+            },
+            "put": {
+                "operationId": "service-configs_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ServiceConfig"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceConfig"
+                        }
+                    }
+                },
+                "tags": [
+                    "service-configs"
+                ]
+            },
+            "patch": {
+                "operationId": "service-configs_partial_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ServiceConfig"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceConfig"
+                        }
+                    }
+                },
+                "tags": [
+                    "service-configs"
+                ]
+            },
+            "delete": {
+                "operationId": "service-configs_delete",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "204": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "service-configs"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this service config.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/service-requests/": {
+            "get": {
+                "operationId": "service-requests_list",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ServiceRequest"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "service-requests"
+                ]
+            },
+            "post": {
+                "operationId": "service-requests_create",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRequest"
+                        }
+                    }
+                },
+                "tags": [
+                    "service-requests"
+                ]
+            },
+            "parameters": []
+        },
+        "/service-requests/{id}/": {
+            "get": {
+                "operationId": "service-requests_read",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRequest"
+                        }
+                    }
+                },
+                "tags": [
+                    "service-requests"
+                ]
+            },
+            "put": {
+                "operationId": "service-requests_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRequest"
+                        }
+                    }
+                },
+                "tags": [
+                    "service-requests"
+                ]
+            },
+            "patch": {
+                "operationId": "service-requests_partial_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRequest"
+                        }
+                    }
+                },
+                "tags": [
+                    "service-requests"
+                ]
+            },
+            "delete": {
+                "operationId": "service-requests_delete",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "204": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "service-requests"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this service request.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/service-requests/{id}/acknowledge_escalation/": {
+            "post": {
+                "operationId": "service-requests_acknowledge_escalation",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRequest"
+                        }
+                    }
+                },
+                "tags": [
+                    "service-requests"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this service request.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/service-requests/{id}/claim/": {
+            "post": {
+                "operationId": "service-requests_claim",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRequest"
+                        }
+                    }
+                },
+                "tags": [
+                    "service-requests"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this service request.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/service-requests/{id}/complete_step/": {
+            "post": {
+                "operationId": "service-requests_complete_step",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRequest"
+                        }
+                    }
+                },
+                "tags": [
+                    "service-requests"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this service request.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/service-requests/{id}/escalate/": {
+            "post": {
+                "operationId": "service-requests_escalate",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRequest"
+                        }
+                    }
+                },
+                "tags": [
+                    "service-requests"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this service request.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/service-requests/{id}/release/": {
+            "post": {
+                "operationId": "service-requests_release",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceRequest"
+                        }
+                    }
+                },
+                "tags": [
+                    "service-requests"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this service request.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/token/": {
+            "post": {
+                "operationId": "token_create",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CustomTokenObtainPair"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/CustomTokenObtainPair"
+                        }
+                    }
+                },
+                "tags": [
+                    "token"
+                ]
+            },
+            "parameters": []
+        },
+        "/token/refresh/": {
+            "post": {
+                "operationId": "token_refresh_create",
+                "description": "Takes a refresh type JSON web token and returns an access type JSON web\ntoken if the refresh token is valid.",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/TokenRefresh"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/TokenRefresh"
+                        }
+                    }
+                },
+                "tags": [
+                    "token"
+                ]
+            },
+            "parameters": []
+        },
+        "/users/": {
+            "get": {
+                "operationId": "users_list",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/User"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
+            },
+            "post": {
+                "operationId": "users_create",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
+            },
+            "parameters": []
+        },
+        "/users/register/": {
+            "post": {
+                "operationId": "users_register",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
+            },
+            "parameters": []
+        },
+        "/users/{id}/": {
+            "get": {
+                "operationId": "users_read",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
+            },
+            "put": {
+                "operationId": "users_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
+            },
+            "patch": {
+                "operationId": "users_partial_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
+            },
+            "delete": {
+                "operationId": "users_delete",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "204": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "users"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this user.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/workflow-steps/": {
+            "get": {
+                "operationId": "workflow-steps_list",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/WorkflowStep"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "workflow-steps"
+                ]
+            },
+            "post": {
+                "operationId": "workflow-steps_create",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/WorkflowStep"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/WorkflowStep"
+                        }
+                    }
+                },
+                "tags": [
+                    "workflow-steps"
+                ]
+            },
+            "parameters": []
+        },
+        "/workflow-steps/{id}/": {
+            "get": {
+                "operationId": "workflow-steps_read",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/WorkflowStep"
+                        }
+                    }
+                },
+                "tags": [
+                    "workflow-steps"
+                ]
+            },
+            "put": {
+                "operationId": "workflow-steps_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/WorkflowStep"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/WorkflowStep"
+                        }
+                    }
+                },
+                "tags": [
+                    "workflow-steps"
+                ]
+            },
+            "patch": {
+                "operationId": "workflow-steps_partial_update",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/WorkflowStep"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/WorkflowStep"
+                        }
+                    }
+                },
+                "tags": [
+                    "workflow-steps"
+                ]
+            },
+            "delete": {
+                "operationId": "workflow-steps_delete",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "204": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "workflow-steps"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this workflow step.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        }
+    },
+    "definitions": {
+        "Role": {
+            "required": [
+                "name"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "name": {
+                    "title": "Name",
+                    "type": "string",
+                    "maxLength": 50,
+                    "minLength": 1
+                },
+                "description": {
+                    "title": "Description",
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "permissions": {
+                    "title": "Permissions",
+                    "type": "object"
+                }
+            }
+        },
+        "MDA": {
+            "required": [
+                "name"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "name": {
+                    "title": "Name",
+                    "type": "string",
+                    "maxLength": 255,
+                    "minLength": 1
+                },
+                "code": {
+                    "title": "Code",
+                    "type": "string",
+                    "maxLength": 50,
+                    "x-nullable": true
+                },
+                "description": {
+                    "title": "Description",
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "head_of_mda": {
+                    "title": "Head of mda",
+                    "type": "string",
+                    "maxLength": 255,
+                    "x-nullable": true
+                },
+                "contact_email": {
+                    "title": "Contact email",
+                    "type": "string",
+                    "format": "email",
+                    "maxLength": 254,
+                    "x-nullable": true
+                },
+                "contact_phone": {
+                    "title": "Contact phone",
+                    "type": "string",
+                    "maxLength": 20,
+                    "x-nullable": true
+                },
+                "website": {
+                    "title": "Website",
+                    "type": "string",
+                    "format": "uri",
+                    "maxLength": 200,
+                    "x-nullable": true
+                },
+                "address": {
+                    "title": "Address",
+                    "type": "string",
+                    "x-nullable": true
+                }
+            }
+        },
+        "User": {
+            "required": [
+                "username"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "username": {
+                    "title": "Username",
+                    "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+                    "type": "string",
+                    "pattern": "^[\\w.@+-]+$",
+                    "maxLength": 150,
+                    "minLength": 1
+                },
+                "first_name": {
+                    "title": "First name",
+                    "type": "string",
+                    "maxLength": 150
+                },
+                "last_name": {
+                    "title": "Last name",
+                    "type": "string",
+                    "maxLength": 150
+                },
+                "email": {
+                    "title": "Email address",
+                    "type": "string",
+                    "format": "email",
+                    "maxLength": 254
+                },
+                "password": {
+                    "title": "Password",
+                    "type": "string",
+                    "minLength": 1
+                },
+                "role": {
+                    "title": "Role",
+                    "type": "string",
+                    "enum": [
+                        "citizen",
+                        "officer",
+                        "supervisor",
+                        "registrar",
+                        "mda_admin",
+                        "system_admin",
+                        "admin"
+                    ]
+                },
+                "user_role": {
+                    "title": "User role",
+                    "type": "integer",
+                    "x-nullable": true
+                },
+                "user_role_details": {
+                    "$ref": "#/definitions/Role"
+                },
+                "mda": {
+                    "title": "Mda",
+                    "type": "integer",
+                    "x-nullable": true
+                },
+                "mda_details": {
+                    "$ref": "#/definitions/MDA"
+                },
+                "id_number": {
+                    "title": "Id number",
+                    "type": "string",
+                    "maxLength": 20,
+                    "x-nullable": true
+                },
+                "passport_number": {
+                    "title": "Passport number",
+                    "type": "string",
+                    "maxLength": 20,
+                    "x-nullable": true
+                },
+                "phone_number": {
+                    "title": "Phone number",
+                    "type": "string",
+                    "maxLength": 20,
+                    "x-nullable": true
+                },
+                "saved_documents": {
+                    "title": "Saved documents",
+                    "type": "object"
+                }
+            }
+        },
+        "NestedServiceRequest": {
+            "required": [
+                "request_id"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "request_id": {
+                    "title": "Request id",
+                    "type": "string",
+                    "maxLength": 255,
+                    "minLength": 1
+                },
+                "service_name": {
+                    "title": "Service name",
+                    "type": "string",
+                    "readOnly": true,
+                    "minLength": 1
+                }
+            }
+        },
+        "AuditLog": {
+            "required": [
+                "action"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "actor": {
+                    "$ref": "#/definitions/User"
+                },
+                "service_request": {
+                    "$ref": "#/definitions/NestedServiceRequest"
+                },
+                "actor_role": {
+                    "title": "Actor role",
+                    "type": "string",
+                    "maxLength": 50,
+                    "x-nullable": true
+                },
+                "actor_mdas": {
+                    "title": "Actor mdas",
+                    "type": "object"
+                },
+                "action": {
+                    "title": "Action",
+                    "type": "string",
+                    "maxLength": 255,
+                    "minLength": 1
+                },
+                "decision": {
+                    "title": "Decision",
+                    "type": "string",
+                    "enum": [
+                        "ALLOW",
+                        "DENY"
+                    ]
+                },
+                "process_id": {
+                    "title": "Process id",
+                    "type": "string",
+                    "maxLength": 100,
+                    "x-nullable": true
+                },
+                "service_id": {
+                    "title": "Service id",
+                    "type": "string",
+                    "maxLength": 100,
+                    "x-nullable": true
+                },
+                "owning_mda_id": {
+                    "title": "Owning mda id",
+                    "type": "integer",
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "x-nullable": true
+                },
+                "timestamp": {
+                    "title": "Timestamp",
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                },
+                "details": {
+                    "title": "Details",
+                    "type": "string",
+                    "x-nullable": true
+                }
+            }
+        },
+        "ServiceDomain": {
+            "required": [
+                "name"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "name": {
+                    "title": "Name",
+                    "type": "string",
+                    "maxLength": 255,
+                    "minLength": 1
+                },
+                "description": {
+                    "title": "Description",
+                    "type": "string",
+                    "x-nullable": true
+                }
+            }
+        },
+        "ServiceCategory": {
+            "required": [
+                "name"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "domain": {
+                    "$ref": "#/definitions/ServiceDomain"
+                },
+                "name": {
+                    "title": "Name",
+                    "type": "string",
+                    "maxLength": 255,
+                    "minLength": 1
+                },
+                "description": {
+                    "title": "Description",
+                    "type": "string",
+                    "x-nullable": true
+                }
+            }
+        },
+        "WorkflowStep": {
+            "required": [
+                "step_name",
+                "sequence",
+                "service_config"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "step_name": {
+                    "title": "Step name",
+                    "type": "string",
+                    "maxLength": 255,
+                    "minLength": 1
+                },
+                "step_type": {
+                    "title": "Step type",
+                    "type": "string",
+                    "enum": [
+                        "manual",
+                        "api_call"
+                    ]
+                },
+                "bpmn_element_type": {
+                    "title": "Bpmn element type",
+                    "type": "string",
+                    "enum": [
+                        "start_event",
+                        "user_task",
+                        "service_task",
+                        "exclusive_gateway",
+                        "end_event"
+                    ]
+                },
+                "lifecycle_stage": {
+                    "title": "Lifecycle stage",
+                    "type": "string",
+                    "enum": [
+                        "as_is",
+                        "to_be"
+                    ]
+                },
+                "role": {
+                    "title": "Role",
+                    "type": "string",
+                    "maxLength": 50,
+                    "x-nullable": true
+                },
+                "action": {
+                    "title": "Action",
+                    "type": "string",
+                    "maxLength": 50,
+                    "x-nullable": true
+                },
+                "api_config": {
+                    "title": "Api config",
+                    "type": "object",
+                    "x-nullable": true
+                },
+                "sequence": {
+                    "title": "Sequence",
+                    "type": "integer",
+                    "maximum": 2147483647,
+                    "minimum": -2147483648
+                },
+                "service_config": {
+                    "title": "Service config",
+                    "type": "integer"
+                },
+                "target_mda": {
+                    "title": "Target mda",
+                    "type": "integer",
+                    "x-nullable": true
+                }
+            }
+        },
+        "ServiceConfig": {
+            "required": [
+                "service_code",
+                "service_name",
+                "mda"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "workflow_steps": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/WorkflowStep"
+                    },
+                    "readOnly": true
+                },
+                "category_details": {
+                    "$ref": "#/definitions/ServiceCategory"
+                },
+                "service_code": {
+                    "title": "Service code",
+                    "type": "string",
+                    "maxLength": 50,
+                    "minLength": 1
+                },
+                "service_name": {
+                    "title": "Service name",
+                    "type": "string",
+                    "maxLength": 255,
+                    "minLength": 1
+                },
+                "description": {
+                    "title": "Description",
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "service_status": {
+                    "title": "Service status",
+                    "type": "string",
+                    "enum": [
+                        "active",
+                        "inactive",
+                        "deprecated",
+                        "draft"
+                    ]
+                },
+                "digitization_level": {
+                    "title": "Digitization level",
+                    "description": "1=Manual, 5=Fully Digital",
+                    "type": "integer",
+                    "maximum": 2147483647,
+                    "minimum": -2147483648
+                },
+                "is_public_facing": {
+                    "title": "Is public facing",
+                    "type": "boolean"
+                },
+                "service_type": {
+                    "title": "Service type",
+                    "type": "string",
+                    "maxLength": 50,
+                    "x-nullable": true
+                },
+                "delivery_channels": {
+                    "title": "Delivery channels",
+                    "type": "object"
+                },
+                "process_complexity": {
+                    "title": "Process complexity",
+                    "type": "string",
+                    "maxLength": 50,
+                    "x-nullable": true
+                },
+                "pain_points": {
+                    "title": "Pain points",
+                    "type": "object"
+                },
+                "legal_basis_summary": {
+                    "title": "Legal basis summary",
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "processing_time_estimate": {
+                    "title": "Processing time estimate",
+                    "type": "string",
+                    "maxLength": 100,
+                    "x-nullable": true
+                },
+                "fees_applicable": {
+                    "title": "Fees applicable",
+                    "type": "boolean"
+                },
+                "catalogue_visible": {
+                    "title": "Catalogue visible",
+                    "type": "boolean"
+                },
+                "catalogue_order": {
+                    "title": "Catalogue order",
+                    "type": "integer",
+                    "maximum": 2147483647,
+                    "minimum": -2147483648
+                },
+                "life_event_group": {
+                    "title": "Life event group",
+                    "type": "string",
+                    "maxLength": 100,
+                    "x-nullable": true
+                },
+                "catalogue_tags": {
+                    "title": "Catalogue tags",
+                    "type": "object"
+                },
+                "consolidation_candidate": {
+                    "title": "Consolidation candidate",
+                    "type": "boolean"
+                },
+                "blocking_issues": {
+                    "title": "Blocking issues",
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "quick_wins": {
+                    "title": "Quick wins",
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "priority": {
+                    "title": "Priority",
+                    "type": "string",
+                    "enum": [
+                        "low",
+                        "normal",
+                        "high",
+                        "critical"
+                    ]
+                },
+                "shared_services": {
+                    "title": "Shared services",
+                    "type": "object"
+                },
+                "associated_systems": {
+                    "title": "Associated systems",
+                    "type": "object"
+                },
+                "associated_actors": {
+                    "title": "Associated actors",
+                    "type": "object"
+                },
+                "dependencies": {
+                    "title": "Dependencies",
+                    "type": "object"
+                },
+                "config": {
+                    "title": "Config",
+                    "type": "object"
+                },
+                "form_schema": {
+                    "title": "Form schema",
+                    "type": "object"
+                },
+                "mda": {
+                    "title": "Mda",
+                    "type": "integer"
+                },
+                "category": {
+                    "title": "Category",
+                    "type": "integer",
+                    "x-nullable": true
+                }
+            }
+        },
+        "DataPurpose": {
+            "required": [
+                "code",
+                "description"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "code": {
+                    "title": "Code",
+                    "type": "string",
+                    "maxLength": 50,
+                    "minLength": 1
+                },
+                "description": {
+                    "title": "Description",
+                    "type": "string",
+                    "minLength": 1
+                }
+            }
+        },
+        "ConsentRecord": {
+            "required": [
+                "data_scope",
+                "user",
+                "requester",
+                "purpose"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "purpose_details": {
+                    "$ref": "#/definitions/DataPurpose"
+                },
+                "requester_details": {
+                    "$ref": "#/definitions/MDA"
+                },
+                "data_scope": {
+                    "title": "Data scope",
+                    "type": "string",
+                    "maxLength": 255,
+                    "minLength": 1
+                },
+                "status": {
+                    "title": "Status",
+                    "type": "string",
+                    "enum": [
+                        "ACTIVE",
+                        "REVOKED",
+                        "EXPIRED"
+                    ]
+                },
+                "granted_at": {
+                    "title": "Granted at",
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                },
+                "expires_at": {
+                    "title": "Expires at",
+                    "type": "string",
+                    "format": "date-time",
+                    "x-nullable": true
+                },
+                "revoked_at": {
+                    "title": "Revoked at",
+                    "type": "string",
+                    "format": "date-time",
+                    "x-nullable": true
+                },
+                "user": {
+                    "title": "User",
+                    "type": "integer"
+                },
+                "requester": {
+                    "title": "Requester",
+                    "type": "integer"
+                },
+                "purpose": {
+                    "title": "Purpose",
+                    "type": "integer"
+                }
+            }
+        },
+        "CorrespondenceAction": {
+            "required": [
+                "instruction",
+                "memo"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "assigned_to_details": {
+                    "$ref": "#/definitions/User"
+                },
+                "instruction": {
+                    "title": "Instruction",
+                    "type": "string",
+                    "minLength": 1
+                },
+                "deadline": {
+                    "title": "Deadline",
+                    "type": "string",
+                    "format": "date-time",
+                    "x-nullable": true
+                },
+                "is_completed": {
+                    "title": "Is completed",
+                    "type": "boolean"
+                },
+                "completed_at": {
+                    "title": "Completed at",
+                    "type": "string",
+                    "format": "date-time",
+                    "x-nullable": true
+                },
+                "progress_notes": {
+                    "title": "Progress notes",
+                    "type": "string"
+                },
+                "created_at": {
+                    "title": "Created at",
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                },
+                "memo": {
+                    "title": "Memo",
+                    "type": "integer"
+                },
+                "assigned_to": {
+                    "title": "Assigned to",
+                    "type": "integer",
+                    "x-nullable": true
+                }
+            }
+        },
+        "DesktopReview": {
+            "required": [
+                "mda"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "mda_details": {
+                    "$ref": "#/definitions/MDA"
+                },
+                "process_id": {
+                    "title": "Process id",
+                    "type": "string",
+                    "maxLength": 100,
+                    "x-nullable": true
+                },
+                "executive_summary": {
+                    "title": "Executive summary",
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "process_overview": {
+                    "title": "Process overview",
+                    "type": "object"
+                },
+                "stakeholders": {
+                    "title": "Stakeholders",
+                    "type": "object"
+                },
+                "inputs_outputs_dependencies": {
+                    "title": "Inputs outputs dependencies",
+                    "type": "object"
+                },
+                "process_maturity": {
+                    "title": "Process maturity",
+                    "type": "object"
+                },
+                "as_is_narrative": {
+                    "title": "As is narrative",
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "as_is_steps": {
+                    "title": "As is steps",
+                    "type": "object"
+                },
+                "pain_points_bottlenecks_risks": {
+                    "title": "Pain points bottlenecks risks",
+                    "type": "object"
+                },
+                "to_be_process": {
+                    "title": "To be process",
+                    "type": "object"
+                },
+                "digitization_opportunities": {
+                    "title": "Digitization opportunities",
+                    "type": "object"
+                },
+                "metadata": {
+                    "title": "Metadata",
+                    "type": "object"
+                },
+                "created_at": {
+                    "title": "Created at",
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                },
+                "mda": {
+                    "title": "Mda",
+                    "type": "integer"
+                }
+            }
+        },
+        "GovernmentFile": {
+            "required": [
+                "file_number",
+                "subject",
+                "owning_mda"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "owning_mda_details": {
+                    "$ref": "#/definitions/MDA"
+                },
+                "file_number": {
+                    "title": "File number",
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 1
+                },
+                "subject": {
+                    "title": "Subject",
+                    "type": "string",
+                    "maxLength": 255,
+                    "minLength": 1
+                },
+                "status": {
+                    "title": "Status",
+                    "type": "string",
+                    "enum": [
+                        "open",
+                        "pending",
+                        "escalated",
+                        "closed",
+                        "archived"
+                    ]
+                },
+                "created_at": {
+                    "title": "Created at",
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                },
+                "updated_at": {
+                    "title": "Updated at",
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                },
+                "owning_mda": {
+                    "title": "Owning mda",
+                    "type": "integer"
+                }
+            }
+        },
+        "InterDepartmentalMemo": {
+            "required": [
+                "subject",
+                "content",
+                "recipient_mda"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "sender": {
+                    "$ref": "#/definitions/User"
+                },
+                "sender_mda": {
+                    "$ref": "#/definitions/MDA"
+                },
+                "recipient_mda_details": {
+                    "$ref": "#/definitions/MDA"
+                },
+                "actions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CorrespondenceAction"
+                    },
+                    "readOnly": true
+                },
+                "gov_file_details": {
+                    "$ref": "#/definitions/GovernmentFile"
+                },
+                "official_ref": {
+                    "title": "Official ref",
+                    "type": "string",
+                    "readOnly": true,
+                    "minLength": 1,
+                    "x-nullable": true
+                },
+                "memo_type": {
+                    "title": "Memo type",
+                    "type": "string",
+                    "enum": [
+                        "policy",
+                        "operational",
+                        "instruction",
+                        "concurrence",
+                        "escalation",
+                        "information"
+                    ]
+                },
+                "subject": {
+                    "title": "Subject",
+                    "type": "string",
+                    "maxLength": 255,
+                    "minLength": 1
+                },
+                "content": {
+                    "title": "Content",
+                    "type": "string",
+                    "minLength": 1
+                },
+                "status": {
+                    "title": "Status",
+                    "type": "string",
+                    "enum": [
+                        "draft",
+                        "reviewing",
+                        "approved",
+                        "registered",
+                        "signed",
+                        "actioning",
+                        "responded",
+                        "closed"
+                    ]
+                },
+                "priority": {
+                    "title": "Priority",
+                    "type": "string",
+                    "enum": [
+                        "normal",
+                        "high",
+                        "urgent"
+                    ]
+                },
+                "is_read": {
+                    "title": "Is read",
+                    "type": "boolean"
+                },
+                "digitally_signed": {
+                    "title": "Digitally signed",
+                    "type": "boolean",
+                    "readOnly": true
+                },
+                "created_at": {
+                    "title": "Created at",
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                },
+                "updated_at": {
+                    "title": "Updated at",
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                },
+                "gov_file": {
+                    "title": "Gov file",
+                    "type": "integer",
+                    "x-nullable": true
+                },
+                "recipient_mda": {
+                    "title": "Recipient mda",
+                    "type": "integer"
+                },
+                "signed_by": {
+                    "title": "Signed by",
+                    "type": "integer",
+                    "readOnly": true,
+                    "x-nullable": true
+                },
+                "parent_memo": {
+                    "title": "Parent memo",
+                    "type": "integer",
+                    "x-nullable": true
+                }
+            }
+        },
+        "OfficialLetter": {
+            "required": [
+                "official_ref",
+                "recipient_name",
+                "subject",
+                "content",
+                "gov_file",
+                "sender"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "sender_details": {
+                    "$ref": "#/definitions/User"
+                },
+                "official_ref": {
+                    "title": "Official ref",
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 1
+                },
+                "recipient_name": {
+                    "title": "Recipient name",
+                    "type": "string",
+                    "maxLength": 255,
+                    "minLength": 1
+                },
+                "subject": {
+                    "title": "Subject",
+                    "type": "string",
+                    "maxLength": 255,
+                    "minLength": 1
+                },
+                "content": {
+                    "title": "Content",
+                    "type": "string",
+                    "minLength": 1
+                },
+                "signed_at": {
+                    "title": "Signed at",
+                    "type": "string",
+                    "format": "date-time",
+                    "x-nullable": true
+                },
+                "created_at": {
+                    "title": "Created at",
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                },
+                "gov_file": {
+                    "title": "Gov file",
+                    "type": "integer"
+                },
+                "sender": {
+                    "title": "Sender",
+                    "type": "integer"
+                }
+            }
+        },
+        "PaymentProvider": {
+            "required": [
+                "name",
+                "code"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "name": {
+                    "title": "Name",
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 1
+                },
+                "code": {
+                    "title": "Code",
+                    "type": "string",
+                    "maxLength": 20,
+                    "minLength": 1
+                },
+                "config": {
+                    "title": "Config",
+                    "type": "object"
+                },
+                "is_active": {
+                    "title": "Is active",
+                    "type": "boolean"
+                }
+            }
+        },
+        "RevenueSplit": {
+            "required": [
+                "amount",
+                "transaction",
+                "beneficiary_mda"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "beneficiary_mda_details": {
+                    "$ref": "#/definitions/MDA"
+                },
+                "amount": {
+                    "title": "Amount",
+                    "type": "string",
+                    "format": "decimal"
+                },
+                "percentage": {
+                    "title": "Percentage",
+                    "type": "string",
+                    "format": "decimal",
+                    "x-nullable": true
+                },
+                "account_number": {
+                    "title": "Account number",
+                    "type": "string",
+                    "maxLength": 100,
+                    "x-nullable": true
+                },
+                "transaction": {
+                    "title": "Transaction",
+                    "type": "integer"
+                },
+                "beneficiary_mda": {
+                    "title": "Beneficiary mda",
+                    "type": "integer"
+                }
+            }
+        },
+        "PaymentTransaction": {
+            "required": [
+                "amount",
+                "service_request",
+                "provider"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "provider_details": {
+                    "$ref": "#/definitions/PaymentProvider"
+                },
+                "splits": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RevenueSplit"
+                    },
+                    "readOnly": true
+                },
+                "amount": {
+                    "title": "Amount",
+                    "type": "string",
+                    "format": "decimal"
+                },
+                "currency": {
+                    "title": "Currency",
+                    "type": "string",
+                    "maxLength": 3,
+                    "minLength": 1
+                },
+                "provider_ref": {
+                    "title": "Provider ref",
+                    "type": "string",
+                    "maxLength": 100,
+                    "x-nullable": true
+                },
+                "status": {
+                    "title": "Status",
+                    "type": "string",
+                    "enum": [
+                        "PENDING",
+                        "SUCCESS",
+                        "FAILED",
+                        "CANCELLED"
+                    ]
+                },
+                "created_at": {
+                    "title": "Created at",
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                },
+                "updated_at": {
+                    "title": "Updated at",
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                },
+                "service_request": {
+                    "title": "Service request",
+                    "type": "integer"
+                },
+                "provider": {
+                    "title": "Provider",
+                    "type": "integer"
+                }
+            }
+        },
+        "ServiceRequest": {
+            "required": [
+                "request_id",
+                "payload"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "assigned_to_details": {
+                    "$ref": "#/definitions/User"
+                },
+                "citizen_details": {
+                    "$ref": "#/definitions/User"
+                },
+                "request_id": {
+                    "title": "Request id",
+                    "type": "string",
+                    "maxLength": 255,
+                    "minLength": 1
+                },
+                "payload": {
+                    "title": "Payload",
+                    "type": "object"
+                },
+                "status": {
+                    "title": "Status",
+                    "type": "string",
+                    "enum": [
+                        "received",
+                        "validation_failed",
+                        "in_progress",
+                        "escalated",
+                        "approved",
+                        "rejected",
+                        "closed"
+                    ]
+                },
+                "is_escalated": {
+                    "title": "Is escalated",
+                    "type": "boolean"
+                },
+                "priority": {
+                    "title": "Priority",
+                    "type": "string",
+                    "enum": [
+                        "low",
+                        "normal",
+                        "high",
+                        "critical"
+                    ]
+                },
+                "created_at": {
+                    "title": "Created at",
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                },
+                "updated_at": {
+                    "title": "Updated at",
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                },
+                "citizen": {
+                    "required": [
+                        "password",
+                        "username"
+                    ],
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "title": "ID",
+                            "type": "integer",
+                            "readOnly": true
+                        },
+                        "password": {
+                            "title": "Password",
+                            "type": "string",
+                            "maxLength": 128,
+                            "minLength": 1
+                        },
+                        "last_login": {
+                            "title": "Last login",
+                            "type": "string",
+                            "format": "date-time",
+                            "x-nullable": true
+                        },
+                        "is_superuser": {
+                            "title": "Superuser status",
+                            "description": "Designates that this user has all permissions without explicitly assigning them.",
+                            "type": "boolean"
+                        },
+                        "username": {
+                            "title": "Username",
+                            "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+                            "type": "string",
+                            "pattern": "^[\\w.@+-]+$",
+                            "maxLength": 150,
+                            "minLength": 1
+                        },
+                        "first_name": {
+                            "title": "First name",
+                            "type": "string",
+                            "maxLength": 150
+                        },
+                        "last_name": {
+                            "title": "Last name",
+                            "type": "string",
+                            "maxLength": 150
+                        },
+                        "email": {
+                            "title": "Email address",
+                            "type": "string",
+                            "format": "email",
+                            "maxLength": 254
+                        },
+                        "is_staff": {
+                            "title": "Staff status",
+                            "description": "Designates whether the user can log into this admin site.",
+                            "type": "boolean"
+                        },
+                        "is_active": {
+                            "title": "Active",
+                            "description": "Designates whether this user should be treated as active. Unselect this instead of deleting accounts.",
+                            "type": "boolean"
+                        },
+                        "date_joined": {
+                            "title": "Date joined",
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "role": {
+                            "title": "Role",
+                            "type": "string",
+                            "enum": [
+                                "citizen",
+                                "officer",
+                                "supervisor",
+                                "registrar",
+                                "mda_admin",
+                                "system_admin",
+                                "admin"
+                            ]
+                        },
+                        "id_number": {
+                            "title": "Id number",
+                            "type": "string",
+                            "maxLength": 20,
+                            "x-nullable": true
+                        },
+                        "passport_number": {
+                            "title": "Passport number",
+                            "type": "string",
+                            "maxLength": 20,
+                            "x-nullable": true
+                        },
+                        "phone_number": {
+                            "title": "Phone number",
+                            "type": "string",
+                            "maxLength": 20,
+                            "x-nullable": true
+                        },
+                        "saved_documents": {
+                            "title": "Saved documents",
+                            "type": "object"
+                        },
+                        "user_role": {
+                            "title": "User role",
+                            "type": "integer",
+                            "x-nullable": true
+                        },
+                        "mda": {
+                            "title": "Mda",
+                            "type": "integer",
+                            "x-nullable": true
+                        },
+                        "groups": {
+                            "description": "The groups this user belongs to. A user will get all permissions granted to each of their groups.",
+                            "type": "array",
+                            "items": {
+                                "description": "The groups this user belongs to. A user will get all permissions granted to each of their groups.",
+                                "type": "integer"
+                            },
+                            "uniqueItems": true
+                        },
+                        "user_permissions": {
+                            "description": "Specific permissions for this user.",
+                            "type": "array",
+                            "items": {
+                                "description": "Specific permissions for this user.",
+                                "type": "integer"
+                            },
+                            "uniqueItems": true
+                        },
+                        "assigned_mdas": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            },
+                            "uniqueItems": true
+                        }
+                    },
+                    "readOnly": true
+                },
+                "service_config": {
+                    "required": [
+                        "service_code",
+                        "service_name",
+                        "mda"
+                    ],
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "title": "ID",
+                            "type": "integer",
+                            "readOnly": true
+                        },
+                        "service_code": {
+                            "title": "Service code",
+                            "type": "string",
+                            "maxLength": 50,
+                            "minLength": 1
+                        },
+                        "service_name": {
+                            "title": "Service name",
+                            "type": "string",
+                            "maxLength": 255,
+                            "minLength": 1
+                        },
+                        "description": {
+                            "title": "Description",
+                            "type": "string",
+                            "x-nullable": true
+                        },
+                        "service_status": {
+                            "title": "Service status",
+                            "type": "string",
+                            "enum": [
+                                "active",
+                                "inactive",
+                                "deprecated",
+                                "draft"
+                            ]
+                        },
+                        "digitization_level": {
+                            "title": "Digitization level",
+                            "description": "1=Manual, 5=Fully Digital",
+                            "type": "integer",
+                            "maximum": 2147483647,
+                            "minimum": -2147483648
+                        },
+                        "is_public_facing": {
+                            "title": "Is public facing",
+                            "type": "boolean"
+                        },
+                        "service_type": {
+                            "title": "Service type",
+                            "type": "string",
+                            "maxLength": 50,
+                            "x-nullable": true
+                        },
+                        "delivery_channels": {
+                            "title": "Delivery channels",
+                            "type": "object"
+                        },
+                        "process_complexity": {
+                            "title": "Process complexity",
+                            "type": "string",
+                            "maxLength": 50,
+                            "x-nullable": true
+                        },
+                        "pain_points": {
+                            "title": "Pain points",
+                            "type": "object"
+                        },
+                        "legal_basis_summary": {
+                            "title": "Legal basis summary",
+                            "type": "string",
+                            "x-nullable": true
+                        },
+                        "processing_time_estimate": {
+                            "title": "Processing time estimate",
+                            "type": "string",
+                            "maxLength": 100,
+                            "x-nullable": true
+                        },
+                        "fees_applicable": {
+                            "title": "Fees applicable",
+                            "type": "boolean"
+                        },
+                        "catalogue_visible": {
+                            "title": "Catalogue visible",
+                            "type": "boolean"
+                        },
+                        "catalogue_order": {
+                            "title": "Catalogue order",
+                            "type": "integer",
+                            "maximum": 2147483647,
+                            "minimum": -2147483648
+                        },
+                        "life_event_group": {
+                            "title": "Life event group",
+                            "type": "string",
+                            "maxLength": 100,
+                            "x-nullable": true
+                        },
+                        "catalogue_tags": {
+                            "title": "Catalogue tags",
+                            "type": "object"
+                        },
+                        "consolidation_candidate": {
+                            "title": "Consolidation candidate",
+                            "type": "boolean"
+                        },
+                        "blocking_issues": {
+                            "title": "Blocking issues",
+                            "type": "string",
+                            "x-nullable": true
+                        },
+                        "quick_wins": {
+                            "title": "Quick wins",
+                            "type": "string",
+                            "x-nullable": true
+                        },
+                        "priority": {
+                            "title": "Priority",
+                            "type": "string",
+                            "enum": [
+                                "low",
+                                "normal",
+                                "high",
+                                "critical"
+                            ]
+                        },
+                        "shared_services": {
+                            "title": "Shared services",
+                            "type": "object"
+                        },
+                        "associated_systems": {
+                            "title": "Associated systems",
+                            "type": "object"
+                        },
+                        "associated_actors": {
+                            "title": "Associated actors",
+                            "type": "object"
+                        },
+                        "dependencies": {
+                            "title": "Dependencies",
+                            "type": "object"
+                        },
+                        "config": {
+                            "title": "Config",
+                            "type": "object"
+                        },
+                        "form_schema": {
+                            "title": "Form schema",
+                            "type": "object"
+                        },
+                        "mda": {
+                            "title": "Mda",
+                            "type": "integer"
+                        },
+                        "category": {
+                            "title": "Category",
+                            "type": "integer",
+                            "x-nullable": true
+                        }
+                    },
+                    "readOnly": true
+                },
+                "current_step": {
+                    "required": [
+                        "step_name",
+                        "sequence",
+                        "service_config"
+                    ],
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "title": "ID",
+                            "type": "integer",
+                            "readOnly": true
+                        },
+                        "step_name": {
+                            "title": "Step name",
+                            "type": "string",
+                            "maxLength": 255,
+                            "minLength": 1
+                        },
+                        "step_type": {
+                            "title": "Step type",
+                            "type": "string",
+                            "enum": [
+                                "manual",
+                                "api_call"
+                            ]
+                        },
+                        "bpmn_element_type": {
+                            "title": "Bpmn element type",
+                            "type": "string",
+                            "enum": [
+                                "start_event",
+                                "user_task",
+                                "service_task",
+                                "exclusive_gateway",
+                                "end_event"
+                            ]
+                        },
+                        "lifecycle_stage": {
+                            "title": "Lifecycle stage",
+                            "type": "string",
+                            "enum": [
+                                "as_is",
+                                "to_be"
+                            ]
+                        },
+                        "role": {
+                            "title": "Role",
+                            "type": "string",
+                            "maxLength": 50,
+                            "x-nullable": true
+                        },
+                        "action": {
+                            "title": "Action",
+                            "type": "string",
+                            "maxLength": 50,
+                            "x-nullable": true
+                        },
+                        "api_config": {
+                            "title": "Api config",
+                            "type": "object",
+                            "x-nullable": true
+                        },
+                        "sequence": {
+                            "title": "Sequence",
+                            "type": "integer",
+                            "maximum": 2147483647,
+                            "minimum": -2147483648
+                        },
+                        "service_config": {
+                            "title": "Service config",
+                            "type": "integer"
+                        },
+                        "target_mda": {
+                            "title": "Target mda",
+                            "type": "integer",
+                            "x-nullable": true
+                        }
+                    },
+                    "readOnly": true
+                },
+                "assigned_to": {
+                    "required": [
+                        "password",
+                        "username"
+                    ],
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "title": "ID",
+                            "type": "integer",
+                            "readOnly": true
+                        },
+                        "password": {
+                            "title": "Password",
+                            "type": "string",
+                            "maxLength": 128,
+                            "minLength": 1
+                        },
+                        "last_login": {
+                            "title": "Last login",
+                            "type": "string",
+                            "format": "date-time",
+                            "x-nullable": true
+                        },
+                        "is_superuser": {
+                            "title": "Superuser status",
+                            "description": "Designates that this user has all permissions without explicitly assigning them.",
+                            "type": "boolean"
+                        },
+                        "username": {
+                            "title": "Username",
+                            "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+                            "type": "string",
+                            "pattern": "^[\\w.@+-]+$",
+                            "maxLength": 150,
+                            "minLength": 1
+                        },
+                        "first_name": {
+                            "title": "First name",
+                            "type": "string",
+                            "maxLength": 150
+                        },
+                        "last_name": {
+                            "title": "Last name",
+                            "type": "string",
+                            "maxLength": 150
+                        },
+                        "email": {
+                            "title": "Email address",
+                            "type": "string",
+                            "format": "email",
+                            "maxLength": 254
+                        },
+                        "is_staff": {
+                            "title": "Staff status",
+                            "description": "Designates whether the user can log into this admin site.",
+                            "type": "boolean"
+                        },
+                        "is_active": {
+                            "title": "Active",
+                            "description": "Designates whether this user should be treated as active. Unselect this instead of deleting accounts.",
+                            "type": "boolean"
+                        },
+                        "date_joined": {
+                            "title": "Date joined",
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "role": {
+                            "title": "Role",
+                            "type": "string",
+                            "enum": [
+                                "citizen",
+                                "officer",
+                                "supervisor",
+                                "registrar",
+                                "mda_admin",
+                                "system_admin",
+                                "admin"
+                            ]
+                        },
+                        "id_number": {
+                            "title": "Id number",
+                            "type": "string",
+                            "maxLength": 20,
+                            "x-nullable": true
+                        },
+                        "passport_number": {
+                            "title": "Passport number",
+                            "type": "string",
+                            "maxLength": 20,
+                            "x-nullable": true
+                        },
+                        "phone_number": {
+                            "title": "Phone number",
+                            "type": "string",
+                            "maxLength": 20,
+                            "x-nullable": true
+                        },
+                        "saved_documents": {
+                            "title": "Saved documents",
+                            "type": "object"
+                        },
+                        "user_role": {
+                            "title": "User role",
+                            "type": "integer",
+                            "x-nullable": true
+                        },
+                        "mda": {
+                            "title": "Mda",
+                            "type": "integer",
+                            "x-nullable": true
+                        },
+                        "groups": {
+                            "description": "The groups this user belongs to. A user will get all permissions granted to each of their groups.",
+                            "type": "array",
+                            "items": {
+                                "description": "The groups this user belongs to. A user will get all permissions granted to each of their groups.",
+                                "type": "integer"
+                            },
+                            "uniqueItems": true
+                        },
+                        "user_permissions": {
+                            "description": "Specific permissions for this user.",
+                            "type": "array",
+                            "items": {
+                                "description": "Specific permissions for this user.",
+                                "type": "integer"
+                            },
+                            "uniqueItems": true
+                        },
+                        "assigned_mdas": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            },
+                            "uniqueItems": true
+                        }
+                    },
+                    "readOnly": true
+                }
+            }
+        },
+        "CustomTokenObtainPair": {
+            "required": [
+                "username",
+                "password"
+            ],
+            "type": "object",
+            "properties": {
+                "username": {
+                    "title": "Username",
+                    "type": "string",
+                    "minLength": 1
+                },
+                "password": {
+                    "title": "Password",
+                    "type": "string",
+                    "minLength": 1
+                }
+            }
+        },
+        "TokenRefresh": {
+            "required": [
+                "refresh"
+            ],
+            "type": "object",
+            "properties": {
+                "refresh": {
+                    "title": "Refresh",
+                    "type": "string",
+                    "minLength": 1
+                },
+                "access": {
+                    "title": "Access",
+                    "type": "string",
+                    "readOnly": true,
+                    "minLength": 1
+                }
+            }
+        }
+    }
+}
