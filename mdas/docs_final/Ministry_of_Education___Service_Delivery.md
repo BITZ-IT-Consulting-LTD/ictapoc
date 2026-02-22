@@ -83,12 +83,17 @@ Student Registration & Capitation (NEMIS)
 ## Detailed Process (AS-IS)
 | Step | Role | Action | Tool | Notes |
 |---|---|---|---|---|
-| 1 | Head Teacher | **Admission:** Admits student physically. Collects Birth Certificate copy. | Physical File | |
-| 2 | Head Teacher | **Data Entry:** Logs into NEMIS (often at a cyber café due to lack of school internet). Types name, DOB, Birth Cert No, Parent Name/ID. | NEMIS Web Portal | System often hangs during peak admission weeks (Jan/Feb). |
-| 3 | NEMIS System | **Validation:** Attempts to validate Birth Cert against CRS database. | Integration API | *Pain Point:* Often fails if names don't match *exactly* or if CRS data is missing. |
-| 4 | Head Teacher | **Generation:** If successful, NEMIS generates a **UPI**. If failed, student is flagged as "Pending" (Risk of missing Capitation). | Dashboard | Thousands of students lack UPIs due to "validation errors." |
-| 5 | MoE HQ | **Capitation:** Funds are disbursed *only* to students with valid UPIs. | IFMIS / Bank | Schools struggle with "ghost students" vs real students without UPIs. |
-| 6 | KNEC | **Exam Reg:** Fetches UPIs for exam registration. | KNEC Portal | Students without UPIs risk missing exams. |
+| 1 | Parent / Guardian | **Admission:** Takes child to school for admission (PP1, Grade 1, or transfer). | Physical Presence | Child must be physically present for verification. |
+| 2 | Parent / Guardian | **Submission:** Submits required documents: Birth Certificate (Mandatory), Parent ID copy, Passport photo, Previous school details, Immunization card. | Physical Documents | *Constraint:* Without Birth Cert, admission is often delayed. |
+| 3 | School | **Verification:** Checks authenticity of documents (Spelling, DOB, Parent details). | Manual Check | If Birth Cert missing, parent is advised to register birth first. |
+| 4 | School | **Manual Recording:** Records learner details in the physical Admission Register and Class Register. | Physical Register | Creates the official school admission record (offline). |
+| 5 | School Admin | **Portal Login:** Logs into NEMIS portal using school credentials. | NEMIS Web Portal | Often done at cyber cafés due to lack of school internet. |
+| 6 | School Admin | **Data Entry:** Manually enters learner details into NEMIS (Birth Cert No, Name, Gender, DOB, Parent details). | NEMIS Web Portal | *Bottleneck:* School applies to NEMIS on behalf of learner; Parent cannot do this directly. |
+| 7 | NEMIS System | **Validation:** Automatically checks against CRS. | Integration API | **Outcomes:** <br>• Valid: Learner accepted.<br>• Duplicate: Transfer required.<br>• Invalid: Registration rejected (Learner stuck). |
+| 8 | NEMIS System | **Generation:** Generates **Unique Personal Identifier (UPI)**. | System | This becomes the learner’s permanent education ID for exams (KPSEA, KCSE) and Capitation. |
+| 9 | School | **Confirmation:** Confirms learner is now fully registered and Active in NEMIS. | Dashboard | Learner is now officially recognized by Ministry of Education. |
+
+**Summary:** The reality is that **Parents DO NOT apply directly to NEMIS**. Parents apply to the school, and the **School applies to NEMIS** on behalf of the learner. The final artifact is the **UPI Number**.
 
 ---
 
@@ -114,19 +119,27 @@ Student Registration & Capitation (NEMIS)
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph WoG_Platform [Education Service Bus]
-        S1["Fetches Child UPI from CRS (X-Road)"]
-        S2["Auto-Generates 'Eligible for School' List"]
-        S3["Validates School Capacity (Geo-spatial)"]
+    subgraph Parent [Citizen via eCitizen]
+        S1["Logs into eCitizen (SSO)"]
+        S2["Selects 'School Admission Service'"]
+        S3["System Auto-Populates Child Details (CRS)"]
+        S4["Selects Preferred School (Geo-Located)"]
     end
-    subgraph Parent [Citizen]
-        S4["Selects School on eCitizen (Based on Location)"]
-        S5["Consents to Enrollment"]
+    subgraph WoG_Platform [Service Engine & Workflow]
+        S5["Validates Age & School Capacity (Business Rules)"]
+        S6["Checks Duplicate Enrollment (Unique UPI)"]
     end
-    subgraph School_System [NEMIS 2.0]
-        S6["Receives Enrollment Request"]
-        S7["Auto-Confirms Placement (if space available)"]
-        S8["Triggers Capitation (G2G Payment)"]
+    subgraph School [Head Teacher Workbench]
+        S7["Receives Digital Application"]
+        S8["Approves Admission (One-Click)"]
+    end
+    subgraph NEMIS_Core [Backend Systems]
+        S9["Updates Learner Status to 'Enrolled'"]
+        S10["Triggers Capitation Calculation"]
+    end
+    subgraph Payments [Govt Payment Aggregator]
+        S11["Disburses Funds to School Account"]
+        S12["Notifies Parent & School (SMS/Email)"]
     end
     
     S1 --> S2
@@ -136,25 +149,25 @@ graph TD
     S5 --> S6
     S6 --> S7
     S7 --> S8
-    S8 --> End((End))
+    S8 --> S9
+    S9 --> S10
+    S10 --> S11
+    S11 --> S12
+    S12 --> End((End))
 ```
 
-## Future State Process (TO-BE)
-### Narrative
-The process is **Identity-Driven** and **Automated**.
-1.  **UPI Federation:** The system uses the child's UPI (Maisha Namba) from birth. No new ID is created.
-2.  **Parent-Led Enrollment:** Through the **Citizen Portal (eCitizen)**, parents select schools. The system validates eligibility based on age (from CRS) and location.
-3.  **Real-Time Data:** School enrollment numbers are updated instantly via the platform.
-4.  **Automated Capitation:** Funds are released automatically via the **Government Payment Aggregator (GPA)** based on verified enrollment, eliminating ghost students.
-5.  **Seamless Transition:** Moving schools is a simple "Transfer Request" on the portal, approved by the receiving school.
-
-### Optimized Steps (Digital)
-| Step | Actor | Action | System |
-|---|---|---|---|
-| 1 | Parent | Selects school and enrolls child via eCitizen. | eCitizen Portal |
-| 2 | WoG Platform | Validates UPI (CRS) and checks school capacity. | X-Road / NEMIS |
-| 3 | School | Receives digital enrollment notification. | School Dashboard |
-| 4 | MoE System | Disburses capitation funds instantly. | GPA / IFMIS |
+## Detailed Process (TO-BE) - Configurable & Automated
+| Step | Role | Action | System Component | Logic / Integration |
+|---|---|---|---|---|
+| 1 | Parent / Guardian | **Initiation:** Logs into eCitizen and selects "School Admission Service". | **eCitizen Portal** (Unified Front-End) | Authenticated via **Maisha Namba (SSO)**. |
+| 2 | System | **Data Fetch:** Auto-populates child's details using Parent ID / Birth Entry Number. | **Integration Layer (X-Road)** | Fetches data from **CRS Registry** (Source of Truth). No manual entry of names/DOB. |
+| 3 | Parent | **Selection:** Selects preferred school from a geo-located list. | **Service Engine** | System filters schools by **Capacity** and **Learner Age** eligibility. |
+| 4 | System | **Auto-Validation:** Validates application against business rules (Age, Zone, Capacity). | **Workflow Engine** | *Rule:* If `Age < 6`, reject for Grade 1. If `Capacity = 0`, disable selection. |
+| 5 | School (Head Teacher) | **Approval:** Receives digital notification and approves admission on the workbench. | **Officer Workbench** | "One-Click" approval. No physical file verification needed (Data is trusted). |
+| 6 | System | **Enrollment:** Automatically links Learner UPI to School Code in NEMIS. | **NEMIS Database** | Learner status updates to `Enrolled`. |
+| 7 | System | **Capitation Trigger:** Automatically calculates FSE/FDSE amount for the new learner. | **Business Rules Engine** | *Logic:* `Amount = Capitation_Rate * 1`. |
+| 8 | GPA | **Disbursement:** Disburses funds directly to School Account. | **Govt Payment Aggregator** | Real-time settlement. No "ghost students." |
+| 9 | Parent | **Notification:** Receives SMS/Email confirmation of admission. | **Notification Service** | "Your child has been admitted to [School Name]." |
 
 ---
 
