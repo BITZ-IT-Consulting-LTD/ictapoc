@@ -1,466 +1,468 @@
 # MDA Process Documentation Index
 
-This directory contains the serialized process mapping documents for various Kenyan Ministries, Departments, and Agencies (MDAs). Each file details the **AS-IS** (current) and **TO-BE** (optimized) workflows for specific government services.
+This directory contains the serialized process mapping documents for various Kenyan Ministries, Departments, and Agencies (MDAs). Each document details the **AS-IS** (current) and **TO-BE** (optimized) workflows.
 
-## Numbered File Descriptions
+## Documentation Index
 
-1. **[ASALs_and_Regional_Development___Service_Delivery.md](ASALs_and_Regional_Development___Service_Delivery.md)**: Process documentation for the ASALs and Regional Development regarding Service Delivery.
-2. **[Agri_and_Cooperative_Training_and_Consultancy_Services_Limted_subsidary_of_Cooperative_University____Student_Admission.md](Agri_and_Cooperative_Training_and_Consultancy_Services_Limted_subsidary_of_Cooperative_University____Student_Admission.md)**: Process documentation for the Agri and Cooperative Training and Consultancy Services Limted subsidary of Cooperative University regarding Student Admission.
-3. **[Agricultural_Development_Corporation___Service_Delivery.md](Agricultural_Development_Corporation___Service_Delivery.md)**: Process documentation for the Agricultural Development Corporation regarding Service Delivery.
-4. **[Agricultural_Finance_Corporation___Service_Delivery.md](Agricultural_Finance_Corporation___Service_Delivery.md)**: Process documentation for the Agricultural Finance Corporation regarding Service Delivery.
-5. **[Agriculture_and_Food_Authority___Service_Delivery.md](Agriculture_and_Food_Authority___Service_Delivery.md)**: Process documentation for the Agriculture and Food Authority regarding Service Delivery.
-6. **[Agro-Chemical_and_Food_Company___Service_Delivery.md](Agro-Chemical_and_Food_Company___Service_Delivery.md)**: Process documentation for the Agro-Chemical and Food Company regarding Service Delivery.
-7. **[Ahero_Rice_Mills___Service_Delivery.md](Ahero_Rice_Mills___Service_Delivery.md)**: Process documentation for the Ahero Rice Mills regarding Service Delivery.
-8. **[Alupe_University_College___Student_Admission.md](Alupe_University_College___Student_Admission.md)**: Process documentation for the Alupe University College regarding Student Admission.
-9. **[Animal_Technicians_Council___Service_Delivery.md](Animal_Technicians_Council___Service_Delivery.md)**: Process documentation for the Animal Technicians Council regarding Service Delivery.
-10. **[Anti-Counterfeit_Authority___Service_Delivery.md](Anti-Counterfeit_Authority___Service_Delivery.md)**: Process documentation for the Anti-Counterfeit Authority regarding Service Delivery.
-11. **[Anti-Doping_Agency_of_Kenya___Service_Delivery.md](Anti-Doping_Agency_of_Kenya___Service_Delivery.md)**: Process documentation for the Anti-Doping Agency of Kenya regarding Service Delivery.
-12. **[Anti-Female_Genital_Mutilation_Board___Service_Delivery.md](Anti-Female_Genital_Mutilation_Board___Service_Delivery.md)**: Process documentation for the Anti-Female Genital Mutilation Board regarding Service Delivery.
-13. **[Assets_Recovery_Agency___Service_Delivery.md](Assets_Recovery_Agency___Service_Delivery.md)**: Process documentation for the Assets Recovery Agency regarding Service Delivery.
-14. **[Athi_Water_Works_Development_Agency___Procurement_Process.md](Athi_Water_Works_Development_Agency___Procurement_Process.md)**: Process documentation for the Athi Water Works Development Agency regarding Procurement Process.
-15. **[Athi_Water_Works_Development_Agency___Service_Delivery.md](Athi_Water_Works_Development_Agency___Service_Delivery.md)**: Process documentation for the Athi Water Works Development Agency regarding Service Delivery.
-16. **[Auctioneers_Licensing_Board___Service_Delivery.md](Auctioneers_Licensing_Board___Service_Delivery.md)**: Process documentation for the Auctioneers Licensing Board regarding Service Delivery.
-17. **[Bandari_Maritime_Academy___Service_Delivery.md](Bandari_Maritime_Academy___Service_Delivery.md)**: Process documentation for the Bandari Maritime Academy regarding Service Delivery.
-18. **[Basic_Education___Service_Delivery.md](Basic_Education___Service_Delivery.md)**: Process documentation for the Basic Education regarding Service Delivery.
-19. **[Board_of_Registration_of_Architects_and_Quantity_Surveyors___Service_Delivery.md](Board_of_Registration_of_Architects_and_Quantity_Surveyors___Service_Delivery.md)**: Process documentation for the Board of Registration of Architects and Quantity Surveyors regarding Service Delivery.
-20. **[Bomas_of_Kenya___Service_Delivery.md](Bomas_of_Kenya___Service_Delivery.md)**: Process documentation for the Bomas of Kenya regarding Service Delivery.
-21. **[Bomet_University_College___Student_Admission.md](Bomet_University_College___Student_Admission.md)**: Process documentation for the Bomet University College regarding Student Admission.
-22. **[Broadcasting_and_Telecommunications___Service_Delivery.md](Broadcasting_and_Telecommunications___Service_Delivery.md)**: Process documentation for the Broadcasting and Telecommunications regarding Service Delivery.
-23. **[Building_Surveyors_Registration_Board___Service_Delivery.md](Building_Surveyors_Registration_Board___Service_Delivery.md)**: Process documentation for the Building Surveyors Registration Board regarding Service Delivery.
-24. **[Bukura_Agricultural_College___Student_Admission.md](Bukura_Agricultural_College___Student_Admission.md)**: Process documentation for the Bukura Agricultural College regarding Student Admission.
-25. **[Business_Registration_Service___Service_Delivery.md](Business_Registration_Service___Service_Delivery.md)**: Process documentation for the Business Registration Service regarding Service Delivery.
-26. **[CABINET_OFFICE___Cabinet_Memo_Processing.md](CABINET_OFFICE___Cabinet_Memo_Processing.md)**: Process documentation for the CABINET OFFICE regarding Cabinet Memo Processing.
-27. **[CABINET_OFFICE___Service_Delivery.md](CABINET_OFFICE___Service_Delivery.md)**: Process documentation for the CABINET OFFICE regarding Service Delivery.
-28. **[CBL_Bancassurance_Intermediary_Limited_subsidiary_of_consolidated_Bank____Service_Delivery.md](CBL_Bancassurance_Intermediary_Limited_subsidiary_of_consolidated_Bank____Service_Delivery.md)**: Process documentation for the CBL Bancassurance Intermediary Limited subsidiary of consolidated Bank regarding Service Delivery.
-29. **[Capital_Markets_Authority___Service_Delivery.md](Capital_Markets_Authority___Service_Delivery.md)**: Process documentation for the Capital Markets Authority regarding Service Delivery.
-30. **[Central_Rift_Valley_Water_Works_Development_Agency___Procurement_Process.md](Central_Rift_Valley_Water_Works_Development_Agency___Procurement_Process.md)**: Process documentation for the Central Rift Valley Water Works Development Agency regarding Procurement Process.
-31. **[Central_Rift_Valley_Water_Works_Development_Agency___Service_Delivery.md](Central_Rift_Valley_Water_Works_Development_Agency___Service_Delivery.md)**: Process documentation for the Central Rift Valley Water Works Development Agency regarding Service Delivery.
-32. **[Centre_for_Mathematics_Science_and_Technology_Education_in_Africa___Service_Delivery.md](Centre_for_Mathematics_Science_and_Technology_Education_in_Africa___Service_Delivery.md)**: Process documentation for the Centre for Mathematics Science and Technology Education in Africa regarding Service Delivery.
-33. **[Chemelil_Sugar_Company_Limited___Service_Delivery.md](Chemelil_Sugar_Company_Limited___Service_Delivery.md)**: Process documentation for the Chemelil Sugar Company Limited regarding Service Delivery.
-34. **[Child_Welfare_Society_of_Kenya___Service_Delivery.md](Child_Welfare_Society_of_Kenya___Service_Delivery.md)**: Process documentation for the Child Welfare Society of Kenya regarding Service Delivery.
-35. **[Chuka_University___Student_Admission.md](Chuka_University___Student_Admission.md)**: Process documentation for the Chuka University regarding Student Admission.
-36. **[Citizen_Services___Service_Delivery.md](Citizen_Services___Service_Delivery.md)**: Process documentation for the Citizen Services regarding Service Delivery.
-37. **[Clinical_Officers_Council_of_Kenya___Service_Delivery.md](Clinical_Officers_Council_of_Kenya___Service_Delivery.md)**: Process documentation for the Clinical Officers Council of Kenya regarding Service Delivery.
-38. **[Co-operative_University_of_Kenya___Student_Admission.md](Co-operative_University_of_Kenya___Student_Admission.md)**: Process documentation for the Co-operative University of Kenya regarding Student Admission.
-39. **[Coast_Development_Authority___Procurement_Process.md](Coast_Development_Authority___Procurement_Process.md)**: Process documentation for the Coast Development Authority regarding Procurement Process.
-40. **[Coast_Development_Authority___Service_Delivery.md](Coast_Development_Authority___Service_Delivery.md)**: Process documentation for the Coast Development Authority regarding Service Delivery.
-41. **[Coast_Water_Works_Development_Agency___Procurement_Process.md](Coast_Water_Works_Development_Agency___Procurement_Process.md)**: Process documentation for the Coast Water Works Development Agency regarding Procurement Process.
-42. **[Coast_Water_Works_Development_Agency___Service_Delivery.md](Coast_Water_Works_Development_Agency___Service_Delivery.md)**: Process documentation for the Coast Water Works Development Agency regarding Service Delivery.
-43. **[Commission_for_University_Education___Service_Delivery.md](Commission_for_University_Education___Service_Delivery.md)**: Process documentation for the Commission for University Education regarding Service Delivery.
-44. **[Communications_Authority_of_Kenya___Licensing_and_Permitting.md](Communications_Authority_of_Kenya___Licensing_and_Permitting.md)**: Process documentation for the Communications Authority of Kenya regarding Licensing and Permitting.
-45. **[Competition_Authority_of_Kenya___Service_Delivery.md](Competition_Authority_of_Kenya___Service_Delivery.md)**: Process documentation for the Competition Authority of Kenya regarding Service Delivery.
-46. **[Consolidated_Bank_of_Kenya___Service_Delivery.md](Consolidated_Bank_of_Kenya___Service_Delivery.md)**: Process documentation for the Consolidated Bank of Kenya regarding Service Delivery.
-47. **[Cooperatives___Service_Delivery.md](Cooperatives___Service_Delivery.md)**: Process documentation for the Cooperatives regarding Service Delivery.
-48. **[Correctional_Services___Service_Delivery.md](Correctional_Services___Service_Delivery.md)**: Process documentation for the Correctional Services regarding Service Delivery.
-49. **[Council_of_Legal_Education___Licensing_and_Permitting.md](Council_of_Legal_Education___Licensing_and_Permitting.md)**: Process documentation for the Council of Legal Education regarding Licensing and Permitting.
-50. **[Counsellors_and_Psychologists_Board___Licensing_and_Permitting.md](Counsellors_and_Psychologists_Board___Licensing_and_Permitting.md)**: Process documentation for the Counsellors and Psychologists Board regarding Licensing and Permitting.
-51. **[Cradle_to_Death_MDAs.md](Cradle_to_Death_MDAs.md)**: Process documentation for the Cradle to Death MDAs.md regarding Cradle to Death MDAs.
-52. **[Crop_Development___Service_Delivery.md](Crop_Development___Service_Delivery.md)**: Process documentation for the Crop Development regarding Service Delivery.
-53. **[Culture_and_Heritage___Service_Delivery.md](Culture_and_Heritage___Service_Delivery.md)**: Process documentation for the Culture and Heritage regarding Service Delivery.
-54. **[Dedan_Kimathi_University_of_Technology___Student_Admission.md](Dedan_Kimathi_University_of_Technology___Student_Admission.md)**: Process documentation for the Dedan Kimathi University of Technology regarding Student Admission.
-55. **[Defence___Service_Delivery.md](Defence___Service_Delivery.md)**: Process documentation for the Defence regarding Service Delivery.
-56. **[Development_Bank_of_Kenya___Service_Delivery.md](Development_Bank_of_Kenya___Service_Delivery.md)**: Process documentation for the Development Bank of Kenya regarding Service Delivery.
-57. **[ENERGY_AND_PETROLEUM_AUTHORITY___Service_Delivery.md](ENERGY_AND_PETROLEUM_AUTHORITY___Service_Delivery.md)**: Process documentation for the ENERGY AND PETROLEUM AUTHORITY regarding Service Delivery.
-58. **[East_African_Portland_Cement_Company___Service_Delivery.md](East_African_Portland_Cement_Company___Service_Delivery.md)**: Process documentation for the East African Portland Cement Company regarding Service Delivery.
-59. **[Economic_Planning___Service_Delivery.md](Economic_Planning___Service_Delivery.md)**: Process documentation for the Economic Planning regarding Service Delivery.
-60. **[Egerton_University___Student_Admission.md](Egerton_University___Student_Admission.md)**: Process documentation for the Egerton University regarding Student Admission.
-61. **[Energy___Service_Delivery.md](Energy___Service_Delivery.md)**: Process documentation for the Energy regarding Service Delivery.
-62. **[Energy_and_Petroleum_Regulatory_Authority___Service_Delivery.md](Energy_and_Petroleum_Regulatory_Authority___Service_Delivery.md)**: Process documentation for the Energy and Petroleum Regulatory Authority regarding Service Delivery.
-63. **[Engineers_Board_of_Kenya___Service_Delivery.md](Engineers_Board_of_Kenya___Service_Delivery.md)**: Process documentation for the Engineers Board of Kenya regarding Service Delivery.
-64. **[Environment_and_Forestry___Service_Delivery.md](Environment_and_Forestry___Service_Delivery.md)**: Process documentation for the Environment and Forestry regarding Service Delivery.
-65. **[Estate_Agents_Registration_Board___Service_Delivery.md](Estate_Agents_Registration_Board___Service_Delivery.md)**: Process documentation for the Estate Agents Registration Board regarding Service Delivery.
-66. **[Ewaso_Ng_iro_North_River_Basin_Development_Authority___Procurement_Process.md](Ewaso_Ng_iro_North_River_Basin_Development_Authority___Procurement_Process.md)**: Process documentation for the Ewaso Ng iro North River Basin Development Authority regarding Procurement Process.
-67. **[Ewaso_Ng_iro_North_River_Basin_Development_Authority___Service_Delivery.md](Ewaso_Ng_iro_North_River_Basin_Development_Authority___Service_Delivery.md)**: Process documentation for the Ewaso Ng iro North River Basin Development Authority regarding Service Delivery.
-68. **[Ewaso_Ng_iro_South_Development_Authority___Procurement_Process.md](Ewaso_Ng_iro_South_Development_Authority___Procurement_Process.md)**: Process documentation for the Ewaso Ng iro South Development Authority regarding Procurement Process.
-69. **[Ewaso_Ng_iro_South_Development_Authority___Service_Delivery.md](Ewaso_Ng_iro_South_Development_Authority___Service_Delivery.md)**: Process documentation for the Ewaso Ng iro South Development Authority regarding Service Delivery.
-70. **[Export_Processing_Zones_Authority___Service_Delivery.md](Export_Processing_Zones_Authority___Service_Delivery.md)**: Process documentation for the Export Processing Zones Authority regarding Service Delivery.
-71. **[Fertilizers_and_Animal_Foodstuffs_Board_of_Kenya___Service_Delivery.md](Fertilizers_and_Animal_Foodstuffs_Board_of_Kenya___Service_Delivery.md)**: Process documentation for the Fertilizers and Animal Foodstuffs Board of Kenya regarding Service Delivery.
-72. **[Financial_Reporting_Centre___Service_Delivery.md](Financial_Reporting_Centre___Service_Delivery.md)**: Process documentation for the Financial Reporting Centre regarding Service Delivery.
-73. **[Foreign_Affairs___Service_Delivery.md](Foreign_Affairs___Service_Delivery.md)**: Process documentation for the Foreign Affairs regarding Service Delivery.
-74. **[Garissa_University___Student_Admission.md](Garissa_University___Student_Admission.md)**: Process documentation for the Garissa University regarding Student Admission.
-75. **[Gatitu_Tea_Factory_subsidiary_Nyayo_Tea_Zone____Service_Delivery.md](Gatitu_Tea_Factory_subsidiary_Nyayo_Tea_Zone____Service_Delivery.md)**: Process documentation for the Gatitu Tea Factory subsidiary Nyayo Tea Zone regarding Service Delivery.
-76. **[Gender_and_Affirmative_Action___Service_Delivery.md](Gender_and_Affirmative_Action___Service_Delivery.md)**: Process documentation for the Gender and Affirmative Action regarding Service Delivery.
-77. **[Geologist_Registration_Board___Service_Delivery.md](Geologist_Registration_Board___Service_Delivery.md)**: Process documentation for the Geologist Registration Board regarding Service Delivery.
-78. **[Geothermal_Development_Company_GDC____Service_Delivery.md](Geothermal_Development_Company_GDC____Service_Delivery.md)**: Process documentation for the Geothermal Development Company GDC regarding Service Delivery.
-79. **[Golf_Hotel_Kakamega___Service_Delivery.md](Golf_Hotel_Kakamega___Service_Delivery.md)**: Process documentation for the Golf Hotel Kakamega regarding Service Delivery.
-80. **[HUDUMA_SECRETARIAT___Service_Delivery.md](HUDUMA_SECRETARIAT___Service_Delivery.md)**: Process documentation for the HUDUMA SECRETARIAT regarding Service Delivery.
-81. **[Health_Records_and_Information_Managers_Board___Service_Delivery.md](Health_Records_and_Information_Managers_Board___Service_Delivery.md)**: Process documentation for the Health Records and Information Managers Board regarding Service Delivery.
-82. **[Heath_Standards_and_Professional_Management___Service_Delivery.md](Heath_Standards_and_Professional_Management___Service_Delivery.md)**: Process documentation for the Heath Standards and Professional Management regarding Service Delivery.
-83. **[Higher_Education_Loans_Board___Loan_Processing.md](Higher_Education_Loans_Board___Loan_Processing.md)**: Process documentation for the Higher Education Loans Board regarding Loan Processing.
-84. **[Higher_Education_and_Training___Service_Delivery.md](Higher_Education_and_Training___Service_Delivery.md)**: Process documentation for the Higher Education and Training regarding Service Delivery.
-85. **[Housing_and_Urban_Development___Service_Delivery.md](Housing_and_Urban_Development___Service_Delivery.md)**: Process documentation for the Housing and Urban Development regarding Service Delivery.
-86. **[Human_Resource_Management_Professionals_Examination_Board___Service_Delivery.md](Human_Resource_Management_Professionals_Examination_Board___Service_Delivery.md)**: Process documentation for the Human Resource Management Professionals Examination Board regarding Service Delivery.
-87. **[Hydrologists_Registration_Board___Service_Delivery.md](Hydrologists_Registration_Board___Service_Delivery.md)**: Process documentation for the Hydrologists Registration Board regarding Service Delivery.
-88. **[IDB_Capital___Service_Delivery.md](IDB_Capital___Service_Delivery.md)**: Process documentation for the IDB Capital regarding Service Delivery.
-89. **[Industrial_and_Commercial_Development_Corporation___Service_Delivery.md](Industrial_and_Commercial_Development_Corporation___Service_Delivery.md)**: Process documentation for the Industrial and Commercial Development Corporation regarding Service Delivery.
-90. **[Information_Communication_Technology_and_Digital_Economy___Service_Delivery.md](Information_Communication_Technology_and_Digital_Economy___Service_Delivery.md)**: Process documentation for the Information Communication Technology and Digital Economy regarding Service Delivery.
-91. **[Information_and_Communication_Technology_Authority_ICTA____Service_Delivery.md](Information_and_Communication_Technology_Authority_ICTA____Service_Delivery.md)**: Process documentation for the Information and Communication Technology Authority ICTA regarding Service Delivery.
-92. **[Institute_of_Certified_Investment_and_Financial_Analysts___Service_Delivery.md](Institute_of_Certified_Investment_and_Financial_Analysts___Service_Delivery.md)**: Process documentation for the Institute of Certified Investment and Financial Analysts regarding Service Delivery.
-93. **[Institute_of_Certified_Public_Accountants_of_Kenya___Service_Delivery.md](Institute_of_Certified_Public_Accountants_of_Kenya___Service_Delivery.md)**: Process documentation for the Institute of Certified Public Accountants of Kenya regarding Service Delivery.
-94. **[Institute_of_Human_Resource_Management___Service_Delivery.md](Institute_of_Human_Resource_Management___Service_Delivery.md)**: Process documentation for the Institute of Human Resource Management regarding Service Delivery.
-95. **[Institute_of_Primate_Research___Service_Delivery.md](Institute_of_Primate_Research___Service_Delivery.md)**: Process documentation for the Institute of Primate Research regarding Service Delivery.
-96. **[Insurance_Regulatory_Authority___Service_Delivery.md](Insurance_Regulatory_Authority___Service_Delivery.md)**: Process documentation for the Insurance Regulatory Authority regarding Service Delivery.
-97. **[Internal_Security_and_National_Administration___Service_Delivery.md](Internal_Security_and_National_Administration___Service_Delivery.md)**: Process documentation for the Internal Security and National Administration regarding Service Delivery.
-98. **[Investments_Promotion_and_Industry___Service_Delivery.md](Investments_Promotion_and_Industry___Service_Delivery.md)**: Process documentation for the Investments Promotion and Industry regarding Service Delivery.
-99. **[Jaramogi_Oginga_Odinga_University_of_Science_and_Technology___Student_Admission.md](Jaramogi_Oginga_Odinga_University_of_Science_and_Technology___Student_Admission.md)**: Process documentation for the Jaramogi Oginga Odinga University of Science and Technology regarding Student Admission.
-100. **[Jomo_Kenyatta_Foundation___Service_Delivery.md](Jomo_Kenyatta_Foundation___Service_Delivery.md)**: Process documentation for the Jomo Kenyatta Foundation regarding Service Delivery.
-101. **[Jomo_Kenyatta_University_Enterprises_Limited_Subsidiary_of_JKUAT____Student_Admission.md](Jomo_Kenyatta_University_Enterprises_Limited_Subsidiary_of_JKUAT____Student_Admission.md)**: Process documentation for the Jomo Kenyatta University Enterprises Limited Subsidiary of JKUAT regarding Student Admission.
-102. **[Jomo_Kenyatta_University_of_Agriculture_And_Technology___Student_Admission.md](Jomo_Kenyatta_University_of_Agriculture_And_Technology___Student_Admission.md)**: Process documentation for the Jomo Kenyatta University of Agriculture And Technology regarding Student Admission.
-103. **[Jomo_Kenyatta_University_of_Agriculture_and_Technology_Industrial_Park_Subsidiary_of_JKUAT____Student_Admission.md](Jomo_Kenyatta_University_of_Agriculture_and_Technology_Industrial_Park_Subsidiary_of_JKUAT____Student_Admission.md)**: Process documentation for the Jomo Kenyatta University of Agriculture and Technology Industrial Park Subsidiary of JKUAT regarding Student Admission.
-104. **[KENYA_BUREAU_OF_STANDARDS___Licensing_and_Permitting.md](KENYA_BUREAU_OF_STANDARDS___Licensing_and_Permitting.md)**: Process documentation for the KENYA BUREAU OF STANDARDS regarding Licensing and Permitting.
-105. **[KENYA_MEDICAL_SUPPLIES_AUTHORITY___Service_Delivery.md](KENYA_MEDICAL_SUPPLIES_AUTHORITY___Service_Delivery.md)**: Process documentation for the KENYA MEDICAL SUPPLIES AUTHORITY regarding Service Delivery.
-106. **[KENYA_NATIONAL_BUREA_OF_STATISTICS___Service_Delivery.md](KENYA_NATIONAL_BUREA_OF_STATISTICS___Service_Delivery.md)**: Process documentation for the KENYA NATIONAL BUREA OF STATISTICS regarding Service Delivery.
-107. **[KENYA_REVENUE_AUTHORITY_KRA____Tax_Return_Filing.md](KENYA_REVENUE_AUTHORITY_KRA____Tax_Return_Filing.md)**: Process documentation for the KENYA REVENUE AUTHORITY KRA regarding Tax Return Filing.
-108. **[Kabarnet_Hotel_Limited_subsidiary_of_KDC____Service_Delivery.md](Kabarnet_Hotel_Limited_subsidiary_of_KDC____Service_Delivery.md)**: Process documentation for the Kabarnet Hotel Limited subsidiary of KDC regarding Service Delivery.
-109. **[Kabete_National_Polytechnic___Student_Admission.md](Kabete_National_Polytechnic___Student_Admission.md)**: Process documentation for the Kabete National Polytechnic regarding Student Admission.
-110. **[Kaimosi_Friends_University_College___Student_Admission.md](Kaimosi_Friends_University_College___Student_Admission.md)**: Process documentation for the Kaimosi Friends University College regarding Student Admission.
-111. **[Karatina_University___Student_Admission.md](Karatina_University___Student_Admission.md)**: Process documentation for the Karatina University regarding Student Admission.
-112. **[Kenya_Academy_of_Sports___Service_Delivery.md](Kenya_Academy_of_Sports___Service_Delivery.md)**: Process documentation for the Kenya Academy of Sports regarding Service Delivery.
-113. **[Kenya_Accountants_and_Secretaries_National_Examination_Board___Service_Delivery.md](Kenya_Accountants_and_Secretaries_National_Examination_Board___Service_Delivery.md)**: Process documentation for the Kenya Accountants and Secretaries National Examination Board regarding Service Delivery.
-114. **[Kenya_Advanced_Institute_of_Science_and_Technology_KAIST____Student_Admission.md](Kenya_Advanced_Institute_of_Science_and_Technology_KAIST____Student_Admission.md)**: Process documentation for the Kenya Advanced Institute of Science and Technology KAIST regarding Student Admission.
-115. **[Kenya_Agricultural_and_Livestock_Research_Organization___Service_Delivery.md](Kenya_Agricultural_and_Livestock_Research_Organization___Service_Delivery.md)**: Process documentation for the Kenya Agricultural and Livestock Research Organization regarding Service Delivery.
-116. **[Kenya_Airports_Authority___Service_Delivery.md](Kenya_Airports_Authority___Service_Delivery.md)**: Process documentation for the Kenya Airports Authority regarding Service Delivery.
-117. **[Kenya_Animal_Genetic_Resources_Centre___Service_Delivery.md](Kenya_Animal_Genetic_Resources_Centre___Service_Delivery.md)**: Process documentation for the Kenya Animal Genetic Resources Centre regarding Service Delivery.
-118. **[Kenya_Biovax_Institute_Limited___Service_Delivery.md](Kenya_Biovax_Institute_Limited___Service_Delivery.md)**: Process documentation for the Kenya Biovax Institute Limited regarding Service Delivery.
-119. **[Kenya_Broadcasting_Corporation___Service_Delivery.md](Kenya_Broadcasting_Corporation___Service_Delivery.md)**: Process documentation for the Kenya Broadcasting Corporation regarding Service Delivery.
-120. **[Kenya_Citizens_and_Foreign_National_Management_Services___Service_Delivery.md](Kenya_Citizens_and_Foreign_National_Management_Services___Service_Delivery.md)**: Process documentation for the Kenya Citizens and Foreign National Management Services regarding Service Delivery.
-121. **[Kenya_Civil_Aviation_Authority___Service_Delivery.md](Kenya_Civil_Aviation_Authority___Service_Delivery.md)**: Process documentation for the Kenya Civil Aviation Authority regarding Service Delivery.
-122. **[Kenya_Coast_National_Polytechnic___Student_Admission.md](Kenya_Coast_National_Polytechnic___Student_Admission.md)**: Process documentation for the Kenya Coast National Polytechnic regarding Student Admission.
-123. **[Kenya_Copyright_Board___Service_Delivery.md](Kenya_Copyright_Board___Service_Delivery.md)**: Process documentation for the Kenya Copyright Board regarding Service Delivery.
-124. **[Kenya_Cultural_Centre___Service_Delivery.md](Kenya_Cultural_Centre___Service_Delivery.md)**: Process documentation for the Kenya Cultural Centre regarding Service Delivery.
-125. **[Kenya_Dairy_Board___Service_Delivery.md](Kenya_Dairy_Board___Service_Delivery.md)**: Process documentation for the Kenya Dairy Board regarding Service Delivery.
-126. **[Kenya_Deposit_Insurance_Corporation___Service_Delivery.md](Kenya_Deposit_Insurance_Corporation___Service_Delivery.md)**: Process documentation for the Kenya Deposit Insurance Corporation regarding Service Delivery.
-127. **[Kenya_Development_Corporation___Service_Delivery.md](Kenya_Development_Corporation___Service_Delivery.md)**: Process documentation for the Kenya Development Corporation regarding Service Delivery.
-128. **[Kenya_Education_Management_Institute___Service_Delivery.md](Kenya_Education_Management_Institute___Service_Delivery.md)**: Process documentation for the Kenya Education Management Institute regarding Service Delivery.
-129. **[Kenya_Electricity_Generating_Company_PLC___Service_Delivery.md](Kenya_Electricity_Generating_Company_PLC___Service_Delivery.md)**: Process documentation for the Kenya Electricity Generating Company PLC regarding Service Delivery.
-130. **[Kenya_Electricity_Transmission_Company___Service_Delivery.md](Kenya_Electricity_Transmission_Company___Service_Delivery.md)**: Process documentation for the Kenya Electricity Transmission Company regarding Service Delivery.
-131. **[Kenya_Engineering_Technology_Registration_Board___Service_Delivery.md](Kenya_Engineering_Technology_Registration_Board___Service_Delivery.md)**: Process documentation for the Kenya Engineering Technology Registration Board regarding Service Delivery.
-132. **[Kenya_Export_Promotion_and_Branding_Agency___Service_Delivery.md](Kenya_Export_Promotion_and_Branding_Agency___Service_Delivery.md)**: Process documentation for the Kenya Export Promotion and Branding Agency regarding Service Delivery.
-133. **[Kenya_Film_Classification_Board___Service_Delivery.md](Kenya_Film_Classification_Board___Service_Delivery.md)**: Process documentation for the Kenya Film Classification Board regarding Service Delivery.
-134. **[Kenya_Film_Commission___Service_Delivery.md](Kenya_Film_Commission___Service_Delivery.md)**: Process documentation for the Kenya Film Commission regarding Service Delivery.
-135. **[Kenya_Fish_Marketing_Authority___Service_Delivery.md](Kenya_Fish_Marketing_Authority___Service_Delivery.md)**: Process documentation for the Kenya Fish Marketing Authority regarding Service Delivery.
-136. **[Kenya_Fisheries_Service___Service_Delivery.md](Kenya_Fisheries_Service___Service_Delivery.md)**: Process documentation for the Kenya Fisheries Service regarding Service Delivery.
-137. **[Kenya_Fishing_Industries_Corporation___Service_Delivery.md](Kenya_Fishing_Industries_Corporation___Service_Delivery.md)**: Process documentation for the Kenya Fishing Industries Corporation regarding Service Delivery.
-138. **[Kenya_Foreign_Service_Institute___Service_Delivery.md](Kenya_Foreign_Service_Institute___Service_Delivery.md)**: Process documentation for the Kenya Foreign Service Institute regarding Service Delivery.
-139. **[Kenya_Forest_Service___Licensing_and_Permitting.md](Kenya_Forest_Service___Licensing_and_Permitting.md)**: Process documentation for the Kenya Forest Service regarding Licensing and Permitting.
-140. **[Kenya_Forestry_Research_Institute___Service_Delivery.md](Kenya_Forestry_Research_Institute___Service_Delivery.md)**: Process documentation for the Kenya Forestry Research Institute regarding Service Delivery.
-141. **[Kenya_Health_Human_Resource_Advisory_Council___Service_Delivery.md](Kenya_Health_Human_Resource_Advisory_Council___Service_Delivery.md)**: Process documentation for the Kenya Health Human Resource Advisory Council regarding Service Delivery.
-142. **[Kenya_Health_Professionals_Oversight_Authority___Service_Delivery.md](Kenya_Health_Professionals_Oversight_Authority___Service_Delivery.md)**: Process documentation for the Kenya Health Professionals Oversight Authority regarding Service Delivery.
-143. **[Kenya_Hospital_Authority_Trust_Fund___Service_Delivery.md](Kenya_Hospital_Authority_Trust_Fund___Service_Delivery.md)**: Process documentation for the Kenya Hospital Authority Trust Fund regarding Service Delivery.
-144. **[Kenya_Industrial_Estates___Service_Delivery.md](Kenya_Industrial_Estates___Service_Delivery.md)**: Process documentation for the Kenya Industrial Estates regarding Service Delivery.
-145. **[Kenya_Industrial_Property_Institute___Service_Delivery.md](Kenya_Industrial_Property_Institute___Service_Delivery.md)**: Process documentation for the Kenya Industrial Property Institute regarding Service Delivery.
-146. **[Kenya_Industrial_Research_and_Development_Institute___Service_Delivery.md](Kenya_Industrial_Research_and_Development_Institute___Service_Delivery.md)**: Process documentation for the Kenya Industrial Research and Development Institute regarding Service Delivery.
-147. **[Kenya_Institute_for_Public_Policy_Research_and_Analysis___Service_Delivery.md](Kenya_Institute_for_Public_Policy_Research_and_Analysis___Service_Delivery.md)**: Process documentation for the Kenya Institute for Public Policy Research and Analysis regarding Service Delivery.
-148. **[Kenya_Institute_of_Curriculum_Development___Service_Delivery.md](Kenya_Institute_of_Curriculum_Development___Service_Delivery.md)**: Process documentation for the Kenya Institute of Curriculum Development regarding Service Delivery.
-149. **[Kenya_Institute_of_Mass_Communication___Service_Delivery.md](Kenya_Institute_of_Mass_Communication___Service_Delivery.md)**: Process documentation for the Kenya Institute of Mass Communication regarding Service Delivery.
-150. **[Kenya_Institute_of_Supplies_Examination_Board___Service_Delivery.md](Kenya_Institute_of_Supplies_Examination_Board___Service_Delivery.md)**: Process documentation for the Kenya Institute of Supplies Examination Board regarding Service Delivery.
-151. **[Kenya_Institute_of_Supplies_Management___Service_Delivery.md](Kenya_Institute_of_Supplies_Management___Service_Delivery.md)**: Process documentation for the Kenya Institute of Supplies Management regarding Service Delivery.
-152. **[Kenya_Investment_Authority___Service_Delivery.md](Kenya_Investment_Authority___Service_Delivery.md)**: Process documentation for the Kenya Investment Authority regarding Service Delivery.
-153. **[Kenya_Law_Reform_Commission___Service_Delivery.md](Kenya_Law_Reform_Commission___Service_Delivery.md)**: Process documentation for the Kenya Law Reform Commission regarding Service Delivery.
-154. **[Kenya_Leather_Development_Council___Service_Delivery.md](Kenya_Leather_Development_Council___Service_Delivery.md)**: Process documentation for the Kenya Leather Development Council regarding Service Delivery.
-155. **[Kenya_Literature_Bureau___Service_Delivery.md](Kenya_Literature_Bureau___Service_Delivery.md)**: Process documentation for the Kenya Literature Bureau regarding Service Delivery.
-156. **[Kenya_Marine_and_Fisheries_Research_Institute___Service_Delivery.md](Kenya_Marine_and_Fisheries_Research_Institute___Service_Delivery.md)**: Process documentation for the Kenya Marine and Fisheries Research Institute regarding Service Delivery.
-157. **[Kenya_Maritime_Authority___Service_Delivery.md](Kenya_Maritime_Authority___Service_Delivery.md)**: Process documentation for the Kenya Maritime Authority regarding Service Delivery.
-158. **[Kenya_Meat_Commission___Service_Delivery.md](Kenya_Meat_Commission___Service_Delivery.md)**: Process documentation for the Kenya Meat Commission regarding Service Delivery.
-159. **[Kenya_Medical_Laboratory_Technicians_and_Technologists_Board___Service_Delivery.md](Kenya_Medical_Laboratory_Technicians_and_Technologists_Board___Service_Delivery.md)**: Process documentation for the Kenya Medical Laboratory Technicians and Technologists Board regarding Service Delivery.
-160. **[Kenya_Medical_Practitioners_and_Dentists_Council___Service_Delivery.md](Kenya_Medical_Practitioners_and_Dentists_Council___Service_Delivery.md)**: Process documentation for the Kenya Medical Practitioners and Dentists Council regarding Service Delivery.
-161. **[Kenya_Medical_Research_Institute___Service_Delivery.md](Kenya_Medical_Research_Institute___Service_Delivery.md)**: Process documentation for the Kenya Medical Research Institute regarding Service Delivery.
-162. **[Kenya_Medical_Training_College___Student_Admission.md](Kenya_Medical_Training_College___Student_Admission.md)**: Process documentation for the Kenya Medical Training College regarding Student Admission.
-163. **[Kenya_National_Accreditation_Service___Service_Delivery.md](Kenya_National_Accreditation_Service___Service_Delivery.md)**: Process documentation for the Kenya National Accreditation Service regarding Service Delivery.
-164. **[Kenya_National_Assurance_Co_2001_Limited___Service_Delivery.md](Kenya_National_Assurance_Co_2001_Limited___Service_Delivery.md)**: Process documentation for the Kenya National Assurance Co 2001 Limited regarding Service Delivery.
-165. **[Kenya_National_Bureau_of_Statistics___Service_Delivery.md](Kenya_National_Bureau_of_Statistics___Service_Delivery.md)**: Process documentation for the Kenya National Bureau of Statistics regarding Service Delivery.
-166. **[Kenya_National_Commission_for_UNESCO___Service_Delivery.md](Kenya_National_Commission_for_UNESCO___Service_Delivery.md)**: Process documentation for the Kenya National Commission for UNESCO regarding Service Delivery.
-167. **[Kenya_National_Entepreneurs_Savings_Trust_Limited___Service_Delivery.md](Kenya_National_Entepreneurs_Savings_Trust_Limited___Service_Delivery.md)**: Process documentation for the Kenya National Entepreneurs Savings Trust Limited regarding Service Delivery.
-168. **[Kenya_National_Examinations_Council___Service_Delivery.md](Kenya_National_Examinations_Council___Service_Delivery.md)**: Process documentation for the Kenya National Examinations Council regarding Service Delivery.
-169. **[Kenya_National_Highways_Authority___Procurement_Process.md](Kenya_National_Highways_Authority___Procurement_Process.md)**: Process documentation for the Kenya National Highways Authority regarding Procurement Process.
-170. **[Kenya_National_Highways_Authority___Service_Delivery.md](Kenya_National_Highways_Authority___Service_Delivery.md)**: Process documentation for the Kenya National Highways Authority regarding Service Delivery.
-171. **[Kenya_National_Innovation_Agency___Service_Delivery.md](Kenya_National_Innovation_Agency___Service_Delivery.md)**: Process documentation for the Kenya National Innovation Agency regarding Service Delivery.
-172. **[Kenya_National_Library_Service___Service_Delivery.md](Kenya_National_Library_Service___Service_Delivery.md)**: Process documentation for the Kenya National Library Service regarding Service Delivery.
-173. **[Kenya_National_Multi_Commodities_Exchange_Ltd___Service_Delivery.md](Kenya_National_Multi_Commodities_Exchange_Ltd___Service_Delivery.md)**: Process documentation for the Kenya National Multi Commodities Exchange Ltd regarding Service Delivery.
-174. **[Kenya_National_Public_Health_Institute_KNPHI____Service_Delivery.md](Kenya_National_Public_Health_Institute_KNPHI____Service_Delivery.md)**: Process documentation for the Kenya National Public Health Institute KNPHI regarding Service Delivery.
-175. **[Kenya_National_Qualifications_Authority___Service_Delivery.md](Kenya_National_Qualifications_Authority___Service_Delivery.md)**: Process documentation for the Kenya National Qualifications Authority regarding Service Delivery.
-176. **[Kenya_National_Shipping_Line_Ltd___Service_Delivery.md](Kenya_National_Shipping_Line_Ltd___Service_Delivery.md)**: Process documentation for the Kenya National Shipping Line Ltd regarding Service Delivery.
-177. **[Kenya_National_Trading_Corporation___Service_Delivery.md](Kenya_National_Trading_Corporation___Service_Delivery.md)**: Process documentation for the Kenya National Trading Corporation regarding Service Delivery.
-178. **[Kenya_Nuclear_Regulatory_Authority___Service_Delivery.md](Kenya_Nuclear_Regulatory_Authority___Service_Delivery.md)**: Process documentation for the Kenya Nuclear Regulatory Authority regarding Service Delivery.
-179. **[Kenya_Ordinance_Factories_Corporation___Service_Delivery.md](Kenya_Ordinance_Factories_Corporation___Service_Delivery.md)**: Process documentation for the Kenya Ordinance Factories Corporation regarding Service Delivery.
-180. **[Kenya_Petroleum_Refineries_Limited___Service_Delivery.md](Kenya_Petroleum_Refineries_Limited___Service_Delivery.md)**: Process documentation for the Kenya Petroleum Refineries Limited regarding Service Delivery.
-181. **[Kenya_Pipeline_Company___Service_Delivery.md](Kenya_Pipeline_Company___Service_Delivery.md)**: Process documentation for the Kenya Pipeline Company regarding Service Delivery.
-182. **[Kenya_Plant_Health_Inspectorate_Services___Service_Delivery.md](Kenya_Plant_Health_Inspectorate_Services___Service_Delivery.md)**: Process documentation for the Kenya Plant Health Inspectorate Services regarding Service Delivery.
-183. **[Kenya_Ports_Authority___Service_Delivery.md](Kenya_Ports_Authority___Service_Delivery.md)**: Process documentation for the Kenya Ports Authority regarding Service Delivery.
-184. **[Kenya_Post_Office_Savings_Bank___Service_Delivery.md](Kenya_Post_Office_Savings_Bank___Service_Delivery.md)**: Process documentation for the Kenya Post Office Savings Bank regarding Service Delivery.
-185. **[Kenya_Power_and_Lighting_Company___Service_Delivery.md](Kenya_Power_and_Lighting_Company___Service_Delivery.md)**: Process documentation for the Kenya Power and Lighting Company regarding Service Delivery.
-186. **[Kenya_Prison_Enteprise_Fund___Service_Delivery.md](Kenya_Prison_Enteprise_Fund___Service_Delivery.md)**: Process documentation for the Kenya Prison Enteprise Fund regarding Service Delivery.
-187. **[Kenya_Railways_Corporation___Service_Delivery.md](Kenya_Railways_Corporation___Service_Delivery.md)**: Process documentation for the Kenya Railways Corporation regarding Service Delivery.
-188. **[Kenya_Reinsurance_Corporation___Service_Delivery.md](Kenya_Reinsurance_Corporation___Service_Delivery.md)**: Process documentation for the Kenya Reinsurance Corporation regarding Service Delivery.
-189. **[Kenya_Revenue_Authority___Tax_Return_Filing.md](Kenya_Revenue_Authority___Tax_Return_Filing.md)**: Process documentation for the Kenya Revenue Authority regarding Tax Return Filing.
-190. **[Kenya_Roads_Board___Service_Delivery.md](Kenya_Roads_Board___Service_Delivery.md)**: Process documentation for the Kenya Roads Board regarding Service Delivery.
-191. **[Kenya_Rural_Roads_Authority___Procurement_Process.md](Kenya_Rural_Roads_Authority___Procurement_Process.md)**: Process documentation for the Kenya Rural Roads Authority regarding Procurement Process.
-192. **[Kenya_Rural_Roads_Authority___Service_Delivery.md](Kenya_Rural_Roads_Authority___Service_Delivery.md)**: Process documentation for the Kenya Rural Roads Authority regarding Service Delivery.
-193. **[Kenya_Safari_Lodges_and_Hotels_Limited_subsidiary_of_KDC____Service_Delivery.md](Kenya_Safari_Lodges_and_Hotels_Limited_subsidiary_of_KDC____Service_Delivery.md)**: Process documentation for the Kenya Safari Lodges and Hotels Limited subsidiary of KDC regarding Service Delivery.
-194. **[Kenya_School_of_Government___Service_Delivery.md](Kenya_School_of_Government___Service_Delivery.md)**: Process documentation for the Kenya School of Government regarding Service Delivery.
-195. **[Kenya_School_of_Law___Service_Delivery.md](Kenya_School_of_Law___Service_Delivery.md)**: Process documentation for the Kenya School of Law regarding Service Delivery.
-196. **[Kenya_School_of_TVET_Kenya_Technical_Trainers_College_KTTC____Student_Admission.md](Kenya_School_of_TVET_Kenya_Technical_Trainers_College_KTTC____Student_Admission.md)**: Process documentation for the Kenya School of TVET Kenya Technical Trainers College KTTC regarding Student Admission.
-197. **[Kenya_Seed_Company_Limited_subsidiary_of_ADC____Service_Delivery.md](Kenya_Seed_Company_Limited_subsidiary_of_ADC____Service_Delivery.md)**: Process documentation for the Kenya Seed Company Limited subsidiary of ADC regarding Service Delivery.
-198. **[Kenya_Shipyard_Limited___Service_Delivery.md](Kenya_Shipyard_Limited___Service_Delivery.md)**: Process documentation for the Kenya Shipyard Limited regarding Service Delivery.
-199. **[Kenya_Space_Agency___Service_Delivery.md](Kenya_Space_Agency___Service_Delivery.md)**: Process documentation for the Kenya Space Agency regarding Service Delivery.
-200. **[Kenya_Tissue_and_Transplant_Authority___Service_Delivery.md](Kenya_Tissue_and_Transplant_Authority___Service_Delivery.md)**: Process documentation for the Kenya Tissue and Transplant Authority regarding Service Delivery.
-201. **[Kenya_Tourism_Board___Service_Delivery.md](Kenya_Tourism_Board___Service_Delivery.md)**: Process documentation for the Kenya Tourism Board regarding Service Delivery.
-202. **[Kenya_Trade_Network_Agency___Service_Delivery.md](Kenya_Trade_Network_Agency___Service_Delivery.md)**: Process documentation for the Kenya Trade Network Agency regarding Service Delivery.
-203. **[Kenya_Trade_Remedies_Agency___Service_Delivery.md](Kenya_Trade_Remedies_Agency___Service_Delivery.md)**: Process documentation for the Kenya Trade Remedies Agency regarding Service Delivery.
-204. **[Kenya_Tsetse_and_Trypanosomiasis_Eradication_Council___Service_Delivery.md](Kenya_Tsetse_and_Trypanosomiasis_Eradication_Council___Service_Delivery.md)**: Process documentation for the Kenya Tsetse and Trypanosomiasis Eradication Council regarding Service Delivery.
-205. **[Kenya_Universities_And_Colleges_Central_Placement_Service___Student_Admission.md](Kenya_Universities_And_Colleges_Central_Placement_Service___Student_Admission.md)**: Process documentation for the Kenya Universities And Colleges Central Placement Service regarding Student Admission.
-206. **[Kenya_Urban_Roads_Authority___Procurement_Process.md](Kenya_Urban_Roads_Authority___Procurement_Process.md)**: Process documentation for the Kenya Urban Roads Authority regarding Procurement Process.
-207. **[Kenya_Urban_Roads_Authority___Service_Delivery.md](Kenya_Urban_Roads_Authority___Service_Delivery.md)**: Process documentation for the Kenya Urban Roads Authority regarding Service Delivery.
-208. **[Kenya_Utalii_College___Student_Admission.md](Kenya_Utalii_College___Student_Admission.md)**: Process documentation for the Kenya Utalii College regarding Student Admission.
-209. **[Kenya_Veterinary_Board___Service_Delivery.md](Kenya_Veterinary_Board___Service_Delivery.md)**: Process documentation for the Kenya Veterinary Board regarding Service Delivery.
-210. **[Kenya_Veterinary_Vaccines_Production_Institute___Service_Delivery.md](Kenya_Veterinary_Vaccines_Production_Institute___Service_Delivery.md)**: Process documentation for the Kenya Veterinary Vaccines Production Institute regarding Service Delivery.
-211. **[Kenya_Water_Institute___Service_Delivery.md](Kenya_Water_Institute___Service_Delivery.md)**: Process documentation for the Kenya Water Institute regarding Service Delivery.
-212. **[Kenya_Water_Towers_Agency___Service_Delivery.md](Kenya_Water_Towers_Agency___Service_Delivery.md)**: Process documentation for the Kenya Water Towers Agency regarding Service Delivery.
-213. **[Kenya_Wildlife_Service___Licensing_and_Permitting.md](Kenya_Wildlife_Service___Licensing_and_Permitting.md)**: Process documentation for the Kenya Wildlife Service regarding Licensing and Permitting.
-214. **[Kenya_Yearbook_Editorial_Board___Service_Delivery.md](Kenya_Yearbook_Editorial_Board___Service_Delivery.md)**: Process documentation for the Kenya Yearbook Editorial Board regarding Service Delivery.
-215. **[Kenyatta_International_Convention_Centre___Service_Delivery.md](Kenyatta_International_Convention_Centre___Service_Delivery.md)**: Process documentation for the Kenyatta International Convention Centre regarding Service Delivery.
-216. **[Kenyatta_National_Hospital___Patient_Management.md](Kenyatta_National_Hospital___Patient_Management.md)**: Process documentation for the Kenyatta National Hospital regarding Patient Management.
-217. **[Kenyatta_University_Teaching_Referral_and_Research_Hospital___Student_Admission.md](Kenyatta_University_Teaching_Referral_and_Research_Hospital___Student_Admission.md)**: Process documentation for the Kenyatta University Teaching Referral and Research Hospital regarding Student Admission.
-218. **[Kenyatta_University___Student_Admission.md](Kenyatta_University___Student_Admission.md)**: Process documentation for the Kenyatta University regarding Student Admission.
-219. **[Kerio_Valley_Development_Authority___Procurement_Process.md](Kerio_Valley_Development_Authority___Procurement_Process.md)**: Process documentation for the Kerio Valley Development Authority regarding Procurement Process.
-220. **[Kerio_Valley_Development_Authority___Service_Delivery.md](Kerio_Valley_Development_Authority___Service_Delivery.md)**: Process documentation for the Kerio Valley Development Authority regarding Service Delivery.
-221. **[Kibabii_University___Student_Admission.md](Kibabii_University___Student_Admission.md)**: Process documentation for the Kibabii University regarding Student Admission.
-222. **[Kipchabo_Tea_Factory_subsidiary_Nyayo_Tea_Zone____Service_Delivery.md](Kipchabo_Tea_Factory_subsidiary_Nyayo_Tea_Zone____Service_Delivery.md)**: Process documentation for the Kipchabo Tea Factory subsidiary Nyayo Tea Zone regarding Service Delivery.
-223. **[Kirinyaga_University___Student_Admission.md](Kirinyaga_University___Student_Admission.md)**: Process documentation for the Kirinyaga University regarding Student Admission.
-224. **[Kisii_National_Polytechnic___Student_Admission.md](Kisii_National_Polytechnic___Student_Admission.md)**: Process documentation for the Kisii National Polytechnic regarding Student Admission.
-225. **[Kisii_University___Student_Admission.md](Kisii_University___Student_Admission.md)**: Process documentation for the Kisii University regarding Student Admission.
-226. **[Kisumu_National_Polytechnic___Student_Admission.md](Kisumu_National_Polytechnic___Student_Admission.md)**: Process documentation for the Kisumu National Polytechnic regarding Student Admission.
-227. **[Kitale_National_Polytechnic___Student_Admission.md](Kitale_National_Polytechnic___Student_Admission.md)**: Process documentation for the Kitale National Polytechnic regarding Student Admission.
-228. **[Koitaleel_Samoei_University_College___Student_Admission.md](Koitaleel_Samoei_University_College___Student_Admission.md)**: Process documentation for the Koitaleel Samoei University College regarding Student Admission.
-229. **[Konza_Technopolis_Development_Authority___Procurement_Process.md](Konza_Technopolis_Development_Authority___Procurement_Process.md)**: Process documentation for the Konza Technopolis Development Authority regarding Procurement Process.
-230. **[Konza_Technopolis_Development_Authority___Service_Delivery.md](Konza_Technopolis_Development_Authority___Service_Delivery.md)**: Process documentation for the Konza Technopolis Development Authority regarding Service Delivery.
-231. **[LAPSSET_Corridor_Development_Authority___Procurement_Process.md](LAPSSET_Corridor_Development_Authority___Procurement_Process.md)**: Process documentation for the LAPSSET Corridor Development Authority regarding Procurement Process.
-232. **[LAPSSET_Corridor_Development_Authority___Service_Delivery.md](LAPSSET_Corridor_Development_Authority___Service_Delivery.md)**: Process documentation for the LAPSSET Corridor Development Authority regarding Service Delivery.
-233. **[Labour_and_Skills_Development___Service_Delivery.md](Labour_and_Skills_Development___Service_Delivery.md)**: Process documentation for the Labour and Skills Development regarding Service Delivery.
-234. **[Laikipia_University___Student_Admission.md](Laikipia_University___Student_Admission.md)**: Process documentation for the Laikipia University regarding Student Admission.
-235. **[Lake_Basin_Development_Authority___Procurement_Process.md](Lake_Basin_Development_Authority___Procurement_Process.md)**: Process documentation for the Lake Basin Development Authority regarding Procurement Process.
-236. **[Lake_Basin_Development_Authority___Service_Delivery.md](Lake_Basin_Development_Authority___Service_Delivery.md)**: Process documentation for the Lake Basin Development Authority regarding Service Delivery.
-237. **[Lake_Victoria_North_Water_Works_Development_Agency___Procurement_Process.md](Lake_Victoria_North_Water_Works_Development_Agency___Procurement_Process.md)**: Process documentation for the Lake Victoria North Water Works Development Agency regarding Procurement Process.
-238. **[Lake_Victoria_North_Water_Works_Development_Agency___Service_Delivery.md](Lake_Victoria_North_Water_Works_Development_Agency___Service_Delivery.md)**: Process documentation for the Lake Victoria North Water Works Development Agency regarding Service Delivery.
-239. **[Lake_Victoria_South_Water_Works_Development_Agency___Procurement_Process.md](Lake_Victoria_South_Water_Works_Development_Agency___Procurement_Process.md)**: Process documentation for the Lake Victoria South Water Works Development Agency regarding Procurement Process.
-240. **[Lake_Victoria_South_Water_Works_Development_Agency___Service_Delivery.md](Lake_Victoria_South_Water_Works_Development_Agency___Service_Delivery.md)**: Process documentation for the Lake Victoria South Water Works Development Agency regarding Service Delivery.
-241. **[Land_Surveyors_Board___Service_Delivery.md](Land_Surveyors_Board___Service_Delivery.md)**: Process documentation for the Land Surveyors Board regarding Service Delivery.
-242. **[Land_and_Physical_Planning___Service_Delivery.md](Land_and_Physical_Planning___Service_Delivery.md)**: Process documentation for the Land and Physical Planning regarding Service Delivery.
-243. **[Lands_Limited_subsidiary_of_ADC____Service_Delivery.md](Lands_Limited_subsidiary_of_ADC____Service_Delivery.md)**: Process documentation for the Lands Limited subsidiary of ADC regarding Service Delivery.
-244. **[Livestock_Development___Service_Delivery.md](Livestock_Development___Service_Delivery.md)**: Process documentation for the Livestock Development regarding Service Delivery.
-245. **[Local_Authorities_Provident_Fund___Service_Delivery.md](Local_Authorities_Provident_Fund___Service_Delivery.md)**: Process documentation for the Local Authorities Provident Fund regarding Service Delivery.
-246. **[Local_Authority_Pension_Trust_Fund___Service_Delivery.md](Local_Authority_Pension_Trust_Fund___Service_Delivery.md)**: Process documentation for the Local Authority Pension Trust Fund regarding Service Delivery.
-247. **[MINISTRY_OF_AGRICULTURE_AND_LIVESTOCK_DEVELOPMENT___Service_Delivery.md](MINISTRY_OF_AGRICULTURE_AND_LIVESTOCK_DEVELOPMENT___Service_Delivery.md)**: Process documentation for the MINISTRY OF AGRICULTURE AND LIVESTOCK DEVELOPMENT regarding Service Delivery.
-248. **[MINISTRY_OF_ENERGY_AND_PETROLEUM___Service_Delivery.md](MINISTRY_OF_ENERGY_AND_PETROLEUM___Service_Delivery.md)**: Process documentation for the MINISTRY OF ENERGY AND PETROLEUM regarding Service Delivery.
-249. **[MINISTRY_OF_INVESTMENT_TRADE_AND_INDUSTRY___Service_Delivery.md](MINISTRY_OF_INVESTMENT_TRADE_AND_INDUSTRY___Service_Delivery.md)**: Process documentation for the MINISTRY OF INVESTMENT TRADE AND INDUSTRY regarding Service Delivery.
-250. **[Maasai_Mara_University___Student_Admission.md](Maasai_Mara_University___Student_Admission.md)**: Process documentation for the Maasai Mara University regarding Student Admission.
-251. **[Machakos_University___Student_Admission.md](Machakos_University___Student_Admission.md)**: Process documentation for the Machakos University regarding Student Admission.
-252. **[Mama_Ngina_University_College___Student_Admission.md](Mama_Ngina_University_College___Student_Admission.md)**: Process documentation for the Mama Ngina University College regarding Student Admission.
-253. **[Maseno_University___Student_Admission.md](Maseno_University___Student_Admission.md)**: Process documentation for the Maseno University regarding Student Admission.
-254. **[Masinde_Muliro_University_of_Science_And_Technology___Student_Admission.md](Masinde_Muliro_University_of_Science_And_Technology___Student_Admission.md)**: Process documentation for the Masinde Muliro University of Science And Technology regarding Student Admission.
-255. **[Mathari_National_Teaching_and_Referral_Hospital___Patient_Management.md](Mathari_National_Teaching_and_Referral_Hospital___Patient_Management.md)**: Process documentation for the Mathari National Teaching and Referral Hospital regarding Patient Management.
-256. **[Media_Council_of_Kenya___Service_Delivery.md](Media_Council_of_Kenya___Service_Delivery.md)**: Process documentation for the Media Council of Kenya regarding Service Delivery.
-257. **[Medical_Services___Service_Delivery.md](Medical_Services___Service_Delivery.md)**: Process documentation for the Medical Services regarding Service Delivery.
-258. **[Meru_National_Polytechnic___Student_Admission.md](Meru_National_Polytechnic___Student_Admission.md)**: Process documentation for the Meru National Polytechnic regarding Student Admission.
-259. **[Meru_University_of_Science_and_Technology___Student_Admission.md](Meru_University_of_Science_and_Technology___Student_Admission.md)**: Process documentation for the Meru University of Science and Technology regarding Student Admission.
-260. **[Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md](Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md)**: Process documentation for the Micro Small and Medium Enterprise Development regarding Service Delivery.
-261. **[Micro_and_Small_Enterprises_Authority___Service_Delivery.md](Micro_and_Small_Enterprises_Authority___Service_Delivery.md)**: Process documentation for the Micro and Small Enterprises Authority regarding Service Delivery.
-262. **[Mining___Service_Delivery.md](Mining___Service_Delivery.md)**: Process documentation for the Mining regarding Service Delivery.
-263. **[Ministry_of_Co-operatives_and_Micro_Small_and_Medium_Enterprises_MSME_Development___Service_Delivery.md](Ministry_of_Co-operatives_and_Micro_Small_and_Medium_Enterprises_MSME_Development___Service_Delivery.md)**: Process documentation for the Ministry of Co-operatives and Micro Small and Medium Enterprises MSME Development regarding Service Delivery.
-264. **[Ministry_of_Defence___Service_Delivery.md](Ministry_of_Defence___Service_Delivery.md)**: Process documentation for the Ministry of Defence regarding Service Delivery.
-265. **[Ministry_of_East_African_Community_EAC_The_ASALs_and_Regional_Development___Service_Delivery.md](Ministry_of_East_African_Community_EAC_The_ASALs_and_Regional_Development___Service_Delivery.md)**: Process documentation for the Ministry of East African Community EAC The ASALs and Regional Development regarding Service Delivery.
-266. **[Ministry_of_Education___Service_Delivery.md](Ministry_of_Education___Service_Delivery.md)**: Process documentation for the Ministry of Education regarding Service Delivery.
-267. **[Ministry_of_Environment_and_Forestry___Service_Delivery.md](Ministry_of_Environment_and_Forestry___Service_Delivery.md)**: Process documentation for the Ministry of Environment and Forestry regarding Service Delivery.
-268. **[Ministry_of_Foreign_and_Diaspora_Affairs___Service_Delivery.md](Ministry_of_Foreign_and_Diaspora_Affairs___Service_Delivery.md)**: Process documentation for the Ministry of Foreign and Diaspora Affairs regarding Service Delivery.
-269. **[Ministry_of_Health___Service_Delivery.md](Ministry_of_Health___Service_Delivery.md)**: Process documentation for the Ministry of Health regarding Service Delivery.
-270. **[Ministry_of_Information_Communications_and_The_Digital_Economy___Service_Delivery.md](Ministry_of_Information_Communications_and_The_Digital_Economy___Service_Delivery.md)**: Process documentation for the Ministry of Information Communications and The Digital Economy regarding Service Delivery.
-271. **[Ministry_of_Interior_and_National_Administration___Service_Delivery.md](Ministry_of_Interior_and_National_Administration___Service_Delivery.md)**: Process documentation for the Ministry of Interior and National Administration regarding Service Delivery.
-272. **[Ministry_of_Labour_and_Social_Protection___Service_Delivery.md](Ministry_of_Labour_and_Social_Protection___Service_Delivery.md)**: Process documentation for the Ministry of Labour and Social Protection regarding Service Delivery.
-273. **[Ministry_of_Lands_Public_Works_Housing_and_Urban_Development___Service_Delivery.md](Ministry_of_Lands_Public_Works_Housing_and_Urban_Development___Service_Delivery.md)**: Process documentation for the Ministry of Lands Public Works Housing and Urban Development regarding Service Delivery.
-274. **[Ministry_of_Mining_Blue_Economy_and_Maritime_Affairs___Service_Delivery.md](Ministry_of_Mining_Blue_Economy_and_Maritime_Affairs___Service_Delivery.md)**: Process documentation for the Ministry of Mining Blue Economy and Maritime Affairs regarding Service Delivery.
-275. **[Ministry_of_Public_Service_Gender_and_Affirmative_Action___Service_Delivery.md](Ministry_of_Public_Service_Gender_and_Affirmative_Action___Service_Delivery.md)**: Process documentation for the Ministry of Public Service Gender and Affirmative Action regarding Service Delivery.
-276. **[Ministry_of_Roads_and_Transport___Service_Delivery.md](Ministry_of_Roads_and_Transport___Service_Delivery.md)**: Process documentation for the Ministry of Roads and Transport regarding Service Delivery.
-277. **[Ministry_of_Tourism_Wildlife_and_Heritage___Service_Delivery.md](Ministry_of_Tourism_Wildlife_and_Heritage___Service_Delivery.md)**: Process documentation for the Ministry of Tourism Wildlife and Heritage regarding Service Delivery.
-278. **[Ministry_of_Trade_Investments_and_Industry___Service_Delivery.md](Ministry_of_Trade_Investments_and_Industry___Service_Delivery.md)**: Process documentation for the Ministry of Trade Investments and Industry regarding Service Delivery.
-279. **[Ministry_of_Water_Sanitation_and_Irrigation___Service_Delivery.md](Ministry_of_Water_Sanitation_and_Irrigation___Service_Delivery.md)**: Process documentation for the Ministry of Water Sanitation and Irrigation regarding Service Delivery.
-280. **[Ministry_of_Youth_Sports_and_The_Arts___Service_Delivery.md](Ministry_of_Youth_Sports_and_The_Arts___Service_Delivery.md)**: Process documentation for the Ministry of Youth Sports and The Arts regarding Service Delivery.
-281. **[Miwani_Sugar_Company_Limited___Service_Delivery.md](Miwani_Sugar_Company_Limited___Service_Delivery.md)**: Process documentation for the Miwani Sugar Company Limited regarding Service Delivery.
-282. **[Moi_Teaching_and_Referral_Hospital___Patient_Management.md](Moi_Teaching_and_Referral_Hospital___Patient_Management.md)**: Process documentation for the Moi Teaching and Referral Hospital regarding Patient Management.
-283. **[Moi_University___Student_Admission.md](Moi_University___Student_Admission.md)**: Process documentation for the Moi University regarding Student Admission.
-284. **[Mt_Elgon_Lodge_subsidiary_of_KDC____Service_Delivery.md](Mt_Elgon_Lodge_subsidiary_of_KDC____Service_Delivery.md)**: Process documentation for the Mt Elgon Lodge subsidiary of KDC regarding Service Delivery.
-285. **[Muhoroni_Sugar_Company_Ltd___Service_Delivery.md](Muhoroni_Sugar_Company_Ltd___Service_Delivery.md)**: Process documentation for the Muhoroni Sugar Company Ltd regarding Service Delivery.
-286. **[Multimedia_University_of_Kenya___Student_Admission.md](Multimedia_University_of_Kenya___Student_Admission.md)**: Process documentation for the Multimedia University of Kenya regarding Student Admission.
-287. **[Murang_a_University_of_Technology___Student_Admission.md](Murang_a_University_of_Technology___Student_Admission.md)**: Process documentation for the Murang a University of Technology regarding Student Admission.
-288. **[Mwea_Rice_Mills___Service_Delivery.md](Mwea_Rice_Mills___Service_Delivery.md)**: Process documentation for the Mwea Rice Mills regarding Service Delivery.
-289. **[NATIONAL_ENVIRONMENT_AND_MANAGEMENT_AUTHORITY___Service_Delivery.md](NATIONAL_ENVIRONMENT_AND_MANAGEMENT_AUTHORITY___Service_Delivery.md)**: Process documentation for the NATIONAL ENVIRONMENT AND MANAGEMENT AUTHORITY regarding Service Delivery.
-290. **[NATIONAL_POLICE_SERVICE_NPS____Service_Delivery.md](NATIONAL_POLICE_SERVICE_NPS____Service_Delivery.md)**: Process documentation for the NATIONAL POLICE SERVICE NPS regarding Service Delivery.
-291. **[NATIONAL_TRANSPORT_AND_SAFETY_AUTHORITY_NTSA____Driving_License_Renewal.md](NATIONAL_TRANSPORT_AND_SAFETY_AUTHORITY_NTSA____Driving_License_Renewal.md)**: Process documentation for the NATIONAL TRANSPORT AND SAFETY AUTHORITY NTSA regarding Driving License Renewal.
-292. **[Nairobi_Centre_for_International_Arbitration___Service_Delivery.md](Nairobi_Centre_for_International_Arbitration___Service_Delivery.md)**: Process documentation for the Nairobi Centre for International Arbitration regarding Service Delivery.
-293. **[Nairobi_International_Financial_Center___Service_Delivery.md](Nairobi_International_Financial_Center___Service_Delivery.md)**: Process documentation for the Nairobi International Financial Center regarding Service Delivery.
-294. **[Nairobi_Metropolitan_AreaTransport_Authority___Service_Delivery.md](Nairobi_Metropolitan_AreaTransport_Authority___Service_Delivery.md)**: Process documentation for the Nairobi Metropolitan AreaTransport Authority regarding Service Delivery.
-295. **[National_Authority_for_the_Campaign_Against_Alcohol_And_Drug_Abuse___Service_Delivery.md](National_Authority_for_the_Campaign_Against_Alcohol_And_Drug_Abuse___Service_Delivery.md)**: Process documentation for the National Authority for the Campaign Against Alcohol And Drug Abuse regarding Service Delivery.
-296. **[National_Biosafety_Authority___Service_Delivery.md](National_Biosafety_Authority___Service_Delivery.md)**: Process documentation for the National Biosafety Authority regarding Service Delivery.
-297. **[National_Cancer_Institute_of_Kenya___Service_Delivery.md](National_Cancer_Institute_of_Kenya___Service_Delivery.md)**: Process documentation for the National Cancer Institute of Kenya regarding Service Delivery.
-298. **[National_Cereals_and_Produce_Board___Service_Delivery.md](National_Cereals_and_Produce_Board___Service_Delivery.md)**: Process documentation for the National Cereals and Produce Board regarding Service Delivery.
-299. **[National_Commission_For_Science_Technology_and_Innovation___Service_Delivery.md](National_Commission_For_Science_Technology_and_Innovation___Service_Delivery.md)**: Process documentation for the National Commission For Science Technology and Innovation regarding Service Delivery.
-300. **[National_Construction_Authority___Service_Delivery.md](National_Construction_Authority___Service_Delivery.md)**: Process documentation for the National Construction Authority regarding Service Delivery.
-301. **[National_Coroners_Service___Service_Delivery.md](National_Coroners_Service___Service_Delivery.md)**: Process documentation for the National Coroners Service regarding Service Delivery.
-302. **[National_Council_for_Children_s_Services___Service_Delivery.md](National_Council_for_Children_s_Services___Service_Delivery.md)**: Process documentation for the National Council for Children s Services regarding Service Delivery.
-303. **[National_Council_for_Law_Reporting___Service_Delivery.md](National_Council_for_Law_Reporting___Service_Delivery.md)**: Process documentation for the National Council for Law Reporting regarding Service Delivery.
-304. **[National_Council_for_Persons_With_Disabilities___Service_Delivery.md](National_Council_for_Persons_With_Disabilities___Service_Delivery.md)**: Process documentation for the National Council for Persons With Disabilities regarding Service Delivery.
-305. **[National_Council_for_Population_and_Development___Service_Delivery.md](National_Council_for_Population_and_Development___Service_Delivery.md)**: Process documentation for the National Council for Population and Development regarding Service Delivery.
-306. **[National_Crime_Research_Centre___Service_Delivery.md](National_Crime_Research_Centre___Service_Delivery.md)**: Process documentation for the National Crime Research Centre regarding Service Delivery.
-307. **[National_Defense_University_-_Kenya___Student_Admission.md](National_Defense_University_-_Kenya___Student_Admission.md)**: Process documentation for the National Defense University - Kenya regarding Student Admission.
-308. **[National_Drought_Management_Authority___Service_Delivery.md](National_Drought_Management_Authority___Service_Delivery.md)**: Process documentation for the National Drought Management Authority regarding Service Delivery.
-309. **[National_Employment_Authority___Service_Delivery.md](National_Employment_Authority___Service_Delivery.md)**: Process documentation for the National Employment Authority regarding Service Delivery.
-310. **[National_Environment_Management_Authority___Service_Delivery.md](National_Environment_Management_Authority___Service_Delivery.md)**: Process documentation for the National Environment Management Authority regarding Service Delivery.
-311. **[National_Environment_Trust_Fund___Service_Delivery.md](National_Environment_Trust_Fund___Service_Delivery.md)**: Process documentation for the National Environment Trust Fund regarding Service Delivery.
-312. **[National_Government_Affirmative_Action_Fund___Service_Delivery.md](National_Government_Affirmative_Action_Fund___Service_Delivery.md)**: Process documentation for the National Government Affirmative Action Fund regarding Service Delivery.
-313. **[National_Government_Constituencies_Development_Fund___Service_Delivery.md](National_Government_Constituencies_Development_Fund___Service_Delivery.md)**: Process documentation for the National Government Constituencies Development Fund regarding Service Delivery.
-314. **[National_Health_Insurance_Fund___Service_Delivery.md](National_Health_Insurance_Fund___Service_Delivery.md)**: Process documentation for the National Health Insurance Fund regarding Service Delivery.
-315. **[National_Heroes_Council___Service_Delivery.md](National_Heroes_Council___Service_Delivery.md)**: Process documentation for the National Heroes Council regarding Service Delivery.
-316. **[National_Housing_Corporation___Service_Delivery.md](National_Housing_Corporation___Service_Delivery.md)**: Process documentation for the National Housing Corporation regarding Service Delivery.
-317. **[National_Industrial_Training_Authority___Service_Delivery.md](National_Industrial_Training_Authority___Service_Delivery.md)**: Process documentation for the National Industrial Training Authority regarding Service Delivery.
-318. **[National_Informal_Sector_Pensions_Ltd___Service_Delivery.md](National_Informal_Sector_Pensions_Ltd___Service_Delivery.md)**: Process documentation for the National Informal Sector Pensions Ltd regarding Service Delivery.
-319. **[National_Irrigation_Authority___Service_Delivery.md](National_Irrigation_Authority___Service_Delivery.md)**: Process documentation for the National Irrigation Authority regarding Service Delivery.
-320. **[National_Legal_Aid_Service___Service_Delivery.md](National_Legal_Aid_Service___Service_Delivery.md)**: Process documentation for the National Legal Aid Service regarding Service Delivery.
-321. **[National_Mining_Corporation___Service_Delivery.md](National_Mining_Corporation___Service_Delivery.md)**: Process documentation for the National Mining Corporation regarding Service Delivery.
-322. **[National_Museums_of_Kenya___Service_Delivery.md](National_Museums_of_Kenya___Service_Delivery.md)**: Process documentation for the National Museums of Kenya regarding Service Delivery.
-323. **[National_Oil_Corporation_of_Kenya___Service_Delivery.md](National_Oil_Corporation_of_Kenya___Service_Delivery.md)**: Process documentation for the National Oil Corporation of Kenya regarding Service Delivery.
-324. **[National_Quality_Control_Laboratory___Service_Delivery.md](National_Quality_Control_Laboratory___Service_Delivery.md)**: Process documentation for the National Quality Control Laboratory regarding Service Delivery.
-325. **[National_Social_Security_Assistance_Authority___Service_Delivery.md](National_Social_Security_Assistance_Authority___Service_Delivery.md)**: Process documentation for the National Social Security Assistance Authority regarding Service Delivery.
-326. **[National_Social_Security_Fund___Service_Delivery.md](National_Social_Security_Fund___Service_Delivery.md)**: Process documentation for the National Social Security Fund regarding Service Delivery.
-327. **[National_Syndemic_Diseases_Control_Council___Service_Delivery.md](National_Syndemic_Diseases_Control_Council___Service_Delivery.md)**: Process documentation for the National Syndemic Diseases Control Council regarding Service Delivery.
-328. **[National_Transport_and_Safety_Authority___Driving_License_Renewal.md](National_Transport_and_Safety_Authority___Driving_License_Renewal.md)**: Process documentation for the National Transport and Safety Authority regarding Driving License Renewal.
-329. **[National_Treasury_and_Economic_Planning_The___Service_Delivery.md](National_Treasury_and_Economic_Planning_The___Service_Delivery.md)**: Process documentation for the National Treasury and Economic Planning The regarding Service Delivery.
-330. **[National_Water_Harvesting_and_Storage_Authority___Service_Delivery.md](National_Water_Harvesting_and_Storage_Authority___Service_Delivery.md)**: Process documentation for the National Water Harvesting and Storage Authority regarding Service Delivery.
-331. **[National_Youth_Council___Service_Delivery.md](National_Youth_Council___Service_Delivery.md)**: Process documentation for the National Youth Council regarding Service Delivery.
-332. **[National_Youth_Service___Service_Delivery.md](National_Youth_Service___Service_Delivery.md)**: Process documentation for the National Youth Service regarding Service Delivery.
-333. **[New_Kenya_Co-operative_Creameries_Limited___Service_Delivery.md](New_Kenya_Co-operative_Creameries_Limited___Service_Delivery.md)**: Process documentation for the New Kenya Co-operative Creameries Limited regarding Service Delivery.
-334. **[New_Kenya_Planters_Cooperative_Union___Service_Delivery.md](New_Kenya_Planters_Cooperative_Union___Service_Delivery.md)**: Process documentation for the New Kenya Planters Cooperative Union regarding Service Delivery.
-335. **[North_Eastern_National_Polytechnic___Student_Admission.md](North_Eastern_National_Polytechnic___Student_Admission.md)**: Process documentation for the North Eastern National Polytechnic regarding Student Admission.
-336. **[North_Rift_Valley_Water_Works_Development_Agency___Procurement_Process.md](North_Rift_Valley_Water_Works_Development_Agency___Procurement_Process.md)**: Process documentation for the North Rift Valley Water Works Development Agency regarding Procurement Process.
-337. **[North_Rift_Valley_Water_Works_Development_Agency___Service_Delivery.md](North_Rift_Valley_Water_Works_Development_Agency___Service_Delivery.md)**: Process documentation for the North Rift Valley Water Works Development Agency regarding Service Delivery.
-338. **[Northern_Water_Works_Development_Agency___Procurement_Process.md](Northern_Water_Works_Development_Agency___Procurement_Process.md)**: Process documentation for the Northern Water Works Development Agency regarding Procurement Process.
-339. **[Northern_Water_Works_Development_Agency___Service_Delivery.md](Northern_Water_Works_Development_Agency___Service_Delivery.md)**: Process documentation for the Northern Water Works Development Agency regarding Service Delivery.
-340. **[Nuclear_Power_and_Energy_Agency___Service_Delivery.md](Nuclear_Power_and_Energy_Agency___Service_Delivery.md)**: Process documentation for the Nuclear Power and Energy Agency regarding Service Delivery.
-341. **[Numerical_Machining_Complex_Limited___Service_Delivery.md](Numerical_Machining_Complex_Limited___Service_Delivery.md)**: Process documentation for the Numerical Machining Complex Limited regarding Service Delivery.
-342. **[Nursing_Council_of_Kenya___Service_Delivery.md](Nursing_Council_of_Kenya___Service_Delivery.md)**: Process documentation for the Nursing Council of Kenya regarding Service Delivery.
-343. **[Nyandarua_National_Polytechnic___Student_Admission.md](Nyandarua_National_Polytechnic___Student_Admission.md)**: Process documentation for the Nyandarua National Polytechnic regarding Student Admission.
-344. **[Nyayo_Tea_Zones_Development_Corporation___Service_Delivery.md](Nyayo_Tea_Zones_Development_Corporation___Service_Delivery.md)**: Process documentation for the Nyayo Tea Zones Development Corporation regarding Service Delivery.
-345. **[Nyeri_National_Polytechnic___Student_Admission.md](Nyeri_National_Polytechnic___Student_Admission.md)**: Process documentation for the Nyeri National Polytechnic regarding Student Admission.
-346. **[Nzoia_Sugar_Company_Limited___Service_Delivery.md](Nzoia_Sugar_Company_Limited___Service_Delivery.md)**: Process documentation for the Nzoia Sugar Company Limited regarding Service Delivery.
-347. **[OFFICE_OF_THE_ATTORNEY_GENERAL_AG____Service_Delivery.md](OFFICE_OF_THE_ATTORNEY_GENERAL_AG____Service_Delivery.md)**: Process documentation for the OFFICE OF THE ATTORNEY GENERAL AG regarding Service Delivery.
-348. **[OFFICE_OF_THE_DATA_PROTECTION_COMMISIONER_ODPC____Service_Delivery.md](OFFICE_OF_THE_DATA_PROTECTION_COMMISIONER_ODPC____Service_Delivery.md)**: Process documentation for the OFFICE OF THE DATA PROTECTION COMMISIONER ODPC regarding Service Delivery.
-349. **[Occupational_Therapy_Council_of_Kenya___Service_Delivery.md](Occupational_Therapy_Council_of_Kenya___Service_Delivery.md)**: Process documentation for the Occupational Therapy Council of Kenya regarding Service Delivery.
-350. **[PUBLIC_SERVICE_COMMISION_PSC____Service_Delivery.md](PUBLIC_SERVICE_COMMISION_PSC____Service_Delivery.md)**: Process documentation for the PUBLIC SERVICE COMMISION PSC regarding Service Delivery.
-351. **[Petroleum___Service_Delivery.md](Petroleum___Service_Delivery.md)**: Process documentation for the Petroleum regarding Service Delivery.
-352. **[Pharmacy_and_Poisons_Board___Licensing_and_Permitting.md](Pharmacy_and_Poisons_Board___Licensing_and_Permitting.md)**: Process documentation for the Pharmacy and Poisons Board regarding Licensing and Permitting.
-353. **[Physical_Planners_Registration_Board___Service_Delivery.md](Physical_Planners_Registration_Board___Service_Delivery.md)**: Process documentation for the Physical Planners Registration Board regarding Service Delivery.
-354. **[Physiotherapy_Council___Service_Delivery.md](Physiotherapy_Council___Service_Delivery.md)**: Process documentation for the Physiotherapy Council regarding Service Delivery.
-355. **[Policy_Holders_Compensation_Fund___Service_Delivery.md](Policy_Holders_Compensation_Fund___Service_Delivery.md)**: Process documentation for the Policy Holders Compensation Fund regarding Service Delivery.
-356. **[Postal_Corporation_of_Kenya___Service_Delivery.md](Postal_Corporation_of_Kenya___Service_Delivery.md)**: Process documentation for the Postal Corporation of Kenya regarding Service Delivery.
-357. **[Private_Security_Regulatory_Authority___Service_Delivery.md](Private_Security_Regulatory_Authority___Service_Delivery.md)**: Process documentation for the Private Security Regulatory Authority regarding Service Delivery.
-358. **[Privatization_Commission___Service_Delivery.md](Privatization_Commission___Service_Delivery.md)**: Process documentation for the Privatization Commission regarding Service Delivery.
-359. **[Public_Benefits_Organizations_Regulatory_Authority_NGO_Coordinating_Board___Service_Delivery.md](Public_Benefits_Organizations_Regulatory_Authority_NGO_Coordinating_Board___Service_Delivery.md)**: Process documentation for the Public Benefits Organizations Regulatory Authority NGO Coordinating Board regarding Service Delivery.
-360. **[Public_Health_Officers_and_Technicians_Council___Service_Delivery.md](Public_Health_Officers_and_Technicians_Council___Service_Delivery.md)**: Process documentation for the Public Health Officers and Technicians Council regarding Service Delivery.
-361. **[Public_Procurement_Regulatory_Authority___Procurement_Process.md](Public_Procurement_Regulatory_Authority___Procurement_Process.md)**: Process documentation for the Public Procurement Regulatory Authority regarding Procurement Process.
-362. **[Public_Procurement_Regulatory_Authority___Service_Delivery.md](Public_Procurement_Regulatory_Authority___Service_Delivery.md)**: Process documentation for the Public Procurement Regulatory Authority regarding Service Delivery.
-363. **[Public_Service_Superannuation_Fund_Board___Service_Delivery.md](Public_Service_Superannuation_Fund_Board___Service_Delivery.md)**: Process documentation for the Public Service Superannuation Fund Board regarding Service Delivery.
-364. **[Public_Service___Service_Delivery.md](Public_Service___Service_Delivery.md)**: Process documentation for the Public Service regarding Service Delivery.
-365. **[Public_Works___Service_Delivery.md](Public_Works___Service_Delivery.md)**: Process documentation for the Public Works regarding Service Delivery.
-366. **[Pwani_University___Student_Admission.md](Pwani_University___Student_Admission.md)**: Process documentation for the Pwani University regarding Student Admission.
-367. **[Pyrethrum_Processing_Company_of_Kenya___Service_Delivery.md](Pyrethrum_Processing_Company_of_Kenya___Service_Delivery.md)**: Process documentation for the Pyrethrum Processing Company of Kenya regarding Service Delivery.
-368. **[Railway_City_Development_Authority___Procurement_Process.md](Railway_City_Development_Authority___Procurement_Process.md)**: Process documentation for the Railway City Development Authority regarding Procurement Process.
-369. **[Railway_City_Development_Authority___Service_Delivery.md](Railway_City_Development_Authority___Service_Delivery.md)**: Process documentation for the Railway City Development Authority regarding Service Delivery.
-370. **[Regional_Centre_on_Groundwater_Resources_Education_Training_and_Research___Licensing_and_Permitting.md](Regional_Centre_on_Groundwater_Resources_Education_Training_and_Research___Licensing_and_Permitting.md)**: Process documentation for the Regional Centre on Groundwater Resources Education Training and Research regarding Licensing and Permitting.
-371. **[Registration_of_Certified_Public_Accountants_Board___Service_Delivery.md](Registration_of_Certified_Public_Accountants_Board___Service_Delivery.md)**: Process documentation for the Registration of Certified Public Accountants Board regarding Service Delivery.
-372. **[Registration_of_Certified_Public_Secretaries_Board___Service_Delivery.md](Registration_of_Certified_Public_Secretaries_Board___Service_Delivery.md)**: Process documentation for the Registration of Certified Public Secretaries Board regarding Service Delivery.
-373. **[Research_Development_Unit_Co_Ltd___Service_Delivery.md](Research_Development_Unit_Co_Ltd___Service_Delivery.md)**: Process documentation for the Research Development Unit Co Ltd regarding Service Delivery.
-374. **[Retirement_Benefits_Authority___Service_Delivery.md](Retirement_Benefits_Authority___Service_Delivery.md)**: Process documentation for the Retirement Benefits Authority regarding Service Delivery.
-375. **[Rivatex_East_Africa_Ltd_Subsidiary_of_Moi_University____Student_Admission.md](Rivatex_East_Africa_Ltd_Subsidiary_of_Moi_University____Student_Admission.md)**: Process documentation for the Rivatex East Africa Ltd Subsidiary of Moi University regarding Student Admission.
-376. **[Roads___Service_Delivery.md](Roads___Service_Delivery.md)**: Process documentation for the Roads regarding Service Delivery.
-377. **[Rongo_University___Student_Admission.md](Rongo_University___Student_Admission.md)**: Process documentation for the Rongo University regarding Student Admission.
-378. **[Rural_Electrification_and_Renewable_Energy_Corporation___Service_Delivery.md](Rural_Electrification_and_Renewable_Energy_Corporation___Service_Delivery.md)**: Process documentation for the Rural Electrification and Renewable Energy Corporation regarding Service Delivery.
-379. **[SACCO_Societies_Regulatory_Authority___Service_Delivery.md](SACCO_Societies_Regulatory_Authority___Service_Delivery.md)**: Process documentation for the SACCO Societies Regulatory Authority regarding Service Delivery.
-380. **[STATE_DEPARTMENT_FOR_BASIC_EDUCATION___Service_Delivery.md](STATE_DEPARTMENT_FOR_BASIC_EDUCATION___Service_Delivery.md)**: Process documentation for the STATE DEPARTMENT FOR BASIC EDUCATION regarding Service Delivery.
-381. **[STATE_DEPARTMENT_FOR_CORRECTIONAL_SERVICES___Service_Delivery.md](STATE_DEPARTMENT_FOR_CORRECTIONAL_SERVICES___Service_Delivery.md)**: Process documentation for the STATE DEPARTMENT FOR CORRECTIONAL SERVICES regarding Service Delivery.
-382. **[STATE_DEPARTMENT_FOR_ENVIRONMENT___Service_Delivery.md](STATE_DEPARTMENT_FOR_ENVIRONMENT___Service_Delivery.md)**: Process documentation for the STATE DEPARTMENT FOR ENVIRONMENT regarding Service Delivery.
-383. **[STATE_DEPARTMENT_FOR_IMMIGRATION_AND_CITIZEN_SERVICES___Passport_Application.md](STATE_DEPARTMENT_FOR_IMMIGRATION_AND_CITIZEN_SERVICES___Passport_Application.md)**: Process documentation for the STATE DEPARTMENT FOR IMMIGRATION AND CITIZEN SERVICES regarding Passport Application.
-384. **[STATE_DEPARTMENT_FOR_LANDS_AND_PHYSICAL_PLANNING___Service_Delivery.md](STATE_DEPARTMENT_FOR_LANDS_AND_PHYSICAL_PLANNING___Service_Delivery.md)**: Process documentation for the STATE DEPARTMENT FOR LANDS AND PHYSICAL PLANNING regarding Service Delivery.
-385. **[STATE_DEPARTMENT_FOR_MINING___Service_Delivery.md](STATE_DEPARTMENT_FOR_MINING___Service_Delivery.md)**: Process documentation for the STATE DEPARTMENT FOR MINING regarding Service Delivery.
-386. **[STATE_DEPARTMENT_FOR_PARLIAMENTARY_AFFAIRS___Service_Delivery.md](STATE_DEPARTMENT_FOR_PARLIAMENTARY_AFFAIRS___Service_Delivery.md)**: Process documentation for the STATE DEPARTMENT FOR PARLIAMENTARY AFFAIRS regarding Service Delivery.
-387. **[STATE_DEPARTMENT_FOR_PUBLIC_HEALTH___Service_Delivery.md](STATE_DEPARTMENT_FOR_PUBLIC_HEALTH___Service_Delivery.md)**: Process documentation for the STATE DEPARTMENT FOR PUBLIC HEALTH regarding Service Delivery.
-388. **[STATE_DEPARTMENT_FOR_PUBLIC_SERVICE_AND_HUMAN_CAPITAL___Service_Delivery.md](STATE_DEPARTMENT_FOR_PUBLIC_SERVICE_AND_HUMAN_CAPITAL___Service_Delivery.md)**: Process documentation for the STATE DEPARTMENT FOR PUBLIC SERVICE AND HUMAN CAPITAL regarding Service Delivery.
-389. **[STATE_DEPARTMENT_FOR_TRANSPORT___Service_Delivery.md](STATE_DEPARTMENT_FOR_TRANSPORT___Service_Delivery.md)**: Process documentation for the STATE DEPARTMENT FOR TRANSPORT regarding Service Delivery.
-390. **[STATE_DEPARTMENT_FOR_TVET___Service_Delivery.md](STATE_DEPARTMENT_FOR_TVET___Service_Delivery.md)**: Process documentation for the STATE DEPARTMENT FOR TVET regarding Service Delivery.
-391. **[STATE_DEPARTMENT_OF_MEDICAL_SERVICES___Service_Delivery.md](STATE_DEPARTMENT_OF_MEDICAL_SERVICES___Service_Delivery.md)**: Process documentation for the STATE DEPARTMENT OF MEDICAL SERVICES regarding Service Delivery.
-392. **[School_Equipment_Production_Unit___Service_Delivery.md](School_Equipment_Production_Unit___Service_Delivery.md)**: Process documentation for the School Equipment Production Unit regarding Service Delivery.
-393. **[Scrap_Metal_Council___Service_Delivery.md](Scrap_Metal_Council___Service_Delivery.md)**: Process documentation for the Scrap Metal Council regarding Service Delivery.
-394. **[Shipping_and_Maritime_Affairs___Service_Delivery.md](Shipping_and_Maritime_Affairs___Service_Delivery.md)**: Process documentation for the Shipping and Maritime Affairs regarding Service Delivery.
-395. **[Sigalagala_National_Polytechnic___Student_Admission.md](Sigalagala_National_Polytechnic___Student_Admission.md)**: Process documentation for the Sigalagala National Polytechnic regarding Student Admission.
-396. **[Simlaw_Seeds_Kenya_Ltd_Subsidiary_of_Kenya_Seed_Co____Service_Delivery.md](Simlaw_Seeds_Kenya_Ltd_Subsidiary_of_Kenya_Seed_Co____Service_Delivery.md)**: Process documentation for the Simlaw Seeds Kenya Ltd Subsidiary of Kenya Seed Co regarding Service Delivery.
-397. **[Simlaw_Seeds_Tanzania_Subsidiary_of_Kenya_Seed_Co____Service_Delivery.md](Simlaw_Seeds_Tanzania_Subsidiary_of_Kenya_Seed_Co____Service_Delivery.md)**: Process documentation for the Simlaw Seeds Tanzania Subsidiary of Kenya Seed Co regarding Service Delivery.
-398. **[Simlaw_Seeds_Uganda_Ltd_Subsidiary_of_Kenya_Seed_Co____Service_Delivery.md](Simlaw_Seeds_Uganda_Ltd_Subsidiary_of_Kenya_Seed_Co____Service_Delivery.md)**: Process documentation for the Simlaw Seeds Uganda Ltd Subsidiary of Kenya Seed Co regarding Service Delivery.
-399. **[Social_Security_and_Protection___Service_Delivery.md](Social_Security_and_Protection___Service_Delivery.md)**: Process documentation for the Social Security and Protection regarding Service Delivery.
-400. **[Solicitor_General___Service_Delivery.md](Solicitor_General___Service_Delivery.md)**: Process documentation for the Solicitor General regarding Service Delivery.
-401. **[South_Eastern_Kenya_University___Student_Admission.md](South_Eastern_Kenya_University___Student_Admission.md)**: Process documentation for the South Eastern Kenya University regarding Student Admission.
-402. **[South_Nyanza_Sugar_Company_Limited___Service_Delivery.md](South_Nyanza_Sugar_Company_Limited___Service_Delivery.md)**: Process documentation for the South Nyanza Sugar Company Limited regarding Service Delivery.
-403. **[Special_Economic_Zones_Authority___Service_Delivery.md](Special_Economic_Zones_Authority___Service_Delivery.md)**: Process documentation for the Special Economic Zones Authority regarding Service Delivery.
-404. **[Sports_Kenya___Service_Delivery.md](Sports_Kenya___Service_Delivery.md)**: Process documentation for the Sports Kenya regarding Service Delivery.
-405. **[Sports_and_the_Arts___Service_Delivery.md](Sports_and_the_Arts___Service_Delivery.md)**: Process documentation for the Sports and the Arts regarding Service Delivery.
-406. **[State_Law_Office_The___Service_Delivery.md](State_Law_Office_The___Service_Delivery.md)**: Process documentation for the State Law Office The regarding Service Delivery.
-407. **[Street_Families_Rehabilitation_Fund___Service_Delivery.md](Street_Families_Rehabilitation_Fund___Service_Delivery.md)**: Process documentation for the Street Families Rehabilitation Fund regarding Service Delivery.
-408. **[Sunset_Hotel_Kisumu_Subsidiary_of_Kenya_Development_Corporation____Service_Delivery.md](Sunset_Hotel_Kisumu_Subsidiary_of_Kenya_Development_Corporation____Service_Delivery.md)**: Process documentation for the Sunset Hotel Kisumu Subsidiary of Kenya Development Corporation regarding Service Delivery.
-409. **[THE_JUDICIARY___Service_Delivery.md](THE_JUDICIARY___Service_Delivery.md)**: Process documentation for the THE JUDICIARY regarding Service Delivery.
-410. **[THE_NATIONAL_TREASURY___Service_Delivery.md](THE_NATIONAL_TREASURY___Service_Delivery.md)**: Process documentation for the THE NATIONAL TREASURY regarding Service Delivery.
-411. **[Taita_Taveta_University___Student_Admission.md](Taita_Taveta_University___Student_Admission.md)**: Process documentation for the Taita Taveta University regarding Student Admission.
-412. **[Tana_Water_Works_Development_Agency___Procurement_Process.md](Tana_Water_Works_Development_Agency___Procurement_Process.md)**: Process documentation for the Tana Water Works Development Agency regarding Procurement Process.
-413. **[Tana_Water_Works_Development_Agency___Service_Delivery.md](Tana_Water_Works_Development_Agency___Service_Delivery.md)**: Process documentation for the Tana Water Works Development Agency regarding Service Delivery.
-414. **[Tana_and_Athi_Rivers_Development_Authority___Procurement_Process.md](Tana_and_Athi_Rivers_Development_Authority___Procurement_Process.md)**: Process documentation for the Tana and Athi Rivers Development Authority regarding Procurement Process.
-415. **[Tana_and_Athi_Rivers_Development_Authority___Service_Delivery.md](Tana_and_Athi_Rivers_Development_Authority___Service_Delivery.md)**: Process documentation for the Tana and Athi Rivers Development Authority regarding Service Delivery.
-416. **[Tanathi_Water_Works_Development_Agency___Procurement_Process.md](Tanathi_Water_Works_Development_Agency___Procurement_Process.md)**: Process documentation for the Tanathi Water Works Development Agency regarding Procurement Process.
-417. **[Tanathi_Water_Works_Development_Agency___Service_Delivery.md](Tanathi_Water_Works_Development_Agency___Service_Delivery.md)**: Process documentation for the Tanathi Water Works Development Agency regarding Service Delivery.
-418. **[Tea_Board_of_Kenya___Service_Delivery.md](Tea_Board_of_Kenya___Service_Delivery.md)**: Process documentation for the Tea Board of Kenya regarding Service Delivery.
-419. **[Technical_University_of_Kenya___Student_Admission.md](Technical_University_of_Kenya___Student_Admission.md)**: Process documentation for the Technical University of Kenya regarding Student Admission.
-420. **[Technical_University_of_Mombasa___Student_Admission.md](Technical_University_of_Mombasa___Student_Admission.md)**: Process documentation for the Technical University of Mombasa regarding Student Admission.
-421. **[Technical_Vocational_Education_and_Training___Service_Delivery.md](Technical_Vocational_Education_and_Training___Service_Delivery.md)**: Process documentation for the Technical Vocational Education and Training regarding Service Delivery.
-422. **[Technical_and_Vocational_Education_and_Training_Authority___Service_Delivery.md](Technical_and_Vocational_Education_and_Training_Authority___Service_Delivery.md)**: Process documentation for the Technical and Vocational Education and Training Authority regarding Service Delivery.
-423. **[Technical_and_Vocational_Education_and_Training_Curriculum_Development_Assessment_and_Certification___Service_Delivery.md](Technical_and_Vocational_Education_and_Training_Curriculum_Development_Assessment_and_Certification___Service_Delivery.md)**: Process documentation for the Technical and Vocational Education and Training Curriculum Development Assessment and Certification regarding Service Delivery.
-424. **[Telkom_Kenya_Limited___Service_Delivery.md](Telkom_Kenya_Limited___Service_Delivery.md)**: Process documentation for the Telkom Kenya Limited regarding Service Delivery.
-425. **[Tharaka_University___Student_Admission.md](Tharaka_University___Student_Admission.md)**: Process documentation for the Tharaka University regarding Student Admission.
-426. **[The_Blue_Economy_and_Fisheries___Service_Delivery.md](The_Blue_Economy_and_Fisheries___Service_Delivery.md)**: Process documentation for the The Blue Economy and Fisheries regarding Service Delivery.
-427. **[The_Eldoret_National_Polytechnic___Student_Admission.md](The_Eldoret_National_Polytechnic___Student_Admission.md)**: Process documentation for the The Eldoret National Polytechnic regarding Student Admission.
-428. **[The_Presidents_Award-Kenya___Service_Delivery.md](The_Presidents_Award-Kenya___Service_Delivery.md)**: Process documentation for the The Presidents Award-Kenya regarding Service Delivery.
-429. **[Tom_Mboya_University___Student_Admission.md](Tom_Mboya_University___Student_Admission.md)**: Process documentation for the Tom Mboya University regarding Student Admission.
-430. **[Tourism_Finance_Corporation___Service_Delivery.md](Tourism_Finance_Corporation___Service_Delivery.md)**: Process documentation for the Tourism Finance Corporation regarding Service Delivery.
-431. **[Tourism_Fund___Service_Delivery.md](Tourism_Fund___Service_Delivery.md)**: Process documentation for the Tourism Fund regarding Service Delivery.
-432. **[Tourism_Regulatory_Authority___Service_Delivery.md](Tourism_Regulatory_Authority___Service_Delivery.md)**: Process documentation for the Tourism Regulatory Authority regarding Service Delivery.
-433. **[Tourism_Research_Institute___Service_Delivery.md](Tourism_Research_Institute___Service_Delivery.md)**: Process documentation for the Tourism Research Institute regarding Service Delivery.
-434. **[Tourism_and_Wildlife___Service_Delivery.md](Tourism_and_Wildlife___Service_Delivery.md)**: Process documentation for the Tourism and Wildlife regarding Service Delivery.
-435. **[Trade___Service_Delivery.md](Trade___Service_Delivery.md)**: Process documentation for the Trade regarding Service Delivery.
-436. **[Transport___Service_Delivery.md](Transport___Service_Delivery.md)**: Process documentation for the Transport regarding Service Delivery.
-437. **[Turkana_University_College___Student_Admission.md](Turkana_University_College___Student_Admission.md)**: Process documentation for the Turkana University College regarding Student Admission.
-438. **[Unclaimed_Financial_Assets_Authority___Service_Delivery.md](Unclaimed_Financial_Assets_Authority___Service_Delivery.md)**: Process documentation for the Unclaimed Financial Assets Authority regarding Service Delivery.
-439. **[University_of_Eldoret___Student_Admission.md](University_of_Eldoret___Student_Admission.md)**: Process documentation for the University of Eldoret regarding Student Admission.
-440. **[University_of_Embu___Student_Admission.md](University_of_Embu___Student_Admission.md)**: Process documentation for the University of Embu regarding Student Admission.
-441. **[University_of_Kabianga___Student_Admission.md](University_of_Kabianga___Student_Admission.md)**: Process documentation for the University of Kabianga regarding Student Admission.
-442. **[University_of_Nairobi_Enterprises_and_Services_Limited_Subsidiary_of_University_of_Nairobi____Student_Admission.md](University_of_Nairobi_Enterprises_and_Services_Limited_Subsidiary_of_University_of_Nairobi____Student_Admission.md)**: Process documentation for the University of Nairobi Enterprises and Services Limited Subsidiary of University of Nairobi regarding Student Admission.
-443. **[University_of_Nairobi_Press_Subsidiary_of_University_of_Nairobi____Student_Admission.md](University_of_Nairobi_Press_Subsidiary_of_University_of_Nairobi____Student_Admission.md)**: Process documentation for the University of Nairobi Press Subsidiary of University of Nairobi regarding Student Admission.
-444. **[University_of_Nairobi___Student_Admission.md](University_of_Nairobi___Student_Admission.md)**: Process documentation for the University of Nairobi regarding Student Admission.
-445. **[Veterinary_Medicines_Directorate___Service_Delivery.md](Veterinary_Medicines_Directorate___Service_Delivery.md)**: Process documentation for the Veterinary Medicines Directorate regarding Service Delivery.
-446. **[Victims_Protection_Board___Service_Delivery.md](Victims_Protection_Board___Service_Delivery.md)**: Process documentation for the Victims Protection Board regarding Service Delivery.
-447. **[Warehouse_Receipt_System_Council___Service_Delivery.md](Warehouse_Receipt_System_Council___Service_Delivery.md)**: Process documentation for the Warehouse Receipt System Council regarding Service Delivery.
-448. **[Water_Resources_Authority___Licensing_and_Permitting.md](Water_Resources_Authority___Licensing_and_Permitting.md)**: Process documentation for the Water Resources Authority regarding Licensing and Permitting.
-449. **[Water_Sanitation_and_Irrigation___Service_Delivery.md](Water_Sanitation_and_Irrigation___Service_Delivery.md)**: Process documentation for the Water Sanitation and Irrigation regarding Service Delivery.
-450. **[Water_Sector_Trust_Fund___Service_Delivery.md](Water_Sector_Trust_Fund___Service_Delivery.md)**: Process documentation for the Water Sector Trust Fund regarding Service Delivery.
-451. **[Water_Services_Regulatory_Board___Service_Delivery.md](Water_Services_Regulatory_Board___Service_Delivery.md)**: Process documentation for the Water Services Regulatory Board regarding Service Delivery.
-452. **[Western_Kenya_Rice_Mills_Ltd_Subsidiary_of_NIA____Service_Delivery.md](Western_Kenya_Rice_Mills_Ltd_Subsidiary_of_NIA____Service_Delivery.md)**: Process documentation for the Western Kenya Rice Mills Ltd Subsidiary of NIA regarding Service Delivery.
-453. **[Wildlife_Research_Training_Institute___Service_Delivery.md](Wildlife_Research_Training_Institute___Service_Delivery.md)**: Process documentation for the Wildlife Research Training Institute regarding Service Delivery.
-454. **[Youth_Affairs___Service_Delivery.md](Youth_Affairs___Service_Delivery.md)**: Process documentation for the Youth Affairs regarding Service Delivery.
-455. **[Youth_Enterprise_Development_Fund___Service_Delivery.md](Youth_Enterprise_Development_Fund___Service_Delivery.md)**: Process documentation for the Youth Enterprise Development Fund regarding Service Delivery.
-456. **[_CIVIL_REGISTRATION_SERVICES_CRS____Service_Delivery.md](_CIVIL_REGISTRATION_SERVICES_CRS____Service_Delivery.md)**: Process documentation for the  CIVIL REGISTRATION SERVICES CRS regarding Service Delivery.
-457. **[_E_CITIZEN___Service_Delivery.md](_E_CITIZEN___Service_Delivery.md)**: Process documentation for the  E CITIZEN regarding Service Delivery.
-458. **[_INTEGRATED_POPULATION_REGISTRATION_SYSTEM___Service_Delivery.md](_INTEGRATED_POPULATION_REGISTRATION_SYSTEM___Service_Delivery.md)**: Process documentation for the  INTEGRATED POPULATION REGISTRATION SYSTEM regarding Service Delivery.
-459. **[_NATIONAL_REGISTRATION_BUREAU_NRB____Service_Delivery.md](_NATIONAL_REGISTRATION_BUREAU_NRB____Service_Delivery.md)**: Process documentation for the  NATIONAL REGISTRATION BUREAU NRB regarding Service Delivery.
-460. **[_REFUGEE_SERVICES___Service_Delivery.md](_REFUGEE_SERVICES___Service_Delivery.md)**: Process documentation for the  REFUGEE SERVICES regarding Service Delivery.
+| # | Sector / MDA | Process Type | Documentation Link |
+|---|---|---|---|
+| 1. | ASALs and Regional Development | Service Delivery | [View Document](ASALs_and_Regional_Development___Service_Delivery.md) |
+| 2. | Agri and Cooperative Training and Consultancy Services Limted subsidary of Cooperative University | Student Admission | [View Document](Agri_and_Cooperative_Training_and_Consultancy_Services_Limted_subsidary_of_Cooperative_University____Student_Admission.md) |
+| 3. | Agricultural Development Corporation | Service Delivery | [View Document](Agricultural_Development_Corporation___Service_Delivery.md) |
+| 4. | Agricultural Finance Corporation | Service Delivery | [View Document](Agricultural_Finance_Corporation___Service_Delivery.md) |
+| 5. | Agriculture and Food Authority | Service Delivery | [View Document](Agriculture_and_Food_Authority___Service_Delivery.md) |
+| 6. | Agro-Chemical and Food Company | Service Delivery | [View Document](Agro-Chemical_and_Food_Company___Service_Delivery.md) |
+| 7. | Ahero Rice Mills | Service Delivery | [View Document](Ahero_Rice_Mills___Service_Delivery.md) |
+| 8. | Alupe University College | Student Admission | [View Document](Alupe_University_College___Student_Admission.md) |
+| 9. | Animal Technicians Council | Service Delivery | [View Document](Animal_Technicians_Council___Service_Delivery.md) |
+| 10. | Anti-Counterfeit Authority | Service Delivery | [View Document](Anti-Counterfeit_Authority___Service_Delivery.md) |
+| 11. | Anti-Doping Agency of Kenya | Service Delivery | [View Document](Anti-Doping_Agency_of_Kenya___Service_Delivery.md) |
+| 12. | Anti-Female Genital Mutilation Board | Service Delivery | [View Document](Anti-Female_Genital_Mutilation_Board___Service_Delivery.md) |
+| 13. | Assets Recovery Agency | Service Delivery | [View Document](Assets_Recovery_Agency___Service_Delivery.md) |
+| 14. | Athi Water Works Development Agency | Procurement Process | [View Document](Athi_Water_Works_Development_Agency___Procurement_Process.md) |
+| 15. | Athi Water Works Development Agency | Service Delivery | [View Document](Athi_Water_Works_Development_Agency___Service_Delivery.md) |
+| 16. | Auctioneers Licensing Board | Service Delivery | [View Document](Auctioneers_Licensing_Board___Service_Delivery.md) |
+| 17. | Bandari Maritime Academy | Service Delivery | [View Document](Bandari_Maritime_Academy___Service_Delivery.md) |
+| 18. | Basic Education | Service Delivery | [View Document](Basic_Education___Service_Delivery.md) |
+| 19. | Board of Registration of Architects and Quantity Surveyors | Service Delivery | [View Document](Board_of_Registration_of_Architects_and_Quantity_Surveyors___Service_Delivery.md) |
+| 20. | Bomas of Kenya | Service Delivery | [View Document](Bomas_of_Kenya___Service_Delivery.md) |
+| 21. | Bomet University College | Student Admission | [View Document](Bomet_University_College___Student_Admission.md) |
+| 22. | Broadcasting and Telecommunications | Service Delivery | [View Document](Broadcasting_and_Telecommunications___Service_Delivery.md) |
+| 23. | Building Surveyors Registration Board | Service Delivery | [View Document](Building_Surveyors_Registration_Board___Service_Delivery.md) |
+| 24. | Bukura Agricultural College | Student Admission | [View Document](Bukura_Agricultural_College___Student_Admission.md) |
+| 25. | Business Registration Service | Service Delivery | [View Document](Business_Registration_Service___Service_Delivery.md) |
+| 26. | CABINET OFFICE | Cabinet Memo Processing | [View Document](CABINET_OFFICE___Cabinet_Memo_Processing.md) |
+| 27. | CABINET OFFICE | Service Delivery | [View Document](CABINET_OFFICE___Service_Delivery.md) |
+| 28. | CBL Bancassurance Intermediary Limited subsidiary of consolidated Bank | Service Delivery | [View Document](CBL_Bancassurance_Intermediary_Limited_subsidiary_of_consolidated_Bank____Service_Delivery.md) |
+| 29. | Capital Markets Authority | Service Delivery | [View Document](Capital_Markets_Authority___Service_Delivery.md) |
+| 30. | Central Rift Valley Water Works Development Agency | Procurement Process | [View Document](Central_Rift_Valley_Water_Works_Development_Agency___Procurement_Process.md) |
+| 31. | Central Rift Valley Water Works Development Agency | Service Delivery | [View Document](Central_Rift_Valley_Water_Works_Development_Agency___Service_Delivery.md) |
+| 32. | Centre for Mathematics Science and Technology Education in Africa | Service Delivery | [View Document](Centre_for_Mathematics_Science_and_Technology_Education_in_Africa___Service_Delivery.md) |
+| 33. | Chemelil Sugar Company Limited | Service Delivery | [View Document](Chemelil_Sugar_Company_Limited___Service_Delivery.md) |
+| 34. | Child Welfare Society of Kenya | Service Delivery | [View Document](Child_Welfare_Society_of_Kenya___Service_Delivery.md) |
+| 35. | Chuka University | Student Admission | [View Document](Chuka_University___Student_Admission.md) |
+| 36. | Citizen Services | Service Delivery | [View Document](Citizen_Services___Service_Delivery.md) |
+| 37. | Clinical Officers Council of Kenya | Service Delivery | [View Document](Clinical_Officers_Council_of_Kenya___Service_Delivery.md) |
+| 38. | Co-operative University of Kenya | Student Admission | [View Document](Co-operative_University_of_Kenya___Student_Admission.md) |
+| 39. | Coast Development Authority | Procurement Process | [View Document](Coast_Development_Authority___Procurement_Process.md) |
+| 40. | Coast Development Authority | Service Delivery | [View Document](Coast_Development_Authority___Service_Delivery.md) |
+| 41. | Coast Water Works Development Agency | Procurement Process | [View Document](Coast_Water_Works_Development_Agency___Procurement_Process.md) |
+| 42. | Coast Water Works Development Agency | Service Delivery | [View Document](Coast_Water_Works_Development_Agency___Service_Delivery.md) |
+| 43. | Commission for University Education | Service Delivery | [View Document](Commission_for_University_Education___Service_Delivery.md) |
+| 44. | Communications Authority of Kenya | Licensing and Permitting | [View Document](Communications_Authority_of_Kenya___Licensing_and_Permitting.md) |
+| 45. | Competition Authority of Kenya | Service Delivery | [View Document](Competition_Authority_of_Kenya___Service_Delivery.md) |
+| 46. | Consolidated Bank of Kenya | Service Delivery | [View Document](Consolidated_Bank_of_Kenya___Service_Delivery.md) |
+| 47. | Cooperatives | Service Delivery | [View Document](Cooperatives___Service_Delivery.md) |
+| 48. | Correctional Services | Service Delivery | [View Document](Correctional_Services___Service_Delivery.md) |
+| 49. | Council of Legal Education | Licensing and Permitting | [View Document](Council_of_Legal_Education___Licensing_and_Permitting.md) |
+| 50. | Counsellors and Psychologists Board | Licensing and Permitting | [View Document](Counsellors_and_Psychologists_Board___Licensing_and_Permitting.md) |
+| 51. | Cradle to Death MDAs.md | Service Delivery | [View Document](Cradle_to_Death_MDAs.md) |
+| 52. | Crop Development | Service Delivery | [View Document](Crop_Development___Service_Delivery.md) |
+| 53. | Culture and Heritage | Service Delivery | [View Document](Culture_and_Heritage___Service_Delivery.md) |
+| 54. | Dedan Kimathi University of Technology | Student Admission | [View Document](Dedan_Kimathi_University_of_Technology___Student_Admission.md) |
+| 55. | Defence | Service Delivery | [View Document](Defence___Service_Delivery.md) |
+| 56. | Development Bank of Kenya | Service Delivery | [View Document](Development_Bank_of_Kenya___Service_Delivery.md) |
+| 57. | ENERGY AND PETROLEUM AUTHORITY | Service Delivery | [View Document](ENERGY_AND_PETROLEUM_AUTHORITY___Service_Delivery.md) |
+| 58. | East African Portland Cement Company | Service Delivery | [View Document](East_African_Portland_Cement_Company___Service_Delivery.md) |
+| 59. | Economic Planning | Service Delivery | [View Document](Economic_Planning___Service_Delivery.md) |
+| 60. | Egerton University | Student Admission | [View Document](Egerton_University___Student_Admission.md) |
+| 61. | Energy | Service Delivery | [View Document](Energy___Service_Delivery.md) |
+| 62. | Energy and Petroleum Regulatory Authority | Service Delivery | [View Document](Energy_and_Petroleum_Regulatory_Authority___Service_Delivery.md) |
+| 63. | Engineers Board of Kenya | Service Delivery | [View Document](Engineers_Board_of_Kenya___Service_Delivery.md) |
+| 64. | Environment and Forestry | Service Delivery | [View Document](Environment_and_Forestry___Service_Delivery.md) |
+| 65. | Estate Agents Registration Board | Service Delivery | [View Document](Estate_Agents_Registration_Board___Service_Delivery.md) |
+| 66. | Ewaso Ng iro North River Basin Development Authority | Procurement Process | [View Document](Ewaso_Ng_iro_North_River_Basin_Development_Authority___Procurement_Process.md) |
+| 67. | Ewaso Ng iro North River Basin Development Authority | Service Delivery | [View Document](Ewaso_Ng_iro_North_River_Basin_Development_Authority___Service_Delivery.md) |
+| 68. | Ewaso Ng iro South Development Authority | Procurement Process | [View Document](Ewaso_Ng_iro_South_Development_Authority___Procurement_Process.md) |
+| 69. | Ewaso Ng iro South Development Authority | Service Delivery | [View Document](Ewaso_Ng_iro_South_Development_Authority___Service_Delivery.md) |
+| 70. | Export Processing Zones Authority | Service Delivery | [View Document](Export_Processing_Zones_Authority___Service_Delivery.md) |
+| 71. | Fertilizers and Animal Foodstuffs Board of Kenya | Service Delivery | [View Document](Fertilizers_and_Animal_Foodstuffs_Board_of_Kenya___Service_Delivery.md) |
+| 72. | Financial Reporting Centre | Service Delivery | [View Document](Financial_Reporting_Centre___Service_Delivery.md) |
+| 73. | Foreign Affairs | Service Delivery | [View Document](Foreign_Affairs___Service_Delivery.md) |
+| 74. | Garissa University | Student Admission | [View Document](Garissa_University___Student_Admission.md) |
+| 75. | Gatitu Tea Factory subsidiary Nyayo Tea Zone | Service Delivery | [View Document](Gatitu_Tea_Factory_subsidiary_Nyayo_Tea_Zone____Service_Delivery.md) |
+| 76. | Gender and Affirmative Action | Service Delivery | [View Document](Gender_and_Affirmative_Action___Service_Delivery.md) |
+| 77. | Geologist Registration Board | Service Delivery | [View Document](Geologist_Registration_Board___Service_Delivery.md) |
+| 78. | Geothermal Development Company GDC | Service Delivery | [View Document](Geothermal_Development_Company_GDC____Service_Delivery.md) |
+| 79. | Golf Hotel Kakamega | Service Delivery | [View Document](Golf_Hotel_Kakamega___Service_Delivery.md) |
+| 80. | HUDUMA SECRETARIAT | Service Delivery | [View Document](HUDUMA_SECRETARIAT___Service_Delivery.md) |
+| 81. | Health Records and Information Managers Board | Service Delivery | [View Document](Health_Records_and_Information_Managers_Board___Service_Delivery.md) |
+| 82. | Heath Standards and Professional Management | Service Delivery | [View Document](Heath_Standards_and_Professional_Management___Service_Delivery.md) |
+| 83. | Higher Education Loans Board | Loan Processing | [View Document](Higher_Education_Loans_Board___Loan_Processing.md) |
+| 84. | Higher Education and Training | Service Delivery | [View Document](Higher_Education_and_Training___Service_Delivery.md) |
+| 85. | Housing and Urban Development | Service Delivery | [View Document](Housing_and_Urban_Development___Service_Delivery.md) |
+| 86. | Human Resource Management Professionals Examination Board | Service Delivery | [View Document](Human_Resource_Management_Professionals_Examination_Board___Service_Delivery.md) |
+| 87. | Hydrologists Registration Board | Service Delivery | [View Document](Hydrologists_Registration_Board___Service_Delivery.md) |
+| 88. | IDB Capital | Service Delivery | [View Document](IDB_Capital___Service_Delivery.md) |
+| 89. | Industrial and Commercial Development Corporation | Service Delivery | [View Document](Industrial_and_Commercial_Development_Corporation___Service_Delivery.md) |
+| 90. | Information Communication Technology and Digital Economy | Service Delivery | [View Document](Information_Communication_Technology_and_Digital_Economy___Service_Delivery.md) |
+| 91. | Information and Communication Technology Authority ICTA | Service Delivery | [View Document](Information_and_Communication_Technology_Authority_ICTA____Service_Delivery.md) |
+| 92. | Institute of Certified Investment and Financial Analysts | Service Delivery | [View Document](Institute_of_Certified_Investment_and_Financial_Analysts___Service_Delivery.md) |
+| 93. | Institute of Certified Public Accountants of Kenya | Service Delivery | [View Document](Institute_of_Certified_Public_Accountants_of_Kenya___Service_Delivery.md) |
+| 94. | Institute of Human Resource Management | Service Delivery | [View Document](Institute_of_Human_Resource_Management___Service_Delivery.md) |
+| 95. | Institute of Primate Research | Service Delivery | [View Document](Institute_of_Primate_Research___Service_Delivery.md) |
+| 96. | Insurance Regulatory Authority | Service Delivery | [View Document](Insurance_Regulatory_Authority___Service_Delivery.md) |
+| 97. | Internal Security and National Administration | Service Delivery | [View Document](Internal_Security_and_National_Administration___Service_Delivery.md) |
+| 98. | Investments Promotion and Industry | Service Delivery | [View Document](Investments_Promotion_and_Industry___Service_Delivery.md) |
+| 99. | Jaramogi Oginga Odinga University of Science and Technology | Student Admission | [View Document](Jaramogi_Oginga_Odinga_University_of_Science_and_Technology___Student_Admission.md) |
+| 100. | Jomo Kenyatta Foundation | Service Delivery | [View Document](Jomo_Kenyatta_Foundation___Service_Delivery.md) |
+| 101. | Jomo Kenyatta University Enterprises Limited Subsidiary of JKUAT | Student Admission | [View Document](Jomo_Kenyatta_University_Enterprises_Limited_Subsidiary_of_JKUAT____Student_Admission.md) |
+| 102. | Jomo Kenyatta University of Agriculture And Technology | Student Admission | [View Document](Jomo_Kenyatta_University_of_Agriculture_And_Technology___Student_Admission.md) |
+| 103. | Jomo Kenyatta University of Agriculture and Technology Industrial Park Subsidiary of JKUAT | Student Admission | [View Document](Jomo_Kenyatta_University_of_Agriculture_and_Technology_Industrial_Park_Subsidiary_of_JKUAT____Student_Admission.md) |
+| 104. | KENYA BUREAU OF STANDARDS | Licensing and Permitting | [View Document](KENYA_BUREAU_OF_STANDARDS___Licensing_and_Permitting.md) |
+| 105. | KENYA MEDICAL SUPPLIES AUTHORITY | Service Delivery | [View Document](KENYA_MEDICAL_SUPPLIES_AUTHORITY___Service_Delivery.md) |
+| 106. | KENYA NATIONAL BUREA OF STATISTICS | Service Delivery | [View Document](KENYA_NATIONAL_BUREA_OF_STATISTICS___Service_Delivery.md) |
+| 107. | KENYA REVENUE AUTHORITY KRA | Tax Return Filing | [View Document](KENYA_REVENUE_AUTHORITY_KRA____Tax_Return_Filing.md) |
+| 108. | Kabarnet Hotel Limited subsidiary of KDC | Service Delivery | [View Document](Kabarnet_Hotel_Limited_subsidiary_of_KDC____Service_Delivery.md) |
+| 109. | Kabete National Polytechnic | Student Admission | [View Document](Kabete_National_Polytechnic___Student_Admission.md) |
+| 110. | Kaimosi Friends University College | Student Admission | [View Document](Kaimosi_Friends_University_College___Student_Admission.md) |
+| 111. | Karatina University | Student Admission | [View Document](Karatina_University___Student_Admission.md) |
+| 112. | Kenya Academy of Sports | Service Delivery | [View Document](Kenya_Academy_of_Sports___Service_Delivery.md) |
+| 113. | Kenya Accountants and Secretaries National Examination Board | Service Delivery | [View Document](Kenya_Accountants_and_Secretaries_National_Examination_Board___Service_Delivery.md) |
+| 114. | Kenya Advanced Institute of Science and Technology KAIST | Student Admission | [View Document](Kenya_Advanced_Institute_of_Science_and_Technology_KAIST____Student_Admission.md) |
+| 115. | Kenya Agricultural and Livestock Research Organization | Service Delivery | [View Document](Kenya_Agricultural_and_Livestock_Research_Organization___Service_Delivery.md) |
+| 116. | Kenya Airports Authority | Service Delivery | [View Document](Kenya_Airports_Authority___Service_Delivery.md) |
+| 117. | Kenya Animal Genetic Resources Centre | Service Delivery | [View Document](Kenya_Animal_Genetic_Resources_Centre___Service_Delivery.md) |
+| 118. | Kenya Biovax Institute Limited | Service Delivery | [View Document](Kenya_Biovax_Institute_Limited___Service_Delivery.md) |
+| 119. | Kenya Broadcasting Corporation | Service Delivery | [View Document](Kenya_Broadcasting_Corporation___Service_Delivery.md) |
+| 120. | Kenya Citizens and Foreign National Management Services | Service Delivery | [View Document](Kenya_Citizens_and_Foreign_National_Management_Services___Service_Delivery.md) |
+| 121. | Kenya Civil Aviation Authority | Service Delivery | [View Document](Kenya_Civil_Aviation_Authority___Service_Delivery.md) |
+| 122. | Kenya Coast National Polytechnic | Student Admission | [View Document](Kenya_Coast_National_Polytechnic___Student_Admission.md) |
+| 123. | Kenya Copyright Board | Service Delivery | [View Document](Kenya_Copyright_Board___Service_Delivery.md) |
+| 124. | Kenya Cultural Centre | Service Delivery | [View Document](Kenya_Cultural_Centre___Service_Delivery.md) |
+| 125. | Kenya Dairy Board | Service Delivery | [View Document](Kenya_Dairy_Board___Service_Delivery.md) |
+| 126. | Kenya Deposit Insurance Corporation | Service Delivery | [View Document](Kenya_Deposit_Insurance_Corporation___Service_Delivery.md) |
+| 127. | Kenya Development Corporation | Service Delivery | [View Document](Kenya_Development_Corporation___Service_Delivery.md) |
+| 128. | Kenya Education Management Institute | Service Delivery | [View Document](Kenya_Education_Management_Institute___Service_Delivery.md) |
+| 129. | Kenya Electricity Generating Company PLC | Service Delivery | [View Document](Kenya_Electricity_Generating_Company_PLC___Service_Delivery.md) |
+| 130. | Kenya Electricity Transmission Company | Service Delivery | [View Document](Kenya_Electricity_Transmission_Company___Service_Delivery.md) |
+| 131. | Kenya Engineering Technology Registration Board | Service Delivery | [View Document](Kenya_Engineering_Technology_Registration_Board___Service_Delivery.md) |
+| 132. | Kenya Export Promotion and Branding Agency | Service Delivery | [View Document](Kenya_Export_Promotion_and_Branding_Agency___Service_Delivery.md) |
+| 133. | Kenya Film Classification Board | Service Delivery | [View Document](Kenya_Film_Classification_Board___Service_Delivery.md) |
+| 134. | Kenya Film Commission | Service Delivery | [View Document](Kenya_Film_Commission___Service_Delivery.md) |
+| 135. | Kenya Fish Marketing Authority | Service Delivery | [View Document](Kenya_Fish_Marketing_Authority___Service_Delivery.md) |
+| 136. | Kenya Fisheries Service | Service Delivery | [View Document](Kenya_Fisheries_Service___Service_Delivery.md) |
+| 137. | Kenya Fishing Industries Corporation | Service Delivery | [View Document](Kenya_Fishing_Industries_Corporation___Service_Delivery.md) |
+| 138. | Kenya Foreign Service Institute | Service Delivery | [View Document](Kenya_Foreign_Service_Institute___Service_Delivery.md) |
+| 139. | Kenya Forest Service | Licensing and Permitting | [View Document](Kenya_Forest_Service___Licensing_and_Permitting.md) |
+| 140. | Kenya Forestry Research Institute | Service Delivery | [View Document](Kenya_Forestry_Research_Institute___Service_Delivery.md) |
+| 141. | Kenya Health Human Resource Advisory Council | Service Delivery | [View Document](Kenya_Health_Human_Resource_Advisory_Council___Service_Delivery.md) |
+| 142. | Kenya Health Professionals Oversight Authority | Service Delivery | [View Document](Kenya_Health_Professionals_Oversight_Authority___Service_Delivery.md) |
+| 143. | Kenya Hospital Authority Trust Fund | Service Delivery | [View Document](Kenya_Hospital_Authority_Trust_Fund___Service_Delivery.md) |
+| 144. | Kenya Industrial Estates | Service Delivery | [View Document](Kenya_Industrial_Estates___Service_Delivery.md) |
+| 145. | Kenya Industrial Property Institute | Service Delivery | [View Document](Kenya_Industrial_Property_Institute___Service_Delivery.md) |
+| 146. | Kenya Industrial Research and Development Institute | Service Delivery | [View Document](Kenya_Industrial_Research_and_Development_Institute___Service_Delivery.md) |
+| 147. | Kenya Institute for Public Policy Research and Analysis | Service Delivery | [View Document](Kenya_Institute_for_Public_Policy_Research_and_Analysis___Service_Delivery.md) |
+| 148. | Kenya Institute of Curriculum Development | Service Delivery | [View Document](Kenya_Institute_of_Curriculum_Development___Service_Delivery.md) |
+| 149. | Kenya Institute of Mass Communication | Service Delivery | [View Document](Kenya_Institute_of_Mass_Communication___Service_Delivery.md) |
+| 150. | Kenya Institute of Supplies Examination Board | Service Delivery | [View Document](Kenya_Institute_of_Supplies_Examination_Board___Service_Delivery.md) |
+| 151. | Kenya Institute of Supplies Management | Service Delivery | [View Document](Kenya_Institute_of_Supplies_Management___Service_Delivery.md) |
+| 152. | Kenya Investment Authority | Service Delivery | [View Document](Kenya_Investment_Authority___Service_Delivery.md) |
+| 153. | Kenya Law Reform Commission | Service Delivery | [View Document](Kenya_Law_Reform_Commission___Service_Delivery.md) |
+| 154. | Kenya Leather Development Council | Service Delivery | [View Document](Kenya_Leather_Development_Council___Service_Delivery.md) |
+| 155. | Kenya Literature Bureau | Service Delivery | [View Document](Kenya_Literature_Bureau___Service_Delivery.md) |
+| 156. | Kenya Marine and Fisheries Research Institute | Service Delivery | [View Document](Kenya_Marine_and_Fisheries_Research_Institute___Service_Delivery.md) |
+| 157. | Kenya Maritime Authority | Service Delivery | [View Document](Kenya_Maritime_Authority___Service_Delivery.md) |
+| 158. | Kenya Meat Commission | Service Delivery | [View Document](Kenya_Meat_Commission___Service_Delivery.md) |
+| 159. | Kenya Medical Laboratory Technicians and Technologists Board | Service Delivery | [View Document](Kenya_Medical_Laboratory_Technicians_and_Technologists_Board___Service_Delivery.md) |
+| 160. | Kenya Medical Practitioners and Dentists Council | Service Delivery | [View Document](Kenya_Medical_Practitioners_and_Dentists_Council___Service_Delivery.md) |
+| 161. | Kenya Medical Research Institute | Service Delivery | [View Document](Kenya_Medical_Research_Institute___Service_Delivery.md) |
+| 162. | Kenya Medical Training College | Student Admission | [View Document](Kenya_Medical_Training_College___Student_Admission.md) |
+| 163. | Kenya National Accreditation Service | Service Delivery | [View Document](Kenya_National_Accreditation_Service___Service_Delivery.md) |
+| 164. | Kenya National Assurance Co 2001 Limited | Service Delivery | [View Document](Kenya_National_Assurance_Co_2001_Limited___Service_Delivery.md) |
+| 165. | Kenya National Bureau of Statistics | Service Delivery | [View Document](Kenya_National_Bureau_of_Statistics___Service_Delivery.md) |
+| 166. | Kenya National Commission for UNESCO | Service Delivery | [View Document](Kenya_National_Commission_for_UNESCO___Service_Delivery.md) |
+| 167. | Kenya National Entepreneurs Savings Trust Limited | Service Delivery | [View Document](Kenya_National_Entepreneurs_Savings_Trust_Limited___Service_Delivery.md) |
+| 168. | Kenya National Examinations Council | Service Delivery | [View Document](Kenya_National_Examinations_Council___Service_Delivery.md) |
+| 169. | Kenya National Highways Authority | Procurement Process | [View Document](Kenya_National_Highways_Authority___Procurement_Process.md) |
+| 170. | Kenya National Highways Authority | Service Delivery | [View Document](Kenya_National_Highways_Authority___Service_Delivery.md) |
+| 171. | Kenya National Innovation Agency | Service Delivery | [View Document](Kenya_National_Innovation_Agency___Service_Delivery.md) |
+| 172. | Kenya National Library Service | Service Delivery | [View Document](Kenya_National_Library_Service___Service_Delivery.md) |
+| 173. | Kenya National Multi Commodities Exchange Ltd | Service Delivery | [View Document](Kenya_National_Multi_Commodities_Exchange_Ltd___Service_Delivery.md) |
+| 174. | Kenya National Public Health Institute KNPHI | Service Delivery | [View Document](Kenya_National_Public_Health_Institute_KNPHI____Service_Delivery.md) |
+| 175. | Kenya National Qualifications Authority | Service Delivery | [View Document](Kenya_National_Qualifications_Authority___Service_Delivery.md) |
+| 176. | Kenya National Shipping Line Ltd | Service Delivery | [View Document](Kenya_National_Shipping_Line_Ltd___Service_Delivery.md) |
+| 177. | Kenya National Trading Corporation | Service Delivery | [View Document](Kenya_National_Trading_Corporation___Service_Delivery.md) |
+| 178. | Kenya Nuclear Regulatory Authority | Service Delivery | [View Document](Kenya_Nuclear_Regulatory_Authority___Service_Delivery.md) |
+| 179. | Kenya Ordinance Factories Corporation | Service Delivery | [View Document](Kenya_Ordinance_Factories_Corporation___Service_Delivery.md) |
+| 180. | Kenya Petroleum Refineries Limited | Service Delivery | [View Document](Kenya_Petroleum_Refineries_Limited___Service_Delivery.md) |
+| 181. | Kenya Pipeline Company | Service Delivery | [View Document](Kenya_Pipeline_Company___Service_Delivery.md) |
+| 182. | Kenya Plant Health Inspectorate Services | Service Delivery | [View Document](Kenya_Plant_Health_Inspectorate_Services___Service_Delivery.md) |
+| 183. | Kenya Ports Authority | Service Delivery | [View Document](Kenya_Ports_Authority___Service_Delivery.md) |
+| 184. | Kenya Post Office Savings Bank | Service Delivery | [View Document](Kenya_Post_Office_Savings_Bank___Service_Delivery.md) |
+| 185. | Kenya Power and Lighting Company | Service Delivery | [View Document](Kenya_Power_and_Lighting_Company___Service_Delivery.md) |
+| 186. | Kenya Prison Enteprise Fund | Service Delivery | [View Document](Kenya_Prison_Enteprise_Fund___Service_Delivery.md) |
+| 187. | Kenya Railways Corporation | Service Delivery | [View Document](Kenya_Railways_Corporation___Service_Delivery.md) |
+| 188. | Kenya Reinsurance Corporation | Service Delivery | [View Document](Kenya_Reinsurance_Corporation___Service_Delivery.md) |
+| 189. | Kenya Revenue Authority | Tax Return Filing | [View Document](Kenya_Revenue_Authority___Tax_Return_Filing.md) |
+| 190. | Kenya Roads Board | Service Delivery | [View Document](Kenya_Roads_Board___Service_Delivery.md) |
+| 191. | Kenya Rural Roads Authority | Procurement Process | [View Document](Kenya_Rural_Roads_Authority___Procurement_Process.md) |
+| 192. | Kenya Rural Roads Authority | Service Delivery | [View Document](Kenya_Rural_Roads_Authority___Service_Delivery.md) |
+| 193. | Kenya Safari Lodges and Hotels Limited subsidiary of KDC | Service Delivery | [View Document](Kenya_Safari_Lodges_and_Hotels_Limited_subsidiary_of_KDC____Service_Delivery.md) |
+| 194. | Kenya School of Government | Service Delivery | [View Document](Kenya_School_of_Government___Service_Delivery.md) |
+| 195. | Kenya School of Law | Service Delivery | [View Document](Kenya_School_of_Law___Service_Delivery.md) |
+| 196. | Kenya School of TVET Kenya Technical Trainers College KTTC | Student Admission | [View Document](Kenya_School_of_TVET_Kenya_Technical_Trainers_College_KTTC____Student_Admission.md) |
+| 197. | Kenya Seed Company Limited subsidiary of ADC | Service Delivery | [View Document](Kenya_Seed_Company_Limited_subsidiary_of_ADC____Service_Delivery.md) |
+| 198. | Kenya Shipyard Limited | Service Delivery | [View Document](Kenya_Shipyard_Limited___Service_Delivery.md) |
+| 199. | Kenya Space Agency | Service Delivery | [View Document](Kenya_Space_Agency___Service_Delivery.md) |
+| 200. | Kenya Tissue and Transplant Authority | Service Delivery | [View Document](Kenya_Tissue_and_Transplant_Authority___Service_Delivery.md) |
+| 201. | Kenya Tourism Board | Service Delivery | [View Document](Kenya_Tourism_Board___Service_Delivery.md) |
+| 202. | Kenya Trade Network Agency | Service Delivery | [View Document](Kenya_Trade_Network_Agency___Service_Delivery.md) |
+| 203. | Kenya Trade Remedies Agency | Service Delivery | [View Document](Kenya_Trade_Remedies_Agency___Service_Delivery.md) |
+| 204. | Kenya Tsetse and Trypanosomiasis Eradication Council | Service Delivery | [View Document](Kenya_Tsetse_and_Trypanosomiasis_Eradication_Council___Service_Delivery.md) |
+| 205. | Kenya Universities And Colleges Central Placement Service | Student Admission | [View Document](Kenya_Universities_And_Colleges_Central_Placement_Service___Student_Admission.md) |
+| 206. | Kenya Urban Roads Authority | Procurement Process | [View Document](Kenya_Urban_Roads_Authority___Procurement_Process.md) |
+| 207. | Kenya Urban Roads Authority | Service Delivery | [View Document](Kenya_Urban_Roads_Authority___Service_Delivery.md) |
+| 208. | Kenya Utalii College | Student Admission | [View Document](Kenya_Utalii_College___Student_Admission.md) |
+| 209. | Kenya Veterinary Board | Service Delivery | [View Document](Kenya_Veterinary_Board___Service_Delivery.md) |
+| 210. | Kenya Veterinary Vaccines Production Institute | Service Delivery | [View Document](Kenya_Veterinary_Vaccines_Production_Institute___Service_Delivery.md) |
+| 211. | Kenya Water Institute | Service Delivery | [View Document](Kenya_Water_Institute___Service_Delivery.md) |
+| 212. | Kenya Water Towers Agency | Service Delivery | [View Document](Kenya_Water_Towers_Agency___Service_Delivery.md) |
+| 213. | Kenya Wildlife Service | Licensing and Permitting | [View Document](Kenya_Wildlife_Service___Licensing_and_Permitting.md) |
+| 214. | Kenya Yearbook Editorial Board | Service Delivery | [View Document](Kenya_Yearbook_Editorial_Board___Service_Delivery.md) |
+| 215. | Kenyatta International Convention Centre | Service Delivery | [View Document](Kenyatta_International_Convention_Centre___Service_Delivery.md) |
+| 216. | Kenyatta National Hospital | Patient Management | [View Document](Kenyatta_National_Hospital___Patient_Management.md) |
+| 217. | Kenyatta University Teaching Referral and Research Hospital | Student Admission | [View Document](Kenyatta_University_Teaching_Referral_and_Research_Hospital___Student_Admission.md) |
+| 218. | Kenyatta University | Student Admission | [View Document](Kenyatta_University___Student_Admission.md) |
+| 219. | Kerio Valley Development Authority | Procurement Process | [View Document](Kerio_Valley_Development_Authority___Procurement_Process.md) |
+| 220. | Kerio Valley Development Authority | Service Delivery | [View Document](Kerio_Valley_Development_Authority___Service_Delivery.md) |
+| 221. | Kibabii University | Student Admission | [View Document](Kibabii_University___Student_Admission.md) |
+| 222. | Kipchabo Tea Factory subsidiary Nyayo Tea Zone | Service Delivery | [View Document](Kipchabo_Tea_Factory_subsidiary_Nyayo_Tea_Zone____Service_Delivery.md) |
+| 223. | Kirinyaga University | Student Admission | [View Document](Kirinyaga_University___Student_Admission.md) |
+| 224. | Kisii National Polytechnic | Student Admission | [View Document](Kisii_National_Polytechnic___Student_Admission.md) |
+| 225. | Kisii University | Student Admission | [View Document](Kisii_University___Student_Admission.md) |
+| 226. | Kisumu National Polytechnic | Student Admission | [View Document](Kisumu_National_Polytechnic___Student_Admission.md) |
+| 227. | Kitale National Polytechnic | Student Admission | [View Document](Kitale_National_Polytechnic___Student_Admission.md) |
+| 228. | Koitaleel Samoei University College | Student Admission | [View Document](Koitaleel_Samoei_University_College___Student_Admission.md) |
+| 229. | Konza Technopolis Development Authority | Procurement Process | [View Document](Konza_Technopolis_Development_Authority___Procurement_Process.md) |
+| 230. | Konza Technopolis Development Authority | Service Delivery | [View Document](Konza_Technopolis_Development_Authority___Service_Delivery.md) |
+| 231. | LAPSSET Corridor Development Authority | Procurement Process | [View Document](LAPSSET_Corridor_Development_Authority___Procurement_Process.md) |
+| 232. | LAPSSET Corridor Development Authority | Service Delivery | [View Document](LAPSSET_Corridor_Development_Authority___Service_Delivery.md) |
+| 233. | Labour and Skills Development | Service Delivery | [View Document](Labour_and_Skills_Development___Service_Delivery.md) |
+| 234. | Laikipia University | Student Admission | [View Document](Laikipia_University___Student_Admission.md) |
+| 235. | Lake Basin Development Authority | Procurement Process | [View Document](Lake_Basin_Development_Authority___Procurement_Process.md) |
+| 236. | Lake Basin Development Authority | Service Delivery | [View Document](Lake_Basin_Development_Authority___Service_Delivery.md) |
+| 237. | Lake Victoria North Water Works Development Agency | Procurement Process | [View Document](Lake_Victoria_North_Water_Works_Development_Agency___Procurement_Process.md) |
+| 238. | Lake Victoria North Water Works Development Agency | Service Delivery | [View Document](Lake_Victoria_North_Water_Works_Development_Agency___Service_Delivery.md) |
+| 239. | Lake Victoria South Water Works Development Agency | Procurement Process | [View Document](Lake_Victoria_South_Water_Works_Development_Agency___Procurement_Process.md) |
+| 240. | Lake Victoria South Water Works Development Agency | Service Delivery | [View Document](Lake_Victoria_South_Water_Works_Development_Agency___Service_Delivery.md) |
+| 241. | Land Surveyors Board | Service Delivery | [View Document](Land_Surveyors_Board___Service_Delivery.md) |
+| 242. | Land and Physical Planning | Service Delivery | [View Document](Land_and_Physical_Planning___Service_Delivery.md) |
+| 243. | Lands Limited subsidiary of ADC | Service Delivery | [View Document](Lands_Limited_subsidiary_of_ADC____Service_Delivery.md) |
+| 244. | Livestock Development | Service Delivery | [View Document](Livestock_Development___Service_Delivery.md) |
+| 245. | Local Authorities Provident Fund | Service Delivery | [View Document](Local_Authorities_Provident_Fund___Service_Delivery.md) |
+| 246. | Local Authority Pension Trust Fund | Service Delivery | [View Document](Local_Authority_Pension_Trust_Fund___Service_Delivery.md) |
+| 247. | MINISTRY OF AGRICULTURE AND LIVESTOCK DEVELOPMENT | Service Delivery | [View Document](MINISTRY_OF_AGRICULTURE_AND_LIVESTOCK_DEVELOPMENT___Service_Delivery.md) |
+| 248. | MINISTRY OF ENERGY AND PETROLEUM | Service Delivery | [View Document](MINISTRY_OF_ENERGY_AND_PETROLEUM___Service_Delivery.md) |
+| 249. | MINISTRY OF INVESTMENT TRADE AND INDUSTRY | Service Delivery | [View Document](MINISTRY_OF_INVESTMENT_TRADE_AND_INDUSTRY___Service_Delivery.md) |
+| 250. | Maasai Mara University | Student Admission | [View Document](Maasai_Mara_University___Student_Admission.md) |
+| 251. | Machakos University | Student Admission | [View Document](Machakos_University___Student_Admission.md) |
+| 252. | Mama Ngina University College | Student Admission | [View Document](Mama_Ngina_University_College___Student_Admission.md) |
+| 253. | Maseno University | Student Admission | [View Document](Maseno_University___Student_Admission.md) |
+| 254. | Masinde Muliro University of Science And Technology | Student Admission | [View Document](Masinde_Muliro_University_of_Science_And_Technology___Student_Admission.md) |
+| 255. | Mathari National Teaching and Referral Hospital | Patient Management | [View Document](Mathari_National_Teaching_and_Referral_Hospital___Patient_Management.md) |
+| 256. | Media Council of Kenya | Service Delivery | [View Document](Media_Council_of_Kenya___Service_Delivery.md) |
+| 257. | Medical Services | Service Delivery | [View Document](Medical_Services___Service_Delivery.md) |
+| 258. | Meru National Polytechnic | Student Admission | [View Document](Meru_National_Polytechnic___Student_Admission.md) |
+| 259. | Meru University of Science and Technology | Student Admission | [View Document](Meru_University_of_Science_and_Technology___Student_Admission.md) |
+| 260. | Micro Small and Medium Enterprise Development | Service Delivery | [View Document](Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md) |
+| 261. | Micro and Small Enterprises Authority | Service Delivery | [View Document](Micro_and_Small_Enterprises_Authority___Service_Delivery.md) |
+| 262. | Mining | Service Delivery | [View Document](Mining___Service_Delivery.md) |
+| 263. | Ministry of Co-operatives and Micro Small and Medium Enterprises MSME Development | Service Delivery | [View Document](Ministry_of_Co-operatives_and_Micro_Small_and_Medium_Enterprises_MSME_Development___Service_Delivery.md) |
+| 264. | Ministry of Defence | Service Delivery | [View Document](Ministry_of_Defence___Service_Delivery.md) |
+| 265. | Ministry of East African Community EAC The ASALs and Regional Development | Service Delivery | [View Document](Ministry_of_East_African_Community_EAC_The_ASALs_and_Regional_Development___Service_Delivery.md) |
+| 266. | Ministry of Education | Service Delivery | [View Document](Ministry_of_Education___Service_Delivery.md) |
+| 267. | Ministry of Environment and Forestry | Service Delivery | [View Document](Ministry_of_Environment_and_Forestry___Service_Delivery.md) |
+| 268. | Ministry of Foreign and Diaspora Affairs | Service Delivery | [View Document](Ministry_of_Foreign_and_Diaspora_Affairs___Service_Delivery.md) |
+| 269. | Ministry of Health | Service Delivery | [View Document](Ministry_of_Health___Service_Delivery.md) |
+| 270. | Ministry of Information Communications and The Digital Economy | Service Delivery | [View Document](Ministry_of_Information_Communications_and_The_Digital_Economy___Service_Delivery.md) |
+| 271. | Ministry of Interior and National Administration | Service Delivery | [View Document](Ministry_of_Interior_and_National_Administration___Service_Delivery.md) |
+| 272. | Ministry of Labour and Social Protection | Service Delivery | [View Document](Ministry_of_Labour_and_Social_Protection___Service_Delivery.md) |
+| 273. | Ministry of Lands Public Works Housing and Urban Development | Service Delivery | [View Document](Ministry_of_Lands_Public_Works_Housing_and_Urban_Development___Service_Delivery.md) |
+| 274. | Ministry of Mining Blue Economy and Maritime Affairs | Service Delivery | [View Document](Ministry_of_Mining_Blue_Economy_and_Maritime_Affairs___Service_Delivery.md) |
+| 275. | Ministry of Public Service Gender and Affirmative Action | Service Delivery | [View Document](Ministry_of_Public_Service_Gender_and_Affirmative_Action___Service_Delivery.md) |
+| 276. | Ministry of Roads and Transport | Service Delivery | [View Document](Ministry_of_Roads_and_Transport___Service_Delivery.md) |
+| 277. | Ministry of Tourism Wildlife and Heritage | Service Delivery | [View Document](Ministry_of_Tourism_Wildlife_and_Heritage___Service_Delivery.md) |
+| 278. | Ministry of Trade Investments and Industry | Service Delivery | [View Document](Ministry_of_Trade_Investments_and_Industry___Service_Delivery.md) |
+| 279. | Ministry of Water Sanitation and Irrigation | Service Delivery | [View Document](Ministry_of_Water_Sanitation_and_Irrigation___Service_Delivery.md) |
+| 280. | Ministry of Youth Sports and The Arts | Service Delivery | [View Document](Ministry_of_Youth_Sports_and_The_Arts___Service_Delivery.md) |
+| 281. | Miwani Sugar Company Limited | Service Delivery | [View Document](Miwani_Sugar_Company_Limited___Service_Delivery.md) |
+| 282. | Moi Teaching and Referral Hospital | Patient Management | [View Document](Moi_Teaching_and_Referral_Hospital___Patient_Management.md) |
+| 283. | Moi University | Student Admission | [View Document](Moi_University___Student_Admission.md) |
+| 284. | Mt Elgon Lodge subsidiary of KDC | Service Delivery | [View Document](Mt_Elgon_Lodge_subsidiary_of_KDC____Service_Delivery.md) |
+| 285. | Muhoroni Sugar Company Ltd | Service Delivery | [View Document](Muhoroni_Sugar_Company_Ltd___Service_Delivery.md) |
+| 286. | Multimedia University of Kenya | Student Admission | [View Document](Multimedia_University_of_Kenya___Student_Admission.md) |
+| 287. | Murang a University of Technology | Student Admission | [View Document](Murang_a_University_of_Technology___Student_Admission.md) |
+| 288. | Mwea Rice Mills | Service Delivery | [View Document](Mwea_Rice_Mills___Service_Delivery.md) |
+| 289. | NATIONAL ENVIRONMENT AND MANAGEMENT AUTHORITY | Service Delivery | [View Document](NATIONAL_ENVIRONMENT_AND_MANAGEMENT_AUTHORITY___Service_Delivery.md) |
+| 290. | NATIONAL POLICE SERVICE NPS | Service Delivery | [View Document](NATIONAL_POLICE_SERVICE_NPS____Service_Delivery.md) |
+| 291. | NATIONAL TRANSPORT AND SAFETY AUTHORITY NTSA | Driving License Renewal | [View Document](NATIONAL_TRANSPORT_AND_SAFETY_AUTHORITY_NTSA____Driving_License_Renewal.md) |
+| 292. | Nairobi Centre for International Arbitration | Service Delivery | [View Document](Nairobi_Centre_for_International_Arbitration___Service_Delivery.md) |
+| 293. | Nairobi International Financial Center | Service Delivery | [View Document](Nairobi_International_Financial_Center___Service_Delivery.md) |
+| 294. | Nairobi Metropolitan AreaTransport Authority | Service Delivery | [View Document](Nairobi_Metropolitan_AreaTransport_Authority___Service_Delivery.md) |
+| 295. | National Authority for the Campaign Against Alcohol And Drug Abuse | Service Delivery | [View Document](National_Authority_for_the_Campaign_Against_Alcohol_And_Drug_Abuse___Service_Delivery.md) |
+| 296. | National Biosafety Authority | Service Delivery | [View Document](National_Biosafety_Authority___Service_Delivery.md) |
+| 297. | National Cancer Institute of Kenya | Service Delivery | [View Document](National_Cancer_Institute_of_Kenya___Service_Delivery.md) |
+| 298. | National Cereals and Produce Board | Service Delivery | [View Document](National_Cereals_and_Produce_Board___Service_Delivery.md) |
+| 299. | National Commission For Science Technology and Innovation | Service Delivery | [View Document](National_Commission_For_Science_Technology_and_Innovation___Service_Delivery.md) |
+| 300. | National Construction Authority | Service Delivery | [View Document](National_Construction_Authority___Service_Delivery.md) |
+| 301. | National Coroners Service | Service Delivery | [View Document](National_Coroners_Service___Service_Delivery.md) |
+| 302. | National Council for Children s Services | Service Delivery | [View Document](National_Council_for_Children_s_Services___Service_Delivery.md) |
+| 303. | National Council for Law Reporting | Service Delivery | [View Document](National_Council_for_Law_Reporting___Service_Delivery.md) |
+| 304. | National Council for Persons With Disabilities | Service Delivery | [View Document](National_Council_for_Persons_With_Disabilities___Service_Delivery.md) |
+| 305. | National Council for Population and Development | Service Delivery | [View Document](National_Council_for_Population_and_Development___Service_Delivery.md) |
+| 306. | National Crime Research Centre | Service Delivery | [View Document](National_Crime_Research_Centre___Service_Delivery.md) |
+| 307. | National Defense University - Kenya | Student Admission | [View Document](National_Defense_University_-_Kenya___Student_Admission.md) |
+| 308. | National Drought Management Authority | Service Delivery | [View Document](National_Drought_Management_Authority___Service_Delivery.md) |
+| 309. | National Employment Authority | Service Delivery | [View Document](National_Employment_Authority___Service_Delivery.md) |
+| 310. | National Environment Management Authority | Service Delivery | [View Document](National_Environment_Management_Authority___Service_Delivery.md) |
+| 311. | National Environment Trust Fund | Service Delivery | [View Document](National_Environment_Trust_Fund___Service_Delivery.md) |
+| 312. | National Government Affirmative Action Fund | Service Delivery | [View Document](National_Government_Affirmative_Action_Fund___Service_Delivery.md) |
+| 313. | National Government Constituencies Development Fund | Service Delivery | [View Document](National_Government_Constituencies_Development_Fund___Service_Delivery.md) |
+| 314. | National Health Insurance Fund | Service Delivery | [View Document](National_Health_Insurance_Fund___Service_Delivery.md) |
+| 315. | National Heroes Council | Service Delivery | [View Document](National_Heroes_Council___Service_Delivery.md) |
+| 316. | National Housing Corporation | Service Delivery | [View Document](National_Housing_Corporation___Service_Delivery.md) |
+| 317. | National Industrial Training Authority | Service Delivery | [View Document](National_Industrial_Training_Authority___Service_Delivery.md) |
+| 318. | National Informal Sector Pensions Ltd | Service Delivery | [View Document](National_Informal_Sector_Pensions_Ltd___Service_Delivery.md) |
+| 319. | National Irrigation Authority | Service Delivery | [View Document](National_Irrigation_Authority___Service_Delivery.md) |
+| 320. | National Legal Aid Service | Service Delivery | [View Document](National_Legal_Aid_Service___Service_Delivery.md) |
+| 321. | National Mining Corporation | Service Delivery | [View Document](National_Mining_Corporation___Service_Delivery.md) |
+| 322. | National Museums of Kenya | Service Delivery | [View Document](National_Museums_of_Kenya___Service_Delivery.md) |
+| 323. | National Oil Corporation of Kenya | Service Delivery | [View Document](National_Oil_Corporation_of_Kenya___Service_Delivery.md) |
+| 324. | National Quality Control Laboratory | Service Delivery | [View Document](National_Quality_Control_Laboratory___Service_Delivery.md) |
+| 325. | National Social Security Assistance Authority | Service Delivery | [View Document](National_Social_Security_Assistance_Authority___Service_Delivery.md) |
+| 326. | National Social Security Fund | Service Delivery | [View Document](National_Social_Security_Fund___Service_Delivery.md) |
+| 327. | National Syndemic Diseases Control Council | Service Delivery | [View Document](National_Syndemic_Diseases_Control_Council___Service_Delivery.md) |
+| 328. | National Transport and Safety Authority | Driving License Renewal | [View Document](National_Transport_and_Safety_Authority___Driving_License_Renewal.md) |
+| 329. | National Treasury and Economic Planning The | Service Delivery | [View Document](National_Treasury_and_Economic_Planning_The___Service_Delivery.md) |
+| 330. | National Water Harvesting and Storage Authority | Service Delivery | [View Document](National_Water_Harvesting_and_Storage_Authority___Service_Delivery.md) |
+| 331. | National Youth Council | Service Delivery | [View Document](National_Youth_Council___Service_Delivery.md) |
+| 332. | National Youth Service | Service Delivery | [View Document](National_Youth_Service___Service_Delivery.md) |
+| 333. | New Kenya Co-operative Creameries Limited | Service Delivery | [View Document](New_Kenya_Co-operative_Creameries_Limited___Service_Delivery.md) |
+| 334. | New Kenya Planters Cooperative Union | Service Delivery | [View Document](New_Kenya_Planters_Cooperative_Union___Service_Delivery.md) |
+| 335. | North Eastern National Polytechnic | Student Admission | [View Document](North_Eastern_National_Polytechnic___Student_Admission.md) |
+| 336. | North Rift Valley Water Works Development Agency | Procurement Process | [View Document](North_Rift_Valley_Water_Works_Development_Agency___Procurement_Process.md) |
+| 337. | North Rift Valley Water Works Development Agency | Service Delivery | [View Document](North_Rift_Valley_Water_Works_Development_Agency___Service_Delivery.md) |
+| 338. | Northern Water Works Development Agency | Procurement Process | [View Document](Northern_Water_Works_Development_Agency___Procurement_Process.md) |
+| 339. | Northern Water Works Development Agency | Service Delivery | [View Document](Northern_Water_Works_Development_Agency___Service_Delivery.md) |
+| 340. | Nuclear Power and Energy Agency | Service Delivery | [View Document](Nuclear_Power_and_Energy_Agency___Service_Delivery.md) |
+| 341. | Numerical Machining Complex Limited | Service Delivery | [View Document](Numerical_Machining_Complex_Limited___Service_Delivery.md) |
+| 342. | Nursing Council of Kenya | Service Delivery | [View Document](Nursing_Council_of_Kenya___Service_Delivery.md) |
+| 343. | Nyandarua National Polytechnic | Student Admission | [View Document](Nyandarua_National_Polytechnic___Student_Admission.md) |
+| 344. | Nyayo Tea Zones Development Corporation | Service Delivery | [View Document](Nyayo_Tea_Zones_Development_Corporation___Service_Delivery.md) |
+| 345. | Nyeri National Polytechnic | Student Admission | [View Document](Nyeri_National_Polytechnic___Student_Admission.md) |
+| 346. | Nzoia Sugar Company Limited | Service Delivery | [View Document](Nzoia_Sugar_Company_Limited___Service_Delivery.md) |
+| 347. | OFFICE OF THE ATTORNEY GENERAL AG | Service Delivery | [View Document](OFFICE_OF_THE_ATTORNEY_GENERAL_AG____Service_Delivery.md) |
+| 348. | OFFICE OF THE DATA PROTECTION COMMISIONER ODPC | Service Delivery | [View Document](OFFICE_OF_THE_DATA_PROTECTION_COMMISIONER_ODPC____Service_Delivery.md) |
+| 349. | Occupational Therapy Council of Kenya | Service Delivery | [View Document](Occupational_Therapy_Council_of_Kenya___Service_Delivery.md) |
+| 350. | PUBLIC SERVICE COMMISION PSC | Service Delivery | [View Document](PUBLIC_SERVICE_COMMISION_PSC____Service_Delivery.md) |
+| 351. | Petroleum | Service Delivery | [View Document](Petroleum___Service_Delivery.md) |
+| 352. | Pharmacy and Poisons Board | Licensing and Permitting | [View Document](Pharmacy_and_Poisons_Board___Licensing_and_Permitting.md) |
+| 353. | Physical Planners Registration Board | Service Delivery | [View Document](Physical_Planners_Registration_Board___Service_Delivery.md) |
+| 354. | Physiotherapy Council | Service Delivery | [View Document](Physiotherapy_Council___Service_Delivery.md) |
+| 355. | Policy Holders Compensation Fund | Service Delivery | [View Document](Policy_Holders_Compensation_Fund___Service_Delivery.md) |
+| 356. | Postal Corporation of Kenya | Service Delivery | [View Document](Postal_Corporation_of_Kenya___Service_Delivery.md) |
+| 357. | Private Security Regulatory Authority | Service Delivery | [View Document](Private_Security_Regulatory_Authority___Service_Delivery.md) |
+| 358. | Privatization Commission | Service Delivery | [View Document](Privatization_Commission___Service_Delivery.md) |
+| 359. | Public Benefits Organizations Regulatory Authority NGO Coordinating Board | Service Delivery | [View Document](Public_Benefits_Organizations_Regulatory_Authority_NGO_Coordinating_Board___Service_Delivery.md) |
+| 360. | Public Health Officers and Technicians Council | Service Delivery | [View Document](Public_Health_Officers_and_Technicians_Council___Service_Delivery.md) |
+| 361. | Public Procurement Regulatory Authority | Procurement Process | [View Document](Public_Procurement_Regulatory_Authority___Procurement_Process.md) |
+| 362. | Public Procurement Regulatory Authority | Service Delivery | [View Document](Public_Procurement_Regulatory_Authority___Service_Delivery.md) |
+| 363. | Public Service Superannuation Fund Board | Service Delivery | [View Document](Public_Service_Superannuation_Fund_Board___Service_Delivery.md) |
+| 364. | Public Service | Service Delivery | [View Document](Public_Service___Service_Delivery.md) |
+| 365. | Public Works | Service Delivery | [View Document](Public_Works___Service_Delivery.md) |
+| 366. | Pwani University | Student Admission | [View Document](Pwani_University___Student_Admission.md) |
+| 367. | Pyrethrum Processing Company of Kenya | Service Delivery | [View Document](Pyrethrum_Processing_Company_of_Kenya___Service_Delivery.md) |
+| 368. | Railway City Development Authority | Procurement Process | [View Document](Railway_City_Development_Authority___Procurement_Process.md) |
+| 369. | Railway City Development Authority | Service Delivery | [View Document](Railway_City_Development_Authority___Service_Delivery.md) |
+| 370. | Regional Centre on Groundwater Resources Education Training and Research | Licensing and Permitting | [View Document](Regional_Centre_on_Groundwater_Resources_Education_Training_and_Research___Licensing_and_Permitting.md) |
+| 371. | Registration of Certified Public Accountants Board | Service Delivery | [View Document](Registration_of_Certified_Public_Accountants_Board___Service_Delivery.md) |
+| 372. | Registration of Certified Public Secretaries Board | Service Delivery | [View Document](Registration_of_Certified_Public_Secretaries_Board___Service_Delivery.md) |
+| 373. | Research Development Unit Co Ltd | Service Delivery | [View Document](Research_Development_Unit_Co_Ltd___Service_Delivery.md) |
+| 374. | Retirement Benefits Authority | Service Delivery | [View Document](Retirement_Benefits_Authority___Service_Delivery.md) |
+| 375. | Rivatex East Africa Ltd Subsidiary of Moi University | Student Admission | [View Document](Rivatex_East_Africa_Ltd_Subsidiary_of_Moi_University____Student_Admission.md) |
+| 376. | Roads | Service Delivery | [View Document](Roads___Service_Delivery.md) |
+| 377. | Rongo University | Student Admission | [View Document](Rongo_University___Student_Admission.md) |
+| 378. | Rural Electrification and Renewable Energy Corporation | Service Delivery | [View Document](Rural_Electrification_and_Renewable_Energy_Corporation___Service_Delivery.md) |
+| 379. | SACCO Societies Regulatory Authority | Service Delivery | [View Document](SACCO_Societies_Regulatory_Authority___Service_Delivery.md) |
+| 380. | STATE DEPARTMENT FOR BASIC EDUCATION | Service Delivery | [View Document](STATE_DEPARTMENT_FOR_BASIC_EDUCATION___Service_Delivery.md) |
+| 381. | STATE DEPARTMENT FOR CORRECTIONAL SERVICES | Service Delivery | [View Document](STATE_DEPARTMENT_FOR_CORRECTIONAL_SERVICES___Service_Delivery.md) |
+| 382. | STATE DEPARTMENT FOR ENVIRONMENT | Service Delivery | [View Document](STATE_DEPARTMENT_FOR_ENVIRONMENT___Service_Delivery.md) |
+| 383. | STATE DEPARTMENT FOR IMMIGRATION AND CITIZEN SERVICES | Passport Application | [View Document](STATE_DEPARTMENT_FOR_IMMIGRATION_AND_CITIZEN_SERVICES___Passport_Application.md) |
+| 384. | STATE DEPARTMENT FOR LANDS AND PHYSICAL PLANNING | Service Delivery | [View Document](STATE_DEPARTMENT_FOR_LANDS_AND_PHYSICAL_PLANNING___Service_Delivery.md) |
+| 385. | STATE DEPARTMENT FOR MINING | Service Delivery | [View Document](STATE_DEPARTMENT_FOR_MINING___Service_Delivery.md) |
+| 386. | STATE DEPARTMENT FOR PARLIAMENTARY AFFAIRS | Service Delivery | [View Document](STATE_DEPARTMENT_FOR_PARLIAMENTARY_AFFAIRS___Service_Delivery.md) |
+| 387. | STATE DEPARTMENT FOR PUBLIC HEALTH | Service Delivery | [View Document](STATE_DEPARTMENT_FOR_PUBLIC_HEALTH___Service_Delivery.md) |
+| 388. | STATE DEPARTMENT FOR PUBLIC SERVICE AND HUMAN CAPITAL | Service Delivery | [View Document](STATE_DEPARTMENT_FOR_PUBLIC_SERVICE_AND_HUMAN_CAPITAL___Service_Delivery.md) |
+| 389. | STATE DEPARTMENT FOR TRANSPORT | Service Delivery | [View Document](STATE_DEPARTMENT_FOR_TRANSPORT___Service_Delivery.md) |
+| 390. | STATE DEPARTMENT FOR TVET | Service Delivery | [View Document](STATE_DEPARTMENT_FOR_TVET___Service_Delivery.md) |
+| 391. | STATE DEPARTMENT OF MEDICAL SERVICES | Service Delivery | [View Document](STATE_DEPARTMENT_OF_MEDICAL_SERVICES___Service_Delivery.md) |
+| 392. | School Equipment Production Unit | Service Delivery | [View Document](School_Equipment_Production_Unit___Service_Delivery.md) |
+| 393. | Scrap Metal Council | Service Delivery | [View Document](Scrap_Metal_Council___Service_Delivery.md) |
+| 394. | Shipping and Maritime Affairs | Service Delivery | [View Document](Shipping_and_Maritime_Affairs___Service_Delivery.md) |
+| 395. | Sigalagala National Polytechnic | Student Admission | [View Document](Sigalagala_National_Polytechnic___Student_Admission.md) |
+| 396. | Simlaw Seeds Kenya Ltd Subsidiary of Kenya Seed Co | Service Delivery | [View Document](Simlaw_Seeds_Kenya_Ltd_Subsidiary_of_Kenya_Seed_Co____Service_Delivery.md) |
+| 397. | Simlaw Seeds Tanzania Subsidiary of Kenya Seed Co | Service Delivery | [View Document](Simlaw_Seeds_Tanzania_Subsidiary_of_Kenya_Seed_Co____Service_Delivery.md) |
+| 398. | Simlaw Seeds Uganda Ltd Subsidiary of Kenya Seed Co | Service Delivery | [View Document](Simlaw_Seeds_Uganda_Ltd_Subsidiary_of_Kenya_Seed_Co____Service_Delivery.md) |
+| 399. | Social Security and Protection | Service Delivery | [View Document](Social_Security_and_Protection___Service_Delivery.md) |
+| 400. | Solicitor General | Service Delivery | [View Document](Solicitor_General___Service_Delivery.md) |
+| 401. | South Eastern Kenya University | Student Admission | [View Document](South_Eastern_Kenya_University___Student_Admission.md) |
+| 402. | South Nyanza Sugar Company Limited | Service Delivery | [View Document](South_Nyanza_Sugar_Company_Limited___Service_Delivery.md) |
+| 403. | Special Economic Zones Authority | Service Delivery | [View Document](Special_Economic_Zones_Authority___Service_Delivery.md) |
+| 404. | Sports Kenya | Service Delivery | [View Document](Sports_Kenya___Service_Delivery.md) |
+| 405. | Sports and the Arts | Service Delivery | [View Document](Sports_and_the_Arts___Service_Delivery.md) |
+| 406. | State Law Office The | Service Delivery | [View Document](State_Law_Office_The___Service_Delivery.md) |
+| 407. | Street Families Rehabilitation Fund | Service Delivery | [View Document](Street_Families_Rehabilitation_Fund___Service_Delivery.md) |
+| 408. | Sunset Hotel Kisumu Subsidiary of Kenya Development Corporation | Service Delivery | [View Document](Sunset_Hotel_Kisumu_Subsidiary_of_Kenya_Development_Corporation____Service_Delivery.md) |
+| 409. | THE JUDICIARY | Service Delivery | [View Document](THE_JUDICIARY___Service_Delivery.md) |
+| 410. | THE NATIONAL TREASURY | Service Delivery | [View Document](THE_NATIONAL_TREASURY___Service_Delivery.md) |
+| 411. | Taita Taveta University | Student Admission | [View Document](Taita_Taveta_University___Student_Admission.md) |
+| 412. | Tana Water Works Development Agency | Procurement Process | [View Document](Tana_Water_Works_Development_Agency___Procurement_Process.md) |
+| 413. | Tana Water Works Development Agency | Service Delivery | [View Document](Tana_Water_Works_Development_Agency___Service_Delivery.md) |
+| 414. | Tana and Athi Rivers Development Authority | Procurement Process | [View Document](Tana_and_Athi_Rivers_Development_Authority___Procurement_Process.md) |
+| 415. | Tana and Athi Rivers Development Authority | Service Delivery | [View Document](Tana_and_Athi_Rivers_Development_Authority___Service_Delivery.md) |
+| 416. | Tanathi Water Works Development Agency | Procurement Process | [View Document](Tanathi_Water_Works_Development_Agency___Procurement_Process.md) |
+| 417. | Tanathi Water Works Development Agency | Service Delivery | [View Document](Tanathi_Water_Works_Development_Agency___Service_Delivery.md) |
+| 418. | Tea Board of Kenya | Service Delivery | [View Document](Tea_Board_of_Kenya___Service_Delivery.md) |
+| 419. | Technical University of Kenya | Student Admission | [View Document](Technical_University_of_Kenya___Student_Admission.md) |
+| 420. | Technical University of Mombasa | Student Admission | [View Document](Technical_University_of_Mombasa___Student_Admission.md) |
+| 421. | Technical Vocational Education and Training | Service Delivery | [View Document](Technical_Vocational_Education_and_Training___Service_Delivery.md) |
+| 422. | Technical and Vocational Education and Training Authority | Service Delivery | [View Document](Technical_and_Vocational_Education_and_Training_Authority___Service_Delivery.md) |
+| 423. | Technical and Vocational Education and Training Curriculum Development Assessment and Certification | Service Delivery | [View Document](Technical_and_Vocational_Education_and_Training_Curriculum_Development_Assessment_and_Certification___Service_Delivery.md) |
+| 424. | Telkom Kenya Limited | Service Delivery | [View Document](Telkom_Kenya_Limited___Service_Delivery.md) |
+| 425. | Tharaka University | Student Admission | [View Document](Tharaka_University___Student_Admission.md) |
+| 426. | The Blue Economy and Fisheries | Service Delivery | [View Document](The_Blue_Economy_and_Fisheries___Service_Delivery.md) |
+| 427. | The Eldoret National Polytechnic | Student Admission | [View Document](The_Eldoret_National_Polytechnic___Student_Admission.md) |
+| 428. | The Presidents Award-Kenya | Service Delivery | [View Document](The_Presidents_Award-Kenya___Service_Delivery.md) |
+| 429. | Tom Mboya University | Student Admission | [View Document](Tom_Mboya_University___Student_Admission.md) |
+| 430. | Tourism Finance Corporation | Service Delivery | [View Document](Tourism_Finance_Corporation___Service_Delivery.md) |
+| 431. | Tourism Fund | Service Delivery | [View Document](Tourism_Fund___Service_Delivery.md) |
+| 432. | Tourism Regulatory Authority | Service Delivery | [View Document](Tourism_Regulatory_Authority___Service_Delivery.md) |
+| 433. | Tourism Research Institute | Service Delivery | [View Document](Tourism_Research_Institute___Service_Delivery.md) |
+| 434. | Tourism and Wildlife | Service Delivery | [View Document](Tourism_and_Wildlife___Service_Delivery.md) |
+| 435. | Trade | Service Delivery | [View Document](Trade___Service_Delivery.md) |
+| 436. | Transport | Service Delivery | [View Document](Transport___Service_Delivery.md) |
+| 437. | Turkana University College | Student Admission | [View Document](Turkana_University_College___Student_Admission.md) |
+| 438. | Unclaimed Financial Assets Authority | Service Delivery | [View Document](Unclaimed_Financial_Assets_Authority___Service_Delivery.md) |
+| 439. | University of Eldoret | Student Admission | [View Document](University_of_Eldoret___Student_Admission.md) |
+| 440. | University of Embu | Student Admission | [View Document](University_of_Embu___Student_Admission.md) |
+| 441. | University of Kabianga | Student Admission | [View Document](University_of_Kabianga___Student_Admission.md) |
+| 442. | University of Nairobi Enterprises and Services Limited Subsidiary of University of Nairobi | Student Admission | [View Document](University_of_Nairobi_Enterprises_and_Services_Limited_Subsidiary_of_University_of_Nairobi____Student_Admission.md) |
+| 443. | University of Nairobi Press Subsidiary of University of Nairobi | Student Admission | [View Document](University_of_Nairobi_Press_Subsidiary_of_University_of_Nairobi____Student_Admission.md) |
+| 444. | University of Nairobi | Student Admission | [View Document](University_of_Nairobi___Student_Admission.md) |
+| 445. | Veterinary Medicines Directorate | Service Delivery | [View Document](Veterinary_Medicines_Directorate___Service_Delivery.md) |
+| 446. | Victims Protection Board | Service Delivery | [View Document](Victims_Protection_Board___Service_Delivery.md) |
+| 447. | Warehouse Receipt System Council | Service Delivery | [View Document](Warehouse_Receipt_System_Council___Service_Delivery.md) |
+| 448. | Water Resources Authority | Licensing and Permitting | [View Document](Water_Resources_Authority___Licensing_and_Permitting.md) |
+| 449. | Water Sanitation and Irrigation | Service Delivery | [View Document](Water_Sanitation_and_Irrigation___Service_Delivery.md) |
+| 450. | Water Sector Trust Fund | Service Delivery | [View Document](Water_Sector_Trust_Fund___Service_Delivery.md) |
+| 451. | Water Services Regulatory Board | Service Delivery | [View Document](Water_Services_Regulatory_Board___Service_Delivery.md) |
+| 452. | Western Kenya Rice Mills Ltd Subsidiary of NIA | Service Delivery | [View Document](Western_Kenya_Rice_Mills_Ltd_Subsidiary_of_NIA____Service_Delivery.md) |
+| 453. | Wildlife Research Training Institute | Service Delivery | [View Document](Wildlife_Research_Training_Institute___Service_Delivery.md) |
+| 454. | Youth Affairs | Service Delivery | [View Document](Youth_Affairs___Service_Delivery.md) |
+| 455. | Youth Enterprise Development Fund | Service Delivery | [View Document](Youth_Enterprise_Development_Fund___Service_Delivery.md) |
+| 456. | CIVIL REGISTRATION SERVICES CRS | Service Delivery | [View Document](_CIVIL_REGISTRATION_SERVICES_CRS____Service_Delivery.md) |
+| 457. | E CITIZEN | Service Delivery | [View Document](_E_CITIZEN___Service_Delivery.md) |
+| 458. | INTEGRATED POPULATION REGISTRATION SYSTEM | Service Delivery | [View Document](_INTEGRATED_POPULATION_REGISTRATION_SYSTEM___Service_Delivery.md) |
+| 459. | NATIONAL REGISTRATION BUREAU NRB | Service Delivery | [View Document](_NATIONAL_REGISTRATION_BUREAU_NRB____Service_Delivery.md) |
+| 460. | REFUGEE SERVICES | Service Delivery | [View Document](_REFUGEE_SERVICES___Service_Delivery.md) |
