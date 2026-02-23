@@ -25,7 +25,9 @@ This document outlines the key Ministries, Departments, and Agencies (MDAs) invo
 
 *   **Ministry of Education**
     *   *File:* [`Ministry_of_Education___Service_Delivery.md`](./Ministry_of_Education___Service_Delivery.md)
-    *   *Role:* issuance of **NEMIS** (National Education Management Information System) numbers for school enrollment.
+    *   *Role:* Issuance of **NEMIS** (National Education Management Information System) numbers for school enrollment.
+*   **National Schools Registry**
+    *   *Role:* The authoritative database for all accredited basic education institutions, used for school selection and geo-spatial mapping.
 *   **Kenya National Examinations Council (KNEC)**
     *   *File:* `Kenya_National_Examinations_Council___Service_Delivery.md`
     *   *Role:* Administration of national exams (KPSEA, KCSE) and certification.

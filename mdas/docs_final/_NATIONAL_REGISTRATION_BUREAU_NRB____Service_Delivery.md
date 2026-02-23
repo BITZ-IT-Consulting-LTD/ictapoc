@@ -20,43 +20,44 @@ The National Registration Bureau (NRB) is responsible for the identification and
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph Applicant [Citizen turning 18]
-        S1["Attains age of 18"]
-        S2["Visits Chief/Assistant Chief for Introduction"]
-        S3["Visits NRB Office / Huduma Centre"]
-        S6["Waits for SMS Notification (2-6 months)"]
-        S7["Collects ID Card"]
+
+    subgraph Applicant [Applicant]
+        S1["**Preparation:** Obtains parents' ID copies and Birth Cer..."]
+        S3["**Application:** Visits the NRB office (Registrar of Pers..."]
+        S7["**Collection:** Applicant receives SMS (sometimes), visit..."]
     end
-    subgraph Chief [Chief / Assistant Chief]
-        S2a["Vets Applicant & Parents"]
-        S2b["Signs Introduction Letter"]
+
+    subgraph Chief___Assistant_Chief [Chief / Assistant Chief]
+        S2["**Vetting:** Visits the local administrator for verificat..."]
     end
-    subgraph NRBOfficer [Registration Officer]
-        S4["Vets Documents (Birth Cert, Parent IDs)"]
-        S5["Captures Biometrics (Fingerprints) & Photo"]
-        S5a["Fills Form 136A (Manual/Digital)"]
+
+    subgraph NRB_Officer [NRB Officer]
+        S4["**Data Capture:** Officer verifies documents against orig..."]
     end
-    subgraph ProductionCentre [NRB HQ - Nairobi]
-        S5b["Receives Batch"]
-        S5c["Quality Assurance & AFIS Check"]
-        S5d["Prints Card"]
-        S5e["Dispatches to Station"]
+
+    subgraph NRB_HQ [NRB HQ]
+        S5["**Processing:** Data transmitted to HQ (Nairobi)."]
     end
-    
+
+    subgraph Logistics [Logistics]
+        S6["**Dispatch:** Cards are batched and sent back to the dist..."]
+    end
     S1 --> S2
-    S2 --> S2a
-    S2a --> S2b
-    S2b --> S3
+    S2 --> S3
     S3 --> S4
     S4 --> S5
-    S5 --> S5a
-    S5a --> S5b
-    S5b --> S5c
-    S5c --> S5d
-    S5d --> S5e
-    S5e --> S6
+    S5 --> S6
     S6 --> S7
     S7 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5,S6,S7 userTask;
 ```
 
 ---
@@ -98,15 +99,19 @@ National Identity Card Registration (New Application & Replacement)
 ## Detailed Process (AS-IS)
 | Step | Role | Action | Tool | Notes |
 |---|---|---|---|---|
-| 1 | Applicant | **Preparation:** Obtains parents' ID copies and Birth Certificate. | Manual | Mandatory documents. |
-| 2 | Chief / Assistant Chief | **Vetting:** Visits the local administrator for verification of village of origin. Chief signs the introduction letter. | Manual Letter | Crucial for border counties to prevent illegal registration. |
-| 3 | Applicant | **Application:** Visits the NRB office (Registrar of Persons) or Huduma Centre. | Manual Queue | Long queues common. |
-| 4 | NRB Officer | **Data Capture:** Officer verifies documents against originals. Captures 10 fingerprints (digital scanner or ink pad) and photo. Fills Form 136A. | Live Scan Kit / Form 136A | Connectivity issues often force fallback to manual forms. |
-| 5 | NRB HQ | **Processing:** Data transmitted to HQ (Nairobi). 
-- **AFIS:** Automated Fingerprint Identification System checks for duplicates. 
-- **Production:** Card is printed. | AFIS / Production Machines | Backlogs occur frequently due to material shortages or system downtime. |
-| 6 | Logistics | **Dispatch:** Cards are batched and sent back to the district registrar. | Physical Courier | Delays in transport to remote areas. |
-| 7 | Applicant | **Collection:** Applicant receives SMS (sometimes), visits office to collect card. | Physical Logbook | Uncollected IDs pile up at offices. |
+| 1 | Citizen | **Trigger:** Reaches 18 years of age. Becomes eligible for ID. | N/A | |
+| 2 | Citizen | **Visit:** Physically visits NRB Office, Chief's Camp, or Huduma Centre. | Physical Presence | Must appear in person. |
+| 3 | Citizen | **Form Acquisition:** Obtains **Form REG.136A**. Fills Name, DOB, Place of Birth, Parents, Location, Occupation. | Paper Form | Manual data entry by citizen. |
+| 4 | Citizen | **Submission:** Presents mandatory documents: Original Birth Cert, Copy of Birth Cert, Parent ID copies. | Physical Documents | *Constraint:* Without these, application stops. |
+| 5 | Chief / Registration Officer | **Vetting:** Conducts identity vetting to confirm lineage and residence. | Manual Verification | **Outcome:** Approve, Reject, or Request more proof. Critical anti-fraud step. |
+| 6 | Registration Officer | **Data Capture:** Records biographic details in the National Identity Register system. | Legacy System | |
+| 7 | Registration Officer | **Biometrics:** Captures Fingerprints, Facial Photo, and Signature. | Live Scan Kit | Creates the **Biometric Identity Profile**. |
+| 8 | Citizen | **Sign-off:** Signs the application form to confirm details are correct. | Pen & Paper | |
+| 9 | Registration Officer | **Waiting Card:** Issues **Waiting Card (ID Waiting Slip)** with serial number. | Physical Slip | Used as temporary ID. |
+| 10 | NRB HQ | **Processing:** Application sent to HQ for processing and card production. | Backend System | Card is generated with ID Number linked to biometrics. |
+| 11 | Citizen | **Collection:** Returns to Registration Office with Waiting Card to collect the **National ID**. | Physical Collection | **Final Artifact:** Official Adult Identity. |
+
+**Summary:** The process is heavily manual, involving physical forms (REG.136A), face-to-face vetting by Chiefs, and multiple physical visits.
 
 ---
 
@@ -132,21 +137,26 @@ National Identity Card Registration (New Application & Replacement)
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph WoG_Platform [Identity Service]
-        S1["Fetches Citizen UPI from Birth Record (CRS via X-Road)"]
-        S2["Auto-Verifies Age (18+)"]
-        S3["Pre-Fills Maisha Namba Upgrade Form"]
+
+    subgraph Citizen [Citizen via eCitizen]
+        S1["Logs in & Selects 'Upgrade to Adult ID'"]
+        S2["System Auto-Fetches Child UPI Data"]
+        S3["Updates Photo & Address (Self-Service)"]
     end
-    subgraph Citizen [Applicant]
-        S4["Logs into eCitizen App"]
-        S5["Selects 'Upgrade to Adult ID'"]
-        S6["Self-Captures Photo (ICAO Standard)"]
-        S7["Visits Biometric Hub (only for fingerprints)"]
+
+    subgraph WoG_Platform [Service Engine]
+        S4["Auto-Vets Citizenship via CRS/IPRS"]
+        S5["Schedules Biometric Capture at Local Hub"]
     end
-    subgraph NRB_System [Biometric Registry]
-        S8["Captures & Validates Fingerprints (AFIS Real-time)"]
-        S9["Issues Virtual ID to App"]
-        S10["Queues Physical Card (Optional)"]
+
+    subgraph Registration_Officer [Biometric Hub]
+        S6["Captures Fingerprints & Live Photo"]
+        S7["System Links Biometrics to Existing UPI"]
+    end
+
+    subgraph NRB_Core [National Identity System]
+        S8["Instantly Issues Virtual ID to eCitizen"]
+        S9["Triggers Printing of Physical Card (Optional)"]
     end
     
     S1 --> S2
@@ -157,26 +167,31 @@ graph TD
     S6 --> S7
     S7 --> S8
     S8 --> S9
-    S9 --> S10
-    S10 --> End((End))
+    S9 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5,S6,S7,S8,S9 userTask;
 ```
 
-## Future State Process (TO-BE)
-### Narrative
-The process is **Seamless** and **Digital-First**.
-1.  **UPI Continuity:** The citizen's UPI (Maisha Namba) from birth is reused. No new application is needed, just an "Upgrade".
-2.  **Auto-Vetting:** The platform verifies citizenship via the **IPRS/CRS Link**. Chief's letters are only required for exceptional cases (e.g., late registration without birth cert).
-3.  **Self-Service:** Photo and bio-data updates are done via the **eCitizen App**.
-4.  **Virtual ID:** A digital ID is issued instantly upon biometric capture to the citizen's secure wallet.
-5.  **Decentralized Printing:** Physical cards (if requested) are printed at regional hubs or delivered via courier (Posta).
+## Detailed Process (TO-BE) - Biometric Upgrade
+| Step | Role | Action | System Component | Logic / Integration |
+|---|---|---|---|---|
+| 1 | Citizen | **Initiation:** Logs into eCitizen app using Child UPI. Selects "Upgrade to Adult ID". | **eCitizen Portal** | Authentication via UPI. |
+| 2 | System | **Data Fetch:** Pulls existing Child data (Names, DOB, Parents) from CRS. | **Integration Layer (X-Road)** | Source of Truth is CRS. No manual form filling (REG.136A eliminated). |
+| 3 | System | **Auto-Vetting:** Validates Citizenship. If parents are Kenyans, vetting is auto-approved. | **Rules Engine** | *Logic:* If Parent.Citizenship = Kenyan, Approve. Else, Route to Chief. |
+| 4 | Citizen | **Scheduling:** Selects nearest Huduma Centre/Chief's Camp for biometric capture. | **Booking Service** | Geo-located appointment booking. |
+| 5 | Registration Officer | **Capture:** Scans Citizen's QR Code. Captures Fingerprints & Live Photo. | **Biometric Kit (Tablet)** | Quick 2-minute process. No paperwork. |
+| 6 | System | **Linkage:** Links new Biometrics to the existing Maisha Namba (UPI). | **IPRS / Maisha DB** | Transitions status from "Child" to "Adult". |
+| 7 | System | **Issuance:** Instantly generates **Virtual ID** in Maisha Wallet. | **Digital Wallet** | Immediate usability for services. |
+| 8 | NRB | **Printing:** Prints physical card (if requested) and dispatches via Posta. | **Production Centre** | Optional step for those needing physical card. |
 
-### Optimized Steps (Digital)
-| Step | Actor | Action | System |
-|---|---|---|---|
-| 1 | Citizen | Upgrades status to "Adult" on eCitizen App. | eCitizen / Maisha |
-| 2 | WoG Platform | Auto-verifies birth record via X-Road. | IPRS / CRS |
-| 3 | Citizen | Visits local hub for quick fingerprint scan. | Biometric Kit |
-| 4 | NRB System | Issues Virtual ID instantly. | Maisha Wallet |
+**Key Benefit:** Eliminates the "waiting card" and manual vetting for the majority of citizens. The UPI remains the single source of truth from birth to adulthood.
 
 ---
 

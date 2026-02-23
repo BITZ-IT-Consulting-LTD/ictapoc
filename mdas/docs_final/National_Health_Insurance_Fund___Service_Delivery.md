@@ -20,45 +20,38 @@ The National Health Insurance Fund (transitioning to the Social Health Authority
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph Member [Citizen]
-        S1["Logs into NHIF Portal / USSD *155#"]
-        S2["Registers Self & Dependents"]
-        S3["Uploads ID & Birth Certs"]
-        S4["Pays Monthly Contribution (KES 500+)"]
-        S5["Wait period (60-90 days) for card activation"]
-        S8["Visits Hospital for Treatment"]
+
+    subgraph Member [Member]
+        S1["**Registration:** Individual visits Huduma Centre or uses..."]
+        S2["**Payment:** Pays via M-Pesa Paybill 200222 or Salary Che..."]
+        S3["**Access:** Visits hospital. Receptionist checks status o..."]
     end
-    subgraph Employer [Employer]
-        S4a["Deducts NHIF/SHIF from Salary"]
-        S4b["Remits to Fund via Portal"]
+
+    subgraph Hospital [Hospital]
+        S4["**Pre-Auth:** For surgeries/CT scans, hospital requests '..."]
+        S6["**Treatment:** Upon approval, treatment is given. Patient..."]
+        S7["**Claim:** Hospital compiles invoice and submits to Fund ..."]
     end
-    subgraph Hospital [Provider]
-        S9["Checks Member Status (Active/Inactive)"]
-        S10["Requests Pre-Authorization (Online)"]
-        S12["Provides Treatment (Inpatient/Outpatient)"]
-        S13["Submits Claim for Reimbursement"]
+
+    subgraph SHA_NHIF [SHA/NHIF]
+        S5["**Adjudication:** Medical team reviews request. Often rej..."]
     end
-    subgraph NHIF_SHA [Fund Manager]
-        S2a["Verifies Dependents (Manual/Batch)"]
-        S11["Approves Pre-Auth (24-48 hours)"]
-        S14["Processes Claim Payment (90+ days)"]
-    end
-    
     S1 --> S2
-    S2 --> S2a
-    S2a --> S3
+    S2 --> S3
     S3 --> S4
-    S4 --> S4a
-    S4a --> S4b
-    S4b --> S5
-    S5 --> S8
-    S8 --> S9
-    S9 --> S10
-    S10 --> S11
-    S11 --> S12
-    S12 --> S13
-    S13 --> S14
-    S14 --> End((End))
+    S4 --> S5
+    S5 --> S6
+    S6 --> S7
+    S7 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5,S6,S7 userTask;
 ```
 
 ---
@@ -131,31 +124,40 @@ Member Registration & Benefit Access (UHC)
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph WoG_Platform [Health Service]
-        S1["Checks Membership via Biometrics (NRB)"]
-        S2["Validates Dependents (CRS/IPRS)"]
-        S3["Auto-Checks Benefit Balance"]
+
+    subgraph Patient [Patient]
+        S1["Checks in at hospital using facial recognition."]
     end
-    subgraph Hospital [Provider]
-        S4["Patient Checks-In via Face ID"]
-        S5["Doctor Submits Diagnosis"]
-        S6["Discharges Patient"]
+
+    subgraph WoG_Platform [WoG Platform]
+        S2["Validates identity and active status."]
     end
-    subgraph SHA_AI [Claims Engine]
-        S7["Auto-Approves Pre-Auth (Standard Care)"]
-        S8["Real-time Fraud Detection"]
-        S9["Triggers Payment via GPA"]
+
+    subgraph Doctor [Doctor]
+        S3["Enters diagnosis. AI approves treatment plan instantly."]
     end
-    
+
+    subgraph Hospital [Hospital]
+        S4["Submits e-Claim upon discharge."]
+    end
+
+    subgraph GPA [GPA]
+        S5["Settles payment to hospital account."]
+    end
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
-    S5 --> S7
-    S7 --> S6
-    S6 --> S8
-    S8 --> S9
-    S9 --> End((End))
+    S5 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5 userTask;
 ```
 
 ## Future State Process (TO-BE)

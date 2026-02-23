@@ -20,35 +20,35 @@ The Business Registration Service (BRS) is a semi-autonomous government agency u
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph Entrepreneur [Citizen]
-        S1["Logs into eCitizen (BRS Portal)"]
-        S2["Applies for Name Reservation (Search)"]
-        S3["Pays KES 150 for Search"]
-        S6["Receives Name Approval (Letter)"]
-        S7["Fills CR1, CR2, CR8 forms online"]
-        S8["Uploads ID, Tax PIN, Passport Photo"]
-        S9["Pays Registration Fee (KES 10,650 for Company)"]
-        S12["Downloads Certificate of Incorporation"]
+
+    subgraph Entrepreneur [Entrepreneur]
+        S1["**Name Search:** Applicant proposes 1-3 names. Pays KES 150."]
+        S3["**Application:** Once approved, applicant fills CR1 (App)..."]
+        S4["**Payment:** Pays registration fee (KES 950 for BN; KES 1..."]
+        S7["**Output:** Downloads Certificate and CR12 (list of direc..."]
     end
-    subgraph BRSOfficer [Registrar]
-        S4["Manually Reviews Name vs Database"]
-        S5["Approves or Rejects (with reasons)"]
-        S10["Reviews Forms & Attachments"]
-        S11["Digitally Signs Certificate"]
+
+    subgraph BRS_Officer [BRS Officer]
+        S2["**Vetting:** Registrar manually checks name against 'Proh..."]
+        S5["**Review:** Officer opens the digital file to verify sign..."]
+        S6["**Approval:** If compliant, Officer approves. System gene..."]
     end
-    
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
     S5 --> S6
     S6 --> S7
-    S7 --> S8
-    S8 --> S9
-    S9 --> S10
-    S10 --> S11
-    S11 --> S12
-    S12 --> End((End))
+    S7 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5,S6,S7 userTask;
 ```
 
 ---
@@ -121,35 +121,37 @@ Registration of Private Limited Company / Business Name
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph WoG_Platform [Business Service]
-        S1["AI Checks Name Availability (Real-time)"]
-        S2["Validates Directors via NRB/IPRS"]
-        S3["Generates Digital Forms (CR1, CR2)"]
+
+    subgraph Entrepreneur [Entrepreneur]
+        S1["Inputs name and directors' IDs."]
+        S4["Pays single bundled fee."]
     end
-    subgraph Entrepreneur [User]
-        S4["Inputs Proposed Name"]
-        S5["Approves Directors (Consent via App)"]
-        S6["e-Signs Documents (Digital Signature)"]
-        S7["Pays Fee via GPA"]
+
+    subgraph WoG_AI [WoG AI]
+        S2["Approves name and verifies directors."]
     end
-    subgraph Integrated_Systems [X-Road]
-        S8["BRS Issues Incorporation Cert"]
-        S9["KRA Issues PIN"]
-        S10["NHIF/NSSF Registers Employer"]
-        S11["County Issues Provisional Permit"]
+
+    subgraph Directors [Directors]
+        S3["Consent via App notification."]
     end
-    
+
+    subgraph Integrated_Systems [Integrated Systems]
+        S5["Issue all certificates instantly."]
+    end
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> S8
-    S8 --> S9
-    S9 --> S10
-    S10 --> S11
-    S11 --> End((End))
+    S5 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5 userTask;
 ```
 
 ## Future State Process (TO-BE)

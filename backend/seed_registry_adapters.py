@@ -40,6 +40,7 @@ def seed_registry_adapters():
             "endpoints": [
                 {"name": "Check ID Card Status", "path": "/api/cards/status/{serial_no}", "method": "GET"},
                 {"name": "Request ID Replacement", "path": "/api/cards/replace", "method": "POST"},
+                {"name": "Mint Maisha Namba", "path": "/api/v1/upi/mint", "method": "POST"},
             ],
             "mock_data": {
                 "12345678": {"serial_no": "99887766", "issue_date": "2010-01-01", "station": "NAIROBI CENTRAL", "status": "ISSUED", "card_type": "MAISHA_CARD"},
@@ -57,6 +58,7 @@ def seed_registry_adapters():
                 {"name": "Register Birth", "path": "/api/births/register", "method": "POST"},
                 {"name": "Get Birth Certificate", "path": "/api/certificates/birth/{id}", "method": "GET"},
                 {"name": "Notify Death", "path": "/api/deaths/notify", "method": "POST"},
+                {"name": "Issue Death Certificate", "path": "/api/certificates/death/issue", "method": "POST"},
             ],
             "mock_data": {
                 "BC-111": {"full_name": "JAMES DOE JNR", "event": "BIRTH", "date": "2006-05-15", "mother": "MARY MOTHER", "place": "PUMWANI HOSPITAL"},
@@ -266,6 +268,22 @@ def seed_registry_adapters():
                 "NRB/01/123": {"owner": "JOHN DOE", "location": "UPPERHILL", "status": "CLEAN", "acreage": "0.5"},
                 "NRB/05/999": {"owner": "JANE DOE", "location": "KAREN", "status": "CLEAN", "acreage": "2.0"},
                 "MSA/02/456": {"owner": "PETER OMONDI", "location": "NYALI", "status": "CHARGED", "chargee": "KCB BANK"}
+            }
+        },
+        {
+            "code": "SCHOOLS_REGISTRY",
+            "name": "National Schools Registry",
+            "base_url": "https://api.education.go.ke/schools",
+            "endpoints": [
+                {"name": "Search Schools", "path": "/api/v1/schools/search", "method": "GET"},
+                {"name": "Get School Details", "path": "/api/v1/schools/{code}", "method": "GET"},
+                {"name": "Verify School Capacity", "path": "/api/v1/schools/{code}/capacity", "method": "GET"},
+            ],
+            "mock_data": {
+                "SCH-20101": {"name": "NAIROBI SCHOOL", "level": "SECONDARY", "county": "NAIROBI", "capacity": 1200, "enrolled": 1150, "geo_location": "-1.2587, 36.7691"},
+                "SCH-30102": {"name": "ALLIANCE GIRLS HIGH SCHOOL", "level": "SECONDARY", "county": "KIAMBU", "capacity": 1500, "enrolled": 1480, "geo_location": "-1.1819, 36.6581"},
+                "SCH-40103": {"name": "STAREHE BOYS CENTRE", "level": "SECONDARY", "county": "NAIROBI", "capacity": 1000, "enrolled": 980, "geo_location": "-1.2721, 36.8354"},
+                "SCH-10101": {"name": "MANG'U HIGH SCHOOL", "level": "SECONDARY", "county": "KIAMBU", "capacity": 1300, "enrolled": 1250, "geo_location": "-1.0964, 37.0131"}
             }
         }
     ]

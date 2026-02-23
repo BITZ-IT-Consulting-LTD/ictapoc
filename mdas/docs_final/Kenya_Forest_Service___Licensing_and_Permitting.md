@@ -20,18 +20,29 @@ The Kenya Forest Service (KFS) is a state corporation established under the Fore
 ```mermaid
 graph TD
     Start((Start)) --> S1
+
     subgraph Transporter [Transporter]
-        S1["Transporter applies for a Movement Permit at the F..."]
+        S1["Transporter applies for a Movement Permit at the Forest S..."]
         S3["Transporter pays the movement fees via M-Pesa."]
     end
-    subgraph KFSOfficer [KFS Officer]
-        S2["Forest Officer inspects the forest produce and ver..."]
-        S4["Forest Officer issues the Movement Permit specifyi..."]
+
+    subgraph KFS_Officer [KFS Officer]
+        S2["Forest Officer inspects the forest produce and verifies o..."]
+        S4["Forest Officer issues the Movement Permit specifying rout..."]
     end
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4 userTask;
 ```
 
 ---
@@ -96,18 +107,21 @@ Licensing and Permitting
 ```mermaid
 graph TD
     Start((Start)) --> S1
+
     subgraph Applicant [Applicant]
-        S1["Applicant logs in via Single Sign-On (SSO) and sel..."]
-        S4["Applicant pays fees via the Government Payment Gat..."]
+        S1["Applicant logs in via Single Sign-On (SSO) and selects th..."]
+        S4["Applicant pays fees via the Government Payment Gateway; S..."]
     end
+
     subgraph System [System]
-        S2["Applicant enters Business Registration Number; Sys..."]
-        S3["System performs auto-validation of compliance (e.g..."]
-        S5["Application is processed by the Rules Engine. (Low..."]
-        S7["System generates a Verifiable Digital Certificate ..."]
+        S2["Applicant enters Business Registration Number; System aut..."]
+        S3["System performs auto-validation of compliance (e.g., KRA ..."]
+        S5["Application is processed by the Rules Engine. (Low-risk c..."]
+        S7["System generates a Verifiable Digital Certificate (QR Cod..."]
     end
+
     subgraph Officer [Officer]
-        S6["Complex cases are routed to the Officer Workbench ..."]
+        S6["Complex cases are routed to the Officer Workbench for dig..."]
     end
     S1 --> S2
     S2 --> S3
@@ -116,6 +130,16 @@ graph TD
     S5 --> S6
     S6 --> S7
     S7 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S4,S6 userTask;
+    class S2,S3,S5,S7 serviceTask;
 ```
 
 ## Future State Process (TO-BE)

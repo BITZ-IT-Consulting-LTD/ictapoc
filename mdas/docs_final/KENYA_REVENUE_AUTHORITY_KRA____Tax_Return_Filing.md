@@ -20,37 +20,42 @@ The Kenya Revenue Authority (KRA) administers tax laws. The **Personal Identific
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph Taxpayer [Individual / Business]
-        S1["Turns 18 / Registers Business"]
-        S2["Applies for PIN on iTax (itax.kra.go.ke)"]
-        S3["Receives PIN Certificate (Email)"]
-        S4["Transacts (Opening Bank A/C, Land Purchase)"]
-        S5["Files Returns annually (June Deadline)"]
+
+    subgraph Taxpayer [Taxpayer]
+        S1["**Registration:** Individual accesses iTax, selects 'New ..."]
+        S3["**Filing:** Logs in to file Annual Returns (Jan - June). ..."]
+        S5["**Payment:** Generates PRN (E-Slip) to pay tax due. Pays ..."]
+        S7["**TCC Application:** Applies for Tax Compliance Certifica..."]
     end
-    subgraph iTax [System]
-        S2a["Validates ID with NRB (IPRS)"]
-        S2b["Sets Tax Obligations (Income Tax Resident)"]
-        S5a["Calculates Tax Liability / Refund"]
-        S6["Generates Payment Slip (PRN)"]
-        S7["Imposes Penalty for Late Filing (KES 2,000+)"]
+
+    subgraph iTax_System [iTax System]
+        S2["**Obligation:** Auto-registers for 'Income Tax Resident'...."]
     end
+
     subgraph Employer [Employer]
-        S4a["Deducts PAYE monthly"]
-        S4b["Remits to KRA"]
+        S4["**Pre-Filling:** Employer uploads P9 data. Employee finds..."]
     end
-    
+
+    subgraph System [System]
+        S6["**Penalty:** Automatically imposes KES 2,000 penalty if r..."]
+    end
     S1 --> S2
-    S2 --> S2a
-    S2a --> S2b
-    S2b --> S3
+    S2 --> S3
     S3 --> S4
-    S4 --> S4a
-    S4a --> S4b
-    S4b --> S5
-    S5 --> S5a
-    S5a --> S6
+    S4 --> S5
+    S5 --> S6
     S6 --> S7
     S7 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5,S7 userTask;
+    class S6 serviceTask;
 ```
 
 ---
@@ -124,33 +129,37 @@ Taxpayer Registration & Compliance (Individual Income Tax)
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph WoG_Data_Layer [X-Road]
-        S1["Fetches Income Data (Banks, Employers, Ministries)"]
-        S2["Consolidates into 'Single Tax View'"]
+
+    subgraph WoG_Platform [WoG Platform]
+        S1["Aggregates income data from sources via X-Road APIs."]
     end
-    subgraph KRA_AI [Compliance Engine]
-        S3["Auto-Computes Liability (Real-time)"]
-        S4["Pre-Fills 'Draft Return'"]
-        S5["Sends 'Tax Statement' to Citizen"]
+
+    subgraph KRA_AI [KRA AI]
+        S2["Computes tax liability and pre-fills the return."]
     end
-    subgraph Taxpayer [Citizen]
-        S6["Receives Push Notification (eCitizen App)"]
-        S7["Reviews & Confirms (One-Click)"]
-        S8["Pays via GPA (Instant Ledger Update)"]
+
+    subgraph Citizen [Citizen]
+        S3["Receives 'Tax Statement' notification on App."]
+        S4["Confirms statement and pays balance via GPA."]
     end
-    subgraph System [Registry]
-        S9["Updates TCC Status to 'Compliant'"]
+
+    subgraph KRA_System [KRA System]
+        S5["Instantly updates TCC status to 'Compliant'."]
     end
-    
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> S8
-    S8 --> S9
-    S9 --> End((End))
+    S5 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5 userTask;
 ```
 
 ## Future State Process (TO-BE)

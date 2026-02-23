@@ -20,33 +20,36 @@ The Office of the Attorney General (State Law Office), through the Registrar of 
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph Couple [Applicants]
-        S1["Logs into eCitizen (Office of AG)"]
-        S2["Files Notice of Marriage (21 Days)"]
-        S3["Uploads IDs & Photos"]
-        S4["Pays Fee (KES 600 - Notice)"]
-        S5["Books Appointment Date"]
-        S6["Visits Sheria House (Nairobi)"]
-        S8["Signs Marriage Certificate"]
+
+    subgraph Couple [Couple]
+        S1["**Notice:** Both parties log into eCitizen, fill details ..."]
+        S2["**Fee Payment:** Pays KES 600 for Notice. Wait 21 days (m..."]
+        S4["**Booking:** After 21 days, couple logs in to book a date..."]
     end
-    subgraph Registrar [Marriage Officer]
-        S2a["Reviews Notice Application"]
-        S2b["Approves Notice (if no impediment)"]
-        S7["Conducts Ceremony (15 Mins)"]
-        S9["Issues Certificate"]
+
+    subgraph Registrar [Registrar]
+        S3["**Review:** Officer checks uploaded documents. If valid, ..."]
+        S6["**Issuance:** Parties sign the Register. Registrar issues..."]
     end
-    
+
+    subgraph Couple_+_Witnesses [Couple + Witnesses]
+        S5["**Ceremony:** On the day, arrive at Sheria House. Wait in..."]
+    end
     S1 --> S2
-    S2 --> S2a
-    S2a --> S2b
-    S2b --> S3
+    S2 --> S3
     S3 --> S4
     S4 --> S5
     S5 --> S6
-    S6 --> S7
-    S7 --> S8
-    S8 --> S9
-    S9 --> End((End))
+    S6 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5,S6 userTask;
 ```
 
 ---
@@ -117,35 +120,40 @@ Civil Marriage Registration (Sheria House)
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph WoG_Platform [Civil Registry]
-        S1["Checks Marital Status (Bigamy Check)"]
-        S2["Publishes Online Notice (e-Gazette)"]
-        S3["Waits 21 Days (Auto-Countdown)"]
+
+    subgraph Couple [Couple]
+        S1["Files joint notice via eCitizen App."]
     end
-    subgraph Couple [Applicants]
-        S4["Logs into eCitizen App"]
-        S5["Jointly Signs 'Notice of Intent' (Digital Signature)"]
-        S6["Receives 'License to Marry' QR Code"]
+
+    subgraph WoG_Platform [WoG Platform]
+        S2["Runs bigamy check and publishes notice."]
     end
-    subgraph Officiant [Registrar / Pastor / Kadhi]
-        S7["Scans Couple's QR Code at Venue"]
-        S8["Activates 'Married' Status in Registry"]
+
+    subgraph Public [Public]
+        S3["Can view notice and file objection online."]
     end
-    subgraph Integrated_Systems [X-Road]
-        S9["Updates Spouse Status in IPRS/NRB"]
-        S10["Issues Digital Certificate"]
+
+    subgraph Officiant [Officiant]
+        S4["Scans QR code to finalize marriage."]
     end
-    
+
+    subgraph Registry [Registry]
+        S5["Updates status and issues Digital Cert."]
+    end
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> S8
-    S8 --> S9
-    S9 --> S10
-    S10 --> End((End))
+    S5 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5 userTask;
 ```
 
 ## Future State Process (TO-BE)

@@ -20,21 +20,27 @@ The Ministry of Education (MoE) is responsible for national education policy and
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph School [Head Teacher / Principal]
-        S1["Receives Student Admission (Form 1 / Grade 1)"]
-        S2["Collects Birth Certificate & Parent ID Copies"]
-        S3["Logs into NEMIS Portal"]
-        S4["Manually Enters Student Bio-Data"]
+
+    subgraph Parent___Guardian [Parent / Guardian]
+        S1["**Admission:** Takes child to school for admission (PP1, ..."]
+        S2["**Submission:** Submits required documents: Birth Certifi..."]
     end
-    subgraph NEMIS [NEMIS System]
-        S5["Validates Birth Cert No. (Offline/Batch)"]
-        S6["Generates UPI (Unique Personal Identifier)"]
-        S7["Allocates Capitation Funds (FSE / FDSE)"]
+
+    subgraph School [School]
+        S3["**Verification:** Checks authenticity of documents (Spell..."]
+        S4["**Manual Recording:** Records learner details in the phys..."]
+        S9["**Confirmation:** Confirms learner is now fully registere..."]
     end
-    subgraph Parent [Parent / Guardian]
-        S8["Checks UPI Status via SMS/Portal"]
+
+    subgraph School_Admin [School Admin]
+        S5["**Portal Login:** Logs into NEMIS portal using school cre..."]
+        S6["**Data Entry:** Manually enters learner details into NEMI..."]
     end
-    
+
+    subgraph NEMIS_System [NEMIS System]
+        S7["**Validation:** Automatically checks against CRS."]
+        S8["**Generation:** Generates **Unique Personal Identifier (U..."]
+    end
     S1 --> S2
     S2 --> S3
     S3 --> S4
@@ -42,7 +48,17 @@ graph TD
     S5 --> S6
     S6 --> S7
     S7 --> S8
-    S8 --> End((End))
+    S8 --> S9
+    S9 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5,S6,S7,S8,S9 userTask;
 ```
 
 ---
@@ -119,70 +135,61 @@ Student Registration & Capitation (NEMIS)
 ```mermaid
 graph TD
     Start((Start)) --> S1
+    
     subgraph Parent [Citizen via eCitizen]
-        S1["Logs into eCitizen (SSO)"]
-        S2["Selects 'School Admission Service'"]
-        S3["System Auto-Populates Child Details (CRS)"]
-        S4["Selects Preferred School (Geo-Located)"]
+        S1["**Parental Enrollment Request:** Selects child & school"]
     end
-    subgraph WoG_Platform [Service Engine & Workflow]
-        S5["Validates Age & School Capacity (Business Rules)"]
-        S6["Checks Duplicate Enrollment (Unique UPI)"]
+    
+    subgraph WoG_Platform [Education Service Bus]
+        S2["**Validate UPI Registry:** Verifies identity via CRS Registry"]
+        S3["**Verify School Capacity:** Real-time check via Schools Registry"]
     end
+    
     subgraph School [Head Teacher Workbench]
-        S7["Receives Digital Application"]
-        S8["Approves Admission (One-Click)"]
+        S4["**Head Teacher Admission:** Digital review & one-click approval"]
     end
-    subgraph NEMIS_Core [Backend Systems]
-        S9["Updates Learner Status to 'Enrolled'"]
-        S10["Triggers Capitation Calculation"]
-    end
-    subgraph Payments [Govt Payment Aggregator]
-        S11["Disburses Funds to School Account"]
-        S12["Notifies Parent & School (SMS/Email)"]
+    
+    subgraph NEMIS_System [NEMIS Backend]
+        S5["**NEMIS Record Finalization:** Auto-enrollment & capitation trigger"]
     end
     
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> S8
-    S8 --> S9
-    S9 --> S10
-    S10 --> S11
-    S11 --> S12
-    S12 --> End((End))
+    S5 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    
+    class Start start;
+    class End endNode;
+    class S1,S4 userTask;
+    class S2,S3,S5 serviceTask;
 ```
 
 ## Detailed Process (TO-BE) - Configurable & Automated
-| Step | Role | Action | System Component | Logic / Integration |
+| Step | Actor | Action | System Component | Logic / Integration |
 |---|---|---|---|---|
-| 1 | Parent / Guardian | **Initiation:** Logs into eCitizen and selects "School Admission Service". | **eCitizen Portal** (Unified Front-End) | Authenticated via **Maisha Namba (SSO)**. |
-| 2 | System | **Data Fetch:** Auto-populates child's details using Parent ID / Birth Entry Number. | **Integration Layer (X-Road)** | Fetches data from **CRS Registry** (Source of Truth). No manual entry of names/DOB. |
-| 3 | Parent | **Selection:** Selects preferred school from a geo-located list. | **Service Engine** | System filters schools by **Capacity** and **Learner Age** eligibility. |
-| 4 | System | **Auto-Validation:** Validates application against business rules (Age, Zone, Capacity). | **Workflow Engine** | *Rule:* If `Age < 6`, reject for Grade 1. If `Capacity = 0`, disable selection. |
-| 5 | School (Head Teacher) | **Approval:** Receives digital notification and approves admission on the workbench. | **Officer Workbench** | "One-Click" approval. No physical file verification needed (Data is trusted). |
-| 6 | System | **Enrollment:** Automatically links Learner UPI to School Code in NEMIS. | **NEMIS Database** | Learner status updates to `Enrolled`. |
-| 7 | System | **Capitation Trigger:** Automatically calculates FSE/FDSE amount for the new learner. | **Business Rules Engine** | *Logic:* `Amount = Capitation_Rate * 1`. |
-| 8 | GPA | **Disbursement:** Disburses funds directly to School Account. | **Govt Payment Aggregator** | Real-time settlement. No "ghost students." |
-| 9 | Parent | **Notification:** Receives SMS/Email confirmation of admission. | **Notification Service** | "Your child has been admitted to [School Name]." |
+| 1 | Parent / Guardian | **Initiation:** Selects child (via UPI) and preferred school on eCitizen. | **eCitizen Portal** | Uses `Maisha Namba (SSO)` for authentication. |
+| 2 | System | **UPI Validation:** Verifies child existence and parentage records. | **CRS Registry API** | Fetches birth details via the `Service Bus`. |
+| 3 | System | **Capacity Check:** Validates school has space and child meets age requirements. | **National Schools Registry** | Calls `Verify School Capacity` endpoint dynamically. |
+| 4 | School Head | **Admission Review:** Approves the digital application on the workbench. | **Officer Workbench** | Validated data removes need for physical file review. |
+| 5 | System | **Enrollment Sync:** Finalizes record in NEMIS and triggers capitation. | **NEMIS Workflow Engine** | Auto-enrolls and calculated FDSE/FPE funds. |
 
 ---
 
 ## 3. Standard Data Inputs
 *Required fields for the WoG Digital Service.*
 
-### A. School Enrollment (New Admission)
-| Field Name | Type | Source | Validation |
+### A. School Enrollment (MOE-NEMIS-001)
+| Field Name | Type | Source | Widget / Registry |
 |---|---|---|---|
-| Child UPI | String | System Fetch (CRS) | Must exist in CRS |
-| Parent ID | String | User Input (Auth) | Must match CRS Parent |
-| School Code | String | User Input / List | Must be Active School |
-| Admission Date | Date | System (Today) | Auto-filled |
-| Grade Level | Enum | System Calculated | Based on Age (DOB) |
-| Disability Status | Enum | User Input | Optional |
+| child_upi | String | CRS Registry | **Auto-Populate / Verify** |
+| school_code | String | Schools Registry | **Registry Search** |
+| admission_level | Enum | Business Logic | **Rule-Based (Age)** |
 
 ### B. Student Transfer Request
 | Field Name | Type | Source | Validation |
