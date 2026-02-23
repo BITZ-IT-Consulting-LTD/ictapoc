@@ -20,23 +20,29 @@ The Ministry of Investment, Trade and Industry in Kenya is dedicated to driving 
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph MinistryPS [Ministry PS]
-        S1["Ministry/State Department submits a Draft Cabinet ..."]
+
+    subgraph Ministry_PS [Ministry PS]
+        S1["Ministry/State Department submits a Draft Cabinet Memo to..."]
     end
-    subgraph CabinetSecretariat [Cabinet Secretariat]
-        S2["Cabinet Office Secretariat reviews the Memo for po..."]
+
+    subgraph Cabinet_Secretariat [Cabinet Secretariat]
+        S2["Cabinet Office Secretariat reviews the Memo for policy al..."]
     end
-    subgraph SecretarytoCabinet [Secretary to Cabinet]
-        S3["Approved Memo is allocated a Cabinet Paper Number ..."]
+
+    subgraph Secretary_to_Cabinet [Secretary to Cabinet]
+        S3["Approved Memo is allocated a Cabinet Paper Number and sch..."]
     end
-    subgraph TheCabinet [The Cabinet]
-        S4["Cabinet deliberates on the Memo during the schedul..."]
+
+    subgraph The_Cabinet [The Cabinet]
+        S4["Cabinet deliberates on the Memo during the scheduled meet..."]
     end
+
     subgraph Secretariat [Secretariat]
-        S5["Cabinet Office records the decision as a Cabinet M..."]
+        S5["Cabinet Office records the decision as a Cabinet Minute (..."]
     end
-    subgraph HeadofPublicService [Head of Public Service]
-        S6["Cabinet Office issues a 'Notification of Cabinet D..."]
+
+    subgraph Head_of_Public_Service [Head of Public Service]
+        S6["Cabinet Office issues a 'Notification of Cabinet Decision..."]
     end
     S1 --> S2
     S2 --> S3
@@ -44,6 +50,15 @@ graph TD
     S4 --> S5
     S5 --> S6
     S6 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5,S6 userTask;
 ```
 
 ---
@@ -114,22 +129,35 @@ Cabinet Memo Processing
 ```mermaid
 graph TD
     Start((Start)) --> S1
+
     subgraph PS [PS]
         S1["Ministry uploads Memo to secure e-Cabinet Portal."]
     end
+
     subgraph System [System]
-        S2["System validates attachments (AG/Treasury) and rou..."]
-        S5["System auto-generates Notification Letter and emai..."]
+        S2["System validates attachments (AG/Treasury) and routes for..."]
+        S5["System auto-generates Notification Letter and emails it t..."]
     end
+
     subgraph Secretariat [Secretariat]
-        S3["Secretariat schedules the item digitally; Agenda i..."]
-        S4["Decisions are recorded in the system during the me..."]
+        S3["Secretariat schedules the item digitally; Agenda is pushe..."]
+        S4["Decisions are recorded in the system during the meeting."]
     end
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
     S5 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S3,S4 userTask;
+    class S2,S5 serviceTask;
 ```
 
 ## Future State Process (TO-BE)

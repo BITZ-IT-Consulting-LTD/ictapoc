@@ -20,21 +20,26 @@ The Coast Development Authority (CDA) is a State Corporation in Kenya, establish
 ```mermaid
 graph TD
     Start((Start)) --> S1
+
     subgraph Agency [Agency]
-        S1["Agency advertises tender on Public Procurement Inf..."]
+        S1["Agency advertises tender on Public Procurement Informatio..."]
     end
+
     subgraph Bidder [Bidder]
-        S2["Bidder downloads tender documents and prepares bid..."]
-        S3["Bidder submits bid via e-Procurement portal or ten..."]
+        S2["Bidder downloads tender documents and prepares bid (Techn..."]
+        S3["Bidder submits bid via e-Procurement portal or tender box."]
     end
-    subgraph EvaluationCommittee [Evaluation Committee]
-        S4["Evaluation Committee conducts opening, technical, ..."]
+
+    subgraph Evaluation_Committee [Evaluation Committee]
+        S4["Evaluation Committee conducts opening, technical, and fin..."]
     end
-    subgraph AccountingOfficer [Accounting Officer]
-        S5["Accounting Officer awards the tender to the lowest..."]
+
+    subgraph Accounting_Officer [Accounting Officer]
+        S5["Accounting Officer awards the tender to the lowest respon..."]
     end
-    subgraph AgencyBidder [Agency/Bidder]
-        S6["Contract is signed after the 14-day standstill per..."]
+
+    subgraph Agency_Bidder [Agency/Bidder]
+        S6["Contract is signed after the 14-day standstill period."]
     end
     S1 --> S2
     S2 --> S3
@@ -42,6 +47,15 @@ graph TD
     S4 --> S5
     S5 --> S6
     S6 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5,S6 userTask;
 ```
 
 ---

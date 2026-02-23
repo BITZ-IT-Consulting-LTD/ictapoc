@@ -20,26 +20,40 @@ The Ministry of Investment, Trade and Industry in Kenya is dedicated to driving 
 ```mermaid
 graph TD
     Start((Start)) --> S1
+
     subgraph Citizen [Citizen]
-        S1["Citizen/Stakeholder submits inquiry, complaint, or..."]
+        S1["Citizen/Stakeholder submits inquiry, complaint, or policy..."]
     end
+
     subgraph Registry [Registry]
-        S2["Central Registry receives and tags the corresponde..."]
+        S2["Central Registry receives and tags the correspondence."]
     end
+
     subgraph Directorate [Directorate]
-        S3["Relevant Technical Directorate reviews and drafts ..."]
+        S3["Relevant Technical Directorate reviews and drafts respons..."]
     end
-    subgraph PSDirector [PS/Director]
-        S4["Principal Secretary/Director approves the response..."]
+
+    subgraph PS_Director [PS/Director]
+        S4["Principal Secretary/Director approves the response."]
     end
+
     subgraph Ministry [Ministry]
-        S5["Ministry issues official response or policy guidel..."]
+        S5["Ministry issues official response or policy guideline."]
     end
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
     S5 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5 userTask;
 ```
 
 ---

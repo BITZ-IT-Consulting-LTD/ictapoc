@@ -20,33 +20,38 @@ The Judiciary is the custodian of the law. In the lifecycle of a citizen, it pla
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph Petitioner [Family / Beneficiary]
-        S1["Death Occurs"]
-        S2["Obtains Death Certificate (CRS)"]
-        S3["Files 'Petition for Grant of Letters of Administration'"]
-        S4["Collects 'Form P&A 80' (Chief's Letter)"]
-        S6["Appears for Court Mention"]
-        S9["Receives Confirmed Grant"]
+
+    subgraph Petitioner [Petitioner]
+        S1["**Filing:** Files Petition (P&A 80) at High Court or Magi..."]
+        S4["**Hearing:** After 30 days, file for 'Mention' to identif..."]
+        S6["**Confirmation:** After 6 months, Petitioner files 'Summo..."]
     end
-    subgraph HighCourt [Probate Registry]
-        S5["Gazettement (Kenya Gazette - 30 days)"]
-        S7["Issues Temporary Grant (6 months)"]
-        S8["Final Distribution Hearing"]
+
+    subgraph Registry [Registry]
+        S2["**Assessment:** Registry assesses filing fees (based on e..."]
+        S3["**Gazettement:** Court sends notice to Government Printer..."]
     end
-    subgraph Chief [Chief]
-        S4a["Lists Beneficiaries & Assets"]
+
+    subgraph Court [Court]
+        S5["**Grant Issued:** Court issues 'Temporary Grant' (Form 41..."]
+        S7["**Final Orders:** If no objections, Court confirms the gr..."]
     end
-    
     S1 --> S2
     S2 --> S3
     S3 --> S4
-    S4 --> S4a
-    S4a --> S5
+    S4 --> S5
     S5 --> S6
     S6 --> S7
-    S7 --> S8
-    S8 --> S9
-    S9 --> End((End))
+    S7 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5,S6,S7 userTask;
 ```
 
 ---
@@ -121,37 +126,40 @@ Succession Cause (Intestate / Testate)
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph WoG_Platform [Succession Service]
-        S1["Death Registered in CRS"]
-        S2["Auto-Triggers 'Estate File' Creation"]
-        S3["Fetches Assets (Lands, NTSA, Banks) via X-Road"]
-        S4["Fetches Heirs (Marriage, Births) via IPRS"]
+
+    subgraph CRS [CRS]
+        S1["Flags ID as 'Deceased'."]
     end
-    subgraph Petitioner [Heir]
-        S5["Claims Estate on eCitizen"]
-        S6["Reviews Asset List (Auto-Generated)"]
-        S7["Proposes Distribution"]
+
+    subgraph WoG_Platform [WoG Platform]
+        S2["Compiles asset inventory via X-Road APIs."]
     end
-    subgraph Judiciary_System [Court]
-        S8["Publishes Online Notice (30 Days)"]
-        S9["Receives No Objection"]
-        S10["Auto-Issues Digital Grant"]
+
+    subgraph Heir [Heir]
+        S3["Claims estate and proposes distribution on App."]
     end
-    subgraph Asset_Holders [Bank / Lands]
-        S11["Honors Digital Grant & Transfers Assets"]
+
+    subgraph Judiciary [Judiciary]
+        S4["Publishes e-Gazette notice instantly."]
     end
-    
+
+    subgraph Court_AI [Court AI]
+        S5["Validates proposal and issues Grant."]
+    end
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> S8
-    S8 --> S9
-    S9 --> S10
-    S10 --> S11
-    S11 --> End((End))
+    S5 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5 userTask;
 ```
 
 ## Future State Process (TO-BE)

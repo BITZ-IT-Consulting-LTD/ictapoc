@@ -20,39 +20,43 @@ The Directorate of Immigration Services (DIS) is responsible for the issuance of
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph Applicant [Citizen]
-        S1["Logs into eCitizen (immigration.ecitizen.go.ke)"]
-        S2["Fills Application Form 19"]
-        S3["Pays Fee (M-Pesa/Card)"]
-        S4["Prints Application & Books Appointment"]
-        S5["Visits Passport Control Office (Nyayo House/Huduma)"]
-        S8["Waits for SMS Notification (Weeks/Months)"]
-        S9["Collects Passport"]
+
+    subgraph Applicant [Applicant]
+        S1["**Application:** Logs into eCitizen, selects Passport typ..."]
+        S2["**Payment:** Pays the prescribed fee via Mobile Money or ..."]
+        S3["**Booking:** Selects a date, time, and station (Nairobi, ..."]
+        S4["**Biometrics:** Physically visits the selected station wi..."]
+        S8["**Collection:** Citizen presents ID and collection slip t..."]
     end
-    subgraph ImmigrationOfficer [Counter Officer]
-        S6["Biometric Capture (Fingerprints, Photo, Signature)"]
-        S7["Document Verification (Originals)"]
+
+    subgraph Immigration_Officer [Immigration Officer]
+        S5["**Enrollment:** Officer takes digital photo, fingerprints..."]
     end
-    subgraph BackOffice [Production Centre]
-        S7a["Scanning & Quality Check"]
-        S7b["Approval by Senior Officer"]
-        S7c["Printing & Personalization"]
-        S7d["Dispatch to Collection Point"]
+
+    subgraph Back_Office [Back Office]
+        S6["**Processing:** File moves to:"]
     end
-    
+
+    subgraph Logistics [Logistics]
+        S7["**Dispatch:** Printed passports sorted and sent to collec..."]
+    end
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
     S5 --> S6
     S6 --> S7
-    S7 --> S7a
-    S7a --> S7b
-    S7b --> S7c
-    S7c --> S7d
-    S7d --> S8
-    S8 --> S9
-    S9 --> End((End))
+    S7 --> S8
+    S8 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5,S6,S7,S8 userTask;
 ```
 
 ---
@@ -129,35 +133,40 @@ Passport Application (New / Renewal / Replacement)
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph WoG_Platform [Identity Service]
-        S1["Fetches Citizen Biometrics from NRB (Maisha)"]
-        S2["Auto-Verifies Identity (IPRS)"]
-        S3["Pre-Fills 'Passport Request'"]
+
+    subgraph Citizen [Citizen]
+        S1["Requests passport on eCitizen App. Takes ICAO-compliant s..."]
     end
-    subgraph Applicant [Citizen]
-        S4["Logs into eCitizen App"]
-        S5["Selects 'Issue Passport'"]
-        S6["Self-Captures Photo (ICAO Check via AI)"]
-        S7["Pays Fee via GPA"]
+
+    subgraph WoG_Platform [WoG Platform]
+        S2["Fetches fingerprints from NRB and validates identity."]
     end
-    subgraph Production [Immigration Factory]
-        S8["Auto-Approves (if biometrics match)"]
-        S9["Personalizes Booklet"]
+
+    subgraph Immigration [Immigration]
+        S3["Auto-approves application."]
     end
-    subgraph Logistics [Posta / Courier]
-        S10["Delivers to Citizen's Address"]
+
+    subgraph Factory [Factory]
+        S4["Prints booklet."]
     end
-    
+
+    subgraph Posta [Posta]
+        S5["Delivers passport to citizen's doorstep."]
+    end
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> S8
-    S8 --> S9
-    S9 --> S10
-    S10 --> End((End))
+    S5 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5 userTask;
 ```
 
 ## Future State Process (TO-BE)

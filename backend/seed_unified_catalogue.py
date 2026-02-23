@@ -51,21 +51,34 @@ def seed_unified_catalogue():
     LIFECYCLE_MAP = {
         "WF-STEP-01": {
             "mda": "MINISTRY OF HEALTH",
-            "service": "Birth Notification",
+            "service": "Birth Notification (B1)",
             "code": "MOH-NOTIF-001",
             "schema": {
                 "type": "object",
-                "required": ["mother_id", "child_gender", "date_of_birth"],
+                "required": ["child_name", "mother_id", "child_gender", "date_of_birth"],
                 "properties": {
+                    "child_name": {
+                        "type": "string", 
+                        "title": "Child's Full Name",
+                        "description": "Enter the name as it should appear on the birth certificate"
+                    },
                     "mother_id": {
                         "type": "string", 
                         "title": "Mother's ID Number", 
                         "widget": "text",
                         "x-registry-config": {
-                            "adapter_id": iprs_adapter_id or "IPRS",
-                            "endpoint_id": person_lookup_id or "Verify Citizen Identity"
+                            "adapter_id": "IPRS",
+                            "endpoint_id": "Verify Citizen Identity"
                         },
-                        "description": "Validation: IPRS Identity Check"
+                        "description": "Validation: Real-time IPRS Identity Check"
+                    },
+                    "father_id": {
+                        "type": "string", 
+                        "title": "Father's ID Number (Optional)", 
+                        "x-registry-config": {
+                            "adapter_id": "IPRS",
+                            "endpoint_id": "Verify Citizen Identity"
+                        }
                     },
                     "child_gender": {
                         "type": "string", 
@@ -76,8 +89,7 @@ def seed_unified_catalogue():
                     "date_of_birth": {
                         "type": "string", 
                         "format": "date", 
-                        "title": "Date of Birth",
-                        "default": "2026-02-19"
+                        "title": "Date of Birth"
                     },
                     "place_of_birth": {
                         "type": "string", 
@@ -88,10 +100,10 @@ def seed_unified_catalogue():
                 }
             },
             "custom_workflow": [
-                {"name": "Capture Details", "role": "Hospital_Staff", "type": "manual"},
-                {"name": "Validate Parent", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/IPRS/api/v1/citizens/verify"}, "action": "IPRS_CHECK"},
-                {"name": "Generate B1 Number", "role": "System", "type": "api_call", "api_config": {"endpoint": "CRS: Create Notification", "mappings": {"output": {"notification_number": "b1_number"}}}},
-                {"name": "Notify Parent", "role": "System", "type": "api_call", "action": "SEND_SMS"}
+                {"name": "Record Birth Event", "role": "Medical Staff", "type": "manual"},
+                {"name": "Verify Parentage (IPRS)", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/IPRS/api/v1/citizens/verify"}, "action": "IPRS_CHECK"},
+                {"name": "Generate B1 Notification", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/CRS/api/births/notify"}, "action": "GENERATE_B1"},
+                {"name": "SMS Notification to Parent", "role": "System", "type": "api_call", "action": "SEND_SMS"}
             ]
         },
         "WF-STEP-01b": { 
@@ -110,7 +122,7 @@ def seed_unified_catalogue():
             "custom_workflow": [
                 {"name": "Initialize Birth Record", "role": "Citizen", "type": "manual"},
                 {"name": "Verify B1 Notification", "role": "CRS Officer", "type": "manual"},
-                {"name": "MINT MAISHA NAMBA (UPI)", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/NRB/mint_upi"}},
+                {"name": "MINT MAISHA NAMBA (UPI)", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/NRB/api/v1/upi/mint"}},
                 {"name": "Final Registrar Approval", "role": "CRS Registrar", "type": "manual"}
             ]
         },
@@ -140,13 +152,32 @@ def seed_unified_catalogue():
                 "type": "object",
                 "required": ["child_upi", "school_code"],
                 "properties": {
-                    "child_upi": {"type": "string", "title": "Child UPI", "lookup_service": "CRS"},
-                    "school_code": {"type": "string", "title": "Selection: Institutional Code", "widget": "select", "enum": ["SCH-001 (Kenyatta Primary)", "SCH-002 (Moi Primary)"]}
+                    "child_upi": {
+                        "type": "string", 
+                        "title": "Child Maisha Namba (UPI)",
+                        "x-registry-config": {
+                            "adapter_id": "CRS",
+                            "endpoint_id": "Get Birth Certificate"
+                        }
+                    },
+                    "school_code": {
+                        "type": "string", 
+                        "title": "Select School", 
+                        "widget": "registry_search",
+                        "x-registry-config": {
+                            "adapter_id": "SCHOOLS_REGISTRY",
+                            "endpoint_id": "Search Schools",
+                            "display_field": "name",
+                            "value_field": "code"
+                        },
+                        "description": "Validation: Automated Capacity & Geospatial Check"
+                    }
                 }
             },
             "custom_workflow": [
                 {"name": "Parental Enrollment Request", "role": "Citizen", "type": "manual"},
                 {"name": "Validate UPI Registry", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/CRS/verify_upi"}},
+                {"name": "Verify School Capacity", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/SCHOOLS_REGISTRY/api/v1/schools/{school_code}/capacity"}},
                 {"name": "Head Teacher Admission", "role": "School Head", "type": "manual"},
                 {"name": "NEMIS Record Finalization", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/NEMIS/enroll"}}
             ]
@@ -157,18 +188,44 @@ def seed_unified_catalogue():
             "code": "NRB-ID-001",
             "schema": {
                 "type": "object",
-                "required": ["upi", "fingerprints", "photo_icao"],
+                "required": ["upi", "current_photo", "fingerprints", "physical_address"],
                 "properties": {
-                    "upi": {"type": "string", "title": "Existing UPI (Maisha Namba)", "readOnly": True},
-                    "fingerprints": {"type": "string", "format": "binary", "title": "Biometric Template (WSQ)"},
-                    "photo_icao": {"type": "string", "format": "data-url", "title": "Current Photo (ICAO Standard)"}
+                    "upi": {
+                        "type": "string", 
+                        "title": "Existing Maisha Namba (UPI)", 
+                        "x-registry-config": {
+                            "adapter_id": "CRS",
+                            "endpoint_id": "Get Birth Certificate"
+                        }
+                    },
+                    "current_photo": {
+                        "type": "string", 
+                        "format": "data-url", 
+                        "title": "Live Photo (ICAO Standard)",
+                        "description": "Validation: AI-based ICAO Compliance Check"
+                    },
+                    "fingerprints": {
+                        "type": "string", 
+                        "format": "binary", 
+                        "title": "Biometric Template (WSQ)",
+                        "description": "Validation: AFIS Uniqueness Check"
+                    },
+                    "physical_address": {
+                        "type": "string", 
+                        "title": "Residential Address", 
+                        "widget": "geo_address"
+                    },
+                    "mobile_number": {
+                        "type": "string", 
+                        "title": "Contact Mobile Number"
+                    }
                 }
             },
             "custom_workflow": [
-                {"name": "Biometric Data Harvest", "role": "NRB Officer", "type": "manual"},
-                {"name": "Automated AFIS Deduplication", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/IPRS/dedup"}},
-                {"name": "Identity Authentication", "role": "NRB Supervisor", "type": "manual"},
-                {"name": "Secure ID Production", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/NRB/issue_id"}}
+                {"name": "Initiate Adult ID Upgrade", "role": "Citizen", "type": "manual"},
+                {"name": "Auto-Fetch & Vetting", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/IPRS/api/v1/citizens/verify"}, "action": "CITIZEN_VETTING"},
+                {"name": "Biometric Capture Hub", "role": "NRB Officer", "type": "manual"},
+                {"name": "Identity Linkage & Issuance", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/NRB/api/v1/upi/mint"}, "action": "ISSUE_VIRTUAL_ID"}
             ]
         },
         "WF-STEP-05": {
@@ -290,6 +347,41 @@ def seed_unified_catalogue():
                 {"name": "Judicial Confirmation", "role": "Judge", "type": "manual"},
                 {"name": "Asset Distribution Bridge", "role": "System", "type": "api_call"}
             ]
+        },
+        "WF-STEP-11": {
+            "mda": "CIVIL REGISTRATION SERVICES (CRS)",
+            "service": "Death Registration",
+            "code": "CRS-DEATH-001",
+            "schema": {
+                "type": "object",
+                "required": ["deceased_id", "date_of_death", "cause_of_death", "informant_id"],
+                "properties": {
+                    "deceased_id": {
+                        "type": "string", 
+                        "title": "Deceased's National ID/UPI",
+                        "x-registry-config": {
+                            "adapter_id": "IPRS",
+                            "endpoint_id": "Verify Citizen Identity"
+                        }
+                    },
+                    "date_of_death": {"type": "string", "format": "date", "title": "Date of Death"},
+                    "cause_of_death": {"type": "string", "title": "Cause of Death (ICD-11)"},
+                    "informant_id": {
+                        "type": "string", 
+                        "title": "Informant's National ID",
+                        "x-registry-config": {
+                            "adapter_id": "IPRS",
+                            "endpoint_id": "Verify Citizen Identity"
+                        }
+                    }
+                }
+            },
+            "custom_workflow": [
+                {"name": "Notification of Death", "role": "Medical Personnel", "type": "manual"},
+                {"name": "Verify Deceased Identity", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/IPRS/api/v1/citizens/verify"}},
+                {"name": "Issue Death Certificate", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/CRS/api/certificates/death/issue"}},
+                {"name": "Notify Informant", "role": "System", "type": "api_call", "action": "SEND_SMS"}
+            ]
         }
     }
 
@@ -330,8 +422,7 @@ def seed_unified_catalogue():
         "Business Name Registration": "WF-STEP-07",
         "Land Transfer": "WF-STEP-09",
         "Transfer of Land Ownership": "WF-STEP-09",
-        "Succession": "WF-STEP-10",
-        "Death Registration": "WF-STEP-10",
+        "Death Registration": "WF-STEP-11",
         "NHIF Registration": "WF-STEP-02",
         "Student Enrollment": "WF-STEP-03",
         "Tax Compliance Certificates": "WF-STEP-05",

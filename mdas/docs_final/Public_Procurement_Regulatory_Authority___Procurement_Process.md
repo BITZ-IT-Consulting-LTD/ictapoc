@@ -20,14 +20,17 @@ The Public Procurement Regulatory Authority (PPRA) is an autonomous government a
 ```mermaid
 graph TD
     Start((Start)) --> S1
+
     subgraph Applicant [Applicant]
         S1["Applicant registers business on AGPO Portal."]
-        S2["Applicant uploads ID, Business Reg Cert, and Tax C..."]
+        S2["Applicant uploads ID, Business Reg Cert, and Tax Complian..."]
         S5["Applicant downloads the AGPO Certificate."]
     end
+
     subgraph PPRA [PPRA]
         S3["PPRA/Treasury verifies documents."]
     end
+
     subgraph System [System]
         S4["System approves application."]
     end
@@ -36,6 +39,16 @@ graph TD
     S3 --> S4
     S4 --> S5
     S5 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S5 userTask;
+    class S4 serviceTask;
 ```
 
 ---

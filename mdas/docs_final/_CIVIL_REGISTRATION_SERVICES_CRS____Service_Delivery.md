@@ -20,33 +20,41 @@ Civil Registration Services (CRS) is mandated to register all births and deaths 
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph Citizen [Parent / Next of Kin]
-        S1["Event Occurs (Birth/Death)"]
-        S3["Collects Notification (B1/D1) form"]
-        S4["Visits Huduma Centre / CRS Office"]
-        S6["Pays fee at Bank/Agent & Returns with receipt"]
+
+    subgraph Health_Facility___Chief [Health Facility / Chief]
+        S1["**Notification:** Issuer records event. For hospital birt..."]
     end
-    subgraph HealthFacility [Hospital / Chief]
-        S2["Issues Notification Number (B1/D1)"]
+
+    subgraph Parent___Informant [Parent / Informant]
+        S2["**Application:** Visits CRS office or Huduma Centre with ..."]
+        S4["**Payment:** Pays processing fee (e.g., via eCitizen or B..."]
+        S7["**Collection:** Collects the physical certificate."]
     end
-    subgraph CRSOfficer [CRS Officer]
-        S5["Verifies Notification details in register"]
-        S7["Manually keys data into CRS System"]
-        S8["Prints Certificate"]
+
+    subgraph CRS_Officer [CRS Officer]
+        S3["**Verification:** Officer locates the physical or digital..."]
+        S5["**Data Entry:** Officer types details into the legacy CRS..."]
     end
-    subgraph Registrar [District Registrar]
-        S9["Signs & Seals Certificate"]
+
+    subgraph District_Registrar [District Registrar]
+        S6["**Approval:** Registrar manually signs and stamps the pri..."]
     end
-    
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
     S5 --> S6
     S6 --> S7
-    S7 --> S8
-    S8 --> S9
-    S9 --> End((End))
+    S7 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5,S6,S7 userTask;
 ```
 
 ---
@@ -87,13 +95,17 @@ Birth & Death Registration (Current/Late)
 ## Detailed Process (AS-IS)
 | Step | Role | Action | Tool | Notes |
 |---|---|---|---|---|
-| 1 | Health Facility / Chief | **Notification:** Issuer records event. For hospital births/deaths, a Notification Number is generated. For home events, the Assistant Chief issues a manual acknowledgement. | Manual Register / B1 Form | |
-| 2 | Parent / Informant | **Application:** Visits CRS office or Huduma Centre with the Notification Number and parent ID copies (for birth) or Deceased ID (for death). | Manual | "Late Registration" requires additional vetting. |
-| 3 | CRS Officer | **Verification:** Officer locates the physical or digital notification record to validate details. | Manual / Local DB | Frequent delays if records aren't synced. |
-| 4 | Parent / Informant | **Payment:** Pays processing fee (e.g., via eCitizen or Bank) and presents receipt. | eCitizen / Manual Receipt | |
-| 5 | CRS Officer | **Data Entry:** Officer types details into the legacy CRS system for certificate printing. | Legacy Desktop App | Risk of typos. |
-| 6 | District Registrar | **Approval:** Registrar manually signs and stamps the printed certificate. | Manual | Bottleneck step. |
-| 7 | Parent / Informant | **Collection:** Collects the physical certificate. | Manual | |
+| 1 | Hospital / Health Facility / Parent | **Birth Occurs:** Child is born. If at **Hospital**: Notification issued immediately. If at **Home**: Parent must report to Assistant Chief. | Physical Presence | **Hospital Output:** Birth Notification (Serial No).<br>**Home Output:** Chief's Acknowledgement. |
+| 2 | Parent / Guardian | **Application:** Visits CRS Office or Huduma Centre with documents. **Required:** Birth Notification, Parent ID, Clinic Card, Baptism Card (Optional). | Physical Documents | *Constraint:* Must travel to office; often long queues. |
+| 3 | CRS Officer | **Form B3 Issuance:** Provides "Application for Birth Certificate" (Form B3). | Paper Form | |
+| 4 | Parent / Guardian | **Data Entry:** Manually fills Form B3: Child Name, DOB, Place of Birth, Father Details, Mother Details, Address. | Pen & Paper | Risk of legible errors or misspelling names. |
+| 5 | CRS Registrar | **Verification:** Checks authenticity of Birth Notification and Parent ID against physical records. | Manual Check | If incomplete, parent is sent back. |
+| 6 | CRS Registrar | **Manual Recording:** Captures birth details in the **Birth Register**. | Physical Ledger | This creates the official government birth record. |
+| 7 | CRS Registrar | **Certificate Generation:** Processes application and prints the Birth Certificate. | Legacy Printer | Contains: Cert Number, Name, Parents, DOB, Place. |
+| 8 | Parent / Guardian | **Payment:** Pays certificate fee (KES 50 - 200) for late registration or extra copies. | Cash / M-Pesa | |
+| 9 | Parent / Guardian | **Collection:** Collects the official Birth Certificate. | Physical Collection | **Final Artifact:** The Foundational Identity Document used for NEMIS, ID, Passport. |
+
+**Summary:** The process relies heavily on physical movement of parents and paper forms (B3). Data is often re-entered multiple times, leading to errors.
 
 ---
 
@@ -118,26 +130,30 @@ Birth & Death Registration (Current/Late)
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph Health_System [Hospital / Community Health]
-        S1["Event Occurs (Birth/Death)"]
-        S2["Data Captured in HIS / Mobile App"]
-        S3["Push to X-Road (KeSEL)"]
+
+    subgraph Health_Staff [Source Capture]
+        S1["Enters details into Hospital EMR / Chief's Tablet"]
     end
-    subgraph WoG_Platform [Government Service Bus]
-        S4["Validates Parent/Deceased Identity (IPRS)"]
-        S5["Generates Unique Personal Identifier (UPI)"]
-        S6["Creates CRS Record (Draft)"]
-        S7["Triggers Payment Prompt (GPA)"]
+
+    subgraph WoG_Platform [Interoperability Layer]
+        S2["Auto-Links Mother's ID via IPRS/Maisha Namba"]
+        S3["Validates Data & Generates Unique Notification No"]
     end
-    subgraph Citizen [Parent / Next of Kin]
-        S8["Receives SMS/USSD Prompt"]
-        S9["Pays via M-Pesa (Government Paybill)"]
-        S11["Downloads Digital Certificate (eCitizen)"]
+
+    subgraph CRS_Core [Civil Registration System]
+        S4["Mints Maisha Namba (UPI) Immediately"]
+        S5["Creates Digital Birth Record (Source of Truth)"]
     end
-    subgraph CRS_Backend [Registry]
-        S10["Auto-Signs & Seals Digital Cert"]
+
+    subgraph Parent [Citizen via eCitizen]
+        S6["Receives SMS Notification with UPI"]
+        S7["Logs into eCitizen to View Digital Cert"]
     end
     
+    subgraph Payments [Govt Payment Aggregator]
+        S8["Auto-Deducts Fee (if applicable)"]
+    end
+
     S1 --> S2
     S2 --> S3
     S3 --> S4
@@ -145,30 +161,29 @@ graph TD
     S5 --> S6
     S6 --> S7
     S7 --> S8
-    S8 --> S9
-    S9 --> S10
-    S10 --> S11
-    S11 --> End((End))
+    S8 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5,S6,S7,S8 userTask;
 ```
 
-## Future State Process (TO-BE)
-### Narrative
-The process is **Event-Driven** and **Interoperable**.
-1.  **Source Capture:** Data is captured *once* at the source (Hospital HMIS or Community Health Promoter's Tablet).
-2.  **Interoperability (X-Road):** The Health System pushes data securely to CRS via the Government Service Bus (KeSEL).
-3.  **Identity Verification:** The platform automatically queries IPRS to validate the parents' or deceased's identity.
-4.  **UPI Generation:** For births, a **Maisha Namba (UPI)** is minted immediately.
-5.  **Direct Payment:** The citizen pays directly via the Government Payment Aggregator (GPA).
-6.  **Digital Output:** A Verifiable Digital Certificate (QR Code) is issued to the citizen's eCitizen locker. No physical visit required.
+## Detailed Process (TO-BE) - Event-Driven & Automated
+| Step | Role | Action | System Component | Logic / Integration |
+|---|---|---|---|---|
+| 1 | Health Staff / Chief | **Source Capture:** Enters birth details directly at the point of event (Hospital EMR or Chief's Tablet). | **Hospital EMR / Mobile App** | Data is captured *once*. No re-entry. |
+| 2 | System | **Identity Link:** Auto-fetches Mother's details using her ID/Maisha Namba. | **IPRS / Maisha Namba** | Validates Mother's existence and citizenship instantly. |
+| 3 | System | **UPI Minting:** Automatically generates **Maisha Namba (UPI)** for the newborn. | **Civil Registration System** | This UPI is permanent and pushed to NEMIS for school. |
+| 4 | System | **Notification:** Sends SMS to Parent: "Birth Registered. UPI: [Number]. Click to view Cert." | **Notification Service** | Immediate feedback loop. |
+| 5 | Parent | **Payment (Optional):** If a physical copy is needed, pays via Mobile Money. | **Govt Payment Aggregator** | Real-time settlement. |
+| 6 | System | **Issuance:** Generates **Verifiable Digital Certificate** (QR Code) in Parent's eCitizen Locker. | **eCitizen Portal** | No need to visit CRS office. Print anytime. |
 
-### Optimized Steps (Digital)
-| Step | Actor | Action | System |
-|---|---|---|---|
-| 1 | Health Staff | Enters birth/death details into Hospital System (EMR). | Hospital EMR |
-| 2 | WoG Platform | Validates IDs, generates UPI, and creates draft record. | X-Road / IPRS |
-| 3 | Citizen | Receives SMS, reviews details, and pays fee. | Notification / GPA |
-| 4 | CRS System | Auto-approves (if low risk) and generates Digital Certificate. | Workflow Engine |
-| 5 | Citizen | Downloads official certificate from eCitizen. | eCitizen Portal |
+**Key Benefit:** The child leaves the hospital with a **Digital Identity (UPI)** already created. No "Late Registration" backlog.
 
 ---
 

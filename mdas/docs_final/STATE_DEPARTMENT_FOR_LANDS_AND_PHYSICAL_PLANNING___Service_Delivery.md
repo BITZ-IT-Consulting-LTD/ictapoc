@@ -20,45 +20,44 @@ The Ministry of Lands manages land administration, registration, valuation, and 
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph Buyer [Citizen / Conveyancer]
-        S1["Logs into Ardhisasa (ardhisasa.lands.go.ke)"]
-        S2["Conducts Official Search (KES 500)"]
-        S3["Initiates Transfer Application"]
-        S4["Uploads Sale Agreement, IDs, Photos"]
-        S5["Pays Stamp Duty (Calculated by Valuer)"]
-        S10["Collects Title Deed"]
+
+    subgraph Buyer [Buyer]
+        S1["**Search:** Logs into Ardhisasa. Requests search on Parce..."]
+        S5["**Duty Payment:** Once value is approved, Buyer generates..."]
+        S7["**Collection:** Buyer (or Advocate) visits Registry to pi..."]
     end
-    subgraph Seller [Owner]
-        S3a["Consents to Transfer via OTP/App"]
-        S4a["Uploads Spousal Consent / Land Rent Clearance"]
+
+    subgraph Seller [Seller]
+        S2["**Consent:** Seller receives SMS prompt to authorize the ..."]
     end
-    subgraph LandsOfficer [Registrar]
-        S2a["Verifies Search (Manual/System)"]
-        S6["Assigns Valuer for Site Visit"]
-        S7["Approves Valuation Report"]
-        S8["Registers Transfer Instrument"]
-        S9["Issues New Title Deed"]
+
+    subgraph Advocate [Advocate]
+        S3["**Transfer:** Lawyer uploads Transfer Form (TR1), Sale Ag..."]
     end
-    subgraph Valuer [Govt Valuer]
-        S6a["Visits Property (Physical Inspection)"]
-        S6b["Determines Market Value for Duty"]
+
+    subgraph Valuer [Valuer]
+        S4["**Valuation:** System assigns a Govt Valuer. Valuer sched..."]
     end
-    
+
+    subgraph Registrar [Registrar]
+        S6["**Registration:** Registrar reviews the file. If complian..."]
+    end
     S1 --> S2
-    S2 --> S2a
-    S2a --> S3
-    S3 --> S3a
-    S3a --> S4
-    S4 --> S4a
-    S4a --> S5
+    S2 --> S3
+    S3 --> S4
+    S4 --> S5
     S5 --> S6
-    S6 --> S6a
-    S6a --> S6b
-    S6b --> S7
-    S7 --> S8
-    S8 --> S9
-    S9 --> S10
-    S10 --> End((End))
+    S6 --> S7
+    S7 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5,S6,S7 userTask;
 ```
 
 ---
@@ -133,33 +132,37 @@ Transfer of Land / Registration of Charge
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph WoG_Platform [Land Registry]
-        S1["Digital Title Search (Instant & Guaranteed)"]
-        S2["Auto-Calculates Stamp Duty (GIS Zonal Value)"]
-        S3["Validates Seller via IPRS/BRS"]
+
+    subgraph Buyer [Buyer]
+        S1["Initiates purchase and deposits funds."]
+        S5["Receives Digital Title."]
     end
-    subgraph Buyer [Citizen]
-        S4["Initiates Transfer on App"]
-        S5["Deposits Funds into Smart Contract Escrow"]
+
+    subgraph WoG_Platform [WoG Platform]
+        S2["Validates Seller and calculates Duty."]
     end
-    subgraph Seller [Owner]
-        S6["Approves Transfer via Biometric Consent"]
+
+    subgraph Seller [Seller]
+        S3["Consents via Biometric Scan."]
     end
-    subgraph Blockchain_System [Immutable Ledger]
-        S7["Executes Atomic Swap (Title for Cash)"]
-        S8["Issues Digital Token (New Title)"]
-        S9["Remits Duty to KRA"]
+
+    subgraph Blockchain [Blockchain]
+        S4["Swaps Title for Cash instantly."]
     end
-    
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> S8
-    S8 --> S9
-    S9 --> End((End))
+    S5 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5 userTask;
 ```
 
 ## Future State Process (TO-BE)
