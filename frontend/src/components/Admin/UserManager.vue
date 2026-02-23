@@ -144,8 +144,9 @@
 
     <!-- Create/Edit User Modal -->
     <BaseModal v-model:show="showModal" :title="modalTitle" :subtitle="modalSubtitle" icon="bi-person-badge">
-      <form @submit.prevent="handleSubmit" class="form flex flex-col gap-5">
+      <form @submit.prevent="handleSubmit" class="flex flex-col gap-5 w-full">
 
+        <!-- CREATE MODE: Existing Grid Layout -->
         <div class="grid grid--2 gap-5" v-if="!form.id">
           <div class="form__group">
             <label class="form__label">Username</label>
@@ -174,37 +175,41 @@
           </div>
         </div>
 
-        <div class="form__group" v-if="form.id">
-          <div class="alert alert--info flex items-center gap-3">
-            <i class="bi bi-info-circle-fill text-xl"></i>
-            <span>Modifying access assignments for <strong>{{ form.username }}</strong></span>
-          </div>
-        </div>
-
-        <div class="grid grid--2 gap-5 pt-4 border-t border-border-color">
+        <!-- EDIT MODE: Refactored Layout -->
+        <template v-if="form.id">
           <div class="form__group">
-            <label class="form__label">System Role</label>
-            <select v-model="form.user_role_id" class="form__select w-full">
-              <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.name }}</option>
-            </select>
+            <div class="alert alert--info flex items-center gap-3">
+              <i class="bi bi-info-circle-fill text-xl"></i>
+              <span>Modifying access assignments for <strong>{{ form.username }}</strong></span>
+            </div>
           </div>
 
-          <div class="form__group">
-            <label class="form__label">MDA Authority</label>
-            <div class="space-y-2">
-              <input type="text" v-model="mdaDropdownSearch" placeholder="Search MDAs..."
-                class="form__input form__input--sm mb-2">
-              <select v-model="form.mda" class="form__select w-full">
-                <option :value="null">Global / Independent</option>
-                <option v-for="mda in filteredMdasForDropdown" :key="mda.id" :value="mda.id">{{ mda.name }} ({{
-                  mda.code }})</option>
+          <div class="flex flex-col md:flex-row gap-5 pt-4 border-t border-border-color">
+            <div class="form__group flex-1">
+              <label class="form__label">System Role</label>
+              <select v-model="form.user_role_id" class="form__select w-full">
+                <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.name }}</option>
               </select>
             </div>
-            <p class="form__help mt-1">Staff will only see workflows associated with this MDA.</p>
-          </div>
-        </div>
 
-        <div class="flex justify-end gap-3 pt-4 border-t border-border-color mt-2">
+            <div class="form__group flex-1">
+              <label class="form__label">MDA Authority</label>
+              <div class="space-y-2">
+                <input type="text" v-model="mdaDropdownSearch" placeholder="Search MDAs..."
+                  class="form__input form__input--sm mb-2 w-full">
+                <select v-model="form.mda" class="form__select w-full">
+                  <option :value="null">Global / Independent</option>
+                  <option v-for="mda in filteredMdasForDropdown" :key="mda.id" :value="mda.id">{{ mda.name }} ({{
+                    mda.code }})</option>
+                </select>
+              </div>
+              <p class="form__help mt-1">Staff will only see workflows associated with this MDA.</p>
+            </div>
+          </div>
+        </template>
+
+        <!-- FOOTER: Buttons -->
+        <div class="flex justify-end gap-3 pt-6 border-t border-border-color mt-2">
           <button type="button" @click="closeModal" class="button button--secondary">Cancel</button>
           <button type="submit"
             class="button button--primary shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all">

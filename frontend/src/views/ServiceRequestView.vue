@@ -130,6 +130,39 @@
             </header>
             <div class="card__body flex flex-col gap-6">
 
+              <!-- Workflow Visualization -->
+              <div v-if="request.service_config && request.service_config.workflow_steps" class="workflow-visualizer">
+                <div class="u-text-[10px] u-font-black u-text-muted u-uppercase u-mb-3">Transaction Lifecycle</div>
+                <div class="u-flex u-flex-col u-gap-0">
+                  <div v-for="(step, index) in sortedWorkflowSteps" :key="step.id" class="u-flex u-gap-3 u-relative">
+                    <!-- Connector Line -->
+                    <div v-if="index < sortedWorkflowSteps.length - 1" 
+                         class="u-absolute u-left-[11px] u-top-[24px] u-bottom-[-16px] u-w-[2px] u-z-0"
+                         :class="isStepCompleted(step) ? 'u-bg-success' : 'u-bg-slate-200'"></div>
+                    
+                    <!-- Step Indicator -->
+                    <div class="u-w-6 u-h-6 u-rounded-full u-flex u-items-center u-justify-center u-z-10 u-flex-shrink-0 u-text-[10px] u-font-bold u-border-2 transition-all"
+                         :class="getStepIndicatorClass(step)">
+                      <i v-if="isStepCompleted(step)" class="bi bi-check-lg"></i>
+                      <span v-else>{{ index + 1 }}</span>
+                    </div>
+
+                    <!-- Step Content -->
+                    <div class="u-pb-4 u-flex-1">
+                      <div class="u-flex u-items-center u-justify-between">
+                        <span class="u-text-xs u-font-bold" :class="isStepActive(step) ? 'u-text-primary' : (isStepCompleted(step) ? 'u-text-main' : 'u-text-muted')">
+                          {{ step.step_name }}
+                        </span>
+                        <span v-if="isStepActive(step)" class="badge badge--primary badge--pill u-py-0 u-px-1 u-text-[9px] animate-pulse">ACTIVE</span>
+                      </div>
+                      <div class="u-text-[10px] u-text-muted u-mt-0.5 u-uppercase u-tracking-wider">
+                        {{ step.role || 'System' }} {{ step.step_type === 'api_call' ? '(Automated)' : '' }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div class="form__group">
                 <label class="form__label">Current Orchestration Node</label>
                 <div class="flex items-center gap-3">
@@ -247,17 +280,45 @@
   import { useAuditLogStore } from '../store/auditLog';
   import { useAuthStore } from '../store/auth';
   import { useStaffStore } from '../store/staff';
+  import { useServiceConfigStore } from '../store/serviceConfig';
   import api from '../services/api';
   import BaseModal from '../components/Common/BaseModal.vue';
 
   const route = useRoute();
   const authStore = useAuthStore();
   const staffStore = useStaffStore();
+  const serviceConfigStore = useServiceConfigStore();
 
   const requestId = route.params.id;
   const request = ref(null);
   const showDocModal = ref(false);
   const currentDocUrl = ref(null);
+  
+  const sortedWorkflowSteps = computed(() => {
+    if (!request.value || !request.value.service_config || !request.value.service_config.workflow_steps) return [];
+    return [...request.value.service_config.workflow_steps].sort((a, b) => a.sequence - b.sequence);
+  });
+
+  const isStepCompleted = (step) => {
+    if (!request.value.current_step) return true; // All steps completed if no current step and status is closed? simplified logic
+    if (request.value.status === 'closed' || request.value.status === 'approved' || request.value.status === 'rejected') {
+        // If terminal status, check if this step sequence is less than total steps?
+        // Simple logic: if request is closed, all are done? Or maybe we need audit logs to be sure.
+        // For now: 
+        return step.sequence < request.value.current_step.sequence; 
+    }
+    return step.sequence < request.value.current_step.sequence;
+  };
+
+  const isStepActive = (step) => {
+     return request.value.current_step && step.id === request.value.current_step.id;
+  };
+
+  const getStepIndicatorClass = (step) => {
+      if (isStepCompleted(step)) return 'u-bg-success u-text-white u-border-success';
+      if (isStepActive(step)) return 'u-bg-white u-text-primary u-border-primary ring-4 ring-primary/10';
+      return 'u-bg-white u-text-muted u-border-slate-200';
+  };
 
   const viewFile = (fileObj) => {
     if (fileObj && fileObj.content) {

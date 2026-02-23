@@ -23,6 +23,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
+
+    'drf_yasg',
     
     # Local apps
     'service_api',
@@ -164,4 +166,19 @@ LOGGING = {
             'propagate': False,
         },
     },
+}
+
+SWAGGER_SETTINGS = {
+    'DEFAULT_INFO': 'project.urls.api_info',
+    'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'Basic': {
+            'type': 'basic'
+        },
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
 }

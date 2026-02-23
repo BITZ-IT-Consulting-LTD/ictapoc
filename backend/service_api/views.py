@@ -20,28 +20,48 @@ from rest_framework import viewsets, permissions, status, serializers
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .models import (
-    ServiceRequest, ServiceConfig, WorkflowStep, User, MDA, AuditLog, Role, 
+    ServiceRequest, ServiceConfig, WorkflowStep, User, AuditLog, MDA, Role, 
     ServiceDomain, ServiceCategory, InterDepartmentalMemo, GovernmentFile, 
-    OfficialLetter, CorrespondenceAction, DesktopReview
+    OfficialLetter, CorrespondenceAction, DesktopReview,
+    PaymentProvider, PaymentTransaction, RevenueSplit,
+    ConsentRecord, DataPurpose, ConsentAccessLog, RegistryAdapter, RegistryEndpoint
 )
 from .serializers import (
-    ServiceRequestSerializer, 
-    ServiceConfigSerializer, 
-    WorkflowStepSerializer, 
-    UserSerializer, 
-    MDASerializer, 
-    AuditLogSerializer,
-    RoleSerializer,
-    ServiceDomainSerializer,
-    ServiceCategorySerializer,
-    InterDepartmentalMemoSerializer,
-    GovernmentFileSerializer,
-    OfficialLetterSerializer,
-    CorrespondenceActionSerializer,
-    DesktopReviewSerializer
+    ServiceRequestSerializer, ServiceConfigSerializer, WorkflowStepSerializer, 
+    UserSerializer, AuditLogSerializer, MDASerializer, RoleSerializer,
+    ServiceDomainSerializer, ServiceCategorySerializer,
+    InterDepartmentalMemoSerializer, GovernmentFileSerializer,
+    OfficialLetterSerializer, CorrespondenceActionSerializer,
+    DesktopReviewSerializer, PaymentProviderSerializer, PaymentTransactionSerializer,
+    ConsentRecordSerializer, DataPurposeSerializer, ConsentAccessLogSerializer,
+    RegistryAdapterSerializer, RegistryEndpointSerializer
 )
+from .services import PaymentService, ConsentService
 from .permissions import IsAdminOrAuthenticatedReadOnly, IsParticipantOrAdmin, AuditLogPermission, IsSystemAdmin, IsClaimAuthorized
 from .workflow import WorkflowEngine, send_notification
+
+class RegistryAdapterViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    Lists available Registry Adapters (e.g., CRS, IPRS) for configuration.
+    """
+    queryset = RegistryAdapter.objects.all()
+    serializer_class = RegistryAdapterSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class RegistryEndpointViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    Lists API operations available on registries.
+    Filterable by ?adapter_id=...
+    """
+    serializer_class = RegistryEndpointSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = RegistryEndpoint.objects.all()
+        adapter_id = self.request.query_params.get('adapter_id')
+        if adapter_id:
+            queryset = queryset.filter(adapter_id=adapter_id)
+        return queryset
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -50,6 +70,9 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
+        if not user.is_authenticated or getattr(self, 'swagger_fake_view', False):
+            return User.objects.none()
+            
         if user.role in ['admin', 'system_admin'] or user.is_staff:
             return User.objects.all()
         
@@ -74,29 +97,23 @@ class UserViewSet(viewsets.ModelViewSet):
                          break
              
              if needs_linking:
-                 from .registries import get_registry
-                 crs = get_registry('CRS')
-                 # Query CRS by child_id (which is the user's ID)
-                 # We iterate because mock registry is key-value based on BEN, not indexed by child_id
-                 found_ben = None
-                 found_record = None
+                 from .services import RegistryService
+                 # Refactored: Use DB-driven RegistryService instead of hardcoded mock
+                 result = RegistryService.query('CRS', user.id_number, 'child_id')
                  
-                 for ben, record in crs.BIRTH_RECORDS.items():
-                     if record.get('child_id') == user.id_number:
-                         found_ben = ben
-                         found_record = record
-                         break
-                 
-                 if found_ben and found_record:
-                     # Link it!
+                 if result['status'] == 'SUCCESS':
+                     found_record = result['data']
+                     # We need an ID for the doc, we'll try to find the key or use a default
+                     found_ben = found_record.get('ben', 'BC-UNKNOWN')
+                     
                      if not user.saved_documents:
                          user.saved_documents = []
                          
                      doc_entry = {
                         "doc_id": f"DOC-{found_ben}",
                         "doctype": "BIRTH_CERTIFICATE",
-                        "title": f"Birth Certificate - {found_record['full_name']}",
-                        "issue_date": found_record.get('date_of_birth'), # Approx
+                        "title": f"Birth Certificate - {found_record.get('full_name', 'N/A')}",
+                        "issue_date": found_record.get('date', 'N/A'),
                         "issuer": "Civil Registration Services",
                         "authoritative_id": found_ben,
                         "metadata": found_record
@@ -231,6 +248,8 @@ class ServiceCatalogViewSet(viewsets.ReadOnlyModelViewSet):
                         "mda": service.mda.name,
                         "mda_code": service.mda.code if service.mda.code else "",
                         "service_type": service.service_type,
+                        "service_category": category.name,
+                        "life_event_group": service.life_event_group,
                         "maturity": service.digitization_level,
                         "delivery_channels": service.delivery_channels,
                         "process_complexity": service.process_complexity,
@@ -271,6 +290,9 @@ class ServiceRequestViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         queryset = ServiceRequest.objects.all().select_related('service_config', 'current_step', 'service_config__mda')
+
+        if not user.is_authenticated or getattr(self, 'swagger_fake_view', False):
+            return queryset.none()
 
         if user.role == 'admin' or user.is_superuser:
             return queryset.order_by('-created_at')
@@ -314,18 +336,20 @@ class ServiceRequestViewSet(viewsets.ModelViewSet):
             # Standard Officers - Restricted Pool
             elif user.role in ['officer', 'MDA_OFFICER']:
                 if self.request.query_params.get('assigned_to_me'):
-                    queryset = queryset.filter(mda_filter, assigned_to=user).exclude(status='closed')
+                    queryset = queryset.filter(mda_filter, assigned_to=user).exclude(status__in=['closed', 'approved', 'rejected'])
                 elif self.request.query_params.get('unassigned'):
-                    queryset = queryset.filter(mda_filter, assigned_to__isnull=True, current_step__role__icontains='officer').exclude(status='closed')
+                    queryset = queryset.filter(mda_filter, assigned_to__isnull=True, current_step__role__icontains='officer').exclude(status__in=['closed', 'approved', 'rejected'])
                 else:
-                    # Default: See own citizen requests + available tasks for their role
-                    queryset = queryset.filter(Q(citizen=user) | (mda_filter & Q(current_step__role__icontains='officer'))).exclude(status='closed')
+                    # DEFAULT (Inbox): Only show what is assigned to ME
+                    # Unless it's their own citizen request
+                    queryset = queryset.filter(mda_filter).filter(Q(assigned_to=user) | Q(citizen=user)).exclude(status__in=['closed', 'approved', 'rejected'])
             
             else:
                 # Catch-all for other MDA roles: basic visibility of assigned MDA requests
-                queryset = queryset.filter(mda_filter)
+                # Default to assigned to ME for Inbox consistency
+                queryset = queryset.filter(mda_filter, assigned_to=user).exclude(status__in=['closed', 'approved', 'rejected'])
 
-            return queryset.order_by('-created_at')
+            return queryset.order_by('-created_at', '-updated_at')
 
         return queryset.none()
 
@@ -538,60 +562,122 @@ from .registries import get_registry
 
 class RegistryQueryView(APIView):
     """
-    Allow authenticated users to query registries (e.g., look up BEN from CRS).
+    Allow authenticated users to query registries (e.g., look up BEN or Notification Number from CRS).
+    Refactored to use database-driven RegistryAdapter.
     """
     permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request):
+    def get(self, request, registry_code=None, identifier=None):
         """
-        Admins can dump all mock records for testing/monitoring.
+        Supports both:
+        1. Admin dump (GET /api/registry/query/)
+        2. Individual lookup (GET /api/registries/<code|mda>/<identifier>/)
         """
-        if request.user.role != 'admin':
-            return Response({"detail": "Only admins can view registry dumps."}, status=403)
-        
-        from .registries import REGISTRY_MAP
-        dump = {}
-        for name, reg in REGISTRY_MAP.items():
-            # Dynamically look for common data attributes
-            data_attrs = [
-                'CITIZENS', 'BIRTH_RECORDS', 'ENTITIES', 'VEHICLES', 
-                'INSTITUTIONS', 'ADMISSIONS', 'TITLES', 'BENEFICIARIES',
-                'CASES', 'VOTERS', 'PINS', 'MEMBERS', 'NOTICES', 'CARDS', 
-                'PASSPORTS', 'RECORDS', 'DOCUMENTS', 'ASSETS', 'AIRCRAFT', 'LEARNERS'
-            ]
+        if not registry_code:
+            # Legacy Admin Dump behavior
+            if request.user.role != 'admin':
+                return Response({"detail": "Only admins can view registry dumps."}, status=403)
             
-            reg_data = {}
-            found = False
-            for attr in data_attrs:
-                if hasattr(reg, attr):
-                    val = getattr(reg, attr)
-                    if isinstance(val, dict):
-                        reg_data[attr] = val
-                        found = True
-            
-            if found:
-                dump[name] = reg_data
-            else:
-                dump[name] = "Operational (Mock)"
+            from .models import RegistryAdapter
+            adapters = RegistryAdapter.objects.all()
+            dump = {}
+            for adapter in adapters:
+                dump[adapter.code] = {
+                    "name": adapter.name,
+                    "is_mock": adapter.is_mock,
+                    "data": adapter.mock_data if adapter.is_mock else "LIVE_API"
+                }
+            return Response(dump)
+
+        # Individual Lookup logic
+        from .services import RegistryService
         
-        return Response(dump)
+        # Mapping logic for common fields based on registry code
+        field_map = {
+            'IPRS': 'id',
+            'KRA': 'id',
+            'CRS': 'ben',
+            'ARDHISASA': 'parcel_no',
+            'NTSA': 'plate',
+            'NEMIS': 'upi',
+            'BRS': 'reg_no'
+        }
+        field = field_map.get(registry_code.upper(), 'id')
+        
+        # Override field from query params if needed
+        query_field = request.query_params.get('field')
+        if query_field:
+            field = query_field
+
+        result = RegistryService.query(registry_code.upper(), identifier, field)
+        
+        if result['status'] == 'NOT_FOUND':
+            return Response(result, status=status.HTTP_404_NOT_FOUND)
+            
+        if result['status'] == 'ERROR':
+            return Response(result, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+
+        return Response(result)
 
     def post(self, request):
+        from .services import RegistryService
+        
+        # New Schematic Lookup Logic
+        adapter_id = request.data.get('adapter_id')
+        endpoint_id = request.data.get('endpoint_id')
+        params = request.data.get('params')
 
+        if adapter_id and endpoint_id:
+            try:
+                # Find the adapter and endpoint
+                adapter = RegistryAdapter.objects.get(id=adapter_id)
+                endpoint = RegistryEndpoint.objects.get(id=endpoint_id, adapter=adapter)
+
+                # For POC, we'll map the 'query' or first param to the identifier logic 
+                # or just pass through to the mockup logic.
+                # In a real scenario, we'd construct the URL and headers based on endpoint.path/method
+                
+                # Simplified: Use the 'query' key from params as the main identifier
+                identifier = params.get('query')
+                if not identifier and params:
+                    # Fallback: take first value
+                    identifier = list(params.values())[0]
+
+                if not identifier:
+                     return Response({"detail": "Missing query parameter for lookup."}, status=400)
+
+                # Execute query via service
+                # We reuse RegistryService.query but mapped by Code from Adapter
+                # We assume the mocked data structure handles the specific endpoint variation via 'field' 
+                # or just general lookup.
+                result = RegistryService.query(adapter.code, identifier)
+
+                if result['status'] == 'NOT_FOUND':
+                    # Fallback error message if mocked data misses
+                    return Response({"status": "NOT_FOUND", "message": f"No record found in {adapter.name} for {identifier}"}, status=200) # Return 200 to let frontend handle 'not found' gracefully
+
+                # Success
+                return Response({"success": True, "status": "SUCCESS", "data": result.get('data', {})})
+
+            except (RegistryAdapter.DoesNotExist, RegistryEndpoint.DoesNotExist):
+                 return Response({"detail": "Invalid Registry or Endpoint configuration."}, status=404)
+            except Exception as e:
+                 return Response({"detail": str(e)}, status=500)
+
+        # Legacy Logic (Keep for backward compatibility)
         registry_name = request.data.get('registry')
-        params = request.data.get('params', {})
+        identifier = request.data.get('identifier')
+        field = request.data.get('field', 'id')
         
-        if not registry_name:
-            return Response({"detail": "Registry name is required."}, status=400)
+        if not registry_name or not identifier:
+            return Response({"detail": "Registry name and identifier are required."}, status=400)
             
-        registry = get_registry(registry_name)
-        if not registry:
-            return Response({"detail": "Registry not found."}, status=404)
-            
-        # Inject requester ID for ownership validation
-        params['requester_id'] = request.user.id_number
+        # Refactored: Call RegistryService instead of legacy registries.py
+        result = RegistryService.query(registry_name, identifier, field)
         
-        result = registry.query(params)
+        if result['status'] == 'NOT_FOUND':
+            return Response(result, status=404)
+            
         return Response(result)
 
 class GovernmentFileViewSet(viewsets.ModelViewSet):
@@ -600,6 +686,9 @@ class GovernmentFileViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
+        if not user.is_authenticated or getattr(self, 'swagger_fake_view', False):
+            return GovernmentFile.objects.none()
+            
         if user.role in ['admin', 'system_admin'] or user.is_staff:
             return GovernmentFile.objects.all()
         return GovernmentFile.objects.filter(owning_mda=user.mda)
@@ -626,6 +715,9 @@ class InterDepartmentalMemoViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
+        if not user.is_authenticated or getattr(self, 'swagger_fake_view', False):
+            return InterDepartmentalMemo.objects.none()
+            
         if user.role in ['admin', 'system_admin'] or user.is_staff:
             return InterDepartmentalMemo.objects.all().order_by('-created_at')
             
@@ -736,3 +828,186 @@ class DesktopReviewViewSet(viewsets.ModelViewSet):
     queryset = DesktopReview.objects.all()
     serializer_class = DesktopReviewSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+class PaymentViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    Exposes Payment Aggregator (GPA) functionalities.
+    """
+    queryset = PaymentTransaction.objects.all()
+    serializer_class = PaymentTransactionSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    @action(detail=False, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    def initiate(self, request):
+        """
+        POST /api/payments/initiate/
+        {
+            "request_id": "REQ-123",
+            "phone_number": "254700000000",
+            "amount": 1500,
+            "provider": "MPESA"
+        }
+        """
+        request_id = request.data.get('request_id')
+        phone = request.data.get('phone_number')
+        amount = request.data.get('amount')
+        provider = request.data.get('provider', 'MPESA')
+
+        if not all([request_id, phone, amount]):
+            return Response({"detail": "request_id, phone_number, and amount are required."}, status=400)
+
+        result = PaymentService.initiate_stk_push(request_id, phone, amount, provider)
+        if result['status'] == 'SUCCESS':
+            return Response(result)
+        return Response(result, status=400)
+
+    @action(detail=False, methods=['post'], permission_classes=[permissions.AllowAny])
+    def callback(self, request):
+        """
+        Public endpoint for Payment Gateway webhooks.
+        POST /api/payments/callback/
+        {
+            "provider_ref": "GPA-X",
+            "status": "SUCCESS",
+            "amount": 1500
+        }
+        """
+        ref = request.data.get('provider_ref')
+        status_code = request.data.get('status')
+        
+        if not ref or not status_code:
+            return Response({"detail": "Invalid callback payload."}, status=400)
+
+        result = PaymentService.process_callback(ref, status_code)
+        if result['status'] == 'SUCCESS':
+            return Response(result)
+        return Response(result, status=400)
+
+    @action(detail=True, methods=['get'])
+    def status(self, request, pk=None):
+        """
+        GET /api/payments/<id>/status/
+        Checks the status of a specific transaction.
+        """
+        txn = self.get_object()
+        return Response({
+            "id": txn.id,
+            "status": txn.status,
+            "provider_ref": txn.provider_ref,
+            "amount": txn.amount
+        })
+
+class ConsentViewSet(viewsets.ModelViewSet):
+    """
+    Manages citizen data processing consents.
+    """
+    serializer_class = ConsentRecordSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        if not user.is_authenticated or getattr(self, 'swagger_fake_view', False):
+            return ConsentRecord.objects.none()
+            
+        # Citizens only see their own consent records
+        return ConsentRecord.objects.filter(user=user).order_by('-granted_at')
+
+    @action(detail=False, methods=['post'])
+    def grant(self, request):
+        """
+        POST /api/consent/grant/
+        {
+            "requester_id": 1,
+            "scope": "identity.read",
+            "purpose_code": "SERVICE_DELIVERY",
+            "expires_in_days": 30
+        }
+        """
+        requester_id = request.data.get('requester_id')
+        scope = request.data.get('scope')
+        purpose_code = request.data.get('purpose_code')
+        days = request.data.get('expires_in_days', 30)
+
+        if not all([requester_id, scope, purpose_code]):
+            return Response({"detail": "requester_id, scope, and purpose_code are required."}, status=400)
+
+        try:
+            mda = MDA.objects.get(id=requester_id)
+            consent = ConsentService.grant_consent(request.user, mda, scope, purpose_code, days)
+            if consent:
+                return Response(ConsentRecordSerializer(consent).data, status=201)
+            return Response({"detail": "Failed to grant consent."}, status=400)
+        except MDA.DoesNotExist:
+            return Response({"detail": "MDA not found."}, status=404)
+
+    @action(detail=True, methods=['post'])
+    def revoke(self, request, pk=None):
+        """
+        POST /api/consent/{id}/revoke/
+        """
+        success = ConsentService.revoke_consent(pk, request.user)
+        if success:
+            return Response({"status": "REVOKED"})
+        return Response({"detail": "Consent not found or unauthorized."}, status=404)
+
+    @action(detail=False, methods=['get'])
+    def check(self, request):
+        """
+        GET /api/consent/check/?scope=...&requester_code=...
+        """
+        scope = request.query_params.get('scope')
+        requester_code = request.query_params.get('requester_code')
+
+        if not scope or not requester_code:
+            return Response({"detail": "scope and requester_code required."}, status=400)
+
+        try:
+            mda = MDA.objects.get(code=requester_code)
+            consent = ConsentService.check_consent(request.user, mda, scope)
+            if consent:
+                return Response({
+                    "has_consent": True,
+                    "consent_id": consent.id,
+                    "expires_at": consent.expires_at
+                })
+            return Response({"has_consent": False})
+        except MDA.DoesNotExist:
+            return Response({"detail": "MDA not found."}, status=404)
+
+class LifecycleViewSet(viewsets.ViewSet):
+    """
+    Exposes Authoritative Lifecycle (Cradle-to-Grave) logic.
+    Provides the 'Optimized To-Be' features for citizens and officers.
+    """
+    permission_classes = [permissions.IsAuthenticated]
+
+    @action(detail=False, methods=['get'])
+    def journey_summary(self, request):
+        """
+        GET /api/lifecycle/journey_summary/
+        Returns a high-level view of the citizen's life journey across registries.
+        """
+        from .services import LifecycleService
+        summary = LifecycleService.get_citizen_journey_summary(request.user)
+        return Response(summary)
+
+    @action(detail=False, methods=['post'])
+    def prefill(self, request):
+        """
+        POST /api/lifecycle/prefill/
+        {
+            "service_code": "IPRS-ID-001",
+            "inputs": {
+                "birth_certificate_number": "BC-111"
+            }
+        }
+        """
+        from .services import LifecycleService
+        service_code = request.data.get('service_code')
+        inputs = request.data.get('inputs', {})
+        
+        if not service_code:
+            return Response({"detail": "service_code is required."}, status=400)
+            
+        prefilled_data = LifecycleService.prefill_service_application(service_code, request.user, inputs)
+        return Response(prefilled_data)

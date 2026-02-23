@@ -22,15 +22,16 @@ class DocumentGenerator:
         svc_code = service_config.service_code
         
         # 1. Generate a Unique Authoritative ID (The "Barcode" content) based on Service Type
-        if svc_code == 'BIRTH_REG':
-            auth_id = f"BEN-{random.randint(100000, 999999)}"
-        elif svc_code == 'NATIONAL_ID':
+        if svc_code in ['BIRTH_REG', 'CRS-CERT-001', 'MOH-NOTIF-001']:
+            prefix = "BEN" if svc_code != 'MOH-NOTIF-001' else "NOTIF"
+            auth_id = f"{prefix}-{random.randint(100000, 999999)}"
+        elif svc_code in ['NATIONAL_ID', 'NRB-ID-001']:
             auth_id = str(random.randint(10000000, 99999999))
-        elif svc_code == 'KRA_PIN_REG':
+        elif svc_code in ['KRA_PIN_REG', 'KRA-TAX-001']:
             auth_id = f"A{random.randint(100000000, 999999999)}W"
-        elif svc_code == 'BIZ_INCORPORATION':
+        elif svc_code in ['BIZ_INCORPORATION', 'BRS-INC-001']:
             auth_id = f"PVT-{random.randint(1000,9999)}"
-        elif svc_code == 'NEMIS_REG':
+        elif svc_code in ['NEMIS_REG', 'MOE-NEMIS-001']:
             auth_id = f"UPI-{random.randint(10000000, 99999999)}"
         else:
             auth_id = f"GOK-{mda.code}-{datetime.datetime.now().year}-{str(uuid.uuid4())[:8].upper()}"

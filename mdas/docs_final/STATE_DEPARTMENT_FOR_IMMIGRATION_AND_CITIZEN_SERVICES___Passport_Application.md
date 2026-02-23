@@ -2,44 +2,55 @@
 
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** STATE DEPARTMENT FOR IMMIGRATION AND CITIZEN SERVICES
-- **Process Name:** Passport Application
-- **Document Version:** 1.0
-- **Date:** 2026-02-14
+- **Process Name:** Passport Application & Issuance
+- **Document Version:** 1.3
+- **Date:** 2026-02-19
 - **Classification:** Official
 
 ---
 
 ## Executive Summary
-The State Department for Immigration and Citizen Services in Kenya controls and regulates the entry, exit, and residency of individuals, manages citizenship, and provides related services. It is responsible for issuing passports and other travel documents, as well as maintaining population registers for citizens and foreign nationals.
+The Directorate of Immigration Services (DIS) is responsible for the issuance of travel documents (passports, visas) to Kenyan citizens and foreign nationals. The passport application process has been digitized via eCitizen but faces significant bottlenecks in biometric capture, processing, and printing.
 
 ---
 
 ## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization.*
+*Current State visualization (eCitizen Application -> Physical Queue).*
 
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph Applicant [Applicant]
-        S1["Applicant logs into the eCitizen portal and naviga..."]
-        S2["Applicant fills the online passport application fo..."]
-        S3["Applicant uploads scanned copies of ID, Birth Cert..."]
-        S4["Applicant pays the fee via M-Pesa."]
-        S5["Applicant downloads application form and receipt."]
-        S6["Applicant books appointment for biometrics."]
-        S7["Applicant visits Immigration Center for biometrics..."]
-        S9["Applicant collects passport."]
+    subgraph Applicant [Citizen]
+        S1["Logs into eCitizen (immigration.ecitizen.go.ke)"]
+        S2["Fills Application Form 19"]
+        S3["Pays Fee (M-Pesa/Card)"]
+        S4["Prints Application & Books Appointment"]
+        S5["Visits Passport Control Office (Nyayo House/Huduma)"]
+        S8["Waits for SMS Notification (Weeks/Months)"]
+        S9["Collects Passport"]
     end
-    subgraph Immigration [Immigration]
-        S8["Passport is processed and printed."]
+    subgraph ImmigrationOfficer [Counter Officer]
+        S6["Biometric Capture (Fingerprints, Photo, Signature)"]
+        S7["Document Verification (Originals)"]
     end
+    subgraph BackOffice [Production Centre]
+        S7a["Scanning & Quality Check"]
+        S7b["Approval by Senior Officer"]
+        S7c["Printing & Personalization"]
+        S7d["Dispatch to Collection Point"]
+    end
+    
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
     S5 --> S6
     S6 --> S7
-    S7 --> S8
+    S7 --> S7a
+    S7a --> S7b
+    S7b --> S7c
+    S7c --> S7d
+    S7d --> S8
     S8 --> S9
     S9 --> End((End))
 ```
@@ -48,106 +59,142 @@ graph TD
 
 ## Process Overview
 ### Process Name
-Passport Application
+Passport Application (New / Renewal / Replacement)
 
 ### Service Category
 - G2C (Government to Citizen)
 
 ### Scope
-- **In Scope:** End-to-end processing within STATE DEPARTMENT FOR IMMIGRATION AND CITIZEN SERVICES.
+- **In Scope:** Ordinary (A, B, C series), Diplomatic, and Service Passports.
+- **Out of Scope:** Visa processing (evisa.go.ke).
 
 ### Triggers
-- Submission of application/request by Applicant.
+- Need for international travel.
+- Expiry of current passport.
 
 ### End States
-- **Successful:** e-Passport, Visa, Work Permit
+- **Successful:** Issuance of e-Passport (East African Community).
 
 ### Policy Context
-- The STATE DEPARTMENT FOR IMMIGRATION AND CITIZEN SERVICES Act; The Constitution of Kenya 2010; Data Protection Act 2019.
+- Kenya Citizenship and Immigration Act, 2011; ICAO Doc 9303.
 
 ---
 
 ## Stakeholders
 | Stakeholder | Role | Responsibilities |
 |---|---|---|
-| Immigration | Process Actor | Performs actions as defined in steps. |
-| Applicant | Process Actor | Performs actions as defined in steps. |
+| Applicant | Applicant | Completes online form, pays fee, attends appointment. |
+| Immigration Officer | Enroller | Captures biometrics and verifies original documents. |
+| Production Staff | Processor | Operates printing machines, quality assurance. |
+| Courier Service | Logistics | Delivers passports to regional offices (Mombasa, Kisumu, etc.). |
 
 ---
 
 ## Detailed Process (AS-IS)
 | Step | Role | Action | Tool | Notes |
 |---|---|---|---|---|
-| 1 | Applicant | Applicant logs into the eCitizen portal and navigates to Immigration Services. | Digital | |
-| 2 | Applicant | Applicant fills the online passport application form. | Manual | |
-| 3 | Applicant | Applicant uploads scanned copies of ID, Birth Certificate, etc. | Manual | |
-| 4 | Applicant | Applicant pays the fee via M-Pesa. | Manual | |
-| 5 | Applicant | Applicant downloads application form and receipt. | Manual | |
-| 6 | Applicant | Applicant books appointment for biometrics. | Manual | |
-| 7 | Applicant | Applicant visits Immigration Center for biometrics. | Manual | |
-| 8 | Immigration | Passport is processed and printed. | Manual | |
-| 9 | Applicant | Applicant collects passport. | Manual | |
+| 1 | Applicant | **Application:** Logs into eCitizen, selects Passport type (32, 50, 66 pages), fills biodata, uploads photo and ID copy. | eCitizen Portal | |
+| 2 | Applicant | **Payment:** Pays the prescribed fee via Mobile Money or Card. | eCitizen / Pesaflow | 32 pages: KES 4,500; 50 pages: KES 6,000 (rates subject to change). |
+| 3 | Applicant | **Booking:** Selects a date, time, and station (Nairobi, Mombasa, Kisumu, Nakuru, Eldoret, Embu, Kisii) for biometrics. | Appointment System | Slots are often fully booked for weeks. "Express" services are limited. |
+| 4 | Applicant | **Biometrics:** Physically visits the selected station with printed forms and original documents (Birth Cert, ID, Old Passport, Recommender ID). Queues for verification. | Biometric Kit | Long queues. Often requires a whole day. |
+| 5 | Immigration Officer | **Enrollment:** Officer takes digital photo, fingerprints, and signature. Verifies physical documents against system data. | Live Capture Station | Frequent system downtime or slow network. |
+| 6 | Back Office | **Processing:** File moves to: 
+- **Scanning:** Physical file digitized.
+- **Approval:** Senior officer approves.
+- **Printing:** Booklet personalized. | Production Workflow | Bottleneck: Printing machines often break down or lack booklets. "Priority" cases skip the queue. |
+| 7 | Logistics | **Dispatch:** Printed passports sorted and sent to collection counters. Applicant receives SMS. | SMS Gateway | SMS often fails; applicants visit office to check status manually. |
+| 8 | Applicant | **Collection:** Citizen presents ID and collection slip to pick up passport. | Collection Desk | Another queue for collection. |
 
 ---
 
 ## Pain Points & Opportunities
 ### Pain Points
-- Crowding at Nyayo House
-- Delay in printing
-- Manual file retrieval
+- **Booklet Shortage:** Frequent delays due to lack of blank passport booklets.
+- **Machine Breakdown:** Few printing machines (mainly in Nairobi), causing national backlog.
+- **Appointment Delays:** Slots booked out for months; forced to travel to other towns.
+- **Corruption:** "Brokers" promising faster processing or appointment slots.
+- **Communication:** Lack of transparency on application status ("Stuck at Printing").
 
 ### Opportunities
-- Integration with IPRS/BRS via Service Bus.
-- Adoption of Government Payment Gateway.
-- Implementation of Automated Rules Engine.
-- Issuance of Digital Verifiable Credentials.
+- **Decentralized Printing:** Install printers in key regional offices (Mombasa, Kisumu).
+- **Mobile Enrollment:** Portable biometric kits for diaspora or remote areas.
+- **Auto-Approval:** Integrate with IPRS/NRB to auto-approve renewal applications (no new biometrics needed if data hasn't changed).
+- **Home Delivery:** Partner with Postal Corporation for secure delivery to home/office.
 
 ---
 
 ## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Optimized).*
+*Future State visualization (Repeatable WoG Platform).*
 
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph Applicant [Applicant]
-        S1["Applicant logs in via Single Sign-On (SSO) and sel..."]
-        S4["Applicant pays fees via the Government Payment Gat..."]
+    subgraph WoG_Platform [Identity Service]
+        S1["Fetches Citizen Biometrics from NRB (Maisha)"]
+        S2["Auto-Verifies Identity (IPRS)"]
+        S3["Pre-Fills 'Passport Request'"]
     end
-    subgraph System [System]
-        S2["Applicant enters National ID; System auto-populate..."]
-        S3["System performs auto-validation of compliance (e.g..."]
-        S5["Application is processed by the Rules Engine. (Low..."]
-        S7["System generates a Verifiable Digital Certificate ..."]
+    subgraph Applicant [Citizen]
+        S4["Logs into eCitizen App"]
+        S5["Selects 'Issue Passport'"]
+        S6["Self-Captures Photo (ICAO Check via AI)"]
+        S7["Pays Fee via GPA"]
     end
-    subgraph Officer [Officer]
-        S6["Complex cases are routed to the Officer Workbench ..."]
+    subgraph Production [Immigration Factory]
+        S8["Auto-Approves (if biometrics match)"]
+        S9["Personalizes Booklet"]
     end
+    subgraph Logistics [Posta / Courier]
+        S10["Delivers to Citizen's Address"]
+    end
+    
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
     S5 --> S6
     S6 --> S7
-    S7 --> End((End))
+    S7 --> S8
+    S8 --> S9
+    S9 --> S10
+    S10 --> End((End))
 ```
 
 ## Future State Process (TO-BE)
 ### Narrative
-The To-Be process leverages the Government Service Bus to integrate with IPRS (Identity Registry) and the Payment Gateway. Manual data entry and document uploads are replaced by real-time API validations, enabling a paperless, cashless, and presence-less service experience.
+The process is **Shared-Service Driven** and **Logistics-Integrated**.
+1.  **Biometric Reuse:** The system pulls existing fingerprints from the **NRB (Maisha Namba)** database via **X-Road**. Why capture them again?
+2.  **No Appointments:** For renewals and standard applications, physical presence is removed.
+3.  **AI Photo Check:** The **eCitizen App** uses AI to ensure the selfie meets ICAO standards before submission.
+4.  **Home Delivery:** Passports are delivered securely via **Posta (National Courier)**, tracking the parcel via the App.
+5.  **Digital Travel Credential (DTC):** A virtual passport is issued immediately to the phone for use at e-Gates.
 
 ### Optimized Steps (Digital)
 | Step | Actor | Action | System |
 |---|---|---|---|
-| 1 | Applicant | Applicant logs in via Single Sign-On (SSO) and selects the service. | Citizen Portal / SSO |
-| 2 | System | Applicant enters National ID; System auto-populates details from IPRS (Identity Registry) via the Service Bus. | Service Bus / Registry API |
-| 3 | System | System performs auto-validation of compliance (e.g., KRA Tax Status) via Inter-Agency APIs. | Service Bus / Compliance Engine |
-| 4 | Applicant | Applicant pays fees via the Government Payment Gateway; System auto-receipts. | Payment Gateway |
-| 5 | System | Application is processed by the Rules Engine. (Low-risk cases are Auto-Approved). | Workflow Engine |
-| 6 | Officer | Complex cases are routed to the Officer Workbench for digital review and approval. | Officer Workbench |
-| 7 | System | System generates a Verifiable Digital Certificate (QR Code) and notifies the applicant. | Output Generator |
+| 1 | Citizen | Requests passport on eCitizen App. Takes ICAO-compliant selfie. | eCitizen App / AI |
+| 2 | WoG Platform | Fetches fingerprints from NRB and validates identity. | X-Road / IPRS |
+| 3 | Immigration | Auto-approves application. | Workflow Engine |
+| 4 | Factory | Prints booklet. | Production System |
+| 5 | Posta | Delivers passport to citizen's doorstep. | Logistics Tracking |
+
+---
+
+## 3. Standard Data Inputs
+*Required fields for the WoG Digital Service.*
+
+### A. Passport Application (Renewal/New)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Citizen ID (Maisha) | String | System Fetch (NRB) | Read-only |
+| Passport Type | Enum | User Input | 32/50/66 Pages |
+| Current Photo | Image | User Capture (App) | AI ICAO Check |
+| Delivery Address | Geo-Loc | User Input | Verified via Google Maps |
+| Recommender ID | String | User Input | Optional (if NRB verified) |
+| Reason for Travel | Enum | User Input | Tourism / Business / Medical |
+| Emergency Contact | String | User Input | Validated vs IPRS |
 
 ---
 
 ## References
-Derived from official mandates.
+- Kenya Citizenship and Immigration Act.

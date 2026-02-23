@@ -70,96 +70,109 @@ class WorkflowEngine:
         return self.service_request
 
     @transaction.atomic
-    def process_workflow_step(self, force_refresh=False):
+    def process_workflow_step(self, force_refresh=False, target_sequence=None):
         """
-        Moves the request to the next step in the sequence.
-        Supports automated 'api_call' and 'manual' officer review.
+        Moves the request to the next step. 
+        If target_sequence is provided, jumps to that specific step.
         """
         if not self.service_request:
             return
 
         service_config = self.service_request.service_config
-        
-        # Determine current sequence. 
-        # If current_step is None but status is 'in_progress', we assume it's an orphan and start from 0.
-        current_seq = 0
-        if self.service_request.current_step:
-            current_seq = self.service_request.current_step.sequence
-        elif self.service_request.status == 'received':
-            current_seq = 0
-        else:
-            # It's an orphan (status in_progress/escalated but no step)
-            current_seq = 0 
-        
-        # Find the next step in the sequence - STRICTLY 'to_be' for client-facing demo
-        next_step = WorkflowStep.objects.filter(
-            service_config=service_config, 
-            lifecycle_stage='to_be',
-            sequence__gt=current_seq
-        ).order_by('sequence').first()
+        current_seq = self.service_request.current_step.sequence if self.service_request.current_step else 0
 
-        if next_step:
-            self.service_request.current_step = next_step
+        next_step_data = None
+
+        if target_sequence:
+            next_step_data = WorkflowStep.objects.filter(
+                service_config=service_config,
+                sequence=target_sequence
+            ).first()
+        
+        if not next_step_data:
+            # Fallback to standard sequence logic
+            target_stage = 'to_be'
+            if self.service_request.current_step:
+                target_stage = self.service_request.current_step.lifecycle_stage
+            elif not WorkflowStep.objects.filter(service_config=service_config, lifecycle_stage='to_be').exists():
+                target_stage = 'as_is'
+
+            next_step_data = WorkflowStep.objects.filter(
+                service_config=service_config, 
+                lifecycle_stage=target_stage,
+                sequence__gt=current_seq
+            ).order_by('sequence').first()
+
+        if next_step_data:
+            self.service_request.current_step = next_step_data
             self.service_request.status = 'in_progress'
             self.service_request.save()
 
             AuditLog.objects.create(
                 service_request=self.service_request,
                 action='STEP_TRANSITION',
-                details=f"Workflow advanced to Step {next_step.sequence}: {next_step.step_name}"
+                details=f"Workflow advanced to Step {next_step_data.sequence}: {next_step_data.step_name}"
             )
 
-            if next_step.step_type == 'api_call':
-                self._execute_api_call(next_step)
+            if next_step_data.step_type == 'api_call':
+                self._execute_api_call(next_step_data)
             else:
-                self._notify_manual_review(next_step)
+                self._notify_manual_review(next_step_data)
         else:
             # Workflow complete
             self._finalize_request('approved')
 
     def _execute_api_call(self, step: WorkflowStep):
         """
+        Executes an automated check and handles branching outcomes.
+        """
+        print(f"WORKFLOW [Automated]: Executing {step.step_name}")
+        api_config = step.api_config or {}
+        
+        # In a real system, we'd call KeSEL here. For branching demo:
+        # We look for a 'success' or 'verified' outcome to determine next sequence.
+        outcomes = api_config.get('outcomes', [])
+        target_seq = None
+        
+        # Mocking a successful exchange
+        for outcome in outcomes:
+            if outcome.get('label', '').lower() in ['verified', 'success', 'approved']:
+                target_seq = outcome.get('target_sequence')
+                break
+        
+    def _execute_api_call(self, step: WorkflowStep):
+        """
         Executes an automated check via the Huduma Bridge (KeSEL).
+        Supports outcome-based branching.
         """
         print(f"WORKFLOW [Orchestration]: Initiating secure exchange for step '{step.step_name}'")
         
-        # 1. Determine Target Registry from step config or hardcoded fallback
+        # 1. Determine Target Registry
         target_registry = None
-        
         api_config = step.api_config or {}
         api_url = api_config.get('url', '')
         
         if api_url:
-            # Parse registry from URL like "KESEL_BRIDGE/EDRMS/archive"
             parts = api_url.split('/')
             if len(parts) > 1 and parts[0] in ['KESEL_BRIDGE', 'HUB_BRIDGE', 'HUDUMA_BRIDGE']:
                 target_registry = parts[1]
         
         if not target_registry:
-            target_registry = "IPRS" # Default fallback
-            if "Passport" in self.service_request.service_config.service_name:
-                 target_registry = "IPRS"
-            elif "Business" in self.service_request.service_config.service_name:
-                 target_registry = "BRS"
-            elif "Birth" in self.service_request.service_config.service_name:
-                 target_registry = "CRS"
+            target_registry = "IPRS" 
+            if "Passport" in self.service_request.service_config.service_name: target_registry = "IPRS"
+            elif "Business" in self.service_request.service_config.service_name: target_registry = "BRS"
+            elif "Birth" in self.service_request.service_config.service_name: target_registry = "CRS"
 
-        # 2. Prepare Payload (Merge local form data with Step Config)
         payload = self.service_request.payload.copy()
-        if step.action:
-            payload['action'] = step.action
+        if step.action: payload['action'] = step.action
         
-        # 3. Support Internal Logic vs. External Bridge
         if api_url.startswith('internal://'):
             self._execute_internal_action(step, payload)
             return
 
-        # 4. Call KeSEL (Huduma Bridge) with Mock NPKI Signature
         from .kesel import KeSEL
-        security_context = {"signed": True, "cert_id": "GOV-CA-12345"}
-        
         try:
-            response = KeSEL.exchange(target_registry, payload, security_context)
+            response = KeSEL.exchange(target_registry, payload, {"signed": True, "cert_id": "GOV-CA-12345"})
             
             if response.get("status") in ["SUCCESS"]:
                 AuditLog.objects.create(
@@ -168,34 +181,41 @@ class WorkflowEngine:
                     details=f"Verified with {target_registry}: {response.get('message', 'OK')}"
                 )
                 
-                # Digital Signature Verification Logic for POC
-                if step.action == 'verify_signature':
-                    AuditLog.objects.create(
-                        service_request=self.service_request,
-                        action='DIGITAL_SIGNATURE_VERIFIED',
-                        details="NPKI X.509 Digital Signature verified against GOK Root CA."
-                    )
+                # Check for Outcome-based branching
+                target_seq = None
+                for outcome in api_config.get('outcomes', []):
+                    if outcome.get('label', '').lower() in ['verified', 'success', 'approved', 'yes']:
+                        target_seq = outcome.get('target_sequence')
+                        break
                 
-                self.process_workflow_step()
+                self.process_workflow_step(target_sequence=target_seq)
             else:
-                 # Auto-reject or Flag for manual review if external check fails
-                AuditLog.objects.create(
-                    service_request=self.service_request,
-                    action='KESEL_VALIDATION_FAILED',
-                    details=f"{target_registry} returned: {response.get('message')}"
-                )
-                # For this POC, let's behave like a strict system: Validation Failure stops the flow
-                self.service_request.status = 'validation_failed'
-                self.service_request.save()
-                send_notification(self.service_request.citizen, f"Your request failed automated validation: {response.get('message')}. Please contact support.", self.service_request)
-
+                self._handle_validation_failure(target_registry, response)
         except Exception as e:
-            print(f"KeSEL connection error: {e}")
-            AuditLog.objects.create(
-                service_request=self.service_request,
-                action='KESEL_ERROR',
-                details=f"Transport error: {str(e)}"
-            )
+            self._handle_transport_error(target_registry, e)
+
+    def _handle_validation_failure(self, registry, response):
+        """Standard handler for business-level validation failures."""
+        AuditLog.objects.create(
+            service_request=self.service_request,
+            action='KESEL_VALIDATION_FAILED',
+            details=f"{registry} returned: {response.get('message')}"
+        )
+        self.service_request.status = 'validation_failed'
+        self.service_request.save()
+        send_notification(self.service_request.citizen, f"Your request failed automated validation: {response.get('message')}", self.service_request)
+
+    def _handle_transport_error(self, registry, error):
+        """Standard handler for technical connection errors."""
+        print(f"KeSEL connection error: {error}")
+        AuditLog.objects.create(
+            service_request=self.service_request,
+            action='KESEL_ERROR',
+            details=f"Transport error communicating with {registry}: {str(error)}"
+        )
+        self.service_request.status = 'validation_failed'
+        self.service_request.save()
+        send_notification(self.service_request.citizen, f"A system communication error occurred. Ref: {self.service_request.request_id}", self.service_request)
 
     def _execute_internal_action(self, step: WorkflowStep, payload: dict):
         """
@@ -224,21 +244,47 @@ class WorkflowEngine:
 
     def _notify_manual_review(self, step: WorkflowStep):
         """
-        Notifies officers assigned to the current role.
+        Notifies officers assigned to the current role and performs load-balanced auto-assignment.
         """
-        # Support both legacy role strings and new RBAC role names
-        from django.db.models import Q
-        officers = User.objects.filter(
-            Q(role__icontains=step.role) | 
-            Q(user_role__name__icontains=step.role)
-        )
-        for officer in officers:
-            send_notification(officer, f"Pending Task: Request {self.service_request.request_id} requires {step.action}.", self.service_request)
+        from django.db.models import Q, Count
+        
+        # 1. Find eligible officers based on role and MDA
+        target_role = step.role
+        target_mda = step.target_mda or self.service_request.service_config.mda
+        
+        eligible_query = Q(role__icontains=target_role) | Q(user_role__name__icontains=target_role)
+        if target_mda:
+            # Match users who belong to this MDA or are multi-assigned to it
+            eligible_query &= (Q(mda=target_mda) | Q(assigned_mdas=target_mda))
+        
+        # 2. Load-Balancing: Find the officer with the least current tasks
+        eligible_officers = User.objects.filter(eligible_query).annotate(
+            task_load=Count('assigned_tasks', filter=Q(assigned_tasks__status='in_progress'))
+        ).order_by('task_load')
+
+        assigned_user = None
+        if eligible_officers.exists():
+            assigned_user = eligible_officers.first()
+            self.service_request.assigned_to = assigned_user
+            self.service_request.save()
+            
+            print(f"WORKFLOW [Assignment]: Auto-assigned {self.service_request.request_id} to {assigned_user.username} (Load: {assigned_user.task_load})")
+            
+            send_notification(
+                assigned_user, 
+                f"New Task Assigned: Request {self.service_request.request_id} for {self.service_request.service_config.service_name}.", 
+                self.service_request
+            )
+        
+        # 3. Fallback: Notify all eligible if no one was explicitly assigned or in addition to assignment
+        if not assigned_user:
+            for officer in User.objects.filter(eligible_query):
+                send_notification(officer, f"Unassigned Task: Request {self.service_request.request_id} requires {step.step_name}.", self.service_request)
             
         AuditLog.objects.create(
             service_request=self.service_request,
             action='MANUAL_STEP_ASSIGNED',
-            details=f"Task assigned to role: {step.role}"
+            details=f"Task assigned to role '{target_role}' (Auto-assigned to: {assigned_user.username if assigned_user else 'None'})"
         )
 
     @transaction.atomic
@@ -257,17 +303,38 @@ class WorkflowEngine:
         if self.service_request.assigned_to != user and not is_privileged:
              raise PermissionError("You must claim this task before you can complete it (only site admins/global supervisors can bypass).")
 
+        # 2. Dynamic Hierarchy Check: Ensure current step index matches user's role capability
+        # In a fully dynamic system, we just check if they are authorized for THIS specific step.
+        # We removed the hardcoded 'if officer then supervisor' logic.
+        current_step = self.service_request.current_step
+        
+        # Logging context for the dynamic transition
         AuditLog.objects.create(
             service_request=self.service_request,
             actor=user,
-            action=f'OFFICER_ACTION_{action.upper()}',
-            details=details or f"Action '{action}' performed by {user.username}."
+            action=f'ACTION_{action.upper()}',
+            details=details or f"Disposition '{action}' finalized for step {current_step.sequence} by {user.username}."
         )
 
         if action.lower() == 'reject':
             self._finalize_request('rejected')
+            return
+
+        # Check for branching outcomes in manual steps
+        target_seq = None
+        api_config = current_step.api_config or {}
+        outcomes = api_config.get('outcomes', [])
+        
+        for outcome in outcomes:
+            if outcome.get('label', '').lower() == action.lower():
+                target_seq = outcome.get('target_sequence')
+                break
+        
+        # If an outcome was matched but has no target, it's a completion
+        if outcomes and target_seq is None and any(o.get('label', '').lower() == action.lower() for o in outcomes):
+             self._finalize_request('approved')
         else:
-            self.process_workflow_step()
+             self.process_workflow_step(target_sequence=target_seq)
 
     def _finalize_request(self, outcome: str):
         """
@@ -309,26 +376,40 @@ class WorkflowEngine:
                 payload = self.service_request.payload
                 auth_id = digital_doc['authoritative_id']
                 
-                if svc_code == 'BIRTH_REG':
+                if svc_code in ['BIRTH_REG', 'CRS-CERT-001', 'MOH-NOTIF-001']:
                     # Add to CRS Registry
                     crs = get_registry('CRS')
+                    
+                    # For Hospital Notifications, status is PENDING_CERTIFICATE
+                    # For Certificates, status is ISSUED
+                    record_status = 'ISSUED' if svc_code != 'MOH-NOTIF-001' else 'PENDING_CERTIFICATE'
+                    
                     new_record = {
-                        "full_name": payload.get('child_full_name'),
+                        "full_name": payload.get('child_full_name', payload.get('child_name', 'N/A')),
                         "date_of_birth": payload.get('date_of_birth'),
-                        "gender": payload.get('sex'),
+                        "gender": payload.get('sex', payload.get('child_gender')),
                         "county": payload.get('county'),
                         "mother_name": payload.get('mother_name'),
                         "mother_id": payload.get('mother_id'),
                         "father_name": payload.get('father_name'),
                         "father_id": payload.get('father_id'),
-                         # In Demo mode, we might just copy the DOB year - 18 if user requested, 
-                         # but here we just store what was applied for.
+                        "status": record_status
                     }
                     if crs:
-                        crs.BIRTH_RECORDS[auth_id] = new_record
+                        crs.RECORDS[auth_id] = new_record
                         print(f"REGISTRY UPDATE [CRS]: Added {auth_id} for {new_record['full_name']}")
+                    
+                    # Also update DB-driven RegistryAdapter for KeSEL visibility
+                    try:
+                        from .models import RegistryAdapter
+                        crs_adapter = RegistryAdapter.objects.get(code='CRS')
+                        if crs_adapter.is_mock:
+                            crs_adapter.mock_data[auth_id] = new_record
+                            crs_adapter.save()
+                    except Exception as e:
+                        print(f"REGISTRY ADAPTER UPDATE FAILED: {e}")
 
-                elif svc_code == 'NATIONAL_ID':
+                elif svc_code in ['NATIONAL_ID', 'NRB-ID-001']:
                     # Add to IPRS Registry (Mock)
                     iprs = get_registry('IPRS')
                     new_record = {
@@ -348,7 +429,7 @@ class WorkflowEngine:
                             
                         print(f"REGISTRY UPDATE [IPRS]: Added ID {auth_id} for {new_record['full_name']}")
 
-                elif svc_code == 'KRA_PIN_REG':
+                elif svc_code in ['KRA_PIN_REG', 'KRA-TAX-001']:
                      kra = get_registry('KRA')
                      # No explicit store in mock registry needed for verify action as it checks length,
                      # but good to have if we expand verification logic.
@@ -359,13 +440,13 @@ class WorkflowEngine:
                      citizen.kra_pin = auth_id # Assuming we add this field or store in profile logic
                      citizen.save()
 
-                elif svc_code == 'BIZ_INCORPORATION':
+                elif svc_code in ['BIZ_INCORPORATION', 'BRS-INC-001']:
                     brs = get_registry('BRS')
                     if brs:
                         brs.EXISTING_BUSINESSES.append(payload.get('proposed_name_1'))
                         print(f"REGISTRY UPDATE [BRS]: Reserved {payload.get('proposed_name_1')}")
                 
-                elif svc_code == 'NEMIS_REG':
+                elif svc_code in ['NEMIS_REG', 'MOE-NEMIS-001']:
                     nemis = get_registry('NEMIS')
                     if nemis: 
                          # Store the issued UPI
@@ -378,6 +459,49 @@ class WorkflowEngine:
                     action='EDRMS_ARCHIVED',
                     details=f"Authoritative Document {auth_id} generated and archived in EDRMS."
                 )
+                
+                # 5. DYNAMIC LIFECYCLE TRIGGERING (The Bridge)
+                # When one life event finishes, automatically trigger the next in the chain
+                LIFECYCLE_CHAIN = {
+                    'MOH-NOTIF-001': 'CRS-CERT-001',   # Birth Notification -> Birth Certificate
+                    'CRS-CERT-001': 'MOE-NEMIS-001',  # Birth Certificate -> School Enrollment
+                    'MOE-NEMIS-001': 'NRB-ID-001',    # NEMIS -> National ID
+                    'NRB-ID-001': 'KRA-TAX-001',      # National ID -> KRA PIN
+                    'KRA-TAX-001': 'IMM-PASS-001'     # KRA PIN -> Passport Eligibility
+                }
+                
+                next_svc_code = LIFECYCLE_CHAIN.get(svc_code)
+                if next_svc_code:
+                    try:
+                        next_svc_config = ServiceConfig.objects.get(service_code=next_svc_code)
+                        
+                        # Prepare payload for the next step (carrying over the authoritative ID/UPI)
+                        next_payload = self.service_request.payload.copy()
+                        
+                        # Correctly map the authoritative ID to the expected field for the next service
+                        if svc_code == 'MOH-NOTIF-001':
+                            next_payload['notification_number'] = auth_id
+                        elif 'upi' not in next_payload and auth_id:
+                            next_payload['upi'] = auth_id
+                        
+                        # Trigger the next service automatically
+                        new_engine = WorkflowEngine()
+                        new_request = new_engine.create_service_request(
+                            citizen=self.service_request.citizen,
+                            service_config=next_svc_config,
+                            payload=next_payload
+                        )
+                        
+                        AuditLog.objects.create(
+                            service_request=self.service_request,
+                            action='LIFECYCLE_CASCADE_TRIGGER',
+                            details=f"Automated Cascade: Triggered '{next_svc_config.service_name}' based on completion of current stage."
+                        )
+                        
+                        print(f"LIFECYCLE [Cascade]: Successfully triggered {next_svc_code} for user {citizen.username}")
+                        
+                    except ServiceConfig.DoesNotExist:
+                        print(f"LIFECYCLE [Warning]: Target service {next_svc_code} not found in registry.")
                 
                 send_notification(
                     self.service_request.citizen, 

@@ -8,6 +8,7 @@ import ServiceRequestView from '../views/ServiceRequestView.vue'
 import ServiceApplicationView from '../views/ServiceApplicationView.vue'
 import AdminRolesView from '../views/AdminRolesView.vue'
 import ProfileView from '../views/ProfileView.vue'
+import ConsentDashboard from '../views/ConsentDashboard.vue'
 
 const routes = [
   { path: '/', name: 'Home', component: HomeView },
@@ -15,6 +16,7 @@ const routes = [
   { path: '/register', name: 'Register', component: RegisterView },
   { path: '/dashboard', name: 'Dashboard', component: DashboardView, meta: { requiresAuth: true } },
   { path: '/profile', name: 'Profile', component: ProfileView, meta: { requiresAuth: true } },
+  { path: '/profile/consent', name: 'ConsentDashboard', component: ConsentDashboard, meta: { requiresAuth: true } },
   { path: '/service-request/:id', name: 'ServiceRequest', component: ServiceRequestView, meta: { requiresAuth: true } },
   { path: '/apply/:service_code', name: 'ServiceApplication', component: ServiceApplicationView, meta: { requiresAuth: true } },
   // Admin Routes

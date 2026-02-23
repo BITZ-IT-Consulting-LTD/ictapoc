@@ -2,150 +2,199 @@
 
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** THE JUDICIARY
-- **Process Name:** Service Delivery
-- **Document Version:** 1.0
-- **Date:** 2026-02-14
+- **Process Name:** Succession & Probate Administration
+- **Document Version:** 1.3
+- **Date:** 2026-02-19
 - **Classification:** Official
 
 ---
 
 ## Executive Summary
-The Judiciary of Kenya is one of the three State organs established under the Constitution, serving as an independent custodian of justice. Its primary role is to exercise judicial authority, delivering justice in line with the Constitution and other laws, resolving disputes justly, protecting rights and liberties, and facilitating the rule of law.
+The Judiciary is the custodian of the law. In the lifecycle of a citizen, it plays the definitive role in the "Death" phase through **Succession Causes** (Probate & Administration). It validates Wills, appoints Administrators, and distributes the estate of the deceased.
 
 ---
 
 ## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization.*
+*Current State visualization (Manual Filing / Court Adjournments).*
 
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph Customer [Customer]
-        S1["Customer/Stakeholder submits request, application,..."]
+    subgraph Petitioner [Family / Beneficiary]
+        S1["Death Occurs"]
+        S2["Obtains Death Certificate (CRS)"]
+        S3["Files 'Petition for Grant of Letters of Administration'"]
+        S4["Collects 'Form P&A 80' (Chief's Letter)"]
+        S6["Appears for Court Mention"]
+        S9["Receives Confirmed Grant"]
     end
-    subgraph Registry [Registry]
-        S2["Registry/Front Office receives, records, and class..."]
+    subgraph HighCourt [Probate Registry]
+        S5["Gazettement (Kenya Gazette - 30 days)"]
+        S7["Issues Temporary Grant (6 months)"]
+        S8["Final Distribution Hearing"]
     end
-    subgraph TechnicalOfficer [Technical Officer]
-        S3["Relevant Technical Department reviews the request ..."]
+    subgraph Chief [Chief]
+        S4a["Lists Beneficiaries & Assets"]
     end
-    subgraph Management [Management]
-        S4["Management/Accounting Officer approves the appropr..."]
-    end
-    subgraph CustomerCare [Customer Care]
-        S5["Service is delivered or official response is commu..."]
-    end
+    
     S1 --> S2
     S2 --> S3
     S3 --> S4
-    S4 --> S5
-    S5 --> End((End))
+    S4 --> S4a
+    S4a --> S5
+    S5 --> S6
+    S6 --> S7
+    S7 --> S8
+    S8 --> S9
+    S9 --> End((End))
 ```
 
 ---
 
 ## Process Overview
 ### Process Name
-Service Delivery
+Succession Cause (Intestate / Testate)
 
 ### Service Category
-- G2C/G2B
+- G2C (Government to Citizen)
 
 ### Scope
-- **In Scope:** End-to-end processing within THE JUDICIARY.
+- **In Scope:** Filing of P&A forms; Gazettement; Grant of Letters of Administration; Confirmation of Grant.
+- **Out of Scope:** Drafting of Wills (Private legal matter).
 
 ### Triggers
-- Submission of application/request by Customer.
+- Death of a property owner.
+- Dispute over inheritance.
 
 ### End States
-- **Successful:** License / Permit / Certificate, Compliance Inspection Report, Official Receipt, Gazette Notice
+- **Successful:** Certificate of Confirmation of Grant (Form 108).
 
 ### Policy Context
-- The THE JUDICIARY Act; The Constitution of Kenya 2010; Data Protection Act 2019.
+- Law of Succession Act (Cap 160).
 
 ---
 
 ## Stakeholders
 | Stakeholder | Role | Responsibilities |
 |---|---|---|
-| Registry | Process Actor | Performs actions as defined in steps. |
-| Technical Officer | Process Actor | Performs actions as defined in steps. |
-| Customer Care | Process Actor | Performs actions as defined in steps. |
-| Management | Process Actor | Performs actions as defined in steps. |
-| Customer | Process Actor | Performs actions as defined in steps. |
+| Petitioner | Applicant | Files the case, lists assets/liabilities. |
+| Advocate | Representative | Legal representation (often mandatory for high value). |
+| Magistrate / Judge | Adjudicator | Reviews petition, hears objections, confirms grant. |
+| Probate Registry | Processor | Assesses court fees, prepares gazette notice. |
+| Government Printer | Publisher | Prints the Kenya Gazette notice. |
+| Objector | Interested Party | Files objection (Caveat) to stop the process. |
 
 ---
 
 ## Detailed Process (AS-IS)
 | Step | Role | Action | Tool | Notes |
 |---|---|---|---|---|
-| 1 | Customer | Customer/Stakeholder submits request, application, or inquiry via official channels (Email, Letter, or Portal). | Digital | |
-| 2 | Registry | Registry/Front Office receives, records, and classifies the request. | Manual | |
-| 3 | Technical Officer | Relevant Technical Department reviews the request against internal policies and regulations. | Manual | |
-| 4 | Management | Management/Accounting Officer approves the appropriate action or service delivery. | Manual | |
-| 5 | Customer Care | Service is delivered or official response is communicated to the customer. | Manual | |
+| 1 | Petitioner | **Filing:** Files Petition (P&A 80) at High Court or Magistrate Court. Must attach: Death Cert, Chief’s Letter (identifying heirs), 2 Sureties. | Manual / e-Filing | e-Filing exists but physical files still dominate. |
+| 2 | Registry | **Assessment:** Registry assesses filing fees (based on estate value). Petitioner pays via M-Pesa/Bank. | Case Tracking System (CTS) | |
+| 3 | Registry | **Gazettement:** Court sends notice to Government Printer. Notice must run for 30 days to allow objections. | Kenya Gazette | *Bottleneck:* Delays at Govt Printer (months). Lost notices. |
+| 4 | Petitioner | **Hearing:** After 30 days, file for "Mention" to identify petitioner and sureties. | Physical Court | Adjournments common due to missing files. |
+| 5 | Court | **Grant Issued:** Court issues "Temporary Grant" (Form 41) valid for 6 months. allows gathering of assets but *not* distribution. | Manual Typing | |
+| 6 | Petitioner | **Confirmation:** After 6 months, Petitioner files "Summons for Confirmation of Grant" (Form 108) proposing distribution. | Manual | |
+| 7 | Court | **Final Orders:** If no objections, Court confirms the grant. Issues Certificate of Confirmation. | Sealed Order | This document is required by Banks/Lands to transfer assets. |
 
 ---
 
 ## Pain Points & Opportunities
 ### Pain Points
-- Manual document verification takes time.
-- High cost and time for physical inspections.
-- Risk of counterfeit licenses/certificates.
-- Lack of real-time monitoring of licensees.
+- **Duration:** Simple cases take 1-2 years. Complex ones take decades.
+- **Lost Files:** Physical files frequently disappear in registries.
+- **Gazette Delays:** Waiting for the weekly Kenya Gazette print run is archaic.
+- **Corruption:** "Missing file" syndrome used to solicit bribes.
+- **Geographic Barriers:** Parties must travel to the specific court where the file is.
 
 ### Opportunities
-- Integration with IPRS/BRS via Service Bus.
-- Adoption of Government Payment Gateway.
-- Implementation of Automated Rules Engine.
-- Issuance of Digital Verifiable Credentials.
+- **e-Gazette:** Instant online publication of notices (daily instead of weekly).
+- **Auto-Integration:** Link CRS (Death) to Judiciary (Succession) to prevent fraud.
+- **Virtual Courts:** Routine mentions via video link to save travel.
+- **Blockchain:** Immutable record of Wills and Grants to prevent tampering.
 
 ---
 
 ## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Optimized).*
+*Future State visualization (Repeatable WoG Platform).*
 
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph Applicant [Applicant]
-        S1["Applicant logs in via Single Sign-On (SSO) and sel..."]
-        S4["Applicant pays fees via the Government Payment Gat..."]
+    subgraph WoG_Platform [Succession Service]
+        S1["Death Registered in CRS"]
+        S2["Auto-Triggers 'Estate File' Creation"]
+        S3["Fetches Assets (Lands, NTSA, Banks) via X-Road"]
+        S4["Fetches Heirs (Marriage, Births) via IPRS"]
     end
-    subgraph System [System]
-        S2["Applicant enters Business Registration Number; Sys..."]
-        S3["System performs auto-validation of compliance (e.g..."]
-        S5["Application is processed by the Rules Engine. (Low..."]
-        S7["System generates a Verifiable Digital Certificate ..."]
+    subgraph Petitioner [Heir]
+        S5["Claims Estate on eCitizen"]
+        S6["Reviews Asset List (Auto-Generated)"]
+        S7["Proposes Distribution"]
     end
-    subgraph Officer [Officer]
-        S6["Complex cases are routed to the Officer Workbench ..."]
+    subgraph Judiciary_System [Court]
+        S8["Publishes Online Notice (30 Days)"]
+        S9["Receives No Objection"]
+        S10["Auto-Issues Digital Grant"]
     end
+    subgraph Asset_Holders [Bank / Lands]
+        S11["Honors Digital Grant & Transfers Assets"]
+    end
+    
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
     S5 --> S6
     S6 --> S7
-    S7 --> End((End))
+    S7 --> S8
+    S8 --> S9
+    S9 --> S10
+    S10 --> S11
+    S11 --> End((End))
 ```
 
 ## Future State Process (TO-BE)
 ### Narrative
-The To-Be process leverages the Government Service Bus to integrate with BRS (Business Registry) and the Payment Gateway. Manual data entry and document uploads are replaced by real-time API validations, enabling a paperless, cashless, and presence-less service experience.
+The process is **Proactive** and **Data-Driven**.
+1.  **Trigger:** The issuance of a Death Certificate by **CRS** automatically opens a "Succession Case" in the Judiciary system.
+2.  **Asset Discovery:** The system queries **Lands (Ardhisasa)**, **NTSA (Vehicles)**, and **UFAA (Unclaimed Assets)** using the deceased's ID to build an "Inventory of Assets" automatically.
+3.  **Heir Identification:** Potential heirs are identified from **Marriage (Spouse)** and **Birth (Children)** registries.
+4.  **Digital Claim:** The family logs into eCitizen to "Claim" the estate. They confirm the asset list and proposed distribution.
+5.  **Automated Grant:** If the proposal aligns with the Law of Succession (e.g., equal share) and no objection is filed online after 30 days, the **Digital Grant** is issued automatically. No court appearance needed for uncontested cases.
 
 ### Optimized Steps (Digital)
 | Step | Actor | Action | System |
 |---|---|---|---|
-| 1 | Applicant | Applicant logs in via Single Sign-On (SSO) and selects the service. | Citizen Portal / SSO |
-| 2 | System | Applicant enters Business Registration Number; System auto-populates details from BRS (Business Registry) via the Service Bus. | Service Bus / Registry API |
-| 3 | System | System performs auto-validation of compliance (e.g., KRA Tax Status) via Inter-Agency APIs. | Service Bus / Compliance Engine |
-| 4 | Applicant | Applicant pays fees via the Government Payment Gateway; System auto-receipts. | Payment Gateway |
-| 5 | System | Application is processed by the Rules Engine. (Low-risk cases are Auto-Approved). | Workflow Engine |
-| 6 | Officer | Complex cases are routed to the Officer Workbench for digital review and approval. | Officer Workbench |
-| 7 | System | System generates a Verifiable Digital Certificate (QR Code) and notifies the applicant. | Output Generator |
+| 1 | CRS | Flags ID as "Deceased". | IPRS |
+| 2 | WoG Platform | Compiles asset inventory via X-Road APIs. | Data Hub |
+| 3 | Heir | Claims estate and proposes distribution on App. | eCitizen App |
+| 4 | Judiciary | Publishes e-Gazette notice instantly. | Online Gazette |
+| 5 | Court AI | Validates proposal and issues Grant. | Case Management |
+
+---
+
+## 3. Standard Data Inputs
+*Required fields for the WoG Digital Service.*
+
+### A. Estate Claim (Initial Filing)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Deceased UPI | String | System Fetch (CRS) | Must be Deceased |
+| Claimant ID | String | User Input | Must match Heir List |
+| Claimant Relation | Enum | System Fetch (Marriage/Birth) | Spouse/Child |
+| Asset List | JSON | System Fetch (Lands/Banks) | Verified Owners |
+| Other Assets | Text | User Input | Optional (Household) |
+
+### B. Distribution Proposal (P&A 80-Digital)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Case ID | String | System Generated | Unique Case No |
+| Beneficiary 1 | String | User Selection | Valid ID (IPRS) |
+| Asset Share | Percentage | User Input | Total = 100% |
+| Sureties (2) | String | User Input | Valid ID + Consent |
 
 ---
 
 ## References
-Derived from official mandates.
+- Law of Succession Act.

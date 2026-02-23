@@ -2,7 +2,9 @@ from rest_framework import serializers
 from .models import (
     ServiceRequest, ServiceConfig, WorkflowStep, User, MDA, AuditLog, Role, 
     ServiceDomain, ServiceCategory, InterDepartmentalMemo, GovernmentFile, 
-    OfficialLetter, CorrespondenceAction, DesktopReview
+    OfficialLetter, CorrespondenceAction, DesktopReview,
+    PaymentProvider, PaymentTransaction, RevenueSplit,
+    DataPurpose, ConsentRecord, ConsentAccessLog, RegistryAdapter, RegistryEndpoint
 )
 
 class RoleSerializer(serializers.ModelSerializer):
@@ -45,7 +47,20 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+class RegistryEndpointSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RegistryEndpoint
+        fields = '__all__'
+
+class RegistryAdapterSerializer(serializers.ModelSerializer):
+    endpoints = RegistryEndpointSerializer(many=True, read_only=True)
+    class Meta:
+        model = RegistryAdapter
+        fields = '__all__'
+
 class WorkflowStepSerializer(serializers.ModelSerializer):
+    registry_endpoint_details = RegistryEndpointSerializer(source='registry_endpoint', read_only=True)
+    
     class Meta:
         model = WorkflowStep
         fields = '__all__'
@@ -135,18 +150,48 @@ class InterDepartmentalMemoSerializer(serializers.ModelSerializer):
         # Default status is 'draft' as per model, or user can set to 'internal_approval'
         return super().create(validated_data)
 
-class OfficialLetterSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OfficialLetter
-        fields = '__all__'
-
-class CorrespondenceActionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CorrespondenceAction
-        fields = '__all__'
 
 class DesktopReviewSerializer(serializers.ModelSerializer):
     mda_details = MDASerializer(source='mda', read_only=True)
     class Meta:
         model = DesktopReview
         fields = '__all__'
+
+class PaymentProviderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PaymentProvider
+        fields = '__all__'
+
+class RevenueSplitSerializer(serializers.ModelSerializer):
+    beneficiary_mda_details = MDASerializer(source='beneficiary_mda', read_only=True)
+    class Meta:
+        model = RevenueSplit
+        fields = '__all__'
+
+class PaymentTransactionSerializer(serializers.ModelSerializer):
+    provider_details = PaymentProviderSerializer(source='provider', read_only=True)
+    splits = RevenueSplitSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = PaymentTransaction
+        fields = '__all__'
+
+class DataPurposeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DataPurpose
+        fields = '__all__'
+
+class ConsentAccessLogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ConsentAccessLog
+        fields = '__all__'
+
+class ConsentRecordSerializer(serializers.ModelSerializer):
+    purpose_details = DataPurposeSerializer(source='purpose', read_only=True)
+    requester_details = MDASerializer(source='requester', read_only=True)
+    
+    class Meta:
+        model = ConsentRecord
+        fields = '__all__'
+
+

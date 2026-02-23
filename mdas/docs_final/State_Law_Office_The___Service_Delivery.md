@@ -1,151 +1,194 @@
-# State Law Office, The – Service Delivery
+# STATE LAW OFFICE (ATTORNEY GENERAL) – Service Delivery
 
 ## Cover Page
-- **Ministry/Department/Agency (MDA):** State Law Office, The
-- **Process Name:** Service Delivery
-- **Document Version:** 1.0
-- **Date:** 2026-02-14
+- **Ministry/Department/Agency (MDA):** STATE LAW OFFICE (ATTORNEY GENERAL)
+- **Process Name:** Marriage Registration
+- **Document Version:** 1.3
+- **Date:** 2026-02-19
 - **Classification:** Official
 
 ---
 
 ## Executive Summary
-Represents 'Governance Justice Law and Order' cluster for balanced coverage; entity type: Ministry. Included as Tier 3 for light‑touch desk review/survey.
+The Office of the Attorney General (State Law Office), through the Registrar of Marriages, oversees all civil, customary, Christian, Hindu, and Islamic marriages in Kenya. It issues the **Marriage Certificate**, a vital document for spousal benefits, travel, and succession.
 
 ---
 
 ## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization.*
+*Current State visualization (Manual Notice / Sheria House Queues).*
 
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph Customer [Customer]
-        S1["Customer/Stakeholder submits request, application,..."]
+    subgraph Couple [Applicants]
+        S1["Logs into eCitizen (Office of AG)"]
+        S2["Files Notice of Marriage (21 Days)"]
+        S3["Uploads IDs & Photos"]
+        S4["Pays Fee (KES 600 - Notice)"]
+        S5["Books Appointment Date"]
+        S6["Visits Sheria House (Nairobi)"]
+        S8["Signs Marriage Certificate"]
     end
-    subgraph Registry [Registry]
-        S2["Registry/Front Office receives, records, and class..."]
+    subgraph Registrar [Marriage Officer]
+        S2a["Reviews Notice Application"]
+        S2b["Approves Notice (if no impediment)"]
+        S7["Conducts Ceremony (15 Mins)"]
+        S9["Issues Certificate"]
     end
-    subgraph TechnicalOfficer [Technical Officer]
-        S3["Relevant Technical Department reviews the request ..."]
-    end
-    subgraph Management [Management]
-        S4["Management/Accounting Officer approves the appropr..."]
-    end
-    subgraph CustomerCare [Customer Care]
-        S5["Service is delivered or official response is commu..."]
-    end
+    
     S1 --> S2
-    S2 --> S3
+    S2 --> S2a
+    S2a --> S2b
+    S2b --> S3
     S3 --> S4
     S4 --> S5
-    S5 --> End((End))
+    S5 --> S6
+    S6 --> S7
+    S7 --> S8
+    S8 --> S9
+    S9 --> End((End))
 ```
 
 ---
 
 ## Process Overview
 ### Process Name
-Service Delivery
+Civil Marriage Registration (Sheria House)
 
 ### Service Category
-- G2C/G2B
+- G2C (Government to Citizen)
 
 ### Scope
-- **In Scope:** End-to-end processing within State Law Office, The.
+- **In Scope:** Notice of Marriage; Civil Marriage Ceremony; Issuance of Marriage Certificate.
+- **Out of Scope:** Divorce (Judiciary); Customary Marriage registration (often delayed).
 
 ### Triggers
-- Submission of application/request by Customer.
+- Couple intending to marry.
 
 ### End States
-- **Successful:** Policy Guidelines / Circulars, Official Response Letters, Cabinet Resolutions, Public Service Reports
+- **Successful:** Issuance of Marriage Certificate.
 
 ### Policy Context
-- The State Law Office, The Act; The Constitution of Kenya 2010; Data Protection Act 2019.
+- Marriage Act, 2014.
 
 ---
 
 ## Stakeholders
 | Stakeholder | Role | Responsibilities |
 |---|---|---|
-| Registry | Process Actor | Performs actions as defined in steps. |
-| Technical Officer | Process Actor | Performs actions as defined in steps. |
-| Customer Care | Process Actor | Performs actions as defined in steps. |
-| Management | Process Actor | Performs actions as defined in steps. |
-| Customer | Process Actor | Performs actions as defined in steps. |
+| Couple | Applicant | Files notice, attends interview/ceremony. |
+| Registrar of Marriages | Officiant | Conducts civil marriage, verifies capacity to marry. |
+| Witnesses (2) | Verifier | Witness the vows and sign the register. |
+| Public | Objector | May file an objection (Caveat) during the 21-day notice period. |
 
 ---
 
 ## Detailed Process (AS-IS)
 | Step | Role | Action | Tool | Notes |
 |---|---|---|---|---|
-| 1 | Customer | Customer/Stakeholder submits request, application, or inquiry via official channels (Email, Letter, or Portal). | Digital | |
-| 2 | Registry | Registry/Front Office receives, records, and classifies the request. | Manual | |
-| 3 | Technical Officer | Relevant Technical Department reviews the request against internal policies and regulations. | Manual | |
-| 4 | Management | Management/Accounting Officer approves the appropriate action or service delivery. | Manual | |
-| 5 | Customer Care | Service is delivered or official response is communicated to the customer. | Manual | |
+| 1 | Couple | **Notice:** Both parties log into eCitizen, fill details (Occupation, Residence, Parents). Upload passport photos and ID copies. | eCitizen Portal | System requires both parties to have eCitizen accounts. |
+| 2 | Couple | **Fee Payment:** Pays KES 600 for Notice. Wait 21 days (mandatory legal requirement). | Mobile Money | No way to expedite legally (except Special License). |
+| 3 | Registrar | **Review:** Officer checks uploaded documents. If valid, Notice is "Published" (often just pinned on a notice board at Sheria House). | Physical Board | Archaic method of publication. |
+| 4 | Couple | **Booking:** After 21 days, couple logs in to book a date for the ceremony. Pays KES 3,300 (Ceremony Fee). | Appointment System | Slots at Sheria House fill up fast, especially on Fridays. |
+| 5 | Couple + Witnesses | **Ceremony:** On the day, arrive at Sheria House. Wait in queue. Enter Registrar's office for brief vows. | Physical Office | Often chaotic, crowded waiting rooms. |
+| 6 | Registrar | **Issuance:** Parties sign the Register. Registrar issues hand-written or typed Certificate. | Manual Certificate | Risk of typos. |
 
 ---
 
 ## Pain Points & Opportunities
 ### Pain Points
-- Slow movement of physical files (Bureaucracy).
-- Loss of institutional memory (Manual registries).
-- Difficulty in tracking correspondence status.
-- Siloed operations between departments.
+- **Physical Presence:** Both parties must visit Sheria House for the interview/booking, even if applied online.
+- **Notice Board:** Relying on a physical notice board for objections is ineffective in the digital age.
+- **Delays:** Booking slots can be months away due to high demand.
+- **Customary Marriages:** Registration of customary unions (traditional weddings) is complex and often ignored until death/succession disputes arise.
+- **Verification:** Banks/Embassies struggle to verify manual certificates instantly.
 
 ### Opportunities
-- Integration with IPRS/BRS via Service Bus.
-- Adoption of Government Payment Gateway.
-- Implementation of Automated Rules Engine.
-- Issuance of Digital Verifiable Credentials.
+- **Digital Notice:** Publish notices online (e-Gazette/Portal) for wider visibility.
+- **Remote Interview:** Conduct the pre-wedding interview via video link to save travel.
+- **Decentralization:** Empower Huduma Centres in all counties to officiate marriages (currently limited).
+- **Blockchain:** Immutable marriage register to prevent bigamy/fraud.
 
 ---
 
 ## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Optimized).*
+*Future State visualization (Repeatable WoG Platform).*
 
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph Applicant [Applicant]
-        S1["Applicant logs in via Single Sign-On (SSO) and sel..."]
-        S4["Applicant pays fees via the Government Payment Gat..."]
+    subgraph WoG_Platform [Civil Registry]
+        S1["Checks Marital Status (Bigamy Check)"]
+        S2["Publishes Online Notice (e-Gazette)"]
+        S3["Waits 21 Days (Auto-Countdown)"]
     end
-    subgraph System [System]
-        S2["Applicant enters Business Registration Number; Sys..."]
-        S3["System performs auto-validation of compliance (e.g..."]
-        S5["Application is processed by the Rules Engine. (Low..."]
-        S7["System generates a Verifiable Digital Certificate ..."]
+    subgraph Couple [Applicants]
+        S4["Logs into eCitizen App"]
+        S5["Jointly Signs 'Notice of Intent' (Digital Signature)"]
+        S6["Receives 'License to Marry' QR Code"]
     end
-    subgraph Officer [Officer]
-        S6["Complex cases are routed to the Officer Workbench ..."]
+    subgraph Officiant [Registrar / Pastor / Kadhi]
+        S7["Scans Couple's QR Code at Venue"]
+        S8["Activates 'Married' Status in Registry"]
     end
+    subgraph Integrated_Systems [X-Road]
+        S9["Updates Spouse Status in IPRS/NRB"]
+        S10["Issues Digital Certificate"]
+    end
+    
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
     S5 --> S6
     S6 --> S7
-    S7 --> End((End))
+    S7 --> S8
+    S8 --> S9
+    S9 --> S10
+    S10 --> End((End))
 ```
 
 ## Future State Process (TO-BE)
 ### Narrative
-The To-Be process leverages the Government Service Bus to integrate with BRS (Business Registry) and the Payment Gateway. Manual data entry and document uploads are replaced by real-time API validations, enabling a paperless, cashless, and presence-less service experience.
+The process is **Decentralized** and **Secure**.
+1.  **Smart Notice:** The **WoG Platform** checks the ID numbers of both parties against the central marriage database. Bigamy is flagged instantly.
+2.  **Online Publication:** The "Notice of Marriage" is published on the public **e-Gazette** portal, searchable by name.
+3.  **Digital License:** After 21 days, if no objection is filed online, the couple receives a secure **QR Code License** on their phone.
+4.  **Universal Officiation:** Any licensed officiant (Pastor, Imam, Registrar) uses the **Government Officiant App** to scan the QR code at the wedding venue (church, garden, mosque). This "activates" the marriage in real-time.
+5.  **Instant Update:** The change of status (Single -> Married) is pushed immediately to **IPRS**, linking the spouses for future services (NHIF, Pension).
 
 ### Optimized Steps (Digital)
 | Step | Actor | Action | System |
 |---|---|---|---|
-| 1 | Applicant | Applicant logs in via Single Sign-On (SSO) and selects the service. | Citizen Portal / SSO |
-| 2 | System | Applicant enters Business Registration Number; System auto-populates details from BRS (Business Registry) via the Service Bus. | Service Bus / Registry API |
-| 3 | System | System performs auto-validation of compliance (e.g., KRA Tax Status) via Inter-Agency APIs. | Service Bus / Compliance Engine |
-| 4 | Applicant | Applicant pays fees via the Government Payment Gateway; System auto-receipts. | Payment Gateway |
-| 5 | System | Application is processed by the Rules Engine. (Low-risk cases are Auto-Approved). | Workflow Engine |
-| 6 | Officer | Complex cases are routed to the Officer Workbench for digital review and approval. | Officer Workbench |
-| 7 | System | System generates a Verifiable Digital Certificate (QR Code) and notifies the applicant. | Output Generator |
+| 1 | Couple | Files joint notice via eCitizen App. | eCitizen App |
+| 2 | WoG Platform | Runs bigamy check and publishes notice. | Registry / e-Gazette |
+| 3 | Public | Can view notice and file objection online. | Public Portal |
+| 4 | Officiant | Scans QR code to finalize marriage. | Officiant App |
+| 5 | Registry | Updates status and issues Digital Cert. | X-Road |
+
+---
+
+## 3. Standard Data Inputs
+*Required fields for the WoG Digital Service.*
+
+### A. Notice of Marriage (Joint)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Groom ID | String | User Input | Must be 'Single' (IPRS) |
+| Bride ID | String | User Input | Must be 'Single' (IPRS) |
+| Marriage Type | Enum | User Input | Civil / Christian / Customary |
+| Proposed Date | Date | User Input | > 21 days from today |
+| Venue | String | User Input | Licensed Venue List |
+
+### B. Officiation (Ceremony)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| License QR | String | Scanned (App) | Valid & Not Expired |
+| Officiant License | String | System (Auth) | Must be Active |
+| Witness 1 ID | String | User Input | Valid ID (IPRS) |
+| Witness 2 ID | String | User Input | Valid ID (IPRS) |
 
 ---
 
 ## References
-Derived from official mandates.
+- Marriage Act.

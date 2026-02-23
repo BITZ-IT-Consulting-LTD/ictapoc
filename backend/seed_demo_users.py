@@ -16,6 +16,7 @@ def create_demo_users():
             "GLOBAL_SUPERVISOR": Role.objects.get(name="GLOBAL_SUPERVISOR"),
             "MDA_OFFICER": Role.objects.get(name="MDA_OFFICER"),
             "MDA_SUPERVISOR": Role.objects.get(name="MDA_SUPERVISOR"),
+            "Hospital_Staff": Role.objects.get(name="Hospital_Staff"),
         }
     except Role.DoesNotExist:
         print("❌ RBAC Roles not seeded. Please run seed_rbac_roles.py first.")
@@ -66,6 +67,13 @@ def create_demo_users():
             "role_name": "MDA_OFFICER",
             "mda": moe,
             "assigned_mdas": [moe]
+        },
+        {
+            "username": "nurse.jane",
+            "password": "Starten1@",
+            "role_name": "Hospital_Staff",
+            "mda": moh,
+            "assigned_mdas": [moh]
         }
     ]
 

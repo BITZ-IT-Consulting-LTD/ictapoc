@@ -149,7 +149,9 @@ class WorkflowStep(models.Model):
     role = models.CharField(max_length=50, blank=True, null=True) # Role responsible for this step
     target_mda = models.ForeignKey('MDA', on_delete=models.SET_NULL, null=True, blank=True, related_name='assigned_steps')
     action = models.CharField(max_length=50, blank=True, null=True)
+    registry_endpoint = models.ForeignKey('RegistryEndpoint', on_delete=models.SET_NULL, null=True, blank=True, related_name='configured_steps')
     api_config = models.JSONField(blank=True, null=True) # For API call steps
+    logic_config = models.JSONField(default=dict, blank=True)
     sequence = models.IntegerField()
 
     class Meta:
@@ -322,3 +324,133 @@ class DesktopReview(models.Model):
 
     def __str__(self):
         return f"Desktop Review: {self.mda.name}"
+
+class RegistryAdapter(models.Model):
+    """
+    GEA-Compliant Registry Adapter configuration.
+    Allows decoupling of registry logic from hardcoded mocks to DB-driven API integrations.
+    """
+    code = models.CharField(max_length=50, unique=True, help_text="Unique code (e.g., IPRS, KRA, CRS)")
+    name = models.CharField(max_length=255)
+    base_url = models.URLField(blank=True, null=True, help_text="Authoritative API Base URL")
+    auth_type = models.CharField(max_length=50, default='API_KEY', help_text="API_KEY, OAUTH2, CERTIFICATE, etc.")
+    auth_config = models.JSONField(default=dict, blank=True, help_text="Headers, API Keys, or Certificates")
+    data_mapping = models.JSONField(default=dict, blank=True, help_text="Field mapping from Registry -> Platform")
+    
+    is_mock = models.BooleanField(default=True)
+    mock_data = models.JSONField(default=dict, blank=True, help_text="JSON dump of original authoritative dictionaries")
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.code} - {self.name}"
+
+class RegistryEndpoint(models.Model):
+    """
+    Specific API operations available on a Registry Adapter.
+    e.g., "Create Birth Record", "Verify ID", "Check Tax Status".
+    """
+    HTTP_METHODS = (
+        ('GET', 'GET'),
+        ('POST', 'POST'),
+        ('PUT', 'PUT'),
+        ('PATCH', 'PATCH'),
+        ('DELETE', 'DELETE'),
+    )
+
+    adapter = models.ForeignKey(RegistryAdapter, on_delete=models.CASCADE, related_name='endpoints')
+    name = models.CharField(max_length=255, help_text="Human-readable action name")
+    path = models.CharField(max_length=255, help_text="Endpoint path (e.g., /api/births)")
+    method = models.CharField(max_length=10, choices=HTTP_METHODS, default='POST')
+    payload_schema = models.JSONField(default=dict, blank=True, help_text="JSON Schema for the expected payload")
+    
+    # Schema Field Discovery
+    input_schema = models.JSONField(default=list, blank=True, help_text="List of required inputs: [{'key': 'id', 'label': 'ID', 'type': 'string'}]")
+    output_schema = models.JSONField(default=list, blank=True, help_text="List of available outputs: [{'key': 'name', 'label': 'Name', 'type': 'string'}]")
+    
+    def __str__(self):
+        return f"{self.adapter.code}: {self.name} ({self.method})"
+
+class PaymentProvider(models.Model):
+    name = models.CharField(max_length=100)
+    code = models.CharField(max_length=20, unique=True) # e.g. MPESA, VISA, KCB
+    config = models.JSONField(default=dict, blank=True) # API keys, Paybill numbers, etc.
+    is_active = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return self.name
+
+class PaymentTransaction(models.Model):
+    STATUS_CHOICES = (
+        ('PENDING', 'Pending'),
+        ('SUCCESS', 'Success'),
+        ('FAILED', 'Failed'),
+        ('CANCELLED', 'Cancelled'),
+    )
+    
+    service_request = models.ForeignKey(ServiceRequest, on_delete=models.CASCADE, related_name='payments')
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    currency = models.CharField(max_length=3, default='KES')
+    provider = models.ForeignKey(PaymentProvider, on_delete=models.PROTECT)
+    provider_ref = models.CharField(max_length=100, unique=True, null=True, blank=True) # e.g. M-Pesa Code
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f"TXN-{self.id}: {self.amount} {self.currency} ({self.status})"
+
+class RevenueSplit(models.Model):
+    transaction = models.ForeignKey(PaymentTransaction, on_delete=models.CASCADE, related_name='splits')
+    beneficiary_mda = models.ForeignKey(MDA, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    percentage = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    account_number = models.CharField(max_length=100, blank=True, null=True) # Destination Account
+
+    def __str__(self):
+        return f"Split: {self.beneficiary_mda.name} - {self.amount}"
+
+class DataPurpose(models.Model):
+    """Legal grounds for data processing."""
+    code = models.CharField(max_length=50, unique=True) # e.g. SERVICE_DELIVERY, LAW_ENFORCEMENT
+    description = models.TextField()
+
+    def __str__(self):
+        return self.code
+
+class ConsentRecord(models.Model):
+    """
+    Tracks explicit citizen consent for data sharing according to the Data Protection Act.
+    """
+    STATUS_CHOICES = (
+        ('ACTIVE', 'Active'),
+        ('REVOKED', 'Revoked'),
+        ('EXPIRED', 'Expired'),
+    )
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='consents')
+    requester = models.ForeignKey(MDA, on_delete=models.CASCADE, related_name='requested_consents')
+    data_scope = models.CharField(max_length=255) # e.g. "identity.read", "tax_compliance.verify"
+    purpose = models.ForeignKey(DataPurpose, on_delete=models.PROTECT)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='ACTIVE')
+    
+    granted_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField(null=True, blank=True)
+    revoked_at = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Consent: {self.user.username} -> {self.requester.name} ({self.data_scope})"
+
+class ConsentAccessLog(models.Model):
+    """
+    Immutable audit log for every time data is accessed under a consent record.
+    """
+    consent = models.ForeignKey(ConsentRecord, on_delete=models.CASCADE, related_name='access_logs')
+    accessed_at = models.DateTimeField(auto_now_add=True)
+    accessed_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    resource_id = models.CharField(max_length=100, blank=True, null=True) # e.g. Request ID
+
+    def __str__(self):
+        return f"Access: {self.consent.id} at {self.accessed_at}"

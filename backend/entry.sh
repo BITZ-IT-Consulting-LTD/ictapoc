@@ -9,11 +9,12 @@ python manage.py collectstatic --noinput
 
 echo "Seeding database..."
 python seed_data.py
-python seed_catalogue_master.py
+python seed_unified_catalogue.py
 python seed_rbac_roles.py
 python seed_demo_users.py
+python seed_registry_adapters.py
+python seed_registry_operations.py
 python seed_test_data.py
-python seed_wog_v2.py
 
 echo "Starting server..."
 exec "$@"

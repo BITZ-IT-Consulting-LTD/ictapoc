@@ -118,9 +118,9 @@ def seed_data():
     created_mdas = {}
     for m_data in mdas_data:
         mda, created = MDA.objects.update_or_create(
-            name=m_data['name'], 
+            code=m_data['code'], 
             defaults={
-                'code': m_data.get('code'),
+                'name': m_data['name'], 
                 'description': m_data.get('description'),
                 'head_of_mda': m_data.get('head_of_mda'),
                 'contact_email': m_data.get('contact_email'),

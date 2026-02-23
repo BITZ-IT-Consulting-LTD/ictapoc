@@ -1,0 +1,253 @@
+{
+  "process_id": "PROC-WoG-LIFECYCLE-001",
+  "service_id": "SVC-WoG-LIFECYCLE",
+  "mda_id": "MDA-WoG-001",
+  "mda_name": "WHOLE OF GOVERNMENT (WoG)",
+  "service_name": "Kenya Citizen Lifecycle (Cradle to Death)",
+  "sector": "Social Protection & Governance",
+  "cover_page": {
+    "process_name": "KENYA CITIZEN LIFECYCLE MANAGEMENT",
+    "document_version": "3.0",
+    "publication_date": "2026-02-19",
+    "classification": "CONFIDENTIAL"
+  },
+  "document_control": [],
+  "executive_summary": "This Unified Citizen Lifecycle integrates 10 key government registries into a single, event-driven workflow. It spans from Birth (CRS) through Education (MoE), Adulthood (NRB), Economic Life (KRA, BRS, Lands), Health (SHA), Marriage (AG), Travel (Immigration), to Death and Succession (Judiciary).",
+  "process_overview": {
+    "service_category": "G2C",
+    "process_objective": "To provide a seamless, proactive government experience where life events trigger automated services across MDAs without redundant data entry.",
+    "scope": {
+      "in_scope": [
+        "Birth Registration (CRS)",
+        "Health Coverage (SHA)",
+        "Education Enrollment (MoE)",
+        "National ID Upgrade (NRB)",
+        "Tax Compliance (KRA)",
+        "Passport Issuance (Immigration)",
+        "Business Registration (BRS)",
+        "Marriage Registration (AG)",
+        "Land Transfer (Lands)",
+        "Death & Succession (Judiciary)"
+      ],
+      "out_of_scope": ["Visa Processing", "Civil Litigation"]
+    },
+    "triggers": [
+      "Birth Notification",
+      "Age Milestones (4, 18 years)",
+      "Marriage Notice",
+      "Property Transaction",
+      "Death Notification"
+    ],
+    "end_states": {
+      "successful": [
+        "UPI Generated",
+        "Digital ID Issued",
+        "Asset Transferred",
+        "Estate Distributed"
+      ]
+    }
+  },
+  "registry": "Integrated Population Registration System (IPRS)",
+  "dependencies": [
+    "CRS",
+    "NEMIS",
+    "NRB",
+    "KRA",
+    "BRS",
+    "SHA",
+    "AG",
+    "LANDS",
+    "JUDICIARY"
+  ],
+  "workflow": {
+    "steps": [
+      {
+        "step_id": "WF-STEP-01",
+        "step_name": "Birth Registration",
+        "description": "Hospital captures birth; System mints Maisha Namba (UPI).",
+        "actor": "System / Hospital",
+        "system": "CRS",
+        "execution_type": "event_driven",
+        "input": ["birth_notification", "mother_id"],
+        "output": "upi",
+        "category": "Civil Status & Identity",
+        "life_event": "Birth",
+        "next_step": "WF-STEP-02",
+        "registry_update": "CRS: Create Record; IPRS: Mint UPI"
+      },
+      {
+        "step_id": "WF-STEP-02",
+        "step_name": "Health Activation",
+        "description": "Newborn auto-enrolled into SHA (Linda Mama).",
+        "actor": "System",
+        "system": "SHA",
+        "execution_type": "automatic",
+        "input": ["upi"],
+        "output": "sha_number",
+        "category": "Health & Social Protection",
+        "life_event": "Health",
+        "next_step": "WF-STEP-03",
+        "registry_update": "SHA: Activate Cover"
+      },
+      {
+        "step_id": "WF-STEP-03",
+        "step_name": "Education Enrollment",
+        "description": "Child enrolled in School using UPI.",
+        "actor": "Parent",
+        "system": "MoE (NEMIS)",
+        "execution_type": "manual",
+        "input": ["upi", "school_code"],
+        "output": "enrollment_id",
+        "category": "Education & Skills",
+        "life_event": "Education",
+        "next_step": "WF-STEP-04",
+        "registry_update": "NEMIS: Assign School"
+      },
+      {
+        "step_id": "WF-STEP-04",
+        "step_name": "ID Upgrade (Age 18)",
+        "description": "UPI upgraded to Adult ID via Biometric Update.",
+        "actor": "Citizen",
+        "system": "NRB",
+        "execution_type": "biometric",
+        "input": ["upi", "fingerprints", "photo"],
+        "output": "virtual_id",
+        "category": "Civil Status & Identity",
+        "life_event": "Adulthood",
+        "next_step": "WF-STEP-05",
+        "registry_update": "NRB: Update Biometrics; KRA: Auto-Gen PIN"
+      },
+      {
+        "step_id": "WF-STEP-05",
+        "step_name": "Tax Compliance",
+        "description": "KRA PIN auto-generated; Compliance is invisible.",
+        "actor": "System",
+        "system": "KRA",
+        "execution_type": "automatic",
+        "input": ["virtual_id"],
+        "output": "kra_pin",
+        "category": "Economic & Tax",
+        "life_event": "Employment",
+        "next_step": "WF-STEP-06",
+        "registry_update": "KRA: Create Ledger"
+      },
+      {
+        "step_id": "WF-STEP-06",
+        "step_name": "Passport Issuance",
+        "description": "Passport issued reusing NRB biometrics.",
+        "actor": "Citizen",
+        "system": "Immigration",
+        "execution_type": "manual",
+        "input": ["virtual_id", "photo_selfie"],
+        "output": "passport_no",
+        "category": "Travel & Immigration",
+        "life_event": "Travel",
+        "next_step": "WF-STEP-07",
+        "registry_update": "Immigration: Issue DTC"
+      },
+      {
+        "step_id": "WF-STEP-07",
+        "step_name": "Business Registration",
+        "description": "Entity incorporation via AI Name Search.",
+        "actor": "Entrepreneur",
+        "system": "BRS",
+        "execution_type": "manual",
+        "input": ["virtual_id", "business_name"],
+        "output": "incorporation_cert",
+        "category": "Business & Commerce",
+        "life_event": "Entrepreneurship",
+        "next_step": "WF-STEP-08",
+        "registry_update": "BRS: Create Entity"
+      },
+      {
+        "step_id": "WF-STEP-08",
+        "step_name": "Marriage Registration",
+        "description": "Civil Union registration via Smart Notice.",
+        "actor": "Couple",
+        "system": "AG (State Law)",
+        "execution_type": "manual",
+        "input": ["groom_id", "bride_id", "officiant_qr"],
+        "output": "marriage_cert",
+        "category": "Civil Status & Identity",
+        "life_event": "Marriage",
+        "next_step": "WF-STEP-09",
+        "registry_update": "AG: Link Spouses"
+      },
+      {
+        "step_id": "WF-STEP-09",
+        "step_name": "Property Acquisition",
+        "description": "Land transfer via Smart Contract.",
+        "actor": "Buyer",
+        "system": "Lands (Ardhisasa)",
+        "execution_type": "blockchain",
+        "input": ["virtual_id", "parcel_no", "consent_bio"],
+        "output": "title_deed_token",
+        "category": "Property & Assets",
+        "life_event": "Property",
+        "next_step": "WF-STEP-10",
+        "registry_update": "Lands: Transfer Ownership"
+      },
+      {
+        "step_id": "WF-STEP-10",
+        "step_name": "Succession (Death)",
+        "description": "Death triggers Estate Distribution.",
+        "actor": "System / Judiciary",
+        "system": "Judiciary",
+        "execution_type": "event_driven",
+        "input": ["death_notification", "asset_inventory"],
+        "output": "confirmed_grant",
+        "category": "Legal & Judiciary",
+        "life_event": "Succession",
+        "next_step": "END",
+        "registry_update": "CRS: Retire ID; Judiciary: Distribute Assets"
+      }
+    ]
+  },
+  "input_form": [
+    {
+      "field_id": "FLD-B1-001",
+      "field_name": "birth_notification",
+      "label": "Notification Number",
+      "type": "string",
+      "source": "Hospital_HIS",
+      "validation": "format:B-#####"
+    },
+    {
+      "field_id": "FLD-NRB-001",
+      "field_name": "fingerprints",
+      "label": "Biometric Template",
+      "type": "binary",
+      "source": "LiveScan_Kit",
+      "validation": "wsq_quality>80"
+    },
+    {
+      "field_id": "FLD-IMM-001",
+      "field_name": "photo_selfie",
+      "label": "ICAO Photo",
+      "type": "image",
+      "source": "eCitizen_App",
+      "validation": "icao_check:pass"
+    },
+    {
+      "field_id": "FLD-BRS-001",
+      "field_name": "business_name",
+      "label": "Proposed Name",
+      "type": "string",
+      "source": "User_Input",
+      "validation": "ai_check:available"
+    },
+    {
+      "field_id": "FLD-LND-001",
+      "field_name": "consent_bio",
+      "label": "Seller Consent",
+      "type": "binary",
+      "source": "Maisha_Auth",
+      "validation": "match_owner"
+    }
+  ],
+  "metadata": {
+    "version": "3.0",
+    "architecture": "Repeatable WoG (X-Road + GPA)",
+    "last_updated": "2026-02-19"
+  }
+}

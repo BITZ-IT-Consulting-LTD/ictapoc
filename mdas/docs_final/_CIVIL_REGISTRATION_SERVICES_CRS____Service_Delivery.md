@@ -2,144 +2,201 @@
 
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** ·       CIVIL REGISTRATION SERVICES (CRS)
-- **Process Name:** Service Delivery
-- **Document Version:** 1.0
-- **Date:** 2026-02-14
+- **Process Name:** Service Delivery (Birth & Death Registration)
+- **Document Version:** 1.3
+- **Date:** 2026-02-19
 - **Classification:** Official
 
 ---
 
 ## Executive Summary
-The Public Service Commission (PSC) of Kenya is an independent constitutional commission responsible for effective human resource management in the public service. Its mandate includes promoting merit-based recruitment, upholding ethics, ensuring accountability, and fostering efficiency in government operations.
+Civil Registration Services (CRS) is mandated to register all births and deaths occurring in Kenya and of Kenyans abroad. It issues Birth and Death Certificates, which are the primary source documents for legal identity and succession.
 
 ---
 
 ## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization.*
+*Current State visualization (Manual/Semi-Digital).*
 
 ```mermaid
 graph TD
     Start((Start)) --> S1
-    subgraph Applicant [Applicant]
-        S1["Applicant submits application for license, permit,..."]
-        S4["Applicant pays the prescribed fees."]
+    subgraph Citizen [Parent / Next of Kin]
+        S1["Event Occurs (Birth/Death)"]
+        S3["Collects Notification (B1/D1) form"]
+        S4["Visits Huduma Centre / CRS Office"]
+        S6["Pays fee at Bank/Agent & Returns with receipt"]
     end
-    subgraph Authority [Authority]
-        S2["Authority verifies documents and compliance with r..."]
-        S5["Authority approves and issues the License/Permit/C..."]
+    subgraph HealthFacility [Hospital / Chief]
+        S2["Issues Notification Number (B1/D1)"]
     end
-    subgraph TechnicalOfficer [Technical Officer]
-        S3["Technical officers conduct assessment or inspectio..."]
+    subgraph CRSOfficer [CRS Officer]
+        S5["Verifies Notification details in register"]
+        S7["Manually keys data into CRS System"]
+        S8["Prints Certificate"]
     end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> End((End))
-```
-
----
-
-## Process Overview
-### Process Name
-Service Delivery
-
-### Service Category
-- G2C (Government to Citizen)
-
-### Scope
-- **In Scope:** End-to-end processing within ·       CIVIL REGISTRATION SERVICES (CRS).
-
-### Triggers
-- Submission of application/request by Applicant.
-
-### End States
-- **Successful:** License / Permit / Certificate, Compliance Inspection Report, Official Receipt, Gazette Notice
-
-### Policy Context
-- The ·       CIVIL REGISTRATION SERVICES (CRS) Act; The Constitution of Kenya 2010; Data Protection Act 2019.
-
----
-
-## Stakeholders
-| Stakeholder | Role | Responsibilities |
-|---|---|---|
-| Technical Officer | Process Actor | Performs actions as defined in steps. |
-| Authority | Process Actor | Performs actions as defined in steps. |
-| Applicant | Process Actor | Performs actions as defined in steps. |
-
----
-
-## Detailed Process (AS-IS)
-| Step | Role | Action | Tool | Notes |
-|---|---|---|---|---|
-| 1 | Applicant | Applicant submits application for license, permit, or service. | Manual | |
-| 2 | Authority | Authority verifies documents and compliance with regulations. | Manual | |
-| 3 | Technical Officer | Technical officers conduct assessment or inspection. | Manual | |
-| 4 | Applicant | Applicant pays the prescribed fees. | Manual | |
-| 5 | Authority | Authority approves and issues the License/Permit/Certificate. | Manual | |
-
----
-
-## Pain Points & Opportunities
-### Pain Points
-- Manual document verification takes time.
-- High cost and time for physical inspections.
-- Risk of counterfeit licenses/certificates.
-- Lack of real-time monitoring of licensees.
-
-### Opportunities
-- Integration with IPRS/BRS via Service Bus.
-- Adoption of Government Payment Gateway.
-- Implementation of Automated Rules Engine.
-- Issuance of Digital Verifiable Credentials.
-
----
-
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Optimized).*
-
-```mermaid
-graph TD
-    Start((Start)) --> S1
-    subgraph Applicant [Applicant]
-        S1["Applicant logs in via Single Sign-On (SSO) and sel..."]
-        S4["Applicant pays fees via the Government Payment Gat..."]
+    subgraph Registrar [District Registrar]
+        S9["Signs & Seals Certificate"]
     end
-    subgraph System [System]
-        S2["Applicant enters Business Registration Number; Sys..."]
-        S3["System performs auto-validation of compliance (e.g..."]
-        S5["Application is processed by the Rules Engine. (Low..."]
-        S7["System generates a Verifiable Digital Certificate ..."]
-    end
-    subgraph Officer [Officer]
-        S6["Complex cases are routed to the Officer Workbench ..."]
-    end
+    
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
     S5 --> S6
     S6 --> S7
-    S7 --> End((End))
+    S7 --> S8
+    S8 --> S9
+    S9 --> End((End))
+```
+
+---
+
+## Process Overview
+### Process Name
+Birth & Death Registration (Current/Late)
+
+### Service Category
+- G2C (Government to Citizen)
+
+### Scope
+- **In Scope:** Registration of births and deaths; Issuance of certificates.
+- **Out of Scope:** DNA testing for disputed parentage.
+
+### Triggers
+- Birth of a child.
+- Death of a person.
+
+### End States
+- **Successful:** Issuance of Birth Certificate (B3) or Death Certificate.
+
+### Policy Context
+- Births and Deaths Registration Act (Cap 149); Kenya Citizenship and Immigration Act.
+
+---
+
+## Stakeholders
+| Stakeholder | Role | Responsibilities |
+|---|---|---|
+| Parent / Informant | Applicant | Reports event, provides notification. |
+| Health Facility / Chief | Notifier | Issues B1 (Birth) or D1 (Death) notification. |
+| CRS Registration Assistant | Processor | Data entry, verification against registers. |
+| District Registrar | Approver | Signing and sealing of certificates. |
+
+---
+
+## Detailed Process (AS-IS)
+| Step | Role | Action | Tool | Notes |
+|---|---|---|---|---|
+| 1 | Health Facility / Chief | **Notification:** Issuer records event. For hospital births/deaths, a Notification Number is generated. For home events, the Assistant Chief issues a manual acknowledgement. | Manual Register / B1 Form | |
+| 2 | Parent / Informant | **Application:** Visits CRS office or Huduma Centre with the Notification Number and parent ID copies (for birth) or Deceased ID (for death). | Manual | "Late Registration" requires additional vetting. |
+| 3 | CRS Officer | **Verification:** Officer locates the physical or digital notification record to validate details. | Manual / Local DB | Frequent delays if records aren't synced. |
+| 4 | Parent / Informant | **Payment:** Pays processing fee (e.g., via eCitizen or Bank) and presents receipt. | eCitizen / Manual Receipt | |
+| 5 | CRS Officer | **Data Entry:** Officer types details into the legacy CRS system for certificate printing. | Legacy Desktop App | Risk of typos. |
+| 6 | District Registrar | **Approval:** Registrar manually signs and stamps the printed certificate. | Manual | Bottleneck step. |
+| 7 | Parent / Informant | **Collection:** Collects the physical certificate. | Manual | |
+
+---
+
+## Pain Points & Opportunities
+### Pain Points
+- **Double Entry:** Hospital types data, CRS officer re-types it (error prone).
+- **Late Registration:** Complex, manual committee vetting for events >6 months.
+- **Physical Archives:** Searching for old records in physical ledgers is slow.
+- **Fraud:** Risk of fake notifications or identity theft (Ghost workers/voters).
+
+### Opportunities
+- **Hospital Integration:** API push from Hospital system directly to CRS.
+- **Automated Queuing:** First-in-First-out processing.
+- **Digitization:** Scanning all historical registers for searchable database.
+- **IPRS Link:** Real-time validation of parent/deceased IDs.
+
+---
+
+## 2. TO-BE Process Flowchart (BPMN 2.0)
+*Future State visualization (Repeatable WoG Platform).*
+
+```mermaid
+graph TD
+    Start((Start)) --> S1
+    subgraph Health_System [Hospital / Community Health]
+        S1["Event Occurs (Birth/Death)"]
+        S2["Data Captured in HIS / Mobile App"]
+        S3["Push to X-Road (KeSEL)"]
+    end
+    subgraph WoG_Platform [Government Service Bus]
+        S4["Validates Parent/Deceased Identity (IPRS)"]
+        S5["Generates Unique Personal Identifier (UPI)"]
+        S6["Creates CRS Record (Draft)"]
+        S7["Triggers Payment Prompt (GPA)"]
+    end
+    subgraph Citizen [Parent / Next of Kin]
+        S8["Receives SMS/USSD Prompt"]
+        S9["Pays via M-Pesa (Government Paybill)"]
+        S11["Downloads Digital Certificate (eCitizen)"]
+    end
+    subgraph CRS_Backend [Registry]
+        S10["Auto-Signs & Seals Digital Cert"]
+    end
+    
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+    S4 --> S5
+    S5 --> S6
+    S6 --> S7
+    S7 --> S8
+    S8 --> S9
+    S9 --> S10
+    S10 --> S11
+    S11 --> End((End))
 ```
 
 ## Future State Process (TO-BE)
 ### Narrative
-The To-Be process leverages the Government Service Bus to integrate with BRS (Business Registry) and the Payment Gateway. Manual data entry and document uploads are replaced by real-time API validations, enabling a paperless, cashless, and presence-less service experience.
+The process is **Event-Driven** and **Interoperable**.
+1.  **Source Capture:** Data is captured *once* at the source (Hospital HMIS or Community Health Promoter's Tablet).
+2.  **Interoperability (X-Road):** The Health System pushes data securely to CRS via the Government Service Bus (KeSEL).
+3.  **Identity Verification:** The platform automatically queries IPRS to validate the parents' or deceased's identity.
+4.  **UPI Generation:** For births, a **Maisha Namba (UPI)** is minted immediately.
+5.  **Direct Payment:** The citizen pays directly via the Government Payment Aggregator (GPA).
+6.  **Digital Output:** A Verifiable Digital Certificate (QR Code) is issued to the citizen's eCitizen locker. No physical visit required.
 
 ### Optimized Steps (Digital)
 | Step | Actor | Action | System |
 |---|---|---|---|
-| 1 | Applicant | Applicant logs in via Single Sign-On (SSO) and selects the service. | Citizen Portal / SSO |
-| 2 | System | Applicant enters Business Registration Number; System auto-populates details from BRS (Business Registry) via the Service Bus. | Service Bus / Registry API |
-| 3 | System | System performs auto-validation of compliance (e.g., KRA Tax Status) via Inter-Agency APIs. | Service Bus / Compliance Engine |
-| 4 | Applicant | Applicant pays fees via the Government Payment Gateway; System auto-receipts. | Payment Gateway |
-| 5 | System | Application is processed by the Rules Engine. (Low-risk cases are Auto-Approved). | Workflow Engine |
-| 6 | Officer | Complex cases are routed to the Officer Workbench for digital review and approval. | Officer Workbench |
-| 7 | System | System generates a Verifiable Digital Certificate (QR Code) and notifies the applicant. | Output Generator |
+| 1 | Health Staff | Enters birth/death details into Hospital System (EMR). | Hospital EMR |
+| 2 | WoG Platform | Validates IDs, generates UPI, and creates draft record. | X-Road / IPRS |
+| 3 | Citizen | Receives SMS, reviews details, and pays fee. | Notification / GPA |
+| 4 | CRS System | Auto-approves (if low risk) and generates Digital Certificate. | Workflow Engine |
+| 5 | Citizen | Downloads official certificate from eCitizen. | eCitizen Portal |
+
+---
+
+## 3. Standard Data Inputs
+*Required fields for the WoG Digital Service.*
+
+### A. Birth Registration Input (B1)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Child Name | String | User Input (Hospital) | Min 3 chars |
+| Date of Birth | Date | User Input (Hospital) | Cannot be future |
+| Gender | Enum (M/F) | User Input | Required |
+| Place of Birth | String | System (Facility Name) | Auto-filled |
+| Mother's ID | String | User Input | Validated vs IPRS |
+| Father's ID | String | User Input (Optional) | Validated vs IPRS |
+| Notification No | String | System Generated | Unique B-Series |
+
+### B. Death Registration Input (D1)
+| Field Name | Type | Source | Validation |
+|---|---|---|---|
+| Deceased Name | String | System Fetch (IPRS) | Read-only |
+| Deceased ID | String | User Input | Must exist in IPRS |
+| Date of Death | Date | User Input | Cannot be future |
+| Cause of Death | String | ICD-11 Code | Medical Personnel Only |
+| Informant ID | String | User Input | Validated vs IPRS |
+| Notification No | String | System Generated | Unique D-Series |
 
 ---
 
 ## References
-Derived from official mandates.
+- Births and Deaths Registration Act.
