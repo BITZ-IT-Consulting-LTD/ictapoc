@@ -36,10 +36,10 @@ The Directorate of Immigration Services (DIS) is responsible for the issuance of
 graph TD
     Start((Start)) --> S1
 
-    subgraph Citizen [Citizen (Applicant)]
+    subgraph Citizen [Citizen - Applicant]
         S1["Creates / Logs into eCitizen Account"]
         S2["Select Passport Application Service"]
-        S3["Fill Passport Application Form (Form 19)"]
+        S3["Fill Passport Application Form - Form 19"]
         S4["Upload Supporting Documents"]
         S6["Pay Passport Fees"]
         S7["Book Biometrics Appointment"]
@@ -47,7 +47,7 @@ graph TD
     end
 
     subgraph eCitizen_System [eCitizen System]
-        S5["Submit Application (Generates Reference Number)"]
+        S5["Submit Application - Generates Reference Number"]
     end
 
     subgraph Immigration_Office [Immigration Officer / Biometrics Officer]
@@ -56,11 +56,11 @@ graph TD
     end
 
     subgraph Immigration_Approval [Senior Immigration Officer]
-        S10["Application Approval (Approved or Rejected)"]
+        S10["Application Approval - Approved or Rejected"]
     end
 
     subgraph Passport_Production [Passport Production Unit]
-        S11["Passport Production (Passport Printed)"]
+        S11["Passport Production - Passport Printed"]
     end
 
     S1 --> S2
