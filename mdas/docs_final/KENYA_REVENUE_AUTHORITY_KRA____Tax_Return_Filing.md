@@ -1,156 +1,149 @@
-# KENYA REVENUE AUTHORITY (KRA) – Tax Return Filing
+# KENYA REVENUE AUTHORITY (KRA) – PIN Registration (Individual)
 
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** KENYA REVENUE AUTHORITY (KRA)
-- **Process Name:** Tax Compliance (PIN Registration & Filing)
-- **Document Version:** 1.3
-- **Date:** 2026-02-19
+- **Process Name:** PIN Registration (Individual)
+- **Document Version:** 1.0
+- **Date:** 2026-02-23
 - **Classification:** Official
 
 ---
 
 ## Executive Summary
-The Kenya Revenue Authority (KRA) administers tax laws. The **Personal Identification Number (PIN)** is the mandatory identifier for all economic activities. Compliance involves monthly/annual filing of returns (PAYE, VAT, Rental Income) via the **iTax** platform.
+The Kenya Revenue Authority (KRA) mandates a **Personal Identification Number (PIN)** for all adult citizens participating in economic activities. This document outlines the AS-IS process for individual PIN registration via the iTax portal and proposes a highly automated TO-BE process integrated with the national identity ecosystem.
 
 ---
 
-## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (iTax System / Password Resets / Penalties).*
+## 1. AS-IS PROCESS: KRA PIN Registration (Individual)
+
+### BUSINESS PROCESS OVERVIEW
+**Process Name:** KRA PIN Registration (Individual)
+**Trigger:** Citizen requires a KRA PIN for employment, business, or other transactions.
+
+### ACTORS
+| Actor                 | Role                          |
+|-----------------------|-------------------------------|
+| Citizen               | Applies for PIN               |
+| iTax System           | Captures and processes application |
+| System (Population Register) | Validates National ID         |
+
+### AS-IS Process Flowchart (BPMN 2.0)
+*Current State visualization (iTax System / Manual Entry).*
 
 ```mermaid
 graph TD
     Start((Start)) --> S1
 
-    subgraph Taxpayer [Taxpayer]
-        S1["**Registration:** Individual accesses iTax, selects 'New ..."]
-        S3["**Filing:** Logs in to file Annual Returns (Jan - June). ..."]
-        S5["**Payment:** Generates PRN (E-Slip) to pay tax due. Pays ..."]
-        S7["**TCC Application:** Applies for Tax Compliance Certifica..."]
+    subgraph Citizen [Citizen]
+        S1["Accesses iTax Portal"]
+        S2["Selects New PIN Registration"]
+        S3["Selects Taxpayer Type: Individual → Kenyan Citizen"]
+        S4["Enters National ID Number"]
+        S6["Fills Registration Form (Mobile, Email, Address, Employment, Obligation)"]
+        S7["Submits Application"]
+        S9["Downloads PIN Certificate"]
     end
 
     subgraph iTax_System [iTax System]
-        S2["**Obligation:** Auto-registers for 'Income Tax Resident'...."]
+        S5{"System Validates ID against Population Register"}
+        S8["PIN Generated Automatically"]
     end
 
-    subgraph Employer [Employer]
-        S4["**Pre-Filling:** Employer uploads P9 data. Employee finds..."]
-    end
-
-    subgraph System [System]
-        S6["**Penalty:** Automatically imposes KES 2,000 penalty if r..."]
-    end
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
-    S5 --> S6
+    S5 -- Valid --> S6
+    S5 -- Not Valid --> E1(Error: Invalid ID)
     S6 --> S7
-    S7 --> End((End))
+    S7 --> S8
+    S8 --> S9
+    S9 --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
     classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
     classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    classDef decisionGateway fill:#f39c12,stroke:#f39c12,color:#fff;
+    classDef error fill:#e74c3c,stroke:#e74c3c,color:#fff;
 
     class Start start;
     class End endNode;
-    class S1,S2,S3,S4,S5,S7 userTask;
-    class S6 serviceTask;
+    class S1,S2,S3,S4,S6,S7,S9 userTask;
+    class S5,S8 serviceTask;
+    class E1 error;
 ```
 
----
+### Detailed Process (AS-IS)
+| Step | Actor                     | Action                                                                   | Tool / System        | Notes                                                |
+|------|---------------------------|--------------------------------------------------------------------------|----------------------|------------------------------------------------------|
+| 1    | Citizen                   | **Access iTax Portal:** Citizen opens the KRA iTax portal.             | iTax Portal          |                                                      |
+| 2    | Citizen                   | **Select New PIN Registration:** Citizen clicks: New PIN Registration.   | iTax Portal          |                                                      |
+| 3    | Citizen                   | **Select Taxpayer Type:** Citizen selects: Individual → Kenyan Citizen.  | iTax Portal          |                                                      |
+| 4    | Citizen                   | **Enter National ID Number:** Citizen enters: National ID Number.        | iTax Portal          |                                                      |
+| 5    | System (iTax / Population Register) | **System Validates ID:** System automatically verifies ID details against the population register. | iTax System / Population Register | If valid → proceeds; If not valid → error returned.  |
+| 6    | Citizen                   | **Fill Registration Form:** Citizen enters: Mobile Number, Email Address, Postal Address, Physical Address, Employment Status, Tax obligation (usually Income Tax Resident Individual). | iTax Portal          |                                                      |
+| 7    | Citizen                   | **Submit Application:** Citizen submits the completed registration form. | iTax Portal          |                                                      |
+| 8    | System (iTax)             | **PIN Generated Automatically:** System generates: KRA PIN.            | iTax System          |                                                      |
+| 9    | Citizen                   | **Download PIN Certificate:** Citizen downloads: KRA PIN Certificate (PDF). | iTax Portal          |                                                      |
 
-## Process Overview
-### Process Name
-Taxpayer Registration & Compliance (Individual Income Tax)
-
-### Service Category
-- G2C (Government to Citizen) / G2B (Government to Business)
-
-### Scope
-- **In Scope:** PIN Generation; Filing of Annual Returns (IT1); Payment of Taxes; TCC (Tax Compliance Certificate).
-- **Out of Scope:** Customs clearance (handled by ICMS).
-
-### Triggers
-- Turning 18 (Adult).
-- Employment.
-- Business Registration.
-
-### End States
-- **Successful:** Valid TCC; Zero liability.
-
-### Policy Context
-- Tax Procedures Act, 2015; Income Tax Act (Cap 470).
+### Output
+**KRA PIN Generated**
+**KRA PIN Certificate (PDF)**
 
 ---
 
-## Stakeholders
-| Stakeholder | Role | Responsibilities |
-|---|---|---|
-| Taxpayer | Compliance | Registers for PIN, files returns, pays taxes. |
-| KRA Officer | Enforcer | Audits returns, issues assessments, collects debt. |
-| Employer | Agent | Withholds PAYE and remits to KRA. |
-| Bank / M-Pesa | Collector | Facilitates payment via PRN (Payment Registration Number). |
+## Pain Points & Opportunities (KRA PIN Registration)
 
----
-
-## Detailed Process (AS-IS)
-| Step | Role | Action | Tool | Notes |
-|---|---|---|---|---|
-| 1 | Taxpayer | **Registration:** Individual accesses iTax, selects "New Registration". Enters ID number, Date of Birth. | iTax Portal | System frequently down. ID validation fails if NRB data is mismatched. |
-| 2 | iTax System | **Obligation:** Auto-registers for "Income Tax Resident". Often adds VAT obligation by mistake, leading to penalties later. | Backend Logic | *Pain Point:* Users unaware of monthly filing requirements for VAT. |
-| 3 | Taxpayer | **Filing:** Logs in to file Annual Returns (Jan - June). Downloads Excel sheet, fills macros, zips, uploads. | Excel Macros | Complex, buggy Excel sheets. Fails on Mac/Linux. |
-| 4 | Employer | **Pre-Filling:** Employer uploads P9 data. Employee finds data missing on iTax. | Employer Portal | Discrepancies common. |
-| 5 | Taxpayer | **Payment:** Generates PRN (E-Slip) to pay tax due. Pays via M-Pesa Paybill 572572. | Payment Gateway | Reconciliation takes 24-48 hours. |
-| 6 | System | **Penalty:** Automatically imposes KES 2,000 penalty if return is late (even by 1 minute). | Auto-Script | "Debt" shows up years later, blocking TCC. |
-| 7 | Taxpayer | **TCC Application:** Applies for Tax Compliance Certificate. System rejects due to "Ksh 5.00 arrears" from 2015. | Compliance Module | Frustrating "Ledger Cleanup" required manually at KRA station. |
-
----
-
-## Pain Points & Opportunities
 ### Pain Points
-- **Forgotten PINs:** Users lose email access, cannot reset password without visiting KRA office.
-- **Complex Filing:** The Excel macro sheets are too technical for the average citizen.
-- **Ghost Obligations:** System auto-adds VAT/PAYE obligations to students/unemployed, accruing massive penalties.
-- **Ledger Mess:** Historic data migration errors show false arrears.
-- **Refund Delays:** Tax refunds take years to process.
+- **Manual ID Validation:** Relies on iTax system matching ID data to population register, which can lead to mismatches and errors if data isn't perfectly synchronized.
+- **Redundant Data Entry:** Citizens re-enter personal details already captured during National ID registration.
+- **Accessibility:** Requires internet access and familiarity with the iTax portal, potentially excluding some citizens.
+- **Delayed Issuance:** While automated, still a separate process initiated by the citizen, not inherently linked to turning 18.
 
 ### Opportunities
-- **Auto-Population:** Pre-fill return 100% from Employer/Bank data. User just clicks "Confirm".
-- **Simplified App:** M-Service App for nil filing and simple returns (no Excel).
-- **Real-Time Ledger:** Instant update of payments to allow TCC issuance immediately.
-- **Amnesty Automation:** Auto-waiver of penalties for dormant/student PINs.
+- **Auto-PIN Generation with Maisha Namba:** Link directly with NRB/Maisha Namba to automatically generate a KRA PIN upon turning 18 or obtaining National ID.
+- **Simplified eCitizen Integration:** Allow citizens to retrieve their KRA PIN directly from their eCitizen profile, pre-populated with verified data.
+- **Proactive Notification:** Automatically notify citizens of their new KRA PIN when it's generated, possibly via SMS or eCitizen notification.
+- **API-Driven Verification:** Provide APIs for other government agencies to verify KRA PINs without manual checks.
 
 ---
 
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Repeatable WoG Platform).*
+## 2. TO-BE PROCESS: KRA PIN Registration (Individual - Optimized)
+
+### TO-BE Process Flowchart (BPMN 2.0)
+*Future State visualization (WoG Platform / Automated via Maisha Namba).*
 
 ```mermaid
 graph TD
-    Start((Start)) --> S1
+    Start((Start)) --> T1
 
-    subgraph WoG_Platform [WoG Platform]
-        S1["Aggregates income data from sources via X-Road APIs."]
+    subgraph NRB_Maisha_Namba [National Registration Bureau / Maisha Namba]
+        T1["Citizen turns 18 / Receives National ID"]
+        T2["NRB System Notifies WoG Platform of New Adult Citizen"]
     end
 
-    subgraph KRA_AI [KRA AI]
-        S2["Computes tax liability and pre-fills the return."]
-    end
-
-    subgraph Citizen [Citizen]
-        S3["Receives 'Tax Statement' notification on App."]
-        S4["Confirms statement and pays balance via GPA."]
+    subgraph WoG_Platform [WoG Platform (Identity Service Bus)]
+        T3["WoG Platform Requests KRA PIN Allocation"]
     end
 
     subgraph KRA_System [KRA System]
-        S5["Instantly updates TCC status to 'Compliant'."]
+        T4["KRA System Automatically Allocates PIN"]
+        T5["KRA System Updates PIN Registry & Generates Digital Certificate"]
     end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> End((End))
+
+    subgraph Citizen [Citizen]
+        T6["Citizen Receives Notification of New KRA PIN"]
+        T7["Citizen Accesses Digital KRA PIN Certificate via eCitizen"]
+    end
+
+    T1 --> T2
+    T2 --> T3
+    T3 --> T4
+    T4 --> T5
+    T5 --> T6
+    T6 --> T7
+    T7 --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
@@ -159,51 +152,35 @@ graph TD
 
     class Start start;
     class End endNode;
-    class S1,S2,S3,S4,S5 userTask;
+    class T1,T6,T7 userTask;
+    class T2,T3,T4,T5 serviceTask;
 ```
 
-## Future State Process (TO-BE)
-### Narrative
-The process is **Invisible** and **Automated**.
-1.  **Data Aggregation:** The KRA system pulls income data directly from sources (Employers, Banks, IFMIS) via **X-Road**.
-2.  **No More Filing:** Citizens do not "file" returns. They receive a **Tax Statement** (like a utility bill) pre-calculated by the AI engine.
-3.  **One-Click Compliance:** The taxpayer simply reviews the statement on the **eCitizen App** and clicks "Accept" or "Dispute".
-4.  **Instant TCC:** Upon payment via **GPA**, the ledger updates instantly. The Tax Compliance Certificate is live and verifiable via API by any agency (e.g., procurement).
-
-### Optimized Steps (Digital)
-| Step | Actor | Action | System |
-|---|---|---|---|
-| 1 | WoG Platform | Aggregates income data from sources via X-Road APIs. | KeSEL / Data Hub |
-| 2 | KRA AI | Computes tax liability and pre-fills the return. | Compliance Engine |
-| 3 | Citizen | Receives "Tax Statement" notification on App. | eCitizen App |
-| 4 | Citizen | Confirms statement and pays balance via GPA. | Payment Gateway |
-| 5 | KRA System | Instantly updates TCC status to "Compliant". | Ledger |
+### Detailed Process (TO-BE) - Configurable & Automated
+| Step | Actor / System        | Action                                                                       | System Component          | Logic / Integration                                            |
+|------|-----------------------|------------------------------------------------------------------------------|---------------------------|----------------------------------------------------------------|
+| 1    | National Registration Bureau (NRB) | **Citizen Reaches Adulthood:** Citizen turns 18 or obtains National ID.   | NRB Registry              | Trigger for new KRA PIN.                                       |
+| 2    | NRB System            | **Notify WoG Platform:** NRB system sends notification of new adult citizen. | Identity Service Bus      | Integration with `Maisha Namba` for central identity.          |
+| 3    | WoG Platform          | **Request KRA PIN Allocation:** WoG Platform automatically requests KRA PIN allocation. | Service Orchestrator      | Orchestrates call to KRA PIN allocation API.                   |
+| 4    | KRA System            | **Auto-Allocate PIN:** KRA system automatically allocates a unique KRA PIN. | KRA Backend / PIN Allocation Service | No manual intervention.                                        |
+| 5    | KRA System            | **Update Registry & Generate Certificate:** KRA system updates its internal registry and generates a digital KRA PIN certificate. | KRA Registry / Output Generator | Ready for instant access.                                      |
+| 6    | Citizen               | **Receive Notification:** Citizen receives automated notification (SMS/eCitizen App) of their new KRA PIN. | Notification Service      | Proactive communication.                                       |
+| 7    | Citizen               | **Access Digital PIN Certificate:** Citizen logs into eCitizen or a dedicated app to view/download their digital KRA PIN Certificate. | eCitizen App / Citizen Portal | Secure and instant access.                                     |
 
 ---
 
-## 3. Standard Data Inputs
-*Required fields for the WoG Digital Service.*
+## 3. Standard Data Inputs (TO-BE)
 
-### A. Annual Tax Statement (System Generated)
-| Field Name | Type | Source | Validation |
-|---|---|---|---|
-| Taxpayer PIN | String | System Fetch (NRB) | Must be Active |
-| Assessment Year | Year | System | Current - 1 |
-| Employment Income | Currency | System Fetch (Employers) | Aggregated |
-| Withholding Tax | Currency | System Fetch (Banks) | Aggregated |
-| Tax Liability | Currency | System Calculated | Income Tax Bands |
-| Tax Paid (PAYE) | Currency | System Fetch (Employer) | Read-only |
-| Balance Due | Currency | System Calculated | Must be >= 0 |
-
-### B. User Action (One-Click)
-| Field Name | Type | Source | Validation |
-|---|---|---|---|
-| Action | Enum | User Input | Accept / Dispute |
-| Payment Method | Enum | User Input | M-Pesa / Card (GPA) |
-| Dispute Reason | String | User Input | Required if Dispute |
-| Supporting Doc | File | User Upload | Required if Dispute |
+### A. KRA PIN Allocation (System-to-System)
+| Field Name      | Type   | Source     | Validation       |
+|-----------------|--------|------------|------------------|
+| Citizen ID (Maisha Namba) | String | NRB Registry | Must be valid & active |
+| Citizen Full Name | String | NRB Registry | Read-only        |
+| Date of Birth   | Date   | NRB Registry | Read-only        |
+| Nationality     | String | NRB Registry | Read-only        |
 
 ---
 
 ## References
-- Tax Procedures Act.
+- Tax Procedures Act, 2015
+- Kenya Citizenship and Immigration Act, 2011 (for Maisha Namba context)
