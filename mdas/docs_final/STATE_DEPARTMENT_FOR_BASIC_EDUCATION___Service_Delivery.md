@@ -20,6 +20,50 @@ The National Education Management Information System (NEMIS) is a central regist
 **Owner:** Ministry of Education Kenya
 **Purpose:** Assign a Unique Personal Identifier (UPI) and track learner lifecycle
 
+### AS-IS Process Flowchart (BPMN 2.0)
+*Current State visualization (Manual Entry / System Glitches).*
+
+```mermaid
+graph TD
+    Start((Start)) --> S1
+
+    subgraph Parent_Guardian [Parent / Guardian]
+        S1["Child Admitted to School (Presents documents)"]
+    end
+
+    subgraph School_NEMIS_Operator [School / NEMIS Operator]
+        S2["School Logs into NEMIS"]
+        S3["Open Learner Registration Module"]
+        S4["Enter Learner Bio Data"]
+        S5["Enter Parent / Guardian Details"]
+        S6["Upload Supporting Documents"]
+    end
+
+    subgraph NEMIS_System [NEMIS System]
+        S7["Submit Registration (Validates Birth Certificate)"]
+        S8["UPI Generated"]
+    end
+
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+    S4 --> S5
+    S5 --> S6
+    S6 --> S7
+    S7 --> S8
+    S8 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S4,S5,S6 userTask;
+    class S7,S8 serviceTask;
+```
+
 ### BUSINESS PROCESS OVERVIEW
 **Process Name:** Learner Registration and UPI Allocation
 **Trigger:** Child admitted to school (PP1, Grade 1, or transfer)
@@ -103,17 +147,78 @@ UPI Number
 ---
 
 ## Pain Points & Opportunities
-*This section will be updated with Nemis-specific pain points and opportunities.*
+
+### Pain Points
+- **System Downtime:** NEMIS crashes frequently during Form 1 admission.
+- **Data Mismatch:** Rigid validation against CRS (e.g., "Maina" vs "Maina J.") causes rejection.
+- **Manual Transfers:** Moving a student requires the *previous* school to "release" them online. Head Teachers often refuse/delay this.
+- **Capitation Loss:** Schools lose funds for students whose UPI generation is stuck.
+- **Cyber Costs:** Head Teachers in rural areas travel long distances to access internet.
+
+### Opportunities
+- **Auto-Registration:** Link Birth Registration (CRS) to Education. A child turning 4 is *automatically* eligible for PP1.
+- **Offline Mode:** Allow data capture on a mobile app without internet, syncing later.
+- **Parent Self-Service:** Allow parents to register/transfer their own children via eCitizen, removing the Head Teacher bottleneck.
+- **Biometrics:** Introduce simple biometrics to eliminate ghost students definitively.
 
 ---
 
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*This section will be updated with the Nemis TO-BE process flowchart.*
+## 2. TO-BE PROCESS: Student Registration in NEMIS (Optimized)
 
----
+### TO-BE Process Flowchart (BPMN 2.0)
+*Future State visualization (Repeatable WoG Platform / Automated).*
 
-## Future State Process (TO-BE)
-*This section will be updated with the Nemis TO-BE detailed steps.*
+```mermaid
+graph TD
+    Start((Start)) --> T1
+
+    subgraph Citizen_eCitizen [Citizen / eCitizen Portal]
+        T1["Parental Enrollment Request (Selects child & school)"]
+    end
+
+    subgraph WoG_Platform [WoG Platform (Education Service Bus)]
+        T2{"Validate UPI Registry (Verifies identity via CRS Registry)"}
+        T3{"Verify School Capacity (Real-time check via Schools Registry)"}
+    end
+
+    subgraph School_Head_Teacher [School / Head Teacher Workbench]
+        T4["Head Teacher Admission (Digital review & one-click approval)"]
+    end
+
+    subgraph NEMIS_Backend [NEMIS Backend]
+        T5["NEMIS Record Finalization (Auto-enrollment & capitation trigger)"]
+    end
+
+    T1 --> T2
+    T2 -- Valid --> T3
+    T2 -- Invalid --> E1(Error: Invalid UPI/Parentage)
+    T3 -- Capacity OK --> T4
+    T3 -- No Capacity --> E2(Error: School Capacity Full)
+    T4 --> T5
+    T5 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    classDef decisionGateway fill:#f39c12,stroke:#f39c12,color:#fff;
+    classDef error fill:#e74c3c,stroke:#e74c3c,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class T1,T4 userTask;
+    class T2,T3,T5 serviceTask;
+    class E1,E2 error;
+```
+
+### Detailed Process (TO-BE) - Configurable & Automated
+| Step | Actor / System        | Action                                                             | System Component      | Logic / Integration                                             |
+|------|-----------------------|--------------------------------------------------------------------|-----------------------|-----------------------------------------------------------------|
+| 1    | Parent / Guardian     | **Initiation:** Selects child (via Maisha Namba / UPI) and preferred school on eCitizen. | **eCitizen Portal**   | Uses `Maisha Namba (SSO)` for authentication.                 |
+| 2    | WoG Platform (System) | **UPI Validation:** Verifies child existence and parentage records. | **CRS Registry API**  | Fetches birth details via the `Service Bus`.                    |
+| 3    | WoG Platform (System) | **Capacity Check:** Validates school has space and child meets age requirements. | **National Schools Registry** | Calls `Verify School Capacity` endpoint dynamically.            |
+| 4    | School Headteacher    | **Admission Review:** Approves the digital application on the workbench. | **Officer Workbench** | Validated data removes need for physical file review.             |
+| 5    | NEMIS Backend (System)| **Enrollment Sync:** Finalizes record in NEMIS and triggers capitation. | **NEMIS Workflow Engine** | Auto-enrolls and calculates FDSE/FPE funds.                       |
 
 ---
 
