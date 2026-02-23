@@ -172,21 +172,21 @@ UPI Number
 graph TD
     Start((Start)) --> T1
 
-    subgraph Citizen_eCitizen [Citizen / eCitizen Portal]
-        T1["Parental Enrollment Request (Selects child & school)"]
+    subgraph Citizen_eCitizen [Citizen - eCitizen Portal]
+        T1["Parental Enrollment Request<br>(Selects child & school)"]
     end
 
-    subgraph WoG_Platform [WoG Platform (Education Service Bus)]
-        T2{"Validate UPI Registry (Verifies identity via CRS Registry)"}
-        T3{"Verify School Capacity (Real-time check via Schools Registry)"}
+    subgraph WoG_Platform [WoG Platform - Education Service Bus]
+        T2{"Validate UPI Registry<br>(Verifies identity via CRS Registry)"}
+        T3{"Verify School Capacity<br>(Real-time check via Schools Registry)"}
     end
 
-    subgraph School_Head_Teacher [School / Head Teacher Workbench]
-        T4["Head Teacher Admission (Digital review & one-click approval)"]
+    subgraph School_Head_Teacher [School - Head Teacher Workbench]
+        T4["Head Teacher Admission<br>(Digital review & one-click approval)"]
     end
 
     subgraph NEMIS_Backend [NEMIS Backend]
-        T5["NEMIS Record Finalization (Auto-enrollment & capitation trigger)"]
+        T5["NEMIS Record Finalization<br>(Auto-enrollment & capitation trigger)"]
     end
 
     T1 --> T2
