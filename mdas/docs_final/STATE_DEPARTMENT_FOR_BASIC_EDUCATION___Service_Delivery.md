@@ -1,8 +1,8 @@
-# STATE DEPARTMENT FOR BASIC EDUCATION – Service Delivery
+# STATE DEPARTMENT FOR BASIC EDUCATION – Student Registration & Transition (NEMIS)
 
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** STATE DEPARTMENT FOR BASIC EDUCATION
-- **Process Name:** Service Delivery
+- **Process Name:** Student Registration & Transition (NEMIS)
 - **Document Version:** 1.0
 - **Date:** 2026-02-14
 - **Classification:** Official
@@ -10,167 +10,110 @@
 ---
 
 ## Executive Summary
-The State Department for Transport in Kenya operates under the Ministry of Roads and Transport, with a mandate encompassing transport policy management, rail and civil aviation infrastructure development, national transport safety, and oversight of key transport institutions. It aims to develop an integrated, efficient, effective, and sustainable transport system.
+The National Education Management Information System (NEMIS) is a central registry for student data, assigning a Unique Personal Identifier (UPI) to learners across all education levels, from Early Years Education (EYE) to University. This document outlines the AS-IS process for student registration and UPI allocation within Nemis.
 
 ---
 
-## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization.*
+## 1. AS-IS PROCESS: Student Registration in NEMIS
 
-```mermaid
-graph TD
-    Start((Start)) --> S1
+**Registry:** National Education Management Information System
+**Owner:** Ministry of Education Kenya
+**Purpose:** Assign a Unique Personal Identifier (UPI) and track learner lifecycle
 
-    subgraph Citizen [Citizen]
-        S1["Citizen/Stakeholder submits inquiry, complaint, or policy..."]
-    end
+### BUSINESS PROCESS OVERVIEW
+**Process Name:** Learner Registration and UPI Allocation
+**Trigger:** Child admitted to school (PP1, Grade 1, or transfer)
 
-    subgraph Registry [Registry]
-        S2["Central Registry receives and tags the correspondence."]
-    end
+### ACTORS
+| Actor             | Role                       |
+|-------------------|----------------------------|
+| Parent / Guardian | Provides student documents |
+| School Headteacher | Approves registration      |
+| School NEMIS Operator | Enters student data        |
+| Ministry of Education | Maintains system           |
 
-    subgraph Directorate [Directorate]
-        S3["Relevant Technical Directorate reviews and drafts respons..."]
-    end
+### AS-IS WORKFLOW STEPS
+| Step | Actor                 | Action                                                                | Tool / System | Notes |
+|------|-----------------------|-----------------------------------------------------------------------|---------------|-------|
+| 1    | Parent / Guardian     | **Child Admitted to School:** Parent presents: Birth Certificate (Mandatory), Immunization Card (Optional), Transfer Letter (if applicable) | Physical Presence | Student accepted to school |
+| 2    | School NEMIS Operator | **School Logs into NEMIS:** Operator logs into NEMIS Portal using school credentials. | NEMIS Portal  |       |
+| 3    | School NEMIS Operator | **Open Learner Registration Module:** Navigates to Learner → Register Learner. | NEMIS Portal  |       |
+| 4    | School NEMIS Operator | **Enter Learner Bio Data:** Inputs form fields from Birth Certificate (First Name, Middle Name, Last Name, Gender, Date of Birth, Birth Certificate Number, Nationality), Parent County, Parent Sub County, School Generated Admission Number, School Admission Date, School Class. | NEMIS Portal  |       |
+| 5    | School NEMIS Operator | **Enter Parent / Guardian Details:** Inputs Father Name, Father ID Number, Mother Name, Mother ID Number, Guardian Name, Guardian ID Number, Parent Phone Number from Parent. | NEMIS Portal  |       |
+| 6    | School NEMIS Operator | **Upload Supporting Documents:** Uploads Birth Certificate Copy (Mandatory), Optional: Passport Photo. | NEMIS Portal  |       |
+| 7    | System Action         | **Submit Registration:** NEMIS validates Birth Certificate format.      | NEMIS System  |       |
+| 8    | System Action         | **UPI Generated:** NEMIS generates Unique Personal Identifier (UPI).    | NEMIS System  | Example: UPI: 12345678901 |
 
-    subgraph PS_Director [PS/Director]
-        S4["Principal Secretary/Director approves the response."]
-    end
+### OUTPUT
+**UPI Number Assigned**
+Student now exists in: National Education Register
 
-    subgraph Ministry [Ministry]
-        S5["Ministry issues official response or policy guideline."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> End((End))
+### REGISTRY DATA CREATED (AS-IS)
+| Field                 |
+|-----------------------|
+| Learner Record        |
+| UPI                   |
+| Birth Certificate Number |
+| Name                  |
+| Gender                |
+| Date of Birth         |
+| Parent Details        |
+| School                |
+| Class                 |
+| Admission Date        |
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+### REGISTRY DEPENDENCY (AS-IS)
+**Input:** Birth Certificate Number
+**Source:** Civil Registration Services
 
-    class Start start;
-    class End endNode;
-    class S1,S2,S3,S4,S5 userTask;
-```
+### REAL-WORLD VALIDATION (AS-IS)
+Currently: Manual validation by school. No real-time CRS API integration in most cases.
 
----
+### KEY OUTPUT USED BY OTHER SYSTEMS
+**UPI used in:**
+- Education tracking
+- Capitation funding
+- Exams registration (KCPE / KCSE)
 
-## Process Overview
-### Process Name
-Service Delivery
+### PROCESS FLOW SUMMARY (AS-IS)
+Child admitted to School
+↓
+School logs into NEMIS
+↓
+Enter learner details
+↓
+Upload Birth Certificate
+↓
+Submit
+↓
+NEMIS generates UPI
 
-### Service Category
-- G2C/G2B
+### AS-IS PROCESS CHARACTERISTICS
+| Attribute          | Status       |
+|--------------------|--------------|
+| Automation         | Semi-manual  |
+| Initiated by       | School       |
+| Identity verification | Manual       |
+| Primary Key        | UPI          |
+| Dependency         | Birth Certificate |
 
-### Scope
-- **In Scope:** End-to-end processing within STATE DEPARTMENT FOR BASIC EDUCATION.
-
-### Triggers
-- Submission of application/request by Citizen.
-
-### End States
-- **Successful:** Policy Guidelines / Circulars, Official Response Letters, Cabinet Resolutions, Public Service Reports
-
-### Policy Context
-- The STATE DEPARTMENT FOR BASIC EDUCATION Act; The Constitution of Kenya 2010; Data Protection Act 2019.
-
----
-
-## Stakeholders
-| Stakeholder | Role | Responsibilities |
-|---|---|---|
-| Registry | Process Actor | Performs actions as defined in steps. |
-| PS/Director | Process Actor | Performs actions as defined in steps. |
-| Ministry | Process Actor | Performs actions as defined in steps. |
-| Directorate | Process Actor | Performs actions as defined in steps. |
-| Citizen | Process Actor | Performs actions as defined in steps. |
-
----
-
-## Detailed Process (AS-IS)
-| Step | Role | Action | Tool | Notes |
-|---|---|---|---|---|
-| 1 | Citizen | Citizen/Stakeholder submits inquiry, complaint, or policy proposal via email or office. | Manual | |
-| 2 | Registry | Central Registry receives and tags the correspondence. | Manual | |
-| 3 | Directorate | Relevant Technical Directorate reviews and drafts response/action. | Manual | |
-| 4 | PS/Director | Principal Secretary/Director approves the response. | Manual | |
-| 5 | Ministry | Ministry issues official response or policy guideline. | Manual | |
+### FINAL OUTPUT OF NEMIS PROCESS
+UPI Number
 
 ---
 
 ## Pain Points & Opportunities
-### Pain Points
-- Slow movement of physical files (Bureaucracy).
-- Loss of institutional memory (Manual registries).
-- Difficulty in tracking correspondence status.
-- Siloed operations between departments.
-
-### Opportunities
-- Integration with IPRS/BRS via Service Bus.
-- Adoption of Government Payment Gateway.
-- Implementation of Automated Rules Engine.
-- Issuance of Digital Verifiable Credentials.
+*This section will be updated with Nemis-specific pain points and opportunities.*
 
 ---
 
 ## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Optimized).*
+*This section will be updated with the Nemis TO-BE process flowchart.*
 
-```mermaid
-graph TD
-    Start((Start)) --> S1
-
-    subgraph Applicant [Applicant]
-        S1["Applicant logs in via Single Sign-On (SSO) and selects th..."]
-        S4["Applicant pays fees via the Government Payment Gateway; S..."]
-    end
-
-    subgraph System [System]
-        S2["Applicant enters National ID; System auto-populates detai..."]
-        S3["System performs auto-validation of compliance (e.g., KRA ..."]
-        S5["Application is processed by the Rules Engine. (Low-risk c..."]
-        S7["System generates a Verifiable Digital Certificate (QR Cod..."]
-    end
-
-    subgraph Officer [Officer]
-        S6["Complex cases are routed to the Officer Workbench for dig..."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> End((End))
-
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
-    class Start start;
-    class End endNode;
-    class S1,S4,S6 userTask;
-    class S2,S3,S5,S7 serviceTask;
-```
+---
 
 ## Future State Process (TO-BE)
-### Narrative
-The To-Be process leverages the Government Service Bus to integrate with IPRS (Identity Registry) and the Payment Gateway. Manual data entry and document uploads are replaced by real-time API validations, enabling a paperless, cashless, and presence-less service experience.
-
-### Optimized Steps (Digital)
-| Step | Actor | Action | System |
-|---|---|---|---|
-| 1 | Applicant | Applicant logs in via Single Sign-On (SSO) and selects the service. | Citizen Portal / SSO |
-| 2 | System | Applicant enters National ID; System auto-populates details from IPRS (Identity Registry) via the Service Bus. | Service Bus / Registry API |
-| 3 | System | System performs auto-validation of compliance (e.g., KRA Tax Status) via Inter-Agency APIs. | Service Bus / Compliance Engine |
-| 4 | Applicant | Applicant pays fees via the Government Payment Gateway; System auto-receipts. | Payment Gateway |
-| 5 | System | Application is processed by the Rules Engine. (Low-risk cases are Auto-Approved). | Workflow Engine |
-| 6 | Officer | Complex cases are routed to the Officer Workbench for digital review and approval. | Officer Workbench |
-| 7 | System | System generates a Verifiable Digital Certificate (QR Code) and notifies the applicant. | Output Generator |
+*This section will be updated with the Nemis TO-BE detailed steps.*
 
 ---
 
