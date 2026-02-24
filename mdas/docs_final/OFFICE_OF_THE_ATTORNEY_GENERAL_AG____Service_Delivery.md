@@ -1,178 +1,143 @@
-# OFFICE OF THE ATTORNEY GENERAL  (AG) – Service Delivery
+# OFFICE OF THE ATTORNEY GENERAL (AG) – Service Delivery
 
 ## Cover Page
-- **Ministry/Department/Agency (MDA):** OFFICE OF THE ATTORNEY GENERAL  (AG)
-- **Process Name:** Service Delivery
-- **Document Version:** 1.0
-- **Date:** 2026-02-14
+- **Ministry/Department/Agency (MDA):** OFFICE OF THE ATTORNEY GENERAL (AG) - PUBLIC TRUSTEE
+- **Process Name:** Public Trustee Estate Administration
+- **Document Version:** 2.0
+- **Date:** 2026-02-24
 - **Classification:** Official
 
 ---
 
 ## Executive Summary
-The Office of the Attorney General (OAG) in Kenya serves as the principal legal advisor to the National Government, upholding the rule of law and ensuring equal access to justice. It represents the government in legal proceedings, safeguards the Constitution, and promotes good governance and human rights.
+The Public Trustee, under the Office of the Attorney General, provides specialized services in the administration of estates of deceased persons, especially where there is no will (intestate), the executor is unwilling/unable to act, or the beneficiaries are minors. It acts as an impartial administrator to safeguard assets, settle debts, and distribute the estate to lawful beneficiaries.
 
 ---
 
 ## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization.*
+*Current State visualization (Manual Estate Administration).*
 
 ```mermaid
 graph TD
     Start((Start)) --> S1
-
-    subgraph Customer [Customer]
-        S1["Customer/Stakeholder submits request, application, or inq..."]
-    end
-
-    subgraph Registry [Registry]
-        S2["Registry/Front Office receives, records, and classifies t..."]
-    end
-
-    subgraph Technical_Officer [Technical Officer]
-        S3["Relevant Technical Department reviews the request against..."]
-    end
-
-    subgraph Management [Management]
-        S4["Management/Accounting Officer approves the appropriate ac..."]
-    end
-
-    subgraph Customer_Care [Customer Care]
-        S5["Service is delivered or official response is communicated..."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> End((End))
+    S1["Death Occurs & Death Certificate Obtained"] --> S2
+    S2["Interested Party Reports Estate to Public Trustee"] --> S3
+    S3["Applicant submits formal request & supporting documents"] --> S4
+    S4["Public Trustee Opens Estate File & Assigns Ref No."] --> S5
+    S5["Verification of Estate, Assets, and Beneficiaries (Manual checks)"] --> S6
+    S6["Public Trustee applies in Court for Letters of Administration"] --> S7
+    S7["Court Issues Letters of Administration to Public Trustee"] --> S8
+    S8["Public Trustee Collects & Safeguards Estate Assets"] --> S9
+    S9["Public Trustee Pays Debts & Liabilities"] --> S10
+    S10["Estate Distributed to Lawful Beneficiaries"] --> S11
+    S11["Estate File Closed"] --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
     class Start start;
     class End endNode;
-    class S1,S2,S3,S4,S5 userTask;
 ```
 
 ---
 
 ## Process Overview
 ### Process Name
-Service Delivery
+Public Trustee Estate Administration
 
 ### Service Category
-- G2C/G2B
+- G2C (Government to Citizen)
 
 ### Scope
-- **In Scope:** End-to-end processing within OFFICE OF THE ATTORNEY GENERAL  (AG).
+- **In Scope:** Reporting the estate; Verification of assets/heirs; Securing Letters of Administration; Asset collection; Debt settlement; Final distribution.
+- **Out of Scope:** Private executor administration.
 
 ### Triggers
-- Submission of application/request by Customer.
+- Death of a citizen without a will or capable administrator.
+- Request from next of kin, beneficiaries, or government authority (e.g., area Chief).
 
 ### End States
-- **Successful:** Policy Guidelines / Circulars, Official Response Letters, Cabinet Resolutions, Public Service Reports
+- **Successful:** Estate legally administered, assets transferred to beneficiaries, and estate officially closed.
 
 ### Policy Context
-- The OFFICE OF THE ATTORNEY GENERAL  (AG) Act; The Constitution of Kenya 2010; Data Protection Act 2019.
-
----
-
-## Stakeholders
-| Stakeholder | Role | Responsibilities |
-|---|---|---|
-| Registry | Process Actor | Performs actions as defined in steps. |
-| Technical Officer | Process Actor | Performs actions as defined in steps. |
-| Customer Care | Process Actor | Performs actions as defined in steps. |
-| Management | Process Actor | Performs actions as defined in steps. |
-| Customer | Process Actor | Performs actions as defined in steps. |
+- Public Trustee Act (Cap 168); Law of Succession Act.
 
 ---
 
 ## Detailed Process (AS-IS)
-| Step | Role | Action | Tool | Notes |
+| Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
-| 1 | Customer | Customer/Stakeholder submits request, application, or inquiry via official channels (Email, Letter, or Portal). | Digital | |
-| 2 | Registry | Registry/Front Office receives, records, and classifies the request. | Manual | |
-| 3 | Technical Officer | Relevant Technical Department reviews the request against internal policies and regulations. | Manual | |
-| 4 | Management | Management/Accounting Officer approves the appropriate action or service delivery. | Manual | |
-| 5 | Customer Care | Service is delivered or official response is communicated to the customer. | Manual | |
+| 1 | Family/Gov Auth | **Death Registration:** Obtains Death Certificate. | Physical | |
+| 2 | Interested Party | **Reporting:** Reports estate to Public Trustee Office; provides Death Cert, known assets, and beneficiaries. | Manual | |
+| 3 | Applicant | **Application:** Submits formal request for Public Trustee to administer estate. | Physical Form | |
+| 4 | Applicant | **Documentation:** Provides Death Cert, Chief’s Letter, List of Beneficiaries, List of Assets, ID Copies. | Manual | |
+| 5 | Public Trustee | **File Creation:** Creates Estate Administration File and assigns Reference Number. | Physical Ledger/System| |
+| 6 | Public Trustee | **Verification:** Manually contacts Banks, Land Registry, etc., to verify death, beneficiaries, and asset ownership. | Letters/Physical Visits | Very time-consuming. |
+| 7 | Public Trustee | **Court Application:** Files succession case in Court requesting Letters of Administration. | Court Registry | |
+| 8 | Court | **Issuance:** Appoints Public Trustee as legal administrator and issues Letters of Administration. | Court Order | |
+| 9 | Public Trustee | **Collection:** Recovers money from banks, land records, shares, and safeguards them. | Manual/Bank Transfers | |
+| 10 | Public Trustee | **Management:** Pays off verified debts and liabilities of the estate. | Bank/Cheques | |
+| 11 | Public Trustee | **Distribution:** Distributes remaining estate to lawful beneficiaries per succession law. | Manual Transfers | |
+| 12 | Public Trustee | **Closure:** Closes the estate file formally. | Physical Archive | |
 
 ---
 
 ## Pain Points & Opportunities
 ### Pain Points
-- Slow movement of physical files (Bureaucracy).
-- Loss of institutional memory (Manual registries).
-- Difficulty in tracking correspondence status.
-- Siloed operations between departments.
+- **Manual Verification:** Writing letters to banks and land registries to verify assets takes months or years.
+- **Court Delays:** Physical filing for Letters of Administration is subject to massive court backlogs.
+- **Asset Tracing:** High risk of unknown or hidden assets going unclaimed because the Public Trustee relies on what the family reports.
+- **Slow Distribution:** Manual cheque writing and physical meetings delay final disbursement to vulnerable beneficiaries.
 
 ### Opportunities
-- Integration with IPRS/BRS via Service Bus.
-- Adoption of Government Payment Gateway.
-- Implementation of Automated Rules Engine.
-- Issuance of Digital Verifiable Credentials.
+- **API Asset Discovery:** Instantly ping financial institutions, Ardhisasa, and NTSA to build a complete asset profile.
+- **System-to-System Court Filing:** Direct API link from Public Trustee to Judiciary e-Justice for rapid grant issuance.
+- **Smart Contracts:** Automated debt settlement and digital funds distribution to verified beneficiary wallets.
 
 ---
 
 ## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Optimized).*
+*Future State visualization (Digital Public Trust Administration).*
 
 ```mermaid
 graph TD
-    Start((Start)) --> S1
-
-    subgraph Applicant [Applicant]
-        S1["Applicant logs in via Single Sign-On (SSO) and selects th..."]
-        S4["Applicant pays fees via the Government Payment Gateway; S..."]
-    end
-
-    subgraph System [System]
-        S2["Applicant enters Business Registration Number; System aut..."]
-        S3["System performs auto-validation of compliance (e.g., KRA ..."]
-        S5["Application is processed by the Rules Engine. (Low-risk c..."]
-        S7["System generates a Verifiable Digital Certificate (QR Cod..."]
-    end
-
-    subgraph Officer [Officer]
-        S6["Complex cases are routed to the Officer Workbench for dig..."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> End((End))
+    Start((Start)) --> T1
+    T1["Digital request submitted to Public Trustee via eCitizen"] --> T2
+    T2["System auto-verifies death (CRS) and beneficiaries (IPRS)"] --> T3
+    T3["API Engine auto-discovers all assets (Lands, Banks, NTSA, UFAA)"] --> T4
+    T4["Public Trustee System auto-files digital succession case to Judiciary"] --> T5
+    T5["Court AI issues Verifiable Digital Letters of Administration"] --> T6
+    T6["Smart Contracts auto-consolidate assets, settle debts, and distribute funds"] --> T7
+    T7["Digital Estate File is automatically archived and closed"] --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
     class Start start;
     class End endNode;
-    class S1,S4,S6 userTask;
-    class S2,S3,S5,S7 serviceTask;
 ```
 
 ## Future State Process (TO-BE)
 ### Narrative
-The To-Be process leverages the Government Service Bus to integrate with BRS (Business Registry) and the Payment Gateway. Manual data entry and document uploads are replaced by real-time API validations, enabling a paperless, cashless, and presence-less service experience.
+**TO-BE Process: Digital Public Trust Administration**
+
+**Design Principles:**
+- Automated Asset & Heir Discovery
+- Inter-Agency System Integration
+- Smart Contract Estate Management
 
 ### Optimized Steps (Digital)
 | Step | Actor | Action | System |
 |---|---|---|---|
-| 1 | Applicant | Applicant logs in via Single Sign-On (SSO) and selects the service. | Citizen Portal / SSO |
-| 2 | System | Applicant enters Business Registration Number; System auto-populates details from BRS (Business Registry) via the Service Bus. | Service Bus / Registry API |
-| 3 | System | System performs auto-validation of compliance (e.g., KRA Tax Status) via Inter-Agency APIs. | Service Bus / Compliance Engine |
-| 4 | Applicant | Applicant pays fees via the Government Payment Gateway; System auto-receipts. | Payment Gateway |
-| 5 | System | Application is processed by the Rules Engine. (Low-risk cases are Auto-Approved). | Workflow Engine |
-| 6 | Officer | Complex cases are routed to the Officer Workbench for digital review and approval. | Officer Workbench |
-| 7 | System | System generates a Verifiable Digital Certificate (QR Code) and notifies the applicant. | Output Generator |
+| 1 | Applicant | **Digital Request:** Submits request for Public Trustee administration via eCitizen. No physical documents needed. | eCitizen Portal |
+| 2 | System | **Auto-Verification:** Instantly verifies the death via CRS and relationships/beneficiaries via IPRS and Civil Registration. | X-Road (CRS/IPRS) |
+| 3 | System | **Asset Discovery:** Inter-agency APIs ping Ardhisasa, NTSA, Banks, and UFAA to automatically compile a comprehensive asset inventory. | Data Hub API |
+| 4 | Public Trustee | **Automated Filing:** System securely transmits the verified digital file to the Judiciary to apply for Letters of Administration. | e-Justice Integration |
+| 5 | Court | **Digital Issuance:** Court engine reviews and issues Verifiable Digital Letters of Administration directly to the Public Trustee system. | Judiciary e-Justice |
+| 6 | System | **Smart Consolidation:** Digital Letters trigger automated transfer of funds and digital asset control to the Central Trust Account. | Smart Contracts |
+| 7 | System | **Smart Distribution:** Verified debts are auto-paid; remaining funds/assets are distributed directly to beneficiaries' digital wallets or bank accounts. | Gov Payment Gateway |
+| 8 | System | **Auto-Closure:** Upon zero-balance distribution, the system generates a final digital report and securely archives the closed estate. | Digital Archive |
 
 ---
 
 ## References
-Derived from official mandates.
+- Public Trustee Act.
+- Law of Succession Act.

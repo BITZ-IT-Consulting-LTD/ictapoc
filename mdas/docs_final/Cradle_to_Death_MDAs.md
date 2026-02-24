@@ -11,10 +11,10 @@ This document outlines the key Ministries, Departments, and Agencies (MDAs) invo
     *   *File:* [`_CIVIL_REGISTRATION_SERVICES_CRS____Service_Delivery.md`](./_CIVIL_REGISTRATION_SERVICES_CRS____Service_Delivery.md)
     *   *Role:* Issuance of **Birth Certificates** and **Death Certificates**. The primary source of civil status data.
 *   **Ministry of Health**
-    *   *File:* `Ministry_of_Health___Service_Delivery.md`
+    *   *File:* [`Ministry_of_Health___Service_Delivery.md`](./Ministry_of_Health___Service_Delivery.md)
     *   *Role:* Notification of birth occurrences from health facilities (e.g., vaccination records).
 *   **Integrated Population Registration System (IPRS)**
-    *   *File:* `_INTEGRATED_POPULATION_REGISTRATION_SYSTEM___Service_Delivery.md`
+    *   *File:* [`_INTEGRATED_POPULATION_REGISTRATION_SYSTEM___Service_Delivery.md`](./_INTEGRATED_POPULATION_REGISTRATION_SYSTEM___Service_Delivery.md)
     *   *Role:* The "Single Source of Truth" that links the birth record (unique identifier) to all subsequent government services.
 *   **National Health Insurance Fund (NHIF) / Social Health Authority (SHA)**
     *   *File:* [`National_Health_Insurance_Fund___Service_Delivery.md`](./National_Health_Insurance_Fund___Service_Delivery.md)
@@ -29,13 +29,13 @@ This document outlines the key Ministries, Departments, and Agencies (MDAs) invo
 *   **National Schools Registry**
     *   *Role:* The authoritative database for all accredited basic education institutions, used for school selection and geo-spatial mapping.
 *   **Kenya National Examinations Council (KNEC)**
-    *   *File:* `Kenya_National_Examinations_Council___Service_Delivery.md`
+    *   *File:* [`Kenya_National_Examinations_Council___Service_Delivery.md`](./Kenya_National_Examinations_Council___Service_Delivery.md)
     *   *Role:* Administration of national exams (KPSEA, KCSE) and certification.
 *   **Kenya Universities and Colleges Central Placement Service (KUCCPS)**
-    *   *File:* `Kenya_Universities_And_Colleges_Central_Placement_Service___Student_Admission.md`
+    *   *File:* [`Kenya_Universities_And_Colleges_Central_Placement_Service___Student_Admission.md`](./Kenya_Universities_And_Colleges_Central_Placement_Service___Student_Admission.md)
     *   *Role:* Placement of students into universities and colleges.
 *   **Higher Education Loans Board (HELB)**
-    *   *File:* `Higher_Education_Loans_Board___Loan_Processing.md`
+    *   *File:* [`Higher_Education_Loans_Board___Loan_Processing.md`](./Higher_Education_Loans_Board___Loan_Processing.md)
     *   *Role:* Funding for higher education (loans and bursaries).
 
 ## 3. Coming of Age (Adulthood & Citizenship)
@@ -48,7 +48,7 @@ This document outlines the key Ministries, Departments, and Agencies (MDAs) invo
     *   *File:* [`STATE_DEPARTMENT_FOR_IMMIGRATION_AND_CITIZEN_SERVICES___Passport_Application.md`](./STATE_DEPARTMENT_FOR_IMMIGRATION_AND_CITIZEN_SERVICES___Passport_Application.md)
     *   *Role:* Issuance of **Passports** and travel documents.
 *   **National Transport and Safety Authority (NTSA)**
-    *   *File:* `NATIONAL_TRANSPORT_AND_SAFETY_AUTHORITY_NTSA____Driving_License_Renewal.md`
+    *   *File:* [`NATIONAL_TRANSPORT_AND_SAFETY_AUTHORITY_NTSA____Driving_License_Renewal.md`](./NATIONAL_TRANSPORT_AND_SAFETY_AUTHORITY_NTSA____Driving_License_Renewal.md)
     *   *Role:* Driver training, testing, and **Driving License** issuance.
 
 ## 4. Economic Life (Employment & Business)
@@ -61,7 +61,7 @@ This document outlines the key Ministries, Departments, and Agencies (MDAs) invo
     *   *File:* [`Business_Registration_Service___Service_Delivery.md`](./Business_Registration_Service___Service_Delivery.md)
     *   *Role:* Registration of Business Names, Companies, and Partnerships.
 *   **National Social Security Fund (NSSF)**
-    *   *File:* `National_Social_Security_Fund___Service_Delivery.md`
+    *   *File:* [`National_Social_Security_Fund___Service_Delivery.md`](./National_Social_Security_Fund___Service_Delivery.md)
     *   *Role:* Mandatory retirement savings registration.
 *   **National Health Insurance Fund (NHIF) / Social Health Authority (SHA)**
     *   *File:* [`National_Health_Insurance_Fund___Service_Delivery.md`](./National_Health_Insurance_Fund___Service_Delivery.md)
@@ -87,8 +87,8 @@ This document outlines the key Ministries, Departments, and Agencies (MDAs) invo
     *   *File:* [`THE_JUDICIARY___Service_Delivery.md`](./THE_JUDICIARY___Service_Delivery.md)
     *   *Role:* **Succession Causes**, probate administration, and wills.
 *   **Unclaimed Financial Assets Authority (UFAA)**
-    *   *File:* `Unclaimed_Financial_Assets_Authority___Service_Delivery.md`
+    *   *File:* [`Unclaimed_Financial_Assets_Authority___Service_Delivery.md`](./Unclaimed_Financial_Assets_Authority___Service_Delivery.md)
     *   *Role:* Reunification of unclaimed assets (bank accounts, shares) with beneficiaries.
 *   **Public Trustee (under State Law Office)**
-    *   *File:* `OFFICE_OF_THE_ATTORNEY_GENERAL_AG____Service_Delivery.md`
+    *   *File:* [`OFFICE_OF_THE_ATTORNEY_GENERAL_AG____Service_Delivery.md`](./OFFICE_OF_THE_ATTORNEY_GENERAL_AG____Service_Delivery.md)
     *   *Role:* Administration of estates for deceased persons without a will or capable administrator.

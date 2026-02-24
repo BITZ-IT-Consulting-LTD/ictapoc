@@ -1,170 +1,134 @@
-# Unclaimed Financial Assets Authority – Service Delivery
+# UNCLAIMED FINANCIAL ASSETS AUTHORITY (UFAA) – Service Delivery
 
 ## Cover Page
-- **Ministry/Department/Agency (MDA):** Unclaimed Financial Assets Authority
-- **Process Name:** Service Delivery
-- **Document Version:** 1.0
-- **Date:** 2026-02-14
+- **Ministry/Department/Agency (MDA):** UNCLAIMED FINANCIAL ASSETS AUTHORITY (UFAA)
+- **Process Name:** Claim for Unclaimed Financial Assets
+- **Document Version:** 2.0
+- **Date:** 2026-02-24
 - **Classification:** Official
 
 ---
 
 ## Executive Summary
-Represents 'Public Administration and International Relations' cluster for balanced coverage; entity type: Agency. Included as Tier 3 for light‑touch desk review/survey.
+The Unclaimed Financial Assets Authority (UFAA) is mandated to receive, safeguard, and reunite unclaimed financial assets (such as dormant bank accounts, uncollected dividends, insurance benefits, and pension funds) with their rightful owners or beneficiaries. In the context of the citizen lifecycle, UFAA plays a crucial role post-succession.
 
 ---
 
 ## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization.*
+*Current State visualization (Reactive Claim Process).*
 
 ```mermaid
 graph TD
     Start((Start)) --> S1
-
-    subgraph Applicant [Applicant]
-        S1["Applicant submits application for license, permit, or ser..."]
-        S4["Applicant pays the prescribed fees."]
-    end
-
-    subgraph Authority [Authority]
-        S2["Authority verifies documents and compliance with regulati..."]
-        S5["Authority approves and issues the License/Permit/Certific..."]
-    end
-
-    subgraph Technical_Officer [Technical Officer]
-        S3["Technical officers conduct assessment or inspection."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> End((End))
+    S1["Institution declares asset unclaimed & transfers to UFAA"] --> S2
+    S2["Beneficiary searches for assets via Portal or UFAA Office"] --> S3
+    S3["Beneficiary identifies matching asset & confirms interest"] --> S4
+    S4["Beneficiary fills Unclaimed Asset Claim Form"] --> S5
+    S5["Attaches ID, Death Cert, Grant of Probate, Proof of Ownership"] --> S6
+    S6["Submits Claim Application (Online/Office)"] --> S7
+    S7["UFAA manually reviews claim & verifies documents"] --> S8
+    S8["Claim Approved or Rejected"] --> S9
+    S9["Payment Processed via Bank Transfer or Cheque"] --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
     class Start start;
     class End endNode;
-    class S1,S2,S3,S4,S5 userTask;
 ```
 
 ---
 
 ## Process Overview
 ### Process Name
-Service Delivery
+Claim for Unclaimed Financial Assets
 
 ### Service Category
-- G2B (Government to Business)
+- G2C (Government to Citizen) / B2G (Business to Government)
 
 ### Scope
-- **In Scope:** End-to-end processing within Unclaimed Financial Assets Authority.
+- **In Scope:** Receiving unclaimed assets from institutions; Searching for assets; Filing claims; Verification of beneficiaries; Disbursement of funds.
+- **Out of Scope:** Physical assets (e.g., unclaimed land or vehicles).
 
 ### Triggers
-- Submission of application/request by Applicant.
+- Financial institution reaches statutory dormancy period.
+- Beneficiary searches and discovers an asset.
 
 ### End States
-- **Successful:** License / Permit / Certificate, Compliance Inspection Report, Official Receipt, Gazette Notice
+- **Successful:** Unclaimed Asset Paid to Beneficiary; Asset marked as claimed.
 
 ### Policy Context
-- The Unclaimed Financial Assets Authority Act; The Constitution of Kenya 2010; Data Protection Act 2019.
-
----
-
-## Stakeholders
-| Stakeholder | Role | Responsibilities |
-|---|---|---|
-| Technical Officer | Process Actor | Performs actions as defined in steps. |
-| Authority | Process Actor | Performs actions as defined in steps. |
-| Applicant | Process Actor | Performs actions as defined in steps. |
+- Unclaimed Financial Assets Act.
 
 ---
 
 ## Detailed Process (AS-IS)
-| Step | Role | Action | Tool | Notes |
+| Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
-| 1 | Applicant | Applicant submits application for license, permit, or service. | Manual | |
-| 2 | Authority | Authority verifies documents and compliance with regulations. | Manual | |
-| 3 | Technical Officer | Technical officers conduct assessment or inspection. | Manual | |
-| 4 | Applicant | Applicant pays the prescribed fees. | Manual | |
-| 5 | Authority | Authority approves and issues the License/Permit/Certificate. | Manual | |
+| 1 | Financial Institution | **Transfer:** Declares asset (bank accounts, shares, pension) unclaimed after inactivity and transfers to UFAA. | B2G Transfer | |
+| 2 | Beneficiary | **Search:** Searches using UFAA Portal or visits office, providing Name or ID of owner. | UFAA Portal / Manual | |
+| 3 | Beneficiary | **Identify:** Identifies matching asset record from the system and confirms interest. | UFAA Portal | |
+| 4 | Beneficiary | **Form Fill:** Fills the Unclaimed Asset Claim Form. | Physical/Digital | |
+| 5 | Beneficiary | **Attachments:** Submits ID Copy, Death Certificate, Grant of Probate, and Proof of Ownership. | Manual Upload | |
+| 6 | Beneficiary | **Submission:** Submits claim application online or at UFAA Office. | UFAA Portal / Manual | |
+| 7 | UFAA | **Review:** Verifies identity, beneficiary eligibility, and ownership records. | Manual | Process is often lengthy. |
+| 8 | UFAA | **Decision:** Approves or rejects the claim and notifies the beneficiary. | Email/Letter | |
+| 9 | UFAA | **Disbursement:** Transfers asset value to beneficiary via Bank Transfer or physical Cheque. | Bank System | |
 
 ---
 
 ## Pain Points & Opportunities
 ### Pain Points
-- Manual document verification takes time.
-- High cost and time for physical inspections.
-- Risk of counterfeit licenses/certificates.
-- Lack of real-time monitoring of licensees.
+- **Reactive Process:** Beneficiaries often don't know the assets exist. The burden of search is entirely on them.
+- **Manual Verification:** Reviewing physical Grants of Probate and Death Certificates is slow and prone to fraud.
+- **Cheque Payments:** Issuing physical cheques is inefficient and delays access to funds.
 
 ### Opportunities
-- Integration with IPRS/BRS via Service Bus.
-- Adoption of Government Payment Gateway.
-- Implementation of Automated Rules Engine.
-- Issuance of Digital Verifiable Credentials.
+- **Proactive Reunification:** Use IPRS and Judiciary data to actively locate next of kin.
+- **API Integration:** Direct integration with the Judiciary e-Justice system to auto-verify Grants of Probate without manual document uploads.
+- **Digital Disbursement:** Direct to Mobile Money (M-Pesa) or verified bank accounts instantly.
 
 ---
 
 ## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Optimized).*
+*Future State visualization (Proactive Reunification).*
 
 ```mermaid
 graph TD
-    Start((Start)) --> S1
-
-    subgraph Applicant [Applicant]
-        S1["Applicant logs in via Single Sign-On (SSO) and selects th..."]
-        S4["Applicant pays fees via the Government Payment Gateway; S..."]
-    end
-
-    subgraph System [System]
-        S2["Applicant enters Business Registration Number; System aut..."]
-        S3["System performs auto-validation of compliance (e.g., KRA ..."]
-        S5["Application is processed by the Rules Engine. (Low-risk c..."]
-        S7["System generates a Verifiable Digital Certificate (QR Cod..."]
-    end
-
-    subgraph Officer [Officer]
-        S6["Complex cases are routed to the Officer Workbench for dig..."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> End((End))
+    Start((Start)) --> T1
+    T1["Institutions push unclaimed assets to UFAA Ledger via API"] --> T2
+    T2["System cross-references asset ID with Judiciary e-Justice & IPRS"] --> T3
+    T3["System identifies legal Administrator/Heir & sends proactive SMS"] --> T4
+    T4["Administrator logs into eCitizen; Claim is pre-verified via X-Road"] --> T5
+    T5["Administrator accepts claim with one-click digital signature"] --> T6
+    T6["UFAA Rules Engine auto-approves and triggers Government Payment Gateway"] --> T7
+    T7["Funds instantly transferred to Administrator's verified Bank/Mobile Money account"] --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
     class Start start;
     class End endNode;
-    class S1,S4,S6 userTask;
-    class S2,S3,S5,S7 serviceTask;
 ```
 
 ## Future State Process (TO-BE)
 ### Narrative
-The To-Be process leverages the Government Service Bus to integrate with BRS (Business Registry) and the Payment Gateway. Manual data entry and document uploads are replaced by real-time API validations, enabling a paperless, cashless, and presence-less service experience.
+**TO-BE Process: Proactive Asset Reunification**
+
+**Design Principles:**
+- Proactive Citizen Notification
+- Zero Document Uploads (API Verification)
+- Instant Digital Disbursement
 
 ### Optimized Steps (Digital)
 | Step | Actor | Action | System |
 |---|---|---|---|
-| 1 | Applicant | Applicant logs in via Single Sign-On (SSO) and selects the service. | Citizen Portal / SSO |
-| 2 | System | Applicant enters Business Registration Number; System auto-populates details from BRS (Business Registry) via the Service Bus. | Service Bus / Registry API |
-| 3 | System | System performs auto-validation of compliance (e.g., KRA Tax Status) via Inter-Agency APIs. | Service Bus / Compliance Engine |
-| 4 | Applicant | Applicant pays fees via the Government Payment Gateway; System auto-receipts. | Payment Gateway |
-| 5 | System | Application is processed by the Rules Engine. (Low-risk cases are Auto-Approved). | Workflow Engine |
-| 6 | Officer | Complex cases are routed to the Officer Workbench for digital review and approval. | Officer Workbench |
-| 7 | System | System generates a Verifiable Digital Certificate (QR Code) and notifies the applicant. | Output Generator |
+| 1 | Financial Inst. | **API Transfer:** Institutions automatically push unclaimed asset data directly into the UFAA Central Digital Ledger. | Institution API / UFAA Ledger |
+| 2 | System | **Auto-Matching:** UFAA system queries IPRS (for death status) and the Judiciary e-Justice API (for active Grants of Probate) using the asset owner's ID. | X-Road (IPRS & Judiciary) |
+| 3 | System | **Proactive Alert:** System identifies the legal Administrator/Next of Kin and sends a proactive SMS/Email: "Unclaimed asset found. Log in to claim." | Notification Gateway |
+| 4 | Administrator | **One-Click Claim:** Administrator logs into eCitizen. No documents needed, as Probate is already verified. Administrator accepts the claim. | eCitizen Portal |
+| 5 | UFAA System | **Auto-Approval:** The Rules Engine auto-approves the claim instantly based on the API verifications. | UFAA Rules Engine |
+| 6 | System | **Instant Disbursement:** Funds are securely and instantly transferred to the Administrator's verified digital wallet or bank account. | Government Payment Gateway |
 
 ---
 
 ## References
-Derived from official mandates.
+- Unclaimed Financial Assets Act.
