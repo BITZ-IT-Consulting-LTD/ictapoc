@@ -343,6 +343,144 @@ def seed_unified_catalogue():
                 {"name": "Cert Application", "role": "Next of Kin", "type": "manual", "description": "Apply via eCitizen using Digital Permit ID"},
                 {"name": "Issuance", "role": "System", "type": "api_call", "action": "GEN_DEATH_CERT", "description": "Generate digital verifiable death certificate"}
             ]
+        },
+        "WF-STEP-03b": {
+            "mda": "KENYA NATIONAL EXAMINATIONS COUNCIL",
+            "service": "Exam Administration",
+            "code": "KNC-EXAM-001",
+            "schema": {
+                "type": "object",
+                "required": ["candidate_upi", "exam_type", "school_code"],
+                "properties": {
+                    "candidate_upi": {"type": "string", "title": "Candidate Maisha Namba (UPI)", "readOnly": True},
+                    "exam_type": {"type": "string", "enum": ["KPSEA", "KCSE", "Teacher Education"], "title": "Examination Type"},
+                    "school_code": {"type": "string", "title": "Examination Center / School Code"}
+                }
+            },
+            "custom_workflow": [
+                {"name": "Auto-Registration", "role": "System", "type": "api_call", "action": "REG_CANDIDATE", "description": "Auto-fetch eligibility via NEMIS & IPRS"},
+                {"name": "Auto-Indexing", "role": "System", "type": "api_call", "action": "GEN_INDEX", "description": "Automatic assignment of Digital Index Number"},
+                {"name": "Biometric Check-In", "role": "Invigilator", "type": "manual", "description": "Identity verification at center using Tablet"},
+                {"name": "Smart Marking", "role": "Examiner", "type": "api_call", "action": "OCR_MARKING", "description": "OCR/ICR mark synchronization to database"},
+                {"name": "Instant Issuance", "role": "System", "type": "api_call", "action": "ISSUE_DIGI_CERT", "description": "Push verifiable certificate to eCitizen Wallet"}
+            ]
+        },
+        "WF-STEP-03c": {
+            "mda": "KUCCPS",
+            "service": "Student Admission",
+            "code": "KUC-PLACEMENT-001",
+            "schema": {
+                "type": "object",
+                "required": ["student_upi", "preferences"],
+                "properties": {
+                    "student_upi": {"type": "string", "title": "Student Maisha Namba (UPI)", "readOnly": True},
+                    "preferences": {
+                        "type": "array", 
+                        "title": "Course Preferences", 
+                        "items": {"type": "string", "title": "Course Code"},
+                        "maxItems": 6
+                    }
+                }
+            },
+            "custom_workflow": [
+                {"name": "SSO Access", "role": "Citizen", "type": "manual", "description": "Login via eCitizen Maisha Identity"},
+                {"name": "Auto-Fetch Results", "role": "System", "type": "api_call", "action": "FETCH_KNEC", "description": "Retrieve verified KCSE results from KNEC"},
+                {"name": "AI Recommendation", "role": "System", "type": "api_call", "action": "AI_RECOMMEND", "description": "Suggest optimal courses based on grades"},
+                {"name": "Algorithmic Placement", "role": "System", "type": "api_call", "action": "RUN_PLACEMENT", "description": "Automated merit-based matching"},
+                {"name": "Acceptance", "role": "Citizen", "type": "manual", "description": "Accept digital placement letter instantly"}
+            ]
+        },
+        "WF-STEP-03d": {
+            "mda": "HIGHER EDUCATION LOANS BOARD",
+            "service": "Higher Education Loan",
+            "code": "HLB-LOAN-001",
+            "schema": {
+                "type": "object",
+                "required": ["applicant_upi", "parent_ids"],
+                "properties": {
+                    "applicant_upi": {"type": "string", "title": "Applicant Maisha Namba (UPI)", "readOnly": True},
+                    "parent_ids": {"type": "array", "title": "Parent/Guardian IDs", "items": {"type": "string"}}
+                }
+            },
+            "custom_workflow": [
+                {"name": "Auto-Fetch Admission", "role": "System", "type": "api_call", "action": "FETCH_KUCCPS", "description": "Retrieve course and fee details via KUCCPS API"},
+                {"name": "Automated Means Testing", "role": "System", "type": "api_call", "action": "AUTO_MEANS", "description": "Query KRA/NSSF for parent financial status"},
+                {"name": "Digital Signing", "role": "Citizen", "type": "manual", "description": "Sign digital loan agreement via eCitizen"},
+                {"name": "Smart Disbursement", "role": "System", "type": "api_call", "action": "SMART_DISBURSE", "description": "Dual payout to Institution and Student Wallet"}
+            ]
+        },
+        "WF-STEP-04b": {
+            "mda": "NTSA",
+            "service": "Driving License Renewal",
+            "code": "NTS-DL-001",
+            "schema": {
+                "type": "object",
+                "required": ["license_no", "renewal_period"],
+                "properties": {
+                    "license_no": {"type": "string", "title": "Existing License Number", "readOnly": True},
+                    "renewal_period": {"type": "string", "enum": ["1 Year", "3 Years"], "title": "Renewal Duration"}
+                }
+            },
+            "custom_workflow": [
+                {"name": "Compliance Check", "role": "System", "type": "api_call", "action": "CHECK_FINES", "description": "Verify no outstanding traffic warrants or fines"},
+                {"name": "Instant Payment", "role": "Citizen", "type": "manual", "description": "Authorize payment via unified Gov Gateway"},
+                {"name": "Registry Update", "role": "System", "type": "api_call", "action": "UPD_NTSA", "description": "Update license validity in NTSA database"},
+                {"name": "Digital Issuance", "role": "System", "type": "api_call", "action": "ISSUE_DL", "description": "Push QR-enabled license to Digital Wallet"}
+            ]
+        },
+        "WF-STEP-07b": {
+            "mda": "NATIONAL SOCIAL SECURITY FUND",
+            "service": "Social Security (NSSF)",
+            "code": "NSF-REG-001",
+            "schema": {
+                "type": "object",
+                "required": ["upi"],
+                "properties": {
+                    "upi": {"type": "string", "title": "Maisha Namba (UPI)", "readOnly": True},
+                    "employer_kra": {"type": "string", "title": "Current Employer KRA PIN"}
+                }
+            },
+            "custom_workflow": [
+                {"name": "Event Trigger", "role": "System", "type": "api_call", "action": "TRIG_NSSF", "description": "Triggered by first employment or reaching 18"},
+                {"name": "Account Auto-Creation", "role": "System", "type": "api_call", "action": "CREATE_NSSF", "description": "Sync bio-data from IPRS"},
+                {"name": "Real-Time Posting", "role": "System", "type": "api_call", "action": "POST_CONTRIB", "description": "Instant posting of monthly contributions"}
+            ]
+        },
+        "WF-STEP-10b": {
+            "mda": "UFAA",
+            "service": "Unclaimed Assets",
+            "code": "UFA-CLAIM-001",
+            "schema": {
+                "type": "object",
+                "required": ["asset_id", "claimant_id"],
+                "properties": {
+                    "asset_id": {"type": "string", "title": "Unclaimed Asset ID", "readOnly": True},
+                    "claimant_id": {"type": "string", "title": "Claimant ID (Administrator)", "readOnly": True}
+                }
+            },
+            "custom_workflow": [
+                {"name": "Auto-Matching", "role": "System", "type": "api_call", "action": "MATCH_ASSET", "description": "Cross-reference asset with Judiciary & IPRS"},
+                {"name": "Proactive Alert", "role": "System", "type": "api_call", "action": "SEND_ALERT", "description": "Notify next of kin via SMS/Email"},
+                {"name": "One-Click Claim", "role": "Citizen", "type": "manual", "description": "Accept pre-verified claim on eCitizen"},
+                {"name": "Instant Disbursement", "role": "System", "type": "api_call", "action": "UFA_PAY", "description": "Immediate payout to verified bank/wallet"}
+            ]
+        },
+        "WF-STEP-10c": {
+            "mda": "PUBLIC TRUSTEE",
+            "service": "Estate Administration",
+            "code": "AG-TRUST-001",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "deceased_id": {"type": "string", "title": "Deceased ID (Maisha)", "readOnly": True},
+                    "reported_assets": {"type": "array", "title": "Asset Inventory", "items": {"type": "string"}}
+                }
+            },
+            "custom_workflow": [
+                {"name": "Asset Discovery", "role": "System", "type": "api_call", "action": "DISC_ASSETS", "description": "Auto-inventory via Lands, NTSA, Banks, UFAA"},
+                {"name": "Court Integration", "role": "System", "type": "api_call", "action": "JUD_FILING", "description": "Auto-file for Letters of Administration"},
+                {"name": "Smart Distribution", "role": "System", "type": "api_call", "action": "TRUST_PAY", "description": "Automated settlement of debts and heir distribution"}
+            ]
         }
     }
 
@@ -388,7 +526,14 @@ def seed_unified_catalogue():
         "NHIF Registration": "WF-STEP-02",
         "Student Enrollment": "WF-STEP-03",
         "Tax Compliance Certificates": "WF-STEP-05",
-        "Registration of Basic Education Institutions": "WF-STEP-03"
+        "Registration of Basic Education Institutions": "WF-STEP-03",
+        "Exam Administration": "WF-STEP-03b",
+        "Student Admission": "WF-STEP-03c",
+        "Higher Education Loan": "WF-STEP-03d",
+        "Driving License Renewal": "WF-STEP-04b",
+        "NSSF Registration": "WF-STEP-07b",
+        "Unclaimed Assets": "WF-STEP-10b",
+        "Estate Administration": "WF-STEP-10c",
     }
 
     seeded_codes = set()
