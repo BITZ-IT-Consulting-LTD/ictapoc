@@ -5,35 +5,39 @@
 
 /* ===== CSS VARIABLES ===== */
 :root {
-  /* Colors - Primary Palette */
-  --color-info: #0dcaf0;
-  --color-info-dark: #0aa2c0;
-  --color-info-soft: rgba(13, 202, 240, 0.1);
+  /* Colors - ICTA Authority Palette */
+  --color-primary: #EC232A; /* ICTA Red */
+  --color-primary-dark: #A8181D;
+  --color-primary-soft: rgba(236, 35, 42, 0.05);
   
-  --color-warning: #ffc107;
-  --color-warning-dark: #cc9a06;
-  --color-warning-soft: rgba(255, 193, 7, 0.1);
-  
-  --color-primary: #0d6efd;
-  --color-primary-dark: #0b5ed7;
-  --color-primary-soft: rgba(13, 110, 253, 0.1);
-  
-  --color-success: #198754;
-  --color-success-dark: #146c43;
-  --color-success-soft: rgba(25, 135, 84, 0.1);
-  
-  --color-danger: #dc3545;
-  --color-danger-dark: #b02a37;
-  --color-danger-soft: rgba(220, 53, 69, 0.1);
+  --color-success: #01A64E; /* ICTA Green */
+  --color-success-dark: #007D3A;
+  --color-success-soft: rgba(1, 166, 78, 0.08);
+
+  --color-info: #1E3A8A; /* Government Blue */
+  --color-info-dark: #1E3A8A;
+  --color-info-soft: rgba(30, 58, 138, 0.05);
+
+  --color-warning: #F59E0B;
+  --color-warning-dark: #B45309;
+  --color-warning-soft: rgba(245, 158, 11, 0.08);
+
+  --color-danger: #EF4444;
+  --color-danger-dark: #991B1B;
+  --color-danger-soft: rgba(239, 68, 68, 0.08);
   
   /* Colors - Neutrals */
-  --color-text-main: #212529;
-  --color-text-muted: #6c757d;
-  --color-border: #dee2e6;
-  --color-border-light: #e9ecef;
-  --color-background: #ffffff;
-  --color-background-hover: #f8f9fa;
-  --color-background-alt: #f1f3f5;
+  --color-text-main: #1A1C1B;
+  --color-text-muted: #6B7280;
+  --color-border: #E5E7EB;
+  --color-border-light: #F3F4F6;
+  --color-background: #FFFFFF;
+  --color-background-hover: #F9FAFB;
+  --color-background-alt: #F1F5F9;
+
+  /* Premium Gradients */
+  --grad-premium: linear-gradient(135deg, #1A1C1B 0%, #393B3A 100%);
+  --grad-accent: linear-gradient(135deg, #EC232A 0%, #A8181D 100%);
   
   /* Spacing Scale */
   --spacing-1: 0.25rem;    /* 4px */
@@ -129,17 +133,20 @@
 
 .page__title {
   font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-bold);
+  font-weight: 900;
   color: var(--color-text-main);
-  margin: 0 0 var(--spacing-2) 0;
-  line-height: 1.2;
+  margin: 0 0 var(--spacing-1) 0;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 .page__subtitle {
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   margin: 0;
-  line-height: 1.5;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .page__actions {
@@ -196,16 +203,16 @@
 .stats-card {
   position: relative;
   background-color: var(--color-background);
-  border: 1px solid var(--color-border-light);
+  border: 1px solid var(--color-border);
   border-radius: var(--border-radius-lg);
   overflow: hidden;
-  transition: all var(--transition-slow);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
 .stats-card:hover {
-  border-color: transparent;
-  box-shadow: var(--shadow-xl);
-  transform: translateY(-2px);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 /* Stats Card Overlay */
@@ -1296,9 +1303,6 @@
 
 /* ===== AVATAR BLOCK ===== */
 .avatar {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: var(--border-radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1308,8 +1312,11 @@
   color: var(--color-text-muted);
   text-transform: uppercase;
   flex-shrink: 0;
-  border: 2px solid var(--color-background);
   box-shadow: var(--shadow-sm);
+  aspect-ratio: 1/1;
+  min-width: 2.5rem;
+  border-radius: var(--border-radius-full);
+  border: 2px solid var(--color-background);
 }
 
 .avatar--sm {

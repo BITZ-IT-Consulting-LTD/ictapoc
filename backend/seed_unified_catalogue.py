@@ -657,30 +657,50 @@ def seed_unified_catalogue():
             
             # Create Workflow Steps
             if workflow:
+                # 1. Seed the Optimized TO-BE Workflow
                 for i, step_def in enumerate(workflow):
                     raw_type = step_def['type']
                     normalized_type = 'manual'
                     if raw_type in ['api_call', 'system_task', 'event', 'auto']:
                         normalized_type = 'api_call'
+                    
+                    # Logic for BPMN Element Type
+                    b_type = 'user_task'
+                    if normalized_type == 'api_call': b_type = 'service_task'
+                    if i == 0: b_type = 'start_event'
+                    elif i == len(workflow) - 1: b_type = 'end_event'
+
                     WorkflowStep.objects.create(
                         service_config=service,
                         step_name=step_def['name'],
                         step_type=normalized_type,
+                        bpmn_element_type=b_type,
                         role=step_def['role'],
                         sequence=i+1,
                         lifecycle_stage="to_be",
                         api_config=step_def.get('api_config', {})
                     )
+                
+                # 2. Seed a Default AS-IS Workflow to show the transformation
+                WorkflowStep.objects.create(service_config=service, step_name="Manual Forms Submission", step_type="manual", role="Citizen", sequence=1, lifecycle_stage="as_is", bpmn_element_type="start_event")
+                WorkflowStep.objects.create(service_config=service, step_name="Physical File Movement", step_type="manual", role="Registry Officer", sequence=2, lifecycle_stage="as_is")
+                WorkflowStep.objects.create(service_config=service, step_name="Manual Verification & Signing", step_type="manual", role="Approving Officer", sequence=3, lifecycle_stage="as_is", bpmn_element_type="end_event")
+
             elif optimized:
-                # Default 3-step for optimized without custom workflow
-                WorkflowStep.objects.create(service_config=service, step_name="Trigger Event", step_type="api_call", role="System", sequence=1, lifecycle_stage="to_be")
+                # Optimized services without custom workflow get a generic 3-step TO-BE
+                WorkflowStep.objects.create(service_config=service, step_name="Trigger Event", step_type="api_call", bpmn_element_type="start_event", role="System", sequence=1, lifecycle_stage="to_be")
                 WorkflowStep.objects.create(service_config=service, step_name="Processing & Validation", step_type="api_call", role="System", sequence=2, lifecycle_stage="to_be")
-                WorkflowStep.objects.create(service_config=service, step_name="Registry Update", step_type="api_call", role="System", sequence=3, lifecycle_stage="to_be")
+                WorkflowStep.objects.create(service_config=service, step_name="Registry Update", step_type="api_call", bpmn_element_type="end_event", role="System", sequence=3, lifecycle_stage="to_be")
+                
+                # And a generic AS-IS
+                WorkflowStep.objects.create(service_config=service, step_name="Physical Application", step_type="manual", bpmn_element_type="start_event", role="Citizen", sequence=1, lifecycle_stage="as_is")
+                WorkflowStep.objects.create(service_config=service, step_name="Internal Review", step_type="manual", role="Officer", sequence=2, lifecycle_stage="as_is")
+                WorkflowStep.objects.create(service_config=service, step_name="Manual Approval", step_type="manual", bpmn_element_type="end_event", role="Supervisor", sequence=3, lifecycle_stage="as_is")
             else:
-                # Default 3-step workflow for generic services
-                WorkflowStep.objects.create(service_config=service, step_name="Application Submission", step_type="api_call", role="Citizen", sequence=1, lifecycle_stage="as_is")
+                # Default 3-step workflow for generic services (AS-IS)
+                WorkflowStep.objects.create(service_config=service, step_name="Application Submission", step_type="manual", bpmn_element_type="start_event", role="Citizen", sequence=1, lifecycle_stage="as_is")
                 WorkflowStep.objects.create(service_config=service, step_name="MDA Processing", step_type="manual", role="Officer", sequence=2, lifecycle_stage="as_is")
-                WorkflowStep.objects.create(service_config=service, step_name="Final Approval", step_type="manual", role="Supervisor", sequence=3, lifecycle_stage="as_is")
+                WorkflowStep.objects.create(service_config=service, step_name="Final Approval", step_type="manual", bpmn_element_type="end_event", role="Supervisor", sequence=3, lifecycle_stage="as_is")
 
             service_count += 1
 
@@ -719,27 +739,41 @@ def seed_unified_catalogue():
         
         workflow = config.get('custom_workflow')
         if workflow:
+            # 1. TO-BE
             for i, step in enumerate(workflow):
-                # Normalize step type for the engine (Manual or API Call)
                 raw_type = step['type']
                 normalized_type = 'manual'
                 if raw_type in ['api_call', 'system_task', 'event', 'auto']:
                     normalized_type = 'api_call'
                 
+                b_type = 'user_task'
+                if normalized_type == 'api_call': b_type = 'service_task'
+                if i == 0: b_type = 'start_event'
+                elif i == len(workflow) - 1: b_type = 'end_event'
+
                 WorkflowStep.objects.create(
                     service_config=service, 
                     step_name=step['name'], 
                     step_type=normalized_type, 
+                    bpmn_element_type=b_type,
                     role=step['role'], 
                     sequence=i+1, 
                     lifecycle_stage="to_be",
                     action=step.get('action'),
                     api_config=step.get('api_config', {})
                 )
+            # 2. AS-IS
+            WorkflowStep.objects.create(service_config=service, step_name="Manual Entry", step_type="manual", bpmn_element_type="start_event", role="Officer", sequence=1, lifecycle_stage="as_is")
+            WorkflowStep.objects.create(service_config=service, step_name="Paper Verification", step_type="manual", role="Registrar", sequence=2, lifecycle_stage="as_is")
+            WorkflowStep.objects.create(service_config=service, step_name="Manual Issuance", step_type="manual", bpmn_element_type="end_event", role="Supervisor", sequence=3, lifecycle_stage="as_is")
         else:
-            WorkflowStep.objects.create(service_config=service, step_name="Trigger Event", step_type="api_call", role="System", sequence=1, lifecycle_stage="to_be")
+            WorkflowStep.objects.create(service_config=service, step_name="Trigger Event", step_type="api_call", bpmn_element_type="start_event", role="System", sequence=1, lifecycle_stage="to_be")
             WorkflowStep.objects.create(service_config=service, step_name="Processing", step_type="api_call", role="System", sequence=2, lifecycle_stage="to_be")
-            WorkflowStep.objects.create(service_config=service, step_name="Record Finalization", step_type="api_call", role="System", sequence=3, lifecycle_stage="to_be")
+            WorkflowStep.objects.create(service_config=service, step_name="Record Finalization", step_type="api_call", bpmn_element_type="end_event", role="System", sequence=3, lifecycle_stage="to_be")
+            
+            # AS-IS
+            WorkflowStep.objects.create(service_config=service, step_name="Legacy Manual Step", step_type="manual", bpmn_element_type="start_event", role="Officer", sequence=1, lifecycle_stage="as_is")
+            WorkflowStep.objects.create(service_config=service, step_name="Legacy End Step", step_type="manual", bpmn_element_type="end_event", role="Officer", sequence=2, lifecycle_stage="as_is")
             
         seeded_codes.add(config['code'])
         service_count += 1
