@@ -1,0 +1,197 @@
+{
+  "main": {
+    "id": "2c0584615044fec7",
+    "type": "split",
+    "children": [
+      {
+        "id": "84c166e5ddc1cc01",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "62ad2050f3216d67",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Cradle_to_Death_MDAs.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Cradle_to_Death_MDAs"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "dbac377010eea189",
+    "type": "split",
+    "children": [
+      {
+        "id": "1b8c750a52e29280",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d31556676e0afbff",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "0369fa41a711a7a1",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "575b3a5856318922",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "79f9bb5c93d4d7aa",
+    "type": "split",
+    "children": [
+      {
+        "id": "20b0154cf31ce7d7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b067525dde0680b2",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Cradle_to_Death_MDAs.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Cradle_to_Death_MDAs"
+            }
+          },
+          {
+            "id": "9f44a0a3601f00d6",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Cradle_to_Death_MDAs.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Cradle_to_Death_MDAs"
+            }
+          },
+          {
+            "id": "364bfb55feb45615",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "bb7e491274193221",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "ed5164960675c72e",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Cradle_to_Death_MDAs.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Cradle_to_Death_MDAs"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "62ad2050f3216d67",
+  "lastOpenFiles": [
+    "National_Health_Insurance_Fund___Service_Delivery.md",
+    "Cradle_to_Death_MDAs.md",
+    "_INTEGRATED_POPULATION_REGISTRATION_SYSTEM___Service_Delivery.md",
+    "Ministry_of_Health___Service_Delivery.md",
+    "_CIVIL_REGISTRATION_SERVICES_CRS____Service_Delivery.md",
+    "Ahero_Rice_Mills___Service_Delivery.md",
+    "_REFUGEE_SERVICES___Service_Delivery.md",
+    "_E_CITIZEN___Service_Delivery.md"
+  ]
+}
