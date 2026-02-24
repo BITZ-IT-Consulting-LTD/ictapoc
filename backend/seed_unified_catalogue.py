@@ -55,7 +55,7 @@ def seed_unified_catalogue():
             "code": "MOH-NOTIF-001",
             "schema": {
                 "type": "object",
-                "required": ["child_name", "mother_id", "child_gender", "date_of_birth"],
+                "required": ["child_name", "mother_id", "child_gender", "date_of_birth", "place_of_birth"],
                 "properties": {
                     "child_name": {
                         "type": "string", 
@@ -65,26 +65,16 @@ def seed_unified_catalogue():
                     "mother_id": {
                         "type": "string", 
                         "title": "Mother's ID Number", 
-                        "widget": "text",
                         "x-registry-config": {
                             "adapter_id": "IPRS",
                             "endpoint_id": "Verify Citizen Identity"
                         },
                         "description": "Validation: Real-time IPRS Identity Check"
                     },
-                    "father_id": {
-                        "type": "string", 
-                        "title": "Father's ID Number (Optional)", 
-                        "x-registry-config": {
-                            "adapter_id": "IPRS",
-                            "endpoint_id": "Verify Citizen Identity"
-                        }
-                    },
                     "child_gender": {
                         "type": "string", 
                         "enum": ["Male", "Female"], 
-                        "title": "Child Gender", 
-                        "widget": "select"
+                        "title": "Child Gender"
                     },
                     "date_of_birth": {
                         "type": "string", 
@@ -93,17 +83,16 @@ def seed_unified_catalogue():
                     },
                     "place_of_birth": {
                         "type": "string", 
-                        "title": "Place of Birth (Hospital)", 
-                        "readOnly": True, 
-                        "default": "Kenyatta National Hospital"
+                        "title": "Place of Birth (Hospital/Clinic)", 
+                        "description": "Captured at source by medical personnel"
                     }
                 }
             },
             "custom_workflow": [
-                {"name": "Record Birth Event", "role": "Medical Staff", "type": "manual"},
-                {"name": "Verify Parentage (IPRS)", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/IPRS/api/v1/citizens/verify"}, "action": "IPRS_CHECK"},
-                {"name": "Generate B1 Notification", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/CRS/api/births/notify"}, "action": "GENERATE_B1"},
-                {"name": "SMS Notification to Parent", "role": "System", "type": "api_call", "action": "SEND_SMS"}
+                {"name": "Source Capture", "role": "Medical Staff", "type": "manual", "description": "Enter birth details directly at point of event"},
+                {"name": "Identity Link (IPRS)", "role": "System", "type": "api_call", "action": "IPRS_LINK", "description": "Auto-fetch and validate Mother's details"},
+                {"name": "UPI Minting", "role": "System", "type": "api_call", "action": "MINT_UPI", "description": "Generate Maisha Namba (UPI) for the newborn"},
+                {"name": "Notification", "role": "System", "type": "api_call", "action": "SEND_SMS", "description": "Send SMS to Parent with UPI and cert link"}
             ]
         },
         "WF-STEP-01b": { 
@@ -112,18 +101,18 @@ def seed_unified_catalogue():
             "code": "CRS-CERT-001",
             "schema": {
                 "type": "object",
-                "required": ["notification_number", "child_name"],
+                "required": ["notification_number", "child_name", "parent_consent"],
                 "properties": {
-                    "notification_number": {"type": "string", "title": "Notification Number (B1)", "readOnly": True, "description": "Inherited from Hospital Notification"},
+                    "notification_number": {"type": "string", "title": "Notification Number (B1)", "description": "Inherited from Hospital Notification"},
                     "child_name": {"type": "string", "title": "Child's Full Name"},
-                    "parent_consent": {"type": "boolean", "title": "Confirm Institutional Accuracy"}
+                    "parent_consent": {"type": "boolean", "title": "Confirm Accuracy & Consent"}
                 }
             },
             "custom_workflow": [
-                {"name": "Initialize Birth Record", "role": "Citizen", "type": "manual"},
-                {"name": "Verify B1 Notification", "role": "CRS Officer", "type": "manual"},
-                {"name": "MINT MAISHA NAMBA (UPI)", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/NRB/api/v1/upi/mint"}},
-                {"name": "Final Registrar Approval", "role": "CRS Registrar", "type": "manual"}
+                {"name": "Application Initiation", "role": "Citizen", "type": "manual", "description": "Verify B1 and apply via eCitizen"},
+                {"name": "Verification", "role": "CRS Officer", "type": "manual", "description": "Internal record audit"},
+                {"name": "Payment Processing", "role": "System", "type": "api_call", "action": "PROCESS_PAYMENT"},
+                {"name": "Issuance", "role": "System", "type": "api_call", "action": "GENERATE_E_CERT", "description": "Generate Verifiable Digital Certificate"}
             ]
         },
         "WF-STEP-02": {
@@ -135,13 +124,15 @@ def seed_unified_catalogue():
                 "required": ["upi"],
                 "properties": {
                     "upi": {"type": "string", "title": "Maisha Namba (UPI)", "readOnly": True},
-                    "biometric_face": {"type": "string", "format": "data-url", "title": "Face ID (Newborn Capture)"}
+                    "dependants": {"type": "array", "title": "Dependants (Linked via CRS)", "items": {"type": "string"}},
+                    "income_band": {"type": "string", "title": "Contribution Category (Means Tested)"}
                 }
             },
             "custom_workflow": [
-                {"name": "Retrieve Maisha Record", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/IPRS/lookup"}},
-                {"name": "Activate Linda Mama Cover", "role": "SHA Officer", "type": "manual"},
-                {"name": "Enrollment Confirmation", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/SHA/register"}}
+                {"name": "Profile Creation", "role": "System", "type": "api_call", "action": "SYNC_IPRS", "description": "Fetch bio-data from National Population Registry"},
+                {"name": "Dependant Linking", "role": "System", "type": "api_call", "action": "SYNC_CRS", "description": "Auto-link dependents from CRS records"},
+                {"name": "Means Assessment", "role": "System", "type": "api_call", "action": "KRA_ASSESS", "description": "Determine contribution via KRA/Mobile Money APIs"},
+                {"name": "Coverage Activation", "role": "System", "type": "api_call", "action": "ACTIVATE_SHA", "description": "Instant activation upon payment/assignment"}
             ]
         },
         "WF-STEP-03": {
@@ -152,34 +143,25 @@ def seed_unified_catalogue():
                 "type": "object",
                 "required": ["child_upi", "school_code"],
                 "properties": {
-                    "child_upi": {
-                        "type": "string", 
-                        "title": "Child Maisha Namba (UPI)",
-                        "x-registry-config": {
-                            "adapter_id": "CRS",
-                            "endpoint_id": "Get Birth Certificate"
-                        }
-                    },
+                    "child_upi": {"type": "string", "title": "Child Maisha Namba (UPI)"},
                     "school_code": {
                         "type": "string", 
                         "title": "Select School", 
                         "widget": "registry_search",
                         "x-registry-config": {
                             "adapter_id": "SCHOOLS_REGISTRY",
-                            "endpoint_id": "Search Schools",
-                            "display_field": "name",
-                            "value_field": "code"
-                        },
-                        "description": "Validation: Automated Capacity & Geospatial Check"
-                    }
+                            "endpoint_id": "Search Schools"
+                        }
+                    },
+                    "parent_id": {"type": "string", "title": "Parent/Guardian ID"}
                 }
             },
             "custom_workflow": [
-                {"name": "Parental Enrollment Request", "role": "Citizen", "type": "manual"},
-                {"name": "Validate UPI Registry", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/CRS/verify_upi"}},
-                {"name": "Verify School Capacity", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/SCHOOLS_REGISTRY/api/v1/schools/{school_code}/capacity"}},
-                {"name": "Head Teacher Admission", "role": "School Head", "type": "manual"},
-                {"name": "NEMIS Record Finalization", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/NEMIS/enroll"}}
+                {"name": "Enrollment Request", "role": "Citizen", "type": "manual", "description": "Select child and school on eCitizen"},
+                {"name": "UPI Validation", "role": "System", "type": "api_call", "action": "VAL_UPI", "description": "Verify child existence via CRS Registry"},
+                {"name": "Capacity Check", "role": "System", "type": "api_call", "action": "CHK_CAPACITY", "description": "Real-time check via National Schools Registry"},
+                {"name": "Admission Review", "role": "School Head", "type": "manual", "description": "Digital review and one-click approval"},
+                {"name": "Enrollment Sync", "role": "System", "type": "api_call", "action": "SYNC_NEMIS", "description": "Finalize record and trigger capitation"}
             ]
         },
         "WF-STEP-04": {
@@ -190,42 +172,21 @@ def seed_unified_catalogue():
                 "type": "object",
                 "required": ["upi", "current_photo", "fingerprints", "physical_address"],
                 "properties": {
-                    "upi": {
-                        "type": "string", 
-                        "title": "Existing Maisha Namba (UPI)", 
-                        "x-registry-config": {
-                            "adapter_id": "CRS",
-                            "endpoint_id": "Get Birth Certificate"
-                        }
-                    },
-                    "current_photo": {
-                        "type": "string", 
-                        "format": "data-url", 
-                        "title": "Live Photo (ICAO Standard)",
-                        "description": "Validation: AI-based ICAO Compliance Check"
-                    },
-                    "fingerprints": {
-                        "type": "string", 
-                        "format": "binary", 
-                        "title": "Biometric Template (WSQ)",
-                        "description": "Validation: AFIS Uniqueness Check"
-                    },
-                    "physical_address": {
-                        "type": "string", 
-                        "title": "Residential Address", 
-                        "widget": "geo_address"
-                    },
-                    "mobile_number": {
-                        "type": "string", 
-                        "title": "Contact Mobile Number"
-                    }
+                    "upi": {"type": "string", "title": "Maisha Namba (UPI)"},
+                    "current_photo": {"type": "string", "format": "data-url", "title": "Live Photo (ICAO Standard)"},
+                    "fingerprints": {"type": "string", "format": "binary", "title": "Biometric Template (WSQ)"},
+                    "physical_address": {"type": "string", "title": "Residential Address", "widget": "geo_address"},
+                    "mobile_number": {"type": "string", "title": "Mobile Number"},
+                    "signature": {"type": "string", "format": "data-url", "title": "Digital Signature"}
                 }
             },
             "custom_workflow": [
-                {"name": "Initiate Adult ID Upgrade", "role": "Citizen", "type": "manual"},
-                {"name": "Auto-Fetch & Vetting", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/IPRS/api/v1/citizens/verify"}, "action": "CITIZEN_VETTING"},
-                {"name": "Biometric Capture Hub", "role": "NRB Officer", "type": "manual"},
-                {"name": "Identity Linkage & Issuance", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/NRB/api/v1/upi/mint"}, "action": "ISSUE_VIRTUAL_ID"}
+                {"name": "Initiation", "role": "Citizen", "type": "manual", "description": "Request upgrade via eCitizen"},
+                {"name": "Data Fetch", "role": "System", "type": "api_call", "action": "FETCH_CRS", "description": "Pull child record from CRS"},
+                {"name": "Auto-Vetting", "role": "System", "type": "api_call", "action": "VET_CITIZEN", "description": "Verify citizenship status automatically"},
+                {"name": "Biometric Capture", "role": "NRB Officer", "type": "manual", "description": "Live scan at Local Hub/Huduma Centre"},
+                {"name": "Identity Linkage", "role": "System", "type": "api_call", "action": "LINK_BIO", "description": "Update Maisha Database to Adult status"},
+                {"name": "Virtual ID Issuance", "role": "System", "type": "api_call", "action": "ISSUE_ID", "description": "Generate Digital ID in Maisha Wallet"}
             ]
         },
         "WF-STEP-05": {
@@ -236,14 +197,15 @@ def seed_unified_catalogue():
                 "type": "object",
                 "required": ["virtual_id"],
                 "properties": {
-                    "virtual_id": {"type": "string", "title": "National Digital ID", "readOnly": True},
-                    "occupational_status": {"type": "string", "enum": ["Employed", "Self-Employed", "Student"], "title": "Economic Status"}
+                    "virtual_id": {"type": "string", "title": "National Digital ID (Maisha)", "readOnly": True},
+                    "economic_status": {"type": "string", "enum": ["Employed", "Business", "Student"], "title": "Primary Source of Income"}
                 }
             },
             "custom_workflow": [
-                {"name": "Identity Sync (NRB)", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/IPRS/lookup"}},
-                {"name": "Generate KRA PIN", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/KRA/generate_pin"}},
-                {"name": "Ledger Initialization", "role": "KRA Officer", "type": "manual"}
+                {"name": "Identity Sync", "role": "System", "type": "api_call", "action": "SYNC_ID", "description": "Fetch verified identity via Maisha API"},
+                {"name": "PIN Allocation", "role": "System", "type": "api_call", "action": "GEN_PIN", "description": "Automatic KRA PIN generation"},
+                {"name": "Registry Update", "role": "System", "type": "api_call", "action": "UPD_KRA", "description": "Initialize Taxpayer Ledger"},
+                {"name": "Notification", "role": "System", "type": "api_call", "action": "SEND_NOTIF", "description": "Proactive SMS with new PIN details"}
             ]
         },
         "WF-STEP-06": {
@@ -252,18 +214,20 @@ def seed_unified_catalogue():
             "code": "IMM-PASS-001",
             "schema": {
                 "type": "object",
-                "required": ["virtual_id", "photo_selfie"],
+                "required": ["virtual_id", "passport_type", "current_photo", "delivery_address"],
                 "properties": {
                     "virtual_id": {"type": "string", "title": "Digital ID (Maisha)", "readOnly": True},
-                    "photo_selfie": {"type": "string", "format": "data-url", "title": "Live Selfie (Security Audit)"},
-                    "passport_type": {"type": "string", "enum": ["32 Pages", "50 Pages", "66 Pages"], "title": "Booklet Size", "widget": "select"}
+                    "passport_type": {"type": "string", "enum": ["32 Pages", "50 Pages", "66 Pages"], "title": "Booklet Size"},
+                    "current_photo": {"type": "string", "format": "data-url", "title": "Live Selfie (ICAO AI Check)"},
+                    "delivery_address": {"type": "string", "title": "Posta Delivery Address", "widget": "geo_address"}
                 }
             },
             "custom_workflow": [
-                {"name": "DTC Application Submission", "role": "Citizen", "type": "manual"},
-                {"name": "National Security Screening", "role": "Interpol/Police", "type": "api_call"},
-                {"name": "Immigration Adjudication", "role": "Immigration Officer", "type": "manual"},
-                {"name": "Passport Booklet Production", "role": "System", "type": "api_call"}
+                {"name": "Digital Application", "role": "Citizen", "type": "manual", "description": "ICAO Selfie capture on eCitizen App"},
+                {"name": "Biometric Reuse", "role": "System", "type": "api_call", "action": "REUSE_BIO", "description": "Fetch fingerprints from NRB Maisha Database"},
+                {"name": "Auto-Approval", "role": "System", "type": "api_call", "action": "AUTO_APP", "description": "Security screening and approval rules"},
+                {"name": "Booklet Production", "role": "System", "type": "api_call", "action": "PRINT_PPT", "description": "Trigger booklet printing"},
+                {"name": "Secure Delivery", "role": "System", "type": "api_call", "action": "POSTA_DELIVERY", "description": "Dispatch via Posta with tracking"}
             ]
         },
         "WF-STEP-07": {
@@ -272,18 +236,20 @@ def seed_unified_catalogue():
             "code": "BRS-INC-001",
             "schema": {
                 "type": "object",
-                "required": ["business_name", "entity_type"],
+                "required": ["proposed_name", "entity_type", "nature_of_business", "directors"],
                 "properties": {
-                    "virtual_id": {"type": "string", "title": "Director Digital ID", "readOnly": True},
-                    "entity_type": {"type": "string", "enum": ["Business Name", "Private Limited", "LLP"], "title": "Institutional Category"},
-                    "business_name": {"type": "string", "title": "Proposed Designation", "validation": "ai_check"},
-                    "directors": {"type": "array", "title": "Co-Director IDs", "items": {"type": "string"}}
+                    "proposed_name": {"type": "string", "title": "Proposed Business Name", "description": "Subject to AI Phonetic Check"},
+                    "entity_type": {"type": "string", "enum": ["Business Name", "Private Limited", "LLP"], "title": "Legal Entity Type"},
+                    "nature_of_business": {"type": "string", "title": "Nature of Business (ISIC Codes)"},
+                    "directors": {"type": "array", "title": "List of Directors (IDs)", "items": {"type": "string"}}
                 }
             },
             "custom_workflow": [
-                {"name": "AI Name Reservation", "role": "System", "type": "system_task"},
-                {"name": "Memorandum Verification", "role": "BRS Legal", "type": "manual"},
-                {"name": "Certificate Digital Minting", "role": "System", "type": "api_call"}
+                {"name": "Name Reservation", "role": "System", "type": "api_call", "action": "AI_NAME_CHECK", "description": "Instant algorithmic name clearance"},
+                {"name": "Director Verification", "role": "System", "type": "api_call", "action": "VERIFY_ID", "description": "ID validation against IPRS"},
+                {"name": "Director Consent", "role": "Director", "type": "manual", "description": "In-app biometric/PIN consent by directors"},
+                {"name": "Bundled Payment", "role": "System", "type": "api_call", "action": "GPA_PAY", "description": "Process unified registration & tax fees"},
+                {"name": "Digital Minting", "role": "System", "type": "api_call", "action": "ISSUE_CERT", "description": "Instant issuance of Certificate & CR12"}
             ]
         },
         "WF-STEP-08": {
@@ -292,19 +258,20 @@ def seed_unified_catalogue():
             "code": "AG-MAR-001",
             "schema": {
                 "type": "object",
-                "required": ["groom_id", "bride_id", "marriage_type"],
+                "required": ["groom_id", "bride_id", "marriage_type", "officiant_id"],
                 "properties": {
-                    "groom_id": {"type": "string", "title": "Groom ID", "lookup_service": "IPRS"},
-                    "bride_id": {"type": "string", "title": "Bride ID", "lookup_service": "IPRS"},
-                    "marriage_type": {"type": "string", "enum": ["Civil", "Christian", "Customary", "Hindu"], "title": "Union Category"},
-                    "officiant_qr": {"type": "string", "title": "Licensed Officiant ID"}
+                    "groom_id": {"type": "string", "title": "Groom ID (Maisha)", "x-registry-config": {"adapter_id": "IPRS", "endpoint_id": "Verify Citizen Identity"}},
+                    "bride_id": {"type": "string", "title": "Bride ID (Maisha)", "x-registry-config": {"adapter_id": "IPRS", "endpoint_id": "Verify Citizen Identity"}},
+                    "marriage_type": {"type": "string", "enum": ["Civil", "Christian", "Customary", "Hindu"], "title": "Marital Category"},
+                    "officiant_id": {"type": "string", "title": "Licensed Officiant ID"}
                 }
             },
             "custom_workflow": [
-                {"name": "Institutional Notice Filing", "role": "Citizen", "type": "manual"},
-                {"name": "Legal Impediment Search", "role": "System", "type": "api_call"},
-                {"name": "Marriage Solemnization", "role": "Registrar", "type": "manual"},
-                {"name": "Spousal Linkage (IPRS)", "role": "System", "type": "api_call"}
+                {"name": "Joint Digital Notice", "role": "Citizen", "type": "manual", "description": "Submit notice via eCitizen; status auto-verified"},
+                {"name": "Payment & Publishing", "role": "System", "type": "api_call", "action": "PUB_GAZETTE", "description": "Auto-post on e-Gazette for 21 days"},
+                {"name": "License Issuance", "role": "System", "type": "api_call", "action": "ISSUE_LICENSE", "description": "Generate Digital Marriage License (QR)"},
+                {"name": "Solemnization", "role": "Registrar", "type": "manual", "description": "Scan QR and sign digitally during ceremony"},
+                {"name": "Registry Update", "role": "System", "type": "api_call", "action": "SYNC_MARRIAGE", "description": "Update IPRS status and issue E-Cert"}
             ]
         },
         "WF-STEP-09": {
@@ -313,19 +280,23 @@ def seed_unified_catalogue():
             "code": "LND-TRF-001",
             "schema": {
                 "type": "object",
-                "required": ["parcel_no", "consent_bio"],
+                "required": ["parcel_no", "buyer_id", "seller_id", "transfer_type", "sale_price", "consent_bio"],
                 "properties": {
                     "parcel_no": {"type": "string", "title": "Parcel/Folio Number"},
-                    "transfer_type": {"type": "string", "enum": ["Sale", "Inheritance", "Court Order"], "title": "Transfer Mechanism"},
+                    "buyer_id": {"type": "string", "title": "Buyer ID"},
+                    "seller_id": {"type": "string", "title": "Seller ID"},
+                    "transfer_type": {"type": "string", "enum": ["Sale", "Inheritance", "Court Order"]},
                     "sale_price": {"type": "number", "title": "Valuation (KES)"},
-                    "consent_bio": {"type": "boolean", "title": "Biometric Seller Consent"}
+                    "consent_bio": {"type": "boolean", "title": "Biometric Seller/Buyer Consent"}
                 }
             },
             "custom_workflow": [
-                {"name": "Parcel Search Initiation", "role": "Citizen", "type": "manual"},
-                {"name": "Valuation Audit", "role": "Gov Valuer", "type": "manual"},
-                {"name": "title Deed Tokenization", "role": "System", "type": "api_call"},
-                {"name": "Registry Record Sync", "role": "Land Registrar", "type": "manual"}
+                {"name": "Smart Transfer Initiation", "role": "Citizen", "type": "manual", "description": "Biometric verification of parties via Maisha"},
+                {"name": "Property Audit", "role": "System", "type": "api_call", "action": "CHK_LIEN", "description": "Automated check for encumbrances/cautions"},
+                {"name": "Digital Consents", "role": "Partner", "type": "manual", "description": "Spousal/Board consent via e-Signatures"},
+                {"name": "Tax Settlement", "role": "System", "type": "api_call", "action": "PAY_STAMP", "description": "Integrated Stamp Duty settlement"},
+                {"name": "Execution", "role": "System", "type": "api_call", "action": "RUN_CONTRACT", "description": "Smart contract land registry update"},
+                {"name": "Digital Title Issuance", "role": "System", "type": "api_call", "action": "ISSUE_TITLE", "description": "New verifiable digital title to wallet"}
             ]
         },
         "WF-STEP-10": {
@@ -334,18 +305,21 @@ def seed_unified_catalogue():
             "code": "JUD-SUCC-001",
             "schema": {
                 "type": "object",
-                "required": ["death_cert_no", "cause_type"],
+                "required": ["death_cert_no", "probate_type", "beneficiaries"],
                 "properties": {
                     "death_cert_no": {"type": "string", "title": "Death Certificate No", "lookup_service": "CRS"},
-                    "cause_type": {"type": "string", "enum": ["Intestate", "Testate"], "title": "Probate Classification"},
-                    "beneficiaries": {"type": "array", "title": "Heir Digital IDs", "items": {"type": "string"}}
+                    "probate_type": {"type": "string", "enum": ["Intestate", "Testate"], "title": "Probate Classification"},
+                    "beneficiaries": {"type": "array", "title": "Heir Digital IDs", "items": {"type": "string"}},
+                    "asset_inventory": {"type": "array", "title": "Discovered Assets", "items": {"type": "string"}, "readOnly": True}
                 }
             },
             "custom_workflow": [
-                {"name": "Cause Filing", "role": "Executor", "type": "manual"},
-                {"name": "Estate Inventory Audit", "role": "System", "type": "api_call"},
-                {"name": "Judicial Confirmation", "role": "Judge", "type": "manual"},
-                {"name": "Asset Distribution Bridge", "role": "System", "type": "api_call"}
+                {"name": "Case Initiation", "role": "System", "type": "api_call", "action": "OPEN_CASE", "description": "Auto-creation triggered by digital death certificate"},
+                {"name": "Asset Discovery", "role": "System", "type": "api_call", "action": "DISC_ASSETS", "description": "Inter-agency inventory (Lands, NTSA, Banks)"},
+                {"name": "Verif & Proposal", "role": "Executor", "type": "manual", "description": "Verify assets and input distribution plan"},
+                {"name": "e-Gazettement", "role": "System", "type": "api_call", "action": "PUB_CASE", "description": "Instant 30-day digital notice publication"},
+                {"name": "AI Validation", "role": "System", "type": "api_call", "action": "AI_AUDIT", "description": "Compliance check vs Law of Succession"},
+                {"name": "Grant Issuance", "role": "System", "type": "api_call", "action": "ISSUE_GRANT", "description": "Verifiable Digital Grant to executor's wallet"}
             ]
         },
         "WF-STEP-11": {
@@ -356,34 +330,22 @@ def seed_unified_catalogue():
                 "type": "object",
                 "required": ["deceased_id", "date_of_death", "cause_of_death", "informant_id"],
                 "properties": {
-                    "deceased_id": {
-                        "type": "string", 
-                        "title": "Deceased's National ID/UPI",
-                        "x-registry-config": {
-                            "adapter_id": "IPRS",
-                            "endpoint_id": "Verify Citizen Identity"
-                        }
-                    },
+                    "deceased_id": {"type": "string", "title": "Deceased's National ID/UPI"},
                     "date_of_death": {"type": "string", "format": "date", "title": "Date of Death"},
                     "cause_of_death": {"type": "string", "title": "Cause of Death (ICD-11)"},
-                    "informant_id": {
-                        "type": "string", 
-                        "title": "Informant's National ID",
-                        "x-registry-config": {
-                            "adapter_id": "IPRS",
-                            "endpoint_id": "Verify Citizen Identity"
-                        }
-                    }
+                    "informant_id": {"type": "string", "title": "Informant's National ID"}
                 }
             },
             "custom_workflow": [
-                {"name": "Notification of Death", "role": "Medical Personnel", "type": "manual"},
-                {"name": "Verify Deceased Identity", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/IPRS/api/v1/citizens/verify"}},
-                {"name": "Issue Death Certificate", "role": "System", "type": "api_call", "api_config": {"url": "KESEL_BRIDGE/CRS/api/certificates/death/issue"}},
-                {"name": "Notify Informant", "role": "System", "type": "api_call", "action": "SEND_SMS"}
+                {"name": "Source Capture", "role": "Medical Staff", "type": "manual", "description": "Digital notification by hospital/chief"},
+                {"name": "IPRS Status Update", "role": "System", "type": "api_call", "action": "IPRS_DEATH", "description": "Instantly freeze ID to prevent fraud"},
+                {"name": "Burial Permit", "role": "System", "type": "api_call", "action": "ISSUE_PERMIT", "description": "Auto-generate verifiable QR burial permit"},
+                {"name": "Cert Application", "role": "Next of Kin", "type": "manual", "description": "Apply via eCitizen using Digital Permit ID"},
+                {"name": "Issuance", "role": "System", "type": "api_call", "action": "GEN_DEATH_CERT", "description": "Generate digital verifiable death certificate"}
             ]
         }
     }
+
 
     # Enrich Lifecycle Schema with Field Definitions from JSON
     form_definitions = {f['field_name']: f for f in lifecycle_data.get('input_form', [])}
