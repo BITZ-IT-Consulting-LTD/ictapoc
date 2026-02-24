@@ -2,201 +2,187 @@
 
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** STATE LAW OFFICE (ATTORNEY GENERAL)
-- **Process Name:** Marriage Registration
-- **Document Version:** 1.3
-- **Date:** 2026-02-19
+- **Process Names:** Marriage Registration, Societies Registration, Legal Advice Request
+- **Document Version:** 2.0
+- **Date:** 2026-02-24
 - **Classification:** Official
 
 ---
 
 ## Executive Summary
-The Office of the Attorney General (State Law Office), through the Registrar of Marriages, oversees all civil, customary, Christian, Hindu, and Islamic marriages in Kenya. It issues the **Marriage Certificate**, a vital document for spousal benefits, travel, and succession.
+The Office of the Attorney General (State Law Office) oversees vital legal processes for citizens and government institutions. This includes the registration of civil and religious marriages, the registration and regulation of societies, and the provision of formal legal advice and opinions to government ministries and agencies.
 
 ---
 
-## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (Manual Notice / Sheria House Queues).*
+## Process 1: Marriage Registration
 
+### 1.1 AS-IS Process Flowchart (BPMN 2.0)
 ```mermaid
 graph TD
     Start((Start)) --> S1
-
-    subgraph Couple [Couple]
-        S1["**Notice:** Both parties log into eCitizen, fill details ..."]
-        S2["**Fee Payment:** Pays KES 600 for Notice. Wait 21 days (m..."]
-        S4["**Booking:** After 21 days, couple logs in to book a date..."]
-    end
-
-    subgraph Registrar [Registrar]
-        S3["**Review:** Officer checks uploaded documents. If valid, ..."]
-        S6["**Issuance:** Parties sign the Register. Registrar issues..."]
-    end
-
-    subgraph Couple_+_Witnesses [Couple + Witnesses]
-        S5["**Ceremony:** On the day, arrive at Sheria House. Wait in..."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> S6
-    S6 --> End((End))
+    S1["Couple Gives Notice of Marriage"] --> S2
+    S2["Submit Required Documents (ID, Birth Cert, Photos)"] --> S3
+    S3["Pay Marriage Notice Fee"] --> S4
+    S4["Notice Period Runs (21 Days) / Public Objections"] --> S5
+    S5["Marriage Ceremony Conducted (Registrar/Minister)"] --> S6
+    S6["Marriage Certificate Prepared"] --> S7
+    S7["Marriage Certificate Issued"] --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
     class Start start;
     class End endNode;
-    class S1,S2,S3,S4,S5,S6 userTask;
 ```
 
----
-
-## Process Overview
-### Process Name
-Civil Marriage Registration (Sheria House)
-
-### Service Category
-- G2C (Government to Citizen)
-
-### Scope
-- **In Scope:** Notice of Marriage; Civil Marriage Ceremony; Issuance of Marriage Certificate.
-- **Out of Scope:** Divorce (Judiciary); Customary Marriage registration (often delayed).
-
-### Triggers
-- Couple intending to marry.
-
-### End States
-- **Successful:** Issuance of Marriage Certificate.
-
-### Policy Context
-- Marriage Act, 2014.
-
----
-
-## Stakeholders
-| Stakeholder | Role | Responsibilities |
-|---|---|---|
-| Couple | Applicant | Files notice, attends interview/ceremony. |
-| Registrar of Marriages | Officiant | Conducts civil marriage, verifies capacity to marry. |
-| Witnesses (2) | Verifier | Witness the vows and sign the register. |
-| Public | Objector | May file an objection (Caveat) during the 21-day notice period. |
-
----
-
-## Detailed Process (AS-IS)
-| Step | Role | Action | Tool | Notes |
+### 1.2 Detailed Process (AS-IS)
+| Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
-| 1 | Couple | **Notice:** Both parties log into eCitizen, fill details (Occupation, Residence, Parents). Upload passport photos and ID copies. | eCitizen Portal | System requires both parties to have eCitizen accounts. |
-| 2 | Couple | **Fee Payment:** Pays KES 600 for Notice. Wait 21 days (mandatory legal requirement). | Mobile Money | No way to expedite legally (except Special License). |
-| 3 | Registrar | **Review:** Officer checks uploaded documents. If valid, Notice is "Published" (often just pinned on a notice board at Sheria House). | Physical Board | Archaic method of publication. |
-| 4 | Couple | **Booking:** After 21 days, couple logs in to book a date for the ceremony. Pays KES 3,300 (Ceremony Fee). | Appointment System | Slots at Sheria House fill up fast, especially on Fridays. |
-| 5 | Couple + Witnesses | **Ceremony:** On the day, arrive at Sheria House. Wait in queue. Enter Registrar's office for brief vows. | Physical Office | Often chaotic, crowded waiting rooms. |
-| 6 | Registrar | **Issuance:** Parties sign the Register. Registrar issues hand-written or typed Certificate. | Manual Certificate | Risk of typos. |
+| 1 | Couple | Gives Notice of Intended Marriage at Registrar Office or Online (eCitizen). | eCitizen / Manual | |
+| 2 | Couple | Submits National ID/Passport, Birth Certificate, and Passport Photos. | eCitizen / Manual | |
+| 3 | Couple | Pays the Marriage Notice fee. | eCitizen/Bank | |
+| 4 | Registrar/Public | Registrar publishes notice. 21-day notice period runs allowing public objections. | Notice Board | |
+| 5 | Officiant | Marriage is officiated by Registrar or Licensed religious minister. | Physical | |
+| 6 | Registrar | Prepares the Marriage Record. | Manual/System | |
+| 7 | Registrar | Issues the final Marriage Certificate to the couple. | Manual | |
 
----
-
-## Pain Points & Opportunities
-### Pain Points
-- **Physical Presence:** Both parties must visit Sheria House for the interview/booking, even if applied online.
-- **Notice Board:** Relying on a physical notice board for objections is ineffective in the digital age.
-- **Delays:** Booking slots can be months away due to high demand.
-- **Customary Marriages:** Registration of customary unions (traditional weddings) is complex and often ignored until death/succession disputes arise.
-- **Verification:** Banks/Embassies struggle to verify manual certificates instantly.
-
-### Opportunities
-- **Digital Notice:** Publish notices online (e-Gazette/Portal) for wider visibility.
-- **Remote Interview:** Conduct the pre-wedding interview via video link to save travel.
-- **Decentralization:** Empower Huduma Centres in all counties to officiate marriages (currently limited).
-- **Blockchain:** Immutable marriage register to prevent bigamy/fraud.
-
----
-
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Repeatable WoG Platform).*
+### 1.3 TO-BE Process (Inferred)
+**Design Principles:** Digital Identity Verification, Automated Notice Publication, Instant Certificate Generation.
 
 ```mermaid
 graph TD
-    Start((Start)) --> S1
-
-    subgraph Couple [Couple]
-        S1["Files joint notice via eCitizen App."]
-    end
-
-    subgraph WoG_Platform [WoG Platform]
-        S2["Runs bigamy check and publishes notice."]
-    end
-
-    subgraph Public [Public]
-        S3["Can view notice and file objection online."]
-    end
-
-    subgraph Officiant [Officiant]
-        S4["Scans QR code to finalize marriage."]
-    end
-
-    subgraph Registry [Registry]
-        S5["Updates status and issues Digital Cert."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> End((End))
+    Start((Start)) --> T1
+    T1["Couple submits joint digital notice via eCitizen; System auto-verifies IDs via IPRS"] --> T2
+    T2["System automatically generates payment prompt and processes fee"] --> T3
+    T3["Notice is automatically published on the e-Gazette for 21 days for digital objections"] --> T4
+    T4["Upon maturity, system issues a secure Digital Marriage License (QR Code)"] --> T5
+    T5["Licensed Officiant scans QR code via Gov App during ceremony to confirm marriage"] --> T6
+    T6["System instantly updates IPRS status and emails Digital Marriage Certificate"] --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
     class Start start;
     class End endNode;
-    class S1,S2,S3,S4,S5 userTask;
 ```
 
-## Future State Process (TO-BE)
-### Narrative
-The process is **Decentralized** and **Secure**.
-1.  **Smart Notice:** The **WoG Platform** checks the ID numbers of both parties against the central marriage database. Bigamy is flagged instantly.
-2.  **Online Publication:** The "Notice of Marriage" is published on the public **e-Gazette** portal, searchable by name.
-3.  **Digital License:** After 21 days, if no objection is filed online, the couple receives a secure **QR Code License** on their phone.
-4.  **Universal Officiation:** Any licensed officiant (Pastor, Imam, Registrar) uses the **Government Officiant App** to scan the QR code at the wedding venue (church, garden, mosque). This "activates" the marriage in real-time.
-5.  **Instant Update:** The change of status (Single -> Married) is pushed immediately to **IPRS**, linking the spouses for future services (NHIF, Pension).
-
-### Optimized Steps (Digital)
-| Step | Actor | Action | System |
+| Step | Role | Action | System |
 |---|---|---|---|
-| 1 | Couple | Files joint notice via eCitizen App. | eCitizen App |
-| 2 | WoG Platform | Runs bigamy check and publishes notice. | Registry / e-Gazette |
-| 3 | Public | Can view notice and file objection online. | Public Portal |
-| 4 | Officiant | Scans QR code to finalize marriage. | Officiant App |
-| 5 | Registry | Updates status and issues Digital Cert. | X-Road |
+| 1 | Couple | Submit joint notice; identities and marital status auto-verified. | eCitizen / IPRS |
+| 2 | System | Processes payment through Gov Payment Gateway. | Payment Gateway |
+| 3 | System | Publishes notice on e-Gazette allowing online objections. | e-Gazette |
+| 4 | System | Issues Digital Marriage License (QR Code) after 21 days. | Registry System |
+| 5 | Officiant | Scans QR code via app to solemnize marriage in real-time. | Officiant App |
+| 6 | System | Updates IPRS and issues verifiable Digital Marriage Certificate. | Registry / IPRS |
 
 ---
 
-## 3. Standard Data Inputs
-*Required fields for the WoG Digital Service.*
+## Process 2: Societies Registration
 
-### A. Notice of Marriage (Joint)
-| Field Name | Type | Source | Validation |
-|---|---|---|---|
-| Groom ID | String | User Input | Must be 'Single' (IPRS) |
-| Bride ID | String | User Input | Must be 'Single' (IPRS) |
-| Marriage Type | Enum | User Input | Civil / Christian / Customary |
-| Proposed Date | Date | User Input | > 21 days from today |
-| Venue | String | User Input | Licensed Venue List |
+### 2.1 AS-IS Process Flowchart (BPMN 2.0)
+```mermaid
+graph TD
+    Start((Start)) --> S1
+    S1["Officials Prepare Society Registration Form"] --> S2
+    S2["Submit Application (Form, Constitution, Officials List, IDs)"] --> S3
+    S3["Pay Registration Fee"] --> S4
+    S4["Registrar Reviews Application & Conducts Security Clearance"] --> S5
+    S5["Approval or Rejection by Registrar"] --> S6
+    S6["Certificate of Registration Issued (If Approved)"] --> End((End))
 
-### B. Officiation (Ceremony)
-| Field Name | Type | Source | Validation |
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    class Start start;
+    class End endNode;
+```
+
+### 2.2 Detailed Process (AS-IS)
+| Step | Role | Action | Tool/System | Notes |
+|---|---|---|---|---|
+| 1 | Officials | Society officials complete the Society Registration Form. | Manual/Digital | |
+| 2 | Officials | Submit Form, Constitution, Officials List, and ID Copies. | Manual/Registry | |
+| 3 | Officials | Pay prescribed registration fee. | Bank/Mobile | |
+| 4 | Registrar | Reviews objectives and officials details; may conduct security clearance. | Manual/Internal | |
+| 5 | Registrar | Approves or Rejects the application. | Manual | |
+| 6 | Registrar | Issues Society Registration Certificate if approved. | Manual | |
+
+### 2.3 TO-BE Process (Inferred)
+**Design Principles:** AI-assisted Constitution Review, Automated Background Checks, E-Certificates.
+
+```mermaid
+graph TD
+    Start((Start)) --> T1
+    T1["Officials complete online form; System auto-fetches details from IPRS"] --> T2
+    T2["Upload standard constitution template or custom AI-reviewed constitution"] --> T3
+    T3["System routes officials' details to Security Agencies (DCI) for instant e-clearance"] --> T4
+    T4["Registrar reviews flagged items via Digital Dashboard and Approves"] --> T5
+    T5["System auto-generates Verifiable Digital Certificate of Registration"] --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    class Start start;
+    class End endNode;
+```
+
+| Step | Role | Action | System |
 |---|---|---|---|
-| License QR | String | Scanned (App) | Valid & Not Expired |
-| Officiant License | String | System (Auth) | Must be Active |
-| Witness 1 ID | String | User Input | Valid ID (IPRS) |
-| Witness 2 ID | String | User Input | Valid ID (IPRS) |
+| 1 | Officials | Apply online; ID details auto-fetched. | Portal / IPRS |
+| 2 | System | Validates uploaded constitution against legal templates. | Rules Engine |
+| 3 | System | Triggers automated background checks with security agencies. | Inter-Agency API |
+| 4 | Registrar | Reviews application on digital dashboard and approves. | Officer Workbench |
+| 5 | System | Generates Verifiable Digital Certificate with QR code. | Registry System |
 
 ---
 
-## References
-- Marriage Act.
+## Process 3: Legal Advice Request
+
+### 3.1 AS-IS Process Flowchart (BPMN 2.0)
+```mermaid
+graph TD
+    Start((Start)) --> S1
+    S1["Institution Prepares Formal Written Legal Request"] --> S2
+    S2["Submit Request to Attorney General’s Office"] --> S3
+    S3["Request Logged and Assigned to State Counsel"] --> S4
+    S4["Legal Review Conducted (Laws, Contracts, Issues)"] --> S5
+    S5["State Counsel Prepares Legal Opinion Document"] --> S6
+    S6["Signed Legal Opinion Issued to Requesting Institution"] --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    class Start start;
+    class End endNode;
+```
+
+### 3.2 Detailed Process (AS-IS)
+| Step | Role | Action | Tool/System | Notes |
+|---|---|---|---|---|
+| 1 | Institution | Government Ministry/Agency prepares formal written request. | Physical Letter/Memo | |
+| 2 | Institution | Submits request to the Attorney General’s Office. | Manual Dispatch | |
+| 3 | Registry | Request is logged manually and assigned to a State Counsel. | Logbook/Registry | |
+| 4 | State Counsel | Conducts legal review of laws, contracts, and issues. | Manual | |
+| 5 | State Counsel | Prepares Legal Opinion Document. | Word Processor | |
+| 6 | AG Office | Signed legal opinion sent back to the requesting institution. | Physical Dispatch | |
+
+### 3.3 TO-BE Process (Inferred)
+**Design Principles:** Centralized Legal Case Management, Electronic Routing, AI Legal Research Assistant.
+
+```mermaid
+graph TD
+    Start((Start)) --> T1
+    T1["Institution submits e-Request via Government Legal Portal with attachments"] --> T2
+    T2["System auto-logs, categorizes, and assigns to relevant State Counsel"] --> T3
+    T3["State Counsel uses AI Legal Assistant to query case law and draft opinion"] --> T4
+    T4["Draft routed electronically for peer review and AG signature"] --> T5
+    T5["Digitally signed Legal Opinion securely transmitted to requesting Institution"] --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    class Start start;
+    class End endNode;
+```
+
+| Step | Role | Action | System |
+|---|---|---|---|
+| 1 | Institution | Submits request and contract attachments via secure portal. | Gov Legal Portal |
+| 2 | System | Auto-assigns case based on workload and specialization. | Case Management |
+| 3 | State Counsel | Reviews request utilizing AI-powered legal research tools. | Legal AI Assistant |
+| 4 | Management | Electronically reviews and applies digital signature. | e-Signature Workflow |
+| 5 | System | Transmits official legal opinion back to the institution's dashboard. | Gov Legal Portal |
