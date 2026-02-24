@@ -108,16 +108,7 @@ Member Registration & Benefit Access (UHC)
 | 6 | System | **Generate SHA Number:** System creates SHA Membership Record linked to National ID. | SHA System | |
 | 7 | System | **Assessment:** System determines contribution amount based on income level / means testing. | SHA System | |
 | 8 | Citizen | **Contribution:** Citizen pays via Mobile Money, Bank, or Employer deduction. | Payment Gateway | |
-| 9 | System | **Activation:** Coverage Activated. Citizen becomes eligible for healthcare services. | SHA System |
-
----|---|---|---|---|
-| 1 | Member | **Registration:** Individual visits Huduma Centre or uses USSD/App. Fills bio-data. Uploads spouse ID and children's Birth Certs. | Mobile App / Portal | Dependent verification often fails or takes weeks. |
-| 2 | Member | **Payment:** Pays via M-Pesa Paybill 200222 or Salary Check-off. | Payment Gateway | Reconciliation delays lead to "Card Inactive" status at hospital reception. |
-| 3 | Member | **Access:** Visits hospital. Receptionist checks status on system. If inactive (due to delayed remittance), patient is turned away. | Provider Portal | Frequent downtime of the biometric/card system. |
-| 4 | Hospital | **Pre-Auth:** For surgeries/CT scans, hospital requests "Pre-Authorization" online. Must attach clinical notes. | E-Claim Portal | Approval takes 24-48 hours. Patients wait in wards for "Pre-Auth Code". |
-| 5 | SHA/NHIF | **Adjudication:** Medical team reviews request. Often rejects or queries ("Add X-ray report"). | Back Office | |
-| 6 | Hospital | **Treatment:** Upon approval, treatment is given. Patient discharged. | Hospital HIS | |
-| 7 | Hospital | **Claim:** Hospital compiles invoice and submits to Fund for payment. | Bulk Upload | Payment delays >6 months cripple hospital cash flow. |
+| 9 | System | **Activation:** Coverage Activated. Citizen becomes eligible for healthcare services. | SHA System | |
 
 ---
 
