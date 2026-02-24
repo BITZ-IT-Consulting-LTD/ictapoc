@@ -3,204 +3,130 @@
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** MINISTRY OF EDUCATION
 - **Process Name:** Student Registration & Transition (NEMIS)
-- **Document Version:** 1.3
-- **Date:** 2026-02-19
+- **Document Version:** 2.0
+- **Date:** 2026-02-24
 - **Classification:** Official
 
 ---
 
 ## Executive Summary
-The Ministry of Education (MoE) is responsible for national education policy and standards. The **National Education Management Information System (NEMIS)** is the central repository for all student data, assigning a Unique Personal Identifier (UPI) to every learner from Early Years Education (EYE) to University.
+The Ministry of Education (MoE) is responsible for national education policy and standards. It oversees the **National Education Management Information System (NEMIS)**, which acts as the central repository for all student data, assigning a Unique Personal Identifier (UPI) or NEMIS Number to every learner from Early Years Education to secondary school, which is crucial for tracking enrollment, transition, and capitation funding.
 
 ---
 
 ## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (Manual Entry / System Glitches).*
+*Current State visualization (Manual School-Led Registration).*
 
 ```mermaid
 graph TD
     Start((Start)) --> S1
-
-    subgraph Parent___Guardian [Parent / Guardian]
-        S1["**Admission:** Takes child to school for admission (PP1, ..."]
-        S2["**Submission:** Submits required documents: Birth Certifi..."]
-    end
-
-    subgraph School [School]
-        S3["**Verification:** Checks authenticity of documents (Spell..."]
-        S4["**Manual Recording:** Records learner details in the phys..."]
-        S9["**Confirmation:** Confirms learner is now fully registere..."]
-    end
-
-    subgraph School_Admin [School Admin]
-        S5["**Portal Login:** Logs into NEMIS portal using school cre..."]
-        S6["**Data Entry:** Manually enters learner details into NEMI..."]
-    end
-
-    subgraph NEMIS_System [NEMIS System]
-        S7["**Validation:** Automatically checks against CRS."]
-        S8["**Generation:** Generates **Unique Personal Identifier (U..."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> S8
-    S8 --> S9
-    S9 --> End((End))
+    S1["Child reaches school age & Parent decides on placement"] --> S2
+    S2["Parent approaches school with Birth Cert, ID, and Health Records"] --> S3
+    S3["School prepares manual Registration Form with child & parent details"] --> S4
+    S4["School Officer logs into NEMIS portal & inputs data"] --> S5
+    S5["School verifies data against physical Birth Certificate"] --> S6
+    S6["NEMIS System confirms registration & issues NEMIS Number"] --> S7
+    S7["School issues Admission Letter with NEMIS Number to Parent"] --> S8
+    S8["School submits manual monthly/annual reports to County & MOE"] --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
     class Start start;
     class End endNode;
-    class S1,S2,S3,S4,S5,S6,S7,S8,S9 userTask;
 ```
 
 ---
 
 ## Process Overview
 ### Process Name
-Student Registration & Capitation (NEMIS)
+Student Registration & Transition (NEMIS)
 
 ### Service Category
 - G2C (Government to Citizen) / G2G (Government to School)
 
 ### Scope
-- **In Scope:** Registration of learners in Public/Private Basic Education institutions; Disbursement of Free Primary/Day Secondary Education funds.
-- **Out of Scope:** University placement (KUCCPS handles this based on NEMIS data).
+- **In Scope:** Initial registration of a learner into a school, data entry into NEMIS, generation of the NEMIS Number (UPI), issuance of admission letters, and reporting for government planning.
+- **Out of Scope:** Administration of national exams (handled by KNEC) and university placement (handled by KUCCPS).
 
 ### Triggers
-- Admission of a child to school (PP1, Grade 1, Form 1).
-- Transfer of a student between schools.
+- A child reaches the eligible school-going age (4-6 years).
+- A parent/guardian seeks admission at a specific school.
 
 ### End States
-- **Successful:** UPI Generated; Capitation Disbursed.
+- **Successful:** NEMIS Student Number issued; School Enrollment Record created; Data available for capitation and government planning.
 
 ### Policy Context
-- Basic Education Act, 2013; Sessional Paper No. 1 of 2019.
-
----
-
-## Stakeholders
-| Stakeholder | Role | Responsibilities |
-|---|---|---|
-| Head Teacher | Data Entrant | Captures learner details on NEMIS. |
-| County Director of Education (CDE) | Approver | Approves school registrations and transfers. |
-| Parent | Beneficiary | Provides birth documents; monitors progress. |
-| KNEC | Consumer | Uses NEMIS data for exam registration (KPSEA, KCSE). |
+- Basic Education Act, 2013.
 
 ---
 
 ## Detailed Process (AS-IS)
-| Step | Role | Action | Tool | Notes |
+| Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
-| 1 | Parent / Guardian | **Admission:** Takes child to school for admission (PP1, Grade 1, or transfer). | Physical Presence | Child must be physically present for verification. |
-| 2 | Parent / Guardian | **Submission:** Submits required documents: Birth Certificate (Mandatory), Parent ID copy, Passport photo, Previous school details, Immunization card. | Physical Documents | *Constraint:* Without Birth Cert, admission is often delayed. |
-| 3 | School | **Verification:** Checks authenticity of documents (Spelling, DOB, Parent details). | Manual Check | If Birth Cert missing, parent is advised to register birth first. |
-| 4 | School | **Manual Recording:** Records learner details in the physical Admission Register and Class Register. | Physical Register | Creates the official school admission record (offline). |
-| 5 | School Admin | **Portal Login:** Logs into NEMIS portal using school credentials. | NEMIS Web Portal | Often done at cyber cafés due to lack of school internet. |
-| 6 | School Admin | **Data Entry:** Manually enters learner details into NEMIS (Birth Cert No, Name, Gender, DOB, Parent details). | NEMIS Web Portal | *Bottleneck:* School applies to NEMIS on behalf of learner; Parent cannot do this directly. |
-| 7 | NEMIS System | **Validation:** Automatically checks against CRS. | Integration API | **Outcomes:** <br>• Valid: Learner accepted.<br>• Duplicate: Transfer required.<br>• Invalid: Registration rejected (Learner stuck). |
-| 8 | NEMIS System | **Generation:** Generates **Unique Personal Identifier (UPI)**. | System | This becomes the learner’s permanent education ID for exams (KPSEA, KCSE) and Capitation. |
-| 9 | School | **Confirmation:** Confirms learner is now fully registered and Active in NEMIS. | Dashboard | Learner is now officially recognized by Ministry of Education. |
-
-**Summary:** The reality is that **Parents DO NOT apply directly to NEMIS**. Parents apply to the school, and the **School applies to NEMIS** on behalf of the learner. The final artifact is the **UPI Number**.
+| 1 | Parent/Guardian | **Initiation:** Child reaches school-going age; parent decides on school placement. | Physical | |
+| 2 | Parent/Guardian | **Documentation:** Approaches school and provides Child’s Birth Cert (from CRS), Parent ID, and Health records. | Manual Documents | Without a Birth Cert, registration is blocked. |
+| 3 | School | **Form Preparation:** Records child’s name, DOB, gender, parent details, and previous records on a registration form. | Physical Register | |
+| 4 | School Officer | **Data Entry:** Enters child data into the NEMIS portal, verifying the Birth Cert number and confirming uniqueness. | NEMIS Portal | Done on behalf of the parent. |
+| 5 | School | **Validation:** Checks completeness of data, accuracy against the Birth Cert, and compliance with admission rules. | Manual/NEMIS | |
+| 6 | NEMIS System | **Confirmation:** Issues the NEMIS Number (UPI) to the student and stores the record in the central database. | NEMIS Database | |
+| 7 | School | **Issuance:** Provides an Admission letter containing the NEMIS Number to the parent for reference. | Physical Letter | |
+| 8 | School | **Reporting:** Submits monthly/annual enrollment reports to the County Education Office and MOE. | Manual/Portal | Used for planning and resource allocation. |
 
 ---
 
 ## Pain Points & Opportunities
 ### Pain Points
-- **System Downtime:** NEMIS crashes frequently during Form 1 admission.
-- **Data Mismatch:** Rigid validation against CRS (e.g., "Maina" vs "Maina J.") causes rejection.
-- **Manual Transfers:** Moving a student requires the *previous* school to "release" them online. Head Teachers often refuse/delay this.
-- **Capitation Loss:** Schools lose funds for students whose UPI generation is stuck.
-- **Cyber Costs:** Head Teachers in rural areas travel long distances to access internet.
+- **School Bottleneck:** Parents cannot register their children directly; they must rely entirely on the school officer, leading to delays if the school lacks internet access or personnel.
+- **Manual Verification:** Schools manually verifying physical Birth Certificates against the system leads to spelling errors and "duplicate" rejections.
+- **Reporting Burden:** Despite having NEMIS, schools are still often required to submit manual enrollment reports to county offices.
 
 ### Opportunities
-- **Auto-Registration:** Link Birth Registration (CRS) to Education. A child turning 4 is *automatically* eligible for PP1.
-- **Offline Mode:** Allow data capture on a mobile app without internet, syncing later.
-- **Parent Self-Service:** Allow parents to register/transfer their own children via eCitizen, removing the Head Teacher bottleneck.
-- **Biometrics:** Introduce simple biometrics to eliminate ghost students definitively.
+- **Parent Self-Service:** Empower parents to initiate enrollment requests directly via eCitizen using the child's UPI (from birth).
+- **Auto-Verification:** Direct API link to Civil Registration Services (CRS) to auto-populate the child's details, eliminating manual data entry by schools.
+- **Automated Capitation:** Capitation funds and monthly reports should be auto-generated by the system based on active daily attendance, rather than manual submissions.
 
 ---
 
 ## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Repeatable WoG Platform).*
+*Future State visualization (Parent-Led Digital Enrollment).*
 
 ```mermaid
 graph TD
-    Start((Start)) --> S1
-    
-    subgraph Parent [Citizen via eCitizen]
-        S1["**Parental Enrollment Request:** Selects child & school"]
-    end
-    
-    subgraph WoG_Platform [Education Service Bus]
-        S2["**Validate UPI Registry:** Verifies identity via CRS Registry"]
-        S3["**Verify School Capacity:** Real-time check via Schools Registry"]
-    end
-    
-    subgraph School [Head Teacher Workbench]
-        S4["**Head Teacher Admission:** Digital review & one-click approval"]
-    end
-    
-    subgraph NEMIS_System [NEMIS Backend]
-        S5["**NEMIS Record Finalization:** Auto-enrollment & capitation trigger"]
-    end
-    
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> End((End))
+    Start((Start)) --> T1
+    T1["Parent logs into eCitizen and selects 'School Enrollment'"] --> T2
+    T2["System auto-fetches Child details via Maisha Namba/UPI from CRS"] --> T3
+    T3["Parent selects preferred School; System checks capacity via Schools Registry"] --> T4
+    T4["Digital enrollment request sent to Head Teacher's Workbench"] --> T5
+    T5["Head Teacher reviews and approves request with one click"] --> T6
+    T6["NEMIS instantly activates student and triggers Capitation Funding"] --> T7
+    T7["Parent receives Digital Admission Letter via eCitizen Wallet/SMS"] --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-    
     class Start start;
     class End endNode;
-    class S1,S4 userTask;
-    class S2,S3,S5 serviceTask;
 ```
 
-## Detailed Process (TO-BE) - Configurable & Automated
-| Step | Actor | Action | System Component | Logic / Integration |
-|---|---|---|---|---|
-| 1 | Parent / Guardian | **Initiation:** Selects child (via UPI) and preferred school on eCitizen. | **eCitizen Portal** | Uses `Maisha Namba (SSO)` for authentication. |
-| 2 | System | **UPI Validation:** Verifies child existence and parentage records. | **CRS Registry API** | Fetches birth details via the `Service Bus`. |
-| 3 | System | **Capacity Check:** Validates school has space and child meets age requirements. | **National Schools Registry** | Calls `Verify School Capacity` endpoint dynamically. |
-| 4 | School Head | **Admission Review:** Approves the digital application on the workbench. | **Officer Workbench** | Validated data removes need for physical file review. |
-| 5 | System | **Enrollment Sync:** Finalizes record in NEMIS and triggers capitation. | **NEMIS Workflow Engine** | Auto-enrolls and calculated FDSE/FPE funds. |
+## Future State Process (TO-BE)
+### Narrative
+**TO-BE Process: Parent-Led Digital Enrollment**
 
----
+**Design Principles:**
+- Parent Empowerment (Self-Service)
+- Single Source of Truth Verification (CRS API)
+- Automated Capacity and Capitation Management
 
-## 3. Standard Data Inputs
-*Required fields for the WoG Digital Service.*
-
-### A. School Enrollment (MOE-NEMIS-001)
-| Field Name | Type | Source | Widget / Registry |
+### Optimized Steps (Digital)
+| Step | Actor | Action | System |
 |---|---|---|---|
-| child_upi | String | CRS Registry | **Auto-Populate / Verify** |
-| school_code | String | Schools Registry | **Registry Search** |
-| admission_level | Enum | Business Logic | **Rule-Based (Age)** |
-
-### B. Student Transfer Request
-| Field Name | Type | Source | Validation |
-|---|---|---|---|
-| Child UPI | String | User Input | Must be currently enrolled |
-| From School | String | System Fetch | Read-only |
-| To School Code | String | User Input | Must have capacity |
-| Reason | String | Enum (Relocation, etc.) | Required |
-| Transfer Date | Date | User Input | Cannot be past |
+| 1 | Parent | **Self-Service Request:** Logs into eCitizen using SSO to initiate the school enrollment process for their child. | eCitizen Portal |
+| 2 | System | **Auto-Population:** Uses the child's Maisha Namba (UPI minted at birth) to instantly fetch and verify details from the CRS Registry, eliminating document uploads. | X-Road (CRS API) |
+| 3 | Parent/System| **School Selection:** Parent selects the desired school. System instantly queries the National Schools Registry to confirm available capacity. | Schools Registry API |
+| 4 | School Head | **Digital Approval:** The Head Teacher receives the verified digital request on their dashboard and approves the admission with one click. | Officer Workbench |
+| 5 | NEMIS System | **Activation & Funding:** NEMIS automatically activates the student's enrollment status and immediately triggers capitation funding calculations for the MOE. | NEMIS Core Engine |
+| 6 | System | **Digital Issuance:** Generates a Digital Admission Letter and sends it directly to the parent's eCitizen Wallet and via SMS. | Notification Gateway |
 
 ---
 
 ## References
-- Basic Education Act.
+- Basic Education Act, 2013.

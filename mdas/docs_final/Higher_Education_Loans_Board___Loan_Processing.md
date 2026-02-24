@@ -1,54 +1,39 @@
-# Higher Education Loans Board – Loan Processing
+# HIGHER EDUCATION LOANS BOARD (HELB) – Loan Processing
 
 ## Cover Page
-- **Ministry/Department/Agency (MDA):** Higher Education Loans Board
+- **Ministry/Department/Agency (MDA):** HIGHER EDUCATION LOANS BOARD (HELB)
 - **Process Name:** Loan Processing
-- **Document Version:** 1.0
-- **Date:** 2026-02-14
+- **Document Version:** 2.0
+- **Date:** 2026-02-24
 - **Classification:** Official
 
 ---
 
 ## Executive Summary
-The Higher Education Loans Board (HELB) is a statutory body in Kenya, established in July 1995 by an Act of Parliament (Cap 213A) as a state corporation under the Ministry of Education. Its core mandate is to provide affordable loans, bursaries, and scholarships to Kenyan students pursuing higher education in recognized institutions, both within and outside Kenya, to ensure access to tertiary education.
+The Higher Education Loans Board (HELB) is a statutory body mandated to provide affordable loans, bursaries, and scholarships to Kenyan students pursuing higher education. It is a critical component of the "Childhood & Education" lifecycle, ensuring financial barriers do not prevent transition to tertiary education after KUCCPS placement.
 
 ---
 
 ## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization.*
+*Current State visualization (Manual/Semi-Digital Loan Processing).*
 
 ```mermaid
 graph TD
     Start((Start)) --> S1
-
-    subgraph Student [Student]
-        S1["Student registers/logs into the HELB Student Portal."]
-        S2["Student selects the appropriate Loan Product (e.g., Under..."]
-        S3["Student fills the detailed financial and personal backgro..."]
-        S4["Student prints the filled form."]
-        S5["Student has the form signed by guarantors, a lawyer/magis..."]
-        S6["Student drops the physical form at a Huduma Center or Bank."]
-    end
-
-    subgraph HELB [HELB]
-        S7["HELB processes the loan and disburses funds to the univer..."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> End((End))
+    S1["Student provides KCSE results & Admission Letter (KUCCPS)"] --> S2
+    S2["HELB manually verifies eligibility and admission"] --> S3
+    S3["Student creates application profile on HELB Portal"] --> S4
+    S4["Student inputs details & uploads scanned documents (ID, Bank, etc.)"] --> S5
+    S5["Student submits loan form specifying fees and expenses"] --> S6
+    S6["HELB reviews uploaded documents and verifies identity"] --> S7
+    S7["HELB calculates and approves loan amount for eligible students"] --> S8
+    S8["Disbursement: Tuition paid to institution, expenses to student"] --> S9
+    S9["HELB creates repayment schedule and reports to MOE & Treasury"] --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
     class Start start;
     class End endNode;
-    class S1,S2,S3,S4,S5,S6,S7 userTask;
 ```
 
 ---
@@ -58,115 +43,91 @@ graph TD
 Loan Processing
 
 ### Service Category
-- G2B (Government to Business)
+- G2C (Government to Citizen)
 
 ### Scope
-- **In Scope:** End-to-end processing within Higher Education Loans Board.
+- **In Scope:** Verifying candidate eligibility, processing applications, identity/document verification, means testing, loan approval, and disbursement to institutions and students.
+- **Out of Scope:** Routine university admission (handled by KUCCPS).
 
 ### Triggers
-- Submission of application/request by Student.
+- Admission into a tertiary institution via KUCCPS or direct placement.
+- Opening of the HELB application window.
 
 ### End States
-- **Successful:** License / Permit / Certificate, Compliance Inspection Report, Official Receipt, Gazette Notice
+- **Successful:** Approved loan amount; Funds disbursed to institution and student; Record created in HELB database for future repayment tracking.
 
 ### Policy Context
-- The Higher Education Loans Board Act; The Constitution of Kenya 2010; Data Protection Act 2019.
-
----
-
-## Stakeholders
-| Stakeholder | Role | Responsibilities |
-|---|---|---|
-| Student | Process Actor | Performs actions as defined in steps. |
-| HELB | Process Actor | Performs actions as defined in steps. |
+- Higher Education Loans Board Act (Cap 213A).
 
 ---
 
 ## Detailed Process (AS-IS)
-| Step | Role | Action | Tool | Notes |
+| Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
-| 1 | Student | Student registers/logs into the HELB Student Portal. | Digital | |
-| 2 | Student | Student selects the appropriate Loan Product (e.g., Undergraduate First Time). | Manual | |
-| 3 | Student | Student fills the detailed financial and personal background form online. | Manual | |
-| 4 | Student | Student prints the filled form. | Manual | |
-| 5 | Student | Student has the form signed by guarantors, a lawyer/magistrate, and the local Chief. | Manual | |
-| 6 | Student | Student drops the physical form at a Huduma Center or Bank. | Manual | |
-| 7 | HELB | HELB processes the loan and disburses funds to the university/student. | Manual | |
+| 1 | Student / HELB | **Eligibility Check:** Student provides KCSE slip, Admission Letter, ID, and Parent details. HELB verifies eligibility and admission. | Manual/Portal | |
+| 2 | Student | **Profile Creation:** Creates a profile on the HELB portal, inputs academic details, and uploads scanned documents (ID, Bank account). | HELB Portal | |
+| 3 | Student | **Submission:** Completes loan form specifying tuition fees, accommodation needs, and other expenses. | HELB Portal | |
+| 4 | HELB | **Verification:** Reviews application and uploaded documents. Confirms admission and verifies student identity. | Manual | Prone to delays due to document review backlogs. |
+| 5 | HELB | **Approval:** Calculates the loan amount based on tuition and means testing, then approves the loan. | Assessment Engine| |
+| 6 | HELB | **Disbursement:** Disburses funds. Tuition is paid directly to the institution; other approved expenses are transferred to the student's bank account. | Bank Transfer | |
+| 7 | HELB | **Reporting:** Maintains loan records and repayment schedules. Reports data to the Ministry of Education and National Treasury. | Core System | |
 
 ---
 
 ## Pain Points & Opportunities
 ### Pain Points
-- Manual document verification takes time.
-- High cost and time for physical inspections.
-- Risk of counterfeit licenses/certificates.
-- Lack of real-time monitoring of licensees.
+- **Duplicate Data Entry:** Students have to recreate profiles and re-upload documents they already submitted to KUCCPS or KNEC.
+- **Manual Verification:** HELB staff manually verifying physical scans of IDs and Admission Letters is slow and susceptible to forgery.
+- **Disbursement Delays:** Reconciling which student goes to which university bank account manually often leads to delayed disbursements.
 
 ### Opportunities
-- Integration with IPRS/BRS via Service Bus.
-- Adoption of Government Payment Gateway.
-- Implementation of Automated Rules Engine.
-- Issuance of Digital Verifiable Credentials.
+- **Instant Data Sync:** Direct API integration with KUCCPS to instantly fetch the admission letter and course details, bypassing manual uploads.
+- **Means Testing APIs:** Integrate with KRA, NSSF, and Mobile Money APIs to accurately and automatically conduct means testing on the parents/guardians, rather than relying on self-reported forms.
+- **Automated Disbursement:** Smart contracts that automatically split and disburse funds to the verified University account and the student's eCitizen digital wallet simultaneously.
 
 ---
 
 ## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Optimized).*
+*Future State visualization (Automated API-Driven Loan Processing).*
 
 ```mermaid
 graph TD
-    Start((Start)) --> S1
-
-    subgraph Applicant [Applicant]
-        S1["Applicant logs in via Single Sign-On (SSO) and selects th..."]
-        S4["Applicant pays fees via the Government Payment Gateway; S..."]
-    end
-
-    subgraph System [System]
-        S2["Applicant enters National ID; System auto-populates detai..."]
-        S3["System performs auto-validation of compliance (e.g., KRA ..."]
-        S5["Application is processed by the Rules Engine. (Low-risk c..."]
-        S7["System generates a Verifiable Digital Certificate (QR Cod..."]
-    end
-
-    subgraph Officer [Officer]
-        S6["Complex cases are routed to the Officer Workbench for dig..."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> End((End))
+    Start((Start)) --> T1
+    T1["Student logs into HELB via eCitizen SSO"] --> T2
+    T2["System auto-fetches Admission details from KUCCPS & Identity from IPRS"] --> T3
+    T3["System auto-fetches Parent financial status via KRA/NSSF for Means Testing"] --> T4
+    T4["Student confirms auto-populated application and signs digitally"] --> T5
+    T5["AI Engine auto-calculates and approves the exact loan allocation"] --> T6
+    T6["Smart Contract executes dual-disbursement (Tuition to Uni, Upkeep to Student Wallet)"] --> T7
+    T7["Repayment ledger instantly updated and synced to KRA for future deductions"] --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
     class Start start;
     class End endNode;
-    class S1,S4,S6 userTask;
-    class S2,S3,S5,S7 serviceTask;
 ```
 
 ## Future State Process (TO-BE)
 ### Narrative
-The To-Be process leverages the Government Service Bus to integrate with IPRS (Identity Registry) and the Payment Gateway. Manual data entry and document uploads are replaced by real-time API validations, enabling a paperless, cashless, and presence-less service experience.
+**TO-BE Process: Automated API-Driven Loan Processing**
+
+**Design Principles:**
+- Zero Document Uploads
+- Automated Inter-Agency Means Testing
+- Smart Contract Disbursements
 
 ### Optimized Steps (Digital)
 | Step | Actor | Action | System |
 |---|---|---|---|
-| 1 | Applicant | Applicant logs in via Single Sign-On (SSO) and selects the service. | Citizen Portal / SSO |
-| 2 | System | Applicant enters National ID; System auto-populates details from IPRS (Identity Registry) via the Service Bus. | Service Bus / Registry API |
-| 3 | System | System performs auto-validation of compliance (e.g., KRA Tax Status) via Inter-Agency APIs. | Service Bus / Compliance Engine |
-| 4 | Applicant | Applicant pays fees via the Government Payment Gateway; System auto-receipts. | Payment Gateway |
-| 5 | System | Application is processed by the Rules Engine. (Low-risk cases are Auto-Approved). | Workflow Engine |
-| 6 | Officer | Complex cases are routed to the Officer Workbench for digital review and approval. | Officer Workbench |
-| 7 | System | System generates a Verifiable Digital Certificate (QR Code) and notifies the applicant. | Output Generator |
+| 1 | Student | **SSO Login:** Logs into the HELB portal using the unified eCitizen identity (Maisha Namba/UPI). | eCitizen SSO |
+| 2 | System | **Auto-Fetch (Academic/Identity):** Instantly retrieves verified identity from IPRS and confirmed university admission data directly from the KUCCPS API. No admission letter uploads needed. | X-Road (KUCCPS/IPRS) |
+| 3 | System | **Auto-Fetch (Financial):** Automatically queries KRA and NSSF APIs using the parents' IDs to conduct instant, accurate means testing. | Inter-Agency Data Hub |
+| 4 | Student | **Digital Signature:** Reviews the auto-populated application and signs a legally binding digital loan agreement. | eCitizen Portal |
+| 5 | HELB AI | **Automated Assessment:** An AI assessment engine analyzes the fetched data and instantly calculates and approves the precise loan allocation. | Assessment AI Engine |
+| 6 | System | **Smart Disbursement:** Smart contracts instantly execute a dual disbursement: tuition directly to the verified institution API, and upkeep to the student's digital wallet. | Payment Gateway |
+| 7 | System | **Ecosystem Sync:** The repayment ledger is updated and securely synced with KRA to track future automatic deductions once the student gains employment. | KRA Integration API |
 
 ---
 
 ## References
-Derived from official mandates.
+- Higher Education Loans Board Act.
