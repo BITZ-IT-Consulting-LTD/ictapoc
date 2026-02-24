@@ -112,21 +112,22 @@ Service Delivery
 graph TD
     Start((Start)) --> S1
 
-    subgraph Applicant [Applicant]
-        S1["Applicant logs in via Single Sign-On (SSO) and selects th..."]
-        S4["Applicant pays fees via the Government Payment Gateway; S..."]
-    end
-
     subgraph System [System]
-        S2["Applicant enters Business Registration Number; System aut..."]
-        S3["System performs auto-validation of compliance (e.g., KRA ..."]
-        S5["Application is processed by the Rules Engine. (Low-risk c..."]
-        S7["System generates a Verifiable Digital Certificate (QR Cod..."]
+        S1["Trigger Event: Citizen becomes eligible (Employment/18 yrs/Portal)"]
+        S2["System retrieves IPRS data and creates NSSF Profile"]
+        S3["System generates NSSF Number and notifies Citizen"]
+        S6["Real-Time Contribution Posting to Citizen Account"]
     end
 
-    subgraph Officer [Officer]
-        S6["Complex cases are routed to the Officer Workbench for dig..."]
+    subgraph Employer [Employer]
+        S4["Employer links Employee to NSSF via Payroll API"]
+        S5["Employer system automatically submits contributions"]
     end
+
+    subgraph Citizen [Citizen]
+        S7["Citizen views details on unified self-service portal"]
+    end
+
     S1 --> S2
     S2 --> S3
     S3 --> S4
@@ -142,17 +143,33 @@ graph TD
 
     class Start start;
     class End endNode;
-    class S1,S4,S6 userTask;
-    class S2,S3,S5,S7 serviceTask;
+    class S1,S2,S3,S6 serviceTask;
+    class S4,S5,S7 userTask;
 ```
 
 ## Future State Process (TO-BE)
 ### Narrative
-The To-Be process leverages the Government Service Bus to integrate with BRS (Business Registry) and the Payment Gateway. Manual data entry and document uploads are replaced by real-time API validations, enabling a paperless, cashless, and presence-less service experience.
+**TO-BE Process: Automated NSSF Registration and Contribution**
+
+**Design Principles:**
+- Zero duplicate data entry
+- No physical forms
+- Automatic identity verification
+- Event-driven registration
+- Integrated with National ID, KRA, and Employer systems
 
 ### Optimized Steps (Digital)
 | Step | Actor | Action | System |
 |---|---|---|---|
+| 1 | System | **Trigger Event:** Citizen becomes eligible (first employment via KRA PAYE, turns 18, or registers on gov portal). | KRA / IPRS / Portal |
+| 2 | System | **Profile Creation:** System retrieves citizen data (National ID, Name, DOB, Contact) from National Population Registry. | NSSF System / IPRS |
+| 3 | System | **Number Generation:** System generates NSSF Number and notifies citizen via SMS, Email, or eCitizen. | NSSF System / Notification Gateway |
+| 4 | Employer | **Employee Linking:** Employer submits National ID and KRA PIN during payroll registration. System links employee to NSSF automatically. | Employer Payroll / NSSF API |
+| 5 | Employer | **Contribution Submission:** Employer payroll system calculates and submits contribution via API without manual forms. | Employer Payroll / NSSF API |
+| 6 | System | **Real-Time Posting:** NSSF system updates citizen account instantly. Citizen can view via Portal or Mobile App. | NSSF System |
+| 7 | Citizen | **Self-Service Access:** Citizen logs into unified government portal to view NSSF Number, contributions, employer history, and benefits. | Unified Government Portal |
+
+---|---|---|---|
 | 1 | Applicant | Applicant logs in via Single Sign-On (SSO) and selects the service. | Citizen Portal / SSO |
 | 2 | System | Applicant enters Business Registration Number; System auto-populates details from BRS (Business Registry) via the Service Bus. | Service Bus / Registry API |
 | 3 | System | System performs auto-validation of compliance (e.g., KRA Tax Status) via Inter-Agency APIs. | Service Bus / Compliance Engine |
