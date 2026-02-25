@@ -1,0 +1,35 @@
+graph TD
+    Start((Start)) --> Request["Citizen/Client submits Archival Retrieval Request"]
+    
+    subgraph Search [Manual Archive Search]
+        Request --> Verify["Verify Request Details & Content Rights"]
+        Verify --> PhysicalSearch["Archivist Searches Physical Library/Vault"]
+        PhysicalSearch --> Found{"Content Found?"}
+        
+        Found -- "No" --> Notify["Notify Client (Not Found)"]
+        Found -- "Yes" --> Review["Review Analog Format (Tape/Film)"]
+    end
+    
+    subgraph Processing [Digitization & Billing]
+        Review --> Prep["Prepare Content for Temporary Digitization"]
+        Prep --> Bill["Calculate Licensing & Retrieval Fees"]
+        Bill --> Payment["Client Pays via Bank / Cash at KBC"]
+    end
+    
+    subgraph Issuance [Delivery]
+        Payment --> Confirm["Finance Confirms Payment"]
+        Confirm --> Copy["Copy Content to External Drive / DVD"]
+        Copy --> Collect["Client Collects Content Physically"]
+    end
+    
+    Collect --> End((End))
+    Notify --> End
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class Found gateway;
+    class Request,Verify,PhysicalSearch,Review,Prep,Bill,Payment,Confirm,Copy,Collect,Notify userTask;

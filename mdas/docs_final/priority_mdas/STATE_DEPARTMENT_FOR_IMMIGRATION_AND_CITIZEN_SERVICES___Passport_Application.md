@@ -163,7 +163,7 @@ graph TD
     end
     
     subgraph Agency [Immigration & Production]
-        Payment --> AutoApprove["Workflow Engine Auto-Approves (if Renewal)"]
+        Payment --> AutoApprove["Workflow Engine Auto-Approves "]
         AutoApprove --> Factory["Passport Production Unit Prints"]
         Factory --> Logistics["Posta Delivers to Citizen"]
     end

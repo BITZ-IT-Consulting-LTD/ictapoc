@@ -1,0 +1,33 @@
+graph TD
+    Start((Start)) --> GIS["GIS-Based Master Plan Alignment Check"]
+    
+    subgraph Layer2 [Digital Planning]
+        GIS --> Workflow["Workflow Engine: Auto-Task ESIA & Technical Review"]
+        Workflow --> Repository["Central Project Document Repository (EDRMS)"]
+    end
+    
+    subgraph Layer3 [Procurement - Huduma Bridge]
+        Repository --> eTender["Integrated e-Tendering via X-Road (IFMIS)"]
+        eTender --> Sign["NPKI-Signed Digital Contract"]
+    end
+    
+    subgraph Layer4 [Construction Monitoring]
+        Sign --> Mobile["Resident Engineer Logs Progress via Mobile App"]
+        Mobile --> IoT["IoT Sensors Track Pressure/Flow in Real-Time"]
+    end
+    
+    subgraph Layer5 [Settlement]
+        IoT --> IPC["Auto-Generate Interim Payment Certificate (IPC)"]
+        IPC --> GPA["Process Contractor Payment via GPA"]
+    end
+    
+    GPA --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    class Start start;
+    class End endNode;
+    class Mobile userTask;
+    class GIS,Workflow,Repository,eTender,Sign,IoT,IPC,GPA serviceTask;

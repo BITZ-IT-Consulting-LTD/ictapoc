@@ -20,7 +20,7 @@ The Department of Refugee Services (DRS) is mandated to manage refugee affairs i
 
 ```mermaid
 graph TD
-    Start((Start)) --> Reg["Registration (Report & Capture Biometrics)"]
+    Start((Start)) --> Reg["Registration "]
     
     subgraph Reception [Reception & Registration]
         Reg --> Pass["Issue Asylum Pass"]
@@ -33,12 +33,12 @@ graph TD
         RSDComm --> Decision{"Decision?"}
         
         Decision -- "Reject" --> Reject["Prepare Rejection / Appeal"]
-        Decision -- "Approve" --> Recog["Recognition (Grant Status)"]
+        Decision -- "Approve" --> Recog["Recognition "]
     end
     
     subgraph Documentation [Issuance]
         Recog --> IDCard["Produce & Issue Refugee ID Card"]
-        IDCard --> TravelDoc["Process Convention Travel Document (if requested)"]
+        IDCard --> TravelDoc["Process Convention Travel Document "]
     end
     
     TravelDoc --> End((End))
@@ -120,7 +120,7 @@ graph TD
         Validate -- "No" --> Pass["Issue Digital Asylum Pass"]
     end
     
-    subgraph CorePlatform [Workflow Engine (Camunda)]
+    subgraph CorePlatform [Workflow Engine ]
         Pass --> RSD["Digital RSD Case File Created"]
         RSD --> CommApprove["RSD Committee Approves Digitally"]
         CommApprove --> IPRS["Push Data to IPRS via KeSEL"]
@@ -164,7 +164,7 @@ graph TD
 |---|---|---|---|
 | 1 | Registration Officer | Captures biometrics via integrated kits. System instantly queries IPRS and Immigration databases via X-Road to ensure the individual is not already registered. | eCitizen / X-Road |
 | 2 | System | Auto-generates a Digital Asylum Pass with a QR code verifiable by law enforcement. | Output Generator |
-| 3 | RSD Committee | Reviews the digitized evidence file and records the decision directly in the system. | Workflow Engine (Camunda) |
+| 3 | RSD Committee | Reviews the digitized evidence file and records the decision directly in the system. | Workflow Engine  |
 | 4 | System | Upon approval, the system pushes the data to IPRS to mint a Refugee Maisha Namba. | IPRS / KeSEL |
 | 5 | Production Unit | ID Cards and Travel Documents are queued for printing at the centralized government facility and dispatched via Posta. | Production / Logistics |
 

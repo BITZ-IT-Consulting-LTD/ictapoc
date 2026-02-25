@@ -1,0 +1,33 @@
+graph TD
+    Start((Start)) --> Portal["Youth Applicant Logs in via Maisha Namba"]
+    
+    subgraph Layer2 [Identity & Trust Hub]
+        Portal --> Consent["Consent Manager: Access ID, Education & BRS data?"]
+        Consent --> XRoad["X-Road: Auto-fetch profile from IPRS, KNQA, BRS"]
+    end
+    
+    subgraph Layer3 [Operations - Workflow Engine]
+        XRoad --> Type{"Service Type?"}
+        
+        Type -- "Internship" --> Match["AI Engine: Instant Skill & Location Match"]
+        Type -- "AGPO" --> Vetting["Automated Ownership & Age Validation"]
+    end
+    
+    subgraph Layer4 [Issuance & Settlement]
+        Match --> Letter["Generate Digital Placement Letter (QR)"]
+        Vetting --> Cert["Generate Verifiable AGPO Certificate"]
+    end
+    
+    Letter --> End((End))
+    Cert --> End
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class Type gateway;
+    class Portal,Consent userTask;
+    class XRoad,Match,Vetting,Letter,Cert serviceTask;

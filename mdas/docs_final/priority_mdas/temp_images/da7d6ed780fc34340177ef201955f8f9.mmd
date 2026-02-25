@@ -1,0 +1,32 @@
+graph TD
+    Start((Start)) --> Referral["ARA Receives Digital Referral (eCitizen)"]
+    
+    subgraph Layer3 [Huduma Bridge / X-Road]
+        Referral --> Trace["X-Road: Parallel Query to Lands, BRS, NTSA, KRA"]
+        Trace --> Map["AI Engine: Generate Unified Asset Map"]
+    end
+    
+    subgraph Layer2 [Workflow & Trust Hub]
+        Map --> Evidence["Digital Evidence Packet (NPKI-Signed)"]
+        Evidence --> Judicial_API["X-Road: Auto-file Preservation Motion to Judiciary"]
+    end
+    
+    subgraph Layer4 [Control & Monitoring]
+        Judicial_API --> Freeze["System: Place 'Caution' on Digital Registries via API"]
+        Freeze --> Registry["Update Central Case & Asset Registry"]
+    end
+    
+    subgraph Settlement [Settlement]
+        Registry --> Liquidate["GPA: Automated Proceeds Remittance to Treasury"]
+    end
+    
+    Liquidate --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    class Start start;
+    class End endNode;
+    class Referral userTask;
+    class Trace,Map,Evidence,Judicial_API,Freeze,Registry,Liquidate serviceTask;

@@ -1,0 +1,33 @@
+graph TD
+    Start((Start)) --> Portal["HPS Enters Directive into Executive Portal"]
+    
+    subgraph CorePlatform [Workflow Engine ]
+        Portal --> Tasking["Workflow Engine Auto-tasks Principal Secretaries"]
+        Tasking --> Tracker["Real-time Compliance Tracker (KeSEL Integration)"]
+    end
+    
+    subgraph Interoperability [Huduma Bridge / X-Road]
+        Tracker --> Fetch["X-Road: Auto-fetch progress from IFMIS/MDAs"]
+    end
+    
+    subgraph Analysis [Executive Dashboard]
+        Fetch --> Dashboard["Real-time Performance Dashboard"]
+        Dashboard --> Alert{"Breach / Gap?"}
+        
+        Alert -- "Yes" --> Nudge["System Triggers Auto-Reminder / Escalation"]
+        Alert -- "No" --> Report["Generate Leadership Situation Report"]
+    end
+    
+    Nudge --> End((End))
+    Report --> End
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class Alert gateway;
+    class Portal,Report userTask;
+    class Tasking,Tracker,Fetch,Dashboard,Nudge serviceTask;

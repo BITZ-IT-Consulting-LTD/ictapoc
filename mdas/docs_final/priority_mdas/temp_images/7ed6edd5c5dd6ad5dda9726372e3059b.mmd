@@ -1,0 +1,29 @@
+graph TD
+    Start((Start)) --> Portal["Athlete/Federation Accesses Sports Portal"]
+    
+    subgraph Layer2 [Identity & Trust]
+        Portal --> Verify["X-Road: Verify Athlete/Official via IPRS"]
+        Verify --> NEMIS["X-Road: Fetch Talent History from NEMIS"]
+    end
+    
+    subgraph Layer3 [Operations - Workflow Engine]
+        NEMIS --> Grant["Auto-score Grant Eligibility (AI)"]
+        NEMIS --> Booking["Check Facility Availability via National Service Bus"]
+    end
+    
+    subgraph Layer4 [Settlement & Issuance]
+        Grant --> GPA_Grant["GPA: Disburse Grant to Digital Wallet"]
+        Booking --> GPA_Fee["GPA: Instant Payment & Secure Ticket Issuance"]
+    end
+    
+    GPA_Grant --> End((End))
+    GPA_Fee --> End
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    class Start start;
+    class End endNode;
+    class Portal userTask;
+    class Verify,NEMIS,Grant,Booking,GPA_Grant,GPA_Fee serviceTask;

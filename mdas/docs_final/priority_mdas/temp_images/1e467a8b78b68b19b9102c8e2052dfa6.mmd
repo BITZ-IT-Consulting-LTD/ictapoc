@@ -1,0 +1,42 @@
+graph TD
+    Start((Start)) --> Submit["Complete Application & Attach Research Proposal"]
+    
+    subgraph Intake [Reception & Acknowledgment]
+        Submit --> Comp{"Complete?"}
+        Comp -- "No" --> Return["Return for Completion"]
+        Return --> Submit
+        
+        Comp -- "Yes" --> Log["Log in Register & Assign Reference"]
+        Log --> Acknowledge["Issue Acknowledgment Letter"]
+    end
+    
+    subgraph Vetting [Technical Review]
+        Acknowledge --> Identify["Identify Subject-Matter Examiner"]
+        Identify --> Assess["Assess Research Criteria & Ethical Compliance"]
+        Assess --> Verify["Verify Qualifications & Institution"]
+        Verify --> Report["Prepare Vetting Report"]
+    end
+    
+    subgraph Approval [Payment & Licensing]
+        Report --> Recommend{"Recommendation?"}
+        
+        Recommend -- "Revise" --> ReqRev["Request Revision from Researcher"]
+        ReqRev --> Submit
+        
+        Recommend -- "Approve" --> PayReq["Calculate Fees & Issue Payment Request"]
+        PayReq --> ResearcherPay["Researcher Pays via Bank & Submits Receipt"]
+        
+        ResearcherPay --> VerifyPay["Verify Bank Receipt & Issue Official Receipt"]
+        VerifyPay --> GenLicense["Generate Research License & Notify Applicant"]
+    end
+    
+    GenLicense --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class Comp,Recommend gateway;
+    class Submit,Return,Log,Acknowledge,Identify,Assess,Verify,Report,ReqRev,PayReq,ResearcherPay,VerifyPay,GenLicense userTask;

@@ -1,0 +1,33 @@
+graph TD
+    Start((Start)) --> Portal["Client Accesses KBC Digital Archive (eCitizen)"]
+    
+    subgraph Layer1 [Access & Discovery]
+        Portal --> Search["AI-Powered Metadata Search"]
+        Search --> Preview["View Low-Res Watermarked Previews"]
+    end
+    
+    subgraph Layer2 [Licensing & Workflow]
+        Preview --> Cart["Add to Licensing Cart"]
+        Cart --> Rules["Workflow Engine: Auto-verify Copyright & Fees"]
+    end
+    
+    subgraph Layer4 [Settlement & Issuance]
+        Rules --> Pay["Pay Licensing Fee via GPA (Real-time)"]
+        Pay --> Token["System Generates Secure Download Token"]
+        Token --> Cloud["Fetch High-Res Master from Secure Cloud Storage"]
+    end
+    
+    subgraph Delivery [Digital Fulfillment]
+        Cloud --> Delivery_App["Instant Digital Download / Stream"]
+    end
+    
+    Delivery_App --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    class Start start;
+    class End endNode;
+    class Portal,Search,Preview,Cart userTask;
+    class Rules,Pay,Token,Cloud,Delivery_App serviceTask;

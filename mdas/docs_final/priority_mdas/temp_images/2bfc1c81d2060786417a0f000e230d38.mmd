@@ -1,0 +1,33 @@
+graph TD
+    Start((Start)) --> Report["Report via eCitizen / Mobile App"]
+    
+    subgraph Layer1 [Digital Intake]
+        Report --> IDCheck["X-Road: Verify Child/Parent via IPRS"]
+        IDCheck --> AutoCase["System Auto-creates Digital Case File"]
+    end
+    
+    subgraph Layer2 [Risk & Workflow]
+        AutoCase --> RiskEngine["AI Risk Assessment Engine"]
+        RiskEngine -- "High" --> Alert["Instant Alert to Emergency Responders"]
+    end
+    
+    subgraph Layer3 [Interoperability - Huduma Bridge]
+        Alert --> Invest["Digital Investigation Logs (GPS-tagged)"]
+        Invest --> Court["X-Road: Auto-file to Judiciary Case System"]
+    end
+    
+    subgraph Layer4 [Settlement & Monitoring]
+        Court --> SHA["X-Road: Verify Health Cover via SHA"]
+        SHA --> Monitor["Blockchain-based Case Monitoring & Visits"]
+    end
+    
+    Monitor --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    class Start start;
+    class End endNode;
+    class Report userTask;
+    class IDCheck,AutoCase,RiskEngine,Alert,Invest,Court,SHA,Monitor serviceTask;

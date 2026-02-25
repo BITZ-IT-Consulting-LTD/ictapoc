@@ -1,0 +1,56 @@
+graph TD
+    Start((Start)) --> Report["Report Case (Record Details & Document Info)"]
+    
+    subgraph Intake [Intake & Assessment]
+        Report --> IntakeAss["Intake Assessment (Review Report & Check History)"]
+        IntakeAss --> Risk{"Risk Level?"}
+        
+        Risk -- "High" --> Emergency["Emergency Removal / Placement"]
+        Risk -- "Medium/Low" --> Standard["Standard Response"]
+    end
+    
+    subgraph Investigation [Investigation]
+        Emergency --> Investigate["Conduct Investigation (Home Visits, Interviews)"]
+        Standard --> Investigate
+        Investigate --> Findings["Analyse Findings & Prepare Report"]
+    end
+    
+    subgraph Planning [Case Planning]
+        Findings --> Plan["Draft Care Plan & Set Objectives"]
+        Plan --> CommAppr{"Committee Approved?"}
+        
+        CommAppr -- "No" --> Plan
+        CommAppr -- "Yes" --> ApprovePlan["Approve & Document Plan"]
+    end
+    
+    subgraph Intervention [Intervention]
+        ApprovePlan --> Type{"Intervention Type?"}
+        
+        Type -- "Support" --> Support["Parenting Education / Counselling"]
+        Type -- "Placement" --> Placement["Alternative Care / Adoption"]
+        Type -- "Legal" --> Legal["Court Application"]
+        
+        Support --> Execute["Execute Intervention"]
+        Placement --> Execute
+        Legal --> Execute
+    end
+    
+    subgraph Monitoring [Monitoring & Closure]
+        Execute --> Monitor["Monitor Progress & Conduct Visits"]
+        Monitor --> Met{"Objectives Met?"}
+        
+        Met -- "Not Met" --> Plan
+        Met -- "Partial" --> Monitor
+        Met -- "Achieved" --> Closure["Prepare Closure Report & Archive Case"]
+    end
+    
+    Closure --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class Risk,CommAppr,Type,Met gateway;
+    class Report,IntakeAss,Emergency,Standard,Investigate,Findings,Plan,ApprovePlan,Support,Placement,Legal,Execute,Monitor,Closure userTask;

@@ -1,0 +1,32 @@
+graph TD
+    Start((Start)) --> Intake["Scan Cooperative QR at Center"]
+    
+    subgraph Layer1 [Digital Aggregation]
+        Intake --> Log["Digital Product Entry (Mobile App)"]
+        Log --> Grad["AI-Assisted Grading & QR Label Generation"]
+    end
+    
+    subgraph Layer2 [Market & Sales]
+        Grad --> Sync["Sync to National Creative Gallery (eCitizen)"]
+        Sync --> Purchase["Customer Pays via GPA (QR/Web/Mobile)"]
+    end
+    
+    subgraph Layer3 [Financial Settlement - GPA]
+        Purchase --> Split["GPA: Automatic Revenue Split (Instant)"]
+        Split --> Wallet["Credit Cooperative Digital Wallet"]
+    end
+    
+    subgraph Layer4 [Compliance]
+        Wallet --> Report["Auto-Generate Value Chain Impact Report"]
+    end
+    
+    Report --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    class Start start;
+    class End endNode;
+    class Intake,Log userTask;
+    class Grad,Sync,Purchase,Split,Wallet,Report serviceTask;

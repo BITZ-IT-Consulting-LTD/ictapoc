@@ -1,0 +1,40 @@
+graph TD
+    Start((Start)) --> Receive["Receive Mail / Application"]
+    
+    subgraph Registry_Operations [Incoming Mail]
+        Receive --> Sort["Open and Sort by Priority"]
+        Sort --> Stamp["Date Stamp & Classify by Subject"]
+        Stamp --> Register["Register in Mail Book & Assign Reference"]
+        Register --> Route["Route to Relevant Action Officer"]
+    end
+    
+    subgraph Action [File Creation & Response]
+        Route --> Prepare["Action Officer Prepares Response / Review"]
+        Prepare --> Approvals["Obtain Physical Approvals"]
+        Approvals --> DispatchBook["Register in Dispatch Book & Assign Number"]
+        DispatchBook --> MakeCopy["Make File Copy for Registry"]
+        MakeCopy --> Dispatch["Dispatch to Recipient"]
+    end
+    
+    subgraph Archival [Records Appraisal]
+        Dispatch --> Appraisal["Identify Files for Appraisal & Retrieve"]
+        Appraisal --> Review["Review Contents vs Retention Schedule"]
+        Review --> Disp{"Disposition?"}
+        
+        Disp -- "Archive" --> ArchDesc["Prepare Archival Description"]
+        Disp -- "Dispose" --> DispList["Prepare Disposal List"]
+        
+        ArchDesc --> Execute["Execute Decision & Update Register"]
+        DispList --> Execute
+    end
+    
+    Execute --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class Disp gateway;
+    class Receive,Sort,Stamp,Register,Route,Prepare,Approvals,DispatchBook,MakeCopy,Dispatch,Appraisal,Review,ArchDesc,DispList,Execute userTask;

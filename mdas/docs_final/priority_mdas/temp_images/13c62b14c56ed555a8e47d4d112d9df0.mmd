@@ -1,0 +1,32 @@
+graph TD
+    Start((Start)) --> Event["Birth/Death Occurs at Facility"]
+    
+    subgraph Layer1 [Access - Point of Care]
+        Event --> MOH["MOH System Logs Event (Afya App)"]
+    end
+    
+    subgraph Layer3 [Huduma Bridge / X-Road]
+        MOH --> XRoad["X-Road: Secure Push to CRS Database"]
+        XRoad --> IPRS["X-Road: Verify Parent/Deceased via IPRS"]
+    end
+    
+    subgraph Layer4 [Authoritative Registry]
+        IPRS --> Mint["CRS: Auto-Mint Maisha Namba / Update Status"]
+        Mint --> Vault["Store in Secure Vital Events Vault"]
+    end
+    
+    subgraph Output [Digital Issuance]
+        Vault --> Notify["Notify Parents/Kin via eCitizen App"]
+        Notify --> Wallet["Issue Verifiable Digital Certificate to Wallet"]
+    end
+    
+    Wallet --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    class Start start;
+    class End endNode;
+    class Event,MOH userTask;
+    class XRoad,IPRS,Mint,Vault,Notify,Wallet serviceTask;

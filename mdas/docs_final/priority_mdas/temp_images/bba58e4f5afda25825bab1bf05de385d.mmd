@@ -1,0 +1,40 @@
+graph TD
+    Start((Start)) --> Trigger["Coordination Trigger (National Priority/Security/Reporting)"]
+    
+    subgraph Tasking [Information Tasking]
+        Trigger --> Scope["Define Scope & Identify Stakeholders"]
+        Scope --> Objectives["Set Objectives & Define Deliverables"]
+        Objectives --> Draft["Draft Request & Define Template (Word/Excel)"]
+        Draft --> Dispatch["Dispatch to All MDAs & Copy Regions"]
+    end
+    
+    subgraph Data_Collection [Data Collection]
+        Dispatch --> Monitor["Monitor Acknowledgments & Send Reminders"]
+        Monitor --> AllAck{"All Acknowledged?"}
+        
+        AllAck -- "No" --> Monitor
+        AllAck -- "Yes" --> Receive["Receive MDA & Regional Submissions"]
+    end
+    
+    subgraph Escalation [Review & Escalation]
+        Receive --> Extract["Extract Data & Merge Submissions"]
+        Extract --> Standardize["Standardize Formats & Create Master Dataset"]
+        Standardize --> Analyze["Analyse Data & Identify Patterns/Gaps"]
+        Analyze --> Critical{"Is it Critical?"}
+        
+        Critical -- "Yes" --> Escalate["Escalate to Leadership / HPS"]
+        Critical -- "No" --> Routine["Routine Processing & Dashboard"]
+    end
+    
+    Routine --> Report["Produce Situation Report & Archive"]
+    Escalate --> Report
+    Report --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class AllAck,Critical gateway;
+    class Trigger,Scope,Objectives,Draft,Dispatch,Monitor,Receive,Extract,Standardize,Analyze,Escalate,Routine,Report userTask;

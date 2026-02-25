@@ -1,0 +1,38 @@
+graph TD
+    Start((Start)) --> Submit["Proponent/Expert Submits EIA Project Report"]
+    
+    subgraph Intake [Reception & Payment]
+        Submit --> PayFee["Calculate & Pay EIA Processing Fee (0.1% cost)"]
+        PayFee --> Register["Registry Receives & Stamps Documents"]
+    end
+    
+    subgraph Vetting [Technical Review]
+        Register --> Assign["Assign to Environmental Officer"]
+        Assign --> SiteVisit["Conduct Physical Site Inspection"]
+        SiteVisit --> Consult["Manual Consultation with Lead Agencies (Water, KFS, etc.)"]
+        Consult --> Review["Review Project Report vs. Site Findings"]
+    end
+    
+    subgraph Approval [Issuance]
+        Review --> Comm{"Committee Decision?"}
+        
+        Comm -- "Reject" --> Rej["Issue Rejection Notification"]
+        Comm -- "Conditional" --> Cond["Issue Approval Conditions"]
+        Comm -- "Approve" --> PrepLicense["Prepare Physical EIA License"]
+        
+        Cond --> ProponentAppr["Proponent Accepts Conditions"]
+        ProponentAppr --> PrepLicense
+        PrepLicense --> Sign["Director General Signs License"]
+    end
+    
+    Sign --> Issue["Informant Collects Physical License"]
+    Issue --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class Comm gateway;
+    class Submit,PayFee,Register,Assign,SiteVisit,Consult,Review,Rej,Cond,PrepLicense,ProponentAppr,Sign,Issue userTask;

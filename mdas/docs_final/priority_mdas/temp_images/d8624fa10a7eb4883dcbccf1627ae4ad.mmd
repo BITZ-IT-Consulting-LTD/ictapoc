@@ -1,0 +1,35 @@
+graph TD
+    Start((Start)) --> Command["Leadership Initiates National Priority Task"]
+    
+    subgraph Layer2 [Workflow Engine & Tasking]
+        Command --> Task["Workflow Engine: Auto-dispatch Tasks to MDAs"]
+        Task --> Reminder["AI-based Nudge System for Deadlines"]
+    end
+    
+    subgraph Layer3 [Huduma Bridge / X-Road]
+        Task --> Pull["X-Road: Real-time Data Pull from MDA Registries"]
+        Pull --> Validate["X-Road: Auto-verify against IFMIS/BRS/IPRS"]
+    end
+    
+    subgraph Layer4 [Executive Intelligence]
+        Validate --> Merge["System: Real-time Data Consolidation"]
+        Merge --> Dash["Live Executive Heatmap & Dashboard"]
+        Dash --> Predict{"Trend Negative?"}
+        
+        Predict -- "Yes" --> Trigger_Esc["Auto-Trigger Escalation to HPS/CS"]
+        Predict -- "No" --> Routine["Routine Dashboard Monitoring"]
+    end
+    
+    Trigger_Esc --> End((End))
+    Routine --> End
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class Predict gateway;
+    class Command userTask;
+    class Task,Reminder,Pull,Validate,Merge,Dash,Trigger_Esc,Routine serviceTask;

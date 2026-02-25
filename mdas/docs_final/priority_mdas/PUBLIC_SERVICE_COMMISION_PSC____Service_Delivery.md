@@ -110,7 +110,7 @@ Executive Coordination, Directive Tracking, and Performance Monitoring
 graph TD
     Start((Start)) --> Portal["HPS Enters Directive into Executive Portal"]
     
-    subgraph CorePlatform [Workflow Engine (Camunda)]
+    subgraph CorePlatform [Workflow Engine ]
         Portal --> Tasking["Workflow Engine Auto-tasks Principal Secretaries"]
         Tasking --> Tracker["Real-time Compliance Tracker (KeSEL Integration)"]
     end

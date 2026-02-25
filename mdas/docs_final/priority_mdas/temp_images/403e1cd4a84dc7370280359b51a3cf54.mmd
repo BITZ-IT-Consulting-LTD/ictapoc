@@ -1,0 +1,36 @@
+graph TD
+    Start((Start)) --> Portal["Proponent Submits EIA via eCitizen Business Portal"]
+    
+    subgraph Layer2 [Identity & Compliance]
+        Portal --> Verify["X-Road: Verify Proponent (BRS) & Expert (NEMA Reg)"]
+        Verify --> AutoPop["Auto-populate GIS Land Data (Ardhisasa)"]
+    end
+    
+    subgraph Layer3 [Huduma Bridge / X-Road]
+        AutoPop --> Parallel["Workflow Engine: Parallel Routing to Lead Agencies"]
+        Parallel --> Agencies["X-Road: Digital Review by KFS, Water, NHC"]
+        Agencies --> Consolidate["Auto-consolidate inter-ministerial comments"]
+    end
+    
+    subgraph Layer4 [Settlement & Issuance]
+        Consolidate --> Pay["Pay Fee via Govt Payment Aggregator (GPA)"]
+        Pay --> Rules{"AI Compliance Engine"}
+        
+        Rules -- "Low Risk" --> AutoApprove["Workflow Engine: Auto-Approve License"]
+        Rules -- "High Risk" --> Site["Trigger Mobile GIS Site Inspection"]
+    end
+    
+    AutoApprove --> Output["Generate Verifiable Digital EIA License (QR)"]
+    Site --> Output
+    Output --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class Rules gateway;
+    class Portal userTask;
+    class Verify,AutoPop,Parallel,Agencies,Consolidate,Pay,AutoApprove,Site,Output serviceTask;

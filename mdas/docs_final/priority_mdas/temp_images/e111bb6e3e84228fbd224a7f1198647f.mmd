@@ -1,0 +1,40 @@
+graph TD
+    Start((Start)) --> Portal["Applicant accesses eCitizen Portal"]
+    
+    subgraph Access [Channels]
+        Portal --> Select["Selects License/Permit Type"]
+    end
+    
+    subgraph Interoperability [X-Road & Registries]
+        Select --> QueryBRS["X-Road: Validate Company via BRS"]
+        QueryBRS --> QueryKRA["X-Road: Validate Tax via KRA iTax"]
+        QueryKRA --> AutoPop["Auto-populate Digital Form"]
+    end
+    
+    subgraph Payments [Govt Payment Aggregator]
+        AutoPop --> Pay["Initiate Payment via GPA"]
+    end
+    
+    subgraph CorePlatform [Workflow Engine & AFA]
+        Pay --> Rules{"Rules Engine"}
+        Rules -- "Low Risk/Renewal" --> AutoApprove["Auto-Approve Application"]
+        Rules -- "High Risk" --> Officer["Route to Officer Workbench for Review"]
+        Officer --> Approve["Officer Approves"]
+        
+        AutoApprove --> Output["Generate Verifiable Digital License (QR)"]
+        Approve --> Output
+        Output --> Sync["Sync data to KIAMIS & Kentrade"]
+    end
+    
+    Sync --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class Rules gateway;
+    class Portal,Select,Officer,Approve userTask;
+    class QueryBRS,QueryKRA,AutoPop,Pay,AutoApprove,Output,Sync serviceTask;

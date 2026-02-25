@@ -99,7 +99,7 @@ Cabinet Memorandum (CABMEMO) Processing and GDMIS Registration
 
 ### Opportunities
 - **Parallel Processing:** Using the **Huduma Bridge** to route the CABMEMO to AG, Treasury, and other MDAs simultaneously for comments.
-- **Immutable Audit Trail:** Using **NPKI** (National PKI) to digitally sign all Cabinet Memoranda, ensuring they cannot be altered.
+- **Immutable Audit Trail:** Using **NPKI**  to digitally sign all Cabinet Memoranda, ensuring they cannot be altered.
 - **Integrated Fleet Management:** Automating work tickets and vehicle allocation via a mobile app linked to the **Government Payment Aggregator** for fuel and maintenance.
 
 ---
@@ -112,7 +112,7 @@ graph TD
     Start((Start)) --> Draft["CS/PS Drafts Memo in Secure Executive Portal"]
     
     subgraph Layer2 [Workflow Engine & Trust Hub]
-        Draft --> Sign["Digitally Sign via NPKI (National PKI)"]
+        Draft --> Sign["Digitally Sign via NPKI "]
         Sign --> Parallel["Workflow Engine: Parallel Routing to AG & Treasury"]
     end
     

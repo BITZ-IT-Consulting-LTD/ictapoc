@@ -1,0 +1,28 @@
+graph TD
+    Start((Start)) --> Arrival["Inmate Arrival at Prison Facility"]
+    
+    subgraph Admission [Reception & Intake]
+        Arrival --> Warrant["Verify Court Committal Warrant (Paper)"]
+        Warrant --> Capture["Capture Personal Details & Photo"]
+        Capture --> Folder["Create Physical Inmate Case Folder"]
+    end
+    
+    subgraph Management [Daily Operations]
+        Folder --> Daily["Log Daily Attendance & Transfers"]
+        Daily --> Health["Manual Health Records Logging"]
+        Health --> Vocational["Manual Training & Skill Records"]
+    end
+    
+    subgraph Release [Discharge & Parole]
+        Vocational --> Calculate["Manual Calculation of Sentence Remission"]
+        Calculate --> Release_Process["Execute Release / Parole / Probation"]
+    end
+    
+    Release_Process --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    class Start start;
+    class End endNode;
+    class Arrival,Warrant,Capture,Folder,Daily,Health,Vocational,Calculate,Release_Process userTask;
