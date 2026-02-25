@@ -21,7 +21,7 @@ This document presents the prioritised list of Ministries, Departments, and Agen
 | 2 | [Kenya National Qualifications Authority (KNQA)](./Kenya_National_Qualifications_Authority___Service_Delivery.md) | T2 | ~2.2 | RMI / ESMI | Very High | Qualification applications; validation reports | High | Cross-MDA dependency; regulatory mandate | Qualifications registry, validation workflows |
 | 3 | [Ministry of Health (MoH)](./Ministry_of_Health___Service_Delivery.md) | T1 | ~2.6 | DMI / RMI / ESMI | Extremely High | 55M+ patient profiles; 300M+ encounters annually | Very High | Highest transaction intensity; national shared services | Shared Health Record; patient identity; interoperability |
 | 4 | [Immigration & Citizen Services](./STATE_DEPARTMENT_FOR_IMMIGRATION_AND_CITIZEN_SERVICES___Passport_Application.md) | T2 | ~1.40 | RMI | Very High | >10 million records | High | High citizen reach; bounded registries | Identity registries; records governance |
-| 5 | [Public Service Commission](./PUBLIC_SERVICE_COMMISION_PSC____Service_Delivery.md) | T2 | 2.33 | RMI / GCI | High | 15.7M HR records | High | Records-heavy HR mandate | HR records modernisation |
+| 5 | [Office of the Head of Public Service](./PUBLIC_SERVICE_COMMISION_PSC____Service_Delivery.md) | T2 | 2.33 | RMI / GCI | High | 15.7M HR records | High | Records-heavy HR mandate | HR records modernisation |
 | 6 | [Kenya Broadcasting Corporation](./Kenya_Broadcasting_Corporation___Service_Delivery.md) | T2 | ~2.33 | RMI | High | 33.6M archives | Medium | Public archives; less urgent | Archival digitisation |
 | 7 | [State Department of Correctional Services](./STATE_DEPARTMENT_FOR_CORRECTIONAL_SERVICES___Service_Delivery.md) | T2 | 1.83 | RMI | High | 10–20M inmate records | High | Custodial records digitisation | Inmate records modernisation |
 | 8 | [National Environment Management Authority](./National_Environment_Management_Authority___Service_Delivery.md) | T2 | ~2.09 | RMI / ESMI | High | 2.5M records | High | Permitting bottlenecks | Permit and compliance records |
@@ -34,9 +34,9 @@ This document presents the prioritised list of Ministries, Departments, and Agen
 |---|-----|------|-----|----------------|----------------|----------------|------------|------------------|-------------------|
 | 9 | State Department for Special Programmes | T2 | ~1.40 | RMI | Very High | 100K–1M | High | Beneficiary-heavy registries | Beneficiary registry modernisation |
 | 10 | [State Department for Culture, Arts and Heritage](./Culture_and_Heritage___Service_Delivery.md) | T2 | 1.91 | RMI | Medium-High | <10K | Medium | Records leadership role | Records standards |
-| 11 | State Department for Children Services | T2 | ~1.59 | RMI / ESMI | High | 100K–1M | High | Child protection workflows | Secure case records |
+| 11 | [State Department for Children Services](./State_Department_for_Children_Services___Service_Delivery.md) | T2 | ~1.59 | RMI / ESMI | High | 100K–1M | High | Child protection workflows | Secure case records |
 | 12 | Office of the Chief of Staff | T1 | 1.91 | GCI / RMI | System-wide | 10K–100K | High | Executive change anchor | Whole-of-Government standards |
-| 13 | National Government Coordination | T2 | ~1.46 | RMI | Medium-High | 10K–100K | High | Coordination workflows | Inter-MDA records |
+| 13 | [National Government Coordination](./National_Government_Coordination___Service_Delivery.md) | T2 | ~1.46 | RMI | Medium-High | 10K–100K | High | Coordination workflows | Inter-MDA records |
 
 ---
 
@@ -60,7 +60,7 @@ This document presents the prioritised list of Ministries, Departments, and Agen
 | 20 | [Assets Recovery Agency](./Assets_Recovery_Agency___Service_Delivery.md) | T2 | ~2.27 | RMI | Medium | 10K–100K | High | Governance critical | Evidence records |
 | 21 | [Youth Affairs & Creative Economy](./Youth_Affairs___Service_Delivery.md) | T2 | ~1.76 | RMI | High | 10K–100K | Medium | Programme registries | Programme records |
 | 22 | [State Department for Energy](./Energy___Service_Delivery.md) | T2 | ~2.04 | ESMI / GCI | High | <10K | High | Economic impact | Licensing digitisation |
-| 23 | Science, Research & Innovation | T2 | ~1.60 | RMI / GCI | Medium | 10K–100K | High | Knowledge records | Knowledge repositories |
+| 23 | [Science, Research & Innovation](./National_Commission_For_Science_Technology_and_Innovation___Service_Delivery.md) | T2 | ~1.60 | RMI / GCI | Medium | 10K–100K | High | Knowledge records | Knowledge repositories |
 
 ---
 
