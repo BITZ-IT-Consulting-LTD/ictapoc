@@ -22,14 +22,14 @@ The State Department for Energy is responsible for the regulation and licensing 
 graph TD
     Start((Start)) --> Receive["Receive Mail / Application"]
     
-    subgraph Registry_Operations [Incoming Mail]
+    subgraph Registry_Operations["Incoming Mail"]
         Receive --> Sort["Open and Sort by Priority"]
         Sort --> Stamp["Date Stamp & Classify by Subject"]
         Stamp --> Register["Register in Mail Book & Assign Reference"]
         Register --> Route["Route to Relevant Action Officer"]
     end
     
-    subgraph Action [File Creation & Response]
+    subgraph Action["File Creation & Response"]
         Route --> Prepare["Action Officer Prepares Response / Review"]
         Prepare --> Approvals["Obtain Physical Approvals"]
         Approvals --> DispatchBook["Register in Dispatch Book & Assign Number"]
@@ -37,7 +37,7 @@ graph TD
         MakeCopy --> Dispatch["Dispatch to Recipient"]
     end
     
-    subgraph Archival [Records Appraisal]
+    subgraph Archival["Records Appraisal"]
         Dispatch --> Appraisal["Identify Files for Appraisal & Retrieve"]
         Appraisal --> Review["Review Contents vs Retention Schedule"]
         Review --> Disp{"Disposition?"}
@@ -116,17 +116,17 @@ End-to-End Records Management and Energy Sector Licensing
 graph TD
     Start((Start)) --> Intake["Digital Intake via eCitizen / API Gateway"]
     
-    subgraph Layer2 [Trust Hub & Workflow]
+    subgraph Layer2["Trust Hub & Workflow"]
         Intake --> Sign["NPKI Digital Signature Verification"]
         Sign --> Task["Workflow Engine: Auto-assign to Relevant Unit"]
     end
     
-    subgraph Layer3 [Huduma Bridge / X-Road]
+    subgraph Layer3["Huduma Bridge / X-Road"]
         Task --> Verify["X-Road: Cross-verify with EPRA / BRS / KRA"]
         Verify --> Collaborate["Parallel Inter-departmental Review"]
     end
     
-    subgraph Layer4 [Digital Archival]
+    subgraph Layer4["Digital Archival"]
         Collaborate --> Approval["Digital Approval by Accounting Officer"]
         Approval --> Store["Auto-store in Cloud-based EDRMS"]
         Store --> Meta["AI-based Metadata Tagging & Retention Check"]

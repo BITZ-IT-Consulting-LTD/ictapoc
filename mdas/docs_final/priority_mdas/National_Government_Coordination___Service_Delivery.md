@@ -22,14 +22,14 @@ National Government Coordination is responsible for the seamless alignment of go
 graph TD
     Start((Start)) --> Trigger["Coordination Trigger (National Priority/Security/Reporting)"]
     
-    subgraph Tasking [Information Tasking]
+    subgraph Tasking["Information Tasking"]
         Trigger --> Scope["Define Scope & Identify Stakeholders"]
         Scope --> Objectives["Set Objectives & Define Deliverables"]
         Objectives --> Draft["Draft Request & Define Template (Word/Excel)"]
         Draft --> Dispatch["Dispatch to All MDAs & Copy Regions"]
     end
     
-    subgraph Data_Collection [Data Collection]
+    subgraph Data_Collection["Data Collection"]
         Dispatch --> Monitor["Monitor Acknowledgments & Send Reminders"]
         Monitor --> AllAck{"All Acknowledged?"}
         
@@ -37,7 +37,7 @@ graph TD
         AllAck -- "Yes" --> Receive["Receive MDA & Regional Submissions"]
     end
     
-    subgraph Escalation [Review & Escalation]
+    subgraph Escalation["Review & Escalation"]
         Receive --> Extract["Extract Data & Merge Submissions"]
         Extract --> Standardize["Standardize Formats & Create Master Dataset"]
         Standardize --> Analyze["Analyse Data & Identify Patterns/Gaps"]
@@ -116,17 +116,17 @@ End-to-End Inter-Agency Coordination and Situation Reporting
 graph TD
     Start((Start)) --> Command["Leadership Initiates National Priority Task"]
     
-    subgraph Layer2 [Workflow Engine & Tasking]
+    subgraph Layer2["Workflow Engine & Tasking"]
         Command --> Task["Workflow Engine: Auto-dispatch Tasks to MDAs"]
         Task --> Reminder["AI-based Nudge System for Deadlines"]
     end
     
-    subgraph Layer3 [Huduma Bridge / X-Road]
+    subgraph Layer3["Huduma Bridge / X-Road"]
         Task --> Pull["X-Road: Real-time Data Pull from MDA Registries"]
         Pull --> Validate["X-Road: Auto-verify against IFMIS/BRS/IPRS"]
     end
     
-    subgraph Layer4 [Executive Intelligence]
+    subgraph Layer4["Executive Intelligence"]
         Validate --> Merge["System: Real-time Data Consolidation"]
         Merge --> Dash["Live Executive Heatmap & Dashboard"]
         Dash --> Predict{"Trend Negative?"}

@@ -21,35 +21,35 @@ The Ministry of Health plays a foundational role in the citizen lifecycle. Curre
 flowchart TD
     %% Events
     Start((Start))
-    EndProcess((End - Fragmented History))
+    EndProcess(("End - Fragmented History"))
 
     subgraph Patient [Patient]
         direction LR
-        Arrive1[Patient arrives at facility]
-        Consult1[Attends consultation]
-        Arrive2[Visits another facility]
+        Arrive1["Patient arrives at facility"]
+        Consult1["Attends consultation"]
+        Arrive2["Visits another facility"]
     end
 
-    subgraph RegClerk [Registration Clerk]
+    subgraph RegClerk["Registration Clerk"]
         direction TB
-        RegPat[Registration occurs]
-        SearchRec[Facility searches local EMR]
-        RecGateway{Patient record found?}
-        CreateNew[New patient ID created]
-        AssignID[Local facility ID created]
+        RegPat["Registration occurs"]
+        SearchRec["Facility searches local EMR"]
+        RecGateway{"Patient record found?"}
+        CreateNew["New patient ID created"]
+        AssignID["Local facility ID created"]
     end
 
     subgraph Clinician [Clinician]
         direction TB
-        Triage[Triage and consultation]
-        Labs[Lab tests and prescriptions]
-        RecEnc[Record encounter]
-        DupRec[Duplicate clinical records created]
+        Triage["Triage and consultation"]
+        Labs["Lab tests and prescriptions"]
+        RecEnc["Record encounter"]
+        DupRec["Duplicate clinical records created"]
     end
 
-    subgraph FacEMR [Facility EMR]
+    subgraph FacEMR["Facility EMR"]
         direction TB
-        StoreLoc[Data stored in facility EMR]
+        StoreLoc["Data stored in facility EMR"]
     end
 
     %% Flow connections
@@ -145,39 +145,39 @@ Health Service Delivery & Identity
 flowchart TD
     %% Events
     Start((Start))
-    EndProcess((End - Claims Processed))
+    EndProcess(("End - Claims Processed"))
 
     subgraph Patient [Patient]
         direction LR
-        PresentID[Present ID]
+        PresentID["Present ID"]
     end
 
-    subgraph HealthWorker [Health Worker]
+    subgraph HealthWorker["Health Worker"]
         direction TB
-        IdPat[Identify patient]
-        Consult[Clinical consultation]
-        RecEnc[Record encounter]
+        IdPat["Identify patient"]
+        Consult["Clinical consultation"]
+        RecEnc["Record encounter"]
     end
 
-    subgraph FacEMR [Facility EMR]
+    subgraph FacEMR["Facility EMR"]
         direction TB
-        QueryMPIReq[Query MPI]
-        PushKHIE[Push encounter to KHIE]
+        QueryMPIReq["Query MPI"]
+        PushKHIE["Push encounter to KHIE"]
     end
 
-    subgraph KHIE [KHIE Platform]
+    subgraph KHIE["KHIE Platform"]
         direction TB
-        MPIGateway{Patient found in MPI?}
-        AuthGateway{Access authorized?}
-        RetSHR[Retrieve Shared Health Record]
-        UpdateSHR[Update Shared Health Record]
+        MPIGateway{"Patient found in MPI?"}
+        AuthGateway{"Access authorized?"}
+        RetSHR["Retrieve Shared Health Record"]
+        UpdateSHR["Update Shared Health Record"]
     end
 
-    subgraph NatReg [National Registries]
+    subgraph NatReg["National Registries"]
         direction TB
-        QueryMPI[Master Patient Index]
-        SHR[Shared Health Record]
-        Claims[Trigger claims processing]
+        QueryMPI["Master Patient Index"]
+        SHR["Shared Health Record"]
+        Claims["Trigger claims processing"]
     end
 
     %% Flow connections

@@ -22,20 +22,20 @@ The State Department for Sports is responsible for the regulation of sports fede
 graph TD
     Start((Start)) --> S1
 
-    subgraph Federation [Federation Registration]
+    subgraph Federation["Federation Registration"]
         S1["Federation prepares docs & completes application"]
         S1 --> S2["Sports Officer reviews & verifies compliance"]
         S2 --> S3["Verify leadership & regional representation"]
         S3 --> S4["Approve & issue registration certificate"]
     end
 
-    subgraph Grants [Athlete Grant Application]
+    subgraph Grants["Athlete Grant Application"]
         S4 --> S5["Athlete/Federation submits grant request"]
         S5 --> S6["Review budget & performance metrics"]
         S6 --> S7["Committee approval & payment processing"]
     end
 
-    subgraph Facilities [Facility Booking]
+    subgraph Facilities["Facility Booking"]
         S8["Access Booking System & select facility/date"]
         S8 --> S9["System checks availability & eligibility"]
         S9 --> S10["Calculate fee & generate invoice"]
@@ -112,17 +112,17 @@ Sports Federation Registration, Grant Disbursement, and Facility Booking
 graph TD
     Start((Start)) --> Portal["Athlete/Federation Accesses Sports Portal"]
     
-    subgraph Layer2 [Identity & Trust]
+    subgraph Layer2["Identity & Trust"]
         Portal --> Verify["X-Road: Verify Athlete/Official via IPRS"]
         Verify --> NEMIS["X-Road: Fetch Talent History from NEMIS"]
     end
     
-    subgraph Layer3 [Operations - Workflow Engine]
+    subgraph Layer3["Operations - Workflow Engine"]
         NEMIS --> Grant["Auto-score Grant Eligibility (AI)"]
         NEMIS --> Booking["Check Facility Availability via National Service Bus"]
     end
     
-    subgraph Layer4 [Settlement & Issuance]
+    subgraph Layer4["Settlement & Issuance"]
         Grant --> GPA_Grant["GPA: Disburse Grant to Digital Wallet"]
         Booking --> GPA_Fee["GPA: Instant Payment & Secure Ticket Issuance"]
     end

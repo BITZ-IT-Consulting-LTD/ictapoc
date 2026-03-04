@@ -19,31 +19,31 @@ The Office of the Head of Public Service (OHPS) coordinates Presidential Directi
 *Current State visualization (Manual Executive Coordination & Directives).*
 
 ```mermaid
-flowchart TD
+flowchart LR
     %% Events
     Start((Start))
-    EndClose((End - Directive Closed))
-    EndEscalate((End - Escalated))
+    EndClose(("End - Directive Closed"))
+    EndEscalate(("End - Escalated"))
 
-    subgraph OHPS [Office of the Head of Public Service]
+    subgraph OHPS["Office of the Head of Public Service"]
         direction TB
-        ReceiveDir[Receive Presidential Directive]
-        AnalyzeDir[Analyse directive & identify MDAs]
-        TranslateDir[Translate into implementation instructions]
-        DispatchInst[Dispatch instructions to PSs]
-        TrackImpl[Track implementation progress]
-        Consolidate[Consolidate reports from MDAs]
-        AssessPerf[Perform performance assessment]
-        EvalGateway{Implementation satisfactory?}
-        CloseFeed[Close directive & provide feedback]
-        IssueCorr[Issue corrective instruction or escalate]
+        ReceiveDir["Receive Directive"]
+        AnalyzeDir["Analyse & Identify"]
+        TranslateDir["Translate Instructions"]
+        DispatchInst["Dispatch to PSs"]
+        TrackImpl["Track Progress"]
+        Consolidate["Consolidate Reports"]
+        AssessPerf["Assess Performance"]
+        EvalGateway{Satisfactory?}
+        CloseFeed["Close & Feedback"]
+        IssueCorr["Issue Corrective"]
     end
 
-    subgraph MDAs [Ministries, Departments, Agencies (PSs)]
+    subgraph MDAs [MDAs]
         direction TB
-        ConfirmRec[Confirm receipt]
-        ImplDir[Implement directive tasks]
-        SubProg[Submit progress reports via email/memo]
+        ConfirmRec["Confirm Receipt"]
+        ImplDir["Implement Tasks"]
+        SubProg["Submit Reports"]
     end
 
     %% Flow connections
@@ -139,39 +139,39 @@ Executive Coordination and Presidential Directives Management
 *Future State visualization (Kenya DSAP Architecture - Executive Coordination).*
 
 ```mermaid
-flowchart TD
+flowchart LR
     %% Events
     Start((Start))
-    EndSuccess((End - Directive Met))
-    EndEscalate((End - Action Required))
+    EndSuccess(("End - Directive Met"))
+    EndEscalate(("End - Action Required"))
 
-    subgraph HoPS [Head of Public Service]
+    subgraph HoPS["Head of Public Service"]
         direction TB
-        EnterDir[Enter directive into Portal]
-        GenRep[Review executive reports]
+        EnterDir["Enter Directive"]
+        GenRep["Review Reports"]
     end
 
-    subgraph OHPSSystem [Executive Coordination Portal]
+    subgraph OHPSSystem["Executive Coordination Portal"]
         direction TB
-        StoreDir[Store in Directive Registry]
-        AssignTasks[Workflow Engine assigns tasks]
-        FetchData[Fetch progress data via X-Road]
-        MonitorComp[Monitor compliance & KPIs]
-        GenDash[Generate Performance Dashboard]
-        DetectGateway{Compliance met?}
-        DeadlineGateway{Deadline exceeded?}
-        TrigEsc[Trigger automated escalation]
+        StoreDir["Store in Registry"]
+        AssignTasks["Workflow Assigns Tasks"]
+        FetchData["Fetch Data via X-Road"]
+        MonitorComp["Monitor Compliance"]
+        GenDash["Generate Dashboard"]
+        DetectGateway{"Compliance Met?"}
+        DeadlineGateway{"Deadline Exceeded?"}
+        TrigEsc["Trigger Escalation"]
     end
 
-    subgraph MDASystems [MDA Systems]
+    subgraph MDASystems["MDA Systems"]
         direction TB
-        SubUpdate[Submit progress updates digitally]
-        ExposeData[Expose implementation data via API]
+        SubUpdate["Submit Digital Updates"]
+        ExposeData["Expose Data via API"]
     end
 
-    subgraph PrinSec [Principal Secretaries]
+    subgraph PrinSec["Principal Secretaries"]
         direction TB
-        ActNudge[Act on reminders/escalations]
+        ActNudge["Act on Reminders"]
     end
 
     %% Flow connections

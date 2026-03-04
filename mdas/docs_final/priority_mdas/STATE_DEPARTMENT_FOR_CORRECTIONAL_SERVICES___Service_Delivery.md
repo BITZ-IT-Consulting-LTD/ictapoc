@@ -22,38 +22,38 @@ The State Department for Correctional Services is responsible for the safe custo
 flowchart TD
     %% Events
     Start((Start))
-    EndProcess((End - Release Executed))
+    EndProcess(("End - Release Executed"))
 
-    subgraph Admission [Admission Phase]
+    subgraph Admission["Admission Phase"]
         direction TB
-        IssueWarrant[Court issues committal warrant]
-        Escort[Police escort inmate to facility]
-        VerifyWarrant[Reception verifies court warrant]
-        VerifyID[Identity verification ID/fingerprints]
-        AssignNo[Assign prison number]
-        CreateFile[Create physical case file]
+        IssueWarrant["Court issues committal warrant"]
+        Escort["Police escort inmate to facility"]
+        VerifyWarrant["Reception verifies court warrant"]
+        VerifyID["Identity verification ID/fingerprints"]
+        AssignNo["Assign prison number"]
+        CreateFile["Create physical case file"]
     end
 
     subgraph Classification [Classification]
         direction TB
-        Classify[Security classification]
-        AssignBlock[Assign housing block/facility]
+        Classify["Security classification"]
+        AssignBlock["Assign housing block/facility"]
     end
 
-    subgraph Custody [Custody Management]
+    subgraph Custody["Custody Management"]
         direction TB
-        DailyTrack[Daily attendance tracking]
-        MedLogs[Medical records logging]
-        BehavLogs[Behavioral/disciplinary records]
-        VocTrack[Vocational training tracking]
+        DailyTrack["Daily attendance tracking"]
+        MedLogs["Medical records logging"]
+        BehavLogs["Behavioral/disciplinary records"]
+        VocTrack["Vocational training tracking"]
     end
 
-    subgraph Release [Release Preparation]
+    subgraph Release["Release Preparation"]
         direction TB
-        CalcSent[Manual sentence calculation]
-        CalcRem[Remission calculations]
-        EligGateway{Release eligibility met?}
-        ExecRelease[Execute release/parole/probation]
+        CalcSent["Manual sentence calculation"]
+        CalcRem["Remission calculations"]
+        EligGateway{"Release eligibility met?"}
+        ExecRelease["Execute release/parole/probation"]
     end
 
     %% Flow connections
@@ -152,38 +152,38 @@ End-to-End Inmate Case Management (Admission to Release)
 flowchart TD
     %% Events
     Start((Start))
-    EndProcess((End - Released))
+    EndProcess(("End - Released"))
 
-    subgraph Judiciary [Judiciary System]
+    subgraph Judiciary["Judiciary System"]
         direction TB
-        PushWarrant[Push digital court warrant]
+        PushWarrant["Push digital court warrant"]
     end
 
-    subgraph AdmissionOfficer [Admission Officer]
+    subgraph AdmissionOfficer["Admission Officer"]
         direction TB
-        RecWarrant[Receive digital court warrant]
-        VerifyBio[Verify identity biometrically]
-        IDGateway{Identity verified?}
+        RecWarrant["Receive digital court warrant"]
+        VerifyBio["Verify identity biometrically"]
+        IDGateway{"Identity verified?"}
     end
 
-    subgraph PrisonSystem [Prison System]
+    subgraph PrisonSystem["Prison System"]
         direction TB
-        CreateProfile[Create inmate digital profile]
-        AutoClassify[Perform automatic classification]
-        CalcExpiry[Calculate sentence expiry automatically]
-        SentGateway{Sentence completed?}
-        TriggerAlert[Trigger release eligibility alerts]
-        ExecRelease[Execute digital release]
+        CreateProfile["Create inmate digital profile"]
+        AutoClassify["Perform automatic classification"]
+        CalcExpiry["Calculate sentence expiry automatically"]
+        SentGateway{"Sentence completed?"}
+        TriggerAlert["Trigger release eligibility alerts"]
+        ExecRelease["Execute digital release"]
     end
 
-    subgraph WelfareOfficer [Welfare Officer]
+    subgraph WelfareOfficer["Welfare Officer"]
         direction TB
-        TrackRehab[Track rehabilitation progress]
+        TrackRehab["Track rehabilitation progress"]
     end
 
-    subgraph ProbationService [Probation Service]
+    subgraph ProbationService["Probation Service"]
         direction TB
-        NotifyProb[Notify probation services]
+        NotifyProb["Notify probation services"]
     end
 
     %% Flow connections

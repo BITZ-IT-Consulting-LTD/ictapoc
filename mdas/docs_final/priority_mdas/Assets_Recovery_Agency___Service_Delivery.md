@@ -22,7 +22,7 @@ The Assets Recovery Agency (ARA) is mandated to identify, trace, freeze, and rec
 graph TD
     Start((Start)) --> Alert["Intelligence / Referral from Law Enforcement"]
     
-    subgraph Tracing [Manual Asset Search]
+    subgraph Tracing["Manual Asset Search"]
         Alert --> SearchLands["Physical Search at Ministry of Lands"]
         Alert --> SearchNTSA["Manual Search at NTSA (TIMS)"]
         Alert --> SearchBRS["Manual Search at BRS (Companies)"]
@@ -31,14 +31,14 @@ graph TD
         SearchBRS --> Collect
     end
     
-    subgraph Preservation [Legal Freeze]
+    subgraph Preservation["Legal Freeze"]
         Collect --> Draft["Draft Preservation Application (Affidavits)"]
-        Draft --> Court["File in Court (Physical File)"]
+        Draft --> Court["File in Court('Physical File')"]
         Court --> Order["Obtain Preservation Order (Freeze)"]
     end
     
     subgraph Forfeiture [Recovery]
-        Order --> Management["Track Seized Assets (Manual Spreadsheet)"]
+        Order --> Management["Track Seized Assets('Manual Spreadsheet')"]
         Management --> FinalForfeiture["Execute Final Forfeiture Order"]
         FinalForfeiture --> Treasury["Remit Proceeds to National Treasury"]
     end
@@ -108,17 +108,17 @@ Asset Identification, Tracing, and Forfeiture Lifecycle
 graph TD
     Start((Start)) --> Referral["ARA Receives Digital Referral (eCitizen)"]
     
-    subgraph Layer3 [Huduma Bridge / X-Road]
+    subgraph Layer3["Huduma Bridge / X-Road"]
         Referral --> Trace["X-Road: Parallel Query to Lands, BRS, NTSA, KRA"]
         Trace --> Map["AI Engine: Generate Unified Asset Map"]
     end
     
-    subgraph Layer2 [Workflow & Trust Hub]
-        Map --> Evidence["Digital Evidence Packet (NPKI-Signed)"]
+    subgraph Layer2["Workflow & Trust Hub"]
+        Map --> Evidence["Digital Evidence Packet('NPKI-Signed')"]
         Evidence --> Judicial_API["X-Road: Auto-file Preservation Motion to Judiciary"]
     end
     
-    subgraph Layer4 [Control & Monitoring]
+    subgraph Layer4["Control & Monitoring"]
         Judicial_API --> Freeze["System: Place 'Caution' on Digital Registries via API"]
         Freeze --> Registry["Update Central Case & Asset Registry"]
     end

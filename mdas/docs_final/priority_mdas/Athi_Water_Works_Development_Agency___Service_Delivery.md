@@ -22,7 +22,7 @@ Athi Water Works Development Agency (AWWDA) is responsible for the planning and 
 graph TD
     Start((Start)) --> Study["Identify Study Area & Collect Data"]
     
-    subgraph Planning [Feasibility & Design]
+    subgraph Planning["Feasibility & Design"]
         Study --> Assess["Technical, Environmental & Social Assessment"]
         Assess --> Feasibility["Consolidate Reports & Prepare Feasibility"]
         Feasibility --> Appr{"Approved?"}
@@ -123,17 +123,17 @@ End-to-End Water Infrastructure Development (Study to Handover)
 graph TD
     Start((Start)) --> GIS["GIS-Based Master Plan Alignment Check"]
     
-    subgraph Layer2 [Digital Planning]
+    subgraph Layer2["Digital Planning"]
         GIS --> Workflow["Workflow Engine: Auto-Task ESIA & Technical Review"]
         Workflow --> Repository["Central Project Document Repository (EDRMS)"]
     end
     
-    subgraph Layer3 [Procurement - Huduma Bridge]
+    subgraph Layer3["Procurement - Huduma Bridge"]
         Repository --> eTender["Integrated e-Tendering via X-Road (IFMIS)"]
         eTender --> Sign["NPKI-Signed Digital Contract"]
     end
     
-    subgraph Layer4 [Construction Monitoring]
+    subgraph Layer4["Construction Monitoring"]
         Sign --> Mobile["Resident Engineer Logs Progress via Mobile App"]
         Mobile --> IoT["IoT Sensors Track Pressure/Flow in Real-Time"]
     end
