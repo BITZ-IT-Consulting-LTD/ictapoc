@@ -21,6 +21,7 @@ router.register(r'correspondence-actions', views.CorrespondenceActionViewSet, ba
 router.register(r'desktop-reviews', views.DesktopReviewViewSet)
 router.register(r'payments', views.PaymentViewSet, basename='payments')
 router.register(r'consent', views.ConsentViewSet, basename='consent')
+router.register(r'service-families', views.ServiceFamilyViewSet)
 router.register(r'lifecycle', views.LifecycleViewSet, basename='lifecycle')
 
 # Registry Config

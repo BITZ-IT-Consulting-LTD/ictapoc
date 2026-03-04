@@ -1,0 +1,21 @@
+graph TD
+    Start((Start)) --> Statement["Draft Official Government Statement"]
+    
+    subgraph Dissemination [Communication]
+        Statement --> Media["Send to Media Houses (Email/Physical)"]
+        Media --> Social["Post on Social Media Channels"]
+    end
+    
+    subgraph Archiving [Records Management]
+        Social --> Save["Manually Save Printout in Registry"]
+        Save --> Index["Manual Indexing of Statements"]
+    end
+    
+    Index --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    class Start start;
+    class End endNode;
+    class Statement,Media,Social,Save,Index userTask;

@@ -1,0 +1,31 @@
+graph TD
+    Start((Start)) --> Draft["CS/PS Drafts Memo in Secure Executive Portal"]
+    
+    subgraph Layer2 [Workflow Engine & Trust Hub]
+        Draft --> Sign["Digitally Sign via NPKI "]
+        Sign --> Parallel["Workflow Engine: Parallel Routing to AG & Treasury"]
+    end
+    
+    subgraph Layer3 [Huduma Bridge / X-Road]
+        Parallel --> AG["KeSEL: Legal Review by AG"]
+        Parallel --> Treasury["KeSEL: Fiscal Review by Treasury"]
+        AG --> Notify["Auto-Notify Cabinet Affairs of Feedback"]
+        Treasury --> Notify
+    end
+    
+    subgraph Layer4 [Decision Support]
+        Notify --> Consolidate["AI-Assisted Feedback Consolidation"]
+        Consolidate --> Schedule["Digital Agenda Scheduling"]
+        Schedule --> GDMIS["Auto-Sync to GDMIS for Outcome Tracking"]
+    end
+    
+    GDMIS --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    class Start start;
+    class End endNode;
+    class Draft,Sign,Consolidate,Schedule userTask;
+    class Parallel,AG,Treasury,Notify,GDMIS serviceTask;

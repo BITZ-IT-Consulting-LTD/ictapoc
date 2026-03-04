@@ -2,210 +2,137 @@
 
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** MINISTRY OF LANDS AND PHYSICAL PLANNING
-- **Process Name:** Land Transaction (Transfer, Charge, Search)
-- **Document Version:** 1.3
-- **Date:** 2026-02-19
+- **Process Names:** Land Registration / Title Deed Issuance, Property Transfer (Change of Ownership)
+- **Document Version:** 2.0
+- **Date:** 2026-02-24
 - **Classification:** Official
 
 ---
 
 ## Executive Summary
-The Ministry of Lands manages land administration, registration, valuation, and physical planning. The transition to the **Ardhisasa** digital platform aims to digitize all land records, but the process of buying, selling, or charging land remains complex, involving multiple manual verifications and physical site visits.
+The Ministry of Lands manages land administration, registration, valuation, and physical planning. It operates the **Ardhisasa** digital platform to facilitate secure, transparent, and efficient land transactions, including the registration of new title deeds and the transfer of property ownership between parties.
 
 ---
 
-## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (Ardhisasa Portal / Parallel Manual Files).*
+## Process 1: Land Registration / Title Deed Issuance
 
+### 1.1 AS-IS Process Flowchart (BPMN 2.0)
 ```mermaid
 graph TD
     Start((Start)) --> S1
-
-    subgraph Buyer [Buyer]
-        S1["**Search:** Logs into Ardhisasa. Requests search on Parce..."]
-        S5["**Duty Payment:** Once value is approved, Buyer generates..."]
-        S7["**Collection:** Buyer (or Advocate) visits Registry to pi..."]
-    end
-
-    subgraph Seller [Seller]
-        S2["**Consent:** Seller receives SMS prompt to authorize the ..."]
-    end
-
-    subgraph Advocate [Advocate]
-        S3["**Transfer:** Lawyer uploads Transfer Form (TR1), Sale Ag..."]
-    end
-
-    subgraph Valuer [Valuer]
-        S4["**Valuation:** System assigns a Govt Valuer. Valuer sched..."]
-    end
-
-    subgraph Registrar [Registrar]
-        S6["**Registration:** Registrar reviews the file. If complian..."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> End((End))
+    S1["Create Ardhisasa Account & Login"] --> S2
+    S2["Submit Land Registration Application"] --> S3
+    S3["Upload Supporting Documents"] --> S4
+    S4["Pay Registration Fees & Stamp Duty"] --> S5
+    S5["Land Office Verification (Registrar Reviews)"] --> S6
+    S6["Approval of Registration"] --> S7
+    S7["Title Deed Generated"] --> S8
+    S8["Title Deed Issued (Downloaded or Collected)"] --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
     class Start start;
     class End endNode;
-    class S1,S2,S3,S4,S5,S6,S7 userTask;
 ```
 
----
-
-## Process Overview
-### Process Name
-Transfer of Land / Registration of Charge
-
-### Service Category
-- G2C (Government to Citizen) / G2B (Government to Bank)
-
-### Scope
-- **In Scope:** Official Search; Transfer of Ownership; Charge (Mortgage); Discharge; Caution; Replacement of Lost Title.
-- **Out of Scope:** Land Adjudication (Settlement Schemes); Dispute Resolution (Environment & Land Court).
-
-### Triggers
-- Sale/Purchase of Land.
-- Taking a Bank Loan (Charge).
-- Inheritance (Transmission).
-
-### End States
-- **Successful:** Issuance of Title Deed / Lease.
-
-### Policy Context
-- Land Registration Act, 2012; Sectional Properties Act, 2020.
-
----
-
-## Stakeholders
-| Stakeholder | Role | Responsibilities |
-|---|---|---|
-| Buyer / Seller | Parties | Initiate transfer, provide consent, pay Stamp Duty. |
-| Conveyancing Advocate | Professional | Drafts agreements, witnesses signatures, uploads documents. |
-| Land Registrar | Approver | Vets instruments, signs Titles. |
-| Govt Valuer | Assessor | Determines property value for tax purposes. |
-| Surveyor | Technical | Verifies boundaries/maps (RIM). |
-
----
-
-## Detailed Process (AS-IS)
-| Step | Role | Action | Tool | Notes |
+### 1.2 Detailed Process (AS-IS)
+| Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
-| 1 | Buyer | **Search:** Logs into Ardhisasa. Requests search on Parcel No. (e.g., Nairobi/Block1/123). Pays KES 500. | Ardhisasa Portal | Often returns "No Record Found" if file isn't digitized yet. |
-| 2 | Seller | **Consent:** Seller receives SMS prompt to authorize the search/transfer. Must log in to approve. | OTP / Portal | Requires Seller to have active Ardhisasa account (often tricky for elderly). |
-| 3 | Advocate | **Transfer:** Lawyer uploads Transfer Form (TR1), Sale Agreement, ID copies, KRA PINs, Land Rent Clearance Cert, Rates Clearance (County). | Portal Upload | Missing one document halts the whole process. |
-| 4 | Valuer | **Valuation:** System assigns a Govt Valuer. Valuer schedules a physical site visit to assess value for Stamp Duty (4% Urban / 2% Rural). | Field Visit | *Bottleneck:* Finding the valuer and facilitating the visit can take weeks. |
-| 5 | Buyer | **Duty Payment:** Once value is approved, Buyer generates Stamp Duty slip on iTax and pays via M-Pesa/Bank. | iTax Integration | |
-| 6 | Registrar | **Registration:** Registrar reviews the file. If compliant, signs the new Title Deed. | Digital Workflow | Backlogs at the "Signing" stage are common. |
-| 7 | Buyer | **Collection:** Buyer (or Advocate) visits Registry to pick up the physical Title Deed. | Counter | Digital Titles exist but physical is still preferred by Banks. |
+| 1 | Citizen/Lawyer | **Account Creation:** Registers on Ardhisasa using ID, KRA PIN, Email, and Phone. | Ardhisasa Portal | |
+| 2 | Citizen/Lawyer | **Login:** Logs into the Ardhisasa portal. | Ardhisasa Portal | |
+| 3 | Citizen/Lawyer | **Application:** Selects Land Registration Service; Enters Parcel and Owner details. | Ardhisasa Portal | |
+| 4 | Citizen/Lawyer | **Uploads:** Uploads Sale Agreement, Transfer Forms, ID, PIN, and Consents. | Ardhisasa Portal | |
+| 5 | Citizen/Lawyer | **Payment:** Pays Stamp Duty, Registration Fees, and other charges. | Payment Gateway | |
+| 6 | Registrar | **Verification:** Reviews ownership documents, parcel info, and clearance/consent. | Ardhisasa Backend | |
+| 7 | Registrar | **Approval:** Approves the land registration. | Ardhisasa Backend | |
+| 8 | System | **Generation:** System generates Title Deed registered in the owner's name. | Ardhisasa System | |
+| 9 | Owner | **Issuance:** Owner downloads or physically collects the Title Deed. | Ardhisasa/Registry | |
 
----
-
-## Pain Points & Opportunities
-### Pain Points
-- **Missing Files:** The "conversion" process (digitizing old manual files) is slow/incomplete. Search often fails.
-- **Valuation Delays:** Physical site visits by overwhelmed Govt Valuers delay transactions by months.
-- **System Glitches:** Ardhisasa downtime or "system errors" preventing document upload.
-- **Double Allocation:** Historic fraud where one plot has two titles, confusing the digital system.
-- **Account Access:** Elderly/Rural sellers struggle to create accounts and navigate OTPs/Consent.
-
-### Opportunities
-- **Automated Valuation:** Use GIS and Zonal Valuation Maps to auto-calculate Stamp Duty for standard plots (no site visit needed).
-- **Blockchain Title:** Immutable ledger to prevent double allocation and fraud permanently.
-- **Unified View:** Link BRS (Company Land) and CRS (Deceased Owners) to auto-verify capacity to transfer.
-- **e-Conveyancing:** Fully digital process where Title is a secure Token, not a paper.
-
----
-
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Repeatable WoG Platform).*
+### 1.3 TO-BE Process (Inferred)
+**Design Principles:** Inter-agency Auto-Verification, Smart E-Payments, Verifiable Digital Titles.
 
 ```mermaid
 graph TD
-    Start((Start)) --> S1
-
-    subgraph Buyer [Buyer]
-        S1["Initiates purchase and deposits funds."]
-        S5["Receives Digital Title."]
-    end
-
-    subgraph WoG_Platform [WoG Platform]
-        S2["Validates Seller and calculates Duty."]
-    end
-
-    subgraph Seller [Seller]
-        S3["Consents via Biometric Scan."]
-    end
-
-    subgraph Blockchain [Blockchain]
-        S4["Swaps Title for Cash instantly."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> End((End))
+    Start((Start)) --> T1
+    T1["Citizen authenticates via eCitizen SSO; System auto-fetches ID & KRA data"] --> T2
+    T2["Citizen submits digital application; Smart forms replace manual uploads"] --> T3
+    T3["System auto-calculates fees and processes instant payment via Gov Gateway"] --> T4
+    T4["Automated Rules Engine verifies encumbrances and inter-agency consents"] --> T5
+    T5["Registrar conducts final review on digital dashboard and applies e-Signature"] --> T6
+    T6["System issues a Verifiable Digital Title Deed (QR Code/Blockchain) instantly"] --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
     class Start start;
     class End endNode;
-    class S1,S2,S3,S4,S5 userTask;
 ```
 
-## Future State Process (TO-BE)
-### Narrative
-The process is **Secure** and **Trustless**.
-1.  **Guaranteed Search:** The Digital Land Registry is the "Single Source of Truth." If the system says you own it, you own it (State Guarantee).
-2.  **Auto-Valuation:** The system uses **GIS Data** to determine the property value instantly based on location zones. No human valuer visits the site.
-3.  **Biometric Consent:** The Seller authorizes the sale using their fingerprint/face via the **Maisha App**, eliminating identity fraud.
-4.  **Atomic Swap:** The transfer is a **Smart Contract**. The Title moves to the Buyer *only* when the Funds move to the Seller. It happens in milliseconds. No "pending" state.
-5.  **Digital Asset:** The Title Deed is a secure digital token in the owner's eCitizen Wallet, accepted by banks for collateral instantly.
-
-### Optimized Steps (Digital)
-| Step | Actor | Action | System |
+| Step | Role | Action | System |
 |---|---|---|---|
-| 1 | Buyer | Initiates purchase and deposits funds. | Smart Contract |
-| 2 | WoG Platform | Validates Seller and calculates Duty. | GIS / IPRS |
-| 3 | Seller | Consents via Biometric Scan. | Maisha App |
-| 4 | Blockchain | Swaps Title for Cash instantly. | Ledger |
-| 5 | Buyer | Receives Digital Title. | eCitizen Wallet |
+| 1 | Citizen | Authenticate via single sign-on; profiles auto-populated. | eCitizen / IPRS / KRA |
+| 2 | Citizen | Complete smart-form application. | Land Portal |
+| 3 | System | Calculate and process all fees (Stamp Duty, etc.) instantly. | Integrated Payment Gateway |
+| 4 | System | Auto-verify land status, liens, and spousal/board consents. | Inter-Agency API / Rules Engine |
+| 5 | Registrar | Review flagged items and digitally approve the registration. | Officer Workbench |
+| 6 | System | Generate and push Verifiable Digital Title to citizen's digital wallet. | Digital Registry / Wallet |
 
 ---
 
-## 3. Standard Data Inputs
-*Required fields for the WoG Digital Service.*
+## Process 2: Property Transfer (Change of Ownership)
 
-### A. Official Search (Instant)
-| Field Name | Type | Source | Validation |
+### 2.1 AS-IS Process Flowchart (BPMN 2.0)
+```mermaid
+graph TD
+    Start((Start)) --> S1
+    S1["Initiate Transfer Application on Ardhisasa"] --> S2
+    S2["Enter Property, Buyer, and Seller Details"] --> S3
+    S3["Upload Transfer Documents (Forms, Agreement, Consents)"] --> S4
+    S4["Pay Transfer Fees and Stamp Duty"] --> S5
+    S5["Land Registrar Reviews Application"] --> S6
+    S6["Transfer Approved"] --> S7
+    S7["New Title Deed Issued in Buyer's Name"] --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    class Start start;
+    class End endNode;
+```
+
+### 2.2 Detailed Process (AS-IS)
+| Step | Role | Action | Tool/System | Notes |
+|---|---|---|---|---|
+| 1 | Buyer/Seller | **Initiate:** Logs into Ardhisasa and selects Property Transfer. | Ardhisasa Portal | |
+| 2 | Buyer/Seller | **Details:** Enters Parcel Number, Seller Details, and Buyer Details. | Ardhisasa Portal | |
+| 3 | Buyer/Seller | **Uploads:** Uploads Signed Transfer Forms, Sale Agreement, ID Copies, PINs, and Land Control Board Consent. | Ardhisasa Portal | |
+| 4 | Buyer/Seller | **Payment:** Pays required transfer fees and Stamp Duty. | Payment Gateway | |
+| 5 | Registrar | **Review:** Verifies ownership, payment, and legal compliance. | Ardhisasa Backend | |
+| 6 | Registrar | **Approval:** Approves the transfer of property. | Ardhisasa Backend | |
+| 7 | System | **Issuance:** Generates the new Title Deed in the Buyer’s name. | Ardhisasa System | |
+
+### 2.3 TO-BE Process (Inferred)
+**Design Principles:** Biometric Consents, Smart Contract Execution, Real-time Ledger Updates.
+
+```mermaid
+graph TD
+    Start((Start)) --> T1
+    T1["Parties initiate transfer via Portal; Biometric verification of Buyer & Seller"] --> T2
+    T2["System auto-populates property data and verifies lack of encumbrances"] --> T3
+    T3["Required consents (Spousal, LCB) obtained digitally via e-Signatures"] --> T4
+    T4["Integrated payment of Stamp Duty and fees via Gov Gateway"] --> T5
+    T5["Smart Contract executes transfer; Registrar signs digitally"] --> T6
+    T6["New Verifiable Digital Title issued to Buyer; old Title is cryptographically retired"] --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    class Start start;
+    class End endNode;
+```
+
+| Step | Role | Action | System |
 |---|---|---|---|
-| Parcel Number | String | User Input | Must exist in Registry |
-| Search Purpose | Enum | User Input | Sale / Charge / Due Diligence |
-| Requester ID | String | System (Auth) | Must be Active |
-
-### B. Smart Contract Transfer (TR1-Digital)
-| Field Name | Type | Source | Validation |
-|---|---|---|---|
-| Parcel Number | String | User Input | Must match Search |
-| Buyer ID | String | User Input | Must be Active (IPRS) |
-| Sale Price | Currency | User Input | Must be > 0 |
-| Seller Consent | Boolean | Biometric (App) | Face ID Match |
-| Spousal Consent | Boolean | Biometric (App) | If Married (AG Link) |
-| Stamp Duty | Currency | System Calculated | GIS Zonal Value |
-
----
-
-## References
-- Land Registration Act.
+| 1 | Buyer/Seller | Initiate smart transfer; identities confirmed biometrically. | Portal / IPRS (Maisha) |
+| 2 | System | Fetch authoritative property data; check for active cautions/liens. | Digital Land Registry |
+| 3 | Parties | Provide digital, verifiable consents (e.g., spousal consent via AG link). | e-Signature / API |
+| 4 | Buyer | Process Stamp Duty and transfer fees seamlessly. | Payment Gateway |
+| 5 | System/Registrar| Execute transfer via rules engine/smart contract; final digital approval. | Smart Contract / Workbench |
+| 6 | System | Issue new digital title to buyer; permanently archive previous ownership record. | Blockchain / Immutable Ledger |

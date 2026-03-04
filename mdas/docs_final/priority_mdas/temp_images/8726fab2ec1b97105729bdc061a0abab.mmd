@@ -1,0 +1,37 @@
+graph TD
+    Start((Start)) --> Access["Access eCitizen / Portal"]
+    
+    subgraph Internship [Youth Internship Placement]
+        Access --> Form["Complete Form & Upload Documents"]
+        Form --> Review["Officer Reviews Application"]
+        Review --> Verify["Verify Eligibility (Academic/Age)"]
+        Verify --> Eligible{"Eligible?"}
+        
+        Eligible -- "Yes" --> Search["Search & Match Skills to Opportunities"]
+        Search --> Issue["Issue Letter & Notify Host"]
+        Eligible -- "No" --> Reject["Notify Rejection"]
+    end
+    
+    subgraph AGPO [AGPO Registration]
+        Access --> AGPO_Form["Complete AGPO Form"]
+        AGPO_Form --> Attach["Attach Business & ID Documents"]
+        Attach --> Vetting["Manual Vetting: Verify Ownership & Age (18-35)"]
+        Vetting --> Appr{"Approve?"}
+        
+        Appr -- "Yes" --> Cert["Generate Certificate & Update Registry"]
+        Appr -- "No" --> Rej_AGPO["Reject Application"]
+    end
+    
+    Issue --> End((End))
+    Cert --> End
+    Reject --> End
+    Rej_AGPO --> End
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class Eligible,Appr gateway;
+    class Access,Form,Review,Verify,Search,Issue,Reject,AGPO_Form,Attach,Vetting,Cert,Rej_AGPO userTask;

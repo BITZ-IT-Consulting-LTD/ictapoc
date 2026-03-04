@@ -1,0 +1,36 @@
+graph TD
+    Start((Start)) --> Access["Access Portal / Mobile App"]
+    
+    subgraph Individual_Credit [Hustler Fund Application]
+        Access --> KYC["Complete KYC & Register Account"]
+        KYC --> VerifyID["Verify National ID (IPRS Lookup)"]
+        VerifyID --> CreditScore["Check Credit Score (Internal/CRB)"]
+        CreditScore --> Eligible{"Eligible?"}
+        
+        Eligible -- "Yes" --> Terms["Calculate Terms & Disburse to Mobile Money"]
+        Eligible -- "No" --> Review["Flag for Manual Review / Reject"]
+    end
+    
+    subgraph Group_Credit [Uwezo Fund Loan]
+        Access --> Form_Group["Form Group (10-15 Members) & Elect Officials"]
+        Form_Group --> Bank["Open Group Bank Account"]
+        Bank --> Reg_Form["Complete Registration & Attach Member IDs/Constitution"]
+        Reg_Form --> SubCounty["Submit to Sub-County for Verification"]
+        SubCounty --> Approved{"Approved?"}
+        
+        Approved -- "Yes" --> Cert["Issue Certificate & Disburse Loan"]
+        Approved -- "No" --> Corrections["Return for Corrections"]
+    end
+    
+    Terms --> End((End))
+    Cert --> End
+    Review --> End
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class Eligible,Approved gateway;
+    class Access,KYC,VerifyID,CreditScore,Terms,Review,Form_Group,Bank,Reg_Form,SubCounty,Cert,Corrections userTask;

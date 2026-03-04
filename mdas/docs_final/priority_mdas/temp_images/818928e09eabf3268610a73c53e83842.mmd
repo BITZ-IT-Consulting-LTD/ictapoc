@@ -1,0 +1,27 @@
+graph TD
+    Start((Start)) --> Identify["Identify Potential Beneficiaries (Community/Chief)"]
+    
+    subgraph Enrollment [Field Operations]
+        Identify --> Form["Complete Paper Enrollment Form"]
+        Form --> Docs["Attach Copies of National ID & Household Info"]
+        Docs --> Verify["Manual Verification by District Officer"]
+    end
+    
+    subgraph Data_Entry [Central Office]
+        Verify --> Entry["Manual Data Entry into Excel/Standalone Registry"]
+        Entry --> Deduplicate["Manual Deduplication Check"]
+    end
+    
+    subgraph Disbursement [Settlement]
+        Deduplicate --> List["Approve Final Beneficiary List"]
+        List --> Bank["Trigger Bank Transfer / Physical Cash Pay-out"]
+    end
+    
+    Bank --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    class Start start;
+    class End endNode;
+    class Identify,Form,Docs,Verify,Entry,Deduplicate,List,Bank userTask;

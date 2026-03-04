@@ -1,0 +1,22 @@
+graph TD
+    Start((Start)) --> Set["Set Governance Standards & KPIs"]
+    
+    subgraph Monitoring [Executive Oversight]
+        Set --> Request["Request Periodic Reports from MDAs"]
+        Request --> Meeting["Conduct High-Level Performance Meetings"]
+        Meeting --> Review["Manual Review of Physical Reports"]
+    end
+    
+    subgraph Feedback [Corrective Action]
+        Review --> Score["Assign Manual Governance Score"]
+        Score --> Nudge["Issue Letters of Non-Compliance"]
+    end
+    
+    Nudge --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    class Start start;
+    class End endNode;
+    class Set,Request,Meeting,Review,Score,Nudge userTask;

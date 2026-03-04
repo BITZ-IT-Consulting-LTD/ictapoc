@@ -1,0 +1,38 @@
+graph TD
+    Start((Start)) --> Reason{"Reason?"}
+    
+    subgraph Applicant [Citizen]
+        Reason -- "Lost" --> PoliceAbstract["Obtain Police Abstract"]
+        Reason -- "Damaged" --> RetainPassport["Retain Damaged Passport"]
+        PoliceAbstract --> CompleteForm["Complete Form"]
+        RetainPassport --> CompleteForm
+        CompleteForm --> UploadEvidence["Upload Evidence"]
+        UploadEvidence --> PayFee["Pay Fee"]
+    end
+    
+    subgraph Immigration [Immigration Officers]
+        PayFee --> VerifyRecords["Verify Original Records"]
+        VerifyRecords --> Found{"Found?"}
+        Found -- "No" --> Reject["Reject Application"]
+        Found -- "Yes" --> VerifyAbstract["Verify Police Abstract"]
+        VerifyAbstract --> VerifyIdentity["Verify Identity"]
+        VerifyIdentity --> CaptureBiometrics["Capture Biometrics"]
+        CaptureBiometrics --> CancelOriginal["Cancel Original Passport"]
+    end
+    
+    subgraph Production [Production Unit]
+        CancelOriginal --> PrintReplacement["Print Replacement"]
+        PrintReplacement --> IssuePassport["Issue Passport"]
+    end
+    
+    IssuePassport --> End((End))
+    Reject --> End
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class Reason,Found gateway;
+    class PoliceAbstract,RetainPassport,CompleteForm,UploadEvidence,PayFee,VerifyRecords,VerifyAbstract,VerifyIdentity,CaptureBiometrics,CancelOriginal,PrintReplacement,IssuePassport,Reject userTask;

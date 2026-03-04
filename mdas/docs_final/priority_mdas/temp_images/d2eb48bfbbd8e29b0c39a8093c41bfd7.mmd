@@ -1,0 +1,32 @@
+graph TD
+    Start((Start)) --> Alert["Intelligence / Referral from Law Enforcement"]
+    
+    subgraph Tracing [Manual Asset Search]
+        Alert --> SearchLands["Physical Search at Ministry of Lands"]
+        Alert --> SearchNTSA["Manual Search at NTSA (TIMS)"]
+        Alert --> SearchBRS["Manual Search at BRS (Companies)"]
+        SearchLands --> Collect["Collect Paper Evidence / Certified Copies"]
+        SearchNTSA --> Collect
+        SearchBRS --> Collect
+    end
+    
+    subgraph Preservation [Legal Freeze]
+        Collect --> Draft["Draft Preservation Application (Affidavits)"]
+        Draft --> Court["File in Court (Physical File)"]
+        Court --> Order["Obtain Preservation Order (Freeze)"]
+    end
+    
+    subgraph Forfeiture [Recovery]
+        Order --> Management["Track Seized Assets (Manual Spreadsheet)"]
+        Management --> FinalForfeiture["Execute Final Forfeiture Order"]
+        FinalForfeiture --> Treasury["Remit Proceeds to National Treasury"]
+    end
+    
+    Treasury --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    class Start start;
+    class End endNode;
+    class Alert,SearchLands,SearchNTSA,SearchBRS,Collect,Draft,Court,Order,Management,FinalForfeiture,Treasury userTask;

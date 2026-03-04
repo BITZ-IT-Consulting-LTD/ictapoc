@@ -1,0 +1,30 @@
+graph TD
+    Start((Start)) --> Scan["Biometric Intake & Maisha Namba Verification"]
+    
+    subgraph Layer2 [Trust Hub & Interoperability]
+        Scan --> XRoad_Court["X-Road: Fetch Digital Warrant from Judiciary"]
+        XRoad_Court --> Validate["System: Auto-validate Sentence & Offense"]
+    end
+    
+    subgraph Layer3 [Workflow Engine]
+        Validate --> Profile["Digital Case Profile Created"]
+        Profile --> EHR["X-Road: Auto-link to Patient SHR (MOH)"]
+        EHR --> Rehab["Workflow Engine: Track Vocational/Behavioral Tasks"]
+    end
+    
+    subgraph Layer4 [Settlement & Release]
+        Rehab --> Calc["System: Real-time Sentence Expiry Calculation"]
+        Calc --> Alert["Auto-Alert Probation Unit 3 months before Release"]
+        Alert --> Release["Biometric Release & Credential Issuance"]
+    end
+    
+    Release --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    class Start start;
+    class End endNode;
+    class Scan userTask;
+    class XRoad_Court,Validate,Profile,EHR,Rehab,Calc,Alert,Release serviceTask;

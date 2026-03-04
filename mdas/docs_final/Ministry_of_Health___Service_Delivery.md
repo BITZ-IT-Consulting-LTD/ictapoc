@@ -1,178 +1,131 @@
-# Ministry of Health – Service Delivery
+# MINISTRY OF HEALTH – Service Delivery
 
 ## Cover Page
-- **Ministry/Department/Agency (MDA):** Ministry of Health
-- **Process Name:** Service Delivery
-- **Document Version:** 1.0
-- **Date:** 2026-02-14
+- **Ministry/Department/Agency (MDA):** MINISTRY OF HEALTH
+- **Process Name:** Notification of Birth/Death
+- **Document Version:** 2.0
+- **Date:** 2026-02-24
 - **Classification:** Official
 
 ---
 
 ## Executive Summary
-Represents 'Health' cluster for balanced coverage; entity type: Ministry. Included as Tier 3 for light‑touch desk review/survey.
+The Ministry of Health plays a foundational role in the citizen lifecycle by acting as the primary point of occurrence for vital events (births and deaths). It is responsible for capturing, verifying, and notifying the Civil Registration Services (CRS) of these events, which forms the basis of national identity and public health statistics.
 
 ---
 
 ## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization.*
+*Current State visualization (Manual & Semi-Digital Notification).*
 
 ```mermaid
 graph TD
     Start((Start)) --> S1
-
-    subgraph Citizen [Citizen]
-        S1["Citizen/Stakeholder submits inquiry, complaint, or policy..."]
-    end
-
-    subgraph Registry [Registry]
-        S2["Central Registry receives and tags the correspondence."]
-    end
-
-    subgraph Directorate [Directorate]
-        S3["Relevant Technical Directorate reviews and drafts respons..."]
-    end
-
-    subgraph PS_Director [PS/Director]
-        S4["Principal Secretary/Director approves the response."]
-    end
-
-    subgraph Ministry [Ministry]
-        S5["Ministry issues official response or policy guideline."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> End((End))
+    S1["Birth/Death occurs at a registered Health Facility"] --> S2
+    S2["Health Facility fills Birth/Death Notification Form"] --> S3
+    S3["Health Personnel verifies IDs and record consistency"] --> S4
+    S4["Submit Notification to MOH (DHIS2 or physically)"] --> S5
+    S5["MOH or County Health Office Validates Submission"] --> S6
+    S6["MOH Confirms Record for health statistics"] --> S7
+    S7["Forwarding to CRS for civil registration & cert issuance"] --> S8
+    S8["MOH keeps aggregated reports for vital statistics"] --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
     class Start start;
     class End endNode;
-    class S1,S2,S3,S4,S5 userTask;
 ```
 
 ---
 
 ## Process Overview
 ### Process Name
-Service Delivery
+Notification of Birth/Death
 
 ### Service Category
-- G2C/G2B
+- G2G (Government to Government) / G2C (Government to Citizen)
 
 ### Scope
-- **In Scope:** End-to-end processing within Ministry of Health.
+- **In Scope:** Identification of vital event, completion of notification forms, verification of identities, submission to DHIS2, validation by MOH, and forwarding to Civil Registration Services.
+- **Out of Scope:** Actual printing and issuance of Birth and Death Certificates (handled by CRS).
 
 ### Triggers
-- Submission of application/request by Citizen.
+- A birth or death occurring within a registered health facility.
 
 ### End States
-- **Successful:** Patient File / EMR Record, Diagnostic Lab Reports, Prescription / Medication, Discharge Summary
+- **Successful:** Verified Birth/Death Notification forwarded to CRS; Recorded in MOH database for national statistics.
 
 ### Policy Context
-- The Ministry of Health Act; The Constitution of Kenya 2010; Data Protection Act 2019.
-
----
-
-## Stakeholders
-| Stakeholder | Role | Responsibilities |
-|---|---|---|
-| Registry | Process Actor | Performs actions as defined in steps. |
-| PS/Director | Process Actor | Performs actions as defined in steps. |
-| Ministry | Process Actor | Performs actions as defined in steps. |
-| Directorate | Process Actor | Performs actions as defined in steps. |
-| Citizen | Process Actor | Performs actions as defined in steps. |
+- Public Health Act; Births and Deaths Registration Act.
 
 ---
 
 ## Detailed Process (AS-IS)
-| Step | Role | Action | Tool | Notes |
+| Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
-| 1 | Citizen | Citizen/Stakeholder submits inquiry, complaint, or policy proposal via email or office. | Manual | |
-| 2 | Registry | Central Registry receives and tags the correspondence. | Manual | |
-| 3 | Directorate | Relevant Technical Directorate reviews and drafts response/action. | Manual | |
-| 4 | PS/Director | Principal Secretary/Director approves the response. | Manual | |
-| 5 | Ministry | Ministry issues official response or policy guideline. | Manual | |
+| 1 | Health Facility | **Event Occurs:** Birth or death happens at a registered health facility. Identifies event as reportable. | Physical | |
+| 2 | Health Facility | **Record Event:** Fills Birth Notification Form or Death Notification Form. | Manual/Paper | |
+| 3 | Health Personnel | **Verification:** Verifies National ID of mother (birth) or deceased (death), and completeness of forms. | Manual | |
+| 4 | Health Facility | **Submission:** Sends notification electronically via DHIS2 or physically to County Health Office. | DHIS2 / Physical | |
+| 5 | MOH/County | **Validation:** Checks completeness, compliance, and consistency with other health data. | Manual/DHIS2 | |
+| 6 | MOH | **Confirmation:** Confirms record for health statistics and linking to CRS. | DHIS2 | |
+| 7 | MOH | **Forwarding:** Sends confirmed notifications to CRS for official civil registration. | Manual/Batch | CRS then issues Birth/Death Certificates. |
+| 8 | MOH | **Reporting:** Keeps aggregated reports for vital stats, planning, and epidemiology. | DHIS2 | |
 
 ---
 
 ## Pain Points & Opportunities
 ### Pain Points
-- Loss of physical patient files.
-- Long patient wait times at triage and pharmacy.
-- Lack of interoperability between departments (Lab, Pharmacy, Billing).
-- Revenue leakage in cash collections.
+- **Manual Data Entry:** Paper forms lead to errors in names and ID numbers before they ever reach the digital system.
+- **Processing Delays:** Physical forwarding of batches to County Offices and then to CRS creates massive backlogs in civil registration.
+- **Lack of Verification:** The hospital often cannot instantly verify if the provided Mother's ID or Deceased's ID is valid in IPRS.
 
 ### Opportunities
-- Integration with IPRS/BRS via Service Bus.
-- Adoption of Government Payment Gateway.
-- Implementation of Automated Rules Engine.
-- Issuance of Digital Verifiable Credentials.
+- **Point-of-Care Capture:** Directly inputting data into an EMR connected to the national system.
+- **Instant IPRS Validation:** API ping to IPRS to validate IDs before the notification is saved.
+- **System-to-System Integration:** Direct API push from MOH (DHIS2) to CRS, bypassing manual county-level validation for routine cases.
 
 ---
 
 ## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Optimized).*
+*Future State visualization (Real-Time Vital Event Notification).*
 
 ```mermaid
 graph TD
-    Start((Start)) --> S1
-
-    subgraph Applicant [Applicant]
-        S1["Applicant logs in via Single Sign-On (SSO) and selects th..."]
-        S4["Applicant pays fees via the Government Payment Gateway; S..."]
-    end
-
-    subgraph System [System]
-        S2["Applicant enters National ID; System auto-populates detai..."]
-        S3["System performs auto-validation of compliance (e.g., KRA ..."]
-        S5["Application is processed by the Rules Engine. (Low-risk c..."]
-        S7["System generates a Verifiable Digital Certificate (QR Cod..."]
-    end
-
-    subgraph Officer [Officer]
-        S6["Complex cases are routed to the Officer Workbench for dig..."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> End((End))
+    Start((Start)) --> T1
+    T1["Health Worker logs event directly into Hospital EMR / Afya App"] --> T2
+    T2["System instantly queries IPRS to validate Mother/Deceased ID"] --> T3
+    T3["Validated data is securely pushed to MOH DHIS2 & CRS via X-Road API"] --> T4
+    T4["CRS system automatically mints UPI (Birth) or updates status to Deceased (Death)"] --> T5
+    T5["DHIS2 auto-aggregates data for national epidemiology dashboards"] --> T6
+    T6["Citizen receives SMS notification confirming the event registration"] --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
     class Start start;
     class End endNode;
-    class S1,S4,S6 userTask;
-    class S2,S3,S5,S7 serviceTask;
 ```
 
 ## Future State Process (TO-BE)
 ### Narrative
-The To-Be process leverages the Government Service Bus to integrate with IPRS (Identity Registry) and the Payment Gateway. Manual data entry and document uploads are replaced by real-time API validations, enabling a paperless, cashless, and presence-less service experience.
+**TO-BE Process: Real-Time Vital Event Notification**
+
+**Design Principles:**
+- Point-of-Care Digital Capture
+- Instant Identity Verification
+- Seamless Inter-Agency Data Exchange (MOH to CRS)
 
 ### Optimized Steps (Digital)
 | Step | Actor | Action | System |
 |---|---|---|---|
-| 1 | Applicant | Applicant logs in via Single Sign-On (SSO) and selects the service. | Citizen Portal / SSO |
-| 2 | System | Applicant enters National ID; System auto-populates details from IPRS (Identity Registry) via the Service Bus. | Service Bus / Registry API |
-| 3 | System | System performs auto-validation of compliance (e.g., KRA Tax Status) via Inter-Agency APIs. | Service Bus / Compliance Engine |
-| 4 | Applicant | Applicant pays fees via the Government Payment Gateway; System auto-receipts. | Payment Gateway |
-| 5 | System | Application is processed by the Rules Engine. (Low-risk cases are Auto-Approved). | Workflow Engine |
-| 6 | Officer | Complex cases are routed to the Officer Workbench for digital review and approval. | Officer Workbench |
-| 7 | System | System generates a Verifiable Digital Certificate (QR Code) and notifies the applicant. | Output Generator |
+| 1 | Health Worker | **Digital Capture:** Logs the birth or death event directly into the integrated Hospital EMR or national Afya Mobile App at the point of care. | Hospital EMR |
+| 2 | System | **Auto-Validation:** Instantly pings IPRS via API to validate the provided National ID (Mother or Deceased) to prevent identity fraud. | IPRS API |
+| 3 | System | **Dual-Routing:** The validated notification data is simultaneously routed to the MOH DHIS2 system and directly pushed to the CRS database. | X-Road API |
+| 4 | CRS System | **Registration:** CRS receives the data instantly, automatically minting a Maisha Namba (UPI) for a birth, or flagging the ID as deceased. | CRS System |
+| 5 | MOH System | **Aggregation:** DHIS2 automatically ingests the vital event into the national data lake for real-time epidemiological monitoring and health planning. | DHIS2 / Data Lake |
+| 6 | System | **Citizen Alert:** Auto-generates an SMS to the next of kin/parents confirming the event has been securely registered with the government. | Notification Gateway |
 
 ---
 
 ## References
-Derived from official mandates.
+- Public Health Act.
+- Births and Deaths Registration Act.

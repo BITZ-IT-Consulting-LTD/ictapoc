@@ -1,0 +1,36 @@
+graph TD
+    Start((Start)) --> CompleteForm["Complete Application Form"]
+    
+    subgraph Applicant [Trader / Farmer]
+        CompleteForm --> AttachBRS["Attach Business Registration"]
+        AttachBRS --> AttachPremises["Attach Premises Documents"]
+        AttachPremises --> Submit["Submit Application"]
+    end
+    
+    subgraph AFA [AFA Directorates]
+        Submit --> ReviewDocs["Review Documentation"]
+        ReviewDocs --> AssessPrem["Assess Premises (Physical Inspection)"]
+        AssessPrem --> VerifyCap["Verify Capacity"]
+        VerifyCap --> Decision{"Decision?"}
+        
+        Decision -- "Info" --> RequestInfo["Request More Info"]
+        RequestInfo --> CompleteForm
+        
+        Decision -- "Reject" --> Reject["Reject Application"]
+        
+        Decision -- "Approve" --> GenLicense["Generate License / Permit"]
+        GenLicense --> Notify["Notify Applicant"]
+        Notify --> UpdateReg["Update Manual Registry"]
+    end
+    
+    UpdateReg --> End((End))
+    Reject --> End
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class Decision gateway;
+    class CompleteForm,AttachBRS,AttachPremises,Submit,ReviewDocs,AssessPrem,VerifyCap,RequestInfo,Reject,GenLicense,Notify,UpdateReg userTask;

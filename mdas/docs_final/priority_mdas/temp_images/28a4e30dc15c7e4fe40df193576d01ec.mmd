@@ -1,0 +1,39 @@
+graph TD
+    Start((Start)) --> Source{"Event Source?"}
+    
+    subgraph Capture [Point of Occurrence]
+        Source -- "Hospital" --> Notification["Hospital Notification / Medical Cert"]
+        Source -- "Home" --> Community["Community Report (Chief/Informant)"]
+        Notification --> Form["Complete Form (Birth/Death)"]
+        Community --> Form
+    end
+    
+    subgraph Vetting [Verification & Approval]
+        Form --> Attach["Attach Parent IDs / Marriage Cert / Evidence"]
+        Attach --> Review["Officer Reviews Documents"]
+        Review --> Verify["Verify Parents / Cause of Death"]
+        Verify --> Complete{"Is Data Complete?"}
+        
+        Complete -- "No" --> MoreInfo["Request More Info/Docs"]
+        MoreInfo --> Form
+        
+        Complete -- "Yes" --> Register["Enter in Register & Assign Entry Number"]
+    end
+    
+    subgraph Issuance [Payment & Production]
+        Register --> Sign["Registrar Signs Record"]
+        Sign --> Payment["Process Payment (Manual/eCitizen)"]
+        Payment --> Print["Print Certificate / Burial Permit"]
+        Print --> Issue["Issue Certificate to Informant"]
+    end
+    
+    Issue --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class Source,Complete gateway;
+    class Notification,Community,Form,Attach,Review,Verify,MoreInfo,Register,Sign,Payment,Print,Issue userTask;

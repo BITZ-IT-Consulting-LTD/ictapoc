@@ -1,0 +1,34 @@
+graph TD
+    Start((Start)) --> Directive["Directive Received / Policy Ambiguity Identified"]
+    
+    subgraph Analysis [Coordination & Analysis]
+        Directive --> Analyze["Analyse Requirements & Identify MDAs"]
+        Analyze --> Translate["Translate to Instructions / Request Letter"]
+    end
+    
+    subgraph Dissemination [Dispatch]
+        Translate --> Dispatch["Dispatch to Principal Secretaries / MDAs"]
+        Dispatch --> Receipt["Confirm Receipt (Manual/Memo)"]
+    end
+    
+    subgraph Monitoring [Monitoring & Feedback]
+        Receipt --> Track["Track Implementation / Monitor Submissions"]
+        Track --> Consolidate["Consolidate Updates / Compile Submissions"]
+        Consolidate --> Assess["Analyse Performance / Identify Gaps"]
+        Assess --> Perf{"Performance?"}
+        
+        Perf -- "Good" --> Commend["Commend / Feedback"]
+        Perf -- "Poor" --> Corrective["Issue Corrective Directives"]
+    end
+    
+    Corrective --> End((End))
+    Commend --> End
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class Perf gateway;
+    class Directive,Analyze,Translate,Dispatch,Receipt,Track,Consolidate,Assess,Commend,Corrective userTask;

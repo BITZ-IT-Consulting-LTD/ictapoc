@@ -1,0 +1,35 @@
+graph TD
+    Start((Start)) --> Portal["Citizen Accesses eCitizen Portal"]
+    
+    subgraph Layer1 [Access Channels]
+        Portal
+        Consent["Consent Manager Requests IPRS Access"]
+    end
+    
+    subgraph Layer2 [Core Platform & Trust Hub]
+        Consent --> XRoad["API Gateway routes via KeSEL (X-Road)"]
+        XRoad --> IPRS["Validate Identity against IPRS / Maisha Namba"]
+        IPRS --> AutoForm["Workflow Engine Auto-populates Form"]
+    end
+    
+    subgraph Layer4 [Registries & Payments]
+        AutoForm --> Payment["Initiate Payment via Govt Payment Aggregator (GPA)"]
+    end
+    
+    subgraph Agency [Immigration & Production]
+        Payment --> AutoApprove["Workflow Engine Auto-Approves (if Renewal)"]
+        AutoApprove --> Factory["Passport Production Unit Prints"]
+        Factory --> Logistics["Posta Delivers to Citizen"]
+    end
+    
+    Portal --> Consent
+    Logistics --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    class Start start;
+    class End endNode;
+    class Portal,Consent userTask;
+    class XRoad,IPRS,AutoForm,Payment,AutoApprove,Factory,Logistics serviceTask;

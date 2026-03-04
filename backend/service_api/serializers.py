@@ -4,7 +4,8 @@ from .models import (
     ServiceDomain, ServiceCategory, InterDepartmentalMemo, GovernmentFile, 
     OfficialLetter, CorrespondenceAction, DesktopReview,
     PaymentProvider, PaymentTransaction, RevenueSplit,
-    DataPurpose, ConsentRecord, ConsentAccessLog, RegistryAdapter, RegistryEndpoint
+    DataPurpose, ConsentRecord, ConsentAccessLog, RegistryAdapter, RegistryEndpoint,
+    ServiceFamily
 )
 
 class RoleSerializer(serializers.ModelSerializer):
@@ -76,9 +77,15 @@ class ServiceCategorySerializer(serializers.ModelSerializer):
         model = ServiceCategory
         fields = '__all__'
 
+class ServiceFamilySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ServiceFamily
+        fields = '__all__'
+
 class ServiceConfigSerializer(serializers.ModelSerializer):
     workflow_steps = WorkflowStepSerializer(many=True, read_only=True)
     category_details = ServiceCategorySerializer(source='category', read_only=True)
+    service_family_details = ServiceFamilySerializer(source='service_family', read_only=True)
 
     class Meta:
         model = ServiceConfig

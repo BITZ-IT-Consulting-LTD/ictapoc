@@ -1,0 +1,32 @@
+graph TD
+    Start((Start)) --> Portal["Applicant Accesses Unified MSME Portal (SSO)"]
+    
+    subgraph Layer2 [Workflow & Identity]
+        Portal --> Verify["X-Road: Validate Identity & Business (BRS)"]
+        Verify --> Score["AI Credit Engine: Score based on GPA & BRS Data"]
+    end
+    
+    subgraph Layer3 [Huduma Bridge / X-Road]
+        Score --> GroupCheck["X-Road: Auto-verify Group Members via IPRS"]
+    end
+    
+    subgraph Layer4 [Payments & Disbursement]
+        GroupCheck --> Wallet["System Creates Digital Group Wallet (GPA)"]
+        Wallet --> Disburse["Instant Disbursement via Payment Aggregator"]
+    end
+    
+    subgraph Monitoring [Impact Tracking]
+        Disburse --> Track["Real-time Repayment & Performance Tracking"]
+        Track --> History["Auto-update National Credit Registry"]
+    end
+    
+    History --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    class Start start;
+    class End endNode;
+    class Portal userTask;
+    class Verify,Score,GroupCheck,Wallet,Disburse,Track,History serviceTask;

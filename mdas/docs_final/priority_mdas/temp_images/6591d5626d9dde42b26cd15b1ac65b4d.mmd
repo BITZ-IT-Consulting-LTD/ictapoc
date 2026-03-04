@@ -1,0 +1,43 @@
+graph TD
+    Start((Start)) --> Submit["Submit Application & Attach Documents"]
+    
+    subgraph Intake [Reception & Intake]
+        Submit --> PayFee["Pay Fee & Check Completeness"]
+        PayFee --> Comp{"Complete?"}
+        
+        Comp -- "No" --> Return["Return for Completion"]
+        Return --> Submit
+        
+        Comp -- "Yes" --> Log["Log in System & Assign Reference"]
+    end
+    
+    subgraph Vetting [Verification & Assessment]
+        Log --> AuthCert["Authenticate Certificates & Transcripts"]
+        AuthCert --> VerifyInst["Verify Issuing Institution"]
+        VerifyInst --> FraudCheck["Check for Fraud & Discrepancies"]
+        FraudCheck --> Assess["Assess Against KNQF & Determine Level"]
+    end
+    
+    subgraph Approval [Approval & Issuance]
+        Assess --> Comm["Committee Deliberates on Equivalency"]
+        Comm --> Decision{"Decision?"}
+        
+        Decision -- "Approve" --> GenLetter["Generate Validation Letter & Sign"]
+        Decision -- "Reject" --> PrepRej["Prepare Rejection Notification"]
+        Decision -- "Info" --> ReqInfo["Request More Info"]
+        
+        GenLetter --> Issue["Issue to Applicant & Update Registry"]
+    end
+    
+    Issue --> End((End))
+    PrepRej --> End
+    ReqInfo --> Submit
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class Comp,Decision gateway;
+    class Submit,PayFee,Return,Log,AuthCert,VerifyInst,FraudCheck,Assess,Comm,GenLetter,PrepRej,ReqInfo,Issue userTask;

@@ -1,0 +1,49 @@
+graph TD
+    Start((Start)) --> Gather["Gather Products (Artisans/Cooperatives)"]
+    
+    subgraph Aggregation [Center Operations]
+        Gather --> Travel["Travel to Center & Present Products"]
+        Travel --> Receive["Receive & Count Items"]
+        Receive --> RegCheck{"Registered?"}
+        
+        RegCheck -- "No" --> Reject["Reject Unregistered"]
+        RegCheck -- "Yes" --> Record["Record Details & Issue Receipt"]
+    end
+    
+    subgraph Quality [Quality & Grading]
+        Record --> Inspect["Inspect Craftsmanship & Materials"]
+        Inspect --> Grade{"Grade?"}
+        
+        Grade -- "Premium" --> GradeA["Tag with Grade A"]
+        Grade -- "Standard" --> GradeB["Tag with Grade B"]
+        Grade -- "Fail" --> Reject
+    end
+    
+    subgraph Sales [Market Placement]
+        GradeA --> Catalog["Move to Cataloging & Inventory"]
+        GradeB --> Catalog
+        Catalog --> Market["Market Placement (Retail/Exhibition/Online)"]
+        Market --> Sale["Customer Purchases & Record Sale"]
+    end
+    
+    subgraph Settlement [Payment Processing]
+        Sale --> Summary["Receive Sales Summary"]
+        Summary --> Calculate["Calculate Gross Earnings & Deduct Fees"]
+        Calculate --> Approve{"Approved?"}
+        
+        Approve -- "Yes" --> Transfer["Process Bank Transfer to Cooperative"]
+        Approve -- "No" --> Query["Query Discrepancies"]
+    end
+    
+    Transfer --> Notify["Notify Cooperative"]
+    Notify --> End((End))
+    Reject --> End
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class RegCheck,Grade,Approve gateway;
+    class Gather,Travel,Receive,Record,Inspect,GradeA,GradeB,Catalog,Market,Sale,Summary,Calculate,Transfer,Notify,Reject,Query userTask;

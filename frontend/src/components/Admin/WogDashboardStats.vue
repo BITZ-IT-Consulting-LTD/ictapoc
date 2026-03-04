@@ -1,8 +1,6 @@
 <template>
     <div v-if="stats" class="stats-grid u-mb-8">
-        <div v-for="item in statCards" :key="item.label"
-            class="stats-card"
-            :class="getCardModifier(item.iconClass)">
+        <div v-for="item in statCards" :key="item.label" class="stats-card" :class="getCardModifier(item.iconClass)">
 
             <!-- Gradient Background Overlay -->
             <div class="stats-card__overlay"></div>
@@ -84,10 +82,7 @@
             label: 'Services',
             value: props.stats.totalServices || 0,
             sublabel: 'Total WOG Catalogue',
-            icon: 'LibraryIcon',
-            bgClass: 'bg-indigo-50',
-            iconClass: 'text-indigo-600',
-            gradient: 'linear-gradient(135deg, var(--info) 0%, var(--info-dark) 100%)',
+            iconClass: 'text-primary',
             icon: {
                 template: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>'
             }
@@ -96,9 +91,7 @@
             label: 'Agencies',
             value: props.stats.totalMDAs || 0,
             sublabel: 'Active MDAs Mapped',
-            bgClass: 'bg-orange-50',
-            iconClass: 'text-orange-600',
-            gradient: 'linear-gradient(135deg, var(--warning) 0%, var(--warning-dark) 100%)',
+            iconClass: 'text-warning',
             icon: {
                 template: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>'
             }
@@ -107,9 +100,7 @@
             label: 'Ministries',
             value: props.stats.totalDomains || 0,
             sublabel: 'Service Domains',
-            bgClass: 'bg-purple-50',
-            iconClass: 'text-purple-600',
-            gradient: 'linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)',
+            iconClass: 'text-info',
             icon: {
                 template: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path></svg>'
             }
@@ -117,10 +108,8 @@
         {
             label: 'Citizen Apps',
             value: props.stats.citizenFacing || 0,
-            sublabel: 'Public Facing (C2G)',
-            bgClass: 'bg-blue-50',
-            iconClass: 'text-blue-600',
-            gradient: 'linear-gradient(135deg, var(--info) 0%, var(--info-dark) 100%)',
+            sublabel: 'Public Facing (C2G',
+            iconClass: 'text-success',
             icon: {
                 template: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>'
             }
@@ -130,9 +119,7 @@
             value: props.stats.totalServices > 0 ? Math.round((props.stats.withWorkflow / props.stats.totalServices) * 100) : 0,
             suffix: '%',
             sublabel: 'Orchestration Coverage',
-            bgClass: 'bg-green-50',
-            iconClass: 'text-green-600',
-            gradient: 'linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%)',
+            iconClass: 'text-success',
             icon: {
                 template: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>'
             }
@@ -142,12 +129,75 @@
             value: props.stats.avgMaturity || 0,
             suffix: '/ 5',
             sublabel: 'Avg Digitization',
-            bgClass: 'bg-emerald-50',
-            iconClass: 'text-emerald-600',
-            gradient: 'linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%)',
+            iconClass: 'text-indigo',
             icon: {
                 template: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>'
             }
         }
     ]);
 </script>
+
+<style scoped>
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .stats-card {
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        animation: slideUp 0.6s ease-out forwards;
+        opacity: 0;
+    }
+
+    .stats-card:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+
+    .stats-card:nth-child(2) {
+        animation-delay: 0.15s;
+    }
+
+    .stats-card:nth-child(3) {
+        animation-delay: 0.2s;
+    }
+
+    .stats-card:nth-child(4) {
+        animation-delay: 0.25s;
+    }
+
+    .stats-card:nth-child(5) {
+        animation-delay: 0.3s;
+    }
+
+    .stats-card:nth-child(6) {
+        animation-delay: 0.35s;
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .stats-card__icon-glow {
+        filter: blur(12px);
+        opacity: 0.3;
+    }
+
+    .stats-card:hover .stats-card__icon-glow {
+        opacity: 0.6;
+        transform: scale(1.2);
+    }
+
+    .stats-card__value {
+        letter-spacing: -0.05em;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+</style>

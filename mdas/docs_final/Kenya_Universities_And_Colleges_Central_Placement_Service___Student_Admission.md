@@ -1,169 +1,136 @@
-# Kenya Universities And Colleges Central Placement Service – Student Admission
+# KENYA UNIVERSITIES AND COLLEGES CENTRAL PLACEMENT SERVICE (KUCCPS) – Student Admission
 
 ## Cover Page
-- **Ministry/Department/Agency (MDA):** Kenya Universities And Colleges Central Placement Service
+- **Ministry/Department/Agency (MDA):** KENYA UNIVERSITIES AND COLLEGES CENTRAL PLACEMENT SERVICE (KUCCPS)
 - **Process Name:** Student Admission
-- **Document Version:** 1.0
-- **Date:** 2026-02-14
+- **Document Version:** 2.0
+- **Date:** 2026-02-24
 - **Classification:** Official
 
 ---
 
 ## Executive Summary
-Represents 'Education' cluster for balanced coverage; entity type: Agency. Included as Tier 3 for light‑touch desk review/survey.
+The Kenya Universities and Colleges Central Placement Service (KUCCPS) is mandated to coordinate the placement of government-sponsored students to universities and colleges. It ensures equitable, fair, and merit-based admission into higher education institutions across Kenya by matching candidates' academic performance with their preferred courses and available institutional capacities.
 
 ---
 
 ## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization.*
+*Current State visualization (KUCCPS Student Admission).*
 
 ```mermaid
 graph TD
     Start((Start)) --> S1
-
-    subgraph Student [Student]
-        S1["Student receives placement notification via KUCCPS or app..."]
-        S2["Student logs into the Institution's Student Portal to acc..."]
-        S3["Student pays tuition and statutory fees via Bank or eCiti..."]
-        S4["Student physically reports to the institution for documen..."]
-        S6["Student is issued a Student ID card."]
-    end
-
-    subgraph Registrar [Registrar]
-        S5["Institution registers the student in the ERP system."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> S6
-    S6 --> End((End))
+    S1["Candidate provides KCSE slip & ID/NEMIS Info"] --> S2
+    S2["KUCCPS verifies entry requirements and identity"] --> S3
+    S3["Candidate creates profile on KUCCPS portal"] --> S4
+    S4["Candidate inputs personal details, results, and preferences"] --> S5
+    S5["Candidate submits up to 6 course & institution preferences"] --> S6
+    S6["KUCCPS evaluates qualifications vs requirements, slots, and quotas"] --> S7
+    S7["KUCCPS makes Placement Decision (University or TVET)"] --> S8
+    S8["Placement communicated via Portal, SMS, or Email"] --> S9
+    S9["Candidate confirms acceptance through KUCCPS portal"] --> S10
+    S10["Institution is notified & KUCCPS updates central database"] --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
     class Start start;
     class End endNode;
-    class S1,S2,S3,S4,S5,S6 userTask;
 ```
 
 ---
 
 ## Process Overview
 ### Process Name
-Student Admission
+Student Admission / Placement
 
 ### Service Category
-- G2C/G2B
+- G2C (Government to Citizen) / G2G (Government to Institution)
 
 ### Scope
-- **In Scope:** End-to-end processing within Kenya Universities And Colleges Central Placement Service.
+- **In Scope:** Verifying candidate eligibility, profile creation, submission of course preferences, algorithmic placement matching, candidate acceptance, and notification to tertiary institutions.
+- **Out of Scope:** Actual physical enrollment at the respective university/college (handled by the specific institution).
 
 ### Triggers
-- Submission of application/request by Student.
+- Release of Kenya Certificate of Secondary Education (KCSE) results by KNEC.
+- Opening of the KUCCPS application portal.
 
 ### End States
-- **Successful:** Admission Letter, Student ID Card, Academic Transcripts, Degree/Diploma Certificate
+- **Successful:** Student placement confirmed; Admission record generated for institution and government planning; Data ready for scholarship, loan (HELB), or bursary processing.
 
 ### Policy Context
-- The Kenya Universities And Colleges Central Placement Service Act; The Constitution of Kenya 2010; Data Protection Act 2019.
-
----
-
-## Stakeholders
-| Stakeholder | Role | Responsibilities |
-|---|---|---|
-| Student | Process Actor | Performs actions as defined in steps. |
-| Registrar | Process Actor | Performs actions as defined in steps. |
+- Universities Act, 2012.
 
 ---
 
 ## Detailed Process (AS-IS)
-| Step | Role | Action | Tool | Notes |
+| Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
-| 1 | Student | Student receives placement notification via KUCCPS or applies directly as Self-Sponsored. | Manual | |
-| 2 | Student | Student logs into the Institution's Student Portal to accept admission and download Admission Letter. | Digital | |
-| 3 | Student | Student pays tuition and statutory fees via Bank or eCitizen. | Manual | |
-| 4 | Student | Student physically reports to the institution for document verification (original slips, certs). | Manual | |
-| 5 | Registrar | Institution registers the student in the ERP system. | Manual | |
-| 6 | Student | Student is issued a Student ID card. | Manual | |
+| 1 | Candidate / KUCCPS | **Verification:** Candidate provides KCSE slip, name, ID/NEMIS. KUCCPS verifies minimum entry requirements and identity. | Manual/Portal | |
+| 2 | Candidate | **Profile Creation:** Creates an account on the KUCCPS portal, inputs personal details and KCSE results. | KUCCPS Portal | |
+| 3 | Candidate | **Preferences:** Submits preferences for up to 6 university courses and up to 6 college/TVET courses. | KUCCPS Portal | |
+| 4 | KUCCPS | **Matching:** Evaluates qualifications against course requirements, available slots, and government/institutional quotas. | Placement Algorithm| |
+| 5 | KUCCPS | **Decision:** Assigns candidate to a University or TVET program. | Placement Algorithm| |
+| 6 | KUCCPS | **Notification:** Communicates placement to the candidate via Portal, SMS, and Email. | Notification Gateway| |
+| 7 | Candidate | **Acceptance:** Confirms acceptance of the placement through the KUCCPS portal. | KUCCPS Portal | |
+| 8 | KUCCPS | **Reporting:** Notifies the institution, updates the central database, and sends reports to the Ministry of Education. | Database | Used for planning and HELB funding. |
 
 ---
 
 ## Pain Points & Opportunities
 ### Pain Points
-- Long queues during admission and registration.
-- Manual reconciliation of fee payments.
-- Delays in processing exam results and transcripts.
-- Fragmented student data across departments.
+- **Manual Results Entry:** Candidates manually entering KCSE results is prone to errors or tampering.
+- **Verification Delays:** Verifying identity against National IDs or NEMIS manually can slow down the portal creation process.
+- **Data Silos:** Lack of real-time data sharing with HELB means students have to start fresh applications for funding after placement.
+- **Portal Overload:** High traffic upon portal opening frequently causes system crashes and poor user experience.
 
 ### Opportunities
-- Integration with IPRS/BRS via Service Bus.
-- Adoption of Government Payment Gateway.
-- Implementation of Automated Rules Engine.
-- Issuance of Digital Verifiable Credentials.
+- **Instant Data Sync:** Direct API integration with KNEC to instantly fetch verified KCSE results, and IPRS to verify identity without manual input.
+- **AI-Assisted Guidance:** Implementing an AI recommender system on the portal to guide students toward courses where they have the highest probability of placement based on their grades.
+- **Unified Education Record:** Passing the placement data immediately to HELB via API to automatically initiate the loan assessment process.
 
 ---
 
 ## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Optimized).*
+*Future State visualization (Seamless & Integrated Placement).*
 
 ```mermaid
 graph TD
-    Start((Start)) --> S1
-
-    subgraph Applicant [Applicant]
-        S1["Applicant logs in via Single Sign-On (SSO) and selects th..."]
-        S4["Applicant pays fees via the Government Payment Gateway; S..."]
-    end
-
-    subgraph System [System]
-        S2["Applicant enters Business Registration Number; System aut..."]
-        S3["System performs auto-validation of compliance (e.g., KRA ..."]
-        S5["Application is processed by the Rules Engine. (Low-risk c..."]
-        S7["System generates a Verifiable Digital Certificate (QR Cod..."]
-    end
-
-    subgraph Officer [Officer]
-        S6["Complex cases are routed to the Officer Workbench for dig..."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> End((End))
+    Start((Start)) --> T1
+    T1["Student logs into KUCCPS portal via eCitizen SSO"] --> T2
+    T2["System auto-fetches verified KCSE results from KNEC & Identity from IPRS"] --> T3
+    T3["AI Recommender suggests optimal courses based on grades & quotas"] --> T4
+    T4["Student selects and submits final preferences"] --> T5
+    T5["Algorithmic engine performs automated matching & assigns placement"] --> T6
+    T6["Digital Placement Letter generated & student confirms acceptance instantly"] --> T7
+    T7["Placement data is automatically pushed to the University and HELB via API"] --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
     class Start start;
     class End endNode;
-    class S1,S4,S6 userTask;
-    class S2,S3,S5,S7 serviceTask;
 ```
 
 ## Future State Process (TO-BE)
 ### Narrative
-The To-Be process leverages the Government Service Bus to integrate with BRS (Business Registry) and the Payment Gateway. Manual data entry and document uploads are replaced by real-time API validations, enabling a paperless, cashless, and presence-less service experience.
+**TO-BE Process: Seamless & Integrated Placement**
+
+**Design Principles:**
+- Zero Data Entry (API Data Fetching)
+- Inter-Agency Interoperability (KNEC, HELB, Universities)
+- AI-Assisted Decision Making
 
 ### Optimized Steps (Digital)
 | Step | Actor | Action | System |
 |---|---|---|---|
-| 1 | Applicant | Applicant logs in via Single Sign-On (SSO) and selects the service. | Citizen Portal / SSO |
-| 2 | System | Applicant enters Business Registration Number; System auto-populates details from BRS (Business Registry) via the Service Bus. | Service Bus / Registry API |
-| 3 | System | System performs auto-validation of compliance (e.g., KRA Tax Status) via Inter-Agency APIs. | Service Bus / Compliance Engine |
-| 4 | Applicant | Applicant pays fees via the Government Payment Gateway; System auto-receipts. | Payment Gateway |
-| 5 | System | Application is processed by the Rules Engine. (Low-risk cases are Auto-Approved). | Workflow Engine |
-| 6 | Officer | Complex cases are routed to the Officer Workbench for digital review and approval. | Officer Workbench |
-| 7 | System | System generates a Verifiable Digital Certificate (QR Code) and notifies the applicant. | Output Generator |
+| 1 | Student | **SSO Login:** Logs into the KUCCPS portal using the unified eCitizen identity (Maisha Namba/UPI). | eCitizen SSO |
+| 2 | System | **Auto-Fetch Data:** Instantly retrieves verified identity from IPRS and official KCSE examination results directly from KNEC. | X-Road APIs |
+| 3 | System/AI | **Smart Selection:** An AI engine analyzes the student's grades against historical cutoff points and quotas, suggesting optimal course choices to maximize placement success. | KUCCPS AI Recommender |
+| 4 | Student | **Submission:** Reviews suggestions, selects final preferences, and submits securely online. | KUCCPS Portal |
+| 5 | System | **Automated Matching:** The placement algorithm runs to fairly distribute students to Universities and TVETs based on merit and capacity. | Core Placement Engine |
+| 6 | Student | **Digital Acceptance:** Receives a Verifiable Digital Placement Notification and accepts it instantly on the portal. | KUCCPS Portal |
+| 7 | System | **Ecosystem Sync:** The final placement data is pushed via API to the respective Tertiary Institution (for admission) and immediately to HELB (to trigger loan processing). | Inter-Agency Data Hub |
 
 ---
 
 ## References
-Derived from official mandates.
+- Universities Act, 2012.

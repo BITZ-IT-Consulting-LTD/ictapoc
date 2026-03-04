@@ -15,34 +15,36 @@ The National Health Insurance Fund (transitioning to the Social Health Authority
 ---
 
 ## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (Manual Forms / Delayed Pre-Auth).*
+*Current State visualization (SHA Registration).*
 
 ```mermaid
 graph TD
     Start((Start)) --> S1
 
-    subgraph Member [Member]
-        S1["**Registration:** Individual visits Huduma Centre or uses..."]
-        S2["**Payment:** Pays via M-Pesa Paybill 200222 or Salary Che..."]
-        S3["**Access:** Visits hospital. Receptionist checks status o..."]
+    subgraph Citizen [Citizen]
+        S1["Access SHA Registration (Portal/eCitizen/USSD/Center)"]
+        S2["Enter National ID Number"]
+        S4["Provide Additional Household Details"]
+        S5["Confirm and submit registration"]
+        S8["Make contribution (Mobile Money/Bank/Employer)"]
     end
 
-    subgraph Hospital [Hospital]
-        S4["**Pre-Auth:** For surgeries/CT scans, hospital requests '..."]
-        S6["**Treatment:** Upon approval, treatment is given. Patient..."]
-        S7["**Claim:** Hospital compiles invoice and submits to Fund ..."]
+    subgraph System [System]
+        S3["Retrieve Citizen Details (Name, DOB, Gender)"]
+        S6["Create SHA Membership Record linked to ID"]
+        S7["Determine Contribution Assessment (Means Testing)"]
+        S9["Coverage Activated"]
     end
 
-    subgraph SHA_NHIF [SHA/NHIF]
-        S5["**Adjudication:** Medical team reviews request. Often rej..."]
-    end
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
     S5 --> S6
     S6 --> S7
-    S7 --> End((End))
+    S7 --> S8
+    S8 --> S9
+    S9 --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
@@ -51,7 +53,8 @@ graph TD
 
     class Start start;
     class End endNode;
-    class S1,S2,S3,S4,S5,S6,S7 userTask;
+    class S1,S2,S4,S5,S8 userTask;
+    class S3,S6,S7,S9 serviceTask;
 ```
 
 ---
@@ -90,15 +93,22 @@ Member Registration & Benefit Access (UHC)
 ---
 
 ## Detailed Process (AS-IS)
-| Step | Role | Action | Tool | Notes |
+**AS-IS Steps: SHA Registration (Current Process)**
+*Agency: Social Health Authority*
+*System: SHA Portal / USSD / eCitizen / Physical Registration*
+*(SHA replaced NHIF under Universal Health Coverage reforms)*
+
+| Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
-| 1 | Member | **Registration:** Individual visits Huduma Centre or uses USSD/App. Fills bio-data. Uploads spouse ID and children's Birth Certs. | Mobile App / Portal | Dependent verification often fails or takes weeks. |
-| 2 | Member | **Payment:** Pays via M-Pesa Paybill 200222 or Salary Check-off. | Payment Gateway | Reconciliation delays lead to "Card Inactive" status at hospital reception. |
-| 3 | Member | **Access:** Visits hospital. Receptionist checks status on system. If inactive (due to delayed remittance), patient is turned away. | Provider Portal | Frequent downtime of the biometric/card system. |
-| 4 | Hospital | **Pre-Auth:** For surgeries/CT scans, hospital requests "Pre-Authorization" online. Must attach clinical notes. | E-Claim Portal | Approval takes 24-48 hours. Patients wait in wards for "Pre-Auth Code". |
-| 5 | SHA/NHIF | **Adjudication:** Medical team reviews request. Often rejects or queries ("Add X-ray report"). | Back Office | |
-| 6 | Hospital | **Treatment:** Upon approval, treatment is given. Patient discharged. | Hospital HIS | |
-| 7 | Hospital | **Claim:** Hospital compiles invoice and submits to Fund for payment. | Bulk Upload | Payment delays >6 months cripple hospital cash flow. |
+| 1 | Citizen | **Access:** Citizen accesses SHA Registration via Online Portal, eCitizen, USSD, or Registration Center. | SHA Portal/USSD | |
+| 2 | Citizen | **Enter ID:** Citizen enters National ID Number. | Digital/Manual | |
+| 3 | System | **Retrieve Details:** System automatically fetches Name, Date of Birth, and Gender. | IPRS/System | |
+| 4 | Citizen | **Provide Details:** Citizen enters Phone Number, Email, Residence, and Household/Dependants. | Digital/Manual | |
+| 5 | Citizen | **Submit:** Citizen confirms and submits registration. | Digital/Manual | |
+| 6 | System | **Generate SHA Number:** System creates SHA Membership Record linked to National ID. | SHA System | |
+| 7 | System | **Assessment:** System determines contribution amount based on income level / means testing. | SHA System | |
+| 8 | Citizen | **Contribution:** Citizen pays via Mobile Money, Bank, or Employer deduction. | Payment Gateway | |
+| 9 | System | **Activation:** Coverage Activated. Citizen becomes eligible for healthcare services. | SHA System | |
 
 ---
 
@@ -119,36 +129,38 @@ Member Registration & Benefit Access (UHC)
 ---
 
 ## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Repeatable WoG Platform).*
+*Future State visualization (Automated SHA Registration & Assessment).*
 
 ```mermaid
 graph TD
     Start((Start)) --> S1
 
-    subgraph Patient [Patient]
-        S1["Checks in at hospital using facial recognition."]
+    subgraph System [System]
+        S1["Trigger Event: Citizen gets ID, gets employed, or registers birth/marriage"]
+        S2["System retrieves IPRS & CRS data to create/update SHA Profile"]
+        S3["System auto-links Dependants via Civil Registration (CRS)"]
+        S4["System queries KRA/Mobile Money for income data (Means Testing)"]
+        S5["System calculates Contribution Amount automatically"]
+        S8["Coverage Activated Instantly"]
     end
 
-    subgraph WoG_Platform [WoG Platform]
-        S2["Validates identity and active status."]
+    subgraph Employer [Employer]
+        S6["Employer payroll auto-deducts and remits via API (Formal)"]
     end
 
-    subgraph Doctor [Doctor]
-        S3["Enters diagnosis. AI approves treatment plan instantly."]
+    subgraph Citizen [Citizen]
+        S7["Citizen receives Notification & pays via auto-deduction (Informal)"]
     end
 
-    subgraph Hospital [Hospital]
-        S4["Submits e-Claim upon discharge."]
-    end
-
-    subgraph GPA [GPA]
-        S5["Settles payment to hospital account."]
-    end
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
-    S5 --> End((End))
+    S5 --> S6
+    S5 --> S7
+    S6 --> S8
+    S7 --> S8
+    S8 --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
@@ -157,48 +169,42 @@ graph TD
 
     class Start start;
     class End endNode;
-    class S1,S2,S3,S4,S5 userTask;
+    class S1,S2,S3,S4,S5,S8 serviceTask;
+    class S6,S7 userTask;
 ```
 
 ## Future State Process (TO-BE)
 ### Narrative
-The process is **Seamless** and **Intelligent**.
-1.  **Biometric ID:** No physical card. The patient's face (matched against **NRB/Maisha Namba**) is their insurance credential.
-2.  **Dependent Sync:** Family members are auto-linked from **CRS (Births)** and **AG (Marriage)** registries via **X-Road**. No document uploads.
-3.  **AI Authorization:** Routine procedures (Malaria, Normal Delivery) are approved instantly by the **WoG AI Engine** based on clinical rules. No human delay.
-4.  **Smart Settlement:** Claims are vetted in real-time for fraud. Valid claims are paid weekly via **GPA**, ensuring provider liquidity.
+**TO-BE Process: Automated SHA Registration and Means Testing**
+
+**Design Principles:**
+- Proactive & Event-Driven Enrollment
+- Zero Duplicate Data Entry
+- Automated Dependent Verification
+- Intelligent Means Testing via Inter-Agency APIs
 
 ### Optimized Steps (Digital)
 | Step | Actor | Action | System |
 |---|---|---|---|
-| 1 | Patient | Checks in at hospital using facial recognition. | Biometric Scanner |
-| 2 | WoG Platform | Validates identity and active status. | IPRS / SHA |
-| 3 | Doctor | Enters diagnosis. AI approves treatment plan instantly. | SHA AI Engine |
-| 4 | Hospital | Submits e-Claim upon discharge. | Hospital HIS |
-| 5 | GPA | Settles payment to hospital account. | Payment Gateway |
+| 1 | System | **Trigger Event:** Citizen receives National ID (turns 18), gets first employment (KRA PAYE), or registers a birth/marriage. | NRB / KRA / CRS |
+| 2 | System | **Profile Creation:** System automatically fetches bio-data from National Population Registry to create/update SHA profile. | SHA System / IPRS |
+| 3 | System | **Dependent Linking:** System automatically links spouse and children using data from Civil Registration Services. No manual uploads. | SHA System / CRS |
+| 4 | System | **Assessment:** System determines contribution amount by querying KRA for formal income or alternative data (Mobile Money) for informal sector. | SHA System / KRA API |
+| 5 | Citizen/Employer | **Contribution:** Employer payroll automatically deducts and remits via API. Informal citizens receive a prompt to authorize recurring Mobile Money payments. | Payroll / Payment Gateway |
+| 6 | System | **Activation:** Coverage is activated instantly upon system processing. Citizen is notified via SMS/Email. | SHA System |
 
 ---
 
 ## 3. Standard Data Inputs
 *Required fields for the WoG Digital Service.*
 
-### A. Patient Check-In
+### A. SHA Registration & Assessment
 | Field Name | Type | Source | Validation |
 |---|---|---|---|
-| Biometric Token | Binary (Face) | Biometric Scanner | Match vs IPRS |
-| Patient UPI | String | System Fetch (NRB) | Must be Active |
-| Benefit Package | Enum | System Fetch (SHA) | UHC / Enhanced |
+| National ID Number | String | System Fetch (NRB/IPRS) | Match vs IPRS |
+| Dependants (Birth/Marriage Certs) | String | System Fetch (CRS) | Verified by CRS |
+| Income / Tax Band | Currency | System Fetch (KRA) | API Token |
 
-### B. e-Claim Submission (Provider)
-| Field Name | Type | Source | Validation |
-|---|---|---|---|
-| Patient UPI | String | System Fetch (Check-in) | Verified Session |
-| Diagnosis Code | String | User Input (Dr.) | ICD-11 Standard |
-| Procedure Code | String | User Input (Dr.) | SHA Tariff Code |
-| Bill Amount | Currency | System Calculated | Tariff Rate (Fixed) |
-| Discharge Summary | Text | User Input | Required |
-
----
 
 ## References
 - Social Health Insurance Act.

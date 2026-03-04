@@ -1,0 +1,29 @@
+graph TD
+    Start((Start)) --> Intake["Digital Intake via eCitizen / API Gateway"]
+    
+    subgraph Layer2 [Trust Hub & Workflow]
+        Intake --> Sign["NPKI Digital Signature Verification"]
+        Sign --> Task["Workflow Engine: Auto-assign to Relevant Unit"]
+    end
+    
+    subgraph Layer3 [Huduma Bridge / X-Road]
+        Task --> Verify["X-Road: Cross-verify with EPRA / BRS / KRA"]
+        Verify --> Collaborate["Parallel Inter-departmental Review"]
+    end
+    
+    subgraph Layer4 [Digital Archival]
+        Collaborate --> Approval["Digital Approval by Accounting Officer"]
+        Approval --> Store["Auto-store in Cloud-based EDRMS"]
+        Store --> Meta["AI-based Metadata Tagging & Retention Check"]
+    end
+    
+    Meta --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    class Start start;
+    class End endNode;
+    class Intake userTask;
+    class Sign,Task,Verify,Collaborate,Approval,Store,Meta serviceTask;

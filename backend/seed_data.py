@@ -8,7 +8,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
 django.setup()
 
 from django.contrib.auth import get_user_model
-from service_api.models import MDA, ServiceConfig, WorkflowStep, ServiceRequest, Role
+from service_api.models import MDA, ServiceConfig, WorkflowStep, ServiceRequest, Role, ServiceFamily
 from service_api.utils.taxonomies import KENYA_COUNTIES, BUSINESS_TYPES, APPLICATION_TYPES_ID
 
 User = get_user_model()
@@ -17,7 +17,50 @@ User = get_user_model()
 def seed_data():
     print("Seeding data...")
 
-    # 0. Create Roles
+    # 0. Create Service Families
+    families = {
+        'Civil Registration & Identity': {
+            'description': 'Services related to citizen lifecycle records and identity issuance.',
+            'shared_form_schema': {
+                'type': 'object',
+                'properties': {
+                    'maisha_number': {'type': 'string', 'title': 'National ID / Maisha Number', 'lookup_service': 'IPRS'}
+                }
+            }
+        },
+        'Business & Revenue': {
+            'description': 'Services for commercial entities, tax registration and business licensing.',
+            'shared_form_schema': {
+                'type': 'object',
+                'properties': {
+                    'kra_pin': {'type': 'string', 'title': 'KRA PIN Number', 'lookup_service': 'KRA'}
+                }
+            }
+        },
+        'Social Services & Education': {
+            'description': 'Citizen support services, education grants and community programs.',
+        },
+        'Government Administration (G2G)': {
+            'description': 'Internal government processes, inter-departmental memos and cabinet submissions.',
+        },
+        'System Operations': {
+            'description': 'Platform management and base infrastructure services.',
+        }
+    }
+    
+    created_families = {}
+    for name, data in families.items():
+        fam, created = ServiceFamily.objects.update_or_create(
+            name=name,
+            defaults={
+                'description': data.get('description'),
+                'shared_form_schema': data.get('shared_form_schema')
+            }
+        )
+        created_families[name] = fam
+        print(f"Ensured Service Family: {name}")
+
+    # 1. Create Roles
     roles = {
         'admin': {
             'description': 'Global System Administrator', 
@@ -324,6 +367,7 @@ def seed_data():
             'service_code': 'ONBOARD',
             'service_name': 'Platform Onboarding',
             'mda': 'Ministry of Interior',
+            'family': 'System Operations',
             'config': {
                 'description': 'Onboard from legacy systems to the Digital Maisha Platform.',
             }
@@ -332,6 +376,7 @@ def seed_data():
             'service_code': 'BIRTH_REG',
             'service_name': 'Birth Registration & Issuance',
             'mda': 'Ministry of Interior',
+            'family': 'Civil Registration & Identity',
             'config': {
                 "rules": {
                     "schema": {
@@ -400,6 +445,7 @@ def seed_data():
             'service_code': 'PASSPORT_APP',
             'service_name': 'Passport Application',
             'mda': 'Department of Immigration Services',
+            'family': 'Civil Registration & Identity',
             'config': {
                 "rules": {
                     "schema": {
@@ -426,6 +472,7 @@ def seed_data():
             'service_code': 'BIZ_INCORPORATION',
             'service_name': 'Business Incorporation (Ltd/BN)',
             'mda': 'Business Registration Service',
+            'family': 'Business & Revenue',
             'config': {
                 "rules": {
                     "schema": {
@@ -476,7 +523,8 @@ def seed_data():
         {
             'service_code': 'PROFILE_UPDATE',
             'service_name': 'Profile Update Verification',
-            'mda': 'Ministry of Interior', # Ministry of Interior
+            'mda': 'Ministry of Interior',
+            'family': 'Civil Registration & Identity',
             'config': {
                 'description': 'Request to update authoritative profile information.',
                 'rules': {
@@ -527,7 +575,8 @@ def seed_data():
         {
             'service_code': 'CAB_MEMO',
             'service_name': 'Cabinet Memorandum Submission',
-            'mda': 'Ministry of Interior', 
+            'mda': 'Ministry of Interior',
+            'family': 'Government Administration (G2G)',
             'config': {
                 "rules": {
                     "schema": {
@@ -607,6 +656,7 @@ def seed_data():
             'service_code': 'NATIONAL_ID',
             'service_name': 'National ID Application (Maisha)',
             'mda': 'National Registration Bureau',
+            'family': 'Civil Registration & Identity',
             'config': {
                 'rules': {
                     'schema': {
@@ -684,6 +734,7 @@ def seed_data():
             'service_code': 'SECURE_CLEARANCE',
             'service_name': 'Secure Inter-Agency Clearance',
             'mda': 'Ministry of Interior',
+            'family': 'Government Administration (G2G)',
             'config': {
                 "rules": {
                     "schema": {
@@ -714,6 +765,7 @@ def seed_data():
             'service_code': 'KRA_PIN_REG',
             'service_name': 'Individual KRA PIN Registration',
             'mda': 'Kenya Revenue Authority',
+            'family': 'Business & Revenue',
             'config': {
                 'rules': {
                     'schema': {
@@ -772,6 +824,7 @@ def seed_data():
             'service_code': 'SCHOLARSHIPS',
             'service_name': 'Scholarships & Bursaries Coordination',
             'mda': 'Ministry of Education',
+            'family': 'Social Services & Education',
             'config': {
                 "rules": {
                     "schema": {
@@ -826,11 +879,15 @@ def seed_data():
             print(f"Skipping {svc_data['service_name']} - MDA not found")
             continue
         
+        family_name = svc_data.get('family')
+        family = created_families.get(family_name) if family_name else None
+        
         svc, created = ServiceConfig.objects.update_or_create(
             service_code=svc_data['service_code'],
             defaults={
                 'service_name': svc_data['service_name'],
                 'mda': mda,
+                'service_family': family,
                 'config': svc_data['config']
             }
         )

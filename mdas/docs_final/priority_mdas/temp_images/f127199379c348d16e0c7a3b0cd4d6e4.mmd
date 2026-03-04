@@ -1,0 +1,36 @@
+graph TD
+    Start((Start)) --> S1
+
+    subgraph Federation [Federation Registration]
+        S1["Federation prepares docs & completes application"]
+        S1 --> S2["Sports Officer reviews & verifies compliance"]
+        S2 --> S3["Verify leadership & regional representation"]
+        S3 --> S4["Approve & issue registration certificate"]
+    end
+
+    subgraph Grants [Athlete Grant Application]
+        S4 --> S5["Athlete/Federation submits grant request"]
+        S5 --> S6["Review budget & performance metrics"]
+        S6 --> S7["Committee approval & payment processing"]
+    end
+
+    subgraph Facilities [Facility Booking]
+        S8["Access Booking System & select facility/date"]
+        S8 --> S9["System checks availability & eligibility"]
+        S9 --> S10["Calculate fee & generate invoice"]
+        S10 --> S11["Process payment & issue confirmation"]
+    end
+    
+    S4 --> S8
+    S7 --> End((End))
+    S11 --> End
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S2,S3,S5,S6,S8,S10 userTask;
+    class S4,S7,S9,S11 serviceTask;

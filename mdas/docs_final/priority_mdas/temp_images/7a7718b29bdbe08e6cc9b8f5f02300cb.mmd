@@ -1,0 +1,28 @@
+graph TD
+    Start((Start)) --> Author["Collaborative Authoring in Secure Portal"]
+    
+    subgraph Layer2 [Trust Hub & Workflow]
+        Author --> Sign["NPKI Digital Signature (Immutable Stamp)"]
+        Sign --> Workflow["Workflow Engine: Concurrent Digital Clearance"]
+    end
+    
+    subgraph Layer3 [Interoperability - X-Road]
+        Workflow --> MultiChannel["API Gateway: Push to Social, SMS, Web, KBC"]
+        MultiChannel --> XRoad_Archive["X-Road: Auto-syndicate to National Archive"]
+    end
+    
+    subgraph Layer4 [Intelligent Archive]
+        XRoad_Archive --> AI_Meta["AI: Automated Metadata Tagging & Indexing"]
+        AI_Meta --> Registry["Blockchain-based Verifiable Statement Registry"]
+    end
+    
+    Registry --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    class Start start;
+    class End endNode;
+    class Author userTask;
+    class Sign,Workflow,MultiChannel,XRoad_Archive,AI_Meta,Registry serviceTask;

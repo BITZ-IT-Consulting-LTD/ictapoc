@@ -1,0 +1,210 @@
+{
+  "main": {
+    "id": "cd66d2797b3e3030",
+    "type": "split",
+    "children": [
+      {
+        "id": "807dac9d02ee2100",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d6da66a7c74293a3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/guides/poc_deployment_dev_ops_plan.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "poc_deployment_dev_ops_plan"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "a1c70a283c0c9ce9",
+    "type": "split",
+    "children": [
+      {
+        "id": "cf0cfe15e7884678",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a2b5e9b947f75dec",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "71a0cb9e39dd4fe0",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "50b3c962a41379c6",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "8a18ffc997ca36ca",
+    "type": "split",
+    "children": [
+      {
+        "id": "48d4fcf3952531e6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b119d4a324c12551",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "docs/guides/poc_deployment_dev_ops_plan.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for poc_deployment_dev_ops_plan"
+            }
+          },
+          {
+            "id": "063cfc61d67d620e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "docs/guides/poc_deployment_dev_ops_plan.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from poc_deployment_dev_ops_plan"
+            }
+          },
+          {
+            "id": "9972cb97a1750e70",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "de90a2723a3ef25b",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "c37044b1ef2fdc9f",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "docs/guides/poc_deployment_dev_ops_plan.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of poc_deployment_dev_ops_plan"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "a2b5e9b947f75dec",
+  "lastOpenFiles": [
+    "frontend/dist/assets/flowchart-elk-definition-6af322e1-DnE6-shA.js",
+    "frontend/dist/assets/mindmap-definition-8da855dc-Bt6WKFd-.js",
+    "frontend/dist/assets/index-Dj542UI7.js",
+    "frontend/dist/assets/createText-1719965b-rddhY7AE.js",
+    "frontend/dist/assets/edges-96097737-DfPi7h5W.js",
+    "frontend/dist/assets/graph-BEbKayvQ.js",
+    "frontend/dist/assets/line-ObP8uqJf.js",
+    "frontend/dist/assets/blockDiagram-c4efeb88-Be4mYiHX.js",
+    "frontend/dist/assets/clone-BfYCadCj.js",
+    "frontend/dist/assets/sankeyDiagram-a04cb91d-CUydXbAH.js",
+    "frontend/dist/assets/channel-DPijjxAc.js",
+    "docs/guides/huduma_bridge_instructions.md",
+    "docs/guides/poc_deployment_dev_ops_plan.md",
+    "docs/guides/FRONTEND_CACHE_ISSUE.md",
+    "docs/guides/DEPLOYMENT.md",
+    "docs/archive/developer_handover/poc_algorithm_workflow_documentation.md",
+    "docs/architecture/RBAC_IMPLEMENTATION_SUMMARY.md",
+    "docs/architecture/poc_algorithm_workflow_documentation.md",
+    "docs/architecture/CONFIGURABLE_WORKFLOWS_COMPLETE.md",
+    "docs/architecture/BPMN_WORKFLOW_ENHANCEMENT.md",
+    "docs/architecture/architecture_three.md"
+  ]
+}

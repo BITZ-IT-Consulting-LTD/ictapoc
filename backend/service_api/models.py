@@ -62,6 +62,22 @@ class ServiceCategory(models.Model):
     def __str__(self):
         return f"{self.domain.name} - {self.name}"
 
+class ServiceFamily(models.Model):
+    """
+    Groups services into families (e.g., Civil Registration, Business Services)
+    to share standard workflow templates and form schemas.
+    """
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True, null=True)
+    shared_workflow_template = models.JSONField(blank=True, null=True, help_text="Template for workflow steps shared by all services in this family.")
+    shared_form_schema = models.JSONField(blank=True, null=True, help_text="Default form schema fields shared by all services in this family.")
+    
+    class Meta:
+        verbose_name_plural = "Service Families"
+
+    def __str__(self):
+        return self.name
+
 class ServiceConfig(models.Model):
     STATUS_CHOICES = (
         ('active', 'Active'),
@@ -70,12 +86,16 @@ class ServiceConfig(models.Model):
         ('draft', 'Draft'),
     )
 
+    # Registry Mapping
     service_code = models.CharField(max_length=50, unique=True)
     service_name = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True) # New field
-    mda = models.ForeignKey(MDA, on_delete=models.CASCADE)
+    description = models.TextField(blank=True, null=True)
     
-    # Catalogue & Classification
+    # Ownership
+    mda = models.ForeignKey(MDA, on_delete=models.CASCADE, related_name='services')
+    service_family = models.ForeignKey(ServiceFamily, on_delete=models.SET_NULL, null=True, blank=True, related_name='services')
+    
+    # Categorization
     category = models.ForeignKey(ServiceCategory, on_delete=models.SET_NULL, null=True, blank=True, related_name='services')
     service_status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
     
@@ -122,8 +142,21 @@ class ServiceConfig(models.Model):
     config = models.JSONField(default=dict) # Stores rules, sla, output, etc.
     form_schema = models.JSONField(default=dict, blank=True) # Dynamic form configuration for workflows
     
+    def get_effective_form_schema(self):
+        """
+        Returns the effective form schema for this service.
+        If the service has its own schema in 'config', use it.
+        Otherwise, fall back to the service_family's shared_form_schema.
+        """
+        service_schema = self.config.get('rules', {}).get('schema')
+        if service_schema:
+            return service_schema
+        if self.service_family and self.service_family.shared_form_schema:
+            return self.service_family.shared_form_schema
+        return {}
+
     def __str__(self):
-        return self.service_name
+        return f"{self.mda.code} - {self.service_name}"
 
 class WorkflowStep(models.Model):
     STEP_TYPE_CHOICES = (

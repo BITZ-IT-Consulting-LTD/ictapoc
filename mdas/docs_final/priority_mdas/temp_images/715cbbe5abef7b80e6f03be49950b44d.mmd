@@ -1,0 +1,39 @@
+graph TD
+    Start((Start)) --> Portal["Applicant Logs in via Maisha Namba (SSO)"]
+    
+    subgraph Layer2 [Trust Hub & Workflow]
+        Portal --> Consent["Consent Manager: Access Education Data?"]
+        Consent --> Task["Workflow Engine: Initiate Validation Request"]
+    end
+    
+    subgraph Layer3 [Huduma Bridge / X-Road]
+        Task --> QueryKNEC["X-Road: Auto-fetch results from KNEC"]
+        Task --> QueryUni["X-Road: Auto-fetch results from Commission for Uni Education"]
+        QueryKNEC --> PreCheck["AI-based Pre-Check for Fraud & Mapping"]
+        QueryUni --> PreCheck
+    end
+    
+    subgraph Layer4 [Authoritative Registry]
+        PreCheck --> RegCheck{"Found in National Registry?"}
+        RegCheck -- "Yes" --> Return["Return Existing Digital Certificate"]
+        RegCheck -- "No" --> Comm["Officer Review & KNQF Mapping"]
+    end
+    
+    subgraph Output [Issuance]
+        Comm --> OutputGen["Generate Verifiable Digital Credential (QR)"]
+        Return --> OutputGen
+        OutputGen --> Sync["Sync to National Qualification Registry"]
+    end
+    
+    Sync --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class RegCheck gateway;
+    class Portal,Consent,Comm userTask;
+    class Task,QueryKNEC,QueryUni,PreCheck,Return,OutputGen,Sync serviceTask;

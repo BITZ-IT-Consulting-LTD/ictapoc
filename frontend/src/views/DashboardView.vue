@@ -28,7 +28,9 @@
     <div v-if="user" class="dashboard-main">
 
       <!-- CITIZEN PORTAL VIEW -->
-      <section v-if="user.role && (user.role.toLowerCase() === 'citizen' || user.role.toLowerCase() === 'hospital_staff')" class="citizen-portal">
+      <section
+        v-if="user.role && (user.role.toLowerCase() === 'citizen' || user.role.toLowerCase() === 'hospital_staff')"
+        class="citizen-portal">
         <div class="dashboard-layout">
           <!-- Left Sidebar Navigation -->
           <aside class="dashboard-sidebar">
@@ -223,47 +225,117 @@
                   <h2 class="page__title" style="font-size: 1.5rem">Unified Service Catalogue</h2>
                   <p class="page__subtitle">Access authoritative G2C services through the secure Huduma Bridge</p>
                 </div>
-                <div class="toolbar">
+                <div class="toolbar u-w-full">
                   <div class="toolbar__filters">
-                    <div class="toolbar__filter-group">
-                      <i class="bi bi-building toolbar__filter-icon"></i>
-                      <select v-model="mdaFilter" class="toolbar__filter-input toolbar__filter-input--with-arrow">
-                        <option value="">All Agencies</option>
-                        <option v-for="mda in mdas" :key="mda.id" :value="mda.id">{{ mda.name }}</option>
-                      </select>
-                      <i class="bi bi-chevron-down toolbar__filter-arrow"></i>
-                    </div>
-                    <div class="toolbar__filter-group">
-                      <i class="bi bi-calendar-event toolbar__filter-icon"></i>
-                      <select v-model="lifeEventFilter" class="toolbar__filter-input toolbar__filter-input--with-arrow">
-                        <option value="">Life Event</option>
-                        <option v-for="event in uniqueLifeEvents" :key="event" :value="event">{{ event }}</option>
-                      </select>
-                      <i class="bi bi-chevron-down toolbar__filter-arrow"></i>
-                    </div>
-                    <div class="toolbar__filter-group">
-                      <i class="bi bi-tags-fill toolbar__filter-icon"></i>
-                      <select v-model="categoryFilter" class="toolbar__filter-input toolbar__filter-input--with-arrow">
-                        <option value="">Category</option>
-                        <option v-for="cat in uniqueCategories" :key="cat" :value="cat">{{ cat }}</option>
-                      </select>
-                      <i class="bi bi-chevron-down toolbar__filter-arrow"></i>
-                    </div>
+                    <!-- Search -->
                     <div class="toolbar__filter-group">
                       <i class="bi bi-search toolbar__filter-icon"></i>
                       <input type="text" v-model="serviceSearchQuery" placeholder="Search services..."
                         class="toolbar__filter-input">
+                      <i v-if="serviceSearchQuery" @click="serviceSearchQuery = ''"
+                        class="bi bi-x-circle-fill toolbar__clear-icon"></i>
                     </div>
-                    <!-- Reset Filters Button -->
-                    <button v-if="mdaFilter || lifeEventFilter || categoryFilter || serviceSearchQuery"
-                      @click="() => { mdaFilter = ''; lifeEventFilter = ''; categoryFilter = ''; serviceSearchQuery = ''; }"
-                      class="button button--ghost animate-fade-in"
-                      style="color: var(--icta-red); font-size: 0.75rem; font-weight: 700; white-space: nowrap;">
-                      <i class="bi bi-x-circle-fill"></i> Reset Filters
+
+                    <!-- Agency Filter -->
+                    <div class="toolbar__filter-group">
+                      <i class="bi bi-building toolbar__filter-icon"></i>
+                      <input type="text" v-model="mdaSearchLocal" placeholder="Filter by Agency..."
+                        @focus="showMdaDropdown = true" @blur="setTimeout(() => showMdaDropdown = false, 200)"
+                        class="toolbar__filter-input toolbar__filter-input--with-arrow">
+                      <i class="bi bi-chevron-down toolbar__filter-arrow"
+                        :class="{ 'toolbar__filter-arrow--open': showMdaDropdown }"></i>
+                      <i v-if="mdaFilter" @click="selectMda('')"
+                        class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
+
+                      <transition name="dropdown">
+                        <div v-if="showMdaDropdown" class="dropdown-menu">
+                          <div @click="selectMda('')" class="dropdown-item dropdown-item--header">All Agencies</div>
+                          <div v-for="mda in filteredMdas" :key="mda.id" @click="selectMda(mda)" class="dropdown-item">
+                            {{ mda.name }}
+                          </div>
+                        </div>
+                      </transition>
+                    </div>
+
+                    <!-- Life Event Filter -->
+                    <div class="toolbar__filter-group">
+                      <i class="bi bi-calendar-event toolbar__filter-icon"></i>
+                      <input type="text" v-model="lifeEventSearchLocal" placeholder="Filter by Life Event..."
+                        @focus="showLifeEventDropdown = true"
+                        @blur="setTimeout(() => showLifeEventDropdown = false, 200)"
+                        class="toolbar__filter-input toolbar__filter-input--with-arrow">
+                      <i class="bi bi-chevron-down toolbar__filter-arrow"
+                        :class="{ 'toolbar__filter-arrow--open': showLifeEventDropdown }"></i>
+                      <i v-if="lifeEventFilter" @click="selectLifeEvent('')"
+                        class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
+
+                      <transition name="dropdown">
+                        <div v-if="showLifeEventDropdown" class="dropdown-menu">
+                          <div @click="selectLifeEvent('')" class="dropdown-item dropdown-item--header">All Life Events
+                          </div>
+                          <div v-for="event in filteredLifeEvents" :key="event" @click="selectLifeEvent(event)"
+                            class="dropdown-item">
+                            {{ event }}
+                          </div>
+                        </div>
+                      </transition>
+                    </div>
+
+                    <!-- Family Filter -->
+                    <div class="toolbar__filter-group">
+                      <i class="bi bi-diagram-3-fill toolbar__filter-icon"></i>
+                      <input type="text" v-model="familySearchLocal" placeholder="Filter by Family..."
+                        @focus="showFamilyDropdown = true" @blur="setTimeout(() => showFamilyDropdown = false, 200)"
+                        class="toolbar__filter-input toolbar__filter-input--with-arrow">
+                      <i class="bi bi-chevron-down toolbar__filter-arrow"
+                        :class="{ 'toolbar__filter-arrow--open': showFamilyDropdown }"></i>
+                      <i v-if="familyFilter" @click="selectFamily('')"
+                        class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
+                      <transition name="dropdown">
+                        <div v-if="showFamilyDropdown" class="dropdown-menu">
+                          <div @click="selectFamily('')" class="dropdown-item dropdown-item--header">All Families</div>
+                          <div v-for="fam in filteredFamilies" :key="fam" @click="selectFamily(fam)"
+                            class="dropdown-item">
+                            {{ fam }}
+                          </div>
+                        </div>
+                      </transition>
+                    </div>
+
+                    <!-- Reset Action -->
+                    <button v-if="isAnyServiceFilterActive" @click="resetServiceFilters" class="btn-reset">
+                      <i class="bi bi-arrow-counterclockwise"></i>
+                      <span>Reset</span>
                     </button>
                   </div>
                 </div>
               </header>
+
+              <!-- Active Filter Chips -->
+              <transition-group name="list" tag="div" class="u-flex u-flex-wrap u-gap-2 u-mb-8">
+                <div v-if="serviceSearchQuery" :key="'s-' + serviceSearchQuery" class="filter-chip"
+                  @click="serviceSearchQuery = ''">
+                  <span class="filter-chip__label">Search:</span>
+                  <span class="filter-chip__value">{{ serviceSearchQuery }}</span>
+                  <i class="bi bi-x"></i>
+                </div>
+                <div v-if="mdaFilter" :key="'m-' + mdaFilter" class="filter-chip" @click="selectMda('')">
+                  <span class="filter-chip__label">Agency:</span>
+                  <span class="filter-chip__value">{{ getMdaName(mdaFilter) }}</span>
+                  <i class="bi bi-x"></i>
+                </div>
+                <div v-if="lifeEventFilter" :key="'e-' + lifeEventFilter" class="filter-chip"
+                  @click="selectLifeEvent('')">
+                  <span class="filter-chip__label">Event:</span>
+                  <span class="filter-chip__value">{{ lifeEventFilter }}</span>
+                  <i class="bi bi-x"></i>
+                </div>
+                <div v-if="familyFilter" :key="'f-' + familyFilter" class="filter-chip" @click="selectFamily('')">
+                  <span class="filter-chip__label">Family:</span>
+                  <span class="filter-chip__value">{{ familyFilter }}</span>
+                  <i class="bi bi-x"></i>
+                </div>
+              </transition-group>
 
               <div v-if="filteredAvailableServices.length === 0"
                 class="u-flex u-flex-col u-items-center u-justify-center u-py-20 u-text-muted u-w-full">
@@ -272,24 +344,63 @@
                 <p class="u-text-xs u-mt-2 u-opacity-60">The authoritative catalogue is being updated. Please check back
                   shortly.</p>
               </div>
-              <div v-else class="stats-grid">
-                <div v-for="service in filteredAvailableServices" :key="service.id"
-                  class="card u-p-8 u-flex u-flex-col u-items-center u-text-center transition-all hover:u-shadow-xl"
-                  style="border: none;">
-                  <div class="u-flex u-items-center u-justify-center u-mb-6 u-rounded-lg"
-                    style="width: 4rem; height: 4rem; background: var(--color-primary-soft); color: var(--color-primary); font-size: 1.5rem;">
-                    <i class="bi bi-lightning-charge-fill"></i>
+              <div v-else class="u-flex u-flex-col u-gap-12">
+                <!-- If no family is selected, show the list of families -->
+                <div v-if="!selectedFamilyForView" class="stats-grid">
+                  <div v-for="group in groupedServicesByFamily" :key="group.name"
+                    @click="selectedFamilyForView = group.name"
+                    class="card u-p-8 u-flex u-flex-col u-items-center u-text-center transition-all hover:u-shadow-xl u-cursor-pointer"
+                    style="border: 1px solid var(--border-color);">
+                    <div class="u-flex u-items-center u-justify-center u-mb-6 u-rounded-lg"
+                      style="width: 4rem; height: 4rem; background: var(--color-primary-soft); color: var(--color-primary); font-size: 1.5rem;">
+                      <i :class="getServiceFamilyIcon(group.name)"></i>
+                    </div>
+                    <h3 class="u-font-bold u-text-main u-mb-2" style="font-size: 1.125rem;">{{ group.name }}</h3>
+                    <p class="u-text-xs u-text-muted u-mb-4 u-line-clamp-2" style="min-height: 2.5rem;">{{
+                      group.family?.description || 'View all associated services' }}</p>
+                    <div class="u-mt-auto">
+                      <span class="badge badge--info">{{ group.services.length }} Services</span>
+                    </div>
                   </div>
-                  <h3 class="u-font-bold u-text-main u-mb-2" style="font-size: 1.125rem;">{{ service.service_name }}
-                  </h3>
-                  <p class="u-text-xs u-font-bold u-text-muted u-uppercase u-mb-8 u-p-1 u-rounded"
-                    style="background: var(--color-background-alt); letter-spacing: 0.1em;">
-                    {{ getMdaName(service.mda).split('(')[0] }}
-                  </p>
-                  <router-link :to="`/apply/${service.service_code}`"
-                    class="button button--primary button--pill u-w-full">
-                    Begin Application
-                  </router-link>
+                </div>
+
+                <!-- If a family is selected, show its services -->
+                <div v-else class="service-family-group animate-slide-in">
+                  <div class="u-flex u-items-center u-justify-between u-mb-6">
+                    <div class="u-flex u-items-center u-gap-3">
+                      <button @click="selectedFamilyForView = null" class="button button--ghost button--small u-mr-2">
+                        <i class="bi bi-arrow-left"></i> Back to Families
+                      </button>
+                      <div class="u-w-1 u-h-8 u-bg-primary u-rounded-full"></div>
+                      <div>
+                        <h3 class="u-text-lg u-font-black u-text-main u-uppercase u-tracking-widest">{{
+                          selectedFamilyForView }}</h3>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="stats-grid">
+                    <div
+                      v-for="service in groupedServicesByFamily.find(g => g.name === selectedFamilyForView)?.services || []"
+                      :key="service.id"
+                      class="card u-p-8 u-flex u-flex-col u-items-center u-text-center transition-all hover:u-shadow-xl"
+                      style="border: none;">
+                      <div class="u-flex u-items-center u-justify-center u-mb-6 u-rounded-lg"
+                        style="width: 4rem; height: 4rem; background: var(--color-primary-soft); color: var(--color-primary); font-size: 1.5rem;">
+                        <i :class="getServiceFamilyIcon(service.service_family_details?.name)"></i>
+                      </div>
+                      <h3 class="u-font-bold u-text-main u-mb-2" style="font-size: 1.125rem;">{{ service.service_name }}
+                      </h3>
+                      <p class="u-text-xs u-font-bold u-text-muted u-uppercase u-mb-8 u-p-1 u-rounded"
+                        style="background: var(--color-background-alt); letter-spacing: 0.1em;">
+                        {{ getMdaName(service.mda) }}
+                      </p>
+                      <router-link :to="`/apply/${service.service_code}`"
+                        class="button button--primary button--pill u-w-full u-mt-auto">
+                        Begin Application
+                      </router-link>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -338,83 +449,96 @@
               <div v-else class="u-divide-y">
                 <!-- Active Tasks requiring User Action -->
                 <div v-if="actionableRequests.length > 0">
-                    <div class="u-p-2 u-bg-bg-page u-text-xs u-font-black u-text-primary u-uppercase u-tracking-widest u-border-b u-border-border-color">
-                        <i class="bi bi-lightning-charge-fill u-mr-1"></i> My Active Tasks
-                    </div>
-                    <div v-for="(request, idx) in actionableRequests" :key="request.id"
-                      class="u-p-4 u-flex u-flex-col u-md-flex-row u-gap-4 u-items-start u-md-items-center u-justify-between transition-colors relative bg-white border-l-4 border-l-primary shadow-sm hover:shadow-md">
-                      
-                      <!-- Focus Indicator for Top Item -->
-                      <div v-if="idx === 0" class="u-absolute u-left-0 u-top-0 u-bottom-0 u-w-1 u-bg-primary animate-pulse"></div>
+                  <div
+                    class="u-p-2 u-bg-bg-page u-text-xs u-font-black u-text-primary u-uppercase u-tracking-widest u-border-b u-border-border-color">
+                    <i class="bi bi-lightning-charge-fill u-mr-1"></i> My Active Tasks
+                  </div>
+                  <div v-for="(request, idx) in actionableRequests" :key="request.id"
+                    class="u-p-4 u-flex u-flex-col u-md-flex-row u-gap-4 u-items-start u-md-items-center u-justify-between transition-colors relative bg-white border-l-4 border-l-primary shadow-sm hover:shadow-md">
 
-                      <div class="u-flex-1">
-                        <div class="u-flex u-flex-wrap u-items-center u-gap-3 u-mb-2">
-                          <span class="u-font-bold u-text-main u-text-sm">{{ request.service_config.service_name }}</span>
-                          <span class="table__code-badge">#{{ request.request_id }}</span>
-                          <span class="badge" :class="statusClass(request.status)">{{ request.status.replace('_', ' ').toUpperCase() }}</span>
-                          <span class="badge badge--primary u-animate-bounce-short">
-                            <i class="bi bi-exclamation-circle-fill u-mr-1"></i> ACTION REQUIRED
-                          </span>
-                        </div>
+                    <!-- Focus Indicator for Top Item -->
+                    <div v-if="idx === 0"
+                      class="u-absolute u-left-0 u-top-0 u-bottom-0 u-w-1 u-bg-primary animate-pulse"></div>
 
-                        <div class="u-flex u-items-center u-gap-4 u-text-xs u-font-bold u-text-muted u-uppercase u-tracking-tighter">
-                          <span><i class="bi bi-diagram-3-fill u-mb-1"></i> {{ request.current_step?.step_name || 'Processing' }}</span>
-                          <span><i class="bi bi-clock-fill u-mb-1"></i> {{ new Date(request.created_at).toLocaleDateString() }}</span>
-                        </div>
+                    <div class="u-flex-1">
+                      <div class="u-flex u-flex-wrap u-items-center u-gap-3 u-mb-2">
+                        <span class="u-font-bold u-text-main u-text-sm">{{ request.service_config.service_name }}</span>
+                        <span class="table__code-badge">#{{ request.request_id }}</span>
+                        <span class="badge" :class="statusClass(request.status)">{{ request.status.replace('_', ' ').toUpperCase() }}</span>
+                        <span class="badge badge--primary u-animate-bounce-short">
+                          <i class="bi bi-exclamation-circle-fill u-mr-1"></i> ACTION REQUIRED
+                        </span>
                       </div>
-                      
-                      <div class="u-flex u-gap-2 u-w-full u-md-u-w-auto u-z-base">
-                        <button @click="openCompleteStepModal(request)"
-                          class="button button--primary button--small shadow-lg hover:translate-y-[-2px] transition-all u-font-bold">
-                          <i class="bi bi-lightning-charge-fill u-mr-1"></i> Execute Disposition
-                        </button>
 
-                        <button @click="releaseTask(request.id)" :disabled="releasingId === request.id"
-                          class="button button--secondary button--small border-dashed hover:border-danger hover:text-danger transition-all"
-                          title="Release back to universal pool">
-                          <i :class="releasingId === request.id ? 'bi bi-arrow-repeat animate-spin' : 'bi bi-arrow-left-circle'"></i>
-                          <span class="u-hidden md:u-inline">{{ releasingId === request.id ? 'Releasing...' : 'Release' }}</span>
-                        </button>
+                      <div
+                        class="u-flex u-items-center u-gap-4 u-text-xs u-font-bold u-text-muted u-uppercase u-tracking-tighter">
+                        <span><i class="bi bi-diagram-3-fill u-mb-1"></i> {{ request.current_step?.step_name ||
+                          'Processing' }}</span>
+                        <span><i class="bi bi-clock-fill u-mb-1"></i> {{ new
+                          Date(request.created_at).toLocaleDateString() }}</span>
                       </div>
                     </div>
+
+                    <div class="u-flex u-gap-2 u-w-full u-md-u-w-auto u-z-base">
+                      <button @click="openCompleteStepModal(request)"
+                        class="button button--primary button--small shadow-lg hover:translate-y-[-2px] transition-all u-font-bold">
+                        <i class="bi bi-lightning-charge-fill u-mr-1"></i> Execute Disposition
+                      </button>
+
+                      <button @click="releaseTask(request.id)" :disabled="releasingId === request.id"
+                        class="button button--secondary button--small border-dashed hover:border-danger hover:text-danger transition-all"
+                        title="Release back to universal pool">
+                        <i
+                          :class="releasingId === request.id ? 'bi bi-arrow-repeat animate-spin' : 'bi bi-arrow-left-circle'"></i>
+                        <span class="u-hidden md:u-inline">{{ releasingId === request.id ? 'Releasing...' : 'Release'
+                          }}</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                
+
                 <!-- Tasks currently processing elsewhere -->
                 <div v-if="processingRequests.length > 0">
-                    <div class="u-p-2 u-bg-bg-page u-text-xs u-font-black u-text-muted u-uppercase u-tracking-widest u-border-b u-border-border-color u-mt-4">
-                        <i class="bi bi-hourglass-split u-mr-1"></i> Pending System / External Action
-                    </div>
-                    <div v-for="request in processingRequests" :key="request.id"
-                      class="u-p-4 u-flex u-flex-col u-md-flex-row u-gap-4 u-items-start u-md-items-center u-justify-between transition-colors relative bg-slate-50 opacity-75 grayscale-[0.5] hover:grayscale-0 hover:opacity-100 border-b border-border-color">
-                      
-                      <div class="u-flex-1">
-                        <div class="u-flex u-flex-wrap u-items-center u-gap-3 u-mb-2">
-                          <span class="u-font-bold u-text-main u-text-sm">{{ request.service_config.service_name }}</span>
-                          <span class="table__code-badge">#{{ request.request_id }}</span>
-                           <span class="badge" :class="statusClass(request.status)">{{ request.status.replace('_', ' ').toUpperCase() }}</span>
-                          <span class="badge badge--secondary u-text-muted">
-                            <i class="bi bi-gear-wide-connected u-mr-1"></i> PROCESSING
-                          </span>
-                        </div>
+                  <div
+                    class="u-p-2 u-bg-bg-page u-text-xs u-font-black u-text-muted u-uppercase u-tracking-widest u-border-b u-border-border-color u-mt-4">
+                    <i class="bi bi-hourglass-split u-mr-1"></i> Pending System / External Action
+                  </div>
+                  <div v-for="request in processingRequests" :key="request.id"
+                    class="u-p-4 u-flex u-flex-col u-md-flex-row u-gap-4 u-items-start u-md-items-center u-justify-between transition-colors relative bg-slate-50 opacity-75 grayscale-[0.5] hover:grayscale-0 hover:opacity-100 border-b border-border-color">
 
-                        <div class="u-flex u-items-center u-gap-4 u-text-xs u-font-bold u-text-muted u-uppercase u-tracking-tighter">
-                          <span><i class="bi bi-diagram-3-fill u-mb-1"></i> {{ request.current_step?.step_name || 'Processing' }}</span>
-                          <span><i class="bi bi-clock-fill u-mb-1"></i> {{ new Date(request.created_at).toLocaleDateString() }}</span>
-                        </div>
+                    <div class="u-flex-1">
+                      <div class="u-flex u-flex-wrap u-items-center u-gap-3 u-mb-2">
+                        <span class="u-font-bold u-text-main u-text-sm">{{ request.service_config.service_name }}</span>
+                        <span class="table__code-badge">#{{ request.request_id }}</span>
+                        <span class="badge" :class="statusClass(request.status)">{{ request.status.replace('_', ' ').toUpperCase() }}</span>
+                        <span class="badge badge--secondary u-text-muted">
+                          <i class="bi bi-gear-wide-connected u-mr-1"></i> PROCESSING
+                        </span>
                       </div>
-                      
-                      <div class="u-flex u-gap-2 u-w-full u-md-u-w-auto u-z-base">
-                         <button disabled class="button button--secondary button--small u-opacity-50 u-cursor-not-allowed">
-                           <i class="bi bi-gear-wide-connected u-animate-spin u-mr-1"></i> System Processing
-                        </button>
-                        <button @click="releaseTask(request.id)" :disabled="releasingId === request.id"
-                          class="button button--secondary button--small border-dashed hover:border-danger hover:text-danger transition-all"
-                          title="Release back to universal pool">
-                          <i :class="releasingId === request.id ? 'bi bi-arrow-repeat animate-spin' : 'bi bi-arrow-left-circle'"></i>
-                          <span class="u-hidden md:u-inline">{{ releasingId === request.id ? 'Releasing...' : 'Release' }}</span>
-                        </button>
+
+                      <div
+                        class="u-flex u-items-center u-gap-4 u-text-xs u-font-bold u-text-muted u-uppercase u-tracking-tighter">
+                        <span><i class="bi bi-diagram-3-fill u-mb-1"></i> {{ request.current_step?.step_name ||
+                          'Processing' }}</span>
+                        <span><i class="bi bi-clock-fill u-mb-1"></i> {{ new
+                          Date(request.created_at).toLocaleDateString() }}</span>
                       </div>
                     </div>
+
+                    <div class="u-flex u-gap-2 u-w-full u-md-u-w-auto u-z-base">
+                      <button disabled class="button button--secondary button--small u-opacity-50 u-cursor-not-allowed">
+                        <i class="bi bi-gear-wide-connected u-animate-spin u-mr-1"></i> System Processing
+                      </button>
+                      <button @click="releaseTask(request.id)" :disabled="releasingId === request.id"
+                        class="button button--secondary button--small border-dashed hover:border-danger hover:text-danger transition-all"
+                        title="Release back to universal pool">
+                        <i
+                          :class="releasingId === request.id ? 'bi bi-arrow-repeat animate-spin' : 'bi bi-arrow-left-circle'"></i>
+                        <span class="u-hidden md:u-inline">{{ releasingId === request.id ? 'Releasing...' : 'Release'
+                          }}</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -487,7 +611,7 @@
                   </td>
                   <td class="table__cell">
                     <span class="badge" :class="priorityClass(request.priority)">{{ request.priority.toUpperCase()
-                      }}</span>
+                    }}</span>
                   </td>
                   <td class="table__cell u-text-muted">{{ new Date(request.created_at).toLocaleDateString() }}</td>
                   <td class="table__cell table__cell--align-right table__cell--with-right-padding">
@@ -849,9 +973,53 @@
 
   const mdaFilter = ref('');
   const lifeEventFilter = ref('');
-  const categoryFilter = ref('');
+  const familyFilter = ref('');
+  const selectedFamilyForView = ref(null);
+
   const mdaSearchLocal = ref('');
+  const lifeEventSearchLocal = ref('');
+  const familySearchLocal = ref('');
   const showMdaDropdown = ref(false);
+  const showLifeEventDropdown = ref(false);
+  const showFamilyDropdown = ref(false);
+
+  const selectLifeEvent = (val) => {
+    lifeEventFilter.value = val;
+    lifeEventSearchLocal.value = val;
+    showLifeEventDropdown.value = false;
+  };
+
+  const selectFamily = (val) => {
+    familyFilter.value = val;
+    familySearchLocal.value = val;
+    showFamilyDropdown.value = false;
+  };
+
+  const resetServiceFilters = () => {
+    mdaFilter.value = '';
+    lifeEventFilter.value = '';
+    familyFilter.value = '';
+    serviceSearchQuery.value = '';
+    mdaSearchLocal.value = '';
+    lifeEventSearchLocal.value = '';
+    familySearchLocal.value = '';
+  };
+
+  const isAnyServiceFilterActive = computed(() => {
+    return mdaFilter.value || lifeEventFilter.value || familyFilter.value || serviceSearchQuery.value;
+  });
+
+  const filteredLifeEvents = computed(() => {
+    if (!lifeEventSearchLocal.value) return uniqueLifeEvents.value;
+    const q = lifeEventSearchLocal.value.toLowerCase();
+    return uniqueLifeEvents.value.filter(e => e.toLowerCase().includes(q));
+  });
+
+  const filteredFamilies = computed(() => {
+    if (!familySearchLocal.value) return uniqueFamilies.value;
+    const q = familySearchLocal.value.toLowerCase();
+    return uniqueFamilies.value.filter(f => f.toLowerCase().includes(q));
+  });
   const mdaIncompleteRequests = computed(() => staffStore.mdaIncompleteRequests);
 
   const uniqueLifeEvents = computed(() => {
@@ -859,9 +1027,9 @@
     return [...new Set(events)].sort();
   });
 
-  const uniqueCategories = computed(() => {
-    const cats = availableServices.value.map(s => s.category_details?.name || s.category).filter(Boolean);
-    return [...new Set(cats)].sort();
+  const uniqueFamilies = computed(() => {
+    const fams = availableServices.value.map(s => s.service_family_details?.name || s.service_family).filter(Boolean);
+    return [...new Set(fams)].sort();
   });
 
   const filteredMdas = computed(() => {
@@ -871,11 +1039,11 @@
   });
 
   const actionableRequests = computed(() => {
-     return sortRequestsByUrgency(filteredAssignedRequests.value.filter(r => getActionState(r) === 'action_required'));
+    return sortRequestsByUrgency(filteredAssignedRequests.value.filter(r => getActionState(r) === 'action_required'));
   });
 
   const processingRequests = computed(() => {
-     return filteredAssignedRequests.value.filter(r => getActionState(r) !== 'action_required');
+    return filteredAssignedRequests.value.filter(r => getActionState(r) !== 'action_required');
   });
 
   const getMdaName = (mdaId) => {
@@ -885,46 +1053,68 @@
     return mda ? mda.name : 'Unknown Agency';
   }
 
+  const getServiceFamilyIcon = (familyName) => {
+    const icons = {
+      'Identity & Civil Registration': 'bi-person-badge-fill',
+      'Immigration & Border Management': 'bi-passport-fill',
+      'Business & Commercial Regulation': 'bi-briefcase-fill',
+      'Taxation & Revenue Administration': 'bi-bank2',
+      'Social Protection & Welfare': 'bi-heart-pulse-fill',
+      'Education & Skills Development': 'bi-mortarboard-fill',
+      'Health & Public Health Regulation': 'bi-capsule',
+      'Land, Housing & Property Administration': 'bi-house-heart-fill',
+      'Justice & Legal Services': 'bi-balance-scale',
+      'Security & Public Safety': 'bi-shield-shaded',
+      'Trade, Industry & Investment': 'bi-graph-up-arrow',
+      'Environmental & Natural Resources': 'bi-tree-fill',
+      'Transport & Mobility': 'bi-truck',
+      'Public Finance & Procurement': 'bi-cash-coin',
+      'Governance & Intergovernmental Coordination': 'bi-building-governance',
+      'Tourism, Heritage & Sports': 'bi-palette-fill'
+    };
+    return icons[familyName] || 'bi-lightning-charge-fill';
+  };
+
   // --- Helper Functions for UI Focus ---
 
   const getActionState = (request) => {
-      // If status is 'in_progress' and assigned to me -> Action Required
-      if (request.status === 'in_progress' && user.value && request.assigned_to === user.value.id) {
-          // Double check if step role matches just in case
-          if (request.current_step && request.current_step.role === 'System') return 'processing';
-          return 'action_required';
-      }
-      return 'processing';
+    // If status is 'in_progress' and assigned to me -> Action Required
+    if (request.status === 'in_progress' && user.value && request.assigned_to === user.value.id) {
+      // Double check if step role matches just in case
+      if (request.current_step && request.current_step.role === 'System') return 'processing';
+      return 'action_required';
+    }
+    return 'processing';
   };
 
   const getActionStateClass = (request) => {
-      const state = getActionState(request);
-      if (state === 'action_required') {
-          return 'bg-white border-l-4 border-l-primary shadow-sm hover:shadow-md';
-      }
-      return 'bg-slate-50 opacity-75 grayscale-[0.5] hover:grayscale-0 hover:opacity-100';
+    const state = getActionState(request);
+    if (state === 'action_required') {
+      return 'bg-white border-l-4 border-l-primary shadow-sm hover:shadow-md';
+    }
+    return 'bg-slate-50 opacity-75 grayscale-[0.5] hover:grayscale-0 hover:opacity-100';
   };
 
   const sortRequestsByUrgency = (requests) => {
-      // Sort strategy:
-      // 1. Action Required > Processing
-      // 2. High Priority > Low Priority
-      // 3. Oldest > Newest
-      return [...requests].sort((a, b) => {
-          const stateA = getActionState(a);
-          const stateB = getActionState(b);
-          
-          if (stateA === 'action_required' && stateB !== 'action_required') return -1;
-          if (stateA !== 'action_required' && stateB === 'action_required') return 1;
+    // Sort strategy:
+    // 1. Action Required > Processing
+    // 2. High Priority > Low Priority
+    // 3. Oldest > Newest
+    return [...requests].sort((a, b) => {
+      const stateA = getActionState(a);
+      const stateB = getActionState(b);
 
-          // Priority logic (assuming enum: high, normal, low)
-          const pMap = { high: 3, normal: 2, low: 1 };
-          const pA = pMap[a.priority] || 0;
-          const pB = pMap[b.priority] || 0;
-          if (pA !== pB) return pB - pA; // Descending
+      if (stateA === 'action_required' && stateB !== 'action_required') return -1;
+      if (stateA !== 'action_required' && stateB === 'action_required') return 1;
 
-          return new Date(a.created_at) - new Date(b.created_at); // ASC (FIFO)
-      });
+      // Priority logic (assuming enum: high, normal, low)
+      const pMap = { high: 3, normal: 2, low: 1 };
+      const pA = pMap[a.priority] || 0;
+      const pB = pMap[b.priority] || 0;
+      if (pA !== pB) return pB - pA; // Descending
+
+      return new Date(a.created_at) - new Date(b.created_at); // ASC (FIFO)
+    });
   };
 
   const selectMda = (mda) => {
@@ -937,7 +1127,7 @@
     let result = availableServices.value;
     if (mdaFilter.value) result = result.filter(s => s.mda === parseInt(mdaFilter.value));
     if (lifeEventFilter.value) result = result.filter(s => s.life_event_group === lifeEventFilter.value);
-    if (categoryFilter.value) result = result.filter(s => (s.category_details?.name || s.category) === categoryFilter.value);
+    if (familyFilter.value) result = result.filter(s => (s.service_family_details?.name || s.service_family) === familyFilter.value);
     if (priorityFilter.value) result = result.filter(s => s.priority === priorityFilter.value);
     if (serviceSearchQuery.value) {
       const q = serviceSearchQuery.value.toLowerCase();
@@ -948,6 +1138,41 @@
       );
     }
     return result;
+  });
+
+  watch([serviceSearchQuery, mdaFilter, lifeEventFilter, familyFilter], () => {
+    // If any filter is engaged that isn't the family view filter, maybe we shouldn't reset, but we might want to auto-expand or filter the groups.
+    // For now, if the user explicitly searches or filters, we ensure they can see the results.
+    // If they filter by family, let's select it automatically so it expands!
+    if (familyFilter.value) {
+      selectedFamilyForView.value = familyFilter.value;
+    }
+  });
+
+  const groupedServicesByFamily = computed(() => {
+    const services = filteredAvailableServices.value;
+    const families = serviceConfigStore.families;
+
+    // Group services by their family name from service_family_details
+    const groupMap = services.reduce((acc, svc) => {
+      const famName = svc.service_family_details?.name || 'Uncategorized';
+      if (!acc[famName]) acc[famName] = [];
+      acc[famName].push(svc);
+      return acc;
+    }, {});
+
+    // Sort family names: defined families first, then Uncategorized
+    const sortedFamilyNames = Object.keys(groupMap).sort((a, b) => {
+      if (a === 'Uncategorized') return 1;
+      if (b === 'Uncategorized') return -1;
+      return a.localeCompare(b);
+    });
+
+    return sortedFamilyNames.map(name => ({
+      name,
+      services: groupMap[name],
+      family: Object.keys(groupMap).length === 1 && familyFilter.value ? families.find(f => f.name === name) : families.find(f => f.name === name)
+    }));
   });
 
   const filteredMyRequests = computed(() => {
@@ -1086,6 +1311,7 @@
       citizenStore.fetchAvailableServices();
       citizenStore.fetchMyRequests();
       mdaStore.fetchMdas();
+      serviceConfigStore.fetchFamilies();
     }
     if (['officer', 'supervisor', 'registrar', 'mda_admin', 'global_officer', 'global_supervisor', 'mda_officer', 'mda_supervisor'].includes(role)) {
       staffStore.fetchIncompleteMdaRequests();
@@ -1098,6 +1324,7 @@
     } else if (role === 'admin') {
       mdaStore.fetchMdas();
       serviceConfigStore.fetchServices();
+      serviceConfigStore.fetchFamilies();
     }
   });
 
@@ -1512,9 +1739,22 @@
   }
 
   @keyframes bounceShort {
-    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-    40% {transform: translateY(-4px);}
-    60% {transform: translateY(-2px);}
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+      transform: translateY(0);
+    }
+
+    40% {
+      transform: translateY(-4px);
+    }
+
+    60% {
+      transform: translateY(-2px);
+    }
   }
 
   .rounded-full {
@@ -1666,14 +1906,14 @@
   }
 
   .wallet-doc-icon {
-    width: 3rem;
-    height: 3rem;
-    background: white;
-    border-radius: var(--radius-sm);
-    border: 2px solid var(--secondary);
     display: flex;
     align-items: center;
     justify-content: center;
+    aspect-ratio: 1/1;
+    min-width: 3rem;
+    background: white;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--secondary);
     font-size: 1.5rem;
     box-shadow: var(--shadow-md);
     transition: transform 0.2s;
@@ -1814,6 +2054,172 @@
     }
   }
 
+  /* Glassmorphism Toolbar & Classy Filters */
+  .toolbar {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 1.5rem;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .toolbar__filter-input {
+    background: white;
+    border: 2px solid var(--color-border-light);
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .toolbar__filter-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px var(--color-primary-soft);
+    transform: translateY(-1px);
+  }
+
+  .toolbar__clear-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    opacity: 0.5;
+  }
+
+  .toolbar__clear-icon:hover {
+    color: var(--color-primary);
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .toolbar__clear-icon--with-arrow {
+    right: 2.5rem;
+  }
+
+  /* Classy Dropdown Menu */
+  .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    margin-top: 0.5rem;
+    z-index: 1000;
+    overflow: auto;
+    padding: 0.5rem;
+    max-height: 300px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  .dropdown-item {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-main);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .dropdown-item:hover {
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+    transform: translateX(4px);
+  }
+
+  .dropdown-item--header {
+    color: var(--color-primary);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--color-border-light);
+    margin-bottom: 0.25rem;
+    border-radius: 0;
+  }
+
+  /* Reset Button */
+  .btn-reset {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .btn-reset:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: var(--color-primary-soft);
+    transform: rotate(-5deg) scale(1.05);
+  }
+
+  /* Filter Chips */
+  .filter-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--grad-premium);
+    color: white;
+    border-radius: 40px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+  }
+
+  .filter-chip:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    filter: brightness(1.1);
+  }
+
+  .filter-chip__label {
+    opacity: 0.6;
+    text-transform: uppercase;
+    font-size: 9px;
+  }
+
+  /* Vue Transitions */
+  .dropdown-enter-active,
+  .dropdown-leave-active {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .dropdown-enter-from,
+  .dropdown-leave-to {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+
+  .list-enter-active,
+  .list-leave-active {
+    transition: all 0.4s ease;
+  }
+
+  .list-enter-from,
+  .list-leave-to {
+    opacity: 0;
+    transform: scale(0.5) translateY(10px);
+  }
+
   /* Full-Width Dashboard Wrapper */
   .dashboard-wrapper {
     min-height: 100vh;
@@ -1887,7 +2293,6 @@
     .staff-portal .dashboard-sidebar,
     .admin-portal .dashboard-sidebar {
       position: static;
-      height: auto;
       border-right: none;
       border-bottom: 1px solid var(--border-color);
     }
@@ -1918,7 +2323,6 @@
   }
 
   .sidebar-nav__item {
-    width: 100%;
     display: flex;
     align-items: center;
     gap: 0.75rem;

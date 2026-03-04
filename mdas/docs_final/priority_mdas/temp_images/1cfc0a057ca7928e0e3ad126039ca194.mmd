@@ -1,0 +1,28 @@
+graph TD
+    Start((Start)) --> Portal["Author drafts Statement in Secure Portal"]
+    
+    subgraph Layer2 [Trust Hub & Workflow]
+        Portal --> Sign["NPKI Digital Signature (Official Stamp)"]
+        Sign --> Push["Workflow Engine: Concurrent Push to all Channels"]
+    end
+    
+    subgraph Layer3 [Huduma Bridge / X-Road]
+        Push --> XRoad_KBC["X-Road: Auto-syndicate to KBC Archive"]
+        Push --> XRoad_Web["X-Road: Auto-update MyGov / eCitizen News"]
+    end
+    
+    subgraph Layer4 [Digital Public Archive]
+        XRoad_Web --> AI["AI Meta-tagging & Search Indexing"]
+        AI --> Vault["Store in Immutable Public Archive Vault"]
+    end
+    
+    Vault --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    class Start start;
+    class End endNode;
+    class Portal userTask;
+    class Sign,Push,XRoad_KBC,XRoad_Web,AI,Vault serviceTask;

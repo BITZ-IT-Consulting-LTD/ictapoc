@@ -115,6 +115,8 @@ def seed():
                         "service_code": f"{existing.code}-{s_name[:3].upper()}-{processes_count}",
                         "mda": existing,
                         "category": registry_cat,
+                        "is_public_facing": False,
+                        "service_type": "Internal",
                         "description": f"Standard registry process for {existing.name}",
                         "config": {"steps": []}
                     }
@@ -129,6 +131,8 @@ def seed():
                     "service_code": p_mda['domain_code'],
                     "mda": existing,
                     "category": domain_cat,
+                    "is_public_facing": True,
+                    "service_type": "Transactional",
                     "description": f"Primary domain service for {existing.name}",
                     "config": {"steps": []}
                 }

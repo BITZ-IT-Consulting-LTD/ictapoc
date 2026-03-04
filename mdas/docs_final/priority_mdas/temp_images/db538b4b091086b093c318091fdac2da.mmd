@@ -1,0 +1,29 @@
+graph TD
+    Start((Start)) --> FacA["Patient Arrives at Facility A"]
+    
+    subgraph Facility_A [Facility A]
+        FacA --> RegA["New Registration (Paper/Local EMR)"]
+        RegA --> ID_A["Assign Local Facility ID"]
+    end
+    
+    subgraph Facility_B [Facility B]
+        ID_A --> FacB["Patient Arrives at Facility B"]
+        FacB --> Search["Search Records"]
+        Search --> NotFound["No Record Found"]
+        NotFound --> RegB["New Registration B"]
+        RegB --> ID_B["Assign New Facility ID"]
+    end
+    
+    subgraph National_Level [MOH / National]
+        ID_B --> Multiple["Multiple IDs Generated"]
+        Multiple --> Fragmented["Fragmented Patient History"]
+    end
+    
+    Fragmented --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    class Start start;
+    class End endNode;
+    class FacA,RegA,ID_A,FacB,Search,NotFound,RegB,ID_B,Multiple,Fragmented userTask;

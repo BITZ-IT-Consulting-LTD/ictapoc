@@ -1,0 +1,35 @@
+graph TD
+    Start((Start)) --> Prepare["Prepare Cabinet Memorandum"]
+    
+    subgraph Initiation [Ministry Level]
+        Prepare --> PS_Approve["Obtain PS / CS Approval"]
+        PS_Approve --> Submit["Submit to Cabinet Affairs"]
+    end
+    
+    subgraph Processing [Cabinet Affairs]
+        Submit --> Log["Log in CABMEMO / EDRMS"]
+        Log --> Assign["Assign Reference Number"]
+        Assign --> Compliant{"Compliant?"}
+        
+        Compliant -- "No" --> Return["Return for Corrections"]
+        Return --> Prepare
+        
+        Compliant -- "Yes" --> RouteAG["Route to Attorney General for Legal Opinion"]
+        RouteAG --> RouteTreasury["Route to National Treasury for Fiscal Impact"]
+    end
+    
+    subgraph Finalization [Approval & Scheduling]
+        RouteTreasury --> Comments["Receive & Consolidate Inter-Ministerial Comments"]
+        Comments --> Schedule["Schedule for Cabinet Meeting"]
+    end
+    
+    Schedule --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    class Start start;
+    class End endNode;
+    class Compliant gateway;
+    class Prepare,PS_Approve,Submit,Log,Assign,Return,RouteAG,RouteTreasury,Comments,Schedule userTask;
