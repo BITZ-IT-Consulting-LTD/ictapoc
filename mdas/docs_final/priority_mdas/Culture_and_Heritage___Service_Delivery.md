@@ -5,7 +5,7 @@
 - **Department:** State Department for Culture, Arts and Heritage
 - **Process Name:** Ushanga Kenya (Beadwork Value Chain)
 - **Document Version:** 2.1
-- **Date:** 2026-02-24
+- **Date:** 2026-03-04
 - **Classification:** Official
 
 ---
@@ -19,55 +19,78 @@ The State Department for Culture, Arts and Heritage oversees the Ushanga Kenya i
 *Current State visualization (End-to-End Ushanga Kenya based on Deep Dive).*
 
 ```mermaid
-graph TD
-    Start((Start)) --> Gather["Gather Products (Artisans/Cooperatives)"]
-    
-    subgraph Aggregation [Center Operations]
-        Gather --> Travel["Travel to Center & Present Products"]
-        Travel --> Receive["Receive & Count Items"]
-        Receive --> RegCheck{"Registered?"}
-        
-        RegCheck -- "No" --> Reject["Reject Unregistered"]
-        RegCheck -- "Yes" --> Record["Record Details & Issue Receipt"]
-    end
-    
-    subgraph Quality [Quality & Grading]
-        Record --> Inspect["Inspect Craftsmanship & Materials"]
-        Inspect --> Grade{"Grade?"}
-        
-        Grade -- "Premium" --> GradeA["Tag with Grade A"]
-        Grade -- "Standard" --> GradeB["Tag with Grade B"]
-        Grade -- "Fail" --> Reject
-    end
-    
-    subgraph Sales [Market Placement]
-        GradeA --> Catalog["Move to Cataloging & Inventory"]
-        GradeB --> Catalog
-        Catalog --> Market["Market Placement (Retail/Exhibition/Online)"]
-        Market --> Sale["Customer Purchases & Record Sale"]
-    end
-    
-    subgraph Settlement [Payment Processing]
-        Sale --> Summary["Receive Sales Summary"]
-        Summary --> Calculate["Calculate Gross Earnings & Deduct Fees"]
-        Calculate --> Approve{"Approved?"}
-        
-        Approve -- "Yes" --> Transfer["Process Bank Transfer to Cooperative"]
-        Approve -- "No" --> Query["Query Discrepancies"]
-    end
-    
-    Transfer --> Notify["Notify Cooperative"]
-    Notify --> End((End))
-    Reject --> End
+flowchart TD
+    %% Events
+    Start((Start))
+    EndProcess((End Process))
+    EndReject((End - Rejected))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    subgraph Artisan [Artisan & Cooperative]
+        direction TB
+        Onboard[Cooperative onboarding]
+        Aggregate[Product aggregation]
+    end
+
+    subgraph CenterOps [Center Operations]
+        direction TB
+        VerifyReg[Verification of cooperative registration]
+        RegGateway{Registered cooperative?}
+        Intake[Product intake and counting]
+        QualityGrad[Quality grading]
+        QualGateway{Product passed quality check?}
+        StoreInv[Inventory storage]
+        CatList[Catalog listing]
+    end
+
+    subgraph MarketSales [Market & Sales]
+        direction TB
+        MarketPlac[Market placement]
+        ProdSale[Product sales]
+        SoldGateway{Product sold?}
+    end
+
+    subgraph Settlement [Finance & Settlement]
+        direction TB
+        SalesRec[Sales reconciliation]
+        PaySett[Payment settlement]
+    end
+
+    %% Flow connections
+    Start --> Onboard
+    Onboard --> Aggregate
+    Aggregate --> VerifyReg
+    VerifyReg --> RegGateway
+    
+    RegGateway -- "No" --> EndReject
+    RegGateway -- "Yes" --> Intake
+    
+    Intake --> QualityGrad
+    QualityGrad --> QualGateway
+    
+    QualGateway -- "No" --> EndReject
+    QualGateway -- "Yes" --> StoreInv
+    
+    StoreInv --> CatList
+    CatList --> MarketPlac
+    MarketPlac --> ProdSale
+    ProdSale --> SoldGateway
+    
+    SoldGateway -- "No" --> MarketPlac
+    SoldGateway -- "Yes" --> SalesRec
+    
+    SalesRec --> PaySett
+    PaySett --> EndProcess
+
+    %% Styling
+    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff;
     classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
     classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
-    class Start start;
-    class End endNode;
-    class RegCheck,Grade,Approve gateway;
-    class Gather,Travel,Receive,Record,Inspect,GradeA,GradeB,Catalog,Market,Sale,Summary,Calculate,Transfer,Notify,Reject,Query userTask;
+    
+    class Start startEvent;
+    class EndProcess,EndReject endEvent;
+    class RegGateway,QualGateway,SoldGateway gateway;
+    class Onboard,Aggregate,VerifyReg,Intake,QualityGrad,StoreInv,CatList,MarketPlac,ProdSale,SalesRec,PaySett userTask;
 ```
 
 ---
@@ -97,11 +120,14 @@ End-to-End Ushanga Kenya Value Chain (Aggregation to Payment)
 ## Detailed Process (AS-IS)
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
-| 1 | Artisans | Cooperatives gather beadwork from members and travel to a central aggregation center. | Physical | |
-| 2 | Center Officer | Receives products, counts items, and verifies if the cooperative is registered. | Manual Ledger | |
-| 3 | Quality Officer | Examines craftsmanship and materials to assign a Grade (A, B, or Fail). | Manual | |
-| 4 | Market Officer | Places products in retail shops, exhibitions, or online portals and records sales manually. | Manual/EDRMS | |
-| 5 | Finance Officer | Calculates earnings, deducts management fees, and processes batch transfers via bank. | Manual/Excel | Target: Payment within 14 days. |
+| 1 | Artisan / Cooperative Leader | Coordinates the onboarding of the cooperative and aggregation of beadwork from members. Travels to the aggregation center. | Physical | |
+| 2 | Center Officer | Receives products, counts items, and verifies if the cooperative is formally registered with Ushanga Kenya. | Manual Ledger | |
+| 3 | Quality Officer | Examines craftsmanship and materials to assign a Grade (A, B, or Fail) during the quality grading process. | Manual | |
+| 4 | Center Officer | Stores the graded inventory securely and logs items into the local catalog. | Paper Records / Excel | |
+| 5 | Market Officer | Manages market cataloging and placement, displaying products in retail shops, exhibitions, or online portals. | Manual/EDRMS | |
+| 6 | Market Officer | Facilitates product sales and records transaction details. | Receipt Books | |
+| 7 | Finance Officer | Conducts sales reconciliation, calculates gross earnings, and deducts management fees. | Manual/Excel | Target: Payment within 14 days. |
+| 8 | Finance Officer | Processes payment settlement via batch bank transfers to the respective cooperatives. | Banking Portal | High delay risk. |
 
 ---
 
@@ -112,70 +138,116 @@ End-to-End Ushanga Kenya Value Chain (Aggregation to Payment)
 - **Delayed Payments:** The 14-day payment target is often missed due to manual reconciliation of sales summaries.
 
 ### Opportunities
-- **Digital Inventory (QR-Based):** Assigning a unique QR code to every item upon grading to allow for instant tracking and automated sales logging.
+- **Digital Inventory Registry:** Assigning a unique QR code to every item upon grading to allow for instant tracking and automated sales logging.
 - **Unified Payment Aggregator:** Using the **GPA** to receive customer payments and auto-split the funds (Artisan share, Cooperative fee, Government fee) instantly.
-- **E-Commerce Integration:** Direct API integration between the center's inventory and a national e-commerce portal via **X-Road**.
+- **Creative Economy Marketplace:** Direct API integration between the center's inventory and a national e-commerce portal via **X-Road**.
 
 ---
 
 ## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
+*Future State visualization (Kenya DSAP Architecture - Digital Value Chain).*
 
 ```mermaid
-graph TD
-    Start((Start)) --> Intake["Scan Cooperative QR at Center"]
-    
-    subgraph Layer1 [Digital Aggregation]
-        Intake --> Log["Digital Product Entry (Mobile App)"]
-        Log --> Grad["AI-Assisted Grading & QR Label Generation"]
-    end
-    
-    subgraph Layer2 [Market & Sales]
-        Grad --> Sync["Sync to National Creative Gallery (eCitizen)"]
-        Sync --> Purchase["Customer Pays via GPA (QR/Web/Mobile)"]
-    end
-    
-    subgraph Layer3 [Financial Settlement - GPA]
-        Purchase --> Split["GPA: Automatic Revenue Split (Instant)"]
-        Split --> Wallet["Credit Cooperative Digital Wallet"]
-    end
-    
-    subgraph Layer4 [Compliance]
-        Wallet --> Report["Auto-Generate Value Chain Impact Report"]
-    end
-    
-    Report --> End((End))
+flowchart TD
+    %% Events
+    Start((Start))
+    EndProcess((End Process))
+    EndFail((End - QA Fail))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    subgraph ArtisanCoop [Artisan / Cooperative]
+        direction TB
+        BringProd[Bring products to center]
+        RecNotif[Receive notification & payment]
+    end
+
+    subgraph CenterOff [Center Officer]
+        direction TB
+        DigIntake[Digital product intake]
+    end
+
+    subgraph QualOff [Quality Officer]
+        direction TB
+        AIGrade[AI-assisted grading review]
+        ApprQual[Human quality approval]
+        QualGateway{Quality pass?}
+    end
+
+    subgraph Sys [Digital System / Marketplace]
+        direction TB
+        GenQR[Generate QR code identity]
+        SyncInv[Inventory synchronization]
+        ListMarket[Marketplace listing]
+    end
+
+    subgraph Cust [Customer]
+        direction TB
+        CustBuy[Customer purchase via platform]
+    end
+
+    subgraph PaySys [Payment System]
+        direction TB
+        AutoSplit[Automated payment split]
+    end
+
+    %% Flow connections
+    Start --> BringProd
+    BringProd --> DigIntake
+    DigIntake --> AIGrade
+    AIGrade --> ApprQual
+    ApprQual --> QualGateway
+    
+    QualGateway -- "No" --> EndFail
+    QualGateway -- "Yes" --> GenQR
+    
+    GenQR --> SyncInv
+    SyncInv --> ListMarket
+    ListMarket --> CustBuy
+    
+    CustBuy --> AutoSplit
+    AutoSplit --> RecNotif
+    RecNotif --> EndProcess
+
+    %% Styling
+    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff;
     classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
     classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-    class Start start;
-    class End endNode;
-    class Intake,Log userTask;
-    class Grad,Sync,Purchase,Split,Wallet,Report serviceTask;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    
+    class Start startEvent;
+    class EndProcess,EndFail endEvent;
+    class QualGateway gateway;
+    class GenQR,SyncInv,ListMarket,AutoSplit serviceTask;
+    class BringProd,DigIntake,AIGrade,ApprQual,CustBuy,RecNotif userTask;
 ```
 
 ## Future State Process (TO-BE)
 ### Narrative
 **TO-BE Process: Digital Creative Economy (Ushanga)**
 
-**Design Principles:**
-- **Product Traceability:** Every beadwork item is assigned a digital identity (QR Code) that links back to the artisan's **Maisha Namba** profile.
-- **Real-Time Settlement:** The **Government Payment Aggregator (GPA)** eliminates the 14-day delay. When a customer buys a necklace, the funds are instantly split according to the agreed policy.
-- **Global Reach:** By exposing inventory via the **Huduma Bridge APIs**, Ushanga products can be listed on international marketplaces while maintaining a single authoritative source of truth for stock.
+The To-Be architecture transforms the manual beadwork value chain into a **digital, traceable ecosystem**.
+
+**Core Digital Components:**
+- **Digital Inventory Registry:** Replaces paper logs with a cloud-based stock management system.
+- **QR-Based Product Identity:** Gives every single product a unique digital footprint linking it to its creator.
+- **Creative Economy Marketplace Platform:** An integrated e-commerce portal exposing inventory to a global audience.
+- **Mobile Inventory Scanning:** Empowers center officers to manage intake and dispatch via smartphones.
+- **Automated Payment Settlement:** Integrates with the Government Payment Aggregator for instant fund disbursement.
 
 ### Optimized Steps (Digital)
 | Step | Actor | Action | System |
 |---|---|---|---|
-| 1 | Center Officer | Scans the cooperative's digital ID to start the intake session. | Ushanga App |
-| 2 | Quality Officer | Uses an AI-assisted tool to verify grading standards and prints a QR-coded price tag. | Smart Printer / AI |
-| 3 | System | Instantly lists the item on the eCitizen Creative Economy portal. | eCitizen / X-Road |
-| 4 | Customer | Pays for the item by scanning the QR code at a retail shop or exhibition. | GPA |
-| 5 | System | GPA automatically deducts the management fee and transfers the artisan's share to their digital wallet immediately. | GPA / Mobile Money |
+| 1 | Center Officer | Performs digital product intake using a mobile inventory scanning app, instantly verifying the cooperative's registration. | Ushanga Mobile App |
+| 2 | Quality Officer | Uses an AI-assisted tool to evaluate the product, but provides the final human approval for the quality pass. | Digital QA Portal |
+| 3 | System | Generates a unique QR code serving as the product's digital identity and prints the physical label. | Digital Inventory Registry |
+| 4 | System | Performs inventory synchronization and automatically pushes the catalog listing to the Creative Economy Marketplace Platform. | Integration Hub / eCitizen |
+| 5 | Customer | Browses the marketplace and completes a customer purchase using integrated digital payments. | Marketplace / GPA |
+| 6 | Payment System | Executes an automated payment settlement, instantly splitting revenue between the artisan, cooperative, and program management. | GPA / Mobile Money API |
+| 7 | System | Sends a real-time notification to the cooperative and artisan regarding the successful sale and payment. | Notification Gateway |
 
 ---
 
 ## References
-- The Culture Policy.
-- Huduma Bridge DSAP Architecture.
+- https://www.sportsheritage.go.ke
+- Culture Policy
+- Desk Review

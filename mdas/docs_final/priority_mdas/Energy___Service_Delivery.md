@@ -165,5 +165,6 @@ graph TD
 ---
 
 ## References
-- The Energy Act 2019.
-- Huduma Bridge DSAP Architecture.
+- https://energy.go.ke
+- Energy Act 2019
+- Desk Review

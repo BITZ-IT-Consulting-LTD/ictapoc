@@ -1,0 +1,30 @@
+graph TD
+    Start((Start)) --> Collection["Collect Info: MDAs submit Briefs/Announcements"]
+    
+    subgraph Development [Message Creation]
+        Collection --> Draft["Communication Officers Draft Public Messages"]
+        Draft --> Review["Review for Accuracy and Consistency"]
+        Review --> Clearance["Obtain Clearance from Authorized Offices"]
+        Clearance --> Approval["Final Message Approval"]
+    end
+    
+    subgraph Dissemination [Communication]
+        Approval --> Media["Disseminate via Press Briefings / Release / Channels"]
+        Media --> Inquiries["Handle Media Inquiries Manually"]
+        Inquiries --> Coordinate["Coordinate Internal Responses"]
+    end
+    
+    subgraph Archiving [Records]
+        Coordinate --> Compile["Compile Final Statements & Materials"]
+        Compile --> Save["Store in Physical Files / Digital Folders"]
+        Save --> Retrieval["Manual Retrieval on Request"]
+    end
+    
+    Retrieval --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    class Start start;
+    class End endNode;
+    class Collection,Draft,Review,Clearance,Approval,Media,Inquiries,Coordinate,Compile,Save,Retrieval userTask;

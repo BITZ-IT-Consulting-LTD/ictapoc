@@ -160,5 +160,6 @@ graph TD
 ---
 
 ## References
-- POCAMLA.
-- Huduma Bridge DSAP Architecture.
+- https://ara.go.ke
+- Proceeds of Crime and Anti-Money Laundering Act
+- Desk Review

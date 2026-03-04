@@ -171,6 +171,31 @@ ENHANCED_WORKFLOWS = {
             {"name": "Supervisor Migration Approval", "role": "supervisor", "type": "manual", "bpmn": "user_task", "seq": 5},
             {"name": "Provision Digital Profile & SMS", "role": "system", "type": "api", "bpmn": "end_event", "seq": 6}
         ]
+    },
+    "Export Permit": {
+        "mda_code": "SD-AGRIC",
+        "as_is": [
+            {"name": "Complete Application", "role": "citizen", "type": "manual", "bpmn": "start_event", "seq": 1},
+            {"name": "Attach Documents", "role": "citizen", "type": "manual", "bpmn": "user_task", "seq": 2},
+            {"name": "Submit Application", "role": "citizen", "type": "manual", "bpmn": "user_task", "seq": 3},
+            {"name": "Pay Application Fee", "role": "citizen", "type": "manual", "bpmn": "user_task", "seq": 4},
+            {"name": "Review Documentation", "role": "officer", "type": "manual", "bpmn": "user_task", "seq": 5},
+            {"name": "Verify Business Registration", "role": "officer", "type": "manual", "bpmn": "user_task", "seq": 6},
+            {"name": "Premises Inspection", "role": "officer", "type": "manual", "bpmn": "user_task", "seq": 7},
+            {"name": "Inspection Result", "role": "officer", "type": "manual", "bpmn": "user_task", "seq": 8},
+            {"name": "Officer Recommendation", "role": "officer", "type": "manual", "bpmn": "user_task", "seq": 9},
+            {"name": "Directorate Approval", "role": "supervisor", "type": "manual", "bpmn": "user_task", "seq": 10},
+            {"name": "Generate License", "role": "system", "type": "manual", "bpmn": "service_task", "seq": 11},
+            {"name": "Notify Applicant", "role": "system", "type": "manual", "bpmn": "service_task", "seq": 12},
+            {"name": "Update Manual Registry", "role": "officer", "type": "manual", "bpmn": "end_event", "seq": 13}
+        ],
+        "to_be": [
+            {"name": "Logs into eCitizen and selects the required AFA service (e.g., Export Permit)", "role": "citizen", "type": "api", "bpmn": "start_event", "seq": 1},
+            {"name": "Fetches business details from BRS and tax status from KRA instantly via KeSEL", "role": "system", "type": "api", "bpmn": "service_task", "seq": 2},
+            {"name": "Pays the required cess or license fee through unified mobile money or card options", "role": "citizen", "type": "api", "bpmn": "user_task", "seq": 3},
+            {"name": "Rules Engine assesses risk and routes automatically", "role": "system", "type": "api", "bpmn": "service_task", "seq": 4},
+            {"name": "Generates a QR-coded digital license and pushes the approval status directly to the Kentrade Single Window System", "role": "system", "type": "api", "bpmn": "end_event", "seq": 5}
+        ]
     }
 }
 

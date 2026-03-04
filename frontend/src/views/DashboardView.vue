@@ -281,24 +281,22 @@
                       </transition>
                     </div>
 
-                    <!-- Category Filter -->
+                    <!-- Family Filter -->
                     <div class="toolbar__filter-group">
-                      <i class="bi bi-tags-fill toolbar__filter-icon"></i>
-                      <input type="text" v-model="categorySearchLocal" placeholder="Filter by Category..."
-                        @focus="showCategoryDropdown = true" @blur="setTimeout(() => showCategoryDropdown = false, 200)"
+                      <i class="bi bi-diagram-3-fill toolbar__filter-icon"></i>
+                      <input type="text" v-model="familySearchLocal" placeholder="Filter by Family..."
+                        @focus="showFamilyDropdown = true" @blur="setTimeout(() => showFamilyDropdown = false, 200)"
                         class="toolbar__filter-input toolbar__filter-input--with-arrow">
                       <i class="bi bi-chevron-down toolbar__filter-arrow"
-                        :class="{ 'toolbar__filter-arrow--open': showCategoryDropdown }"></i>
-                      <i v-if="categoryFilter" @click="selectCategory('')"
+                        :class="{ 'toolbar__filter-arrow--open': showFamilyDropdown }"></i>
+                      <i v-if="familyFilter" @click="selectFamily('')"
                         class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
-
                       <transition name="dropdown">
-                        <div v-if="showCategoryDropdown" class="dropdown-menu">
-                          <div @click="selectCategory('')" class="dropdown-item dropdown-item--header">All Categories
-                          </div>
-                          <div v-for="cat in filteredCategories" :key="cat" @click="selectCategory(cat)"
+                        <div v-if="showFamilyDropdown" class="dropdown-menu">
+                          <div @click="selectFamily('')" class="dropdown-item dropdown-item--header">All Families</div>
+                          <div v-for="fam in filteredFamilies" :key="fam" @click="selectFamily(fam)"
                             class="dropdown-item">
-                            {{ cat }}
+                            {{ fam }}
                           </div>
                         </div>
                       </transition>
@@ -332,9 +330,9 @@
                   <span class="filter-chip__value">{{ lifeEventFilter }}</span>
                   <i class="bi bi-x"></i>
                 </div>
-                <div v-if="categoryFilter" :key="'c-' + categoryFilter" class="filter-chip" @click="selectCategory('')">
-                  <span class="filter-chip__label">Category:</span>
-                  <span class="filter-chip__value">{{ categoryFilter }}</span>
+                <div v-if="familyFilter" :key="'f-' + familyFilter" class="filter-chip" @click="selectFamily('')">
+                  <span class="filter-chip__label">Family:</span>
+                  <span class="filter-chip__value">{{ familyFilter }}</span>
                   <i class="bi bi-x"></i>
                 </div>
               </transition-group>
@@ -346,24 +344,63 @@
                 <p class="u-text-xs u-mt-2 u-opacity-60">The authoritative catalogue is being updated. Please check back
                   shortly.</p>
               </div>
-              <div v-else class="stats-grid">
-                <div v-for="service in filteredAvailableServices" :key="service.id"
-                  class="card u-p-8 u-flex u-flex-col u-items-center u-text-center transition-all hover:u-shadow-xl"
-                  style="border: none;">
-                  <div class="u-flex u-items-center u-justify-center u-mb-6 u-rounded-lg"
-                    style="width: 4rem; height: 4rem; background: var(--color-primary-soft); color: var(--color-primary); font-size: 1.5rem;">
-                    <i class="bi bi-lightning-charge-fill"></i>
+              <div v-else class="u-flex u-flex-col u-gap-12">
+                <!-- If no family is selected, show the list of families -->
+                <div v-if="!selectedFamilyForView" class="stats-grid">
+                  <div v-for="group in groupedServicesByFamily" :key="group.name"
+                    @click="selectedFamilyForView = group.name"
+                    class="card u-p-8 u-flex u-flex-col u-items-center u-text-center transition-all hover:u-shadow-xl u-cursor-pointer"
+                    style="border: 1px solid var(--border-color);">
+                    <div class="u-flex u-items-center u-justify-center u-mb-6 u-rounded-lg"
+                      style="width: 4rem; height: 4rem; background: var(--color-primary-soft); color: var(--color-primary); font-size: 1.5rem;">
+                      <i :class="getServiceFamilyIcon(group.name)"></i>
+                    </div>
+                    <h3 class="u-font-bold u-text-main u-mb-2" style="font-size: 1.125rem;">{{ group.name }}</h3>
+                    <p class="u-text-xs u-text-muted u-mb-4 u-line-clamp-2" style="min-height: 2.5rem;">{{
+                      group.family?.description || 'View all associated services' }}</p>
+                    <div class="u-mt-auto">
+                      <span class="badge badge--info">{{ group.services.length }} Services</span>
+                    </div>
                   </div>
-                  <h3 class="u-font-bold u-text-main u-mb-2" style="font-size: 1.125rem;">{{ service.service_name }}
-                  </h3>
-                  <p class="u-text-xs u-font-bold u-text-muted u-uppercase u-mb-8 u-p-1 u-rounded"
-                    style="background: var(--color-background-alt); letter-spacing: 0.1em;">
-                    {{ getMdaName(service.mda).split('(')[0] }}
-                  </p>
-                  <router-link :to="`/apply/${service.service_code}`"
-                    class="button button--primary button--pill u-w-full">
-                    Begin Application
-                  </router-link>
+                </div>
+
+                <!-- If a family is selected, show its services -->
+                <div v-else class="service-family-group animate-slide-in">
+                  <div class="u-flex u-items-center u-justify-between u-mb-6">
+                    <div class="u-flex u-items-center u-gap-3">
+                      <button @click="selectedFamilyForView = null" class="button button--ghost button--small u-mr-2">
+                        <i class="bi bi-arrow-left"></i> Back to Families
+                      </button>
+                      <div class="u-w-1 u-h-8 u-bg-primary u-rounded-full"></div>
+                      <div>
+                        <h3 class="u-text-lg u-font-black u-text-main u-uppercase u-tracking-widest">{{
+                          selectedFamilyForView }}</h3>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="stats-grid">
+                    <div
+                      v-for="service in groupedServicesByFamily.find(g => g.name === selectedFamilyForView)?.services || []"
+                      :key="service.id"
+                      class="card u-p-8 u-flex u-flex-col u-items-center u-text-center transition-all hover:u-shadow-xl"
+                      style="border: none;">
+                      <div class="u-flex u-items-center u-justify-center u-mb-6 u-rounded-lg"
+                        style="width: 4rem; height: 4rem; background: var(--color-primary-soft); color: var(--color-primary); font-size: 1.5rem;">
+                        <i :class="getServiceFamilyIcon(service.service_family_details?.name)"></i>
+                      </div>
+                      <h3 class="u-font-bold u-text-main u-mb-2" style="font-size: 1.125rem;">{{ service.service_name }}
+                      </h3>
+                      <p class="u-text-xs u-font-bold u-text-muted u-uppercase u-mb-8 u-p-1 u-rounded"
+                        style="background: var(--color-background-alt); letter-spacing: 0.1em;">
+                        {{ getMdaName(service.mda) }}
+                      </p>
+                      <router-link :to="`/apply/${service.service_code}`"
+                        class="button button--primary button--pill u-w-full u-mt-auto">
+                        Begin Application
+                      </router-link>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -454,7 +491,7 @@
                         <i
                           :class="releasingId === request.id ? 'bi bi-arrow-repeat animate-spin' : 'bi bi-arrow-left-circle'"></i>
                         <span class="u-hidden md:u-inline">{{ releasingId === request.id ? 'Releasing...' : 'Release'
-                        }}</span>
+                          }}</span>
                       </button>
                     </div>
                   </div>
@@ -498,7 +535,7 @@
                         <i
                           :class="releasingId === request.id ? 'bi bi-arrow-repeat animate-spin' : 'bi bi-arrow-left-circle'"></i>
                         <span class="u-hidden md:u-inline">{{ releasingId === request.id ? 'Releasing...' : 'Release'
-                        }}</span>
+                          }}</span>
                       </button>
                     </div>
                   </div>
@@ -574,7 +611,7 @@
                   </td>
                   <td class="table__cell">
                     <span class="badge" :class="priorityClass(request.priority)">{{ request.priority.toUpperCase()
-                      }}</span>
+                    }}</span>
                   </td>
                   <td class="table__cell u-text-muted">{{ new Date(request.created_at).toLocaleDateString() }}</td>
                   <td class="table__cell table__cell--align-right table__cell--with-right-padding">
@@ -936,13 +973,15 @@
 
   const mdaFilter = ref('');
   const lifeEventFilter = ref('');
-  const categoryFilter = ref('');
+  const familyFilter = ref('');
+  const selectedFamilyForView = ref(null);
+
   const mdaSearchLocal = ref('');
   const lifeEventSearchLocal = ref('');
-  const categorySearchLocal = ref('');
+  const familySearchLocal = ref('');
   const showMdaDropdown = ref(false);
   const showLifeEventDropdown = ref(false);
-  const showCategoryDropdown = ref(false);
+  const showFamilyDropdown = ref(false);
 
   const selectLifeEvent = (val) => {
     lifeEventFilter.value = val;
@@ -950,24 +989,24 @@
     showLifeEventDropdown.value = false;
   };
 
-  const selectCategory = (val) => {
-    categoryFilter.value = val;
-    categorySearchLocal.value = val;
-    showCategoryDropdown.value = false;
+  const selectFamily = (val) => {
+    familyFilter.value = val;
+    familySearchLocal.value = val;
+    showFamilyDropdown.value = false;
   };
 
   const resetServiceFilters = () => {
     mdaFilter.value = '';
     lifeEventFilter.value = '';
-    categoryFilter.value = '';
+    familyFilter.value = '';
     serviceSearchQuery.value = '';
     mdaSearchLocal.value = '';
     lifeEventSearchLocal.value = '';
-    categorySearchLocal.value = '';
+    familySearchLocal.value = '';
   };
 
   const isAnyServiceFilterActive = computed(() => {
-    return mdaFilter.value || lifeEventFilter.value || categoryFilter.value || serviceSearchQuery.value;
+    return mdaFilter.value || lifeEventFilter.value || familyFilter.value || serviceSearchQuery.value;
   });
 
   const filteredLifeEvents = computed(() => {
@@ -976,10 +1015,10 @@
     return uniqueLifeEvents.value.filter(e => e.toLowerCase().includes(q));
   });
 
-  const filteredCategories = computed(() => {
-    if (!categorySearchLocal.value) return uniqueCategories.value;
-    const q = categorySearchLocal.value.toLowerCase();
-    return uniqueCategories.value.filter(c => c.toLowerCase().includes(q));
+  const filteredFamilies = computed(() => {
+    if (!familySearchLocal.value) return uniqueFamilies.value;
+    const q = familySearchLocal.value.toLowerCase();
+    return uniqueFamilies.value.filter(f => f.toLowerCase().includes(q));
   });
   const mdaIncompleteRequests = computed(() => staffStore.mdaIncompleteRequests);
 
@@ -988,9 +1027,9 @@
     return [...new Set(events)].sort();
   });
 
-  const uniqueCategories = computed(() => {
-    const cats = availableServices.value.map(s => s.category_details?.name || s.category).filter(Boolean);
-    return [...new Set(cats)].sort();
+  const uniqueFamilies = computed(() => {
+    const fams = availableServices.value.map(s => s.service_family_details?.name || s.service_family).filter(Boolean);
+    return [...new Set(fams)].sort();
   });
 
   const filteredMdas = computed(() => {
@@ -1013,6 +1052,28 @@
     const mda = mdas.value.find(m => m.id === mdaId);
     return mda ? mda.name : 'Unknown Agency';
   }
+
+  const getServiceFamilyIcon = (familyName) => {
+    const icons = {
+      'Identity & Civil Registration': 'bi-person-badge-fill',
+      'Immigration & Border Management': 'bi-passport-fill',
+      'Business & Commercial Regulation': 'bi-briefcase-fill',
+      'Taxation & Revenue Administration': 'bi-bank2',
+      'Social Protection & Welfare': 'bi-heart-pulse-fill',
+      'Education & Skills Development': 'bi-mortarboard-fill',
+      'Health & Public Health Regulation': 'bi-capsule',
+      'Land, Housing & Property Administration': 'bi-house-heart-fill',
+      'Justice & Legal Services': 'bi-balance-scale',
+      'Security & Public Safety': 'bi-shield-shaded',
+      'Trade, Industry & Investment': 'bi-graph-up-arrow',
+      'Environmental & Natural Resources': 'bi-tree-fill',
+      'Transport & Mobility': 'bi-truck',
+      'Public Finance & Procurement': 'bi-cash-coin',
+      'Governance & Intergovernmental Coordination': 'bi-building-governance',
+      'Tourism, Heritage & Sports': 'bi-palette-fill'
+    };
+    return icons[familyName] || 'bi-lightning-charge-fill';
+  };
 
   // --- Helper Functions for UI Focus ---
 
@@ -1066,7 +1127,7 @@
     let result = availableServices.value;
     if (mdaFilter.value) result = result.filter(s => s.mda === parseInt(mdaFilter.value));
     if (lifeEventFilter.value) result = result.filter(s => s.life_event_group === lifeEventFilter.value);
-    if (categoryFilter.value) result = result.filter(s => (s.category_details?.name || s.category) === categoryFilter.value);
+    if (familyFilter.value) result = result.filter(s => (s.service_family_details?.name || s.service_family) === familyFilter.value);
     if (priorityFilter.value) result = result.filter(s => s.priority === priorityFilter.value);
     if (serviceSearchQuery.value) {
       const q = serviceSearchQuery.value.toLowerCase();
@@ -1077,6 +1138,41 @@
       );
     }
     return result;
+  });
+
+  watch([serviceSearchQuery, mdaFilter, lifeEventFilter, familyFilter], () => {
+    // If any filter is engaged that isn't the family view filter, maybe we shouldn't reset, but we might want to auto-expand or filter the groups.
+    // For now, if the user explicitly searches or filters, we ensure they can see the results.
+    // If they filter by family, let's select it automatically so it expands!
+    if (familyFilter.value) {
+      selectedFamilyForView.value = familyFilter.value;
+    }
+  });
+
+  const groupedServicesByFamily = computed(() => {
+    const services = filteredAvailableServices.value;
+    const families = serviceConfigStore.families;
+
+    // Group services by their family name from service_family_details
+    const groupMap = services.reduce((acc, svc) => {
+      const famName = svc.service_family_details?.name || 'Uncategorized';
+      if (!acc[famName]) acc[famName] = [];
+      acc[famName].push(svc);
+      return acc;
+    }, {});
+
+    // Sort family names: defined families first, then Uncategorized
+    const sortedFamilyNames = Object.keys(groupMap).sort((a, b) => {
+      if (a === 'Uncategorized') return 1;
+      if (b === 'Uncategorized') return -1;
+      return a.localeCompare(b);
+    });
+
+    return sortedFamilyNames.map(name => ({
+      name,
+      services: groupMap[name],
+      family: Object.keys(groupMap).length === 1 && familyFilter.value ? families.find(f => f.name === name) : families.find(f => f.name === name)
+    }));
   });
 
   const filteredMyRequests = computed(() => {
@@ -1215,6 +1311,7 @@
       citizenStore.fetchAvailableServices();
       citizenStore.fetchMyRequests();
       mdaStore.fetchMdas();
+      serviceConfigStore.fetchFamilies();
     }
     if (['officer', 'supervisor', 'registrar', 'mda_admin', 'global_officer', 'global_supervisor', 'mda_officer', 'mda_supervisor'].includes(role)) {
       staffStore.fetchIncompleteMdaRequests();
@@ -1227,6 +1324,7 @@
     } else if (role === 'admin') {
       mdaStore.fetchMdas();
       serviceConfigStore.fetchServices();
+      serviceConfigStore.fetchFamilies();
     }
   });
 

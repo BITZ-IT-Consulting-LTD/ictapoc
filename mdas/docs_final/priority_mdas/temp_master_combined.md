@@ -36,10 +36,10 @@ This document presents the prioritised list of Ministries, Departments, and Agen
 
 | # | MDA | Tier | DMI | Weakest Pillar | Citizen Impact | Record Volumes | Complexity | Model Application | Intervention Focus |
 |---|-----|------|-----|----------------|----------------|----------------|------------|------------------|-------------------|
-| 9 | State Department for Special Programmes | T2 | ~1.40 | RMI | Very High | 100K–1M | High | Beneficiary-heavy registries | Beneficiary registry modernisation |
+| 9 | [State Department for Special Programmes](./State_Department_for_Special_Programmes___Service_Delivery.md) | T2 | ~1.40 | RMI | Very High | 100K–1M | High | Beneficiary-heavy registries | Beneficiary registry modernisation |
 | 10 | [State Department for Culture, Arts and Heritage](./Culture_and_Heritage___Service_Delivery.md) | T2 | 1.91 | RMI | Medium-High | <10K | Medium | Records leadership role | Records standards |
 | 11 | [State Department for Children Services](./State_Department_for_Children_Services___Service_Delivery.md) | T2 | ~1.59 | RMI / ESMI | High | 100K–1M | High | Child protection workflows | Secure case records |
-| 12 | Office of the Chief of Staff | T1 | 1.91 | GCI / RMI | System-wide | 10K–100K | High | Executive change anchor | Whole-of-Government standards |
+| 12 | [Office of the Chief of Staff](./Office_of_the_Chief_of_Staff___Service_Delivery.md) | T1 | 1.91 | GCI / RMI | System-wide | 10K–100K | High | Executive change anchor | Whole-of-Government standards |
 | 13 | [National Government Coordination](./National_Government_Coordination___Service_Delivery.md) | T2 | ~1.46 | RMI | Medium-High | 10K–100K | High | Coordination workflows | Inter-MDA records |
 
 ---
@@ -48,7 +48,7 @@ This document presents the prioritised list of Ministries, Departments, and Agen
 
 | # | MDA | Tier | DMI | Weakest Pillar | Citizen Impact | Record Volumes | Complexity | Model Application | Intervention Focus |
 |---|-----|------|-----|----------------|----------------|----------------|------------|------------------|-------------------|
-| 14 | Government Spokesperson | T2 | ~1.68 | RMI | Medium | 10K–100K | Medium | Public archives | Digital archives |
+| 14 | [Government Spokesperson](./Government_Spokesperson___Service_Delivery.md) | T2 | ~1.68 | RMI | Medium | 10K–100K | Medium | Public archives | Digital archives |
 | 15 | [Athi Water Works Development Agency](./Athi_Water_Works_Development_Agency___Service_Delivery.md) | T2 | ~2.52 | RMI | High | <10K | High | Infrastructure constrained by records | Contract & infrastructure records |
 | 16 | [Department for Sports](./Sports_and_the_Arts___Service_Delivery.md) | T2 | ~1.25 | RMI | Medium | 1.3M | Medium | Grants and events | Registry modernisation |
 | 17 | [Department of Refugee Services](./_REFUGEE_SERVICES___Service_Delivery.md) | T2 | ~1.47 | RMI / ESMI | High | <10K | High | Sensitive case files | Case digitisation |
@@ -236,8 +236,10 @@ End-to-End Farmer Registration, Export Permits, and Trading Licenses
 ---
 
 ## References
-- Agriculture and Food Authority Act.
-- Kenya DSAP Architecture.
+- https://afa.go.ke
+- Agriculture and Food Authority Act
+- Desk Review
+
 
 ---
 
@@ -349,8 +351,10 @@ Asset Identification, Tracing, and Forfeiture Lifecycle
 ---
 
 ## References
-- POCAMLA.
-- Huduma Bridge DSAP Architecture.
+- https://ara.go.ke
+- Proceeds of Crime and Anti-Money Laundering Act
+- Desk Review
+
 
 ---
 
@@ -463,8 +467,10 @@ End-to-End Water Infrastructure Development (Study to Handover)
 ---
 
 ## References
-- The Water Act 2016.
-- Huduma Bridge DSAP Architecture.
+- https://awwda.go.ke
+- Water Act 2016
+- Desk Review
+
 
 ---
 
@@ -576,8 +582,10 @@ Cabinet Memorandum (CABMEMO) Processing and GDMIS Registration
 ---
 
 ## References
-- Cabinet Handbook.
-- Huduma Bridge DSAP Architecture.
+- https://cabinetoffice.go.ke
+- Cabinet Handbook
+- Desk Review
+
 
 ---
 
@@ -689,8 +697,10 @@ End-to-End Ushanga Kenya Value Chain (Aggregation to Payment)
 ---
 
 ## References
-- The Culture Policy.
-- Huduma Bridge DSAP Architecture.
+- https://www.sportsheritage.go.ke
+- Culture Policy
+- Desk Review
+
 
 ---
 
@@ -802,8 +812,84 @@ End-to-End Records Management and Energy Sector Licensing
 ---
 
 ## References
-- The Energy Act 2019.
-- Huduma Bridge DSAP Architecture.
+- https://energy.go.ke
+- Energy Act 2019
+- Desk Review
+
+
+---
+
+
+
+# Source: Government_Spokesperson___Service_Delivery.md
+
+# OFFICE OF THE GOVERNMENT SPOKESPERSON – Service Delivery
+
+## Cover Page
+- **Ministry/Department/Agency (MDA):** Executive Office of the President
+- **Office:** Office of the Government Spokesperson
+- **Process Name:** Public Communication & Information Archiving
+- **Document Version:** 2.2
+- **Date:** 2026-02-25
+- **Classification:** Official
+
+---
+
+## Executive Summary
+The Office of the Government Spokesperson manages official government communication, public messaging, and media coordination. Currently, information collection and message clearance are sequential and semi-manual. The transition to the Kenya DSAP Architecture aims to establish a secure, multi-channel dissemination portal with automated AI archiving and blockchain-based verifiable statements.
+
+---
+
+## 1. AS-IS Process Flowchart (BPMN 2.0)
+*Current State visualization (Manual Government Communication).*
+
+
+
+![Process Flow](temp_images/ead87b31fda022b3c1b2a7c1e3e75a3b.png)
+
+
+
+---
+
+## Process Overview
+### Process Name
+End-to-End Government Communication (Collection to Archiving)
+
+### Service Category
+- G2C (Government to Citizen) / G2B (Media)
+
+### Scope
+- **In Scope:** Message development, clearance, dissemination, and archiving.
+- **Out of Scope:** Political campaigning.
+
+### Triggers
+- Government announcements, policies, or events requiring public dissemination.
+
+### End States
+- **Successful:** Information communicated; Records archived.
+
+---
+
+## 2. TO-BE Process Flowchart (BPMN 2.0)
+*Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
+
+
+
+![Process Flow](temp_images/7a7718b29bdbe08e6cc9b8f5f02300cb.png)
+
+
+
+## Future State Process (TO-BE)
+### Narrative
+The To-Be process uses a **Secure Shared Service Portal** for collaborative drafting. **NPKI** ensures that every statement has an immutable digital stamp, preventing misinformation. **X-Road** enables instant syndication to all official government nodes (eCitizen, KBC, MyGov), while **AI** ensures that every word is instantly archived and searchable for future reference.
+
+---
+
+## References
+- https://www.spokesperson.go.ke
+- Communications Act
+- Desk Review
+
 
 ---
 
@@ -915,8 +1001,10 @@ End-to-End Archival Retrieval, Digitization, and Content Licensing
 ---
 
 ## References
-- KBC Act.
-- Huduma Bridge DSAP Architecture.
+- https://www.kbc.co.ke
+- Kenya Broadcasting Corporation Act
+- Desk Review
+
 
 ---
 
@@ -1029,8 +1117,10 @@ End-to-End Qualification Validation and Recognition of Prior Learning
 ---
 
 ## References
-- KNQF Act.
-- Huduma Bridge DSAP Architecture.
+- https://www.knqa.go.ke
+- Kenya National Qualifications Framework (KNQF) Act
+- Desk Review
+
 
 ---
 
@@ -1142,8 +1232,10 @@ MSME Credit Access (Hustler/Uwezo), Repayment, and NYOTA Apprenticeship
 ---
 
 ## References
-- The Micro and Small Enterprises Act.
-- Huduma Bridge DSAP Architecture.
+- https://www.msme.go.ke
+- Micro and Small Enterprises Act
+- Desk Review
+
 
 ---
 
@@ -1256,8 +1348,10 @@ Health Service Delivery & Identity
 ---
 
 ## References
-- Digital Health Act 2023.
-- Huduma Bridge DSAP Architecture.
+- https://www.health.go.ke
+- Digital Health Act 2023
+- Desk Review
+
 
 ---
 
@@ -1369,8 +1463,10 @@ End-to-End Research Application, Vetting, and Licensing
 ---
 
 ## References
-- Science, Technology and Innovation Act 2013.
-- Huduma Bridge DSAP Architecture.
+- https://www.nacosti.go.ke
+- Science, Technology and Innovation Act 2013
+- Desk Review
+
 
 ---
 
@@ -1482,8 +1578,10 @@ Environmental Impact Assessment (EIA) Licensing and Compliance Monitoring
 ---
 
 ## References
-- EMCA (Environmental Management and Coordination Act).
-- Huduma Bridge DSAP Architecture.
+- https://www.nema.go.ke
+- Environmental Management and Coordination Act (EMCA)
+- Desk Review
+
 
 ---
 
@@ -1595,8 +1693,84 @@ End-to-End Inter-Agency Coordination and Situation Reporting
 ---
 
 ## References
-- Executive Order No. 1 of 2023.
-- Huduma Bridge DSAP Architecture.
+- https://www.interior.go.ke
+- Executive Order No. 1 of 2023
+- Desk Review
+
+
+---
+
+
+
+# Source: Office_of_the_Chief_of_Staff___Service_Delivery.md
+
+# OFFICE OF THE CHIEF OF STAFF – Service Delivery
+
+## Cover Page
+- **Ministry/Department/Agency (MDA):** Executive Office of the President
+- **Office:** Office of the Chief of Staff
+- **Process Name:** Whole-of-Government Oversight & Performance Monitoring
+- **Document Version:** 2.2
+- **Date:** 2026-02-25
+- **Classification:** Official
+
+---
+
+## Executive Summary
+The Office of the Chief of Staff coordinates whole-of-government performance monitoring and strategic oversight. The current process relies on manual data collection from MDAs, leading to analysis lags. The transition to the Kenya DSAP Architecture aims to establish an automated performance engine that "pulls" data directly from MDA registries via the Huduma Bridge.
+
+---
+
+## 1. AS-IS Process Flowchart (BPMN 2.0)
+*Current State visualization (Manual Whole-of-Gov Oversight).*
+
+
+
+![Process Flow](temp_images/969c42bc5ba0a23b64d694254e66457b.png)
+
+
+
+---
+
+## Process Overview
+### Process Name
+End-to-End Whole-of-Government Oversight (Tasking to Follow-Up)
+
+### Service Category
+- G2G (Government to Government)
+
+### Scope
+- **In Scope:** Performance data collection, analysis, governance standards oversight, and executive briefing.
+- **Out of Scope:** Individual MDA internal HR operations.
+
+### Triggers
+- Executive directives or periodic reporting cycles.
+
+### End States
+- **Successful:** Governance compliance status assessed; Leadership briefed.
+
+---
+
+## 2. TO-BE Process Flowchart (BPMN 2.0)
+*Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
+
+
+
+![Process Flow](temp_images/6bf8f329d99eb79ade0e08e2c21740da.png)
+
+
+
+## Future State Process (TO-BE)
+### Narrative
+The To-Be process eliminates "Reporting Fatigue" by automatically pulling evidence-based performance data from MDA registries via **X-Road**. The **AI Analytics Engine** provides the President and Chief of Staff with a real-time governance heatmap, moving from reactive reporting to proactive intervention.
+
+---
+
+## References
+- https://www.president.go.ke
+- Executive Order No. 1 of 2023
+- Desk Review
+
 
 ---
 
@@ -1708,8 +1882,10 @@ Executive Coordination, Directive Tracking, and Performance Monitoring
 ---
 
 ## References
-- Executive Order No. 1 of 2023.
-- Huduma Bridge DSAP Architecture.
+- https://www.headofpublicservice.go.ke
+- Executive Order No. 1 of 2023
+- Desk Review
+
 
 ---
 
@@ -1821,8 +1997,10 @@ End-to-End Inmate Case Management (Admission to Release)
 ---
 
 ## References
-- The Prisons Act.
-- Huduma Bridge DSAP Architecture.
+- https://www.correctional.go.ke
+- Prisons Act
+- Desk Review
+
 
 ---
 
@@ -1983,7 +2161,9 @@ The process is **Shared-Service Driven** and **Logistics-Integrated**.
 ---
 
 ## References
-- Kenya Citizenship and Immigration Act.
+- https://www.immigration.go.ke
+- Kenya Citizenship and Immigration Act
+- Desk Review
 
 
 ---
@@ -2096,8 +2276,10 @@ Sports Federation Registration, Grant Disbursement, and Facility Booking
 ---
 
 ## References
-- The Sports Act 2013.
-- Huduma Bridge DSAP Architecture.
+- https://www.sportsheritage.go.ke
+- Sports Act 2013
+- Desk Review
+
 
 ---
 
@@ -2209,8 +2391,84 @@ End-to-End Child Protection Case Management (Reporting to Closure)
 ---
 
 ## References
-- The Children Act 2022.
-- Huduma Bridge DSAP Architecture.
+- https://www.socialprotection.go.ke
+- Children Act 2022
+- Desk Review
+
+
+---
+
+
+
+# Source: State_Department_for_Special_Programmes___Service_Delivery.md
+
+# STATE DEPARTMENT FOR SPECIAL PROGRAMMES – Service Delivery
+
+## Cover Page
+- **Ministry/Department/Agency (MDA):** Ministry of Labour and Social Protection
+- **Department:** State Department for Special Programmes
+- **Process Name:** Social Protection & Beneficiary Management
+- **Document Version:** 2.2
+- **Date:** 2026-02-25
+- **Classification:** Official
+
+---
+
+## Executive Summary
+The State Department for Special Programmes is responsible for social protection interventions targeting vulnerable populations. This includes safety net programmes, emergency relief, and beneficiary support. The current process is heavily manual, leading to identification delays and disbursement risks. The transition to the Kenya DSAP Architecture aims to establish a real-time, biometric-linked social registry.
+
+---
+
+## 1. AS-IS Process Flowchart (BPMN 2.0)
+*Current State visualization (Manual Special Programmes Delivery).*
+
+
+
+![Process Flow](temp_images/2f384e1339bab0a8d44e2b3735a2d11a.png)
+
+
+
+---
+
+## Process Overview
+### Process Name
+End-to-End Special Programmes Delivery (Registration to Assistance)
+
+### Service Category
+- G2C (Government to Citizen)
+
+### Scope
+- **In Scope:** Beneficiary identification, registration, validation, approval, and assistance delivery.
+- **Out of Scope:** Long-term policy formulation.
+
+### Triggers
+- Citizen seeking inclusion or government identification of vulnerable households.
+
+### End States
+- **Successful:** Assistance delivered; Records archived.
+
+---
+
+## 2. TO-BE Process Flowchart (BPMN 2.0)
+*Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
+
+
+
+![Process Flow](temp_images/19f6c12521d8c766997b51117afb182a.png)
+
+
+
+## Future State Process (TO-BE)
+### Narrative
+The To-Be process leverages **Maisha Namba** for instant identity and household verification. **X-Road** allows for automated means testing against other registries (e.g., NHIF, NSSF). Assistance is delivered instantly via the **Government Payment Aggregator (GPA)**, ensuring zero leakage.
+
+---
+
+## References
+- https://www.socialprotection.go.ke
+- National Social Protection Policy
+- Desk Review
+
 
 ---
 
@@ -2321,8 +2579,10 @@ Youth Internship Placement, AGPO Registration, and Film Production Licensing
 ---
 
 ## References
-- Public Service Commission Internship Policy.
-- Huduma Bridge DSAP Architecture.
+- https://www.youth.go.ke
+- Public Service Commission Internship Policy
+- Desk Review
+
 
 ---
 
@@ -2434,8 +2694,10 @@ Vital Event Registration (Births and Deaths) and Certificate Issuance
 ---
 
 ## References
-- Births and Deaths Registration Act.
-- Huduma Bridge DSAP Architecture.
+- https://www.immigration.go.ke
+- Births and Deaths Registration Act
+- Desk Review
+
 
 ---
 
@@ -2548,8 +2810,10 @@ End-to-End Refugee Status Determination and Documentation
 ---
 
 ## References
-- The Refugees Act, 2021.
-- Kenya DSAP Architecture.
+- https://www.refugees.go.ke
+- Refugees Act 2021
+- Desk Review
+
 
 ---
 

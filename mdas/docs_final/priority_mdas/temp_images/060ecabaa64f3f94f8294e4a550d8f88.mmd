@@ -1,0 +1,23 @@
+graph TD
+    Start((Start)) --> Dash["Executive Dashboard: Real-time Governance Pulse"]
+    
+    subgraph Layer3 [Interoperability - X-Road]
+        Dash --> Pull["X-Road: Auto-fetch Compliance Data from all MDAs"]
+        Pull --> Validate["API Gateway: Cross-check against GIF Standards"]
+    end
+    
+    subgraph Layer4 [Decision Support]
+        Validate --> AI["AI Engine: Calculate Real-time Governance Maturity Index"]
+        AI --> Alert["Auto-Flag Performance Breaches to President"]
+    end
+    
+    Alert --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    class Start start;
+    class End endNode;
+    class Dash userTask;
+    class Pull,Validate,AI,Alert serviceTask;

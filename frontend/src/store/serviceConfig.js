@@ -4,6 +4,7 @@ import api from '../services/api';
 export const useServiceConfigStore = defineStore('serviceConfig', {
   state: () => ({
     services: [],
+    families: [],
     catalogueSummary: null,
     loadingSummary: false,
   }),
@@ -53,6 +54,14 @@ export const useServiceConfigStore = defineStore('serviceConfig', {
         this.services = response.data;
       } catch (error) {
         console.error('Failed to fetch Service Configurations:', error);
+      }
+    },
+    async fetchFamilies() {
+      try {
+        const response = await api.get('/service-families/');
+        this.families = response.data;
+      } catch (error) {
+        console.error('Failed to fetch Service Families:', error);
       }
     },
     async createService(serviceData) {

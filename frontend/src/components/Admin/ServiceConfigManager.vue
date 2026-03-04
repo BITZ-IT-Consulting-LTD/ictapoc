@@ -23,22 +23,22 @@
           <i v-if="searchQuery" @click="searchQuery = ''" class="bi bi-x-circle-fill toolbar__clear-icon"></i>
         </div>
 
-        <!-- Domain Filter -->
+        <!-- Family Filter -->
         <div class="toolbar__filter-group">
-          <i class="bi bi-diagram-2 toolbar__filter-icon"></i>
-          <input type="text" v-model="domainSearchLocal" placeholder="Filter by Domain..."
-            @focus="showDomainFilterDropdown = true" @blur="setTimeout(() => showDomainFilterDropdown = false, 200)"
+          <i class="bi bi-diagram-3-fill toolbar__filter-icon"></i>
+          <input type="text" v-model="familySearchLocal" placeholder="Filter by Family..."
+            @focus="showFamilyFilterDropdown = true" @blur="setTimeout(() => showFamilyFilterDropdown = false, 200)"
             class="toolbar__filter-input toolbar__filter-input--with-arrow">
           <i class="bi bi-chevron-down toolbar__filter-arrow"
-            :class="{ 'toolbar__filter-arrow--open': showDomainFilterDropdown }"></i>
-          <i v-if="domainFilter" @click="selectDomainFilter('')"
+            :class="{ 'toolbar__filter-arrow--open': showFamilyFilterDropdown }"></i>
+          <i v-if="familyFilter" @click="selectFamilyFilter('')"
             class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
 
           <transition name="dropdown">
-            <div v-if="showDomainFilterDropdown" class="dropdown-menu">
-              <div @click="selectDomainFilter('')" class="dropdown-item dropdown-item--header">All Domains</div>
-              <div v-for="d in filteredDomains" :key="d" @click="selectDomainFilter(d)" class="dropdown-item">
-                {{ d }}
+            <div v-if="showFamilyFilterDropdown" class="dropdown-menu">
+              <div @click="selectFamilyFilter('')" class="dropdown-item dropdown-item--header">All Families</div>
+              <div v-for="f in filteredFamiliesList" :key="f" @click="selectFamilyFilter(f)" class="dropdown-item">
+                {{ f }}
               </div>
             </div>
           </transition>
@@ -126,9 +126,9 @@
         <span class="filter-chip__value">{{ searchQuery }}</span>
         <i class="bi bi-x"></i>
       </div>
-      <div v-if="domainFilter" :key="'d-' + domainFilter" class="filter-chip" @click="selectDomainFilter('')">
-        <span class="filter-chip__label">Domain:</span>
-        <span class="filter-chip__value">{{ domainFilter }}</span>
+      <div v-if="familyFilter" :key="'f-' + familyFilter" class="filter-chip" @click="selectFamilyFilter('')">
+        <span class="filter-chip__label">Family:</span>
+        <span class="filter-chip__value">{{ familyFilter }}</span>
         <i class="bi bi-x"></i>
       </div>
       <div v-if="mdaFilter" :key="'m-' + mdaFilter" class="filter-chip" @click="selectMdaFilter('')">
@@ -157,6 +157,7 @@
               <th class="table__header-cell table__header-cell--with-left-padding">Registry Code</th>
               <th class="table__header-cell">Official Service Name</th>
               <th class="table__header-cell">Institutional Owner (MDA)</th>
+              <th class="table__header-cell">Strategic Family</th>
               <th class="table__header-cell table__header-cell--align-right table__header-cell--with-right-padding">
                 Management</th>
             </tr>
@@ -174,6 +175,13 @@
                   <i class="bi bi-building table__mda-icon"></i> {{ getMdaName(service.mda) }}
                 </div>
               </td>
+              <td class="table__cell">
+                <span v-if="service.service_family_details" class="badge"
+                  style="background: var(--bg-page); color: var(--text-main); border: 1px solid var(--border-color); font-size: 10px; font-weight: 800; text-transform: uppercase;">
+                  <i class="bi bi-diagram-2 me-1"></i> {{ service.service_family_details.name }}
+                </span>
+                <span v-else class="u-text-muted text-[10px] u-italic">Uncategorized</span>
+              </td>
               <td class="table__cell table__cell--align-right table__cell--with-right-padding">
                 <div class="table__actions">
                   <button @click="openEditModal(service)" class="button button--secondary button--small">
@@ -186,7 +194,7 @@
               </td>
             </tr>
             <tr v-if="filteredServices.length === 0">
-              <td colspan="4" class="table__cell u-text-center u-p-12 u-text-muted" style="font-style: italic">
+              <td colspan="5" class="table__cell u-text-center u-p-12 u-text-muted" style="font-style: italic">
                 No services found matching your criteria
               </td>
             </tr>
@@ -327,6 +335,20 @@
                         Mapping a service to an MDA ensures proper data sovereignty and access control.
                       </div>
                     </div>
+                    <div class="form__group md:col-span-2">
+                      <label class="form__label">
+                        <i class="bi bi-diagram-2-fill me-1"></i>Service Strategic Family
+                      </label>
+                      <select v-model="editForm.service_family" class="form__select">
+                        <option :value="null">Uncategorized (Independent Service)</option>
+                        <option v-for="fam in families" :key="fam.id" :value="fam.id">
+                          {{ fam.name }}
+                        </option>
+                      </select>
+                      <p class="text-xs text-muted mt-1">
+                        <i class="bi bi-info-circle me-1"></i>Strategic clustering for shared workflows
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -402,29 +424,30 @@
 
   const auditStats = computed(() => serviceConfigStore.catalogueSummary);
   const services = computed(() => serviceConfigStore.services);
+  const families = computed(() => serviceConfigStore.families);
   const mdas = computed(() => mdaStore.mdas);
   const searchQuery = ref('');
   const mdaFilter = ref('');
-  const domainFilter = ref('');
+  const familyFilter = ref('');
   const categoryFilter = ref('');
   const lifeEventFilter = ref('');
 
   const mdaFilterSearchLocal = ref('');
-  const domainSearchLocal = ref('');
+  const familySearchLocal = ref('');
   const categorySearchLocal = ref('');
   const lifeEventSearchLocal = ref('');
 
   const showMdaFilterDropdown = ref(false);
-  const showDomainFilterDropdown = ref(false);
+  const showFamilyFilterDropdown = ref(false);
   const showCategoryFilterDropdown = ref(false);
   const showLifeEventFilterDropdown = ref(false);
 
   const currentConfigTab = ref('identity'); // Tab state for modal
 
-  const domainsList = computed(() => {
+  const familiesSet = computed(() => {
     const list = new Set();
     services.value.forEach(s => {
-      if (s.category_details?.domain?.name) list.add(s.category_details.domain.name);
+      if (s.service_family_details?.name) list.add(s.service_family_details.name);
     });
     return [...list].sort();
   });
@@ -451,10 +474,10 @@
     return mdas.value.filter(m => m.name.toLowerCase().includes(q));
   });
 
-  const filteredDomains = computed(() => {
-    if (!domainSearchLocal.value) return domainsList.value;
-    const q = domainSearchLocal.value.toLowerCase();
-    return domainsList.value.filter(d => d.toLowerCase().includes(q));
+  const filteredFamiliesList = computed(() => {
+    if (!familySearchLocal.value) return familiesSet.value;
+    const q = familySearchLocal.value.toLowerCase();
+    return familiesSet.value.filter(d => d.toLowerCase().includes(q));
   });
 
   const filteredCategories = computed(() => {
@@ -480,10 +503,10 @@
     showMdaFilterDropdown.value = false;
   };
 
-  const selectDomainFilter = (val) => {
-    domainFilter.value = val;
-    domainSearchLocal.value = val;
-    showDomainFilterDropdown.value = false;
+  const selectFamilyFilter = (val) => {
+    familyFilter.value = val;
+    familySearchLocal.value = val;
+    showFamilyFilterDropdown.value = false;
   };
 
   const selectCategoryFilter = (val) => {
@@ -505,8 +528,8 @@
       result = result.filter(s => s.mda === Number(mdaFilter.value));
     }
 
-    if (domainFilter.value) {
-      result = result.filter(s => s.category_details?.domain?.name === domainFilter.value);
+    if (familyFilter.value) {
+      result = result.filter(s => s.service_family_details?.name === familyFilter.value);
     }
 
     if (categoryFilter.value) {
@@ -542,11 +565,13 @@
     service_code: '',
     service_name: '',
     mda: null,
+    service_family: null,
     config: { rules: { schema: { properties: {}, required: [] } } },
   });
 
   onMounted(() => {
     serviceConfigStore.fetchServices();
+    serviceConfigStore.fetchFamilies();
     mdaStore.fetchMdas();
     serviceConfigStore.fetchCatalogueSummary();
   });
@@ -554,18 +579,18 @@
   const resetFilters = () => {
     searchQuery.value = '';
     mdaFilter.value = '';
-    domainFilter.value = '';
+    familyFilter.value = '';
     categoryFilter.value = '';
     lifeEventFilter.value = '';
 
     mdaFilterSearchLocal.value = '';
-    domainSearchLocal.value = '';
+    familySearchLocal.value = '';
     categorySearchLocal.value = '';
     lifeEventSearchLocal.value = '';
   };
 
   const isAnyFilterActive = computed(() => {
-    return searchQuery.value || mdaFilter.value || domainFilter.value || categoryFilter.value || lifeEventFilter.value;
+    return searchQuery.value || mdaFilter.value || familyFilter.value || categoryFilter.value || lifeEventFilter.value;
   });
 
   const getMdaName = (mdaId) => {
@@ -602,6 +627,12 @@
   const openEditModal = (service) => {
     // Deep copy to avoid reactive mutations outside of the store
     editForm.value = JSON.parse(JSON.stringify(service));
+
+    // Ensure service_family is a flat ID for the select input
+    if (service.service_family_details) {
+      editForm.value.service_family = service.service_family_details.id;
+    }
+
     if (!editForm.value.config || !editForm.value.config.rules || !editForm.value.config.rules.schema) {
       editForm.value.config = { rules: { schema: { properties: {}, required: [] } } };
     }

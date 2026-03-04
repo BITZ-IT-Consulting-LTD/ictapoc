@@ -3,7 +3,7 @@
       <header class="page__header u-mb-8">
          <div class="page__title-group">
             <h1 class="page__title">Whole-of-Government Service Catalogue</h1>
-            <p class="page__subtitle">Business Process → Services → Systems → Actors Mapping</p>
+            <p class="page__subtitle">Service Family → Service Category → Services → Systems → Actors Mapping</p>
          </div>
          <div class="page__actions">
             <button @click="fetchMatrix" class="button button--secondary button--small button--pill">
@@ -44,10 +44,10 @@
                   <i v-if="searchQuery" @click="searchQuery = ''" class="bi bi-x-circle-fill toolbar__clear-icon"></i>
                </div>
 
-               <!-- Searchable Domain Filter -->
+               <!-- Searchable Family Filter -->
                <div class="toolbar__filter-group">
-                  <i class="bi bi-diagram-2 toolbar__filter-icon"></i>
-                  <input type="text" v-model="domainSearchLocal" placeholder="Filter by Domain..."
+                  <i class="bi bi-diagram-3 toolbar__filter-icon"></i>
+                  <input type="text" v-model="domainSearchLocal" placeholder="Filter by Family..."
                      @focus="showDomainDropdown = true" @blur="setTimeout(() => showDomainDropdown = false, 200)"
                      class="toolbar__filter-input toolbar__filter-input--with-arrow">
                   <i class="bi bi-chevron-down toolbar__filter-arrow"
@@ -57,7 +57,7 @@
 
                   <transition name="dropdown">
                      <div v-if="showDomainDropdown" class="dropdown-menu">
-                        <div @click="selectDomain('')" class="dropdown-item dropdown-item--header">All Domains</div>
+                        <div @click="selectDomain('')" class="dropdown-item dropdown-item--header">All Families</div>
                         <div v-for="d in filteredDomains" :key="d" @click="selectDomain(d)" class="dropdown-item">
                            {{ d }}
                         </div>
@@ -146,7 +146,7 @@
                <i class="bi bi-x"></i>
             </div>
             <div v-if="selectedDomain" :key="'d-' + selectedDomain" class="filter-chip" @click="selectDomain('')">
-               <span class="filter-chip__label">Domain:</span>
+               <span class="filter-chip__label">Family:</span>
                <span class="filter-chip__value">{{ selectedDomain }}</span>
                <i class="bi bi-x"></i>
             </div>
@@ -176,17 +176,17 @@
                      style="width: 0.5rem; height: 2rem; background: var(--color-primary);"></span>
                   {{ domain.domain_name }}
                </h3>
-               <span class="table__code-badge">Domain</span>
+               <span class="table__code-badge">Service Family</span>
             </header>
 
             <div class="u-p-6">
                <div v-for="process in domain.processes" :key="process.process_name" class="u-mb-8 last:u-mb-0">
                   <div class="u-mb-4">
                      <h4 class="u-flex u-items-center u-gap-2 u-text-primary u-font-bold">
-                        <i class="bi bi-diagram-3"></i>
+                        <i class="bi bi-tags"></i>
                         {{ process.process_name }}
                      </h4>
-                     <p class="u-text-xs u-text-muted u-ml-7">Business Process</p>
+                     <p class="u-text-xs u-text-muted u-ml-7">Service Category</p>
                   </div>
 
                   <div class="table-container u-ml-7 u-border u-rounded">

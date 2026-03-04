@@ -164,5 +164,6 @@ graph TD
 ---
 
 ## References
-- The Micro and Small Enterprises Act.
-- Huduma Bridge DSAP Architecture.
+- https://www.msme.go.ke
+- Micro and Small Enterprises Act
+- Desk Review

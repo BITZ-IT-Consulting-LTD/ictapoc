@@ -24,7 +24,8 @@ from .models import (
     ServiceDomain, ServiceCategory, InterDepartmentalMemo, GovernmentFile, 
     OfficialLetter, CorrespondenceAction, DesktopReview,
     PaymentProvider, PaymentTransaction, RevenueSplit,
-    ConsentRecord, DataPurpose, ConsentAccessLog, RegistryAdapter, RegistryEndpoint
+    ConsentRecord, DataPurpose, ConsentAccessLog, RegistryAdapter, RegistryEndpoint,
+    ServiceFamily
 )
 from .serializers import (
     ServiceRequestSerializer, ServiceConfigSerializer, WorkflowStepSerializer, 
@@ -34,7 +35,7 @@ from .serializers import (
     OfficialLetterSerializer, CorrespondenceActionSerializer,
     DesktopReviewSerializer, PaymentProviderSerializer, PaymentTransactionSerializer,
     ConsentRecordSerializer, DataPurposeSerializer, ConsentAccessLogSerializer,
-    RegistryAdapterSerializer, RegistryEndpointSerializer
+    RegistryAdapterSerializer, RegistryEndpointSerializer, ServiceFamilySerializer
 )
 from .services import PaymentService, ConsentService
 from .permissions import IsAdminOrAuthenticatedReadOnly, IsParticipantOrAdmin, AuditLogPermission, IsSystemAdmin, IsClaimAuthorized
@@ -211,6 +212,11 @@ class ServiceCategoryViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ServiceCategorySerializer
     permission_classes = [permissions.AllowAny]
 
+class ServiceFamilyViewSet(viewsets.ModelViewSet):
+    queryset = ServiceFamily.objects.all()
+    serializer_class = ServiceFamilySerializer
+    permission_classes = [IsAdminOrAuthenticatedReadOnly]
+
 class ServiceCatalogViewSet(viewsets.ReadOnlyModelViewSet):
     """
     Public facing API for the Service Catalogue.
@@ -247,7 +253,11 @@ class ServiceCatalogViewSet(viewsets.ReadOnlyModelViewSet):
                         "actors": service.associated_actors,
                         "mda": service.mda.name,
                         "mda_code": service.mda.code if service.mda.code else "",
-                        "service_type": service.service_type,
+                        "service_family": service.service_family.name if service.service_family else "Uncategorized",
+                        "service_family_details": {
+                            "id": service.service_family.id,
+                            "name": service.service_family.name
+                        } if service.service_family else None,
                         "service_category": category.name,
                         "life_event_group": service.life_event_group,
                         "maturity": service.digitization_level,
@@ -269,6 +279,14 @@ class ServiceConfigViewSet(viewsets.ModelViewSet):
     queryset = ServiceConfig.objects.all()
     serializer_class = ServiceConfigSerializer
     permission_classes = [IsAdminOrAuthenticatedReadOnly]
+    filterset_fields = ['service_family', 'mda', 'service_status']
+
+    def get_queryset(self):
+        queryset = ServiceConfig.objects.exclude(service_status='deprecated')
+        family_id = self.request.query_params.get('service_family')
+        if family_id:
+            queryset = queryset.filter(service_family_id=family_id)
+        return queryset
 
 class WorkflowStepViewSet(viewsets.ModelViewSet):
     queryset = WorkflowStep.objects.all()

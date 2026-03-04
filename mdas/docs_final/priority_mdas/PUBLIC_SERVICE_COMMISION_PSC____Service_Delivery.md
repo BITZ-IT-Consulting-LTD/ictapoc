@@ -163,5 +163,6 @@ graph TD
 ---
 
 ## References
-- Executive Order No. 1 of 2023.
-- Huduma Bridge DSAP Architecture.
+- https://www.headofpublicservice.go.ke
+- Executive Order No. 1 of 2023
+- Desk Review

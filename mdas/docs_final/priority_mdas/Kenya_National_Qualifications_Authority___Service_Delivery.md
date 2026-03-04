@@ -5,7 +5,7 @@
 - **Authority:** Kenya National Qualifications Authority (KNQA)
 - **Process Name:** Qualification Validation and Recognition of Prior Learning (RPL)
 - **Document Version:** 2.1
-- **Date:** 2026-02-24
+- **Date:** 2026-03-04
 - **Classification:** Official
 
 ---
@@ -89,14 +89,14 @@ End-to-End Qualification Validation and Recognition of Prior Learning
 ---
 
 ## Detailed Process (AS-IS)
-| Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
-| 1 | Applicant | Submits application form and scans of certificates/transcripts. | Manual/Portal | |
-| 2 | KNQA Clerk | Manually checks for completeness and confirms the payment of the fee. | Manual | |
-| 3 | Technical Officer | Contacts issuing institutions (KNEC, Universities) to authenticate certificates. | Email/Letter | High latency step. |
-| 4 | Technical Officer | Maps the qualification against the KNQF levels. | Manual/Excel | |
-| 5 | Committee | Reviews the mapping and approves the equivalency. | Committee Meeting | |
-| 6 | KNQA Admin | Manually generates the validation letter and updates the registry. | Standalone Registry | |
+| Step | Role              | Action                                                                           | Tool/System         | Notes              |
+| ---- | ----------------- | -------------------------------------------------------------------------------- | ------------------- | ------------------ |
+| 1    | Applicant         | Submits application form and scans of certificates/transcripts.                  | Manual/Portal       |                    |
+| 2    | KNQA Clerk        | Manually checks for completeness and confirms the payment of the fee.            | Manual              |                    |
+| 3    | Technical Officer | Contacts issuing institutions (KNEC, Universities) to authenticate certificates. | Email/Letter        | High latency step. |
+| 4    | Technical Officer | Maps the qualification against the KNQF levels.                                  | Manual/Excel        |                    |
+| 5    | Committee         | Reviews the mapping and approves the equivalency.                                | Committee Meeting   |                    |
+| 6    | KNQA Admin        | Manually generates the validation letter and updates the registry.               | Standalone Registry |                    |
 
 ---
 
@@ -117,67 +117,107 @@ End-to-End Qualification Validation and Recognition of Prior Learning
 *Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
 
 ```mermaid
-graph TD
-    Start((Start)) --> Portal["Applicant Logs in via Maisha Namba (SSO)"]
-    
-    subgraph Layer2 [Trust Hub & Workflow]
-        Portal --> Consent["Consent Manager: Access Education Data?"]
-        Consent --> Task["Workflow Engine: Initiate Validation Request"]
-    end
-    
-    subgraph Layer3 [Huduma Bridge / X-Road]
-        Task --> QueryKNEC["X-Road: Auto-fetch results from KNEC"]
-        Task --> QueryUni["X-Road: Auto-fetch results from Commission for Uni Education"]
-        QueryKNEC --> PreCheck["AI-based Pre-Check for Fraud & Mapping"]
-        QueryUni --> PreCheck
-    end
-    
-    subgraph Layer4 [Authoritative Registry]
-        PreCheck --> RegCheck{"Found in National Registry?"}
-        RegCheck -- "Yes" --> Return["Return Existing Digital Certificate"]
-        RegCheck -- "No" --> Comm["Officer Review & KNQF Mapping"]
-    end
-    
-    subgraph Output [Issuance]
-        Comm --> OutputGen["Generate Verifiable Digital Credential (QR)"]
-        Return --> OutputGen
-        OutputGen --> Sync["Sync to National Qualification Registry"]
-    end
-    
-    Sync --> End((End))
+flowchart TD
+    %% Events
+    Start((Start))
+    EndProcess((End Process))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    subgraph Applicant [Applicant]
+        direction LR
+        SubmitReq[Submit validation request]
+        NotifyApp[Notify applicant]
+    end
+
+    subgraph KNQASystem [KNQA System]
+        direction TB
+        RetrieveCreds[Retrieve credentials from registries]
+        VerifyAuth[Verify authenticity]
+        AuthGateway{Credential verified?}
+        MapKNQF[Map qualification to KNQF]
+        RiskAssess[Perform risk assessment]
+        RiskGateway{Risk level?}
+        GenLetter[Generate validation letter]
+        UpdateReg[Update validation registry]
+    end
+
+    subgraph TechnicalOfficer [Technical Officer]
+        direction TB
+        OfficerReview[Officer review]
+        OfficerDecisionGateway{Approve validation?}
+    end
+
+    subgraph Committee [Committee]
+        direction TB
+        CommReview[Committee review]
+        CommDecisionGateway{Approve validation?}
+    end
+
+    %% Flow connections
+    Start --> SubmitReq
+    SubmitReq --> RetrieveCreds
+    RetrieveCreds --> VerifyAuth
+    VerifyAuth --> AuthGateway
+    
+    AuthGateway -- "No" --> NotifyApp
+    AuthGateway -- "Yes" --> MapKNQF
+    MapKNQF --> RiskAssess
+    RiskAssess --> RiskGateway
+    
+    RiskGateway -- "Low" --> GenLetter
+    RiskGateway -- "Medium" --> OfficerReview
+    RiskGateway -- "High" --> CommReview
+    
+    OfficerReview --> OfficerDecisionGateway
+    OfficerDecisionGateway -- "Yes" --> GenLetter
+    OfficerDecisionGateway -- "No" --> NotifyApp
+    
+    CommReview --> CommDecisionGateway
+    CommDecisionGateway -- "Yes" --> GenLetter
+    CommDecisionGateway -- "No" --> NotifyApp
+    
+    GenLetter --> UpdateReg
+    UpdateReg --> NotifyApp
+    NotifyApp --> EndProcess
+
+    %% Styling
+    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff;
     classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
     classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
     classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
-    class Start start;
-    class End endNode;
-    class RegCheck gateway;
-    class Portal,Consent,Comm userTask;
-    class Task,QueryKNEC,QueryUni,PreCheck,Return,OutputGen,Sync serviceTask;
+    
+    class Start startEvent;
+    class EndProcess endEvent;
+    class AuthGateway,RiskGateway,OfficerDecisionGateway,CommDecisionGateway gateway;
+    class RetrieveCreds,VerifyAuth,MapKNQF,RiskAssess,GenLetter,UpdateReg,NotifyApp serviceTask;
+    class SubmitReq,OfficerReview,CommReview userTask;
 ```
 
 ## Future State Process (TO-BE)
 ### Narrative
-**TO-BE Process: Zero-Touch Qualification Validation**
+**TO-BE Process: Automated Qualification Validation**
 
 **Design Principles:**
-- **Once-Only Principle:** The system pulls academic results directly from the **KNEC** and **CUE** (Commission for University Education) registries via **X-Road**. Applicants no longer need to upload scans of their certificates.
-- **Instant Recognition:** Recognized qualifications are cached in the **National Qualification Registry**. If an applicant asks for validation of a degree that KNQA has already mapped, the response is instantaneous.
-- **Digital Trust:** All validation letters are issued as **Verifiable Digital Credentials**, eliminating the possibility of forgery and removing the need for employers to call KNQA for verification.
+- **Once-Only Principle:** Applicants should not upload certificates if they already exist in national registries.
+- **Registry-Centric Architecture:** The system retrieves academic records directly from authoritative databases such as KNEC, accredited universities, and global credential databases.
+- **Automated Credential Verification:** The system automatically validates the certificate number, verifies the issuing institution, and confirms program accreditation.
+- **Automated Qualification Mapping:** Validated credentials are automatically mapped to the corresponding level on the Kenya National Qualifications Framework (KNQF).
+- **Risk-Based Processing:** Applications are processed based on their assessed risk level: Low-risk cases receive automatic approval, medium-risk cases are flagged for an officer review, and high-risk cases escalate to a committee review.
+- **Digital Issuance:** Upon approval, validation letters are digitally generated, featuring a QR verification code, verification ID, and an official registry entry for instantaneous third-party verification.
 
 ### Optimized Steps (Digital)
 | Step | Actor | Action | System |
 |---|---|---|---|
-| 1 | Applicant | Logs into eCitizen and selects "Qualification Validation." | eCitizen / SSO |
-| 2 | System | Fetches the applicant's KNEC/KCSE data and University data via X-Road APIs. | KeSEL / X-Road |
-| 3 | System | Automatically matches the data against the KNQF level framework. | AI Rules Engine |
-| 4 | Technical Officer | Only reviews "Exceptions" where the mapping is ambiguous or from a new foreign institution. | Officer Workbench |
-| 5 | System | Generates a digital validation certificate with a verifiable QR code and pushes it to the citizen's digital wallet. | Output Generator |
+| 1 | Applicant | Submits a validation request via the digital portal. Does not upload certificates if records exist in registries. | eCitizen / Digital Portal |
+| 2 | KNQA System | Retrieves credentials automatically from national and international education registries. | Integration Hub / KeSEL |
+| 3 | KNQA System | Performs automated authenticity verification (checks number, institution, accreditation) and maps to KNQF. | Workflow / Rules Engine |
+| 4 | KNQA System | Conducts a risk assessment to determine the approval routing (Low, Medium, or High risk). | Risk Assessment Engine |
+| 5 | Technical Officer / Committee | Handles exceptions based on risk. Officer reviews medium-risk cases; the Committee reviews high-risk cases. | KNQA Workbench |
+| 6 | KNQA System | Generates a digitally signed validation letter, updates the central validation registry, and notifies the applicant. | Digital Registry / Output Generator |
 
 ---
 
 ## References
-- KNQF Act.
-- Huduma Bridge DSAP Architecture.
+- https://www.knqa.go.ke
+- Kenya National Qualifications Framework (KNQF) Act
+- Desk Review

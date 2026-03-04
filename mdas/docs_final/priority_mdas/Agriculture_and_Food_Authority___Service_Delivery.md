@@ -4,7 +4,7 @@
 - **Ministry/Department/Agency (MDA):** Agriculture and Food Authority
 - **Process Name:** Farmer Registration & Licensing
 - **Document Version:** 2.1
-- **Date:** 2026-02-24
+- **Date:** 2026-03-04
 - **Classification:** Official
 
 ---
@@ -18,42 +18,60 @@ The Agriculture and Food Authority (AFA) regulates, develops, and promotes sched
 *Current State visualization (End-to-End AFA Services based on Deep Dive).*
 
 ```mermaid
-graph TD
-    Start((Start)) --> CompleteForm["Complete Application Form"]
-    
-    subgraph Applicant [Trader / Farmer]
-        CompleteForm --> AttachBRS["Attach Business Registration"]
-        AttachBRS --> AttachPremises["Attach Premises Documents"]
-        AttachPremises --> Submit["Submit Application"]
-    end
-    
-    subgraph AFA [AFA Directorates]
-        Submit --> ReviewDocs["Review Documentation"]
-        ReviewDocs --> AssessPrem["Assess Premises (Physical Inspection)"]
-        AssessPrem --> VerifyCap["Verify Capacity"]
-        VerifyCap --> Decision{"Decision?"}
-        
-        Decision -- "Info" --> RequestInfo["Request More Info"]
-        RequestInfo --> CompleteForm
-        
-        Decision -- "Reject" --> Reject["Reject Application"]
-        
-        Decision -- "Approve" --> GenLicense["Generate License / Permit"]
-        GenLicense --> Notify["Notify Applicant"]
-        Notify --> UpdateReg["Update Manual Registry"]
-    end
-    
-    UpdateReg --> End((End))
-    Reject --> End
+flowchart TD
+    %% Events
+    Start((Start))
+    EndApprove((End - Approved))
+    EndReject((End - Rejected))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    subgraph Applicant [Applicant]
+        direction LR
+        CompleteApp[Complete App] --> AttachDocs[Attach Docs]
+        AttachDocs --> SubmitApp[Submit]
+        SubmitApp --> PayFee[Pay Fee]
+        ProvideMoreInfo[Provide Info]
+    end
+
+    subgraph AFA [AFA Workflow]
+        direction TB
+        LogApp[Log Application] --> ReviewDocs[Review Docs]
+        ReviewDocs --> DocsGateway{Complete?}
+        
+        DocsGateway -- "No" --> ProvideMoreInfo
+        ProvideMoreInfo --> ReviewDocs
+        
+        DocsGateway -- "Yes" --> VerifyBRS[Verify BRS]
+        VerifyBRS --> VerifyCompliance[Verify Compliance]
+        VerifyCompliance --> ScheduleInsp[Schedule Inspection]
+        ScheduleInsp --> PhysInsp[Physical Inspection]
+        PhysInsp --> SubmitInspReport[Submit Report]
+        SubmitInspReport --> OfficerRec[Officer Rec]
+        OfficerRec --> DirApproval[Committee Approval]
+        DirApproval --> ApprovalGateway{Decision?}
+        
+        ApprovalGateway -- "Approved" --> GenLicense[Generate License]
+        GenLicense --> NotifyApp[Notify Applicant]
+        NotifyApp --> UpdateReg[Update Registry]
+        
+        ApprovalGateway -- "Rejected" --> NotifyReject[Notify Rejection]
+    end
+
+    %% Flow connections between subgraphs
+    Start --> CompleteApp
+    PayFee --> LogApp
+    UpdateReg --> EndApprove
+    NotifyReject --> EndReject
+
+    %% Styling
+    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff;
     classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
     classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
-    class Start start;
-    class End endNode;
-    class Decision gateway;
-    class CompleteForm,AttachBRS,AttachPremises,Submit,ReviewDocs,AssessPrem,VerifyCap,RequestInfo,Reject,GenLicense,Notify,UpdateReg userTask;
+    
+    class Start startEvent;
+    class EndApprove,EndReject endEvent;
+    class DocsGateway,ApprovalGateway gateway;
+    class CompleteApp,AttachDocs,SubmitApp,PayFee,ProvideMoreInfo,LogApp,ReviewDocs,VerifyBRS,VerifyCompliance,ScheduleInsp,PhysInsp,SubmitInspReport,OfficerRec,DirApproval,GenLicense,NotifyApp,UpdateReg,NotifyReject userTask;
 ```
 
 ---
@@ -83,11 +101,12 @@ End-to-End Farmer Registration, Export Permits, and Trading Licenses
 ## Detailed Process (AS-IS)
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
-| 1 | Applicant | Fills application forms for licenses or permits and attaches paper copies of BRS certificates and land documents. | Paper/Portal | High manual effort. |
-| 2 | AFA Clerk | Receives and logs the application, assigning a manual reference number. | Manual Registry | |
-| 3 | AFA Inspector | Travels to physically assess the applicant's premises and verify operational capacity. | Manual | Major bottleneck. |
-| 4 | AFA Committee | Reviews the inspection report and documentation to make a decision (Approve/Reject/Info). | Committee | |
-| 5 | AFA Admin | If approved, manually generates the license/permit and notifies the applicant. | AFA IMIS | |
+| 1 | Applicant | Completes application, attaches paper copies of required documents, submits application, and pays the application fee. | Paper/Bank/Portal | High manual effort. |
+| 2 | AFA Clerk | Receives and logs the application, and reviews documentation for completeness. | Manual Registry | May request more info if incomplete. |
+| 3 | AFA Officer | Verifies business registration and compliance history manually. | Manual | Time-consuming verification process. |
+| 4 | AFA Inspector | Schedules inspection, conducts physical premises inspection, and submits inspection report. | Manual | Major bottleneck in the process. |
+| 5 | AFA Committee | Reviews the officer's recommendation and makes a final approval or rejection decision. | Committee | |
+| 6 | AFA Admin | Generates license if approved, notifies the applicant of the decision, and updates the manual registry. | AFA IMIS / Manual | |
 
 ---
 
@@ -98,7 +117,7 @@ End-to-End Farmer Registration, Export Permits, and Trading Licenses
 - **Siloed Registries:** KIAMIS (farmers), AFA IMIS (licenses), and Kentrade (exports) are not fully integrated.
 
 ### Opportunities
-- **Automated Validation:** Use KeSEL (X-Road) to validate BRS (ownership) and KRA (tax compliance) instantly.
+- **Automated Validation:** Use KeSEL to validate BRS (ownership) and KRA (tax compliance) instantly.
 - **Risk-Based Inspections:** Auto-approve renewals for low-risk applicants without physical visits.
 - **Integrated Payments:** Shift all cess and license fees to the Government Payment Aggregator (GPA).
 
@@ -108,46 +127,82 @@ End-to-End Farmer Registration, Export Permits, and Trading Licenses
 *Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
 
 ```mermaid
-graph TD
-    Start((Start)) --> Portal["Applicant accesses eCitizen Portal"]
-    
-    subgraph Access [Channels]
-        Portal --> Select["Selects License/Permit Type"]
-    end
-    
-    subgraph Interoperability [X-Road & Registries]
-        Select --> QueryBRS["X-Road: Validate Company via BRS"]
-        QueryBRS --> QueryKRA["X-Road: Validate Tax via KRA iTax"]
-        QueryKRA --> AutoPop["Auto-populate Digital Form"]
-    end
-    
-    subgraph Payments [Govt Payment Aggregator]
-        AutoPop --> Pay["Initiate Payment via GPA"]
-    end
-    
-    subgraph CorePlatform [Workflow Engine & AFA]
-        Pay --> Rules{"Rules Engine"}
-        Rules -- "Low Risk/Renewal" --> AutoApprove["Auto-Approve Application"]
-        Rules -- "High Risk" --> Officer["Route to Officer Workbench for Review"]
-        Officer --> Approve["Officer Approves"]
-        
-        AutoApprove --> Output["Generate Verifiable Digital License (QR)"]
-        Approve --> Output
-        Output --> Sync["Sync data to KIAMIS & Kentrade"]
-    end
-    
-    Sync --> End((End))
+flowchart TD
+    %% Events
+    Start((Start))
+    EndApprove((End - Issued))
+    EndReject((End - Rejected))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    subgraph Applicant [Applicant]
+        direction LR
+        Access[Access eCitizen] --> SelectType[Select License]
+        SelectType --> ConfirmData[Confirm Data]
+        ConfirmData --> MakePayment[Digital Payment]
+    end
+
+    subgraph IntegrationLayer [System Integration]
+        direction LR
+        ValBRS[Validate BRS] --> ValKRA[Validate KRA]
+        ValKRA --> GetKIAMIS[Get KIAMIS Data]
+        GetKIAMIS --> AutoPop[Auto-populate]
+    end
+
+    subgraph WorkflowEngine [Workflow Engine]
+        direction TB
+        RunRisk[Run Risk Assessment] --> RiskGateway{Risk Level?}
+        OfficerReview[Officer Review] --> ReviewGateway{Decision?}
+    end
+
+    subgraph InspectionWorkflow [Inspection]
+        direction TB
+        ScheduleInsp[Schedule Insp] --> UploadReport[Upload Report]
+        UploadReport --> ReviewInspResult[Review Result]
+        ReviewInspResult --> InspDecisionGateway{Approved?}
+    end
+
+    subgraph LicenseIssuance [Issuance]
+        direction TB
+        GenDigitalLicense[Gen Digital License] --> RegDigitalRegistry[Register License]
+        RegDigitalRegistry --> NotifyApplicantApprove[Notify Applicant]
+        NotifyApplicantApprove --> SyncKentrade[Sync Kentrade]
+    end
+
+    %% Flow connections
+    Start --> Access
+    MakePayment --> ValBRS
+    AutoPop --> RunRisk
+    
+    RiskGateway -- "Low" --> GenDigitalLicense
+    RiskGateway -- "Medium" --> OfficerReview
+    RiskGateway -- "High" --> ScheduleInsp
+    
+    %% Officer Review Path
+    ReviewGateway -- "Approved" --> GenDigitalLicense
+    ReviewGateway -- "Needs Insp" --> ScheduleInsp
+    ReviewGateway -- "Rejected" --> NotifyReject[Notify Rejection]
+    
+    %% Inspection Path
+    InspDecisionGateway -- "Yes" --> GenDigitalLicense
+    InspDecisionGateway -- "No" --> NotifyReject
+    
+    %% License Issuance Path
+    SyncKentrade --> EndApprove
+    
+    %% Rejection Path
+    NotifyReject --> EndReject
+
+    %% Styling
+    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff;
     classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
     classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
     classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
-    class Start start;
-    class End endNode;
-    class Rules gateway;
-    class Portal,Select,Officer,Approve userTask;
-    class QueryBRS,QueryKRA,AutoPop,Pay,AutoApprove,Output,Sync serviceTask;
+    
+    class Start startEvent;
+    class EndApprove,EndReject endEvent;
+    class RiskGateway,ReviewGateway,InspDecisionGateway gateway;
+    class ValBRS,ValKRA,GetKIAMIS,AutoPop,RunRisk,GenDigitalLicense,RegDigitalRegistry,NotifyApplicantApprove,SyncKentrade,NotifyReject serviceTask;
+    class Access,SelectType,ConfirmData,MakePayment,OfficerReview,ScheduleInsp,UploadReport,ReviewInspResult userTask;
 ```
 
 ## Future State Process (TO-BE)
@@ -155,21 +210,24 @@ graph TD
 **TO-BE Process: Automated Licensing via Huduma Bridge**
 
 **Design Principles:**
+- **Registry-Centric Architecture:** KIAMIS serves as the primary registry for farmer profiling.
 - **Once-Only Principle:** BRS and KRA data is fetched automatically via APIs; applicants no longer upload paper certificates.
-- **Cashless & Transparent:** All payments are unified under the GPA, ensuring immediate reconciliation and split-billing where necessary.
-- **Automated Orchestration:** The Camunda workflow engine applies risk profiles to auto-approve standard renewals, reserving manual inspections only for high-risk or first-time applicants.
+- **Automated Compliance Verification:** Seamless validation via KeSEL integration eliminates manual documentation checks.
+- **Risk-Based Decision Automation:** The workflow engine applies risk profiles to auto-approve standard low-risk renewals.
+- **Exception-Based Human Review:** Manual processing and physical inspections are reserved strictly for high-risk or flagged applications.
 
 ### Optimized Steps (Digital)
 | Step | Actor | Action | System |
 |---|---|---|---|
-| 1 | Applicant | Logs into eCitizen and selects the required AFA service (e.g., Export Permit). | eCitizen Portal |
-| 2 | System | Fetches business details from BRS and tax status from KRA instantly via X-Road. | KeSEL / X-Road |
-| 3 | Applicant | Pays the required cess or license fee through unified mobile money or card options. | GPA |
-| 4 | System | Rules Engine assesses risk. If low risk (e.g., renewal), it auto-approves. If high risk, routes to an inspector. | Workflow Engine |
-| 5 | System | Generates a QR-coded digital license and pushes the approval status directly to the Kentrade Single Window System. | Output Generator |
+| 1 | Applicant | Accesses eCitizen, selects the required license type, confirms auto-populated data, and makes digital payment. | eCitizen Portal / GPA |
+| 2 | System Integration Layer | Validates business registration via BRS, checks tax compliance via KRA, retrieves farmer data from KIAMIS, and auto-populates the form. | KeSEL / BRS / KRA / KIAMIS |
+| 3 | Workflow Engine | Runs risk assessment. Low-risk applications are auto-approved. Medium-risk are routed to officer review, and high-risk trigger the inspection workflow. | Workflow Engine |
+| 4 | AFA Inspector / Officer | Handles exception-based reviews or physical inspections (schedules inspection, uploads report, reviews results). | AFA Workbench |
+| 5 | System | Generates a digital license, registers it in the digital registry, notifies the applicant, and synchronizes the approval with Kentrade. | Output Generator / Kentrade |
 
 ---
 
 ## References
-- Agriculture and Food Authority Act.
-- Kenya DSAP Architecture.
+- https://afa.go.ke
+- Agriculture and Food Authority Act
+- Desk Review

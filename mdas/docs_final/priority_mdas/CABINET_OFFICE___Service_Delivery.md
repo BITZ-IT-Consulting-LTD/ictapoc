@@ -162,5 +162,6 @@ graph TD
 ---
 
 ## References
-- Cabinet Handbook.
-- Huduma Bridge DSAP Architecture.
+- https://cabinetoffice.go.ke
+- Cabinet Handbook
+- Desk Review

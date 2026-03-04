@@ -165,5 +165,6 @@ graph TD
 ---
 
 ## References
-- Public Service Commission Internship Policy.
-- Huduma Bridge DSAP Architecture.
+- https://www.youth.go.ke
+- Public Service Commission Internship Policy
+- Desk Review

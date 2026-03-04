@@ -5,7 +5,7 @@
 - **Department:** State Department for Correctional Services
 - **Process Name:** Inmate Case Management and Rehabilitation Tracking
 - **Document Version:** 2.1
-- **Date:** 2026-02-24
+- **Date:** 2026-03-04
 - **Classification:** Official
 
 ---
@@ -19,34 +19,78 @@ The State Department for Correctional Services is responsible for the safe custo
 *Current State visualization (Inmate Admission & Records based on General Mandate).*
 
 ```mermaid
-graph TD
-    Start((Start)) --> Arrival["Inmate Arrival at Prison Facility"]
-    
-    subgraph Admission [Reception & Intake]
-        Arrival --> Warrant["Verify Court Committal Warrant (Paper)"]
-        Warrant --> Capture["Capture Personal Details & Photo"]
-        Capture --> Folder["Create Physical Inmate Case Folder"]
-    end
-    
-    subgraph Management [Daily Operations]
-        Folder --> Daily["Log Daily Attendance & Transfers"]
-        Daily --> Health["Manual Health Records Logging"]
-        Health --> Vocational["Manual Training & Skill Records"]
-    end
-    
-    subgraph Release [Discharge & Parole]
-        Vocational --> Calculate["Manual Calculation of Sentence Remission"]
-        Calculate --> Release_Process["Execute Release / Parole / Probation"]
-    end
-    
-    Release_Process --> End((End))
+flowchart TD
+    %% Events
+    Start((Start))
+    EndProcess((End - Release Executed))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    subgraph Admission [Admission Phase]
+        direction TB
+        IssueWarrant[Court issues committal warrant]
+        Escort[Police escort inmate to facility]
+        VerifyWarrant[Reception verifies court warrant]
+        VerifyID[Identity verification ID/fingerprints]
+        AssignNo[Assign prison number]
+        CreateFile[Create physical case file]
+    end
+
+    subgraph Classification [Classification]
+        direction TB
+        Classify[Security classification]
+        AssignBlock[Assign housing block/facility]
+    end
+
+    subgraph Custody [Custody Management]
+        direction TB
+        DailyTrack[Daily attendance tracking]
+        MedLogs[Medical records logging]
+        BehavLogs[Behavioral/disciplinary records]
+        VocTrack[Vocational training tracking]
+    end
+
+    subgraph Release [Release Preparation]
+        direction TB
+        CalcSent[Manual sentence calculation]
+        CalcRem[Remission calculations]
+        EligGateway{Release eligibility met?}
+        ExecRelease[Execute release/parole/probation]
+    end
+
+    %% Flow connections
+    Start --> IssueWarrant
+    IssueWarrant --> Escort
+    Escort --> VerifyWarrant
+    VerifyWarrant --> VerifyID
+    VerifyID --> AssignNo
+    AssignNo --> CreateFile
+    
+    CreateFile --> Classify
+    Classify --> AssignBlock
+    
+    AssignBlock --> DailyTrack
+    DailyTrack --> MedLogs
+    MedLogs --> BehavLogs
+    BehavLogs --> VocTrack
+    
+    VocTrack --> CalcSent
+    CalcSent --> CalcRem
+    CalcRem --> EligGateway
+    
+    EligGateway -- "No" --> DailyTrack
+    EligGateway -- "Yes" --> ExecRelease
+    
+    ExecRelease --> EndProcess
+
+    %% Styling
+    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff;
     classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    class Start start;
-    class End endNode;
-    class Arrival,Warrant,Capture,Folder,Daily,Health,Vocational,Calculate,Release_Process userTask;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    
+    class Start startEvent;
+    class EndProcess endEvent;
+    class EligGateway gateway;
+    class IssueWarrant,Escort,VerifyWarrant,VerifyID,AssignNo,CreateFile,Classify,AssignBlock,DailyTrack,MedLogs,BehavLogs,VocTrack,CalcSent,CalcRem,ExecRelease userTask;
 ```
 
 ---
@@ -76,11 +120,15 @@ End-to-End Inmate Case Management (Admission to Release)
 ## Detailed Process (AS-IS)
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
-| 1 | Reception Officer | Verifies the physical committal warrant from the court. | Physical Paper | High risk of errors. |
-| 2 | Records Officer | Fills in inmate "booking" details in a physical register. | Manual Ledger | |
-| 3 | Prison Admin | Assigns a prison number and creates a physical folder for all subsequent records. | Manual | |
-| 4 | Welfare Officer | Tracks rehabilitation and vocational progress via periodic paper reports. | Manual | |
-| 5 | Discharge Unit | Calculates release dates manually, accounting for remission and time served. | Manual/Calculator | |
+| 1 | Police | Escorts the inmate to the correctional facility. | Transport | |
+| 2 | Reception Officer | Verifies the physical committal warrant from the court. | Physical Paper | High risk of errors or forgery. |
+| 3 | Records Officer | Conducts manual identity verification (checks physical ID if available, takes ink fingerprints) and assigns a unique prison number. | Manual / Ink | |
+| 4 | Records Officer | Creates a physical inmate case folder containing booking details and court orders. | Physical Folder | |
+| 5 | Prison Administration | Performs security classification (maximum/medium/minimum) and assigns a housing block. | Manual | |
+| 6 | Prison Administration | Manages daily custody, including attendance tracking, facility transfers, and logging disciplinary issues. | Manual Ledgers | |
+| 7 | Welfare / Rehabilitation Officer | Tracks rehabilitation, vocational progress, and medical appointments via periodic paper reports. | Manual | |
+| 8 | Discharge Unit | Calculates release dates manually, accounting for sentence length, time served, and remission. | Manual/Calculator | High risk of computational errors. |
+| 9 | Discharge Unit | Verifies release eligibility and executes physical release, parole, or handover to probation services. | Manual | |
 
 ---
 
@@ -98,61 +146,121 @@ End-to-End Inmate Case Management (Admission to Release)
 ---
 
 ## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
+*Future State visualization (Kenya DSAP Architecture - Digital Justice Ecosystem).*
 
 ```mermaid
-graph TD
-    Start((Start)) --> Scan["Biometric Intake & Maisha Namba Verification"]
-    
-    subgraph Layer2 [Trust Hub & Interoperability]
-        Scan --> XRoad_Court["X-Road: Fetch Digital Warrant from Judiciary"]
-        XRoad_Court --> Validate["System: Auto-validate Sentence & Offense"]
-    end
-    
-    subgraph Layer3 [Workflow Engine]
-        Validate --> Profile["Digital Case Profile Created"]
-        Profile --> EHR["X-Road: Auto-link to Patient SHR (MOH)"]
-        EHR --> Rehab["Workflow Engine: Track Vocational/Behavioral Tasks"]
-    end
-    
-    subgraph Layer4 [Settlement & Release]
-        Rehab --> Calc["System: Real-time Sentence Expiry Calculation"]
-        Calc --> Alert["Auto-Alert Probation Unit 3 months before Release"]
-        Alert --> Release["Biometric Release & Credential Issuance"]
-    end
-    
-    Release --> End((End))
+flowchart TD
+    %% Events
+    Start((Start))
+    EndProcess((End - Released))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    subgraph Judiciary [Judiciary System]
+        direction TB
+        PushWarrant[Push digital court warrant]
+    end
+
+    subgraph AdmissionOfficer [Admission Officer]
+        direction TB
+        RecWarrant[Receive digital court warrant]
+        VerifyBio[Verify identity biometrically]
+        IDGateway{Identity verified?}
+    end
+
+    subgraph PrisonSystem [Prison System]
+        direction TB
+        CreateProfile[Create inmate digital profile]
+        AutoClassify[Perform automatic classification]
+        CalcExpiry[Calculate sentence expiry automatically]
+        SentGateway{Sentence completed?}
+        TriggerAlert[Trigger release eligibility alerts]
+        ExecRelease[Execute digital release]
+    end
+
+    subgraph WelfareOfficer [Welfare Officer]
+        direction TB
+        TrackRehab[Track rehabilitation progress]
+    end
+
+    subgraph ProbationService [Probation Service]
+        direction TB
+        NotifyProb[Notify probation services]
+    end
+
+    %% Flow connections
+    Start --> PushWarrant
+    PushWarrant --> RecWarrant
+    RecWarrant --> VerifyBio
+    VerifyBio --> IDGateway
+    
+    IDGateway -- "No" --> VerifyBio
+    IDGateway -- "Yes" --> CreateProfile
+    
+    CreateProfile --> AutoClassify
+    AutoClassify --> TrackRehab
+    AutoClassify --> CalcExpiry
+    
+    TrackRehab --> CalcExpiry
+    
+    CalcExpiry --> SentGateway
+    
+    SentGateway -- "No" --> TrackRehab
+    SentGateway -- "Yes" --> TriggerAlert
+    
+    TriggerAlert --> NotifyProb
+    TriggerAlert --> ExecRelease
+    
+    NotifyProb --> EndProcess
+    ExecRelease --> EndProcess
+
+    %% Styling
+    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff;
     classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
     classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-    class Start start;
-    class End endNode;
-    class Scan userTask;
-    class XRoad_Court,Validate,Profile,EHR,Rehab,Calc,Alert,Release serviceTask;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    
+    class Start startEvent;
+    class EndProcess endEvent;
+    class IDGateway,SentGateway gateway;
+    class PushWarrant,CreateProfile,AutoClassify,CalcExpiry,TriggerAlert,NotifyProb,ExecRelease serviceTask;
+    class RecWarrant,VerifyBio,TrackRehab userTask;
 ```
 
 ## Future State Process (TO-BE)
 ### Narrative
 **TO-BE Process: Intelligent Correctional Management**
 
-**Design Principles:**
-- **Paperless Justice:** The "Committal Warrant" becomes a digital packet signed by a Judge (NPKI) and pushed to Prisons via the **Huduma Bridge**.
-- **Continuity of Care:** Inmates' health and education records are not "Prison records" but national records (MOH/KNQA) that follow them after release, reducing recidivism.
-- **Algorithmic Sentence Tracking:** The **Workflow Engine** calculates remission and release dates automatically, providing a live countdown for every inmate.
+The To-Be process shifts from a siloed, paper-based operation to a **digital correctional management platform** fully integrated with the national justice ecosystem.
+
+**Core Systems:**
+- **National Inmate Registry:** A unified, biometric-backed database of all offenders.
+- **Prison Case Management System (PCMS):** Manages the entire lifecycle of an inmate from admission to release.
+- **Sentence Calculation Engine:** Automatically computes remission, time served, and exact release dates based on penal codes.
+- **Rehabilitation Tracking System:** Logs vocational training, educational achievements, and behavioural scores.
+- **Release Management System:** Orchestrates parole, probation handover, and formal discharge.
+
+**Inter-Agency Integration:**
+- **Judiciary Case Management System:** Pushes digital committal warrants directly to the PCMS.
+- **National Identity Registry (IPRS / Maisha Namba):** Provides instant biometric identity verification upon admission.
+- **Police Systems:** Synchronizes arrest and transfer records.
+- **Health Systems (MOH):** Links the inmate to their national Shared Health Record (SHR) for continuity of care.
+- **Vocational Certification Systems (KNQA):** Digitally registers skills acquired during incarceration.
 
 ### Optimized Steps (Digital)
 | Step | Actor | Action | System |
 |---|---|---|---|
-| 1 | Admission Officer | Scans the inmate's biometrics. System pulls their legal identity and prior history via X-Road. | eCitizen / Prisons Kit |
-| 2 | System | Fetches the digital court order from the Judiciary CMS, verifying the exact sentence and offense. | KeSEL / X-Road |
-| 3 | System | Automatically creates a digital profile and pings the MOH to fetch the inmate's medical summary. | Workflow Engine |
-| 4 | Welfare Officer | Updates vocational progress using a tablet; certificates earned are pushed to the inmate's **KNQA** account. | Prisons App |
-| 5 | System | Triggers an automated notification to the Probation and Aftercare Service when an inmate is within 90 days of release. | Notification Gateway |
+| 1 | Judiciary System | Pushes a digitally signed committal warrant via X-Road to the correctional facility. | Judiciary CMS / X-Road |
+| 2 | Admission Officer | Receives the digital warrant and verifies the inmate's identity biometrically against the national registry. | PCMS / IPRS |
+| 3 | Prison System | Creates a comprehensive digital case profile and performs automatic security classification based on the offense and history. | PCMS / Rules Engine |
+| 4 | Welfare Officer | Digitally tracks rehabilitation progress, behavioral scores, and vocational training achievements. | Rehabilitation Tracking System |
+| 5 | Prison System | Automatically calculates sentence expiry dates in real-time, accounting for earned remission. | Sentence Calculation Engine |
+| 6 | Prison System | Triggers automated release eligibility alerts when the sentence completion date approaches. | Notification Gateway |
+| 7 | Probation Service | Receives automated notifications to prepare for the inmate's reintegration. | Release Management System |
+| 8 | Prison System | Executes the formal digital release, updating the National Inmate Registry. | PCMS |
 
 ---
 
 ## References
-- The Prisons Act.
-- Huduma Bridge DSAP Architecture.
+- https://www.correctional.go.ke
+- Prisons Act
+- Desk Review

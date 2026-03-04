@@ -1,0 +1,31 @@
+graph TD
+    Start((Start)) --> Requirements["Communicate Reporting Requirements to MDAs"]
+    
+    subgraph Collection [Data Collection]
+        Requirements --> Compilation["MDAs Compile Reports Internally"]
+        Compilation --> Submit["Submit via Email / Letter / Shared Platform"]
+        Submit --> Log["Log Submissions by OCoS"]
+    end
+    
+    subgraph Analysis [Review & Analysis]
+        Log --> Review["Review Reports for Completeness"]
+        Review --> Trends["Identify Trends & Gaps Manually"]
+        Trends --> Briefs["Prepare Summary Briefs for Executive Review"]
+        Briefs --> FollowUp["Request Clarifications (if required)"]
+    end
+    
+    subgraph Standards [Governance Oversight]
+        FollowUp --> Ident["Identify Governance Issues (Complaints/Reports)"]
+        Ident --> RequestDocs["Request Explanations/Docs from MDAs"]
+        RequestDocs --> ReviewStd["Review against Governance Standards"]
+        ReviewStd --> Document["Document Findings & Recommendations"]
+    end
+    
+    Document --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    class Start start;
+    class End endNode;
+    class Requirements,Compilation,Submit,Log,Review,Trends,Briefs,FollowUp,Ident,RequestDocs,ReviewStd,Document userTask;

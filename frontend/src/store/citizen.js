@@ -10,8 +10,8 @@ export const useCitizenStore = defineStore('citizen', {
   actions: {
     async fetchAvailableServices() {
       try {
-        // Anyone can see available services
-        const response = await api.get('/service-configs/');
+        // Use the public catalog endpoint which filters by active/visible status
+        const response = await api.get('/catalog/services/');
         this.availableServices = response.data;
       } catch (error) {
         console.error('Failed to fetch available services:', error);

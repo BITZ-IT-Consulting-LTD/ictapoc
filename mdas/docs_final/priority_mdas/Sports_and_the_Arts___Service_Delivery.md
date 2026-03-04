@@ -161,5 +161,6 @@ graph TD
 ---
 
 ## References
-- The Sports Act 2013.
-- Huduma Bridge DSAP Architecture.
+- https://www.sportsheritage.go.ke
+- Sports Act 2013
+- Desk Review

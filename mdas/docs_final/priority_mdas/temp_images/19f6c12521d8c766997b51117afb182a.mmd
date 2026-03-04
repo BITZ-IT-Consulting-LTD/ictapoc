@@ -1,0 +1,29 @@
+graph TD
+    Start((Start)) --> Portal["Citizen/Officer Accesses eCitizen Social Portal"]
+    
+    subgraph Layer2 [Identity & Trust]
+        Portal --> Scan["Biometric Capture / Maisha Namba Verification"]
+        Scan --> XRoad_IPRS["X-Road: Fetch Household Data from IPRS"]
+        XRoad_IPRS --> Consent["Consent Manager: Access Vulnerability Data?"]
+    end
+    
+    subgraph Layer3 [Orchestration - Workflow Engine]
+        Consent --> AI_Score["AI Engine: Automated Means Testing & Eligibility"]
+        AI_Score --> Approve["Digital Approval by Director (NPKI Signed)"]
+    end
+    
+    subgraph Layer4 [Settlement - GPA]
+        Approve --> GPA["GPA: Instant Disbursement to Digital Wallet"]
+        GPA --> Notify["Auto-Notify Beneficiary via eCitizen App"]
+    end
+    
+    Notify --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    class Start start;
+    class End endNode;
+    class Portal userTask;
+    class Scan,XRoad_IPRS,Consent,AI_Score,Approve,GPA,Notify serviceTask;

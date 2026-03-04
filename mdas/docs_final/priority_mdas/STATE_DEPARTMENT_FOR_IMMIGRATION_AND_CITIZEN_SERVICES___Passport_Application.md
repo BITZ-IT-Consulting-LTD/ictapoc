@@ -3,8 +3,8 @@
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** STATE DEPARTMENT FOR IMMIGRATION AND CITIZEN SERVICES
 - **Process Name:** Passport Application & Issuance
-- **Document Version:** 1.3
-- **Date:** 2026-02-19
+- **Document Version:** 1.4
+- **Date:** 2026-03-04
 - **Classification:** Official
 
 ---
@@ -33,44 +33,75 @@ The Directorate of Immigration Services (DIS) is responsible for the issuance of
 *Current State visualization (End-to-End Passport Services based on Deep Dive).*
 
 ```mermaid
-graph TD
-    Start((Start)) --> Reason{"Reason?"}
-    
-    subgraph Applicant [Citizen]
-        Reason -- "Lost" --> PoliceAbstract["Obtain Police Abstract"]
-        Reason -- "Damaged" --> RetainPassport["Retain Damaged Passport"]
-        PoliceAbstract --> CompleteForm["Complete Form"]
-        RetainPassport --> CompleteForm
-        CompleteForm --> UploadEvidence["Upload Evidence"]
-        UploadEvidence --> PayFee["Pay Fee"]
-    end
-    
-    subgraph Immigration [Immigration Officers]
-        PayFee --> VerifyRecords["Verify Original Records"]
-        VerifyRecords --> Found{"Found?"}
-        Found -- "No" --> Reject["Reject Application"]
-        Found -- "Yes" --> VerifyAbstract["Verify Police Abstract"]
-        VerifyAbstract --> VerifyIdentity["Verify Identity"]
-        VerifyIdentity --> CaptureBiometrics["Capture Biometrics"]
-        CaptureBiometrics --> CancelOriginal["Cancel Original Passport"]
-    end
-    
-    subgraph Production [Production Unit]
-        CancelOriginal --> PrintReplacement["Print Replacement"]
-        PrintReplacement --> IssuePassport["Issue Passport"]
-    end
-    
-    IssuePassport --> End((End))
-    Reject --> End
+flowchart TD
+    %% Events
+    Start((Start))
+    EndProcess((End Process))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    subgraph Applicant [Applicant]
+        direction LR
+        Login[Login to eCitizen]
+        FillForm[Fill passport form]
+        UploadDocs[Upload documents]
+        SubmitApp[Submit application]
+        PayFee[Pay passport fee]
+        BookAppt[Book biometric appointment]
+        Collect[Passport collection by citizen]
+    end
+
+    subgraph ImmOffice [Immigration Office]
+        direction TB
+        BioCapture[Biometric capture]
+        IdVerify[Identity verification against IPRS]
+        DocVerify[Document verification]
+        Approval[Senior officer approval decision]
+        ApprGateway{Application approved?}
+        NotifyReject[Notify applicant]
+    end
+
+    subgraph ProdUnit [Production Unit]
+        direction TB
+        QueueProd[Queue for passport production]
+        Print[Passport printing]
+        QA[Quality assurance]
+        Dispatch[Dispatch to collection center]
+    end
+
+    %% Flow connections
+    Start --> Login
+    Login --> FillForm
+    FillForm --> UploadDocs
+    UploadDocs --> SubmitApp
+    SubmitApp --> PayFee
+    PayFee --> BookAppt
+    
+    BookAppt --> BioCapture
+    BioCapture --> IdVerify
+    IdVerify --> DocVerify
+    DocVerify --> Approval
+    Approval --> ApprGateway
+    
+    ApprGateway -- "No" --> NotifyReject
+    NotifyReject --> EndProcess
+    
+    ApprGateway -- "Yes" --> QueueProd
+    QueueProd --> Print
+    Print --> QA
+    QA --> Dispatch
+    Dispatch --> Collect
+    Collect --> EndProcess
+
+    %% Styling
+    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff;
     classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
     classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
-    class Start start;
-    class End endNode;
-    class Reason,Found gateway;
-    class PoliceAbstract,RetainPassport,CompleteForm,UploadEvidence,PayFee,VerifyRecords,VerifyAbstract,VerifyIdentity,CaptureBiometrics,CancelOriginal,PrintReplacement,IssuePassport,Reject userTask;
+    
+    class Start startEvent;
+    class EndProcess endEvent;
+    class ApprGateway gateway;
+    class Login,FillForm,UploadDocs,SubmitApp,PayFee,BookAppt,Collect,BioCapture,IdVerify,DocVerify,Approval,NotifyReject,QueueProd,Print,QA,Dispatch userTask;
 ```
 
 ### Process Overview
@@ -96,29 +127,29 @@ Passport Application (New / Renewal / Replacement)
 - Kenya Citizenship and Immigration Act, 2011; ICAO Doc 9303.
 
 ### Stakeholders
-| Stakeholder          | Role                     | Responsibilities                                                               |
-|----------------------|--------------------------|--------------------------------------------------------------------------------|
-| Citizen (Applicant)  | Applicant                | Completes online form, pays fee, attends appointment. |
-| Immigration Officer  | Enroller                 | Captures biometrics and verifies original documents. |
-| Production Staff | Processor | Operates printing machines, quality assurance. |
-| Courier Service | Logistics | Delivers passports to regional offices (Mombasa, Kisumu, etc.). |
-
+| Stakeholder         | Role      | Responsibilities                                                |
+| ------------------- | --------- | --------------------------------------------------------------- |
+| Citizen (Applicant) | Applicant | Completes online form, pays fee, attends appointment.           |
+| Immigration Officer | Enroller  | Captures biometrics and verifies original documents.            |
+| Production Staff    | Processor | Operates printing machines, quality assurance.                  |
+| Courier Service     | Logistics | Delivers passports to regional offices (Mombasa, Kisumu, etc.). |
 
 ### Detailed Process (AS-IS)
 | Step | Actor                     | Action                                                                                                                                           | Tool / System      | Notes                                                                    |
 |------|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|--------------------------------------------------------------------------|
-| 1    | Citizen (Applicant)       | **Creates / Logs into eCitizen Account:** Logs in using National ID Number and Password.                                                         | eCitizen Portal    |                                                                          |
-| 2    | Citizen (Applicant)       | **Select Passport Application Service:** Navigates to Immigration Services → Passport Application. Selects First Time Application, Renewal, or Replacement. | eCitizen Portal    |                                                                          |
-| 3    | Citizen (Applicant)       | **Fill Passport Application Form (Form 19):** Inputs Personal Details (Full Name, National ID Number, Date of Birth, Place of Birth, Gender, Occupation) and Parent Details (Father Name, Father ID Number, Mother Name, Mother ID Number, Guardian Name, Guardian ID Number, Phone Number). | eCitizen Portal    |                                                                          |
-| 4    | Citizen (Applicant)       | **Upload Supporting Documents:** Uploads National ID Copy, Birth Certificate Copy, Passport Photo, Recommender ID Copy (Mandatory). Optional: Old passport (for renewal). | eCitizen Portal    |                                                                          |
-| 5    | eCitizen System           | **Submit Application:** System generates Passport Application Reference Number (e.g., PPT/ECITIZEN/2026/123456).                                   | eCitizen System    |                                                                          |
-| 6    | Citizen (Applicant)       | **Pay Passport Fees:** Pays via Mobile Money, Card, or Bank.                                                                                     | eCitizen / Payment Gateway |                                                                          |
-| 7    | Citizen (Applicant)       | **Book Biometrics Appointment:** Selects Immigration Office (e.g., Nairobi, Mombasa, Kisumu) and books date.                                       | eCitizen Portal    |                                                                          |
-| 8    | Biometrics Officer        | **Biometric Capture:** Citizen visits Immigration Office, biometrics captured (Fingerprints, Photo, Signature).                                    | Biometric Kit      |                                                                          |
-| 9    | Immigration Officer       | **Identity Verification:** Verification done against National ID via population register (IPRS lookup).                                          | IPRS System        |                                                                          |
-| 10   | Senior Immigration Officer| **Application Approval:** Application is Approved or Rejected.                                                                                   | Internal System    |                                                                          |
-| 11   | Passport Production Unit  | **Passport Production:** Passport is printed, containing Passport Number (e.g., A1234567).                                                          | Production System  |                                                                          |
-| 12   | Citizen (Applicant)       | **Passport Collection:** Citizen collects passport at the Immigration Office.                                                                    | Collection Desk    |                                                                          |
+| 1    | Citizen (Applicant)       | **Logs into eCitizen:** Creates account or logs in using National ID Number and Password.                                                         | eCitizen Portal    |                                                                          |
+| 2    | Citizen (Applicant)       | **Fill Passport Form:** Selects application type (First Time, Renewal, Replacement) and inputs personal/parent details.                           | eCitizen Portal    |                                                                          |
+| 3    | Citizen (Applicant)       | **Upload Documents:** Uploads National ID, Birth Certificate, Passport Photo, Recommender ID, and old passport (if applicable).                  | eCitizen Portal    |                                                                          |
+| 4    | Citizen (Applicant)       | **Submit Application:** Submits the digital form and generates reference number.                                                                 | eCitizen System    |                                                                          |
+| 5    | Citizen (Applicant)       | **Pay Passport Fee:** Pays via Mobile Money, Card, or Bank.                                                                                      | Payment Gateway    |                                                                          |
+| 6    | Citizen (Applicant)       | **Book Biometric Appointment:** Selects an Immigration Office and books available date.                                                          | eCitizen Portal    |                                                                          |
+| 7    | Biometrics Officer        | **Biometric Capture:** Applicant visits Immigration Office for fingerprints, photo, and signature capture.                                       | Biometric Kit      |                                                                          |
+| 8    | Immigration Officer       | **Identity & Document Verification:** Verifies identity against IPRS and checks physical documents.                                              | IPRS / Manual      |                                                                          |
+| 9    | Senior Immigration Officer| **Senior Officer Approval Decision:** Reviews the verified file and decides to approve or reject.                                                | Internal System    | Rejections trigger a notification to the applicant.                      |
+| 10   | Passport Production Unit  | **Queue & Print:** Approved applications enter the production queue. Passport printing takes place.                                              | Production System  |                                                                          |
+| 11   | Passport Production Unit  | **Quality Assurance:** Printed passports undergo QA to ensure ICAO compliance and accurate chip encoding.                                        | Quality Station    |                                                                          |
+| 12   | Courier / Dispatch        | **Dispatch:** Passport is dispatched to the designated collection center.                                                                        | Logistics          |                                                                          |
+| 13   | Citizen (Applicant)       | **Passport Collection:** Citizen collects the printed passport in person.                                                                        | Collection Desk    |                                                                          |
 
 ---
 
@@ -141,63 +172,102 @@ Passport Application (New / Renewal / Replacement)
 ## 2. TO-BE PROCESS: Passport Application and Issuance (Optimized)
 
 ### TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
+*Future State visualization (Kenya DSAP Architecture - Whole-of-Government).*
 
 ```mermaid
-graph TD
-    Start((Start)) --> Portal["Citizen Accesses eCitizen Portal"]
-    
-    subgraph Layer1 [Access Channels]
-        Portal
-        Consent["Consent Manager Requests IPRS Access"]
-    end
-    
-    subgraph Layer2 [Core Platform & Trust Hub]
-        Consent --> XRoad["API Gateway routes via KeSEL (X-Road)"]
-        XRoad --> IPRS["Validate Identity against IPRS / Maisha Namba"]
-        IPRS --> AutoForm["Workflow Engine Auto-populates Form"]
-    end
-    
-    subgraph Layer4 [Registries & Payments]
-        AutoForm --> Payment["Initiate Payment via Govt Payment Aggregator (GPA)"]
-    end
-    
-    subgraph Agency [Immigration & Production]
-        Payment --> AutoApprove["Workflow Engine Auto-Approves "]
-        AutoApprove --> Factory["Passport Production Unit Prints"]
-        Factory --> Logistics["Posta Delivers to Citizen"]
-    end
-    
-    Portal --> Consent
-    Logistics --> End((End))
+flowchart TD
+    %% Events
+    Start((Start))
+    EndProcess((End Process))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    subgraph Citizen [Citizen]
+        direction LR
+        Submit[Submit application]
+        CapBio[Capture biometrics]
+        Receive[Receive/Collect passport]
+    end
+
+    subgraph eCitizen [eCitizen Platform]
+        direction TB
+        Notify[Notify citizen]
+    end
+
+    subgraph ImmSys [Immigration System]
+        direction TB
+        Verify[Verify identity]
+        FirstGateway{First passport?}
+        Process[Process application]
+        ApprGateway{Application approved?}
+    end
+
+    subgraph ProdUnit [Passport Production Unit]
+        direction TB
+        Print[Print passport]
+    end
+
+    subgraph Courier [Courier Service]
+        direction TB
+        Dispatch[Dispatch passport]
+    end
+
+    %% Flow connections
+    Start --> Submit
+    Submit --> Verify
+    Verify --> FirstGateway
+    
+    FirstGateway -- "Yes" --> CapBio
+    FirstGateway -- "No" --> Process
+    CapBio --> Process
+    
+    Process --> ApprGateway
+    
+    ApprGateway -- "No" --> Notify
+    ApprGateway -- "Yes" --> Print
+    
+    Print --> Dispatch
+    Dispatch --> Notify
+    Dispatch --> Receive
+    Receive --> EndProcess
+    Notify --> EndProcess
+
+    %% Styling
+    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff;
     classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
     classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-    class Start start;
-    class End endNode;
-    class Portal,Consent userTask;
-    class XRoad,IPRS,AutoForm,Payment,AutoApprove,Factory,Logistics serviceTask;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    
+    class Start startEvent;
+    class EndProcess endEvent;
+    class FirstGateway,ApprGateway gateway;
+    class Notify,Verify,Process,Print,Dispatch serviceTask;
+    class Submit,CapBio,Receive userTask;
 ```
 
 ### Future State Process (TO-BE)
 ### Narrative
-The process is **Shared-Service Driven** and **Logistics-Integrated**.
-1.  **Biometric Reuse:** The system pulls existing fingerprints from the **NRB (Maisha Namba)** database via **X-Road**. Why capture them again?
-2.  **No Appointments:** For renewals and standard applications, physical presence is removed.
-3.  **AI Photo Check:** The **eCitizen App** uses AI to ensure the selfie meets ICAO standards before submission.
-4.  **Home Delivery:** Passports are delivered securely via **Posta (National Courier)**, tracking the parcel via the App.
-5.  **Digital Travel Credential (DTC):** A virtual passport is issued immediately to the phone for use at e-Gates.
+The proposed process leverages a **Whole-of-Government digital platform** to deliver a seamless, transparent, and scalable service.
+
+1. **Identity Verification:** The system instantly queries the National Population Register (IPRS / Maisha Namba) using X-Road, verifying applicant identity at the moment of submission.
+2. **Application Processing:** Citizen data is auto-populated to reduce errors, and supporting documents are verified digitally through integration with civil registries.
+3. **Decision Logic:** 
+   - **Renewal:** Existing biometrics are reused directly from the NRB/Maisha Namba repository, eliminating the need for physical appointments.
+   - **First Application:** Physical biometric capture is strictly reserved for first-time applicants or exceptional cases requiring updates.
+4. **Production:** Approved applications are sent to an automated production queue and printed across decentralized printing centers, eliminating the Nairobi bottleneck.
+5. **Delivery:** The printed passport is dispatched via a secure courier service directly to the citizen's address, or sent to a designated collection center based on user preference.
+6. **Notifications:** Real-time SMS and eCitizen status updates proactively notify the citizen at every milestone (e.g., application received, printing, dispatched, ready).
 
 ### Optimized Steps (Digital)
 | Step | Actor | Action | System |
 |---|---|---|---|
-| 1 | Citizen | Requests passport on eCitizen App. Takes ICAO-compliant selfie. | eCitizen App / AI |
-| 2 | WoG Platform | Fetches fingerprints from NRB and validates identity. | X-Road / IPRS |
-| 3 | Immigration | Auto-approves application. | Workflow Engine |
-| 4 | Factory | Prints booklet. | Production System |
-| 5 | Posta | Delivers passport to citizen's doorstep. | Logistics Tracking |
+| 1 | Citizen | Submits application online. Chooses delivery method. | eCitizen App |
+| 2 | Immigration System | Verifies identity via National Population Register. | IPRS / Maisha Namba API |
+| 3 | Immigration System | Determines if biometric capture is needed (First Passport) or reuses existing biometrics (Renewal). | Workflow Engine |
+| 4 | Citizen | Captures biometrics (only if required). | Biometric Kit |
+| 5 | Immigration System | Processes application with digital document verification. | Rules Engine |
+| 6 | Passport Production Unit | Prints passport via automated queue in decentralized centers. | Production System |
+| 7 | Courier Service | Dispatches passport directly to the citizen or a local center. | Logistics Tracking |
+| 8 | eCitizen Platform | Sends SMS/Portal notifications at every major stage. | Notification Gateway |
 
 ---
 
@@ -218,4 +288,6 @@ The process is **Shared-Service Driven** and **Logistics-Integrated**.
 ---
 
 ## References
-- Kenya Citizenship and Immigration Act.
+- https://www.immigration.go.ke
+- Kenya Citizenship and Immigration Act
+- Desk Review

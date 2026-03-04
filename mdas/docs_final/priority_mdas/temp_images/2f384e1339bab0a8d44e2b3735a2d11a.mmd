@@ -1,0 +1,33 @@
+graph TD
+    Start((Start)) --> Identify["Identify Potential Beneficiaries (Community/Chief)"]
+    
+    subgraph Registration [Intake]
+        Identify --> Outreach["Outreach Forums / Registration Points"]
+        Outreach --> Capture["Capture Details (Manual / Basic System)"]
+        Capture --> Docs["Check Supporting Documents (ID/Household)"]
+        Docs --> Submit["Compile & Submit Records for Validation"]
+    end
+    
+    subgraph Validation [Eligibility & Approval]
+        Submit --> Review["Review Registration Records"]
+        Review --> Criteria["Apply Eligibility Criteria (Manual/Semi-Digital)"]
+        Criteria --> CrossCheck["Community Verification / Cross-checks"]
+        CrossCheck --> Compile["Compile Approved Beneficiary Lists"]
+        Compile --> Endorse["Endorsement by Programme Management"]
+    end
+    
+    subgraph Delivery [Assistance]
+        Endorse --> Forward["Forward Lists to Payment / Logistics Units"]
+        Forward --> Distribute["Deliver Assistance (Cash/Food/Supplies)"]
+        Distribute --> Acknowledge["Beneficiaries Acknowledge Receipt"]
+        Acknowledge --> Record["Maintain Distribution Records (Manual)"]
+    end
+    
+    Record --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    class Start start;
+    class End endNode;
+    class Identify,Outreach,Capture,Docs,Submit,Review,Criteria,CrossCheck,Compile,Endorse,Forward,Distribute,Acknowledge,Record userTask;

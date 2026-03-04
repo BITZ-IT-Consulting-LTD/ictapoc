@@ -164,5 +164,6 @@ graph TD
 ---
 
 ## References
-- KBC Act.
-- Huduma Bridge DSAP Architecture.
+- https://www.kbc.co.ke
+- Kenya Broadcasting Corporation Act
+- Desk Review

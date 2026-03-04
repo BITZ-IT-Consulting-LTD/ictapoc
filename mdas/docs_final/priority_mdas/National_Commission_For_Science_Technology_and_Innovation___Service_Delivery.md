@@ -170,5 +170,6 @@ graph TD
 ---
 
 ## References
-- Science, Technology and Innovation Act 2013.
-- Huduma Bridge DSAP Architecture.
+- https://www.nacosti.go.ke
+- Science, Technology and Innovation Act 2013
+- Desk Review

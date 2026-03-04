@@ -32,10 +32,10 @@ This document presents the prioritised list of Ministries, Departments, and Agen
 
 | # | MDA | Tier | DMI | Weakest Pillar | Citizen Impact | Record Volumes | Complexity | Model Application | Intervention Focus |
 |---|-----|------|-----|----------------|----------------|----------------|------------|------------------|-------------------|
-| 9 | State Department for Special Programmes | T2 | ~1.40 | RMI | Very High | 100K–1M | High | Beneficiary-heavy registries | Beneficiary registry modernisation |
+| 9 | [State Department for Special Programmes](./State_Department_for_Special_Programmes___Service_Delivery.md) | T2 | ~1.40 | RMI | Very High | 100K–1M | High | Beneficiary-heavy registries | Beneficiary registry modernisation |
 | 10 | [State Department for Culture, Arts and Heritage](./Culture_and_Heritage___Service_Delivery.md) | T2 | 1.91 | RMI | Medium-High | <10K | Medium | Records leadership role | Records standards |
 | 11 | [State Department for Children Services](./State_Department_for_Children_Services___Service_Delivery.md) | T2 | ~1.59 | RMI / ESMI | High | 100K–1M | High | Child protection workflows | Secure case records |
-| 12 | Office of the Chief of Staff | T1 | 1.91 | GCI / RMI | System-wide | 10K–100K | High | Executive change anchor | Whole-of-Government standards |
+| 12 | [Office of the Chief of Staff](./Office_of_the_Chief_of_Staff___Service_Delivery.md) | T1 | 1.91 | GCI / RMI | System-wide | 10K–100K | High | Executive change anchor | Whole-of-Government standards |
 | 13 | [National Government Coordination](./National_Government_Coordination___Service_Delivery.md) | T2 | ~1.46 | RMI | Medium-High | 10K–100K | High | Coordination workflows | Inter-MDA records |
 
 ---
@@ -44,7 +44,7 @@ This document presents the prioritised list of Ministries, Departments, and Agen
 
 | # | MDA | Tier | DMI | Weakest Pillar | Citizen Impact | Record Volumes | Complexity | Model Application | Intervention Focus |
 |---|-----|------|-----|----------------|----------------|----------------|------------|------------------|-------------------|
-| 14 | Government Spokesperson | T2 | ~1.68 | RMI | Medium | 10K–100K | Medium | Public archives | Digital archives |
+| 14 | [Government Spokesperson](./Government_Spokesperson___Service_Delivery.md) | T2 | ~1.68 | RMI | Medium | 10K–100K | Medium | Public archives | Digital archives |
 | 15 | [Athi Water Works Development Agency](./Athi_Water_Works_Development_Agency___Service_Delivery.md) | T2 | ~2.52 | RMI | High | <10K | High | Infrastructure constrained by records | Contract & infrastructure records |
 | 16 | [Department for Sports](./Sports_and_the_Arts___Service_Delivery.md) | T2 | ~1.25 | RMI | Medium | 1.3M | Medium | Grants and events | Registry modernisation |
 | 17 | [Department of Refugee Services](./_REFUGEE_SERVICES___Service_Delivery.md) | T2 | ~1.47 | RMI / ESMI | High | <10K | High | Sensitive case files | Case digitisation |

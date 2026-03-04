@@ -1,0 +1,27 @@
+graph TD
+    Start((Start)) --> Scan["Biometric Intake (Maisha Namba)"]
+    
+    subgraph Layer2 [Identity & Trust]
+        Scan --> XRoad["X-Road: Verify Vulnerability Profile (IPRS/Social Registry)"]
+        XRoad --> Consent["Consent Manager: Access Household Data?"]
+    end
+    
+    subgraph Layer3 [Operations - Workflow Engine]
+        Consent --> Rule["AI Rules Engine: Auto-calculate Relief Eligibility"]
+        Rule --> Approve["Workflow Engine: Digital Approval by Director"]
+    end
+    
+    subgraph Layer4 [Settlement - GPA]
+        Approve --> GPA["GPA: Instant Disbursement to Digital Wallet"]
+    end
+    
+    GPA --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    class Start start;
+    class End endNode;
+    class Scan userTask;
+    class XRoad,Consent,Rule,Approve,GPA serviceTask;
