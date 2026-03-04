@@ -22,12 +22,12 @@ The State Department for Cabinet Affairs is responsible for the efficient manage
 graph TD
     Start((Start)) --> Prepare["Prepare Cabinet Memorandum"]
     
-    subgraph Initiation [Ministry Level]
+    subgraph Initiation["Ministry Level"]
         Prepare --> PS_Approve["Obtain PS / CS Approval"]
         PS_Approve --> Submit["Submit to Cabinet Affairs"]
     end
     
-    subgraph Processing [Cabinet Affairs]
+    subgraph Processing["Cabinet Affairs"]
         Submit --> Log["Log in CABMEMO / EDRMS"]
         Log --> Assign["Assign Reference Number"]
         Assign --> Compliant{"Compliant?"}
@@ -39,7 +39,7 @@ graph TD
         RouteAG --> RouteTreasury["Route to National Treasury for Fiscal Impact"]
     end
     
-    subgraph Finalization [Approval & Scheduling]
+    subgraph Finalization["Approval & Scheduling"]
         RouteTreasury --> Comments["Receive & Consolidate Inter-Ministerial Comments"]
         Comments --> Schedule["Schedule for Cabinet Meeting"]
     end
@@ -111,19 +111,19 @@ Cabinet Memorandum (CABMEMO) Processing and GDMIS Registration
 graph TD
     Start((Start)) --> Draft["CS/PS Drafts Memo in Secure Executive Portal"]
     
-    subgraph Layer2 [Workflow Engine & Trust Hub]
+    subgraph Layer2["Workflow Engine & Trust Hub"]
         Draft --> Sign["Digitally Sign via NPKI "]
         Sign --> Parallel["Workflow Engine: Parallel Routing to AG & Treasury"]
     end
     
-    subgraph Layer3 [Huduma Bridge / X-Road]
+    subgraph Layer3["Huduma Bridge / X-Road"]
         Parallel --> AG["KeSEL: Legal Review by AG"]
         Parallel --> Treasury["KeSEL: Fiscal Review by Treasury"]
         AG --> Notify["Auto-Notify Cabinet Affairs of Feedback"]
         Treasury --> Notify
     end
     
-    subgraph Layer4 [Decision Support]
+    subgraph Layer4["Decision Support"]
         Notify --> Consolidate["AI-Assisted Feedback Consolidation"]
         Consolidate --> Schedule["Digital Agenda Scheduling"]
         Schedule --> GDMIS["Auto-Sync to GDMIS for Outcome Tracking"]

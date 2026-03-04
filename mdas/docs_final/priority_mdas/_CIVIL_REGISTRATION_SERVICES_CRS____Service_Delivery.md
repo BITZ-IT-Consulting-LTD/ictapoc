@@ -22,14 +22,14 @@ Civil Registration Services (CRS) is the authoritative custodian of vital life e
 graph TD
     Start((Start)) --> Source{"Event Source?"}
     
-    subgraph Capture [Point of Occurrence]
+    subgraph Capture["Point of Occurrence"]
         Source -- "Hospital" --> Notification["Hospital Notification / Medical Cert"]
         Source -- "Home" --> Community["Community Report (Chief/Informant)"]
         Notification --> Form["Complete Form (Birth/Death)"]
         Community --> Form
     end
     
-    subgraph Vetting [Verification & Approval]
+    subgraph Vetting["Verification & Approval"]
         Form --> Attach["Attach Parent IDs / Marriage Cert / Evidence"]
         Attach --> Review["Officer Reviews Documents"]
         Review --> Verify["Verify Parents / Cause of Death"]
@@ -41,7 +41,7 @@ graph TD
         Complete -- "Yes" --> Register["Enter in Register & Assign Entry Number"]
     end
     
-    subgraph Issuance [Payment & Production]
+    subgraph Issuance["Payment & Production"]
         Register --> Sign["Registrar Signs Record"]
         Sign --> Payment["Process Payment (Manual/eCitizen)"]
         Payment --> Print["Print Certificate / Burial Permit"]
@@ -115,21 +115,21 @@ Vital Event Registration (Births and Deaths) and Certificate Issuance
 graph TD
     Start((Start)) --> Event["Birth/Death Occurs at Facility"]
     
-    subgraph Layer1 [Access - Point of Care]
-        Event --> MOH["MOH System Logs Event (Afya App)"]
+    subgraph Layer1["Access - Point of Care"]
+        Event --> MOH["MOH System Logs Event('Afya App')"]
     end
     
-    subgraph Layer3 [Huduma Bridge / X-Road]
+    subgraph Layer3["Huduma Bridge / X-Road"]
         MOH --> XRoad["X-Road: Secure Push to CRS Database"]
         XRoad --> IPRS["X-Road: Verify Parent/Deceased via IPRS"]
     end
     
-    subgraph Layer4 [Authoritative Registry]
+    subgraph Layer4["Authoritative Registry"]
         IPRS --> Mint["CRS: Auto-Mint Maisha Namba / Update Status"]
         Mint --> Vault["Store in Secure Vital Events Vault"]
     end
     
-    subgraph Output [Digital Issuance]
+    subgraph Output["Digital Issuance"]
         Vault --> Notify["Notify Parents/Kin via eCitizen App"]
         Notify --> Wallet["Issue Verifiable Digital Certificate to Wallet"]
     end

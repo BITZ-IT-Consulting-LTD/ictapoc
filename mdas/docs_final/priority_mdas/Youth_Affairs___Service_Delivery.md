@@ -22,7 +22,7 @@ The State Department for Youth Affairs is responsible for the economic empowerme
 graph TD
     Start((Start)) --> Access["Access eCitizen / Portal"]
     
-    subgraph Internship [Youth Internship Placement]
+    subgraph Internship["Youth Internship Placement"]
         Access --> Form["Complete Form & Upload Documents"]
         Form --> Review["Officer Reviews Application"]
         Review --> Verify["Verify Eligibility (Academic/Age)"]
@@ -33,10 +33,10 @@ graph TD
         Eligible -- "No" --> Reject["Notify Rejection"]
     end
     
-    subgraph AGPO [AGPO Registration]
+    subgraph AGPO["AGPO Registration"]
         Access --> AGPO_Form["Complete AGPO Form"]
         AGPO_Form --> Attach["Attach Business & ID Documents"]
-        Attach --> Vetting["Manual Vetting: Verify Ownership & Age (18-35)"]
+        Attach --> Vetting["Manual Vetting: Verify Ownership & Age('18-35')"]
         Vetting --> Appr{"Approve?"}
         
         Appr -- "Yes" --> Cert["Generate Certificate & Update Registry"]
@@ -113,19 +113,19 @@ Youth Internship Placement, AGPO Registration, and Film Production Licensing
 graph TD
     Start((Start)) --> Portal["Youth Applicant Logs in via Maisha Namba"]
     
-    subgraph Layer2 [Identity & Trust Hub]
+    subgraph Layer2["Identity & Trust Hub"]
         Portal --> Consent["Consent Manager: Access ID, Education & BRS data?"]
         Consent --> XRoad["X-Road: Auto-fetch profile from IPRS, KNQA, BRS"]
     end
     
-    subgraph Layer3 [Operations - Workflow Engine]
+    subgraph Layer3["Operations - Workflow Engine"]
         XRoad --> Type{"Service Type?"}
         
         Type -- "Internship" --> Match["AI Engine: Instant Skill & Location Match"]
         Type -- "AGPO" --> Vetting["Automated Ownership & Age Validation"]
     end
     
-    subgraph Layer4 [Issuance & Settlement]
+    subgraph Layer4["Issuance & Settlement"]
         Match --> Letter["Generate Digital Placement Letter (QR)"]
         Vetting --> Cert["Generate Verifiable AGPO Certificate"]
     end

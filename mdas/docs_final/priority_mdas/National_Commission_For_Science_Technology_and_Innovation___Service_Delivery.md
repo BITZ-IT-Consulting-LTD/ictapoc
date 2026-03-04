@@ -22,7 +22,7 @@ NACOSTI is the primary agency responsible for regulating and assuring quality in
 graph TD
     Start((Start)) --> Submit["Complete Application & Attach Research Proposal"]
     
-    subgraph Intake [Reception & Acknowledgment]
+    subgraph Intake["Reception & Acknowledgment"]
         Submit --> Comp{"Complete?"}
         Comp -- "No" --> Return["Return for Completion"]
         Return --> Submit
@@ -31,14 +31,14 @@ graph TD
         Log --> Acknowledge["Issue Acknowledgment Letter"]
     end
     
-    subgraph Vetting [Technical Review]
+    subgraph Vetting["Technical Review"]
         Acknowledge --> Identify["Identify Subject-Matter Examiner"]
         Identify --> Assess["Assess Research Criteria & Ethical Compliance"]
         Assess --> Verify["Verify Qualifications & Institution"]
         Verify --> Report["Prepare Vetting Report"]
     end
     
-    subgraph Approval [Payment & Licensing]
+    subgraph Approval["Payment & Licensing"]
         Report --> Recommend{"Recommendation?"}
         
         Recommend -- "Revise" --> ReqRev["Request Revision from Researcher"]
@@ -118,22 +118,22 @@ End-to-End Research Application, Vetting, and Licensing
 graph TD
     Start((Start)) --> Portal["Researcher Logs in via eCitizen (SSO)"]
     
-    subgraph Layer2 [Identity & Trust Hub]
+    subgraph Layer2["Identity & Trust Hub"]
         Portal --> Verify["X-Road: Verify academic standing via KNQA"]
         Verify --> Workflow["Workflow Engine: Initiate Case File"]
     end
     
-    subgraph Layer3 [Huduma Bridge / X-Road]
+    subgraph Layer3["Huduma Bridge / X-Road"]
         Workflow --> EthicCheck["X-Road: Cross-check Ethical Clearance (ERC)"]
         EthicCheck --> Rules["AI Rules Engine: Auto-match Examiner"]
     end
     
-    subgraph Layer4 [Settlement & Issuance]
-        Rules --> Pay["Initiate Payment via GPA (Real-time)"]
+    subgraph Layer4["Settlement & Issuance"]
+        Rules --> Pay["Initiate Payment via GPA('Real-time')"]
         Pay --> License["Auto-generate Verifiable Digital License (QR)"]
     end
     
-    subgraph Knowledge_Lake [Authoritative Registry]
+    subgraph Knowledge_Lake["Authoritative Registry"]
         License --> Sync["Sync Abstract to National Research Repository"]
     end
     

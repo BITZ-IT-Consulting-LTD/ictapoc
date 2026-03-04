@@ -22,7 +22,7 @@ The Kenya National Qualifications Authority (KNQA) is responsible for coordinati
 graph TD
     Start((Start)) --> Submit["Submit Application & Attach Documents"]
     
-    subgraph Intake [Reception & Intake]
+    subgraph Intake["Reception & Intake"]
         Submit --> PayFee["Pay Fee & Check Completeness"]
         PayFee --> Comp{"Complete?"}
         
@@ -32,14 +32,14 @@ graph TD
         Comp -- "Yes" --> Log["Log in System & Assign Reference"]
     end
     
-    subgraph Vetting [Verification & Assessment]
+    subgraph Vetting["Verification & Assessment"]
         Log --> AuthCert["Authenticate Certificates & Transcripts"]
         AuthCert --> VerifyInst["Verify Issuing Institution"]
         VerifyInst --> FraudCheck["Check for Fraud & Discrepancies"]
         FraudCheck --> Assess["Assess Against KNQF & Determine Level"]
     end
     
-    subgraph Approval [Approval & Issuance]
+    subgraph Approval["Approval & Issuance"]
         Assess --> Comm["Committee Deliberates on Equivalency"]
         Comm --> Decision{"Decision?"}
         
@@ -120,36 +120,36 @@ End-to-End Qualification Validation and Recognition of Prior Learning
 flowchart TD
     %% Events
     Start((Start))
-    EndProcess((End Process))
+    EndProcess(("End Process"))
 
     subgraph Applicant [Applicant]
         direction LR
-        SubmitReq[Submit validation request]
-        NotifyApp[Notify applicant]
+        SubmitReq["Submit validation request"]
+        NotifyApp["Notify applicant"]
     end
 
-    subgraph KNQASystem [KNQA System]
+    subgraph KNQASystem["KNQA System"]
         direction TB
-        RetrieveCreds[Retrieve credentials from registries]
-        VerifyAuth[Verify authenticity]
-        AuthGateway{Credential verified?}
-        MapKNQF[Map qualification to KNQF]
-        RiskAssess[Perform risk assessment]
-        RiskGateway{Risk level?}
-        GenLetter[Generate validation letter]
-        UpdateReg[Update validation registry]
+        RetrieveCreds["Retrieve credentials from registries"]
+        VerifyAuth["Verify authenticity"]
+        AuthGateway{"Credential verified?"}
+        MapKNQF["Map qualification to KNQF"]
+        RiskAssess["Perform risk assessment"]
+        RiskGateway{"Risk level?"}
+        GenLetter["Generate validation letter"]
+        UpdateReg["Update validation registry"]
     end
 
-    subgraph TechnicalOfficer [Technical Officer]
+    subgraph TechnicalOfficer["Technical Officer"]
         direction TB
-        OfficerReview[Officer review]
-        OfficerDecisionGateway{Approve validation?}
+        OfficerReview["Officer review"]
+        OfficerDecisionGateway{"Approve validation?"}
     end
 
     subgraph Committee [Committee]
         direction TB
-        CommReview[Committee review]
-        CommDecisionGateway{Approve validation?}
+        CommReview["Committee review"]
+        CommDecisionGateway{"Approve validation?"}
     end
 
     %% Flow connections

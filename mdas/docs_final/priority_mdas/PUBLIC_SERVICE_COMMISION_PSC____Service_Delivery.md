@@ -22,7 +22,7 @@ The Office of the Head of Public Service (OHPS) is the apex office for coordinat
 graph TD
     Start((Start)) --> Directive["Directive Received / Policy Ambiguity Identified"]
     
-    subgraph Analysis [Coordination & Analysis]
+    subgraph Analysis["Coordination & Analysis"]
         Directive --> Analyze["Analyse Requirements & Identify MDAs"]
         Analyze --> Translate["Translate to Instructions / Request Letter"]
     end
@@ -32,7 +32,7 @@ graph TD
         Dispatch --> Receipt["Confirm Receipt (Manual/Memo)"]
     end
     
-    subgraph Monitoring [Monitoring & Feedback]
+    subgraph Monitoring["Monitoring & Feedback"]
         Receipt --> Track["Track Implementation / Monitor Submissions"]
         Track --> Consolidate["Consolidate Updates / Compile Submissions"]
         Consolidate --> Assess["Analyse Performance / Identify Gaps"]
@@ -110,16 +110,16 @@ Executive Coordination, Directive Tracking, and Performance Monitoring
 graph TD
     Start((Start)) --> Portal["HPS Enters Directive into Executive Portal"]
     
-    subgraph CorePlatform [Workflow Engine ]
+    subgraph CorePlatform["Workflow Engine "]
         Portal --> Tasking["Workflow Engine Auto-tasks Principal Secretaries"]
-        Tasking --> Tracker["Real-time Compliance Tracker (KeSEL Integration)"]
+        Tasking --> Tracker["Real-time Compliance Tracker('KeSEL Integration')"]
     end
     
-    subgraph Interoperability [Huduma Bridge / X-Road]
+    subgraph Interoperability["Huduma Bridge / X-Road"]
         Tracker --> Fetch["X-Road: Auto-fetch progress from IFMIS/MDAs"]
     end
     
-    subgraph Analysis [Executive Dashboard]
+    subgraph Analysis["Executive Dashboard"]
         Fetch --> Dashboard["Real-time Performance Dashboard"]
         Dashboard --> Alert{"Breach / Gap?"}
         

@@ -22,45 +22,45 @@ The State Department for Special Programmes is responsible for social protection
 flowchart TD
     %% Events
     Start((Start))
-    EndProcess((End Process))
+    EndProcess(("End Process"))
 
-    subgraph Identification [Identification Phase]
+    subgraph Identification["Identification Phase"]
         direction TB
-        IdVuln[Community leaders identify vulnerable households]
-        Outreach[Outreach and registration drives conducted]
+        IdVuln["Community leaders identify vulnerable households"]
+        Outreach["Outreach and registration drives conducted"]
     end
 
-    subgraph Registration [Registration Phase]
+    subgraph Registration["Registration Phase"]
         direction TB
-        CapInfo[Capture household information]
-        VerDocs[Verify supporting documents]
-        CompList[Compile preliminary beneficiary lists]
+        CapInfo["Capture household information"]
+        VerDocs["Verify supporting documents"]
+        CompList["Compile preliminary beneficiary lists"]
     end
 
-    subgraph Validation [Validation Phase]
+    subgraph Validation["Validation Phase"]
         direction TB
-        CommVal[Community validation meeting]
-        CrossCheck[Cross-check eligibility]
-        FinList[Finalize beneficiary list]
+        CommVal["Community validation meeting"]
+        CrossCheck["Cross-check eligibility"]
+        FinList["Finalize beneficiary list"]
     end
 
-    subgraph Approval [Approval Phase]
+    subgraph Approval["Approval Phase"]
         direction TB
-        Endorse[Programme management endorses approved beneficiaries]
+        Endorse["Programme management endorses approved beneficiaries"]
     end
 
-    subgraph Delivery [Delivery Phase]
+    subgraph Delivery["Delivery Phase"]
         direction TB
-        FwdList[Forward beneficiary list to payment/logistics unit]
-        Disburse[Disburse cash or in-kind assistance]
-        AckRec[Beneficiary acknowledges receipt]
+        FwdList["Forward beneficiary list to payment/logistics unit"]
+        Disburse["Disburse cash or in-kind assistance"]
+        AckRec["Beneficiary acknowledges receipt"]
     end
 
-    subgraph PostDelivery [Post-Delivery]
+    subgraph PostDelivery["Post-Delivery"]
         direction TB
-        RecAsst[Record assistance delivered]
-        GrievanceGateway{Grievance raised?}
-        HandGriev[Handle grievances or appeals]
+        RecAsst["Record assistance delivered"]
+        GrievanceGateway{"Grievance raised?"}
+        HandGriev["Handle grievances or appeals"]
     end
 
     %% Flow connections
@@ -144,40 +144,40 @@ End-to-End Special Programmes Delivery (Registration to Assistance)
 flowchart TD
     %% Events
     Start((Start))
-    EndSuccess((End - Payment Successful))
-    EndFail((End - Registration Failed))
+    EndSuccess(("End - Payment Successful"))
+    EndFail(("End - Registration Failed"))
 
-    subgraph Citizen [Citizen / Beneficiary]
+    subgraph Citizen["Citizen / Beneficiary"]
         direction LR
-        RegPort[Register via social protection portal]
-        RecNotif[Receive notification]
+        RegPort["Register via social protection portal"]
+        RecNotif["Receive notification"]
     end
 
-    subgraph RegOfficer [Registration Officer]
+    subgraph RegOfficer["Registration Officer"]
         direction TB
-        AssistReg[Assist with registration]
+        AssistReg["Assist with registration"]
     end
 
-    subgraph SocSystem [Social Protection System]
+    subgraph SocSystem["Social Protection System"]
         direction TB
-        VerID[Verify identity via national registry]
-        FetchData[Fetch household data from social registry]
-        EligScore[Perform eligibility scoring]
-        EligGateway{Eligibility confirmed?}
-        EnrollProg[Enroll beneficiary in programme]
-        TrigPay[Trigger digital payment]
-        NotifyBen[Notify beneficiary]
+        VerID["Verify identity via national registry"]
+        FetchData["Fetch household data from social registry"]
+        EligScore["Perform eligibility scoring"]
+        EligGateway{"Eligibility confirmed?"}
+        EnrollProg["Enroll beneficiary in programme"]
+        TrigPay["Trigger digital payment"]
+        NotifyBen["Notify beneficiary"]
     end
 
-    subgraph ProgMan [Programme Management]
+    subgraph ProgMan["Programme Management"]
         direction TB
-        ProgAppr[Programme approval]
+        ProgAppr["Programme approval"]
     end
 
-    subgraph PaySystem [Payment System]
+    subgraph PaySystem["Payment System"]
         direction TB
-        ExecPay[Execute digital payment]
-        PayGateway{Payment successful?}
+        ExecPay["Execute digital payment"]
+        PayGateway{"Payment successful?"}
     end
 
     %% Flow connections

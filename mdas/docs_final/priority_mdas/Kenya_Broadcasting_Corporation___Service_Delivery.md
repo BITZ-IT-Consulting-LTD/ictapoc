@@ -22,16 +22,16 @@ The Kenya Broadcasting Corporation (KBC) is the state broadcaster, holding over 
 graph TD
     Start((Start)) --> Request["Citizen/Client submits Archival Retrieval Request"]
     
-    subgraph Search [Manual Archive Search]
+    subgraph Search["Manual Archive Search"]
         Request --> Verify["Verify Request Details & Content Rights"]
         Verify --> PhysicalSearch["Archivist Searches Physical Library/Vault"]
         PhysicalSearch --> Found{"Content Found?"}
         
-        Found -- "No" --> Notify["Notify Client (Not Found)"]
+        Found -- "No" --> Notify["Notify Client('Not Found')"]
         Found -- "Yes" --> Review["Review Analog Format (Tape/Film)"]
     end
     
-    subgraph Processing [Digitization & Billing]
+    subgraph Processing["Digitization & Billing"]
         Review --> Prep["Prepare Content for Temporary Digitization"]
         Prep --> Bill["Calculate Licensing & Retrieval Fees"]
         Bill --> Payment["Client Pays via Bank / Cash at KBC"]
@@ -111,23 +111,23 @@ End-to-End Archival Retrieval, Digitization, and Content Licensing
 graph TD
     Start((Start)) --> Portal["Client Accesses KBC Digital Archive (eCitizen)"]
     
-    subgraph Layer1 [Access & Discovery]
+    subgraph Layer1["Access & Discovery"]
         Portal --> Search["AI-Powered Metadata Search"]
         Search --> Preview["View Low-Res Watermarked Previews"]
     end
     
-    subgraph Layer2 [Licensing & Workflow]
+    subgraph Layer2["Licensing & Workflow"]
         Preview --> Cart["Add to Licensing Cart"]
         Cart --> Rules["Workflow Engine: Auto-verify Copyright & Fees"]
     end
     
-    subgraph Layer4 [Settlement & Issuance]
-        Rules --> Pay["Pay Licensing Fee via GPA (Real-time)"]
+    subgraph Layer4["Settlement & Issuance"]
+        Rules --> Pay["Pay Licensing Fee via GPA('Real-time')"]
         Pay --> Token["System Generates Secure Download Token"]
         Token --> Cloud["Fetch High-Res Master from Secure Cloud Storage"]
     end
     
-    subgraph Delivery [Digital Fulfillment]
+    subgraph Delivery["Digital Fulfillment"]
         Cloud --> Delivery_App["Instant Digital Download / Stream"]
     end
     

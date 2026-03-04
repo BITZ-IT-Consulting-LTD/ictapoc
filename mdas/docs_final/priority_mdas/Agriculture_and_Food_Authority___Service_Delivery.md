@@ -21,39 +21,39 @@ The Agriculture and Food Authority (AFA) regulates, develops, and promotes sched
 flowchart TD
     %% Events
     Start((Start))
-    EndApprove((End - Approved))
-    EndReject((End - Rejected))
+    EndApprove(("End - Approved"))
+    EndReject(("End - Rejected"))
 
     subgraph Applicant [Applicant]
         direction LR
-        CompleteApp[Complete App] --> AttachDocs[Attach Docs]
+        CompleteApp["Complete App"] --> AttachDocs["Attach Docs"]
         AttachDocs --> SubmitApp[Submit]
-        SubmitApp --> PayFee[Pay Fee]
-        ProvideMoreInfo[Provide Info]
+        SubmitApp --> PayFee["Pay Fee"]
+        ProvideMoreInfo["Provide Info"]
     end
 
-    subgraph AFA [AFA Workflow]
+    subgraph AFA["AFA Workflow"]
         direction TB
-        LogApp[Log Application] --> ReviewDocs[Review Docs]
+        LogApp["Log Application"] --> ReviewDocs["Review Docs"]
         ReviewDocs --> DocsGateway{Complete?}
         
         DocsGateway -- "No" --> ProvideMoreInfo
         ProvideMoreInfo --> ReviewDocs
         
-        DocsGateway -- "Yes" --> VerifyBRS[Verify BRS]
-        VerifyBRS --> VerifyCompliance[Verify Compliance]
-        VerifyCompliance --> ScheduleInsp[Schedule Inspection]
-        ScheduleInsp --> PhysInsp[Physical Inspection]
-        PhysInsp --> SubmitInspReport[Submit Report]
-        SubmitInspReport --> OfficerRec[Officer Rec]
-        OfficerRec --> DirApproval[Committee Approval]
+        DocsGateway -- "Yes" --> VerifyBRS["Verify BRS"]
+        VerifyBRS --> VerifyCompliance["Verify Compliance"]
+        VerifyCompliance --> ScheduleInsp["Schedule Inspection"]
+        ScheduleInsp --> PhysInsp["Physical Inspection"]
+        PhysInsp --> SubmitInspReport["Submit Report"]
+        SubmitInspReport --> OfficerRec["Officer Rec"]
+        OfficerRec --> DirApproval["Committee Approval"]
         DirApproval --> ApprovalGateway{Decision?}
         
-        ApprovalGateway -- "Approved" --> GenLicense[Generate License]
-        GenLicense --> NotifyApp[Notify Applicant]
-        NotifyApp --> UpdateReg[Update Registry]
+        ApprovalGateway -- "Approved" --> GenLicense["Generate License"]
+        GenLicense --> NotifyApp["Notify Applicant"]
+        NotifyApp --> UpdateReg["Update Registry"]
         
-        ApprovalGateway -- "Rejected" --> NotifyReject[Notify Rejection]
+        ApprovalGateway -- "Rejected" --> NotifyReject["Notify Rejection"]
     end
 
     %% Flow connections between subgraphs
@@ -130,41 +130,41 @@ End-to-End Farmer Registration, Export Permits, and Trading Licenses
 flowchart TD
     %% Events
     Start((Start))
-    EndApprove((End - Issued))
-    EndReject((End - Rejected))
+    EndApprove(("End - Issued"))
+    EndReject(("End - Rejected"))
 
     subgraph Applicant [Applicant]
         direction LR
-        Access[Access eCitizen] --> SelectType[Select License]
-        SelectType --> ConfirmData[Confirm Data]
-        ConfirmData --> MakePayment[Digital Payment]
+        Access["Access eCitizen"] --> SelectType["Select License"]
+        SelectType --> ConfirmData["Confirm Data"]
+        ConfirmData --> MakePayment["Digital Payment"]
     end
 
-    subgraph IntegrationLayer [System Integration]
+    subgraph IntegrationLayer["System Integration"]
         direction LR
-        ValBRS[Validate BRS] --> ValKRA[Validate KRA]
-        ValKRA --> GetKIAMIS[Get KIAMIS Data]
-        GetKIAMIS --> AutoPop[Auto-populate]
+        ValBRS["Validate BRS"] --> ValKRA["Validate KRA"]
+        ValKRA --> GetKIAMIS["Get KIAMIS Data"]
+        GetKIAMIS --> AutoPop["Auto-populate"]
     end
 
-    subgraph WorkflowEngine [Workflow Engine]
+    subgraph WorkflowEngine["Workflow Engine"]
         direction TB
-        RunRisk[Run Risk Assessment] --> RiskGateway{Risk Level?}
-        OfficerReview[Officer Review] --> ReviewGateway{Decision?}
+        RunRisk["Run Risk Assessment"] --> RiskGateway{"Risk Level?"}
+        OfficerReview["Officer Review"] --> ReviewGateway{Decision?}
     end
 
     subgraph InspectionWorkflow [Inspection]
         direction TB
-        ScheduleInsp[Schedule Insp] --> UploadReport[Upload Report]
-        UploadReport --> ReviewInspResult[Review Result]
+        ScheduleInsp["Schedule Insp"] --> UploadReport["Upload Report"]
+        UploadReport --> ReviewInspResult["Review Result"]
         ReviewInspResult --> InspDecisionGateway{Approved?}
     end
 
     subgraph LicenseIssuance [Issuance]
         direction TB
-        GenDigitalLicense[Gen Digital License] --> RegDigitalRegistry[Register License]
-        RegDigitalRegistry --> NotifyApplicantApprove[Notify Applicant]
-        NotifyApplicantApprove --> SyncKentrade[Sync Kentrade]
+        GenDigitalLicense["Gen Digital License"] --> RegDigitalRegistry["Register License"]
+        RegDigitalRegistry --> NotifyApplicantApprove["Notify Applicant"]
+        NotifyApplicantApprove --> SyncKentrade["Sync Kentrade"]
     end
 
     %% Flow connections
@@ -179,7 +179,7 @@ flowchart TD
     %% Officer Review Path
     ReviewGateway -- "Approved" --> GenDigitalLicense
     ReviewGateway -- "Needs Insp" --> ScheduleInsp
-    ReviewGateway -- "Rejected" --> NotifyReject[Notify Rejection]
+    ReviewGateway -- "Rejected" --> NotifyReject["Notify Rejection"]
     
     %% Inspection Path
     InspDecisionGateway -- "Yes" --> GenDigitalLicense

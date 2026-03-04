@@ -22,11 +22,11 @@ The Department of Refugee Services (DRS) is mandated to manage refugee affairs i
 graph TD
     Start((Start)) --> Reg["Registration "]
     
-    subgraph Reception [Reception & Registration]
+    subgraph Reception["Reception & Registration"]
         Reg --> Pass["Issue Asylum Pass"]
     end
     
-    subgraph Determination [Refugee Status Determination - RSD]
+    subgraph Determination["Refugee Status Determination - RSD"]
         Pass --> Interview["Schedule & Conduct RSD Interview"]
         Interview --> Assess["Assessment & Evidence Review"]
         Assess --> RSDComm["RSD Committee Deliberates"]
@@ -110,27 +110,27 @@ End-to-End Refugee Status Determination and Documentation
 graph TD
     Start((Start)) --> Intake["Biometric Intake at eCitizen/DRS Desk"]
     
-    subgraph Layer1 [Access & Registration]
+    subgraph Layer1["Access & Registration"]
         Intake --> CrossCheck["Cross-check Biometrics via X-Road"]
     end
     
-    subgraph TrustHub [Identity & Trust Hub]
+    subgraph TrustHub["Identity & Trust Hub"]
         CrossCheck --> Validate{"Match Found in IPRS/NRB/Visa?"}
-        Validate -- "Yes" --> Flag["Flag for Review (Potential Fraud/Existing Resident)"]
+        Validate -- "Yes" --> Flag["Flag for Review('Potential Fraud/Existing Resident')"]
         Validate -- "No" --> Pass["Issue Digital Asylum Pass"]
     end
     
-    subgraph CorePlatform [Workflow Engine ]
+    subgraph CorePlatform["Workflow Engine "]
         Pass --> RSD["Digital RSD Case File Created"]
         RSD --> CommApprove["RSD Committee Approves Digitally"]
         CommApprove --> IPRS["Push Data to IPRS via KeSEL"]
     end
     
-    subgraph Registries [Authoritative Registries]
+    subgraph Registries["Authoritative Registries"]
         IPRS --> Mint["Mint Refugee Maisha Namba"]
     end
     
-    subgraph Output [Production & Delivery]
+    subgraph Output["Production & Delivery"]
         Mint --> PrintID["Auto-trigger ID Card & e-Travel Document Printing"]
         PrintID --> Posta["Deliver via Posta / Issue to Digital Wallet"]
     end

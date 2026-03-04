@@ -22,48 +22,48 @@ The National Environment Management Authority (NEMA) is responsible for the supe
 flowchart TD
     %% Events
     Start((Start))
-    EndProcess((End Process))
+    EndProcess(("End Process"))
 
-    subgraph Proponent [Proponent / Expert]
+    subgraph Proponent["Proponent / Expert"]
         direction TB
-        SubRep[Submit EIA project report]
-        PayFee[Pay EIA processing fee]
+        SubRep["Submit EIA project report"]
+        PayFee["Pay EIA processing fee"]
     end
 
-    subgraph Registry [NEMA Registry]
+    subgraph Registry["NEMA Registry"]
         direction TB
-        LogSub[Log submission & verify payment]
+        LogSub["Log submission & verify payment"]
     end
 
-    subgraph ScreenPhase [Screening Phase]
+    subgraph ScreenPhase["Screening Phase"]
         direction TB
-        ScreenProj[Screen project impact]
-        ScreenGateway{Full EIA study required?}
+        ScreenProj["Screen project impact"]
+        ScreenGateway{"Full EIA study required?"}
     end
 
-    subgraph PublicPart [Public Participation]
+    subgraph PublicPart["Public Participation"]
         direction TB
-        PubNotice[Publish public notice]
-        CollComm[Collect public comments]
-        PubHear[Conduct public hearing]
+        PubNotice["Publish public notice"]
+        CollComm["Collect public comments"]
+        PubHear["Conduct public hearing"]
     end
 
-    subgraph TechReview [Technical Review]
+    subgraph TechReview["Technical Review"]
         direction TB
-        AssignOff[Assign environmental officer]
-        SiteInsp[Conduct physical site inspection]
-        LeadCons[Consult lead agencies KFS, Water, etc.]
-        RevFind[Review technical findings]
+        AssignOff["Assign environmental officer"]
+        SiteInsp["Conduct physical site inspection"]
+        LeadCons["Consult lead agencies KFS, Water, etc."]
+        RevFind["Review technical findings"]
     end
 
-    subgraph Decision [Decision & Issuance]
+    subgraph Decision["Decision & Issuance"]
         direction TB
-        CommRev[Technical committee review]
-        DGDecision[Director General decision]
-        DecGateway{Decision outcome?}
-        IssueRej[Issue rejection notification]
-        IssueCond[Issue conditional approval]
-        IssueLic[Issue EIA License]
+        CommRev["Technical committee review"]
+        DGDecision["Director General decision"]
+        DecGateway{"Decision outcome?"}
+        IssueRej["Issue rejection notification"]
+        IssueCond["Issue conditional approval"]
+        IssueLic["Issue EIA License"]
     end
 
     %% Flow connections
@@ -166,41 +166,41 @@ Environmental Impact Assessment (EIA) Licensing and Compliance Monitoring
 flowchart TD
     %% Events
     Start((Start))
-    EndProcess((End Process))
+    EndProcess(("End Process"))
 
-    subgraph Proponent [Proponent / Expert]
+    subgraph Proponent["Proponent / Expert"]
         direction LR
-        SubmitDig[Submit EIA digitally]
-        PayFee[Pay fee via GPA]
+        SubmitDig["Submit EIA digitally"]
+        PayFee["Pay fee via GPA"]
     end
 
-    subgraph NEMASys [NEMA System]
+    subgraph NEMASys["NEMA System"]
         direction TB
-        VerBRS[Verify business registration BRS]
-        FetchLand[Fetch land data Ardhisasa]
-        ScreenRisk[Screen environmental risk]
-        RiskGateway{Full EIA required?}
-        RouteRev[Route project for digital review]
-        ConsComm[Consolidate agency comments]
-        ApprGateway{License approved?}
-        IssueDig[Issue digital EIA license]
-        NotifyRej[Notify of rejection/conditions]
+        VerBRS["Verify business registration BRS"]
+        FetchLand["Fetch land data Ardhisasa"]
+        ScreenRisk["Screen environmental risk"]
+        RiskGateway{"Full EIA required?"}
+        RouteRev["Route project for digital review"]
+        ConsComm["Consolidate agency comments"]
+        ApprGateway{"License approved?"}
+        IssueDig["Issue digital EIA license"]
+        NotifyRej["Notify of rejection/conditions"]
     end
 
-    subgraph LeadAgencies [Lead Agencies]
+    subgraph LeadAgencies["Lead Agencies"]
         direction TB
-        DigRev[Digital review via service bus]
-        ObjGateway{Objections raised?}
+        DigRev["Digital review via service bus"]
+        ObjGateway{"Objections raised?"}
     end
 
-    subgraph EnvOfficer [Environmental Officer]
+    subgraph EnvOfficer["Environmental Officer"]
         direction TB
-        GISInsp[Conduct mobile GIS inspection]
+        GISInsp["Conduct mobile GIS inspection"]
     end
 
-    subgraph TechComm [Technical Committee]
+    subgraph TechComm["Technical Committee"]
         direction TB
-        CommDec[Committee decision]
+        CommDec["Committee decision"]
     end
 
     %% Flow connections

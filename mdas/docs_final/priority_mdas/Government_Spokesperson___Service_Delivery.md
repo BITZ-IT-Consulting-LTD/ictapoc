@@ -22,7 +22,7 @@ The Office of the Government Spokesperson manages official government communicat
 graph TD
     Start((Start)) --> Collection["Collect Info: MDAs submit Briefs/Announcements"]
     
-    subgraph Development [Message Creation]
+    subgraph Development["Message Creation"]
         Collection --> Draft["Communication Officers Draft Public Messages"]
         Draft --> Review["Review for Accuracy and Consistency"]
         Review --> Clearance["Obtain Clearance from Authorized Offices"]
@@ -79,17 +79,17 @@ End-to-End Government Communication (Collection to Archiving)
 graph TD
     Start((Start)) --> Author["Collaborative Authoring in Secure Portal"]
     
-    subgraph Layer2 [Trust Hub & Workflow]
-        Author --> Sign["NPKI Digital Signature (Immutable Stamp)"]
+    subgraph Layer2["Trust Hub & Workflow"]
+        Author --> Sign["NPKI Digital Signature('Immutable Stamp')"]
         Sign --> Workflow["Workflow Engine: Concurrent Digital Clearance"]
     end
     
-    subgraph Layer3 [Interoperability - X-Road]
+    subgraph Layer3["Interoperability - X-Road"]
         Workflow --> MultiChannel["API Gateway: Push to Social, SMS, Web, KBC"]
         MultiChannel --> XRoad_Archive["X-Road: Auto-syndicate to National Archive"]
     end
     
-    subgraph Layer4 [Intelligent Archive]
+    subgraph Layer4["Intelligent Archive"]
         XRoad_Archive --> AI_Meta["AI: Automated Metadata Tagging & Indexing"]
         AI_Meta --> Registry["Blockchain-based Verifiable Statement Registry"]
     end

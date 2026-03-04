@@ -22,42 +22,42 @@ The State Department for Children Services is responsible for the protection and
 flowchart TD
     %% Events
     Start((Start))
-    EndProcess((End - Case Closed))
+    EndProcess(("End - Case Closed"))
 
-    subgraph CaseIntake [Intake & Assessment]
+    subgraph CaseIntake["Intake & Assessment"]
         direction TB
-        Report[Case reporting]
-        Reg[Case registration]
-        AssignID[Case ID assignment]
-        IntakeAss[Intake assessment]
-        RiskAss[Risk assessment]
-        RiskGateway{Immediate danger?}
+        Report["Case reporting"]
+        Reg["Case registration"]
+        AssignID["Case ID assignment"]
+        IntakeAss["Intake assessment"]
+        RiskAss["Risk assessment"]
+        RiskGateway{"Immediate danger?"}
     end
 
-    subgraph Investigation [Investigation Phase]
+    subgraph Investigation["Investigation Phase"]
         direction TB
         Investigate[Investigation]
-        EmergRem[Emergency removal/placement]
+        EmergRem["Emergency removal/placement"]
     end
 
-    subgraph CasePlanning [Case Planning]
+    subgraph CasePlanning["Case Planning"]
         direction TB
-        RevMeet[Case review meeting]
-        CarePlan[Care plan development]
-        CourtGateway{Court intervention required?}
-        CourtRef[Refer to Court]
+        RevMeet["Case review meeting"]
+        CarePlan["Care plan development"]
+        CourtGateway{"Court intervention required?"}
+        CourtRef["Refer to Court"]
     end
 
-    subgraph Implementation [Intervention & Monitoring]
+    subgraph Implementation["Intervention & Monitoring"]
         direction TB
-        Intervene[Intervention execution]
-        Monitor[Monitoring visits]
-        MetGateway{Objectives achieved?}
+        Intervene["Intervention execution"]
+        Monitor["Monitoring visits"]
+        MetGateway{"Objectives achieved?"}
     end
 
-    subgraph Closure [Case Closure]
+    subgraph Closure["Case Closure"]
         direction TB
-        CloseProc[Case closure procedures]
+        CloseProc["Case closure procedures"]
     end
 
     %% Flow connections
@@ -158,39 +158,39 @@ End-to-End Child Protection Case Management (Reporting to Closure)
 flowchart TD
     %% Events
     Start((Start))
-    EndProcess((End - Case Closed))
+    EndProcess(("End - Case Closed"))
 
-    subgraph Citizen [Citizen Reporter]
+    subgraph Citizen["Citizen Reporter"]
         direction TB
-        DigIntake[Digital case intake]
+        DigIntake["Digital case intake"]
     end
 
-    subgraph CPIMS [System (National CPIMS)]
+    subgraph CPIMS["System (National CPIMS)"]
         direction TB
-        IdVerify[Identity verification integration]
-        RiskScore[AI risk scoring support]
-        CourtFile[Court filing automation]
-        SecureDB[Store in secure case database]
-        EmergGateway{Emergency response required?}
+        IdVerify["Identity verification integration"]
+        RiskScore["AI risk scoring support"]
+        CourtFile["Court filing automation"]
+        SecureDB["Store in secure case database"]
+        EmergGateway{"Emergency response required?"}
     end
 
-    subgraph ChildOfficer [Children Officer]
+    subgraph ChildOfficer["Children Officer"]
         direction TB
-        LogInvest[Investigation logging]
-        DecideAction[Human caseworker decision]
-        CourtGateway{Court order required?}
-        MonVisits[Monitoring visits]
-        CaseClose[Case closure]
+        LogInvest["Investigation logging"]
+        DecideAction["Human caseworker decision"]
+        CourtGateway{"Court order required?"}
+        MonVisits["Monitoring visits"]
+        CaseClose["Case closure"]
     end
 
     subgraph Judicial [Court]
         direction TB
-        ProcOrder[Process protection order]
+        ProcOrder["Process protection order"]
     end
 
-    subgraph CareInst [Care Institution]
+    subgraph CareInst["Care Institution"]
         direction TB
-        ProvideCare[Provide intervention care]
+        ProvideCare["Provide intervention care"]
     end
 
     %% Flow connections

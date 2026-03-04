@@ -22,37 +22,37 @@ The State Department for Culture, Arts and Heritage oversees the Ushanga Kenya i
 flowchart TD
     %% Events
     Start((Start))
-    EndProcess((End Process))
-    EndReject((End - Rejected))
+    EndProcess(("End Process"))
+    EndReject(("End - Rejected"))
 
-    subgraph Artisan [Artisan & Cooperative]
+    subgraph Artisan["Artisan & Cooperative"]
         direction TB
-        Onboard[Cooperative onboarding]
-        Aggregate[Product aggregation]
+        Onboard["Cooperative onboarding"]
+        Aggregate["Product aggregation"]
     end
 
-    subgraph CenterOps [Center Operations]
+    subgraph CenterOps["Center Operations"]
         direction TB
-        VerifyReg[Verification of cooperative registration]
-        RegGateway{Registered cooperative?}
-        Intake[Product intake and counting]
-        QualityGrad[Quality grading]
-        QualGateway{Product passed quality check?}
-        StoreInv[Inventory storage]
-        CatList[Catalog listing]
+        VerifyReg["Verification of cooperative registration"]
+        RegGateway{"Registered cooperative?"}
+        Intake["Product intake and counting"]
+        QualityGrad["Quality grading"]
+        QualGateway{"Product passed quality check?"}
+        StoreInv["Inventory storage"]
+        CatList["Catalog listing"]
     end
 
-    subgraph MarketSales [Market & Sales]
+    subgraph MarketSales["Market & Sales"]
         direction TB
-        MarketPlac[Market placement]
-        ProdSale[Product sales]
-        SoldGateway{Product sold?}
+        MarketPlac["Market placement"]
+        ProdSale["Product sales"]
+        SoldGateway{"Product sold?"}
     end
 
-    subgraph Settlement [Finance & Settlement]
+    subgraph Settlement["Finance & Settlement"]
         direction TB
-        SalesRec[Sales reconciliation]
-        PaySett[Payment settlement]
+        SalesRec["Sales reconciliation"]
+        PaySett["Payment settlement"]
     end
 
     %% Flow connections
@@ -151,42 +151,42 @@ End-to-End Ushanga Kenya Value Chain (Aggregation to Payment)
 flowchart TD
     %% Events
     Start((Start))
-    EndProcess((End Process))
-    EndFail((End - QA Fail))
+    EndProcess(("End Process"))
+    EndFail(("End - QA Fail"))
 
-    subgraph ArtisanCoop [Artisan / Cooperative]
+    subgraph ArtisanCoop["Artisan / Cooperative"]
         direction TB
-        BringProd[Bring products to center]
-        RecNotif[Receive notification & payment]
+        BringProd["Bring products to center"]
+        RecNotif["Receive notification & payment"]
     end
 
-    subgraph CenterOff [Center Officer]
+    subgraph CenterOff["Center Officer"]
         direction TB
-        DigIntake[Digital product intake]
+        DigIntake["Digital product intake"]
     end
 
-    subgraph QualOff [Quality Officer]
+    subgraph QualOff["Quality Officer"]
         direction TB
-        AIGrade[AI-assisted grading review]
-        ApprQual[Human quality approval]
-        QualGateway{Quality pass?}
+        AIGrade["AI-assisted grading review"]
+        ApprQual["Human quality approval"]
+        QualGateway{"Quality pass?"}
     end
 
-    subgraph Sys [Digital System / Marketplace]
+    subgraph Sys["Digital System / Marketplace"]
         direction TB
-        GenQR[Generate QR code identity]
-        SyncInv[Inventory synchronization]
-        ListMarket[Marketplace listing]
+        GenQR["Generate QR code identity"]
+        SyncInv["Inventory synchronization"]
+        ListMarket["Marketplace listing"]
     end
 
     subgraph Cust [Customer]
         direction TB
-        CustBuy[Customer purchase via platform]
+        CustBuy["Customer purchase via platform"]
     end
 
-    subgraph PaySys [Payment System]
+    subgraph PaySys["Payment System"]
         direction TB
-        AutoSplit[Automated payment split]
+        AutoSplit["Automated payment split"]
     end
 
     %% Flow connections

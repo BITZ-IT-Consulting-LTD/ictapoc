@@ -22,9 +22,9 @@ The State Department for MSME Development is mandated to support the growth of s
 graph TD
     Start((Start)) --> Access["Access Portal / Mobile App"]
     
-    subgraph Individual_Credit [Hustler Fund Application]
+    subgraph Individual_Credit["Hustler Fund Application"]
         Access --> KYC["Complete KYC & Register Account"]
-        KYC --> VerifyID["Verify National ID (IPRS Lookup)"]
+        KYC --> VerifyID["Verify National ID('IPRS Lookup')"]
         VerifyID --> CreditScore["Check Credit Score (Internal/CRB)"]
         CreditScore --> Eligible{"Eligible?"}
         
@@ -32,8 +32,8 @@ graph TD
         Eligible -- "No" --> Review["Flag for Manual Review / Reject"]
     end
     
-    subgraph Group_Credit [Uwezo Fund Loan]
-        Access --> Form_Group["Form Group (10-15 Members) & Elect Officials"]
+    subgraph Group_Credit["Uwezo Fund Loan"]
+        Access --> Form_Group["Form Group('10-15 Members') & Elect Officials"]
         Form_Group --> Bank["Open Group Bank Account"]
         Bank --> Reg_Form["Complete Registration & Attach Member IDs/Constitution"]
         Reg_Form --> SubCounty["Submit to Sub-County for Verification"]
@@ -112,21 +112,21 @@ MSME Credit Access (Hustler/Uwezo), Repayment, and NYOTA Apprenticeship
 graph TD
     Start((Start)) --> Portal["Applicant Accesses Unified MSME Portal (SSO)"]
     
-    subgraph Layer2 [Workflow & Identity]
-        Portal --> Verify["X-Road: Validate Identity & Business (BRS)"]
+    subgraph Layer2["Workflow & Identity"]
+        Portal --> Verify["X-Road: Validate Identity & Business('BRS')"]
         Verify --> Score["AI Credit Engine: Score based on GPA & BRS Data"]
     end
     
-    subgraph Layer3 [Huduma Bridge / X-Road]
+    subgraph Layer3["Huduma Bridge / X-Road"]
         Score --> GroupCheck["X-Road: Auto-verify Group Members via IPRS"]
     end
     
-    subgraph Layer4 [Payments & Disbursement]
+    subgraph Layer4["Payments & Disbursement"]
         GroupCheck --> Wallet["System Creates Digital Group Wallet (GPA)"]
         Wallet --> Disburse["Instant Disbursement via Payment Aggregator"]
     end
     
-    subgraph Monitoring [Impact Tracking]
+    subgraph Monitoring["Impact Tracking"]
         Disburse --> Track["Real-time Repayment & Performance Tracking"]
         Track --> History["Auto-update National Credit Registry"]
     end

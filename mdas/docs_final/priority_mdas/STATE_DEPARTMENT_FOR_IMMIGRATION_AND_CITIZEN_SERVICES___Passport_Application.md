@@ -36,35 +36,35 @@ The Directorate of Immigration Services (DIS) is responsible for the issuance of
 flowchart TD
     %% Events
     Start((Start))
-    EndProcess((End Process))
+    EndProcess(("End Process"))
 
     subgraph Applicant [Applicant]
         direction LR
-        Login[Login to eCitizen]
-        FillForm[Fill passport form]
-        UploadDocs[Upload documents]
-        SubmitApp[Submit application]
-        PayFee[Pay passport fee]
-        BookAppt[Book biometric appointment]
-        Collect[Passport collection by citizen]
+        Login["Login to eCitizen"]
+        FillForm["Fill passport form"]
+        UploadDocs["Upload documents"]
+        SubmitApp["Submit application"]
+        PayFee["Pay passport fee"]
+        BookAppt["Book biometric appointment"]
+        Collect["Passport collection by citizen"]
     end
 
-    subgraph ImmOffice [Immigration Office]
+    subgraph ImmOffice["Immigration Office"]
         direction TB
-        BioCapture[Biometric capture]
-        IdVerify[Identity verification against IPRS]
-        DocVerify[Document verification]
-        Approval[Senior officer approval decision]
-        ApprGateway{Application approved?}
-        NotifyReject[Notify applicant]
+        BioCapture["Biometric capture"]
+        IdVerify["Identity verification against IPRS"]
+        DocVerify["Document verification"]
+        Approval["Senior officer approval decision"]
+        ApprGateway{"Application approved?"}
+        NotifyReject["Notify applicant"]
     end
 
-    subgraph ProdUnit [Production Unit]
+    subgraph ProdUnit["Production Unit"]
         direction TB
-        QueueProd[Queue for passport production]
-        Print[Passport printing]
-        QA[Quality assurance]
-        Dispatch[Dispatch to collection center]
+        QueueProd["Queue for passport production"]
+        Print["Passport printing"]
+        QA["Quality assurance"]
+        Dispatch["Dispatch to collection center"]
     end
 
     %% Flow connections
@@ -178,36 +178,36 @@ Passport Application (New / Renewal / Replacement)
 flowchart TD
     %% Events
     Start((Start))
-    EndProcess((End Process))
+    EndProcess(("End Process"))
 
     subgraph Citizen [Citizen]
         direction LR
-        Submit[Submit application]
-        CapBio[Capture biometrics]
-        Receive[Receive/Collect passport]
+        Submit["Submit application"]
+        CapBio["Capture biometrics"]
+        Receive["Receive/Collect passport"]
     end
 
-    subgraph eCitizen [eCitizen Platform]
+    subgraph eCitizen["eCitizen Platform"]
         direction TB
-        Notify[Notify citizen]
+        Notify["Notify citizen"]
     end
 
-    subgraph ImmSys [Immigration System]
+    subgraph ImmSys["Immigration System"]
         direction TB
-        Verify[Verify identity]
-        FirstGateway{First passport?}
-        Process[Process application]
-        ApprGateway{Application approved?}
+        Verify["Verify identity"]
+        FirstGateway{"First passport?"}
+        Process["Process application"]
+        ApprGateway{"Application approved?"}
     end
 
-    subgraph ProdUnit [Passport Production Unit]
+    subgraph ProdUnit["Passport Production Unit"]
         direction TB
-        Print[Print passport]
+        Print["Print passport"]
     end
 
-    subgraph Courier [Courier Service]
+    subgraph Courier["Courier Service"]
         direction TB
-        Dispatch[Dispatch passport]
+        Dispatch["Dispatch passport"]
     end
 
     %% Flow connections
