@@ -30,10 +30,16 @@ graph TD
         direction TB
         
         AG["🔌 API Gateway (Kong)"]:::core
-        WE["⚙️ Workflow Engine (Camunda)"]:::core
+        WE["⚙️ Workflow Engine (Camunda BPMN/DMN)"]:::core
         FS["📋 Dynamic Form Builder"]:::core
         OBS["📊 Observability & Monitoring"]:::core
-        SSE["🧱 Shared Services Engine"]:::core
+        
+        subgraph SharedServices["🧱 Shared Services Engine"]
+            direction TB
+            SSE["Reusable Government Services"]:::core
+            NOTIFY["📨 Notification Service (SMS / Email / Push)"]:::core
+            DOCGEN["📄 Document Generator (Permits / Certificates)"]:::core
+        end
         
         subgraph TrustHub["🔐 Trust Hub"]
             direction LR
@@ -46,9 +52,13 @@ graph TD
         AG --> WE
         WE --> FS
         WE --> CM
+        WE --> SharedServices
+        SharedServices --> NOTIFY
+        SharedServices --> DOCGEN
+        
         CM --> IDP
         IDP --> NPKI
-        SSE --> WE
+        
         OBS -.-> AG
         OBS -.-> WE
     end
@@ -70,23 +80,24 @@ graph TD
         
         subgraph Registries["📋 Authoritative Registries"]
             direction TB
-            R1[IPRS / Maisha Namba / CRS<br/>Person & Civil Registries]:::registry
-            R2[BRS / LMS / NTSA / KRA<br/>Business & Revenue Registries]:::registry
-            R_SEC[Agriculture / Education / Health<br/>World Bank Priority Sectors]:::registry
-            R4[Immigration / Judiciary / SP<br/>Social & Legal Registries]:::registry
+            R1["IPRS / Maisha Namba / CRS<br/>Person & Civil Registries"]:::registry
+            R2["BRS / LMS / NTSA / KRA<br/>Business & Revenue Registries"]:::registry
+            R_SEC["Agriculture / Education / Health<br/>World Bank Priority Sectors"]:::registry
+            R4["Immigration / Judiciary / SP<br/>Social & Legal Registries"]:::registry
+            EDRMS["📚 National EDRMS / Government Records Registry"]:::registry
         end
         
         NDW["🗄️ National Data Warehouse (Analytics)"]:::registry
         
         subgraph Payments["💰 Financial Ecosystem"]
             direction LR
-            GPA["💳 Govt Payment Aggregator"]:::payment
-            Banks["🏦 Banks & M-Pesa"]:::payment
+            GPA["💳 Government Payment Aggregator"]:::payment
+            Banks["🏦 Banks & Mobile Money (M-Pesa etc.)"]:::payment
             Treasury["📊 National Treasury"]:::payment
             Counties["🏛️ County Revenue Systems"]:::payment
         end
         
-        %% Payment internal connections
+        %% Payment connections
         GPA <--> Banks
         GPA --> Treasury
         GPA --> Counties
@@ -95,24 +106,28 @@ graph TD
     %% Cross-Cutting Layer
     subgraph CrossLayer["🛡️ Cross-Cutting Capabilities (Resilience & Security)"]
         direction LR
-        SOC["🛡️ Security Ops Center (SOC)"]:::cross
+        SOC["🛡️ Security Operations Center"]:::cross
         DR["🔄 Disaster Recovery (DR/BCP)"]:::cross
         AUD["📝 Centralized Audit Vault"]:::cross
     end
 
-    %% Main Flow - Top to Bottom
+    %% Main Flow
     Layer1 ==> AG
     
     WE ==> KeSEL
     
     KeSEL ==> Registries
     KeSEL ==> GPA
+    
     Registries ==> NDW
 
-    %% Connect Trust Hub to Layer 3
+    %% Document flow
+    DOCGEN --> EDRMS
+
+    %% Trust integration
     TrustHub -.- KeSEL
-    
-    %% Resilience links
+
+    %% Security monitoring
     CrossLayer -.-> Layer2
     CrossLayer -.-> Layer3
     CrossLayer -.-> Layer4
