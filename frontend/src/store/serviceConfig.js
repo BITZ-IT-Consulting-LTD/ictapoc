@@ -5,10 +5,19 @@ export const useServiceConfigStore = defineStore('serviceConfig', {
   state: () => ({
     services: [],
     families: [],
+    groups: [],
     catalogueSummary: null,
     loadingSummary: false,
   }),
   actions: {
+    async fetchGroups() {
+      try {
+        const response = await api.get('/service-groups/');
+        this.groups = response.data;
+      } catch (error) {
+        console.error('Failed to fetch Service Groups:', error);
+      }
+    },
     async fetchCatalogueSummary() {
       this.loadingSummary = true;
       try {

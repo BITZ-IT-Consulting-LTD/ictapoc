@@ -90,22 +90,43 @@
           </transition>
         </div>
 
-        <!-- Category Filter -->
+        <!-- Type Filter -->
         <div class="toolbar__filter-group">
-          <i class="bi bi-tags toolbar__filter-icon"></i>
-          <input type="text" v-model="categorySearchLocal" placeholder="Filter by Category..."
-            @focus="showCategoryFilterDropdown = true" @blur="setTimeout(() => showCategoryFilterDropdown = false, 200)"
+          <i class="bi bi-tag-fill toolbar__filter-icon"></i>
+          <input type="text" v-model="typeSearchLocal" placeholder="Filter by Type..."
+            @focus="showTypeFilterDropdown = true" @blur="setTimeout(() => showTypeFilterDropdown = false, 200)"
             class="toolbar__filter-input toolbar__filter-input--with-arrow">
           <i class="bi bi-chevron-down toolbar__filter-arrow"
-            :class="{ 'toolbar__filter-arrow--open': showCategoryFilterDropdown }"></i>
-          <i v-if="categoryFilter" @click="selectCategoryFilter('')"
+            :class="{ 'toolbar__filter-arrow--open': showTypeFilterDropdown }"></i>
+          <i v-if="typeFilter" @click="selectTypeFilter('')"
             class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
 
           <transition name="dropdown">
-            <div v-if="showCategoryFilterDropdown" class="dropdown-menu">
-              <div @click="selectCategoryFilter('')" class="dropdown-item dropdown-item--header">All Categories</div>
-              <div v-for="c in filteredCategories" :key="c" @click="selectCategoryFilter(c)" class="dropdown-item">
-                {{ c }}
+            <div v-if="showTypeFilterDropdown" class="dropdown-menu">
+              <div @click="selectTypeFilter('')" class="dropdown-item dropdown-item--header">All Types</div>
+              <div v-for="t in filteredTypesList" :key="t" @click="selectTypeFilter(t)" class="dropdown-item">
+                {{ t }}
+              </div>
+            </div>
+          </transition>
+        </div>
+
+        <!-- Group Filter -->
+        <div class="toolbar__filter-group">
+          <i class="bi bi-collection-fill toolbar__filter-icon"></i>
+          <input type="text" v-model="groupSearchLocal" placeholder="Filter by Group..."
+            @focus="showGroupFilterDropdown = true" @blur="setTimeout(() => showGroupFilterDropdown = false, 200)"
+            class="toolbar__filter-input toolbar__filter-input--with-arrow">
+          <i class="bi bi-chevron-down toolbar__filter-arrow"
+            :class="{ 'toolbar__filter-arrow--open': showGroupFilterDropdown }"></i>
+          <i v-if="groupFilter" @click="selectGroupFilter('')"
+            class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
+
+          <transition name="dropdown">
+            <div v-if="showGroupFilterDropdown" class="dropdown-menu">
+              <div @click="selectGroupFilter('')" class="dropdown-item dropdown-item--header">All Lifecycle Groups</div>
+              <div v-for="g in filteredGroupsForFilter" :key="g.id" @click="selectGroupFilter(g)" class="dropdown-item">
+                {{ g.name }}
               </div>
             </div>
           </transition>
@@ -146,6 +167,16 @@
         <span class="filter-chip__value">{{ categoryFilter }}</span>
         <i class="bi bi-x"></i>
       </div>
+      <div v-if="typeFilter" :key="'t-' + typeFilter" class="filter-chip" @click="selectTypeFilter('')">
+        <span class="filter-chip__label">Type:</span>
+        <span class="filter-chip__value">{{ typeFilter }}</span>
+        <i class="bi bi-x"></i>
+      </div>
+      <div v-if="groupFilter" :key="'g-' + groupFilter" class="filter-chip" @click="selectGroupFilter('')">
+        <span class="filter-chip__label">Group:</span>
+        <span class="filter-chip__value">{{ getGroupName(groupFilter) }}</span>
+        <i class="bi bi-x"></i>
+      </div>
     </transition-group>
 
     <!-- Service Registry Table -->
@@ -157,6 +188,7 @@
               <th class="table__header-cell table__header-cell--with-left-padding">Registry Code</th>
               <th class="table__header-cell">Official Service Name</th>
               <th class="table__header-cell">Institutional Owner (MDA)</th>
+              <th class="table__header-cell">Type</th>
               <th class="table__header-cell">Strategic Family</th>
               <th class="table__header-cell table__header-cell--align-right table__header-cell--with-right-padding">
                 Management</th>
@@ -174,6 +206,14 @@
                 <div class="table__mda-info">
                   <i class="bi bi-building table__mda-icon"></i> {{ getMdaName(service.mda) }}
                 </div>
+              </td>
+              <td class="table__cell">
+                <span class="badge" :class="{
+                    'badge--primary': service.service_type === 'G2C',
+                    'badge--success': service.service_type === 'G2G',
+                    'badge--info': service.service_type === 'G2B',
+                    'badge--warning': service.service_type === 'C2G'
+                  }">{{ service.service_type || 'N/A' }}</span>
               </td>
               <td class="table__cell">
                 <span v-if="service.service_family_details" class="badge"
@@ -349,6 +389,34 @@
                         <i class="bi bi-info-circle me-1"></i>Strategic clustering for shared workflows
                       </p>
                     </div>
+
+                    <!-- New Fields -->
+                    <div class="form__group">
+                      <label class="form__label">
+                        <i class="bi bi-person-check me-1"></i>Service Model (Type)
+                      </label>
+                      <select v-model="editForm.service_type" class="form__select">
+                        <option value="G2C">G2C (Gov to Citizen)</option>
+                        <option value="G2G">G2G (Gov to Gov)</option>
+                        <option value="G2B">G2B (Gov to Business)</option>
+                        <option value="C2G">C2G (Citizen to Gov)</option>
+                        <option value="B2G">B2G (Business to Gov)</option>
+                        <option value="Internal">Internal Agency Process</option>
+                      </select>
+                    </div>
+
+                    <div class="form__group md:col-span-2">
+                       <label class="form__label">
+                        <i class="bi bi-collection me-1"></i>Catalogue Life-Cycle Groups
+                      </label>
+                      <div class="u-flex u-flex-wrap u-gap-3 u-p-4 u-bg-bg-page u-rounded-xl u-border">
+                         <label v-for="grp in groups" :key="grp.id" class="u-flex u-items-center u-gap-2 u-cursor-pointer hover:u-text-primary transition-colors">
+                            <input type="checkbox" :value="grp.id" v-model="editForm.service_groups" class="u-w-4 u-h-4 accent-primary">
+                            <span class="u-text-xs u-font-bold">{{ grp.name }}</span>
+                         </label>
+                      </div>
+                      <p class="u-text-[10px] u-text-muted u-mt-2 italic">Select all that apply. Services in "Cradle to Death" sub-stages should also be checked in the main "Cradle to Death" group.</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -425,22 +493,29 @@
   const auditStats = computed(() => serviceConfigStore.catalogueSummary);
   const services = computed(() => serviceConfigStore.services);
   const families = computed(() => serviceConfigStore.families);
+  const groups = computed(() => serviceConfigStore.groups);
   const mdas = computed(() => mdaStore.mdas);
   const searchQuery = ref('');
   const mdaFilter = ref('');
   const familyFilter = ref('');
   const categoryFilter = ref('');
   const lifeEventFilter = ref('');
+  const typeFilter = ref('');
+  const groupFilter = ref('');
 
   const mdaFilterSearchLocal = ref('');
   const familySearchLocal = ref('');
   const categorySearchLocal = ref('');
   const lifeEventSearchLocal = ref('');
+  const typeSearchLocal = ref('');
+  const groupSearchLocal = ref('');
 
   const showMdaFilterDropdown = ref(false);
   const showFamilyFilterDropdown = ref(false);
   const showCategoryFilterDropdown = ref(false);
   const showLifeEventFilterDropdown = ref(false);
+  const showTypeFilterDropdown = ref(false);
+  const showGroupFilterDropdown = ref(false);
 
   const currentConfigTab = ref('identity'); // Tab state for modal
 
@@ -492,6 +567,26 @@
     return lifeEventsList.value.filter(l => l.toLowerCase().includes(q));
   });
 
+  const typesList = computed(() => {
+    const list = new Set();
+    services.value.forEach(s => {
+      if (s.service_type) list.add(s.service_type);
+    });
+    return [...list].sort();
+  });
+
+  const filteredTypesList = computed(() => {
+    if (!typeSearchLocal.value) return typesList.value;
+    const q = typeSearchLocal.value.toLowerCase();
+    return typesList.value.filter(t => t.toLowerCase().includes(q));
+  });
+
+  const filteredGroupsForFilter = computed(() => {
+    if (!groupSearchLocal.value) return groups.value;
+    const q = groupSearchLocal.value.toLowerCase();
+    return groups.value.filter(g => g.name.toLowerCase().includes(q));
+  });
+
   const selectMdaFilter = (mda) => {
     if (mda === '') {
       mdaFilter.value = '';
@@ -521,6 +616,23 @@
     showLifeEventFilterDropdown.value = false;
   };
 
+  const selectTypeFilter = (val) => {
+    typeFilter.value = val;
+    typeSearchLocal.value = val;
+    showTypeFilterDropdown.value = false;
+  };
+
+  const selectGroupFilter = (group) => {
+    if (group === '') {
+      groupFilter.value = '';
+      groupSearchLocal.value = '';
+    } else {
+      groupFilter.value = group.id;
+      groupSearchLocal.value = group.name;
+    }
+    showGroupFilterDropdown.value = false;
+  };
+
   const filteredServices = computed(() => {
     let result = services.value;
 
@@ -538,6 +650,14 @@
 
     if (lifeEventFilter.value) {
       result = result.filter(s => s.life_event_group === lifeEventFilter.value);
+    }
+
+    if (typeFilter.value) {
+      result = result.filter(s => s.service_type === typeFilter.value);
+    }
+
+    if (groupFilter.value) {
+      result = result.filter(s => s.service_groups && s.service_groups.includes(Number(groupFilter.value)));
     }
 
     if (searchQuery.value) {
@@ -566,12 +686,15 @@
     service_name: '',
     mda: null,
     service_family: null,
+    service_type: 'G2C',
+    service_groups: [],
     config: { rules: { schema: { properties: {}, required: [] } } },
   });
 
   onMounted(() => {
     serviceConfigStore.fetchServices();
     serviceConfigStore.fetchFamilies();
+    serviceConfigStore.fetchGroups();
     mdaStore.fetchMdas();
     serviceConfigStore.fetchCatalogueSummary();
   });
@@ -587,16 +710,25 @@
     familySearchLocal.value = '';
     categorySearchLocal.value = '';
     lifeEventSearchLocal.value = '';
+    typeFilter.value = '';
+    groupFilter.value = '';
+    typeSearchLocal.value = '';
+    groupSearchLocal.value = '';
   };
 
   const isAnyFilterActive = computed(() => {
-    return searchQuery.value || mdaFilter.value || familyFilter.value || categoryFilter.value || lifeEventFilter.value;
+    return searchQuery.value || mdaFilter.value || familyFilter.value || categoryFilter.value || lifeEventFilter.value || typeFilter.value || groupFilter.value;
   });
 
   const getMdaName = (mdaId) => {
     const mda = mdas.value.find(m => m.id === mdaId);
     if (!mda) return 'N/A';
     return mda.code ? `${mda.name} (${mda.code})` : mda.name;
+  };
+
+  const getGroupName = (groupId) => {
+    const group = groups.value.find(g => g.id === Number(groupId));
+    return group ? group.name : 'Unknown Group';
   };
 
   const handleUpdate = async () => {
@@ -619,6 +751,8 @@
       service_code: '',
       service_name: '',
       mda: mdas.value.length > 0 ? mdas.value[0].id : null,
+      service_type: 'G2C',
+      service_groups: [],
       config: { rules: { schema: { properties: {}, required: [] } } },
     };
     showModal.value = true;
@@ -628,9 +762,14 @@
     // Deep copy to avoid reactive mutations outside of the store
     editForm.value = JSON.parse(JSON.stringify(service));
 
-    // Ensure service_family is a flat ID for the select input
+    // Ensure IDs are flat for select/checkbox bindings
     if (service.service_family_details) {
       editForm.value.service_family = service.service_family_details.id;
+    }
+    
+    // Explicitly set service_groups to a list of IDs for binary checkbox binding
+    if (service.service_groups) {
+      editForm.value.service_groups = service.service_groups;
     }
 
     if (!editForm.value.config || !editForm.value.config.rules || !editForm.value.config.rules.schema) {

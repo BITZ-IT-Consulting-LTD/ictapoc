@@ -7,6 +7,9 @@
 - **Document Version:** 2.2
 - **Date:** 2026-03-04
 - **Classification:** Official
+- **Strategic Category:** Priority MDA
+- **Service Model:** G2C
+- **Life-Cycle Group:** Cradle to Death (5. Social Protection & Justice)
 
 ---
 
@@ -19,6 +22,7 @@ The State Department for Special Programmes is responsible for social protection
 *Current State visualization (Manual Special Programmes Delivery).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
     %% Events
     Start((Start))
@@ -141,6 +145,7 @@ End-to-End Special Programmes Delivery (Registration to Assistance)
 *Future State visualization (Kenya DSAP Architecture - Digital Social Protection Platform).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
     %% Events
     Start((Start))

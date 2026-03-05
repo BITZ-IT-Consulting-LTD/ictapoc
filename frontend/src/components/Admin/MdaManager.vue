@@ -30,6 +30,7 @@
             <tr class="bg-gray-50 border-b border-gray-200">
               <th class="table__th pl-8 text-xs uppercase tracking-widest text-muted font-bold">Code</th>
               <th class="table__th text-xs uppercase tracking-widest text-muted font-bold">MDA Name</th>
+              <th class="table__th text-xs uppercase tracking-widest text-muted font-bold">Priority Status</th>
               <th class="table__th text-xs uppercase tracking-widest text-muted font-bold">Head of MDA</th>
               <th class="table__th text-right pr-8 text-xs uppercase tracking-widest text-muted font-bold">Actions</th>
             </tr>
@@ -52,6 +53,12 @@
                     <i class="bi bi-link-45deg"></i> {{ mda.website }}
                   </a>
                 </div>
+              </td>
+              <td class="table__td">
+                <span v-if="mda.is_priority" class="badge badge--primary u-flex u-items-center u-gap-1 u-w-fit">
+                    <i class="bi bi-star-fill u-text-[8px]"></i> Priority
+                </span>
+                <span v-else class="text-muted text-xs">Normal</span>
               </td>
               <td class="table__td">
                 <div class="flex flex-col">
@@ -144,6 +151,15 @@
                 placeholder="Building, Street, City"></textarea>
             </div>
           </div>
+          <div class="form__group md:col-span-2 mt-2">
+            <label class="flex items-center gap-3 cursor-pointer p-4 bg-slate-50 rounded-lg border border-slate-100 hover:bg-white transition-all shadow-sm">
+                <input type="checkbox" v-model="form.is_priority" class="w-5 h-5 accent-primary rounded cursor-pointer">
+                <div>
+                    <span class="font-bold text-main block text-sm">Designate as Priority MDA</span>
+                    <span class="text-xs text-muted block italic">Priority MDAs are featured in the whole-of-government service catalogue.</span>
+                </div>
+            </label>
+          </div>
         </div>
 
         <div class="flex justify-end gap-3 pt-4 border-t border-border-color mt-4">
@@ -192,6 +208,7 @@
     contact_phone: '',
     website: '',
     address: '',
+    is_priority: false,
   });
 
   onMounted(() => {
@@ -210,6 +227,7 @@
       contact_phone: '',
       website: '',
       address: '',
+      is_priority: false,
     };
     showModal.value = true;
   };

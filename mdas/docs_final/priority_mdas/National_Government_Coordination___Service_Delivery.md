@@ -7,6 +7,9 @@
 - **Document Version:** 2.1
 - **Date:** 2026-02-24
 - **Classification:** Official
+- **Strategic Category:** Priority MDA
+- **Service Model:** G2G
+- **Life-Cycle Group:** Cradle to Death (5. Social Protection & Justice)
 
 ---
 
@@ -19,6 +22,7 @@ National Government Coordination is responsible for the seamless alignment of go
 *Current State visualization (End-to-End Coordination based on Deep Dive).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 graph TD
     Start((Start)) --> Trigger["Coordination Trigger (National Priority/Security/Reporting)"]
     
@@ -113,6 +117,7 @@ End-to-End Inter-Agency Coordination and Situation Reporting
 *Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 graph TD
     Start((Start)) --> Command["Leadership Initiates National Priority Task"]
     

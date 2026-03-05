@@ -302,6 +302,27 @@
                       </transition>
                     </div>
 
+                    <!-- Group Filter -->
+                    <div class="toolbar__filter-group">
+                      <i class="bi bi-collection toolbar__filter-icon"></i>
+                      <input type="text" v-model="groupSearchLocal" placeholder="Filter by Group..."
+                        @focus="showGroupDropdown = true" @blur="setTimeout(() => showGroupDropdown = false, 200)"
+                        class="toolbar__filter-input toolbar__filter-input--with-arrow">
+                      <i class="bi bi-chevron-down toolbar__filter-arrow"
+                        :class="{ 'toolbar__filter-arrow--open': showGroupDropdown }"></i>
+                      <i v-if="groupFilter" @click="selectGroup('')"
+                        class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
+                      <transition name="dropdown">
+                        <div v-if="showGroupDropdown" class="dropdown-menu">
+                          <div @click="selectGroup('')" class="dropdown-item dropdown-item--header">All Groups</div>
+                          <div v-for="grp in filteredGroups" :key="grp" @click="selectGroup(grp)"
+                            class="dropdown-item">
+                            {{ grp }}
+                          </div>
+                        </div>
+                      </transition>
+                    </div>
+
                     <!-- Reset Action -->
                     <button v-if="isAnyServiceFilterActive" @click="resetServiceFilters" class="btn-reset">
                       <i class="bi bi-arrow-counterclockwise"></i>
@@ -335,6 +356,11 @@
                   <span class="filter-chip__value">{{ familyFilter }}</span>
                   <i class="bi bi-x"></i>
                 </div>
+                <div v-if="groupFilter" :key="'g-' + groupFilter" class="filter-chip" @click="selectGroup('')">
+                  <span class="filter-chip__label">Group:</span>
+                  <span class="filter-chip__value">{{ groupFilter }}</span>
+                  <i class="bi bi-x"></i>
+                </div>
               </transition-group>
 
               <div v-if="filteredAvailableServices.length === 0"
@@ -345,10 +371,10 @@
                   shortly.</p>
               </div>
               <div v-else class="u-flex u-flex-col u-gap-12">
-                <!-- If no family is selected, show the list of families -->
-                <div v-if="!selectedFamilyForView" class="stats-grid">
+                <!-- If no family is selected and no other filters, show the list of families -->
+                <div v-if="!selectedFamilyForView && !isAnyServiceFilterActive" class="stats-grid">
                   <div v-for="group in groupedServicesByFamily" :key="group.name"
-                    @click="selectedFamilyForView = group.name"
+                    @click="selectFamily(group.name)"
                     class="card u-p-8 u-flex u-flex-col u-items-center u-text-center transition-all hover:u-shadow-xl u-cursor-pointer"
                     style="border: 1px solid var(--border-color);">
                     <div class="u-flex u-items-center u-justify-center u-mb-6 u-rounded-lg"
@@ -364,24 +390,24 @@
                   </div>
                 </div>
 
-                <!-- If a family is selected, show its services -->
+                <!-- If a family is selected or filters are active, show services directly -->
                 <div v-else class="service-family-group animate-slide-in">
                   <div class="u-flex u-items-center u-justify-between u-mb-6">
                     <div class="u-flex u-items-center u-gap-3">
-                      <button @click="selectedFamilyForView = null" class="button button--ghost button--small u-mr-2">
+                      <button @click="resetServiceFiltersAndView" class="button button--ghost button--small u-mr-2">
                         <i class="bi bi-arrow-left"></i> Back to Families
                       </button>
                       <div class="u-w-1 u-h-8 u-bg-primary u-rounded-full"></div>
                       <div>
                         <h3 class="u-text-lg u-font-black u-text-main u-uppercase u-tracking-widest">{{
-                          selectedFamilyForView }}</h3>
+                          selectedFamilyForView || 'Filtered Search Results' }}</h3>
                       </div>
                     </div>
                   </div>
 
                   <div class="stats-grid">
                     <div
-                      v-for="service in groupedServicesByFamily.find(g => g.name === selectedFamilyForView)?.services || []"
+                      v-for="service in (selectedFamilyForView ? (groupedServicesByFamily.find(g => g.name === selectedFamilyForView)?.services || []) : filteredAvailableServices)"
                       :key="service.id"
                       class="card u-p-8 u-flex u-flex-col u-items-center u-text-center transition-all hover:u-shadow-xl"
                       style="border: none;">
@@ -430,6 +456,9 @@
               </div>
               <div class="toolbar u-w-full u-md-w-auto">
                 <div class="toolbar__filters">
+                  <button @click="showStaffCatalogueModal = true" class="button button--secondary button--small mr-4">
+                    <i class="bi bi-grid-3x3-gap-fill u-mr-1"></i> Open Service Catalogue
+                  </button>
                   <div class="toolbar__filter-group">
                     <i class="bi bi-search toolbar__filter-icon"></i>
                     <input type="text" v-model="queueSearchQuery" placeholder="Filter queue..."
@@ -652,6 +681,224 @@
           <ReportsDashboard />
         </section>
       </section>
+
+      <!-- Staff Catalogue Modal -->
+      <BaseModal v-model:show="showStaffCatalogueModal" @close="showStaffCatalogueModal = false" :title="'Unified Service Catalogue'" size="full">
+        <div class="u-p-6" style="max-height: 80vh; overflow-y: auto; background: var(--color-background); border-radius: 0.5rem;">
+            <div  class="tab-content animate-slide-in u-flex u-flex-col u-gap-8">
+              <header class="page__header u-justify-between u-items-end u-mb-4 u-gap-4"
+                style="border-bottom: 1px solid var(--color-border); padding-bottom: 1rem;">
+                <div>
+                  <h2 class="page__title" style="font-size: 1.5rem">Unified Service Catalogue</h2>
+                  <p class="page__subtitle">Access authoritative G2C services through the secure Huduma Bridge</p>
+                </div>
+                <div class="toolbar u-w-full">
+                  <div class="toolbar__filters">
+                    <!-- Search -->
+                    <div class="toolbar__filter-group">
+                      <i class="bi bi-search toolbar__filter-icon"></i>
+                      <input type="text" v-model="serviceSearchQuery" placeholder="Search services..."
+                        class="toolbar__filter-input">
+                      <i v-if="serviceSearchQuery" @click="serviceSearchQuery = ''"
+                        class="bi bi-x-circle-fill toolbar__clear-icon"></i>
+                    </div>
+
+                    <!-- Agency Filter -->
+                    <div class="toolbar__filter-group">
+                      <i class="bi bi-building toolbar__filter-icon"></i>
+                      <input type="text" v-model="mdaSearchLocal" placeholder="Filter by Agency..."
+                        @focus="showMdaDropdown = true" @blur="setTimeout(() => showMdaDropdown = false, 200)"
+                        class="toolbar__filter-input toolbar__filter-input--with-arrow">
+                      <i class="bi bi-chevron-down toolbar__filter-arrow"
+                        :class="{ 'toolbar__filter-arrow--open': showMdaDropdown }"></i>
+                      <i v-if="mdaFilter" @click="selectMda('')"
+                        class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
+
+                      <transition name="dropdown">
+                        <div v-if="showMdaDropdown" class="dropdown-menu">
+                          <div @click="selectMda('')" class="dropdown-item dropdown-item--header">All Agencies</div>
+                          <div v-for="mda in filteredMdas" :key="mda.id" @click="selectMda(mda)" class="dropdown-item">
+                            {{ mda.name }}
+                          </div>
+                        </div>
+                      </transition>
+                    </div>
+
+                    <!-- Life Event Filter -->
+                    <div class="toolbar__filter-group">
+                      <i class="bi bi-calendar-event toolbar__filter-icon"></i>
+                      <input type="text" v-model="lifeEventSearchLocal" placeholder="Filter by Life Event..."
+                        @focus="showLifeEventDropdown = true"
+                        @blur="setTimeout(() => showLifeEventDropdown = false, 200)"
+                        class="toolbar__filter-input toolbar__filter-input--with-arrow">
+                      <i class="bi bi-chevron-down toolbar__filter-arrow"
+                        :class="{ 'toolbar__filter-arrow--open': showLifeEventDropdown }"></i>
+                      <i v-if="lifeEventFilter" @click="selectLifeEvent('')"
+                        class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
+
+                      <transition name="dropdown">
+                        <div v-if="showLifeEventDropdown" class="dropdown-menu">
+                          <div @click="selectLifeEvent('')" class="dropdown-item dropdown-item--header">All Life Events
+                          </div>
+                          <div v-for="event in filteredLifeEvents" :key="event" @click="selectLifeEvent(event)"
+                            class="dropdown-item">
+                            {{ event }}
+                          </div>
+                        </div>
+                      </transition>
+                    </div>
+
+                    <!-- Family Filter -->
+                    <div class="toolbar__filter-group">
+                      <i class="bi bi-diagram-3-fill toolbar__filter-icon"></i>
+                      <input type="text" v-model="familySearchLocal" placeholder="Filter by Family..."
+                        @focus="showFamilyDropdown = true" @blur="setTimeout(() => showFamilyDropdown = false, 200)"
+                        class="toolbar__filter-input toolbar__filter-input--with-arrow">
+                      <i class="bi bi-chevron-down toolbar__filter-arrow"
+                        :class="{ 'toolbar__filter-arrow--open': showFamilyDropdown }"></i>
+                      <i v-if="familyFilter" @click="selectFamily('')"
+                        class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
+                      <transition name="dropdown">
+                        <div v-if="showFamilyDropdown" class="dropdown-menu">
+                          <div @click="selectFamily('')" class="dropdown-item dropdown-item--header">All Families</div>
+                          <div v-for="fam in filteredFamilies" :key="fam" @click="selectFamily(fam)"
+                            class="dropdown-item">
+                            {{ fam }}
+                          </div>
+                        </div>
+                      </transition>
+                    </div>
+                    
+                    <!-- Group Filter -->
+                    <div class="toolbar__filter-group">
+                      <i class="bi bi-collection toolbar__filter-icon"></i>
+                      <input type="text" v-model="groupSearchLocal" placeholder="Filter by Group..."
+                        @focus="showGroupDropdown = true" @blur="setTimeout(() => showGroupDropdown = false, 200)"
+                        class="toolbar__filter-input toolbar__filter-input--with-arrow">
+                      <i class="bi bi-chevron-down toolbar__filter-arrow"
+                        :class="{ 'toolbar__filter-arrow--open': showGroupDropdown }"></i>
+                      <i v-if="groupFilter" @click="selectGroup('')"
+                        class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
+                      <transition name="dropdown">
+                        <div v-if="showGroupDropdown" class="dropdown-menu">
+                          <div @click="selectGroup('')" class="dropdown-item dropdown-item--header">All Groups</div>
+                          <div v-for="grp in filteredGroups" :key="grp" @click="selectGroup(grp)"
+                            class="dropdown-item">
+                            {{ grp }}
+                          </div>
+                        </div>
+                      </transition>
+                    </div>
+
+                    <!-- Reset Action -->
+                    <button v-if="isAnyServiceFilterActive" @click="resetServiceFilters" class="btn-reset">
+                      <i class="bi bi-arrow-counterclockwise"></i>
+                      <span>Reset</span>
+                    </button>
+                  </div>
+                </div>
+              </header>
+
+              <!-- Active Filter Chips -->
+              <transition-group name="list" tag="div" class="u-flex u-flex-wrap u-gap-2 u-mb-8">
+                <div v-if="serviceSearchQuery" :key="'s-' + serviceSearchQuery" class="filter-chip"
+                  @click="serviceSearchQuery = ''">
+                  <span class="filter-chip__label">Search:</span>
+                  <span class="filter-chip__value">{{ serviceSearchQuery }}</span>
+                  <i class="bi bi-x"></i>
+                </div>
+                <div v-if="mdaFilter" :key="'m-' + mdaFilter" class="filter-chip" @click="selectMda('')">
+                  <span class="filter-chip__label">Agency:</span>
+                  <span class="filter-chip__value">{{ getMdaName(mdaFilter) }}</span>
+                  <i class="bi bi-x"></i>
+                </div>
+                <div v-if="lifeEventFilter" :key="'e-' + lifeEventFilter" class="filter-chip"
+                  @click="selectLifeEvent('')">
+                  <span class="filter-chip__label">Event:</span>
+                  <span class="filter-chip__value">{{ lifeEventFilter }}</span>
+                  <i class="bi bi-x"></i>
+                </div>
+                <div v-if="familyFilter" :key="'f-' + familyFilter" class="filter-chip" @click="selectFamily('')">
+                  <span class="filter-chip__label">Family:</span>
+                  <span class="filter-chip__value">{{ familyFilter }}</span>
+                  <i class="bi bi-x"></i>
+                </div>
+                <div v-if="groupFilter" :key="'g-' + groupFilter" class="filter-chip" @click="selectGroup('')">
+                  <span class="filter-chip__label">Group:</span>
+                  <span class="filter-chip__value">{{ groupFilter }}</span>
+                  <i class="bi bi-x"></i>
+                </div>
+              </transition-group>
+
+              <div v-if="filteredAvailableServices.length === 0"
+                class="u-flex u-flex-col u-items-center u-justify-center u-py-20 u-text-muted u-w-full">
+                <i class="bi bi-cloud-slash u-text-5xl u-mb-4 u-opacity-20"></i>
+                <p class="u-font-black u-uppercase u-tracking-widest u-text-xs">No services currently available</p>
+                <p class="u-text-xs u-mt-2 u-opacity-60">The authoritative catalogue is being updated. Please check back
+                  shortly.</p>
+              </div>
+              <div v-else class="u-flex u-flex-col u-gap-12">
+                <!-- If no family is selected and no other filters, show the list of families -->
+                <div v-if="!selectedFamilyForView && !isAnyServiceFilterActive" class="stats-grid">
+                  <div v-for="group in groupedServicesByFamily" :key="group.name"
+                    @click="selectFamily(group.name)"
+                    class="card u-p-8 u-flex u-flex-col u-items-center u-text-center transition-all hover:u-shadow-xl u-cursor-pointer"
+                    style="border: 1px solid var(--border-color);">
+                    <div class="u-flex u-items-center u-justify-center u-mb-6 u-rounded-lg"
+                      style="width: 4rem; height: 4rem; background: var(--color-primary-soft); color: var(--color-primary); font-size: 1.5rem;">
+                      <i :class="getServiceFamilyIcon(group.name)"></i>
+                    </div>
+                    <h3 class="u-font-bold u-text-main u-mb-2" style="font-size: 1.125rem;">{{ group.name }}</h3>
+                    <p class="u-text-xs u-text-muted u-mb-4 u-line-clamp-2" style="min-height: 2.5rem;">{{
+                      group.family?.description || 'View all associated services' }}</p>
+                    <div class="u-mt-auto">
+                      <span class="badge badge--info">{{ group.services.length }} Services</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- If a family is selected or filters are active, show services directly -->
+                <div v-else class="service-family-group animate-slide-in">
+                  <div class="u-flex u-items-center u-justify-between u-mb-6">
+                    <div class="u-flex u-items-center u-gap-3">
+                      <button @click="resetServiceFiltersAndView" class="button button--ghost button--small u-mr-2">
+                        <i class="bi bi-arrow-left"></i> Back to Families
+                      </button>
+                      <div class="u-w-1 u-h-8 u-bg-primary u-rounded-full"></div>
+                      <div>
+                        <h3 class="u-text-lg u-font-black u-text-main u-uppercase u-tracking-widest">{{
+                          selectedFamilyForView || 'Filtered Search Results' }}</h3>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="stats-grid">
+                    <div
+                      v-for="service in (selectedFamilyForView ? (groupedServicesByFamily.find(g => g.name === selectedFamilyForView)?.services || []) : filteredAvailableServices)"
+                      :key="service.id"
+                      class="card u-p-8 u-flex u-flex-col u-items-center u-text-center transition-all hover:u-shadow-xl"
+                      style="border: none;">
+                      <div class="u-flex u-items-center u-justify-center u-mb-6 u-rounded-lg"
+                        style="width: 4rem; height: 4rem; background: var(--color-primary-soft); color: var(--color-primary); font-size: 1.5rem;">
+                        <i :class="getServiceFamilyIcon(service.service_family_details?.name)"></i>
+                      </div>
+                      <h3 class="u-font-bold u-text-main u-mb-2" style="font-size: 1.125rem;">{{ service.service_name }}
+                      </h3>
+                      <p class="u-text-xs u-font-bold u-text-muted u-uppercase u-mb-8 u-p-1 u-rounded"
+                        style="background: var(--color-background-alt); letter-spacing: 0.1em;">
+                        {{ getMdaName(service.mda) }}
+                      </p>
+                      <router-link :to="`/apply/${service.service_code}`"
+                        class="button button--primary button--pill u-w-full u-mt-auto">
+                        Begin Application
+                      </router-link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </BaseModal>
 
       <!-- SYSTEM ADMINISTRATION VIEW -->
       <section v-if="user.role === 'admin'" class="admin-portal">
@@ -882,6 +1129,7 @@
   const escalatedRequests = computed(() => staffStore.escalatedRequests);
 
   const showCompleteStepModal = ref(false);
+  const showStaffCatalogueModal = ref(false);
   const currentRequestToComplete = ref(null);
   const stepAction = ref({ action: '', details: '' });
   const showBpmnBlueprint = ref(false);
@@ -974,14 +1222,17 @@
   const mdaFilter = ref('');
   const lifeEventFilter = ref('');
   const familyFilter = ref('');
+  const groupFilter = ref('');
   const selectedFamilyForView = ref(null);
 
   const mdaSearchLocal = ref('');
   const lifeEventSearchLocal = ref('');
   const familySearchLocal = ref('');
+  const groupSearchLocal = ref('');
   const showMdaDropdown = ref(false);
   const showLifeEventDropdown = ref(false);
   const showFamilyDropdown = ref(false);
+  const showGroupDropdown = ref(false);
 
   const selectLifeEvent = (val) => {
     lifeEventFilter.value = val;
@@ -995,18 +1246,31 @@
     showFamilyDropdown.value = false;
   };
 
+  const selectGroup = (val) => {
+    groupFilter.value = val;
+    groupSearchLocal.value = val;
+    showGroupDropdown.value = false;
+  };
+
   const resetServiceFilters = () => {
     mdaFilter.value = '';
     lifeEventFilter.value = '';
     familyFilter.value = '';
+    groupFilter.value = '';
     serviceSearchQuery.value = '';
     mdaSearchLocal.value = '';
     lifeEventSearchLocal.value = '';
     familySearchLocal.value = '';
+    groupSearchLocal.value = '';
+  };
+
+  const resetServiceFiltersAndView = () => {
+    resetServiceFilters();
+    selectedFamilyForView.value = null;
   };
 
   const isAnyServiceFilterActive = computed(() => {
-    return mdaFilter.value || lifeEventFilter.value || familyFilter.value || serviceSearchQuery.value;
+    return mdaFilter.value || lifeEventFilter.value || familyFilter.value || groupFilter.value || serviceSearchQuery.value;
   });
 
   const filteredLifeEvents = computed(() => {
@@ -1020,6 +1284,12 @@
     const q = familySearchLocal.value.toLowerCase();
     return uniqueFamilies.value.filter(f => f.toLowerCase().includes(q));
   });
+
+  const filteredGroups = computed(() => {
+    if (!groupSearchLocal.value) return uniqueGroups.value;
+    const q = groupSearchLocal.value.toLowerCase();
+    return uniqueGroups.value.filter(g => g.toLowerCase().includes(q));
+  });
   const mdaIncompleteRequests = computed(() => staffStore.mdaIncompleteRequests);
 
   const uniqueLifeEvents = computed(() => {
@@ -1029,7 +1299,17 @@
 
   const uniqueFamilies = computed(() => {
     const fams = availableServices.value.map(s => s.service_family_details?.name || s.service_family).filter(Boolean);
-    return [...new Set(fams)].sort();
+    return [...new Set(fams.map(String))].sort();
+  });
+
+  const uniqueGroups = computed(() => {
+    const grps = [];
+    availableServices.value.forEach(s => {
+      if (s.service_group_details) {
+        s.service_group_details.forEach(g => grps.push(g.name));
+      }
+    });
+    return [...new Set(grps)].sort();
   });
 
   const filteredMdas = computed(() => {
@@ -1056,6 +1336,7 @@
   const getServiceFamilyIcon = (familyName) => {
     const icons = {
       'Identity & Civil Registration': 'bi-person-badge-fill',
+      'Civil Registration & Identity': 'bi-person-badge-fill',
       'Immigration & Border Management': 'bi-passport-fill',
       'Business & Commercial Regulation': 'bi-briefcase-fill',
       'Taxation & Revenue Administration': 'bi-bank2',
@@ -1127,7 +1408,8 @@
     let result = availableServices.value;
     if (mdaFilter.value) result = result.filter(s => s.mda === parseInt(mdaFilter.value));
     if (lifeEventFilter.value) result = result.filter(s => s.life_event_group === lifeEventFilter.value);
-    if (familyFilter.value) result = result.filter(s => (s.service_family_details?.name || s.service_family) === familyFilter.value);
+    if (familyFilter.value) result = result.filter(s => String(s.service_family_details?.name || s.service_family) === String(familyFilter.value));
+    if (groupFilter.value) result = result.filter(s => s.service_group_details && s.service_group_details.some(g => g.name === groupFilter.value));
     if (priorityFilter.value) result = result.filter(s => s.priority === priorityFilter.value);
     if (serviceSearchQuery.value) {
       const q = serviceSearchQuery.value.toLowerCase();
@@ -1140,12 +1422,17 @@
     return result;
   });
 
-  watch([serviceSearchQuery, mdaFilter, lifeEventFilter, familyFilter], () => {
-    // If any filter is engaged that isn't the family view filter, maybe we shouldn't reset, but we might want to auto-expand or filter the groups.
-    // For now, if the user explicitly searches or filters, we ensure they can see the results.
-    // If they filter by family, let's select it automatically so it expands!
-    if (familyFilter.value) {
-      selectedFamilyForView.value = familyFilter.value;
+  watch([serviceSearchQuery, mdaFilter, lifeEventFilter, familyFilter], (newVals, oldVals) => {
+    const [newSearch, newMda, newLife, newFam] = newVals;
+    const [oldSearch, oldMda, oldLife, oldFam] = oldVals || [];
+    
+    // If the family filter was explicitly set
+    if (newFam && newFam !== oldFam) {
+      selectedFamilyForView.value = newFam;
+    } 
+    // If the family filter was cleared, OR any other structural search/filter changed, clear the category view constraint
+    else if ((!newFam && newFam !== oldFam) || newSearch !== oldSearch || newMda !== oldMda || newLife !== oldLife) {
+      selectedFamilyForView.value = null;
     }
   });
 
@@ -1155,7 +1442,7 @@
 
     // Group services by their family name from service_family_details
     const groupMap = services.reduce((acc, svc) => {
-      const famName = svc.service_family_details?.name || 'Uncategorized';
+      const famName = String(svc.service_family_details?.name || svc.service_family || 'Uncategorized');
       if (!acc[famName]) acc[famName] = [];
       acc[famName].push(svc);
       return acc;

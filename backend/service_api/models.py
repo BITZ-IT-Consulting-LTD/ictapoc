@@ -18,6 +18,12 @@ class User(AbstractUser):
         ('mda_admin', 'MDA Admin'),
         ('system_admin', 'System Admin'),
         ('admin', 'Admin'),
+        ('GLOBAL_OFFICER', 'Global Officer'),
+        ('GLOBAL_SUPERVISOR', 'Global Supervisor'),
+        ('MDA_OFFICER', 'MDA Officer'),
+        ('MDA_SUPERVISOR', 'MDA Supervisor'),
+        ('employee', 'Employee'),
+        ('Hospital_Staff', 'Hospital Staff'),
     )
     # Deprecated 'role' string in favor of 'user_role', but kept for legacy checks
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='citizen')
@@ -40,6 +46,7 @@ class MDA(models.Model):
     contact_phone = models.CharField(max_length=20, blank=True, null=True)
     website = models.URLField(blank=True, null=True)
     address = models.TextField(blank=True, null=True)
+    is_priority = models.BooleanField(default=False)
     
     def __str__(self):
         return self.name
@@ -78,6 +85,19 @@ class ServiceFamily(models.Model):
     def __str__(self):
         return self.name
 
+class ServiceGroup(models.Model):
+    """
+    Groups services into separate broad clusters like 'Cradle to Death' or 'Priority MDAs' for dynamic filtering.
+    """
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True, null=True)
+    
+    class Meta:
+        verbose_name_plural = "Service Groups"
+
+    def __str__(self):
+        return self.name
+
 class ServiceConfig(models.Model):
     STATUS_CHOICES = (
         ('active', 'Active'),
@@ -94,6 +114,7 @@ class ServiceConfig(models.Model):
     # Ownership
     mda = models.ForeignKey(MDA, on_delete=models.CASCADE, related_name='services')
     service_family = models.ForeignKey(ServiceFamily, on_delete=models.SET_NULL, null=True, blank=True, related_name='services')
+    service_groups = models.ManyToManyField(ServiceGroup, blank=True, related_name='services')
     
     # Categorization
     category = models.ForeignKey(ServiceCategory, on_delete=models.SET_NULL, null=True, blank=True, related_name='services')

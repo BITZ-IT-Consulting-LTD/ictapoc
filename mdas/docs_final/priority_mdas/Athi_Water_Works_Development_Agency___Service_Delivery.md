@@ -7,6 +7,9 @@
 - **Document Version:** 2.1
 - **Date:** 2026-02-24
 - **Classification:** Official
+- **Strategic Category:** Priority MDA
+- **Service Model:** G2C
+- **Life-Cycle Group:** Cradle to Death (6. Retirement & Legacy)
 
 ---
 
@@ -19,6 +22,7 @@ Athi Water Works Development Agency (AWWDA) is responsible for the planning and 
 *Current State visualization (End-to-End Infrastructure Lifecycle based on Deep Dive).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 graph TD
     Start((Start)) --> Study["Identify Study Area & Collect Data"]
     
@@ -120,6 +124,7 @@ End-to-End Water Infrastructure Development (Study to Handover)
 *Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 graph TD
     Start((Start)) --> GIS["GIS-Based Master Plan Alignment Check"]
     

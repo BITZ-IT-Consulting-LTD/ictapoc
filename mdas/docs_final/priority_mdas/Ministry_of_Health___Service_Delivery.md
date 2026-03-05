@@ -6,6 +6,9 @@
 - **Document Version:** 2.1
 - **Date:** 2026-03-04
 - **Classification:** Official
+- **Strategic Category:** Priority MDA
+- **Service Model:** G2C
+- **Life-Cycle Group:** Cradle to Death (1. The Cradle)
 
 ---
 
@@ -18,6 +21,7 @@ The Ministry of Health plays a foundational role in the citizen lifecycle. Curre
 *Current State visualization (Fragmented Patient Identity based on Deep Dive).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
     %% Events
     Start((Start))
@@ -142,6 +146,7 @@ Health Service Delivery & Identity
 *Future State visualization (Kenya Health Information Exchange - KHIE Architecture).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
     %% Events
     Start((Start))

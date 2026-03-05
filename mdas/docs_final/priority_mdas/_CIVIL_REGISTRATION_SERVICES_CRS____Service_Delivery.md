@@ -7,6 +7,9 @@
 - **Document Version:** 2.1
 - **Date:** 2026-02-24
 - **Classification:** Official
+- **Strategic Category:** Priority MDA
+- **Service Model:** G2C
+- **Life-Cycle Group:** Cradle to Death (1. The Cradle)
 
 ---
 
@@ -19,6 +22,7 @@ Civil Registration Services (CRS) is the authoritative custodian of vital life e
 *Current State visualization (Birth & Death Registration based on Deep Dive).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 graph TD
     Start((Start)) --> Source{"Event Source?"}
     
@@ -112,6 +116,7 @@ Vital Event Registration (Births and Deaths) and Certificate Issuance
 *Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 graph TD
     Start((Start)) --> Event["Birth/Death Occurs at Facility"]
     

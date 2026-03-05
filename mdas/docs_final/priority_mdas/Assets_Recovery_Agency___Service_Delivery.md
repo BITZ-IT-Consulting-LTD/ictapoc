@@ -7,6 +7,9 @@
 - **Document Version:** 2.1
 - **Date:** 2026-02-24
 - **Classification:** Official
+- **Strategic Category:** Priority MDA
+- **Service Model:** G2G
+- **Life-Cycle Group:** Cradle to Death (5. Social Protection & Justice)
 
 ---
 
@@ -19,6 +22,7 @@ The Assets Recovery Agency (ARA) is mandated to identify, trace, freeze, and rec
 *Current State visualization (Asset Tracing and Recovery).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 graph TD
     Start((Start)) --> Alert["Intelligence / Referral from Law Enforcement"]
     
@@ -105,6 +109,7 @@ Asset Identification, Tracing, and Forfeiture Lifecycle
 *Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 graph TD
     Start((Start)) --> Referral["ARA Receives Digital Referral (eCitizen)"]
     

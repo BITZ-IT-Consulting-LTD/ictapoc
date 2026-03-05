@@ -270,9 +270,11 @@
                 <div class="form__group">
                   <label class="form__label">Assigned Institutional Role</label>
                   <div class="u-relative">
-                    <i class="bi bi-person-badge u-absolute u-left-3 u-top-1/2 -u-translate-y-1/2 u-text-muted"></i>
-                    <input type="text" v-model="stepForm.role" class="form__input u-pl-10"
-                      placeholder="e.g. Head_Officer">
+                    <i class="bi bi-shield-check u-absolute u-left-3 u-top-1/2 -u-translate-y-1/2 u-text-muted"></i>
+                    <select v-model="stepForm.role" class="form__select u-pl-10">
+                       <option value="" disabled>Select Role</option>
+                       <option v-for="r in roles" :key="r.id" :value="r.name">{{ r.name }} ({{ r.permissions?.length || 0 }} perms)</option>
+                    </select>
                   </div>
                   <p class="u-text-[10px] u-text-muted u-mt-1">Staff role authorized to handle this step</p>
                 </div>
@@ -356,6 +358,7 @@
 
 <script setup>
   import { ref, computed, watch, onMounted } from 'vue';
+  import api from '../../services/api';
   import { useWorkflowStepStore } from '../../store/workflowStep';
   import { useRegistryStore } from '../../store/registry';
   import { useServiceConfigStore } from '../../store/serviceConfig';
@@ -372,8 +375,18 @@
   const stepStore = useWorkflowStepStore();
   const registryStore = useRegistryStore();
   const serviceConfigStore = useServiceConfigStore();
+  const roles = ref([]);
   const showModal = ref(false);
   const searchQuery = ref('');
+
+  const fetchRoles = async () => {
+    try {
+      const response = await api.get('/roles/');
+      roles.value = response.data;
+    } catch (e) {
+      console.error("Failed to fetch roles", e);
+    }
+  };
 
   const stepForm = ref({
     id: null,
@@ -391,6 +404,7 @@
   onMounted(() => {
     registryStore.fetchAdapters();
     registryStore.fetchEndpoints();
+    fetchRoles();
   });
 
   const filteredEndpoints = computed(() => {

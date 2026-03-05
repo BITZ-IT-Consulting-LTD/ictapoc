@@ -170,32 +170,8 @@
 .stats-grid {
   display: grid;
   gap: var(--spacing-4);
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   margin-bottom: var(--spacing-8);
-}
-
-@media (min-width: 768px) {
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .stats-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (min-width: 1280px) {
-  .stats-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media (min-width: 1536px) {
-  .stats-grid {
-    grid-template-columns: repeat(5, 1fr);
-  }
 }
 
 /* ===== STATS CARD BLOCK ===== */

@@ -6,6 +6,9 @@
 - **Document Version:** 2.1
 - **Date:** 2026-03-04
 - **Classification:** Official
+- **Strategic Category:** Priority MDA
+- **Service Model:** G2B
+- **Life-Cycle Group:** Cradle to Death (4. Employment & Business)
 
 ---
 
@@ -18,6 +21,7 @@ The Agriculture and Food Authority (AFA) regulates, develops, and promotes sched
 *Current State visualization (End-to-End AFA Services based on Deep Dive).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
     %% Events
     Start((Start))
@@ -127,6 +131,7 @@ End-to-End Farmer Registration, Export Permits, and Trading Licenses
 *Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
     %% Events
     Start((Start))
