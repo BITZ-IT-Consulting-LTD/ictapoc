@@ -7,6 +7,9 @@
 - **Document Version:** 2.1
 - **Date:** 2026-02-24
 - **Classification:** Official
+- **Strategic Category:** Priority MDA
+- **Service Model:** G2G
+- **Life-Cycle Group:** Cradle to Death (4. Employment & Business)
 
 ---
 
@@ -19,6 +22,7 @@ The Office of the Head of Public Service (OHPS) is the apex office for coordinat
 *Current State visualization (End-to-End Executive Coordination based on Deep Dive).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 graph TD
     Start((Start)) --> Directive["Directive Received / Policy Ambiguity Identified"]
     
@@ -107,6 +111,7 @@ Executive Coordination, Directive Tracking, and Performance Monitoring
 *Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 graph TD
     Start((Start)) --> Portal["HPS Enters Directive into Executive Portal"]
     

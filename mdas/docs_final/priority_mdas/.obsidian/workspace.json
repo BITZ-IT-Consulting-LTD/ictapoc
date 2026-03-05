@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "farmer",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,7 +74,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -185,6 +186,33 @@
   },
   "active": "f4e855576f44abc8",
   "lastOpenFiles": [
+    "update_mda_metadata.py",
+    "apply_mermaid_visibility.py",
+    "exported_mermaids/Priority_MDAS_template V5.pdf",
+    "State_Department_of_ICT___Service_Delivery.md",
+    "State_Department_of_ICT___Service_Delivery.doc",
+    "State_Department_of_ICT___Service_Delivery.docx",
+    "temp_single_word_export.md",
+    "exported_mermaids/State_Department_of_ICT___Service_Delivery_TO_BE.png",
+    "exported_mermaids/State_Department_of_ICT___Service_Delivery_AS_IS.png",
+    "temp.mmd",
+    "Agriculture_and_Food_Authority___Service_Delivery.md",
+    "~$ate_Department_of_ICT.doc",
+    "State_Department_of_ICT.doc",
+    "State_Department_of_ICT.docx",
+    "export_single_word.py",
+    "~$T_and_Authority_Service_Delivery.doc",
+    "temp_word_export.md",
+    "exported_mermaids/State_Department_of_ICT-2.png",
+    "exported_mermaids/State_Department_of_ICT-1.png",
+    "exported_mermaids/State_Department_of_ICT_TO_BE.png",
+    "exported_mermaids/State_Department_of_ICT_AS_IS.png",
+    "exported_mermaids/ICT_Authority_TO_BE.png",
+    "exported_mermaids/ICT_Authority_AS_IS.png",
+    "ICT_Authority___Service_Delivery.md",
+    "exported_mermaids/_REFUGEE_SERVICES_TO_BE.png",
+    "exported_mermaids/State_Department_of_ICT.md_TO_BE.png",
+    "State_Department_of_ICT.md",
     "Priority_MDAs_Justification_Matrix.md",
     "Kenya_National_Qualifications_Authority___Service_Delivery.md",
     "Ministry_of_Health___Service_Delivery.md",
@@ -203,26 +231,6 @@
     "Athi_Water_Works_Development_Agency___Service_Delivery.md",
     "_REFUGEE_SERVICES___Service_Delivery.md",
     "Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md",
-    "CABINET_OFFICE___Service_Delivery.md",
-    "Assets_Recovery_Agency___Service_Delivery.md",
-    "Youth_Affairs___Service_Delivery.md",
-    "Energy___Service_Delivery.md",
-    "National_Commission_For_Science_Technology_and_Innovation___Service_Delivery.md",
-    "_CIVIL_REGISTRATION_SERVICES_CRS____Service_Delivery.md",
-    "fix_mutated_nodes_2.py",
-    "fix_mutated_nodes.py",
-    "super_fix.py",
-    "fix_quotes.py",
-    "National_Government_Coordination___Service_Delivery.md.bak",
-    "patch_mermaid.py",
-    "test_mermaid_regex.py",
-    "check_mermaid.py",
-    "Agriculture_and_Food_Authority___Service_Delivery.md",
-    "mmd_test3.png",
-    "mmd_test3.mmd",
-    "mmd_test2.png",
-    "mmd_test2.mmd",
-    "mmd_test.png",
-    "temp_master_combined.md"
+    "CABINET_OFFICE___Service_Delivery.md"
   ]
 }

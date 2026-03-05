@@ -7,6 +7,9 @@
 - **Document Version:** 2.2
 - **Date:** 2026-03-04
 - **Classification:** Official
+- **Strategic Category:** Priority MDA
+- **Service Model:** G2G
+- **Life-Cycle Group:** Cradle to Death (5. Social Protection & Justice)
 
 ---
 
@@ -19,6 +22,7 @@ The Office of the Head of Public Service (OHPS) coordinates Presidential Directi
 *Current State visualization (Manual Executive Coordination & Directives).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart LR
     %% Events
     Start((Start))
@@ -139,6 +143,7 @@ Executive Coordination and Presidential Directives Management
 *Future State visualization (Kenya DSAP Architecture - Executive Coordination).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart LR
     %% Events
     Start((Start))

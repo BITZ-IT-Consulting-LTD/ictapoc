@@ -108,6 +108,48 @@
                   </transition>
                </div>
 
+               <!-- Type Filter -->
+               <div class="toolbar__filter-group">
+                  <i class="bi bi-tag-fill toolbar__filter-icon"></i>
+                  <input type="text" v-model="typeSearchLocal" placeholder="Filter by Type..."
+                     @focus="showTypeDropdown = true" @blur="setTimeout(() => showTypeDropdown = false, 200)"
+                     class="toolbar__filter-input toolbar__filter-input--with-arrow">
+                  <i class="bi bi-chevron-down toolbar__filter-arrow"
+                     :class="{ 'toolbar__filter-arrow--open': showTypeDropdown }"></i>
+                  <i v-if="selectedType" @click="selectType('')"
+                     class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
+
+                  <transition name="dropdown">
+                     <div v-if="showTypeDropdown" class="dropdown-menu">
+                        <div @click="selectType('')" class="dropdown-item dropdown-item--header">All Types</div>
+                        <div v-for="t in filteredTypes" :key="t" @click="selectType(t)" class="dropdown-item">
+                           {{ t }}
+                        </div>
+                     </div>
+                  </transition>
+               </div>
+
+               <!-- Group Filter -->
+               <div class="toolbar__filter-group">
+                  <i class="bi bi-collection-fill toolbar__filter-icon"></i>
+                  <input type="text" v-model="groupSearchLocal" placeholder="Filter by Group..."
+                     @focus="showGroupDropdown = true" @blur="setTimeout(() => showGroupDropdown = false, 200)"
+                     class="toolbar__filter-input toolbar__filter-input--with-arrow">
+                  <i class="bi bi-chevron-down toolbar__filter-arrow"
+                     :class="{ 'toolbar__filter-arrow--open': showGroupDropdown }"></i>
+                  <i v-if="selectedGroup" @click="selectGroup('')"
+                     class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
+
+                  <transition name="dropdown">
+                     <div v-if="showGroupDropdown" class="dropdown-menu">
+                        <div @click="selectGroup('')" class="dropdown-item dropdown-item--header">All Lifecycle Groups</div>
+                        <div v-for="g in filteredGroups" :key="g" @click="selectGroup(g)" class="dropdown-item">
+                           {{ g }}
+                        </div>
+                     </div>
+                  </transition>
+               </div>
+
                <!-- Searchable Category Filter -->
                <div class="toolbar__filter-group">
                   <i class="bi bi-tag toolbar__filter-icon"></i>
@@ -155,10 +197,20 @@
                <span class="filter-chip__value">{{ selectedMda }}</span>
                <i class="bi bi-x"></i>
             </div>
-            <div v-if="selectedLifeEvent" :key="'e-' + selectedLifeEvent" class="filter-chip"
-               @click="selectLifeEvent('')">
-               <span class="filter-chip__label">Life Event:</span>
+            <div v-if="selectedLifeEvent" :key="'l-' + selectedLifeEvent" class="filter-chip"
+               @click="selectedLifeEvent = ''">
+               <span class="filter-chip__label">Event:</span>
                <span class="filter-chip__value">{{ selectedLifeEvent }}</span>
+               <i class="bi bi-x"></i>
+            </div>
+            <div v-if="selectedType" :key="'t-' + selectedType" class="filter-chip" @click="selectedType = ''">
+               <span class="filter-chip__label">Type:</span>
+               <span class="filter-chip__value">{{ selectedType }}</span>
+               <i class="bi bi-x"></i>
+            </div>
+            <div v-if="selectedGroup" :key="'g-' + selectedGroup" class="filter-chip" @click="selectedGroup = ''">
+               <span class="filter-chip__label">Group:</span>
+               <span class="filter-chip__value">{{ selectedGroup }}</span>
                <i class="bi bi-x"></i>
             </div>
             <div v-if="selectedCategory" :key="'c-' + selectedCategory" class="filter-chip" @click="selectCategory('')">
@@ -205,7 +257,10 @@
                         <tbody>
                            <tr v-for="service in process.services" :key="service.service_name" class="table__row">
                               <td class="table__cell" style="padding-left: 1rem;">
-                                 <div class="table__cell--bold">{{ service.service_name }}</div>
+                                 <div class="u-flex u-items-center u-gap-2">
+                                     <div class="table__cell--bold">{{ service.service_name }}</div>
+                                     <i v-if="service.mda_priority" class="bi bi-star-fill u-text-primary" title="Priority MDA"></i>
+                                 </div>
                                  <div class="u-text-xs u-text-muted u-mt-0.5">{{ service.mda }}</div>
                               </td>
                               <td class="table__cell">
@@ -355,18 +410,21 @@
    const selectedCategory = ref('');
    const selectedType = ref('');
    const selectedLifeEvent = ref('');
+   const selectedGroup = ref('');
 
    const domainSearchLocal = ref('');
    const mdaSearchLocal = ref('');
    const categorySearchLocal = ref('');
    const typeSearchLocal = ref('');
    const lifeEventSearchLocal = ref('');
+   const groupSearchLocal = ref('');
 
    const showDomainDropdown = ref(false);
    const showMdaDropdown = ref(false);
    const showCategoryDropdown = ref(false);
    const showTypeDropdown = ref(false);
    const showLifeEventDropdown = ref(false);
+   const showGroupDropdown = ref(false);
 
    const activeLifecycle = ref('as_is'); // Default to showing current manual process friction
 
@@ -422,6 +480,20 @@
       return [...events].sort();
    });
 
+   const groupList = computed(() => {
+      const grps = new Set();
+      matrixData.value.forEach(d => {
+         d.processes.forEach(p => {
+            p.services.forEach(s => {
+               if (s.service_group_details) {
+                  s.service_group_details.forEach(g => grps.add(g.name));
+               }
+            });
+         });
+      });
+      return [...grps].sort();
+   });
+
    const filteredDomains = computed(() => {
       if (!domainSearchLocal.value) return domainsList.value;
       const q = domainSearchLocal.value.toLowerCase();
@@ -450,6 +522,12 @@
       if (!lifeEventSearchLocal.value) return lifeEventList.value;
       const q = lifeEventSearchLocal.value.toLowerCase();
       return lifeEventList.value.filter(l => l.toLowerCase().includes(q));
+   });
+
+   const filteredGroups = computed(() => {
+      if (!groupSearchLocal.value) return groupList.value;
+      const q = groupSearchLocal.value.toLowerCase();
+      return groupList.value.filter(g => g.toLowerCase().includes(q));
    });
 
    const selectDomain = (domain) => {
@@ -482,6 +560,12 @@
       showLifeEventDropdown.value = false;
    };
 
+   const selectGroup = (group) => {
+      selectedGroup.value = group;
+      groupSearchLocal.value = group;
+      showGroupDropdown.value = false;
+   };
+
    const filteredMatrixData = computed(() => {
       let data = JSON.parse(JSON.stringify(matrixData.value));
 
@@ -497,10 +581,11 @@
                const matchesCategory = !selectedCategory.value || s.service_category === selectedCategory.value;
                const matchesType = !selectedType.value || s.service_type === selectedType.value;
                const matchesLifeEvent = !selectedLifeEvent.value || s.life_event_group === selectedLifeEvent.value;
+               const matchesGroup = !selectedGroup.value || (s.service_group_details && s.service_group_details.some(g => g.name === selectedGroup.value));
                const matchesSearch = !searchQuery.value ||
                   s.service_name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
                   s.mda.toLowerCase().includes(searchQuery.value.toLowerCase());
-               return matchesMda && matchesCategory && matchesType && matchesLifeEvent && matchesSearch;
+               return matchesMda && matchesCategory && matchesType && matchesLifeEvent && matchesGroup && matchesSearch;
             });
 
             if (matchingServices.length > 0) {
@@ -639,6 +724,8 @@
       categorySearchLocal.value = '';
       typeSearchLocal.value = '';
       lifeEventSearchLocal.value = '';
+      groupSearchLocal.value = '';
+      selectedGroup.value = '';
    };
 
    const isAnyFilterActive = computed(() => {

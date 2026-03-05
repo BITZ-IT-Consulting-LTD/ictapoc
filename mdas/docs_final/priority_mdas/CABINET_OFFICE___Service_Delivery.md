@@ -7,6 +7,9 @@
 - **Document Version:** 2.1
 - **Date:** 2026-02-24
 - **Classification:** Official
+- **Strategic Category:** Priority MDA
+- **Service Model:** G2G
+- **Life-Cycle Group:** Cradle to Death (5. Social Protection & Justice)
 
 ---
 
@@ -19,6 +22,7 @@ The State Department for Cabinet Affairs is responsible for the efficient manage
 *Current State visualization (Cabinet Memorandum Processing based on Deep Dive).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 graph TD
     Start((Start)) --> Prepare["Prepare Cabinet Memorandum"]
     
@@ -108,6 +112,7 @@ Cabinet Memorandum (CABMEMO) Processing and GDMIS Registration
 *Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 graph TD
     Start((Start)) --> Draft["CS/PS Drafts Memo in Secure Executive Portal"]
     

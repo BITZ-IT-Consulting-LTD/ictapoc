@@ -221,7 +221,7 @@
 
   // Group fields into steps based on section_headers
   const formSteps = computed(() => {
-    if (!schema.value) return [];
+    if (!schema.value || !schema.value.properties) return [];
 
     const steps = [];
     let currentStepInfo = { title: 'Information', description: '', fields: [] };
@@ -252,7 +252,7 @@
   const currentStep = computed(() => formSteps.value[currentStepIndex.value]);
 
   const initializeForm = () => {
-    if (!schema.value) return;
+    if (!schema.value || !schema.value.properties) return;
     const user = authStore.user || {};
     const role = user.role?.toLowerCase();
     

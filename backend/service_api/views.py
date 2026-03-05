@@ -25,7 +25,7 @@ from .models import (
     OfficialLetter, CorrespondenceAction, DesktopReview,
     PaymentProvider, PaymentTransaction, RevenueSplit,
     ConsentRecord, DataPurpose, ConsentAccessLog, RegistryAdapter, RegistryEndpoint,
-    ServiceFamily
+    ServiceFamily, ServiceGroup
 )
 from .serializers import (
     ServiceRequestSerializer, ServiceConfigSerializer, WorkflowStepSerializer, 
@@ -35,7 +35,8 @@ from .serializers import (
     OfficialLetterSerializer, CorrespondenceActionSerializer,
     DesktopReviewSerializer, PaymentProviderSerializer, PaymentTransactionSerializer,
     ConsentRecordSerializer, DataPurposeSerializer, ConsentAccessLogSerializer,
-    RegistryAdapterSerializer, RegistryEndpointSerializer, ServiceFamilySerializer
+    RegistryAdapterSerializer, RegistryEndpointSerializer, ServiceFamilySerializer,
+    ServiceGroupSerializer
 )
 from .services import PaymentService, ConsentService
 from .permissions import IsAdminOrAuthenticatedReadOnly, IsParticipantOrAdmin, AuditLogPermission, IsSystemAdmin, IsClaimAuthorized
@@ -217,6 +218,11 @@ class ServiceFamilyViewSet(viewsets.ModelViewSet):
     serializer_class = ServiceFamilySerializer
     permission_classes = [IsAdminOrAuthenticatedReadOnly]
 
+class ServiceGroupViewSet(viewsets.ModelViewSet):
+    queryset = ServiceGroup.objects.all()
+    serializer_class = ServiceGroupSerializer
+    permission_classes = [IsAdminOrAuthenticatedReadOnly]
+
 class ServiceCatalogViewSet(viewsets.ReadOnlyModelViewSet):
     """
     Public facing API for the Service Catalogue.
@@ -225,6 +231,27 @@ class ServiceCatalogViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ServiceConfigSerializer
     permission_classes = [permissions.AllowAny]
     search_fields = ['service_name', 'description', 'life_event_group']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        
+        # Allow G2G only for authenticated staff/admin roles and employees
+        is_staff_or_admin = user.is_authenticated and user.role in [
+            'officer', 'supervisor', 'mda_admin', 'registrar', 'admin', 'system_admin',
+            'GLOBAL_OFFICER', 'GLOBAL_SUPERVISOR', 'MDA_OFFICER', 'MDA_SUPERVISOR', 'employee'
+        ]
+        
+        if not is_staff_or_admin:
+            from django.db.models import Q
+            queryset = queryset.filter(
+                Q(service_type__icontains='G2C') | 
+                Q(service_type__icontains='C2G') | 
+                Q(service_type__icontains='B2G') | 
+                Q(service_type__isnull=True)
+            ).exclude(service_type__icontains='G2G')
+        return queryset
+
     @action(detail=False, methods=['get'])
     def process_matrix(self, request):
         """
@@ -233,6 +260,13 @@ class ServiceCatalogViewSet(viewsets.ReadOnlyModelViewSet):
         domains = ServiceDomain.objects.prefetch_related('categories__services').all()
         data = []
         
+        user = request.user
+        is_staff_or_admin = user.is_authenticated and user.role in [
+            'officer', 'supervisor', 'mda_admin', 'registrar', 'admin', 'system_admin',
+            'GLOBAL_OFFICER', 'GLOBAL_SUPERVISOR', 'MDA_OFFICER', 'MDA_SUPERVISOR', 'employee'
+        ]
+        
+
         for domain in domains:
             domain_data = {
                 "domain_name": domain.name,
@@ -243,7 +277,18 @@ class ServiceCatalogViewSet(viewsets.ReadOnlyModelViewSet):
                     "process_name": category.name,
                     "services": []
                 }
-                for service in category.services.filter(service_status='active'):
+                
+                services_qs = category.services.filter(service_status='active')
+                if not is_staff_or_admin:
+                     from django.db.models import Q
+                     services_qs = services_qs.filter(
+                         Q(service_type__icontains='G2C') | 
+                         Q(service_type__icontains='C2G') | 
+                         Q(service_type__icontains='B2G') | 
+                         Q(service_type__isnull=True)
+                     ).exclude(service_type__icontains='G2G')
+                     
+                for service in services_qs:
                     process_data["services"].append({
                         "id": service.id,
                         "service_code": service.service_code,
@@ -253,11 +298,15 @@ class ServiceCatalogViewSet(viewsets.ReadOnlyModelViewSet):
                         "actors": service.associated_actors,
                         "mda": service.mda.name,
                         "mda_code": service.mda.code if service.mda.code else "",
+                        "mda_priority": service.mda.is_priority,
                         "service_family": service.service_family.name if service.service_family else "Uncategorized",
                         "service_family_details": {
                             "id": service.service_family.id,
                             "name": service.service_family.name
                         } if service.service_family else None,
+                        "service_group_details": [
+                            {"id": g.id, "name": g.name} for g in service.service_groups.all()
+                        ],
                         "service_category": category.name,
                         "life_event_group": service.life_event_group,
                         "maturity": service.digitization_level,

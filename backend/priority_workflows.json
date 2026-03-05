@@ -1,0 +1,2663 @@
+[
+    {
+        "filename": "Assets_Recovery_Agency___Service_Delivery.md",
+        "mda_name": "Office of the Attorney General",
+        "process_name": "Asset Identification, Preservation, and Forfeiture",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Investigator",
+                "Receives a lead and sends physical requests to NTSA, Lands, and BRS to find assets owned by a suspect.",
+                "Physical Letters",
+                "Slow and prone to leakage."
+            ],
+            [
+                "2",
+                "MDA Clerk",
+                "Searches their local database and provides certified paper copies of ownership documents.",
+                "Manual",
+                ""
+            ],
+            [
+                "3",
+                "ARA Legal",
+                "Prepares court affidavits manually, attaching the paper evidence collected.",
+                "Manual/Word",
+                ""
+            ],
+            [
+                "4",
+                "ARA Officer",
+                "Tracks the location and status of seized vehicles/properties in a local Excel sheet.",
+                "Excel",
+                ""
+            ],
+            [
+                "5",
+                "Finance",
+                "Remits funds from liquidated assets to the National Treasury via IFMIS.",
+                "Manual Entry",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "ARA Analyst",
+                "Inputs a suspect's Maisha Namba into the ARA Investigation Portal.",
+                "ARA Portal"
+            ],
+            [
+                "2",
+                "System",
+                "Instantly pings BRS, NTSA, and Ardhisasa via X-Road to list all assets.",
+                "KeSEL / X-Road"
+            ],
+            [
+                "3",
+                "System",
+                "Compiles a digitally signed evidence packet and routes it to the Judiciary Case Management System.",
+                "Huduma Bridge / Judiciary API"
+            ],
+            [
+                "4",
+                "System",
+                "Upon the Judge's digital signature, the system auto-locks the asset records in the source registries.",
+                "Workflow Engine"
+            ],
+            [
+                "5",
+                "System",
+                "Automatically reconciles the proceeds from forfeited assets and remits them to the National Treasury via the GPA.",
+                "GPA / IFMIS"
+            ]
+        ]
+    },
+    {
+        "filename": "Kenya_National_Qualifications_Authority___Service_Delivery.md",
+        "mda_name": "Ministry of Education",
+        "process_name": "Qualification Validation and Recognition of Prior Learning (RPL)",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Applicant",
+                "Submits application form and scans of certificates/transcripts.",
+                "Manual/Portal",
+                ""
+            ],
+            [
+                "2",
+                "KNQA Clerk",
+                "Manually checks for completeness and confirms the payment of the fee.",
+                "Manual",
+                ""
+            ],
+            [
+                "3",
+                "Technical Officer",
+                "Contacts issuing institutions (KNEC, Universities) to authenticate certificates.",
+                "Email/Letter",
+                "High latency step."
+            ],
+            [
+                "4",
+                "Technical Officer",
+                "Maps the qualification against the KNQF levels.",
+                "Manual/Excel",
+                ""
+            ],
+            [
+                "5",
+                "Committee",
+                "Reviews the mapping and approves the equivalency.",
+                "Committee Meeting",
+                ""
+            ],
+            [
+                "6",
+                "KNQA Admin",
+                "Manually generates the validation letter and updates the registry.",
+                "Standalone Registry",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "Applicant",
+                "Submits a validation request via the digital portal. Does not upload certificates if records exist in registries.",
+                "eCitizen / Digital Portal"
+            ],
+            [
+                "2",
+                "KNQA System",
+                "Retrieves credentials automatically from national and international education registries.",
+                "Integration Hub / KeSEL"
+            ],
+            [
+                "3",
+                "KNQA System",
+                "Performs automated authenticity verification (checks number, institution, accreditation) and maps to KNQF.",
+                "Workflow / Rules Engine"
+            ],
+            [
+                "4",
+                "KNQA System",
+                "Conducts a risk assessment to determine the approval routing (Low, Medium, or High risk).",
+                "Risk Assessment Engine"
+            ],
+            [
+                "5",
+                "Technical Officer / Committee",
+                "Handles exceptions based on risk. Officer reviews medium-risk cases; the Committee reviews high-risk cases.",
+                "KNQA Workbench"
+            ],
+            [
+                "6",
+                "KNQA System",
+                "Generates a digitally signed validation letter, updates the central validation registry, and notifies the applicant.",
+                "Digital Registry / Output Generator"
+            ]
+        ]
+    },
+    {
+        "filename": "State_Department_for_Children_Services___Service_Delivery.md",
+        "mda_name": "Ministry of Labour and Social Protection",
+        "process_name": "Child Protection Case Management",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Reporter / Children Officer",
+                "A report is made regarding a child at risk. The Children Officer performs manual case registration and assigns a reference ID.",
+                "Paper Ledger",
+                ""
+            ],
+            [
+                "2",
+                "Children Officer",
+                "Conducts an intake and initial risk assessment to determine the immediate danger level to the child.",
+                "Manual Forms",
+                ""
+            ],
+            [
+                "3",
+                "Children Officer",
+                "Carries out a detailed investigation, including home visits, witness interviews, and evidence gathering.",
+                "Physical Visits",
+                ""
+            ],
+            [
+                "4",
+                "Case Review Committee",
+                "Holds case review meetings to assess the investigation findings and develop a formal care plan.",
+                "Physical Meetings",
+                ""
+            ],
+            [
+                "5",
+                "Children Officer / Court",
+                "Executes the care plan. If necessary, processes court referrals for formal protection orders.",
+                "Manual / Judicial",
+                ""
+            ],
+            [
+                "6",
+                "Children Officer / Care Institutions",
+                "Places the child in an appropriate care institution or with family, executing the planned interventions.",
+                "Care Homes",
+                ""
+            ],
+            [
+                "7",
+                "Children Officer",
+                "Conducts periodic monitoring visits to ensure the child's safety and well-being are maintained.",
+                "Physical Visits",
+                ""
+            ],
+            [
+                "8",
+                "Children Officer",
+                "Initiates case closure procedures once the care plan objectives have been met and the child is deemed safe.",
+                "Manual Forms",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "Citizen Reporter",
+                "Reports a case via a digital portal or mobile app, initiating the digital case intake process.",
+                "CPIMS Portal"
+            ],
+            [
+                "2",
+                "System (CPIMS)",
+                "Performs automatic identity verification of the child and parents against national identity databases.",
+                "CPIMS / X-Road (IPRS)"
+            ],
+            [
+                "3",
+                "System (CPIMS)",
+                "Runs an AI risk scoring algorithm to highlight potential emergency scenarios for the caseworker.",
+                "CPIMS Risk Engine"
+            ],
+            [
+                "4",
+                "Children Officer",
+                "Uses the risk score to make an informed human decision, conducting and logging the investigation digitally.",
+                "CPIMS App"
+            ],
+            [
+                "5",
+                "Children Officer / System",
+                "If a court order is required, the system automates court filing directly to the judicial platform.",
+                "CPIMS / Judiciary API"
+            ],
+            [
+                "6",
+                "Care Institution",
+                "Receives the digital care plan and provides necessary interventions, updating the system.",
+                "CPIMS Portal"
+            ],
+            [
+                "7",
+                "Children Officer",
+                "Logs continuous monitoring visits into the secure digital case file.",
+                "CPIMS App"
+            ],
+            [
+                "8",
+                "Children Officer",
+                "Finalizes the intervention and executes digital case closure, archiving the record securely.",
+                "CPIMS"
+            ]
+        ]
+    },
+    {
+        "filename": "ICT_Authority___Service_Delivery.md",
+        "mda_name": "Ministry of Information, Communications and the Digital Economy",
+        "process_name": "Government ICT Project Implementation and Digital Infrastructure Management",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "MDA",
+                "Identifies need for ICT system",
+                "Internal",
+                ""
+            ],
+            [
+                "2",
+                "MDA",
+                "Develops project concept and submits to ICT Authority",
+                "Project Proposal",
+                ""
+            ],
+            [
+                "3",
+                "ICT Authority",
+                "Reviews architecture and compliance with standards",
+                "GEA Framework",
+                ""
+            ],
+            [
+                "4",
+                "ICT Authority",
+                "Approves or rejects project",
+                "ICTA Governance",
+                ""
+            ],
+            [
+                "5",
+                "MDA / Vendor",
+                "Procures vendor and develops system",
+                "Vendor Systems",
+                ""
+            ],
+            [
+                "6",
+                "MDA",
+                "Deploys and operates system",
+                "Local Infrastructure",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "MDA",
+                "Designs digital service aligned with GEA",
+                "Architecture Portal"
+            ],
+            [
+                "2",
+                "ICT Authority",
+                "Reviews architecture and integration",
+                "GEA Compliance System"
+            ],
+            [
+                "3",
+                "System",
+                "Integrates with national registries via interoperability layer",
+                "KeSEL Bridge"
+            ],
+            [
+                "4",
+                "Government Cloud",
+                "Hosts digital service platform",
+                "National Data Center"
+            ],
+            [
+                "5",
+                "Citizen/Business",
+                "Accesses service through digital government portals",
+                "eCitizen Platform"
+            ]
+        ]
+    },
+    {
+        "filename": "Sports_and_the_Arts___Service_Delivery.md",
+        "mda_name": "Ministry of Youth Affairs, Creative Economy and Sports",
+        "process_name": "Federation Registration, Grants & Facility Management",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Federation",
+                "Submits application for registration along with constitution and list of officials.",
+                "Manual/Portal",
+                ""
+            ],
+            [
+                "2",
+                "Sports Officer",
+                "Verifies the regional representation of the federation as required by the Sports Act.",
+                "Manual",
+                ""
+            ],
+            [
+                "3",
+                "Athlete",
+                "Submits a grant application for international competitions or training.",
+                "Manual Forms",
+                ""
+            ],
+            [
+                "4",
+                "Facility Manager",
+                "Reviews booking requests and checks for conflicts with national team schedules.",
+                "Standalone System",
+                ""
+            ],
+            [
+                "5",
+                "Finance Officer",
+                "Processes facility payments and grant disbursements via bank transfers.",
+                "Manual/IFMIS",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "Athlete",
+                "Logs into the Sports Portal using their Maisha Namba for SSO.",
+                "Sports Portal"
+            ],
+            [
+                "2",
+                "System",
+                "Fetches the athlete's competition history and academic status via X-Road (NEMIS/KNQA).",
+                "KeSEL / X-Road"
+            ],
+            [
+                "3",
+                "Athlete",
+                "Selects a training facility and pays the discounted \"Elite Athlete\" fee.",
+                "GPA"
+            ],
+            [
+                "4",
+                "System",
+                "Instantly issues a digital \"Access Ticket\" (QR Code) and notifies the facility manager.",
+                "Output Generator"
+            ],
+            [
+                "5",
+                "System",
+                "Automatically triggers the quarterly grant disbursement based on verified performance logs.",
+                "GPA / Workflow Engine"
+            ]
+        ]
+    },
+    {
+        "filename": "Agriculture_and_Food_Authority___Service_Delivery.md",
+        "mda_name": "Agriculture and Food Authority",
+        "process_name": "Farmer Registration & Licensing",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Applicant",
+                "Completes application, attaches paper copies of required documents, submits application, and pays the application fee.",
+                "Paper/Bank/Portal",
+                "High manual effort."
+            ],
+            [
+                "2",
+                "AFA Clerk",
+                "Receives and logs the application, and reviews documentation for completeness.",
+                "Manual Registry",
+                "May request more info if incomplete."
+            ],
+            [
+                "3",
+                "AFA Officer",
+                "Verifies business registration and compliance history manually.",
+                "Manual",
+                "Time-consuming verification process."
+            ],
+            [
+                "4",
+                "AFA Inspector",
+                "Schedules inspection, conducts physical premises inspection, and submits inspection report.",
+                "Manual",
+                "Major bottleneck in the process."
+            ],
+            [
+                "5",
+                "AFA Committee",
+                "Reviews the officer's recommendation and makes a final approval or rejection decision.",
+                "Committee",
+                ""
+            ],
+            [
+                "6",
+                "AFA Admin",
+                "Generates license if approved, notifies the applicant of the decision, and updates the manual registry.",
+                "AFA IMIS / Manual",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "Applicant",
+                "Accesses eCitizen, selects the required license type, confirms auto-populated data, and makes digital payment.",
+                "eCitizen Portal / GPA"
+            ],
+            [
+                "2",
+                "System Integration Layer",
+                "Validates business registration via BRS, checks tax compliance via KRA, retrieves farmer data from KIAMIS, and auto-populates the form.",
+                "KeSEL / BRS / KRA / KIAMIS"
+            ],
+            [
+                "3",
+                "Workflow Engine",
+                "Runs risk assessment. Low-risk applications are auto-approved. Medium-risk are routed to officer review, and high-risk trigger the inspection workflow.",
+                "Workflow Engine"
+            ],
+            [
+                "4",
+                "AFA Inspector / Officer",
+                "Handles exception-based reviews or physical inspections (schedules inspection, uploads report, reviews results).",
+                "AFA Workbench"
+            ],
+            [
+                "5",
+                "System",
+                "Generates a digital license, registers it in the digital registry, notifies the applicant, and synchronizes the approval with Kentrade.",
+                "Output Generator / Kentrade"
+            ]
+        ]
+    },
+    {
+        "filename": "State_Department_of_ICT___Service_Delivery.md",
+        "mda_name": "Ministry of Information, Communications and the Digital Economy",
+        "process_name": "Digital Government Infrastructure and ICT Policy Coordination",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "MDA",
+                "Identifies need for digital service or ICT project",
+                "Internal",
+                ""
+            ],
+            [
+                "2",
+                "State Department ICT",
+                "Develops ICT policy, strategy, or framework",
+                "Policy Documents",
+                ""
+            ],
+            [
+                "3",
+                "ICT Authority",
+                "Reviews proposed ICT project for standards compliance",
+                "GEA / ICT Standards",
+                ""
+            ],
+            [
+                "4",
+                "MDA / Vendor",
+                "Procures and develops ICT system",
+                "Vendor Systems",
+                ""
+            ],
+            [
+                "5",
+                "MDA",
+                "Deploys and operates ICT system",
+                "Standalone Systems",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "MDA",
+                "Designs digital service aligned with GEA",
+                "Digital Architecture Framework"
+            ],
+            [
+                "2",
+                "ICT Authority",
+                "Validates architecture and integration requirements",
+                "GEA Compliance Portal"
+            ],
+            [
+                "3",
+                "System",
+                "Integrates with authoritative registries via X-Road",
+                "KeSEL Bridge"
+            ],
+            [
+                "4",
+                "Government Cloud",
+                "Hosts the digital service platform",
+                "Gov Cloud Infrastructure"
+            ],
+            [
+                "5",
+                "Citizen",
+                "Accesses service digitally via portal or mobile device",
+                "eCitizen Platform"
+            ]
+        ]
+    },
+    {
+        "filename": "CABINET_OFFICE___Service_Delivery.md",
+        "mda_name": "Executive Office of the President",
+        "process_name": "Cabinet Memorandum Processing & Coordination",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Ministry",
+                "Prepares a Cabinet Memorandum and obtains approval from the Principal Secretary and Cabinet Secretary.",
+                "Manual/Word",
+                ""
+            ],
+            [
+                "2",
+                "Cabinet Affairs Officer",
+                "Receives the memorandum, logs it in the CABMEMO system, and assigns a reference.",
+                "CABMEMO / EDRMS",
+                ""
+            ],
+            [
+                "3",
+                "Cabinet Affairs Officer",
+                "Checks for compliance with guidelines (e.g., formatting, required attachments).",
+                "Manual",
+                ""
+            ],
+            [
+                "4",
+                "Cabinet Affairs",
+                "Routes the memorandum to the AG and Treasury via the system or physical dispatch for mandatory comments.",
+                "EDRMS / Physical",
+                ""
+            ],
+            [
+                "5",
+                "Cabinet Affairs",
+                "Consolidates all feedback and prepares the final agenda for the Cabinet.",
+                "Manual",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "CS / PS",
+                "Drafts and reviews the memorandum within the secure Executive Portal.",
+                "Executive Portal"
+            ],
+            [
+                "2",
+                "Cabinet Secretary",
+                "Digitally signs the final version using their National PKI (NPKI) certificate.",
+                "Trust Hub / NPKI"
+            ],
+            [
+                "3",
+                "System",
+                "Routes the signed memo via X-Road to the AG and Treasury for concurrent 48-hour review.",
+                "Workflow Engine / X-Road"
+            ],
+            [
+                "4",
+                "Cabinet Affairs",
+                "Uses AI tools to summarize and consolidate inter-ministerial feedback for the final Cabinet brief.",
+                "Analytics Engine"
+            ],
+            [
+                "5",
+                "System",
+                "Automatically creates tracking milestones in the GDMIS based on the approved Cabinet Minute.",
+                "GDMIS / KeSEL"
+            ]
+        ]
+    },
+    {
+        "filename": "National_Government_Coordination___Service_Delivery.md",
+        "mda_name": "Executive Office of the President",
+        "process_name": "Inter-Agency Coordination and Information Tasking",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Coordination Officer",
+                "Identifies a coordination need (e.g., Drought Response) and defines the deliverables required from MDAs.",
+                "Manual",
+                ""
+            ],
+            [
+                "2",
+                "Coordination Officer",
+                "Drafts a formal request letter and attaches an Excel template for data collection.",
+                "MS Word / Excel",
+                ""
+            ],
+            [
+                "3",
+                "Dispatch Clerk",
+                "Sends the request to all relevant Principal Secretaries and Regional Commissioners via email/physical dispatch.",
+                "Email / Physical",
+                ""
+            ],
+            [
+                "4",
+                "Coordination Unit",
+                "Follows up with MDAs via phone calls and reminders to ensure submissions are made.",
+                "Phone/WhatsApp",
+                "High friction step."
+            ],
+            [
+                "5",
+                "Analyst",
+                "Manually cleans and merges 20+ different Excel files into a single master sheet for analysis.",
+                "Excel",
+                "High risk of error."
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "Leadership",
+                "Defines a new national priority and sets the target KPIs in the Coordination Portal.",
+                "Executive Portal"
+            ],
+            [
+                "2",
+                "System",
+                "Maps the KPIs to existing data fields in relevant MDA registries (e.g., Health, Agriculture, Lands).",
+                "Service Catalogue"
+            ],
+            [
+                "3",
+                "System",
+                "Pulls data every 24 hours via X-Road to update the national achievement scorecards.",
+                "KeSEL / X-Road"
+            ],
+            [
+                "4",
+                "System",
+                "Automatically notifies Principal Secretaries of any \"at-risk\" deliverables based on real data, not claims.",
+                "Workflow Engine"
+            ],
+            [
+                "5",
+                "Coordinator",
+                "Focuses on resolving the \"at-risk\" blocks rather than manually cleaning data.",
+                "Executive Dashboard"
+            ]
+        ]
+    },
+    {
+        "filename": "National_Commission_For_Science_Technology_and_Innovation___Service_Delivery.md",
+        "mda_name": "Ministry of Education",
+        "process_name": "Research Licensing and Knowledge Management",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Researcher",
+                "Submits research proposal, ethical clearance, and academic certificates.",
+                "Manual/Portal",
+                ""
+            ],
+            [
+                "2",
+                "NACOSTI Officer",
+                "Manually checks if all documents are attached and assigns a physical file reference.",
+                "Manual",
+                ""
+            ],
+            [
+                "3",
+                "Examiner",
+                "Reviews the proposal for technical validity and alignment with national priorities.",
+                "Manual/Word",
+                ""
+            ],
+            [
+                "4",
+                "Finance Officer",
+                "Issues a payment demand note; waits for the researcher to pay at a bank and upload the slip.",
+                "Standalone System",
+                "Major delay (2-5 days)."
+            ],
+            [
+                "5",
+                "NACOSTI Admin",
+                "Manually verifies the bank slip against bank statements before generating the final PDF license.",
+                "Manual",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "Researcher",
+                "Logs into the research portal. Personal and institutional data is pre-populated via IPRS and CUE.",
+                "eCitizen / SSO"
+            ],
+            [
+                "2",
+                "System",
+                "Fetches the researcher's ethical clearance status directly from the Ethics Review Committee (ERC) portal via X-Road.",
+                "KeSEL / X-Road"
+            ],
+            [
+                "3",
+                "System",
+                "Calculates the fee and allows the researcher to pay instantly via M-Pesa or Card.",
+                "GPA"
+            ],
+            [
+                "4",
+                "System",
+                "Upon successful payment, the workflow engine triggers the issuance of a digital verifiable research license.",
+                "Output Generator"
+            ],
+            [
+                "5",
+                "System",
+                "Automatically creates a record in the National Knowledge Repository, tracking the study's start and end dates.",
+                "Research Registry"
+            ]
+        ]
+    },
+    {
+        "filename": "National_Environment_Management_Authority___Service_Delivery.md",
+        "mda_name": "Ministry of Environment, Climate Change and Forestry",
+        "process_name": "Environmental Impact Assessment (EIA) Licensing",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Proponent / Registered Environmental Expert",
+                "Submits the EIA project report and pays the statutory processing fee.",
+                "Physical / Portal",
+                ""
+            ],
+            [
+                "2",
+                "NEMA Registry",
+                "Logs the submission, verifies payment, and forwards the file for screening.",
+                "Manual",
+                ""
+            ],
+            [
+                "3",
+                "NEMA Environmental Officer",
+                "Screens the project to determine if the report is sufficient or if a full EIA study is required due to high environmental impact.",
+                "Manual",
+                ""
+            ],
+            [
+                "4",
+                "NEMA Environmental Officer",
+                "For full EIAs, initiates public participation by publishing notices, collecting comments, and potentially conducting public hearings.",
+                "Physical / Media",
+                "Extends processing time."
+            ],
+            [
+                "5",
+                "NEMA Environmental Officer",
+                "Conducts physical site inspection to verify details submitted in the report.",
+                "Manual / Camera",
+                ""
+            ],
+            [
+                "6",
+                "Lead Agencies (e.g. KFS, WRA)",
+                "Reviews project documents and provides sector-specific comments and conditions.",
+                "Physical / Letters",
+                "Significant bottleneck (30-60 days)."
+            ],
+            [
+                "7",
+                "Technical Review Committee",
+                "Reviews the consolidated technical findings, site inspection report, and lead agency comments.",
+                "Committee Meeting",
+                ""
+            ],
+            [
+                "8",
+                "Director General",
+                "Makes the final decision: reject, approve with conditions, or approve outright. Signs the physical license.",
+                "Manual / Wet Signature",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "Proponent",
+                "Logs into eCitizen and submits the EIA digitally. Business ownership and expert registration are verified instantly.",
+                "eCitizen / X-Road (BRS)"
+            ],
+            [
+                "2",
+                "NEMA System",
+                "Pulls the cadastral map to verify project coordinates against protected zones (e.g., riparian land).",
+                "KeSEL / X-Road (Ardhisasa)"
+            ],
+            [
+                "3",
+                "NEMA System",
+                "Automatically screens the project for environmental risk and determines if a full EIA and public participation are required.",
+                "AI Rules Engine"
+            ],
+            [
+                "4",
+                "NEMA System",
+                "Routes the report to relevant Lead Agencies via the national service bus for a concurrent digital review.",
+                "Workflow Engine"
+            ],
+            [
+                "5",
+                "Environmental Officer",
+                "Conducts a site inspection using a mobile device, uploading geo-tagged photos directly to the project file.",
+                "Digital Inspection App"
+            ],
+            [
+                "6",
+                "Technical Committee",
+                "Reviews the automatically consolidated agency comments and inspection data to make a decision.",
+                "NEMA Permitting Platform"
+            ],
+            [
+                "7",
+                "NEMA System",
+                "Generates a digital EIA license with a secure QR code and pushes the project coordinates to the National Environmental Dashboard.",
+                "Licensing Registry / Output Generator"
+            ]
+        ]
+    },
+    {
+        "filename": "State_Department_of_ICT.md",
+        "mda_name": "Ministry of Information, Communications and the Digital Economy",
+        "process_name": "Digital Government Infrastructure and ICT Policy Coordination",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "MDA",
+                "Identifies need for digital service or ICT project",
+                "Internal",
+                ""
+            ],
+            [
+                "2",
+                "State Department ICT",
+                "Develops ICT policy, strategy, or framework",
+                "Policy Documents",
+                ""
+            ],
+            [
+                "3",
+                "ICT Authority",
+                "Reviews proposed ICT project for standards compliance",
+                "GEA / ICT Standards",
+                ""
+            ],
+            [
+                "4",
+                "MDA / Vendor",
+                "Procures and develops ICT system",
+                "Vendor Systems",
+                ""
+            ],
+            [
+                "5",
+                "MDA",
+                "Deploys and operates ICT system",
+                "Standalone Systems",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "MDA",
+                "Designs digital service aligned with GEA",
+                "Digital Architecture Framework"
+            ],
+            [
+                "2",
+                "ICT Authority",
+                "Validates architecture and integration requirements",
+                "GEA Compliance Portal"
+            ],
+            [
+                "3",
+                "System",
+                "Integrates with authoritative registries via X-Road",
+                "KeSEL Bridge"
+            ],
+            [
+                "4",
+                "Government Cloud",
+                "Hosts the digital service platform",
+                "Gov Cloud Infrastructure"
+            ],
+            [
+                "5",
+                "Citizen",
+                "Accesses service digitally via portal or mobile device",
+                "eCitizen Platform"
+            ]
+        ]
+    },
+    {
+        "filename": "Office_of_the_Chief_of_Staff___Service_Delivery.md",
+        "mda_name": "Executive Office of the President",
+        "process_name": "Executive Coordination and Presidential Directives Management",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Head of Public Service",
+                "Receives Presidential Directive.",
+                "Physical/Memo",
+                "Originates from Cabinet or Presidential instruction."
+            ],
+            [
+                "2",
+                "OHPS Analysis Team",
+                "Analyses the directive to identify responsible MDAs and scopes required actions.",
+                "Manual/Meetings",
+                ""
+            ],
+            [
+                "3",
+                "Senior Coordinators",
+                "Translates the directive into formal implementation instructions and KPIs.",
+                "Word/Memo",
+                ""
+            ],
+            [
+                "4",
+                "OHPS Secretariat",
+                "Dispatches instructions via memo/email to the respective Principal Secretaries.",
+                "Email/Registry",
+                ""
+            ],
+            [
+                "5",
+                "Principal Secretaries",
+                "Confirm receipt of instructions and assign internally within their MDAs.",
+                "Memo/Email",
+                ""
+            ],
+            [
+                "6",
+                "MDAs",
+                "Implement the directive tasks based on received instructions.",
+                "Internal Systems",
+                ""
+            ],
+            [
+                "7",
+                "MDAs (Reporting Teams)",
+                "Compile and submit progress reports quarterly or as requested.",
+                "Email/Excel",
+                "High effort, prone to delays."
+            ],
+            [
+                "8",
+                "OHPS Analysis Team",
+                "Consolidates received reports manually from multiple MDAs.",
+                "Excel",
+                "Time-consuming process."
+            ],
+            [
+                "9",
+                "Senior Coordinators",
+                "Performs performance assessment against original directive KPIs.",
+                "Manual",
+                ""
+            ],
+            [
+                "10",
+                "Head of Public Service",
+                "Reviews assessment to decide if implementation is satisfactory. If yes, closes directive. If no, issues corrective instructions or escalates.",
+                "Briefings",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Head of Public Service",
+                "Receives Presidential Directive.",
+                "Physical/Memo",
+                "Originates from Cabinet or Presidential instruction."
+            ],
+            [
+                "2",
+                "OHPS Analysis Team",
+                "Analyses the directive to identify responsible MDAs and scopes required actions.",
+                "Manual/Meetings",
+                ""
+            ],
+            [
+                "3",
+                "Senior Coordinators",
+                "Translates the directive into formal implementation instructions and KPIs.",
+                "Word/Memo",
+                ""
+            ],
+            [
+                "4",
+                "OHPS Secretariat",
+                "Dispatches instructions via memo/email to the respective Principal Secretaries.",
+                "Email/Registry",
+                ""
+            ],
+            [
+                "5",
+                "Principal Secretaries",
+                "Confirm receipt of instructions and assign internally within their MDAs.",
+                "Memo/Email",
+                ""
+            ],
+            [
+                "6",
+                "MDAs",
+                "Implement the directive tasks based on received instructions.",
+                "Internal Systems",
+                ""
+            ],
+            [
+                "7",
+                "MDAs (Reporting Teams)",
+                "Compile and submit progress reports quarterly or as requested.",
+                "Email/Excel",
+                "High effort, prone to delays."
+            ],
+            [
+                "8",
+                "OHPS Analysis Team",
+                "Consolidates received reports manually from multiple MDAs.",
+                "Excel",
+                "Time-consuming process."
+            ],
+            [
+                "9",
+                "Senior Coordinators",
+                "Performs performance assessment against original directive KPIs.",
+                "Manual",
+                ""
+            ],
+            [
+                "10",
+                "Head of Public Service",
+                "Reviews assessment to decide if implementation is satisfactory. If yes, closes directive. If no, issues corrective instructions or escalates.",
+                "Briefings",
+                ""
+            ]
+        ]
+    },
+    {
+        "filename": "STATE_DEPARTMENT_FOR_IMMIGRATION_AND_CITIZEN_SERVICES___Passport_Application.md",
+        "mda_name": "STATE DEPARTMENT FOR IMMIGRATION AND CITIZEN SERVICES",
+        "process_name": "Passport Application and Issuance",
+        "as_is": [
+            [
+                "Stakeholder",
+                "Role",
+                "Responsibilities"
+            ],
+            [
+                "Citizen (Applicant)",
+                "Applicant",
+                "Completes online form, pays fee, attends appointment."
+            ],
+            [
+                "Immigration Officer",
+                "Enroller",
+                "Captures biometrics and verifies original documents."
+            ],
+            [
+                "Production Staff",
+                "Processor",
+                "Operates printing machines, quality assurance."
+            ],
+            [
+                "Courier Service",
+                "Logistics",
+                "Delivers passports to regional offices (Mombasa, Kisumu, etc.)."
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "Tool / System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Citizen (Applicant)",
+                "**Logs into eCitizen:** Creates account or logs in using National ID Number and Password.",
+                "eCitizen Portal",
+                ""
+            ],
+            [
+                "2",
+                "Citizen (Applicant)",
+                "**Fill Passport Form:** Selects application type (First Time, Renewal, Replacement) and inputs personal/parent details.",
+                "eCitizen Portal",
+                ""
+            ],
+            [
+                "3",
+                "Citizen (Applicant)",
+                "**Upload Documents:** Uploads National ID, Birth Certificate, Passport Photo, Recommender ID, and old passport (if applicable).",
+                "eCitizen Portal",
+                ""
+            ],
+            [
+                "4",
+                "Citizen (Applicant)",
+                "**Submit Application:** Submits the digital form and generates reference number.",
+                "eCitizen System",
+                ""
+            ],
+            [
+                "5",
+                "Citizen (Applicant)",
+                "**Pay Passport Fee:** Pays via Mobile Money, Card, or Bank.",
+                "Payment Gateway",
+                ""
+            ],
+            [
+                "6",
+                "Citizen (Applicant)",
+                "**Book Biometric Appointment:** Selects an Immigration Office and books available date.",
+                "eCitizen Portal",
+                ""
+            ],
+            [
+                "7",
+                "Biometrics Officer",
+                "**Biometric Capture:** Applicant visits Immigration Office for fingerprints, photo, and signature capture.",
+                "Biometric Kit",
+                ""
+            ],
+            [
+                "8",
+                "Immigration Officer",
+                "**Identity & Document Verification:** Verifies identity against IPRS and checks physical documents.",
+                "IPRS / Manual",
+                ""
+            ],
+            [
+                "9",
+                "Senior Immigration Officer",
+                "**Senior Officer Approval Decision:** Reviews the verified file and decides to approve or reject.",
+                "Internal System",
+                "Rejections trigger a notification to the applicant."
+            ],
+            [
+                "10",
+                "Passport Production Unit",
+                "**Queue & Print:** Approved applications enter the production queue. Passport printing takes place.",
+                "Production System",
+                ""
+            ],
+            [
+                "11",
+                "Passport Production Unit",
+                "**Quality Assurance:** Printed passports undergo QA to ensure ICAO compliance and accurate chip encoding.",
+                "Quality Station",
+                ""
+            ],
+            [
+                "12",
+                "Courier / Dispatch",
+                "**Dispatch:** Passport is dispatched to the designated collection center.",
+                "Logistics",
+                ""
+            ],
+            [
+                "13",
+                "Citizen (Applicant)",
+                "**Passport Collection:** Citizen collects the printed passport in person.",
+                "Collection Desk",
+                ""
+            ]
+        ]
+    },
+    {
+        "filename": "_CIVIL_REGISTRATION_SERVICES_CRS____Service_Delivery.md",
+        "mda_name": "Ministry of Interior and National Administration",
+        "process_name": "Birth and Death Registration",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Informant/Chief",
+                "Reports the event at a CRS office or via the eCitizen portal.",
+                "Manual/Digital",
+                ""
+            ],
+            [
+                "2",
+                "Registration Officer",
+                "Verifies the supporting documents (ID of parents, notification from hospital).",
+                "Manual",
+                ""
+            ],
+            [
+                "3",
+                "Registration Officer",
+                "Manually enters the data into the CRVS system and assigns a serial entry number.",
+                "CRVS System",
+                ""
+            ],
+            [
+                "4",
+                "Registrar",
+                "Approves the entry and signs the physical register or digital record.",
+                "Physical Register",
+                ""
+            ],
+            [
+                "5",
+                "Clerk",
+                "Processes the payment and triggers the printing of the certificate.",
+                "Manual/eCitizen",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "Health Worker",
+                "Records the birth/death in the facility EMR.",
+                "MOH Afya App"
+            ],
+            [
+                "2",
+                "System",
+                "Automatically verifies the parents' IDs against Maisha Namba via X-Road.",
+                "IPRS / KeSEL"
+            ],
+            [
+                "3",
+                "CRS Registry",
+                "Receives the validated packet and mints a UPI (Maisha Namba) for the child.",
+                "CRS / Workflow Engine"
+            ],
+            [
+                "4",
+                "System",
+                "Notifies the parents/kin via SMS/eCitizen that the registration is complete.",
+                "Notification Gateway"
+            ],
+            [
+                "5",
+                "Citizen",
+                "Accesses the verifiable digital certificate via their mobile phone for use in other government services.",
+                "Digital Wallet"
+            ]
+        ]
+    },
+    {
+        "filename": "Youth_Affairs___Service_Delivery.md",
+        "mda_name": "Ministry of Public Service, Gender and Affirmative Action",
+        "process_name": "Youth Internship Placement & AGPO Registration",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Applicant",
+                "Logs into eCitizen and fills forms for Internship or AGPO.",
+                "eCitizen / Portal",
+                ""
+            ],
+            [
+                "2",
+                "Applicant",
+                "Uploads PDF copies of National ID, Academic Certificates, and BRS Business Registrations.",
+                "Manual Upload",
+                ""
+            ],
+            [
+                "3",
+                "Youth Officer",
+                "Manually reviews the documents to ensure the applicant is between 18-35 years old.",
+                "Manual",
+                "High duplication of effort."
+            ],
+            [
+                "4",
+                "Programme Officer",
+                "For internships, manually matches the applicant's course of study with available slots in government agencies.",
+                "Excel / Manual",
+                ""
+            ],
+            [
+                "5",
+                "AGPO Officer",
+                "Verifies business ownership details against BRS certificates before approving the AGPO status.",
+                "Manual",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "Youth Applicant",
+                "Logs into eCitizen using Maisha Namba. All personal and education details are already pre-populated.",
+                "eCitizen / SSO"
+            ],
+            [
+                "2",
+                "System",
+                "For AGPO, the system pings BRS via X-Road to verify the company's \"Youth-Owned\" status.",
+                "KeSEL / X-Road"
+            ],
+            [
+                "3",
+                "System",
+                "AI matching engine assigns the intern to a government agency based on the applicant's degree and the agency's needs.",
+                "Workflow Engine"
+            ],
+            [
+                "4",
+                "System",
+                "Generates a digital verifiable certificate/letter with a secure QR code for instant authentication.",
+                "Output Generator"
+            ]
+        ]
+    },
+    {
+        "filename": "STATE_DEPARTMENT_FOR_CORRECTIONAL_SERVICES___Service_Delivery.md",
+        "mda_name": "Ministry of Interior and National Administration",
+        "process_name": "Inmate Case Management and Rehabilitation Tracking",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Police",
+                "Escorts the inmate to the correctional facility.",
+                "Transport",
+                ""
+            ],
+            [
+                "2",
+                "Reception Officer",
+                "Verifies the physical committal warrant from the court.",
+                "Physical Paper",
+                "High risk of errors or forgery."
+            ],
+            [
+                "3",
+                "Records Officer",
+                "Conducts manual identity verification (checks physical ID if available, takes ink fingerprints) and assigns a unique prison number.",
+                "Manual / Ink",
+                ""
+            ],
+            [
+                "4",
+                "Records Officer",
+                "Creates a physical inmate case folder containing booking details and court orders.",
+                "Physical Folder",
+                ""
+            ],
+            [
+                "5",
+                "Prison Administration",
+                "Performs security classification (maximum/medium/minimum) and assigns a housing block.",
+                "Manual",
+                ""
+            ],
+            [
+                "6",
+                "Prison Administration",
+                "Manages daily custody, including attendance tracking, facility transfers, and logging disciplinary issues.",
+                "Manual Ledgers",
+                ""
+            ],
+            [
+                "7",
+                "Welfare / Rehabilitation Officer",
+                "Tracks rehabilitation, vocational progress, and medical appointments via periodic paper reports.",
+                "Manual",
+                ""
+            ],
+            [
+                "8",
+                "Discharge Unit",
+                "Calculates release dates manually, accounting for sentence length, time served, and remission.",
+                "Manual/Calculator",
+                "High risk of computational errors."
+            ],
+            [
+                "9",
+                "Discharge Unit",
+                "Verifies release eligibility and executes physical release, parole, or handover to probation services.",
+                "Manual",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "Judiciary System",
+                "Pushes a digitally signed committal warrant via X-Road to the correctional facility.",
+                "Judiciary CMS / X-Road"
+            ],
+            [
+                "2",
+                "Admission Officer",
+                "Receives the digital warrant and verifies the inmate's identity biometrically against the national registry.",
+                "PCMS / IPRS"
+            ],
+            [
+                "3",
+                "Prison System",
+                "Creates a comprehensive digital case profile and performs automatic security classification based on the offense and history.",
+                "PCMS / Rules Engine"
+            ],
+            [
+                "4",
+                "Welfare Officer",
+                "Digitally tracks rehabilitation progress, behavioral scores, and vocational training achievements.",
+                "Rehabilitation Tracking System"
+            ],
+            [
+                "5",
+                "Prison System",
+                "Automatically calculates sentence expiry dates in real-time, accounting for earned remission.",
+                "Sentence Calculation Engine"
+            ],
+            [
+                "6",
+                "Prison System",
+                "Triggers automated release eligibility alerts when the sentence completion date approaches.",
+                "Notification Gateway"
+            ],
+            [
+                "7",
+                "Probation Service",
+                "Receives automated notifications to prepare for the inmate's reintegration.",
+                "Release Management System"
+            ],
+            [
+                "8",
+                "Prison System",
+                "Executes the formal digital release, updating the National Inmate Registry.",
+                "PCMS"
+            ]
+        ]
+    },
+    {
+        "filename": "Kenya_Broadcasting_Corporation___Service_Delivery.md",
+        "mda_name": "Ministry of Information, Communications and the Digital Economy",
+        "process_name": "Archival Access and Content Licensing",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Client",
+                "Submits a manual request for a specific historical event or footage.",
+                "Paper/Email",
+                ""
+            ],
+            [
+                "2",
+                "Librarian",
+                "Physically searches through thousands of tapes/reels in the KBC vaults.",
+                "Index Cards",
+                "High risk of missing content."
+            ],
+            [
+                "3",
+                "Archivist",
+                "Verifies the copyright status of the content (KBC-owned vs. shared).",
+                "Manual Registry",
+                ""
+            ],
+            [
+                "4",
+                "Finance Officer",
+                "Manually calculates the digitization and licensing fee.",
+                "Excel",
+                ""
+            ],
+            [
+                "5",
+                "Client",
+                "Pays via bank deposit and brings the slip to the KBC registry for verification.",
+                "Manual",
+                "Major delay."
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "Client",
+                "Searches for content on the KBC eCitizen Portal using keywords (e.g., \"Madaraka Day 1963\").",
+                "eCitizen / AI Search"
+            ],
+            [
+                "2",
+                "System",
+                "Displays high-resolution previews and automatically calculates the license fee based on the client's profile (Commercial vs. Academic).",
+                "Workflow Engine"
+            ],
+            [
+                "3",
+                "Client",
+                "Authorizes an M-Pesa payment through the GPA.",
+                "GPA"
+            ],
+            [
+                "4",
+                "System",
+                "Upon payment confirmation, the system triggers an \"Asset Fetch\" from the secure government content lake.",
+                "Cloud Storage"
+            ],
+            [
+                "5",
+                "System",
+                "Generates a time-bound download link and a verifiable digital license for the content.",
+                "Output Generator"
+            ]
+        ]
+    },
+    {
+        "filename": "Athi_Water_Works_Development_Agency___Service_Delivery.md",
+        "mda_name": "Ministry of Water, Sanitation and Irrigation",
+        "process_name": "Infrastructure Development Lifecycle",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Planning Engineer",
+                "Identifies the study area and collects site data for feasibility.",
+                "Manual/GIS",
+                ""
+            ],
+            [
+                "2",
+                "Environmentalist",
+                "Conducts Environmental & Social Impact Assessment (ESIA).",
+                "Manual",
+                ""
+            ],
+            [
+                "3",
+                "AWWDA Committee",
+                "Reviews the feasibility report and detailed design for approval.",
+                "Manual",
+                ""
+            ],
+            [
+                "4",
+                "Procurement Unit",
+                "Manages the tender process from advertisement to contract signing.",
+                "IFMIS / Manual",
+                ""
+            ],
+            [
+                "5",
+                "Resident Engineer",
+                "Oversees construction, conducts site inspections, and verifies material quality.",
+                "Manual Reports",
+                ""
+            ],
+            [
+                "6",
+                "Technical Team",
+                "Conducts final tests (Pressure/Flow) before issuing a certificate of completion.",
+                "Physical Tests",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "Planning Team",
+                "Checks the proposed project against the GIS-based Water Master Plan.",
+                "GIS / Dashboard"
+            ],
+            [
+                "2",
+                "System",
+                "Routes the feasibility documents to NEMA and Treasury for parallel digital approval.",
+                "X-Road / Workflow Engine"
+            ],
+            [
+                "3",
+                "Contractor",
+                "Submits progress reports via a secure mobile app; IoT sensors verify flow/pressure levels during testing.",
+                "IoT / Mobile App"
+            ],
+            [
+                "4",
+                "Resident Engineer",
+                "Digitally signs the IPC (Interim Payment Certificate) using their NPKI certificate.",
+                "Trust Hub / NPKI"
+            ],
+            [
+                "5",
+                "System",
+                "Automatically reconciles the certificate with the contract value and triggers payment via the GPA.",
+                "GPA / IFMIS"
+            ]
+        ]
+    },
+    {
+        "filename": "State_Department_for_Special_Programmes___Service_Delivery.md",
+        "mda_name": "Ministry of Labour and Social Protection",
+        "process_name": "Social Protection & Beneficiary Management",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Community Leaders / Chiefs",
+                "Identifies vulnerable households within their jurisdiction and conducts outreach drives.",
+                "Manual",
+                "Prone to inclusion/exclusion errors."
+            ],
+            [
+                "2",
+                "Registration Officers",
+                "Captures household information and verifies supporting documents (e.g., ID cards).",
+                "Paper Forms / Basic System",
+                ""
+            ],
+            [
+                "3",
+                "Registration Officers",
+                "Compiles preliminary beneficiary lists based on collected data.",
+                "Manual Ledgers / Excel",
+                ""
+            ],
+            [
+                "4",
+                "Community Leaders / Registration Officers",
+                "Conducts community validation meetings to review and cross-check the preliminary list.",
+                "Public Meetings",
+                ""
+            ],
+            [
+                "5",
+                "Registration Officers",
+                "Cross-checks eligibility criteria manually and finalizes the beneficiary list.",
+                "Manual",
+                ""
+            ],
+            [
+                "6",
+                "Programme Management",
+                "Reviews the finalized list and formally endorses the approved beneficiaries for assistance.",
+                "Manual Approval",
+                ""
+            ],
+            [
+                "7",
+                "Programme Management",
+                "Forwards the endorsed beneficiary list to the Payment or Logistics Unit.",
+                "Physical Dispatch / Email",
+                ""
+            ],
+            [
+                "8",
+                "Payment / Logistics Unit",
+                "Disburses cash payments or distributes in-kind food/supplies to beneficiaries.",
+                "Manual Cash/Goods",
+                "High risk of leakage."
+            ],
+            [
+                "9",
+                "Beneficiaries",
+                "Acknowledges receipt of the assistance via signature or thumbprint.",
+                "Paper Receipts",
+                ""
+            ],
+            [
+                "10",
+                "Registration Officers",
+                "Records the assistance delivered and handles any grievances or appeals raised by the community.",
+                "Manual Registers",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "Citizen / Beneficiary",
+                "Registers for support via the online social protection portal or with the help of a Registration Officer.",
+                "eCitizen / Social Portal"
+            ],
+            [
+                "2",
+                "Social Protection System",
+                "Instantly verifies the applicant's identity using biometrics against the national identity registry.",
+                "IPRS / Maisha Namba"
+            ],
+            [
+                "3",
+                "Social Protection System",
+                "Fetches comprehensive household and socioeconomic data from the National Social Registry via X-Road.",
+                "National Social Registry"
+            ],
+            [
+                "4",
+                "Social Protection System",
+                "Performs automated eligibility scoring (means testing) based on predefined programme criteria.",
+                "Eligibility Scoring Engine"
+            ],
+            [
+                "5",
+                "Programme Management",
+                "Reviews the system-generated recommendations and provides final digital approval for the beneficiary list.",
+                "Programme Management System"
+            ],
+            [
+                "6",
+                "Social Protection System",
+                "Enrolls the approved beneficiary into the specific programme and updates the Beneficiary Registry.",
+                "Beneficiary Registry"
+            ],
+            [
+                "7",
+                "Social Protection System / Payment System",
+                "Triggers a digital payment instruction to the Government Payment Aggregator for instant disbursement to the beneficiary's mobile wallet.",
+                "GPA / Mobile Money API"
+            ],
+            [
+                "8",
+                "Social Protection System",
+                "Automatically notifies the beneficiary via SMS or the eCitizen app regarding their enrollment status and payment receipt.",
+                "Notification Gateway"
+            ]
+        ]
+    },
+    {
+        "filename": "Ministry_of_Health___Service_Delivery.md",
+        "mda_name": "MINISTRY OF HEALTH",
+        "process_name": "Health Information Exchange",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Patient",
+                "Patient arrives at facility.",
+                "Physical",
+                ""
+            ],
+            [
+                "2",
+                "Registration Clerk",
+                "Registration occurs and a local facility ID is created.",
+                "Paper/Local EMR",
+                ""
+            ],
+            [
+                "3",
+                "Clinician",
+                "Performs triage and consultation, followed by lab tests and prescriptions.",
+                "Local EMR",
+                ""
+            ],
+            [
+                "4",
+                "Clinician",
+                "Records the clinical encounter.",
+                "Local EMR",
+                ""
+            ],
+            [
+                "5",
+                "Facility EMR",
+                "Data is stored in the facility EMR.",
+                "Local EMR",
+                "Data remains siloed."
+            ],
+            [
+                "6",
+                "Patient",
+                "Patient visits another facility for further care.",
+                "Physical",
+                ""
+            ],
+            [
+                "7",
+                "Registration Clerk",
+                "Facility searches local EMR for the patient's record.",
+                "Local EMR",
+                ""
+            ],
+            [
+                "8",
+                "Registration Clerk",
+                "No record found. A new patient ID is created at the second facility.",
+                "Local EMR",
+                "Identity becomes fragmented."
+            ],
+            [
+                "9",
+                "Clinician",
+                "Duplicate clinical records created without visibility into previous history.",
+                "Local EMR",
+                "Results in fragmented medical history and duplicate testing."
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "Health Worker",
+                "Patient identified using Maisha Namba or biometrics.",
+                "Facility EMR"
+            ],
+            [
+                "2",
+                "Facility EMR",
+                "Facility system queries Master Patient Index (MPI) to locate the patient's unified profile.",
+                "KHIE MPI / X-Road"
+            ],
+            [
+                "3",
+                "KHIE Platform",
+                "Patient profile retrieved. System retrieves Shared Health Record (SHR) upon authorization.",
+                "KHIE SHR / X-Road"
+            ],
+            [
+                "4",
+                "Clinician",
+                "Clinician performs consultation with access to unified history, lab results, and medications.",
+                "Facility EMR"
+            ],
+            [
+                "5",
+                "Clinician",
+                "Encounter recorded, including treatments and e-prescriptions.",
+                "Facility EMR"
+            ],
+            [
+                "6",
+                "Facility EMR",
+                "Data shared via HIE (pushed to KHIE platform).",
+                "KHIE API Gateway"
+            ],
+            [
+                "7",
+                "KHIE Platform",
+                "Updates the national Shared Health Record (SHR) immediately with new encounter data.",
+                "KHIE SHR"
+            ],
+            [
+                "8",
+                "National Registries",
+                "Claims triggered for Social Health Authority (SHA) based on the recorded encounter.",
+                "Govt Payment Aggregator / SHA"
+            ]
+        ]
+    },
+    {
+        "filename": "Energy___Service_Delivery.md",
+        "mda_name": "Ministry of Energy and Petroleum",
+        "process_name": "Records Management & Energy Licensing",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Registry Clerk",
+                "Receives mail, sorts it into priority categories (Urgent/Normal/Confidential), and date-stamps it.",
+                "Physical Stamp",
+                ""
+            ],
+            [
+                "2",
+                "Records Officer",
+                "Classifies the document by subject and registers it in a manual mail book.",
+                "Manual Ledger",
+                ""
+            ],
+            [
+                "3",
+                "Action Officer",
+                "Reviews the file, prepares a response, and routes it physically for multiple levels of approval.",
+                "Physical File",
+                ""
+            ],
+            [
+                "4",
+                "Dispatch Clerk",
+                "Assigns a dispatch number, makes a physical copy for the file, and registers it in the dispatch book.",
+                "Manual",
+                ""
+            ],
+            [
+                "5",
+                "Archivist",
+                "Periodically appraises files against the retention schedule to determine if they should be archived or disposed.",
+                "Manual",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "Applicant",
+                "Submits an application for an energy permit via the eCitizen business portal.",
+                "eCitizen Portal"
+            ],
+            [
+                "2",
+                "System",
+                "Instantly pings EPRA and BRS to verify the entity's regulatory standing.",
+                "KeSEL / X-Road"
+            ],
+            [
+                "3",
+                "System",
+                "Routes the digitized file to the technical team for concurrent review (parallel workflow).",
+                "Workflow Engine"
+            ],
+            [
+                "4",
+                "Accounting Officer",
+                "Approves the permit using a digital signature (NPKI).",
+                "Trust Hub / NPKI"
+            ],
+            [
+                "5",
+                "System",
+                "Automatically archives the entire application trail in the secure government cloud with AI-generated metadata.",
+                "EDRMS / AI"
+            ]
+        ]
+    },
+    {
+        "filename": "Culture_and_Heritage___Service_Delivery.md",
+        "mda_name": "Ministry of Youth Affairs, Creative Economy and Sports",
+        "process_name": "Ushanga Kenya (Beadwork Value Chain)",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Artisan / Cooperative Leader",
+                "Coordinates the onboarding of the cooperative and aggregation of beadwork from members. Travels to the aggregation center.",
+                "Physical",
+                ""
+            ],
+            [
+                "2",
+                "Center Officer",
+                "Receives products, counts items, and verifies if the cooperative is formally registered with Ushanga Kenya.",
+                "Manual Ledger",
+                ""
+            ],
+            [
+                "3",
+                "Quality Officer",
+                "Examines craftsmanship and materials to assign a Grade (A, B, or Fail) during the quality grading process.",
+                "Manual",
+                ""
+            ],
+            [
+                "4",
+                "Center Officer",
+                "Stores the graded inventory securely and logs items into the local catalog.",
+                "Paper Records / Excel",
+                ""
+            ],
+            [
+                "5",
+                "Market Officer",
+                "Manages market cataloging and placement, displaying products in retail shops, exhibitions, or online portals.",
+                "Manual/EDRMS",
+                ""
+            ],
+            [
+                "6",
+                "Market Officer",
+                "Facilitates product sales and records transaction details.",
+                "Receipt Books",
+                ""
+            ],
+            [
+                "7",
+                "Finance Officer",
+                "Conducts sales reconciliation, calculates gross earnings, and deducts management fees.",
+                "Manual/Excel",
+                "Target: Payment within 14 days."
+            ],
+            [
+                "8",
+                "Finance Officer",
+                "Processes payment settlement via batch bank transfers to the respective cooperatives.",
+                "Banking Portal",
+                "High delay risk."
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "Center Officer",
+                "Performs digital product intake using a mobile inventory scanning app, instantly verifying the cooperative's registration.",
+                "Ushanga Mobile App"
+            ],
+            [
+                "2",
+                "Quality Officer",
+                "Uses an AI-assisted tool to evaluate the product, but provides the final human approval for the quality pass.",
+                "Digital QA Portal"
+            ],
+            [
+                "3",
+                "System",
+                "Generates a unique QR code serving as the product's digital identity and prints the physical label.",
+                "Digital Inventory Registry"
+            ],
+            [
+                "4",
+                "System",
+                "Performs inventory synchronization and automatically pushes the catalog listing to the Creative Economy Marketplace Platform.",
+                "Integration Hub / eCitizen"
+            ],
+            [
+                "5",
+                "Customer",
+                "Browses the marketplace and completes a customer purchase using integrated digital payments.",
+                "Marketplace / GPA"
+            ],
+            [
+                "6",
+                "Payment System",
+                "Executes an automated payment settlement, instantly splitting revenue between the artisan, cooperative, and program management.",
+                "GPA / Mobile Money API"
+            ],
+            [
+                "7",
+                "System",
+                "Sends a real-time notification to the cooperative and artisan regarding the successful sale and payment.",
+                "Notification Gateway"
+            ]
+        ]
+    },
+    {
+        "filename": "_REFUGEE_SERVICES___Service_Delivery.md",
+        "mda_name": "Ministry of Interior and National Administration",
+        "process_name": "Refugee Status Determination and Documentation",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Registration Officer",
+                "Receives asylum seeker, verifies entry documents, and captures photos/fingerprints to issue an Asylum Pass.",
+                "Refugee System / UNHCR proGres",
+                "Dual entry often required."
+            ],
+            [
+                "2",
+                "Eligibility Officer",
+                "Conducts the RSD interview, records testimony, and reviews evidence.",
+                "Manual/Digital",
+                ""
+            ],
+            [
+                "3",
+                "RSD Committee",
+                "Deliberates on the case applying the 1951 Criteria.",
+                "Committee Minutes",
+                ""
+            ],
+            [
+                "4",
+                "Processing Unit",
+                "If recognized, the refugee applies for an ID Card. Old records are retrieved and prints verified.",
+                "Manual/Standalone System",
+                ""
+            ],
+            [
+                "5",
+                "Processing Unit",
+                "If requested, processes Convention Travel Documents, requiring manual status verification.",
+                "Production System",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "Registration Officer",
+                "Captures biometrics via integrated kits. System instantly queries IPRS and Immigration databases via X-Road to ensure the individual is not already registered.",
+                "eCitizen / X-Road"
+            ],
+            [
+                "2",
+                "System",
+                "Auto-generates a Digital Asylum Pass with a QR code verifiable by law enforcement.",
+                "Output Generator"
+            ],
+            [
+                "3",
+                "RSD Committee",
+                "Reviews the digitized evidence file and records the decision directly in the system.",
+                "Workflow Engine"
+            ],
+            [
+                "4",
+                "System",
+                "Upon approval, the system pushes the data to IPRS to mint a Refugee Maisha Namba.",
+                "IPRS / KeSEL"
+            ],
+            [
+                "5",
+                "Production Unit",
+                "ID Cards and Travel Documents are queued for printing at the centralized government facility and dispatched via Posta.",
+                "Production / Logistics"
+            ]
+        ]
+    },
+    {
+        "filename": "PUBLIC_SERVICE_COMMISION_PSC____Service_Delivery.md",
+        "mda_name": "Executive Office of the President",
+        "process_name": "Executive Coordination and Presidential Directives",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Head of Public Service",
+                "Receives a Presidential Directive and translates it into specific instructions for relevant Ministries.",
+                "Memo/Letter",
+                ""
+            ],
+            [
+                "2",
+                "Senior Coordinators",
+                "Identify the specific MDAs responsible for various deliverables within the directive.",
+                "Manual",
+                ""
+            ],
+            [
+                "3",
+                "OHPS Admin",
+                "Dispatches instructions via official correspondence (letters/memos) to Principal Secretaries.",
+                "Physical/Email",
+                ""
+            ],
+            [
+                "4",
+                "Principal Secretaries",
+                "MDAs submit quarterly reports on the status of implementation.",
+                "Word/Excel Reports",
+                ""
+            ],
+            [
+                "5",
+                "OHPS Analysis Team",
+                "Manually consolidates reports, identifies gaps, and prepares a summary for the Head of Public Service.",
+                "Manual",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "Head of Public Service",
+                "Enters a directive into the Executive Coordination Portal, defining the Lead MDA and key milestones.",
+                "Executive Portal"
+            ],
+            [
+                "2",
+                "System",
+                "Instantly notifies relevant Principal Secretaries and creates a tracking record in the national service bus.",
+                "Workflow Engine"
+            ],
+            [
+                "3",
+                "System",
+                "Periodically fetches implementation data from authoritative registries via X-Road to validate MDA claims.",
+                "KeSEL / X-Road"
+            ],
+            [
+                "4",
+                "Senior Coordinators",
+                "Monitor the \"Executive Heatmap\" dashboard to identify underperforming sectors.",
+                "Executive Dashboard"
+            ],
+            [
+                "5",
+                "System",
+                "Generates a weekly \"Situation Report\" for the President, highlighting critical paths and compliance scores.",
+                "Analytics Engine"
+            ]
+        ]
+    },
+    {
+        "filename": "Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md",
+        "mda_name": "Ministry of Co-operatives and MSMEs",
+        "process_name": "MSME Credit, Fund Management & Apprenticeship",
+        "as_is": [
+            [
+                "Step",
+                "Role",
+                "Action",
+                "Tool/System",
+                "Notes"
+            ],
+            [
+                "1",
+                "Applicant",
+                "Accesses the fund portal (USSD/Web) and registers using their National ID.",
+                "USSD / Web Portal",
+                ""
+            ],
+            [
+                "2",
+                "System",
+                "Performs KYC by querying IPRS to verify identity and age eligibility.",
+                "IPRS API",
+                ""
+            ],
+            [
+                "3",
+                "System",
+                "Checks internal credit history and external CRB scores to determine the loan limit.",
+                "Credit Engine",
+                ""
+            ],
+            [
+                "4",
+                "Applicant",
+                "For Uwezo/NYOTA, attaches scanned copies of business registrations or ID documents.",
+                "Manual Upload",
+                ""
+            ],
+            [
+                "5",
+                "Fund Officer",
+                "For group loans, verifies group composition and bank details manually at the Sub-County level.",
+                "Standalone System",
+                ""
+            ]
+        ],
+        "to_be": [
+            [
+                "Step",
+                "Actor",
+                "Action",
+                "System"
+            ],
+            [
+                "1",
+                "Applicant",
+                "Logs in via eCitizen SSO and selects the appropriate MSME fund or support program.",
+                "Unified MSME Portal"
+            ],
+            [
+                "2",
+                "System",
+                "Fetches business history from BRS and tax compliance from KRA via X-Road to assess eligibility.",
+                "KeSEL / X-Road"
+            ],
+            [
+                "3",
+                "System",
+                "For group applications, the system pings the members' phones for digital consent and verifies their \"Maisha Namba\" status.",
+                "Consent Manager"
+            ],
+            [
+                "4",
+                "System",
+                "Instantly disburses the loan to a digital wallet managed by the Government Payment Aggregator.",
+                "GPA / Mobile Money"
+            ],
+            [
+                "5",
+                "System",
+                "Monitors sales and transactions via the GPA to provide real-time credit score updates and nudge for repayments.",
+                "Analytics Engine"
+            ]
+        ]
+    }
+]

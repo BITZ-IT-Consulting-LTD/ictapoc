@@ -157,6 +157,13 @@
     'verify_document', 'approve_request', 'reject_request',
     'issue_certificate', 'view_reports', 'manage_users',
     'manage_roles', 'view_audit_logs', 'archive_record',
+    'access_g2g_services', 'manage_mdas', 'manage_services',
+    'manage_lifecycle_groups', 'view_priority_mdas',
+    'all_mdas.view', 'all_mdas.claim', 'all_mdas.supervise',
+    'mda.view', 'mda.claim', 'mda.initiate', 'mda.supervise',
+    'global_manage', 'global_view', 'mda_manage_services',
+    'request_action', 'request_approve', 'request_create',
+    'request_view_own', 'saved_docs_manage',
     'all'
   ];
 

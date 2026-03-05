@@ -7,6 +7,9 @@
 - **Document Version:** 2.1
 - **Date:** 2026-02-24
 - **Classification:** Official
+- **Strategic Category:** Priority MDA
+- **Service Model:** G2B
+- **Life-Cycle Group:** Cradle to Death (4. Employment & Business)
 
 ---
 
@@ -19,6 +22,7 @@ The State Department for MSME Development is mandated to support the growth of s
 *Current State visualization (Hustler Fund & Uwezo Fund based on Deep Dive).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 graph TD
     Start((Start)) --> Access["Access Portal / Mobile App"]
     
@@ -109,6 +113,7 @@ MSME Credit Access (Hustler/Uwezo), Repayment, and NYOTA Apprenticeship
 *Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 graph TD
     Start((Start)) --> Portal["Applicant Accesses Unified MSME Portal (SSO)"]
     

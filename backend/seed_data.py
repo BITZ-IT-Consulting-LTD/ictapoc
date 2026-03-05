@@ -157,6 +157,95 @@ def seed_data():
             'address': 'Jogoo House, Nairobi'
         },
     ]
+    
+    # Priority MDAs extracted from the blueprints
+    mdas_data.extend([
+        {
+            'name': 'Ministry of Youth Affairs, Creative Economy and Sports',
+            'code': 'MOYACES',
+            'description': 'Empowering youth and promoting sports and creative economy.',
+            'head_of_mda': 'Cabinet Secretary',
+        },
+        {
+            'name': 'Ministry of Information, Communications and the Digital Economy',
+            'code': 'MICDE',
+            'description': 'Responsible for ICT policy, implementation, and digital economy.',
+            'head_of_mda': 'Cabinet Secretary',
+        },
+        {
+            'name': 'Executive Office of the President',
+            'code': 'EOP',
+            'description': 'Top executive management, national coordination.',
+            'head_of_mda': 'Chief of Staff',
+        },
+        {
+            'name': 'Ministry of Environment, Climate Change and Forestry',
+            'code': 'MOECCF',
+            'description': 'Protection, conservation and management of environment.',
+            'head_of_mda': 'Cabinet Secretary',
+        },
+        {
+            'name': 'STATE DEPARTMENT FOR IMMIGRATION AND CITIZEN SERVICES',
+            'code': 'SDICS',
+            'description': 'Immigration, passports, visas, and citizen services.',
+            'head_of_mda': 'Principal Secretary',
+        },
+        {
+            'name': 'Ministry of Public Service, Gender and Affirmative Action',
+            'code': 'MPSGA',
+            'description': 'Public service management, gender equality, and affirmative action.',
+            'head_of_mda': 'Cabinet Secretary',
+        },
+        {
+            'name': 'Agriculture and Food Authority',
+            'code': 'AFA',
+            'description': 'Regulation and promotion of agricultural products.',
+            'head_of_mda': 'Director General',
+        },
+        {
+            'name': 'Office of the Attorney General',
+            'code': 'OAG',
+            'description': 'Principal legal adviser to the Government.',
+            'head_of_mda': 'Attorney General',
+        },
+        {
+            'name': 'Ministry of Water, Sanitation and Irrigation',
+            'code': 'MOWSI',
+            'description': 'Water resources management, sanitation and irrigation.',
+            'head_of_mda': 'Cabinet Secretary',
+        },
+        {
+            'name': 'Ministry of Energy and Petroleum',
+            'code': 'MOEP',
+            'description': 'Energy policy formulation and sector regulation.',
+            'head_of_mda': 'Cabinet Secretary',
+        },
+        {
+            'name': 'Ministry of Labour and Social Protection',
+            'code': 'MOLSP',
+            'description': 'Labor relations, social security and protection.',
+            'head_of_mda': 'Cabinet Secretary',
+        },
+        {
+            'name': 'Ministry of Co-operatives and MSMEs',
+            'code': 'MOCM',
+            'description': 'Cooperatives development and MSME promotion.',
+            'head_of_mda': 'Cabinet Secretary',
+        },
+        {
+            'name': 'Ministry of Interior and National Administration',
+            'code': 'MINA',
+            'description': 'Internal security, state functions, and national administration.',
+            'head_of_mda': 'Cabinet Secretary',
+        },
+        {
+            'name': 'MINISTRY OF HEALTH',
+            'code': 'MOH',
+            'description': 'Health policy, national hospitals, and public health.',
+            'head_of_mda': 'Cabinet Secretary',
+        }
+    ])
+
 
     created_mdas = {}
     for m_data in mdas_data:
@@ -872,6 +961,68 @@ def seed_data():
 
     # The mdas loop and created_mdas are now at the top of the function.
     pass
+
+    try:
+        import os, json
+        pw_path = os.path.join(os.getcwd(), 'priority_workflows.json')
+        if os.path.exists(pw_path):
+            with open(pw_path, 'r') as f:
+                p_data = json.load(f)
+                for idx, item in enumerate(p_data):
+                    mda_name = item.get('mda_name', '').strip()
+                    raw_process_name = item.get('process_name')
+                    if not raw_process_name or not mda_name: continue
+                    process_name = str(raw_process_name).replace('\n', ' ').strip()
+                    
+                    # Match MDA logic loosely
+                    matched_mda_code = None
+                    for m_name, m_obj in created_mdas.items():
+                        if m_name.lower() == mda_name.lower() or mda_name.lower() in m_name.lower() or m_name.lower() in mda_name.lower():
+                            matched_mda_code = m_name
+                            break
+                    if not matched_mda_code:
+                        matched_mda_code = mda_name
+                    
+                    # Construct workflows
+                    to_be = item.get('to_be', [])
+                    wf = []
+                    seq_counter = 1
+                    for row in to_be:
+                        if len(row) >= 3:
+                            role_val = str(row[1]).replace('\n', ' ').strip()[:50]
+                            step_name = str(row[2]).replace('\n', ' ').strip()[:100]
+                            desc_val = str(row[3]).replace('\n', ' ').strip().lower() if len(row) > 3 else ''
+                            stype = 'api_call' if ('api' in desc_val or 'system' in desc_val or 'portal' in desc_val or 'bridge' in desc_val or 'x-road' in desc_val or role_val.lower() == 'system') else 'manual'
+                            wf.append({
+                                'sequence': seq_counter,
+                                'step_name': step_name,
+                                'step_type': stype,
+                                'role': role_val,
+                                'action': 'execute'
+                            })
+                            seq_counter += 1
+                    
+                    services.append({
+                        'service_code': f"PRI-{idx+1000}",
+                        'service_name': process_name[:255],
+                        'mda': matched_mda_code,
+                        'family': 'Government Administration (G2G)',
+                        'config': {
+                            'rules': {
+                                'schema': {
+                                    'type': 'object',
+                                    'title': process_name[:100],
+                                    'properties': {
+                                        'virtual_id': {'type': 'string', 'title': 'Digital ID (Maisha)', 'readOnly': True}
+                                    },
+                                    'required': ['virtual_id']
+                                },
+                                'workflow': wf
+                            }
+                        }
+                    })
+    except Exception as e:
+        print(f"Error loading priority_workflows.json: {e}")
 
     for svc_data in services:
         mda = created_mdas.get(svc_data['mda'])
