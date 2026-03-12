@@ -294,7 +294,7 @@
 
   // SSO Logic
   const startSSOFlow = () => {
-    setTimeout(() => {
+    window.setTimeout(() => {
       ssoModalOpen.value = true;
     }, 300);
   }
@@ -314,7 +314,7 @@
     pkiModalOpen.value = true;
     pkiPhase.value = 'scanning';
 
-    setTimeout(() => {
+    window.setTimeout(() => {
       pkiPhase.value = 'pin';
     }, 2000);
   }

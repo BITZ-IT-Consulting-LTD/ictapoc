@@ -7,7 +7,13 @@ export const useServiceConfigStore = defineStore('serviceConfig', {
     families: [],
     groups: [],
     catalogueSummary: null,
+    matrixData: [],
     loadingSummary: false,
+    servicesPagination: {
+      count: 0,
+      next: null,
+      previous: null
+    }
   }),
   actions: {
     async fetchGroups() {
@@ -18,19 +24,22 @@ export const useServiceConfigStore = defineStore('serviceConfig', {
         console.error('Failed to fetch Service Groups:', error);
       }
     },
-    async fetchCatalogueSummary() {
+    async fetchCatalogueSummary(force = false) {
+      if (this.matrixData.length > 0 && !force) return;
+
       this.loadingSummary = true;
       try {
         const response = await api.get('/catalog/services/process_matrix/');
+        this.matrixData = response.data;
 
         let totalServices = 0;
         let withWf = 0;
         let mdaSet = new Set();
-        let domainCount = response.data.length;
+        let domainCount = this.matrixData.length;
         let totalMaturity = 0;
         let citizenFacing = 0;
 
-        response.data.forEach(domain => {
+        this.matrixData.forEach(domain => {
           domain.processes.forEach(proc => {
             proc.services.forEach(svc => {
               totalServices++;
@@ -57,10 +66,19 @@ export const useServiceConfigStore = defineStore('serviceConfig', {
         this.loadingSummary = false;
       }
     },
-    async fetchServices() {
+    async fetchServices(params = { page: 1, search: '' }) {
       try {
-        const response = await api.get('/service-configs/');
-        this.services = response.data;
+        const response = await api.get('/service-configs/', { params });
+        if (response.data.results) {
+          this.services = response.data.results;
+          this.servicesPagination = {
+            count: response.data.count,
+            next: response.data.next,
+            previous: response.data.previous
+          };
+        } else {
+          this.services = response.data;
+        }
       } catch (error) {
         console.error('Failed to fetch Service Configurations:', error);
       }

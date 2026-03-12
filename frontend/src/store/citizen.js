@@ -6,22 +6,23 @@ export const useCitizenStore = defineStore('citizen', {
   state: () => ({
     availableServices: [],
     myRequests: [],
+    myRequestsMeta: { count: 0, next: null, previous: null },
   }),
   actions: {
     async fetchAvailableServices() {
       try {
-        // Use the public catalog endpoint which filters by active/visible status
+        // Services are relatively small but we keep it generic
         const response = await api.get('/catalog/services/');
-        this.availableServices = response.data;
+        this.availableServices = response.data.results || response.data;
       } catch (error) {
         console.error('Failed to fetch available services:', error);
       }
     },
-    async fetchMyRequests() {
+    async fetchMyRequests(params = {}) {
       try {
-        // This endpoint is protected and will return only the user's requests
-        const response = await api.get('/service-requests/');
-        this.myRequests = response.data;
+        const response = await api.get('/service-requests/', { params });
+        this.myRequests = response.data.results || response.data;
+        this.myRequestsMeta = response.data.results ? { count: response.data.count, next: response.data.next, previous: response.data.previous } : { count: this.myRequests.length };
       } catch (error) {
         console.error('Failed to fetch my requests:', error);
       }

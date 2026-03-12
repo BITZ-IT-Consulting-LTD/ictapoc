@@ -49,56 +49,34 @@ def seed():
 
     all_mdas = list(MDA.objects.all())
 
+    from service_api.seed_utils import get_or_create_mda
+
     for p_mda in priority_mdas:
         target_name = p_mda['name']
         aliases = p_mda['aliases']
         
-        existing = None
-        for m in all_mdas:
-            if m.name == target_name or any(a.lower() == m.name.lower() for a in aliases):
-                existing = m
-                break
+        flags = {
+            "EDRMS": "NOT CONFIGURED",
+            "MIS": "UNKNOWN",
+            "Integration": "PENDING",
+            "Infrastructure": "NOT VALIDATED",
+            "type": p_mda['type'],
+            "sector": p_mda['sector'],
+            "seeded_for": "POC"
+        }
+
+        mda, created = get_or_create_mda(
+            name=target_name,
+            defaults={'description': json.dumps(flags)}
+        )
         
-        status = "VERIFIED"
+        status = "VERIFIED" if not created else "SEEDED"
         processes_count = 0
         actors_count = 0
+        
+        existing = mda
 
-        if not existing:
-            status = "SEEDED"
-            # Improved MDA Code generation
-            if '(' in target_name:
-                mda_code = target_name.split('(')[-1].replace(')', '')
-            elif 'State Department for ' in target_name:
-                part = target_name.split('State Department for ')[-1].split()[0][:5].upper()
-                mda_code = f"SD-{part}"
-            elif 'State Department of ' in target_name:
-                part = target_name.split('State Department of ')[-1].split()[0][:5].upper()
-                mda_code = f"SD-{part}"
-            else:
-                mda_code = target_name.split()[-1][:10].upper()
-            
-            # Ensure unique
-            counter = 1
-            original_code = mda_code
-            while MDA.objects.filter(code=mda_code).exists():
-                mda_code = f"{original_code[:7]}{counter}"
-                counter += 1
-
-            flags = {
-                "EDRMS": "NOT CONFIGURED",
-                "MIS": "UNKNOWN",
-                "Integration": "PENDING",
-                "Infrastructure": "NOT VALIDATED",
-                "type": p_mda['type'],
-                "sector": p_mda['sector'],
-                "seeded_for": "POC"
-            }
-            
-            existing = MDA.objects.create(
-                name=target_name,
-                code=mda_code,
-                description=json.dumps(flags)
-            )
+        if created:
             # STEP 4: Attach Core Process Services
             registry_services = [
                 "Incoming Correspondence",

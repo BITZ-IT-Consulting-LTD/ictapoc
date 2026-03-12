@@ -1,6 +1,6 @@
 <template>
   <main class="page service-application-page">
-    <div v-if="service" class="animate-fade-in space-y-8">
+    <div v-if="service && !loading" class="animate-fade-in space-y-8">
       <!-- Premium Glass Header -->
       <header
         class="page__header page__header--glass p-8 rounded-3xl shadow-2xl border border-white/40 flex flex-col md:flex-row justify-between items-center gap-8 bg-white/40 backdrop-blur-xl">
@@ -34,157 +34,209 @@
         </div>
       </section>
 
-      <!-- Form Body -->
-      <div class="card card--glass border-0 shadow-2xl overflow-visible">
-        <div class="card__body p-10">
-          <form @submit.prevent="handleSubmit" class="form space-y-10">
-            <div v-if="currentStep" class="animate-slide-in" :key="currentStepIndex">
-              <div class="mb-10 border-b pb-6 border-slate-100">
-                <h2 class="text-2xl font-black text-gray-900 mb-2">{{ currentStep.title }}</h2>
-                <p v-if="currentStep.description" class="text-slate-500 text-sm italic">{{ currentStep.description }}
-                </p>
+      <div class="grid grid--sidebar">
+        <!-- Main Form Area -->
+        <div class="flex flex-col gap-8">
+          <div class="card card--glass border-0 shadow-2xl overflow-visible">
+            <div class="card__body p-10">
+              <form @submit.prevent="handleSubmit" class="form space-y-10">
+                <div v-if="currentStep" class="animate-slide-in" :key="currentStepIndex">
+                  <div class="mb-10 border-b pb-6 border-slate-100 flex items-center justify-between">
+                    <div>
+                      <h2 class="text-2xl font-black text-gray-900 mb-2">{{ currentStep.title }}</h2>
+                      <p v-if="currentStep.description" class="text-slate-500 text-sm italic">{{ currentStep.description }}</p>
+                    </div>
+                    <div class="step-indicator-bubble hidden md:flex items-center justify-center w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 font-black border-2 border-indigo-100">
+                      {{ currentStepIndex + 1 }}
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Explicit Field Rendering for maximal reliability -->
+                    <div v-for="key in currentStep.fields" :key="key" class="form__group"
+                      :class="{ 'md:col-span-2': schema.properties[key].format === 'textarea' || schema.properties[key].widget === 'checkbox-group' }">
+
+                      <div class="flex justify-between items-center mb-2">
+                        <label :for="key" class="form__label mb-0">
+                          {{ schema.properties[key].title }}
+                        </label>
+                        <span v-if="isRequired(key)"
+                          class="badge badge--danger badge--small scale-75 origin-right">MANDATORY</span>
+                      </div>
+
+                      <!-- Select / Dropdown -->
+                      <select v-if="schema.properties[key].enum" :id="key" v-model="formData[key]" class="form__select"
+                        :class="{ 'opacity-60 bg-slate-100 cursor-not-allowed': schema.properties[key].readOnly }"
+                        :disabled="schema.properties[key].readOnly" :required="isRequired(key)">
+                        <option value="" disabled>Select authoritative option...</option>
+                        <option v-for="opt in schema.properties[key].enum" :key="opt" :value="opt">{{ opt }}</option>
+                      </select>
+
+                      <!-- File Upload -->
+                      <div v-else-if="schema.properties[key].format === 'data-url'"
+                        class="relative group h-32 flex flex-col justify-center items-center bg-indigo-50/20 border-indigo-200 border-2 border-dashed rounded-2xl hover:bg-white hover:border-primary transition-all cursor-pointer">
+                        <input type="file" @change="handleFileUpload($event, key)"
+                          class="absolute inset-0 opacity-0 cursor-pointer z-10">
+                        <i
+                          class="bi bi-cloud-arrow-up text-3xl text-indigo-400 mb-2 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-indigo-600 font-black text-xs uppercase tracking-widest">
+                          {{ formData[key]?.name || 'Attach Digital Copy' }}
+                        </span>
+                      </div>
+
+                      <!-- Textarea -->
+                      <textarea v-else-if="schema.properties[key].format === 'textarea'" :id="key" v-model="formData[key]"
+                        class="form__input form__textarea h-40"
+                        :class="{ 'opacity-60 bg-slate-100 cursor-not-allowed': schema.properties[key].readOnly }"
+                        :disabled="schema.properties[key].readOnly" :required="isRequired(key)"
+                        placeholder="Enter detailed records..."></textarea>
+
+                      <!-- Standard Input (Date, Number, Text) with Registry Lookup Support -->
+                      <div v-else class="relative flex gap-2">
+                        <div class="relative flex-1">
+                          <input :type="getFieldType(schema.properties[key])" :id="key" v-model="formData[key]"
+                            class="form__input w-full"
+                            :class="{ 
+                              'opacity-60 bg-gray-50 cursor-not-allowed': schema.properties[key].readOnly,
+                              'border-green-500 focus:border-green-500 pr-10': verifiedFields.has(key)
+                            }"
+                            :required="isRequired(key)" :placeholder="schema.properties[key].title"
+                            :disabled="schema.properties[key].readOnly" @input="clearVerification(key)">
+                            
+                          <i v-if="verifiedFields.has(key)" 
+                             class="bi bi-check-circle-fill text-green-500 absolute right-3 top-1/2 -translate-y-1/2 text-lg animate-bounce-short"></i>
+                        </div>
+
+                        <button v-if="schema.properties[key]['x-registry-config']" type="button"
+                          @click="performLookup(key, schema.properties[key])"
+                          class="button button--secondary button--small whitespace-nowrap"
+                          :class="{'button--success': verifiedFields.has(key)}"
+                          :disabled="!formData[key]">
+                          <i class="bi" :class="verifiedFields.has(key) ? 'bi-shield-check' : 'bi-search'"></i>
+                          <span class="ms-1">{{ verifiedFields.has(key) ? 'Verified' : 'Fetch Record' }}</span>
+                        </button>
+                      </div>
+
+                      <p v-if="schema.properties[key].description" class="text-[10px] text-slate-400 mt-2 italic">
+                        <i class="bi bi-info-circle me-1"></i> {{ schema.properties[key].description }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Navigation -->
+                <footer class="flex items-center justify-between pt-10 border-t border-slate-100 mt-10">
+                  <button type="button" v-if="currentStepIndex > 0" @click="prevStep"
+                    class="button button--secondary button--pill">
+                    <i class="bi bi-arrow-left me-2"></i> Back
+                  </button>
+                  <div v-else></div>
+
+                  <button v-if="currentStepIndex < formSteps.length - 1" type="button" @click="handleNext"
+                    class="button button--primary button--pill px-12">
+                    Next Section <i class="bi bi-arrow-right ms-2"></i>
+                  </button>
+
+                  <button v-else type="submit"
+                    class="button button--primary button--pill px-16 bg-emerald-600 hover:bg-emerald-700 border-emerald-600 shadow-xl shadow-emerald-100">
+                    <i class="bi bi-shield-check me-2 text-lg"></i> Finalize Application
+                  </button>
+                </footer>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar / Roadmap -->
+        <aside class="flex flex-col gap-6">
+          <div class="card card--glass sticky top-8">
+            <header class="card__header bg-slate-50/50 border-b">
+               <h3 class="card__title text-xs uppercase tracking-widest flex items-center gap-2">
+                 <i class="bi bi-map-fill text-indigo-500"></i>
+                 Application Roadmap
+               </h3>
+            </header>
+            <div class="card__body p-6">
+              <div class="roadmap-steps space-y-0">
+                <div v-for="(step, index) in formSteps" :key="index" class="roadmap-item relative flex gap-4 pb-8">
+                  <!-- Connector -->
+                  <div v-if="index < formSteps.length - 1" 
+                       class="absolute left-[11px] top-6 bottom-0 w-[2px]"
+                       :class="currentStepIndex > index ? 'bg-emerald-500' : 'bg-slate-100'"></div>
+                  
+                  <div class="relative z-10 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black border-2 transition-all"
+                       :class="[
+                         currentStepIndex === index ? 'bg-indigo-600 text-white border-indigo-600 ring-4 ring-indigo-100 scale-110' : 
+                         currentStepIndex > index ? 'bg-emerald-500 text-white border-emerald-500' : 
+                         'bg-white text-slate-300 border-slate-100'
+                       ]">
+                    <i v-if="currentStepIndex > index" class="bi bi-check-lg"></i>
+                    <span v-else>{{ index + 1 }}</span>
+                  </div>
+                  
+                  <div class="flex-1">
+                    <h4 class="text-xs font-black uppercase tracking-tight mb-1"
+                        :class="currentStepIndex === index ? 'text-indigo-600' : (currentStepIndex > index ? 'text-main' : 'text-slate-400')">
+                      {{ step.title }}
+                    </h4>
+                    <p class="text-[9px] text-slate-400 leading-tight">{{ step.description || 'Information gathering node.' }}</p>
+                  </div>
+                </div>
               </div>
 
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Explicit Field Rendering for maximal reliability -->
-                <div v-for="key in currentStep.fields" :key="key" class="form__group"
-                  :class="{ 'md:col-span-2': schema.properties[key].format === 'textarea' || schema.properties[key].widget === 'checkbox-group' }">
-
-                  <div class="flex justify-between items-center mb-2">
-                    <label :for="key" class="form__label mb-0">
-                      {{ schema.properties[key].title }}
-                    </label>
-                    <span v-if="isRequired(key)"
-                      class="badge badge--danger badge--small scale-75 origin-right">MANDATORY</span>
+              <!-- Post-Submission Prediction -->
+              <div class="mt-4 pt-6 border-t border-slate-100">
+                <div class="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">
+                  <i class="bi bi-lightning-charge-fill text-amber-500"></i>
+                  Pipeline Forecast
+                </div>
+                <div class="p-3 bg-amber-50 rounded-xl border border-amber-100">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-[9px] font-bold text-amber-800 uppercase">Estimated Review</span>
+                    <span class="text-[9px] font-black text-amber-600">4-6 HOURS</span>
                   </div>
-
-                  <!-- Select / Dropdown -->
-                  <select v-if="schema.properties[key].enum" :id="key" v-model="formData[key]" class="form__select"
-                    :class="{ 'opacity-60 bg-slate-100 cursor-not-allowed': schema.properties[key].readOnly }"
-                    :disabled="schema.properties[key].readOnly" :required="isRequired(key)">
-                    <option value="" disabled>Select authoritative option...</option>
-                    <option v-for="opt in schema.properties[key].enum" :key="opt" :value="opt">{{ opt }}</option>
-                  </select>
-
-                  <!-- File Upload -->
-                  <div v-else-if="schema.properties[key].format === 'data-url'"
-                    class="relative group h-32 flex flex-col justify-center items-center bg-indigo-50/20 border-indigo-200 border-2 border-dashed rounded-2xl hover:bg-white hover:border-primary transition-all cursor-pointer">
-                    <input type="file" @change="handleFileUpload($event, key)"
-                      class="absolute inset-0 opacity-0 cursor-pointer z-10">
-                    <i
-                      class="bi bi-cloud-arrow-up text-3xl text-indigo-400 mb-2 group-hover:scale-110 transition-transform"></i>
-                    <span class="text-indigo-600 font-black text-xs uppercase tracking-widest">
-                      {{ formData[key]?.name || 'Attach Digital Copy' }}
-                    </span>
+                  <div class="w-full bg-amber-200/50 rounded-full h-1">
+                    <div class="bg-amber-500 h-full rounded-full w-2/3"></div>
                   </div>
-
-                  <!-- Textarea -->
-                  <textarea v-else-if="schema.properties[key].format === 'textarea'" :id="key" v-model="formData[key]"
-                    class="form__input form__textarea h-40"
-                    :class="{ 'opacity-60 bg-slate-100 cursor-not-allowed': schema.properties[key].readOnly }"
-                    :disabled="schema.properties[key].readOnly" :required="isRequired(key)"
-                    placeholder="Enter detailed records..."></textarea>
-
-                  <!-- Radio Buttons -->
-                  <div v-else-if="schema.properties[key].widget === 'radio'"
-                    class="flex gap-6 p-2 bg-gray-50 rounded-xl border border-gray-100">
-                    <label v-for="opt in schema.properties[key].enum" :key="opt"
-                      class="flex items-center gap-3 cursor-pointer group">
-                      <input type="radio" :name="key" :value="opt" v-model="formData[key]"
-                        class="w-5 h-5 accent-primary cursor-pointer">
-                      <span
-                        class="text-xs font-bold text-slate-600 uppercase tracking-tight group-hover:text-primary transition-colors">{{
-                          opt }}</span>
-                    </label>
-                  </div>
-
-                  <!-- Checkbox Group (Multi-select) -->
-                  <div v-else-if="schema.properties[key].widget === 'checkbox-group'"
-                    class="grid grid-cols-2 lg:grid-cols-3 gap-4 p-2">
-                    <label v-for="opt in (schema.properties[key].items?.enum || schema.properties[key].enum)" :key="opt"
-                      class="flex items-center gap-3 cursor-pointer p-4 bg-gray-50 border border-gray-100 rounded-2xl hover:bg-white hover:border-primary transition-all group"
-                      :class="{ 'bg-white border-primary !border-2 shadow-sm': formData[key]?.includes(opt) }">
-                      <input type="checkbox" :value="opt" v-model="formData[key]"
-                        class="w-5 h-5 accent-primary rounded cursor-pointer">
-                      <span
-                        class="text-xs font-black text-slate-700 uppercase tracking-tighter group-hover:text-primary transition-colors">{{
-                          opt }}</span>
-                    </label>
-                  </div>
-
-                  <!-- Boolean Checkbox (Single) -->
-                  <label v-else-if="schema.properties[key].type === 'boolean'"
-                    class="flex items-center gap-4 p-6 bg-gray-50 border border-gray-100 rounded-2xl cursor-pointer hover:bg-white hover:border-primary transition-all group"
-                    :class="{ 'bg-white border-primary !border-2 shadow-sm': formData[key] }">
-                    <input type="checkbox" class="w-6 h-6 accent-primary rounded cursor-pointer" v-model="formData[key]"
-                      :required="isRequired(key)">
-                    <span
-                      class="text-xs font-black text-slate-700 uppercase tracking-widest group-hover:text-primary transition-colors">{{
-                        schema.properties[key].title }}</span>
-                  </label>
-
-                  <!-- Standard Input (Date, Number, Text) with Registry Lookup Support -->
-                  <div v-else class="relative flex gap-2">
-                    <div class="relative flex-1">
-                      <input :type="getFieldType(schema.properties[key])" :id="key" v-model="formData[key]"
-                        class="form__input w-full"
-                        :class="{ 
-                          'opacity-60 bg-gray-50 cursor-not-allowed': schema.properties[key].readOnly,
-                          'border-green-500 focus:border-green-500 pr-10': verifiedFields.has(key)
-                        }"
-                        :required="isRequired(key)" :placeholder="schema.properties[key].title"
-                        :disabled="schema.properties[key].readOnly" @input="clearVerification(key)">
-                        
-                      <i v-if="verifiedFields.has(key)" 
-                         class="bi bi-check-circle-fill text-green-500 absolute right-3 top-1/2 -translate-y-1/2 text-lg animate-bounce-short"></i>
-                    </div>
-
-                    <button v-if="schema.properties[key]['x-registry-config']" type="button"
-                      @click="performLookup(key, schema.properties[key])"
-                      class="button button--secondary button--small whitespace-nowrap"
-                      :class="{'button--success': verifiedFields.has(key)}"
-                      :disabled="!formData[key]">
-                      <i class="bi" :class="verifiedFields.has(key) ? 'bi-shield-check' : 'bi-search'"></i>
-                      <span class="ms-1">{{ verifiedFields.has(key) ? 'Verified' : 'Fetch Record' }}</span>
-                    </button>
-                  </div>
-
-                  <p v-if="schema.properties[key].description" class="text-[10px] text-slate-400 mt-2 italic">
-                    <i class="bi bi-info-circle me-1"></i> {{ schema.properties[key].description }}
-                  </p>
                 </div>
               </div>
             </div>
+          </div>
 
-            <!-- Navigation -->
-            <footer class="flex items-center justify-between pt-10 border-t border-slate-100 mt-10">
-              <button type="button" v-if="currentStepIndex > 0" @click="prevStep"
-                class="button button--secondary button--pill">
-                <i class="bi bi-arrow-left me-2"></i> Previous Section
-              </button>
-              <div v-else></div>
-
-              <button v-if="currentStepIndex < formSteps.length - 1" type="button" @click="handleNext"
-                class="button button--primary button--pill px-12">
-                Continue to Next Stage <i class="bi bi-arrow-right ms-2"></i>
-              </button>
-
-              <button v-else type="submit"
-                class="button button--primary button--pill px-16 bg-emerald-600 hover:bg-emerald-700 border-emerald-600 shadow-xl shadow-emerald-100">
-                <i class="bi bi-shield-check me-2 text-lg"></i> Finalize & Commit Application
-              </button>
-            </footer>
-          </form>
-        </div>
+          <!-- Official Context Card -->
+          <div class="card bg-indigo-900 border-0 text-white overflow-hidden relative">
+            <div class="absolute top-0 right-0 p-4 opacity-10">
+              <i class="bi bi-info-square-fill text-6xl"></i>
+            </div>
+            <div class="card__body p-6 relative z-10">
+              <h3 class="text-xs font-black uppercase tracking-widest mb-4">Official Context</h3>
+              <p class="text-[10px] text-indigo-200 leading-relaxed mb-4">
+                This application is processed through the <strong>National Orchestration Engine</strong>. 
+                Data is validated against authoritative registries in real-time.
+              </p>
+              <div class="flex items-center gap-3">
+                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                <span class="text-[9px] font-black uppercase tracking-widest text-emerald-400">Secure Live Link</span>
+              </div>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
 
     <!-- Loading State -->
-    <div v-else class="flex flex-col items-center justify-center py-40">
+    <div v-else-if="loading" class="flex flex-col items-center justify-center py-40">
       <div class="w-16 h-16 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin mb-6"></div>
-      <p class="text-xs font-black uppercase tracking-[0.4em] text-indigo-500 animate-pulse">Initializing Secure
-        Portal...
+      <p class="text-xs font-black uppercase tracking-[0.4em] text-indigo-500 animate-pulse">Initializing Secure Portal...
       </p>
+    </div>
+
+    <!-- Ready / Data Missing State -->
+    <div v-else class="flex flex-col items-center justify-center py-40 text-center">
+        <i class="bi bi-search text-5xl mb-4 text-slate-300"></i>
+        <h2 class="text-2xl font-black text-gray-900 mb-2">Service Not Found</h2>
+        <p class="text-slate-500 max-w-md mb-8">The service configuration for "{{ serviceCode }}" could not be retrieved from the national registry.</p>
+        <router-link to="/dashboard" class="button button--primary button--pill px-10">Return to Dashboard</router-link>
     </div>
   </main>
 </template>
@@ -204,20 +256,64 @@
 
   const serviceCode = route.params.service_code;
   const service = ref(null);
+  const loading = ref(false);
   const formData = ref({});
   const currentStepIndex = ref(0);
   const verifiedFields = ref(new Set());
 
   onMounted(async () => {
-    await serviceConfigStore.fetchServices();
-    service.value = serviceConfigStore.services.find(s => s.service_code === serviceCode);
+    loading.value = true;
+    try {
+      // 1. Ensure user and basic data is loaded
+      if (authStore.isAuthenticated && !authStore.user) {
+        await authStore.fetchCurrentUser();
+      }
 
-    if (service.value) {
-      initializeForm();
+      // 2. Fetch authoritative services list (non-paginated)
+      if (citizenStore.availableServices.length === 0) {
+        await citizenStore.fetchAvailableServices();
+      }
+      
+      // 3. Find the specific service by its unique service_code
+      service.value = citizenStore.availableServices.find(s => s.service_code === serviceCode);
+
+      if (service.value) {
+        initializeForm();
+      } else {
+        console.warn(`Service ${serviceCode} not found in authoritative registry.`);
+      }
+    } catch (error) {
+      console.error("Portal initialization failed:", error);
+    } finally {
+      loading.value = false;
     }
   });
 
-  const schema = computed(() => service.value?.config?.rules?.schema);
+  const schema = computed(() => {
+    let s = service.value?.effective_form_schema || {};
+    
+    // Normalize format: transform legacy { fields: [...] } to standard { properties: { ... } }
+    if (Array.isArray(s.fields) && (!s.properties || Object.keys(s.properties).length === 0)) {
+        const properties = {};
+        const required = s.required || [];
+        
+        s.fields.forEach(f => {
+            const key = f.name || f.id || `field_${Math.random().toString(36).substr(2, 9)}`;
+            properties[key] = {
+                type: f.type || 'text',
+                title: f.label || f.title || key,
+                description: f.description || '',
+                ...f
+            };
+            if (f.required && !required.includes(key)) {
+                required.push(key);
+            }
+        });
+        return { properties, required };
+    }
+    
+    return s;
+  });
 
   // Group fields into steps based on section_headers
   const formSteps = computed(() => {

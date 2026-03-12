@@ -2,12 +2,27 @@
    <div class="space-y-6">
       <header class="page__header u-mb-8">
          <div class="page__title-group">
-            <h1 class="page__title">Whole-of-Government Service Catalogue</h1>
-            <p class="page__subtitle">Service Family → Service Category → Services → Systems → Actors Mapping</p>
+            <div class="u-flex u-items-center u-gap-3 u-mb-2">
+               <span class="badge badge--primary u-font-mono u-text-[10px] u-tracking-widest">Active Governance Module</span>
+               <span class="u-text-[10px] u-font-black u-text-muted/60 u-tracking-widest">SECURITY: GOK-ADMIN-01</span>
+            </div>
+            <h1 class="page__title">
+               {{ activeTab === 'Priority MDAs' ? 'Priority MDAs Service Matrix' :
+                  activeTab === 'Priority Services' ? 'High-Impact Priority Services Matrix' :
+                  activeTab === 'Cradle to Death' ? 'Cradle to Death Lifecycle Matrix' :
+                  'Whole-of-Government Service Catalogue' }}
+            </h1>
+            <p class="page__subtitle">
+               {{ activeTab === 'Cradle to Death' ? 'From Birth Registration to Probate & Succession' :
+                  'Cluster → Service Family → Services → Systems → Actors Mapping' }}
+            </p>
          </div>
          <div class="page__actions">
-            <button @click="fetchMatrix" class="button button--secondary button--small button--pill">
+            <button @click="fetchMatrix" class="button button--secondary button--small button--pill no-print">
                <i class="bi bi-arrow-clockwise"></i> Refresh Data
+            </button>
+            <button @click="printCatalogue" class="button button--primary button--small button--pill no-print ml-2">
+               <i class="bi bi-printer"></i> Print Report
             </button>
          </div>
       </header>
@@ -30,11 +45,20 @@
 
       <div v-else class="space-y-8">
          <!-- Whole-of-Government Mini Dashboard -->
-         <WogDashboardStats v-if="auditStats" :stats="auditStats" />
+         <WogDashboardStats v-if="auditStats" :stats="auditStats" class="print-section" />
+
+         <!-- Print Only Header -->
+         <div class="print-only u-mb-10 u-border-b-4 u-border-slate-900 u-pb-6">
+            <h1 class="u-text-4xl u-font-black">National Service Registry</h1>
+            <p class="u-text-xl u-font-bold u-mt-2">Whole-of-Government Governance Catalogue Matrix</p>
+            <div class="u-flex u-justify-between u-mt-4 u-text-sm u-font-bold">
+               <span>Generated: {{ new Date().toLocaleDateString() }}</span>
+               <span>Classification: OFFICIAL / SENSITIVE</span>
+            </div>
+         </div>
 
          <!-- Filters -->
-         <!-- Filters -->
-         <div class="toolbar u-mb-6">
+         <div class="toolbar u-mb-6 no-print">
             <div class="toolbar__filters">
                <!-- Search Core -->
                <div class="toolbar__filter-group">
@@ -48,7 +72,7 @@
                <div class="toolbar__filter-group">
                   <i class="bi bi-diagram-3 toolbar__filter-icon"></i>
                   <input type="text" v-model="domainSearchLocal" placeholder="Filter by Family..."
-                     @focus="showDomainDropdown = true" @blur="setTimeout(() => showDomainDropdown = false, 200)"
+                     @focus="showDomainDropdown = true" @blur="closeDropdownWithDelay('domain')"
                      class="toolbar__filter-input toolbar__filter-input--with-arrow">
                   <i class="bi bi-chevron-down toolbar__filter-arrow"
                      :class="{ 'toolbar__filter-arrow--open': showDomainDropdown }"></i>
@@ -69,7 +93,7 @@
                <div class="toolbar__filter-group">
                   <i class="bi bi-building toolbar__filter-icon"></i>
                   <input type="text" v-model="mdaSearchLocal" placeholder="Filter by Agency..."
-                     @focus="showMdaDropdown = true" @blur="setTimeout(() => showMdaDropdown = false, 200)"
+                     @focus="showMdaDropdown = true" @blur="closeDropdownWithDelay('mda')"
                      class="toolbar__filter-input toolbar__filter-input--with-arrow">
                   <i class="bi bi-chevron-down toolbar__filter-arrow"
                      :class="{ 'toolbar__filter-arrow--open': showMdaDropdown }"></i>
@@ -90,7 +114,7 @@
                <div class="toolbar__filter-group">
                   <i class="bi bi-calendar-event toolbar__filter-icon"></i>
                   <input type="text" v-model="lifeEventSearchLocal" placeholder="Filter by Life Event..."
-                     @focus="showLifeEventDropdown = true" @blur="setTimeout(() => showLifeEventDropdown = false, 200)"
+                     @focus="showLifeEventDropdown = true" @blur="closeDropdownWithDelay('lifeEvent')"
                      class="toolbar__filter-input toolbar__filter-input--with-arrow">
                   <i class="bi bi-chevron-down toolbar__filter-arrow"
                      :class="{ 'toolbar__filter-arrow--open': showLifeEventDropdown }"></i>
@@ -112,7 +136,7 @@
                <div class="toolbar__filter-group">
                   <i class="bi bi-tag-fill toolbar__filter-icon"></i>
                   <input type="text" v-model="typeSearchLocal" placeholder="Filter by Type..."
-                     @focus="showTypeDropdown = true" @blur="setTimeout(() => showTypeDropdown = false, 200)"
+                     @focus="showTypeDropdown = true" @blur="closeDropdownWithDelay('type')"
                      class="toolbar__filter-input toolbar__filter-input--with-arrow">
                   <i class="bi bi-chevron-down toolbar__filter-arrow"
                      :class="{ 'toolbar__filter-arrow--open': showTypeDropdown }"></i>
@@ -133,7 +157,7 @@
                <div class="toolbar__filter-group">
                   <i class="bi bi-collection-fill toolbar__filter-icon"></i>
                   <input type="text" v-model="groupSearchLocal" placeholder="Filter by Group..."
-                     @focus="showGroupDropdown = true" @blur="setTimeout(() => showGroupDropdown = false, 200)"
+                     @focus="showGroupDropdown = true" @blur="closeDropdownWithDelay('group')"
                      class="toolbar__filter-input toolbar__filter-input--with-arrow">
                   <i class="bi bi-chevron-down toolbar__filter-arrow"
                      :class="{ 'toolbar__filter-arrow--open': showGroupDropdown }"></i>
@@ -142,7 +166,8 @@
 
                   <transition name="dropdown">
                      <div v-if="showGroupDropdown" class="dropdown-menu">
-                        <div @click="selectGroup('')" class="dropdown-item dropdown-item--header">All Lifecycle Groups</div>
+                        <div @click="selectGroup('')" class="dropdown-item dropdown-item--header">All Lifecycle Groups
+                        </div>
                         <div v-for="g in filteredGroups" :key="g" @click="selectGroup(g)" class="dropdown-item">
                            {{ g }}
                         </div>
@@ -154,7 +179,7 @@
                <div class="toolbar__filter-group">
                   <i class="bi bi-tag toolbar__filter-icon"></i>
                   <input type="text" v-model="categorySearchLocal" placeholder="Filter by Category..."
-                     @focus="showCategoryDropdown = true" @blur="setTimeout(() => showCategoryDropdown = false, 200)"
+                     @focus="showCategoryDropdown = true" @blur="closeDropdownWithDelay('category')"
                      class="toolbar__filter-input toolbar__filter-input--with-arrow">
                   <i class="bi bi-chevron-down toolbar__filter-arrow"
                      :class="{ 'toolbar__filter-arrow--open': showCategoryDropdown }"></i>
@@ -220,7 +245,8 @@
             </div>
          </transition-group>
 
-         <div v-for="domain in filteredMatrixData" :key="domain.domain_name" class="card u-overflow-hidden u-mb-8">
+         <div v-for="domain in filteredMatrixData" :key="domain.domain_name"
+            class="card u-overflow-hidden u-mb-8 print-section">
             <header class="card__header u-justify-between u-items-center"
                style="background: var(--color-background-hover); border-bottom: 1px solid var(--color-border);">
                <h3 class="card__title u-flex u-items-center u-gap-2">
@@ -228,7 +254,7 @@
                      style="width: 0.5rem; height: 2rem; background: var(--color-primary);"></span>
                   {{ domain.domain_name }}
                </h3>
-               <span class="table__code-badge">Service Family</span>
+               <span class="table__code-badge">National Cluster</span>
             </header>
 
             <div class="u-p-6">
@@ -238,7 +264,7 @@
                         <i class="bi bi-tags"></i>
                         {{ process.process_name }}
                      </h4>
-                     <p class="u-text-xs u-text-muted u-ml-7">Service Category</p>
+                     <p class="u-text-xs u-text-muted u-ml-7">Service Family</p>
                   </div>
 
                   <div class="table-container u-ml-7 u-border u-rounded">
@@ -258,15 +284,16 @@
                            <tr v-for="service in process.services" :key="service.service_name" class="table__row">
                               <td class="table__cell" style="padding-left: 1rem;">
                                  <div class="u-flex u-items-center u-gap-2">
-                                     <div class="table__cell--bold">{{ service.service_name }}</div>
-                                     <i v-if="service.mda_priority" class="bi bi-star-fill u-text-primary" title="Priority MDA"></i>
+                                    <div class="table__cell--bold">{{ service.service_name }}</div>
+                                    <i v-if="service.mda_priority" class="bi bi-star-fill u-text-primary"
+                                       title="Priority MDA"></i>
                                  </div>
                                  <div class="u-text-xs u-text-muted u-mt-0.5">{{ service.mda }}</div>
                               </td>
                               <td class="table__cell">
                                  <div class="u-flex u-flex-col u-gap-1">
                                     <span class="u-text-xs u-font-bold u-text-primary">{{ service.service_type || 'N/A'
-                                       }}</span>
+                                    }}</span>
                                     <div class="u-flex u-items-center u-gap-1">
                                        <div class="u-flex u-gap-0.5">
                                           <template v-for="i in 5" :key="i">
@@ -351,31 +378,14 @@
             </div>
          </template>
 
-         <div class="u-mb-6 u-flex u-items-center u-justify-center u-gap-6">
-            <div class="u-flex u-items-center u-gap-2">
-               <span class="legend-dot legend-dot--start"></span>
-               <span class="u-text-xs u-font-bold u-text-muted u-uppercase">Start</span>
-            </div>
-            <div class="u-flex u-items-center u-gap-2">
-               <span class="legend-dot legend-dot--user"></span>
-               <span class="u-text-xs u-font-bold u-text-muted u-uppercase">User Task</span>
-            </div>
-            <div class="u-flex u-items-center u-gap-2">
-               <span class="legend-dot legend-dot--service"></span>
-               <span class="u-text-xs u-font-bold u-text-muted u-uppercase">Service Task</span>
-            </div>
-            <div class="u-flex u-items-center u-gap-2">
-               <div class="legend-dot legend-dot--gateway"></div>
-               <span class="u-text-xs u-font-bold u-text-muted u-uppercase">Gateway</span>
-            </div>
-            <div class="u-flex u-items-center u-gap-2">
-               <span class="legend-dot legend-dot--end"></span>
-               <span class="u-text-xs u-font-bold u-text-muted u-uppercase">End</span>
-            </div>
-         </div>
-
-         <div class="mermaid u-flex u-justify-center" ref="mermaidContainer">
-            {{ mermaidDefinition }}
+         <!-- Use Single Source of Truth for BPMN Rendering -->
+         <div class="u-flex u-justify-center">
+            <BpmnRenderer 
+               v-if="selectedService" 
+               :steps="filteredWorkflowSteps" 
+               :stage="activeLifecycle" 
+               class="u-w-full"
+            />
          </div>
 
          <template #footer>
@@ -397,12 +407,18 @@
    import { useServiceConfigStore } from '../../store/serviceConfig';
    import WogDashboardStats from './WogDashboardStats.vue';
    import BaseModal from '../Common/BaseModal.vue';
+   import BpmnRenderer from './BpmnRenderer.vue';
+
+   const props = defineProps({
+      activeTab: { type: String, default: 'Whole-of-Gov Catalogue' }
+   });
 
    const serviceConfigStore = useServiceConfigStore();
-   const matrixData = ref([]);
    const auditStats = computed(() => serviceConfigStore.catalogueSummary);
-   const loading = ref(true);
+   const matrixData = computed(() => serviceConfigStore.matrixData);
+   const loading = computed(() => serviceConfigStore.loadingSummary);
    const error = ref(null);
+   const isPrinting = ref(false);
 
    const searchQuery = ref('');
    const selectedDomain = ref('');
@@ -566,6 +582,17 @@
       showGroupDropdown.value = false;
    };
 
+   const closeDropdownWithDelay = (type) => {
+      setTimeout(() => {
+         if (type === 'domain') showDomainDropdown.value = false;
+         if (type === 'mda') showMdaDropdown.value = false;
+         if (type === 'category') showCategoryDropdown.value = false;
+         if (type === 'type') showTypeDropdown.value = false;
+         if (type === 'lifeEvent') showLifeEventDropdown.value = false;
+         if (type === 'group') showGroupDropdown.value = false;
+      }, 200);
+   };
+
    const filteredMatrixData = computed(() => {
       let data = JSON.parse(JSON.stringify(matrixData.value));
 
@@ -577,6 +604,36 @@
       data = data.map(d => {
          const matchingProcesses = d.processes.map(p => {
             const matchingServices = p.services.filter(s => {
+               // Baseline context filters
+               if (props.activeTab === 'Priority MDAs') {
+                  const mdaPriority = s.mda_priority === true;
+                  if (!mdaPriority) return false;
+               }
+
+               if (props.activeTab === 'Priority Services') {
+                  const sPriority = s.service_priority === 'high' || s.service_priority === 'critical' || s.mda_priority === true;
+                  if (!sPriority) return false;
+               }
+
+               if (props.activeTab === 'Cradle to Death') {
+                  const cradleGroups = ['The Cradle', 'Childhood & Education', 'Coming of Age', 'Adulthood', 'The Sunset'];
+                  const cradleFamilies = [
+                     'Identity & Civil Registration',
+                     'Civil Registration & Identity',
+                     'Social Protection & Welfare',
+                     'Education & Skills Development',
+                     'Health & Public Health Regulation'
+                  ];
+                  
+                  const isCradleContext = (s.service_group_details || []).some(sg => cradleGroups.includes(sg.name)) ||
+                                          cradleGroups.includes(d.domain_name) ||
+                                          cradleGroups.includes(p.process_name) ||
+                                          cradleFamilies.includes(s.service_family_details?.name);
+                  
+                  const isLC = s.service_priority === 'critical' || isCradleContext;
+                  if (!isLC) return false;
+               }
+
                const matchesMda = !selectedMda.value || s.mda === selectedMda.value;
                const matchesCategory = !selectedCategory.value || s.service_category === selectedCategory.value;
                const matchesType = !selectedType.value || s.service_type === selectedType.value;
@@ -621,86 +678,26 @@
       }
    };
 
-   const visualizeWorkflow = async (service, stage = 'as_is') => {
+   const filteredWorkflowSteps = computed(() => {
+      if (!selectedService.value) return [];
+      return (selectedService.value.workflow_steps || []).filter(s => s.lifecycle_stage === activeLifecycle.value);
+   });
+
+   const visualizeWorkflow = (service, stage = 'as_is') => {
       selectedService.value = service;
       activeLifecycle.value = stage;
-      showWorkflowModal.value = true;
-
-      // Generate Mermaid Graph
-      let graph = 'graph TD;\n';
-      // Filter steps by active lifecycle stage
-      let steps = (service.workflow_steps || []).filter(s => s.lifecycle_stage === activeLifecycle.value);
-
-      // SMARTER DEFAULT: If selected stage is empty but other stage has steps, switch
+      
+      // Heuristic: If selected stage is empty but other stage has steps, switch
+      const steps = (service.workflow_steps || []).filter(s => s.lifecycle_stage === stage);
       if (steps.length === 0 && service.workflow_steps?.length > 0) {
-         const otherStage = activeLifecycle.value === 'as_is' ? 'to_be' : 'as_is';
+         const otherStage = stage === 'as_is' ? 'to_be' : 'as_is';
          const otherSteps = service.workflow_steps.filter(s => s.lifecycle_stage === otherStage);
          if (otherSteps.length > 0) {
-            steps = otherSteps;
             activeLifecycle.value = otherStage;
          }
       }
-
-      steps.forEach((step, index) => {
-         const nodeId = `S${step.sequence || index + 1}`;
-         const safeLabel = step.step_name.replace(/"/g, "'");
-
-         // Robust Node Type Detection
-         const isService = step.step_type === 'api_call' || step.bpmn_element_type === 'service_task';
-         let bType = step.bpmn_element_type || (isService ? 'service_task' : 'user_task');
-
-         // Auto-detect Start/End
-         if (index === 0 && !bType.includes('gateway')) bType = 'start_event';
-         if (index === steps.length - 1 && !bType.includes('gateway') && steps.length > 1) bType = 'end_event';
-
-         if (bType === 'start_event') {
-            graph += `    ${nodeId}(("${safeLabel}"))\n`;
-            graph += `    class ${nodeId} startEvent;\n`;
-         } else if (bType === 'end_event') {
-            graph += `    ${nodeId}(("${safeLabel}"))\n`;
-            graph += `    class ${nodeId} endEvent;\n`;
-         } else if (bType === 'exclusive_gateway') {
-            graph += `    ${nodeId}{{"${safeLabel}"}}\n`;
-            graph += `    class ${nodeId} gateway;\n`;
-         } else if (bType === 'service_task') {
-            graph += `    ${nodeId}[["${safeLabel}<br/>(System)"]]\n`;
-            graph += `    class ${nodeId} serviceTask;\n`;
-         } else {
-            graph += `    ${nodeId}["${safeLabel}<br/>(${step.role || 'Officer'})"]\n`;
-            graph += `    class ${nodeId} userTask;\n`;
-         }
-
-         if (index < steps.length - 1) {
-            const nextStep = steps[index + 1];
-            const nextNodeId = `S${nextStep.sequence}`;
-            graph += `    ${nodeId} --> ${nextNodeId}\n`;
-         }
-      });
-
-      if (steps.length === 0) {
-         graph += '    Start((No steps for this stage)) --> End((End))\n';
-      }
-
-      graph += '    classDef startEvent fill:#f0fdf4,stroke:#16a34a,stroke-width:4px;\n';
-      graph += '    classDef endEvent fill:#fef2f2,stroke:#dc2626,stroke-width:4px;\n';
-      graph += '    classDef gateway fill:#fff7ed,stroke:#c2410c,stroke-width:2px;\n';
-      graph += '    classDef userTask fill:#eff6ff,stroke:#2563eb,stroke-width:2px;\n';
-      graph += '    classDef serviceTask fill:#faf5ff,stroke:#7c3aed,stroke-width:2px,stroke-dasharray: 5 5;\n';
-
-      mermaidDefinition.value = graph;
-
-      await nextTick();
-      if (mermaidContainer.value) {
-         mermaidContainer.value.removeAttribute('data-processed');
-         mermaidContainer.value.innerHTML = graph;
-         try {
-            await mermaid.run({
-               nodes: [mermaidContainer.value]
-            });
-         } catch (e) {
-            console.error('Mermaid error', e);
-         }
-      }
+      
+      showWorkflowModal.value = true;
    };
 
    const switchStage = (stage) => {
@@ -732,6 +729,14 @@
       return searchQuery.value || selectedDomain.value || selectedMda.value ||
          selectedCategory.value || selectedType.value || selectedLifeEvent.value;
    });
+
+   const printCatalogue = () => {
+      isPrinting.value = true;
+      nextTick(() => {
+         window.print();
+         isPrinting.value = false;
+      });
+   };
 
    onMounted(() => {
       mermaid.initialize({ startOnLoad: false, theme: 'default' });
@@ -1038,5 +1043,57 @@
    .legend-dot--end {
       background: var(--color-danger);
       border-radius: 50%;
+   }
+
+   /* Print Styles */
+   @media print {
+      .no-print {
+         display: none !important;
+      }
+
+      .print-only {
+         display: block !important;
+      }
+
+      .card {
+         border: 1px solid #eee !important;
+         box-shadow: none !important;
+         break-inside: avoid !important;
+         margin-bottom: 2rem !important;
+      }
+
+      .table-container {
+         border: 1px solid #eee !important;
+         overflow: visible !important;
+      }
+
+      .table__row {
+         break-inside: avoid !important;
+      }
+
+      .badge {
+         border: 1px solid #ccc !important;
+         color: black !important;
+         background: transparent !important;
+      }
+
+      body {
+         background: white !important;
+         color: black !important;
+      }
+
+      .page__header {
+         border-bottom: 2px solid black !important;
+         margin-bottom: 3rem !important;
+      }
+
+      .print-section {
+         break-inside: avoid !important;
+         page-break-inside: avoid !important;
+      }
+   }
+
+   .print-only {
+      display: none;
    }
 </style>

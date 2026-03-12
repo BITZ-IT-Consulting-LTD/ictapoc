@@ -22,8 +22,8 @@ The Office of the Head of Public Service (OHPS) coordinates Presidential Directi
 *Current State visualization (Manual Executive Coordination & Directives).*
 
 ```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart LR
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+flowchart TD
     %% Events
     Start((Start))
     EndClose(("End - Directive Closed"))
@@ -31,23 +31,31 @@ flowchart LR
 
     subgraph OHPS["Office of the Head of Public Service"]
         direction TB
-        ReceiveDir["Receive Directive"]
-        AnalyzeDir["Analyse & Identify"]
-        TranslateDir["Translate Instructions"]
-        DispatchInst["Dispatch to PSs"]
-        TrackImpl["Track Progress"]
-        Consolidate["Consolidate Reports"]
-        AssessPerf["Assess Performance"]
-        EvalGateway{Satisfactory?}
-        CloseFeed["Close & Feedback"]
-        IssueCorr["Issue Corrective"]
+        ReceiveDir["1. Receive Directive (Memo/Physical)"]
+        AnalyzeDir["2. Analyse & Identify Responsible MDAs"]
+        TranslateDir["3. Translate into Instructions & KPIs"]
+        DispatchInst["4. Dispatch Instructions to PSs (Manual)"]
     end
 
-    subgraph MDAs [MDAs]
+    subgraph MDAs ["Government Ministries (MDAs)"]
         direction TB
-        ConfirmRec["Confirm Receipt"]
-        ImplDir["Implement Tasks"]
-        SubProg["Submit Reports"]
+        ConfirmRec["5. PSs Confirm Receipt & Assign Tasks"]
+        ImplDir["6. MDAs Implement Directive Tasks"]
+        SubProg["7. Submit Progress Reports (Excel/Email)"]
+    end
+
+    subgraph Monitoring ["Executive Monitoring & Evaluation"]
+        direction TB
+        TrackImpl["8. Track Progress (Manual Follow-up)"]
+        Consolidate["9. Consolidate Reports from MDAs"]
+        AssessPerf["10. Assess Performance against KPIs"]
+        EvalGateway{Satisfactory?}
+    end
+
+    subgraph Outcomes ["Decision Outcomes"]
+        direction TB
+        CloseFeed["11. Close Directive & Feedback"]
+        IssueCorr["12. Issue Corrective Instructions"]
     end
 
     %% Flow connections
@@ -73,10 +81,10 @@ flowchart LR
     CloseFeed --> EndClose
 
     %% Styling
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px,font-size:24px;;
+    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px,font-size:24px;;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px,font-size:24px;;
     
     class Start startEvent;
     class EndClose,EndEscalate endEvent;
@@ -143,50 +151,51 @@ Executive Coordination and Presidential Directives Management
 *Future State visualization (Kenya DSAP Architecture - Executive Coordination).*
 
 ```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart LR
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+flowchart TD
     %% Events
     Start((Start))
-    EndSuccess(("End - Directive Met"))
-    EndEscalate(("End - Action Required"))
+    EndSuccess(("End - Directive Goals Met"))
+    EndEscalate(("End - Remediation Required"))
 
-    subgraph HoPS["Head of Public Service"]
+    subgraph Input["Presidential Directives Input"]
         direction TB
-        EnterDir["Enter Directive"]
-        GenRep["Review Reports"]
+        EnterDir["1. Head of Public Service Enters Directive"]
+        StoreDir["2. Secure Storage in National Registry"]
     end
 
-    subgraph OHPSSystem["Executive Coordination Portal"]
+    subgraph Automation["Digital Platform & Interoperability"]
         direction TB
-        StoreDir["Store in Registry"]
-        AssignTasks["Workflow Assigns Tasks"]
-        FetchData["Fetch Data via X-Road"]
-        MonitorComp["Monitor Compliance"]
-        GenDash["Generate Dashboard"]
-        DetectGateway{"Compliance Met?"}
-        DeadlineGateway{"Deadline Exceeded?"}
-        TrigEsc["Trigger Escalation"]
+        AssignTasks["3. System Automates Task Assignment"]
+        ExposeData["4. MDAs Expose Progress Data via APIs"]
+        SubUpdate["5. MDAs Submit Digital Milestone Updates"]
+        FetchData["6. Real-time Data Fetch via X-Road"]
     end
 
-    subgraph MDASystems["MDA Systems"]
+    subgraph Monitoring ["Executive Performance Monitoring"]
         direction TB
-        SubUpdate["Submit Digital Updates"]
-        ExposeData["Expose Data via API"]
+        MonitorComp["7. System Monitors Compliance & KPIs"]
+        GenDash["8. Real-time Performance Dashboard"]
+        DetectGateway{All KPIs Met?}
     end
 
-    subgraph PrinSec["Principal Secretaries"]
+    subgraph Intervention ["Governance Interventions"]
         direction TB
-        ActNudge["Act on Reminders"]
+        DeadlineGateway{Deadline Exceeded?}
+        TrigEsc["9. Trigger Automated Reminders"]
+        ActNudge["10. PSs Act on Reminders"]
+        GenRep["11. Generate Strategic Situation Reports"]
     end
 
     %% Flow connections
     Start --> EnterDir
     EnterDir --> StoreDir
     StoreDir --> AssignTasks
+    AssignTasks --> ExposeData
     AssignTasks --> SubUpdate
     
-    SubUpdate --> FetchData
     ExposeData --> FetchData
+    SubUpdate --> FetchData
     
     FetchData --> MonitorComp
     MonitorComp --> GenDash
@@ -205,11 +214,11 @@ flowchart LR
     ActNudge --> EndEscalate
 
     %% Styling
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px,font-size:24px;;
+    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px,font-size:24px;;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px,font-size:24px,font-size:24px;;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px,font-size:24px;;
     
     class Start startEvent;
     class EndSuccess,EndEscalate endEvent;

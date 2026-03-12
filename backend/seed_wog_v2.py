@@ -272,11 +272,14 @@ def run_lifecycle_seed_v3():
                     if 'source' in f_def: prop['x-source'] = f_def['source']
 
     # 3. Seeding Loop
+    from service_api.seed_utils import get_or_create_mda
+
     for step_id, config in LIFECYCLE_MAP.items():
         json_step = next((s for s in lifecycle_data.get('workflow', {}).get('steps', []) if s['step_id'] == step_id), {})
         
-        mda_code = config['code'].split('-')[0]
-        mda, _ = MDA.objects.get_or_create(code=mda_code, defaults={"name": config['mda']})
+        mda_name = config['mda']
+        mda, _ = get_or_create_mda(name=mda_name)
+        
         category, _ = ServiceCategory.objects.get_or_create(name=config['service'], domain=domain)
 
         # ----------------------------------------------------

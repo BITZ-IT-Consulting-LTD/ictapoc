@@ -27,877 +27,745 @@
 
     <div v-if="user" class="dashboard-main">
 
-      <!-- CITIZEN PORTAL VIEW -->
-      <section
-        v-if="user.role && (user.role.toLowerCase() === 'citizen' || user.role.toLowerCase() === 'hospital_staff')"
-        class="citizen-portal">
-        <div class="dashboard-layout">
-          <!-- Left Sidebar Navigation -->
+      <section class="citizen-portal" v-if="user.role && (user.role.toLowerCase() === 'citizen' || user.role.toLowerCase() === 'hospital_staff')">
+        <div class="dashboard-layout u-p-8">
+          <!-- Sidebar Navigation -->
           <aside class="dashboard-sidebar">
-            <div class="card">
-              <div class="card__body p-0">
-                <nav class="sidebar-nav" aria-label="Citizen portal navigation">
-                  <button @click="citizenCurrentTab = 'inbox'" class="sidebar-nav__item"
-                    :class="{ 'sidebar-nav__item--active': citizenCurrentTab === 'inbox' }">
-                    <i class="bi bi-envelope-paper-fill sidebar-nav__icon"></i>
-                    <span class="sidebar-nav__text">Official Inbox</span>
-                    <i v-if="citizenCurrentTab === 'inbox'" class="bi bi-chevron-right sidebar-nav__arrow"></i>
-                  </button>
+            <div class="card card--glass overflow-hidden border-0 shadow-xl rounded-[2rem]">
+              <div class="sidebar-nav py-6">
+                <button @click="citizenCurrentTab = 'inbox'" class="sidebar-nav__item px-6 py-4 flex items-center gap-4 transition-all hover:bg-indigo-50/50 group"
+                  :class="{ 'bg-indigo-50/80 border-l-4 border-indigo-600': citizenCurrentTab === 'inbox' }">
+                  <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-indigo-600 group-hover:scale-110 transition-transform">
+                    <i class="bi bi-inbox-fill"></i>
+                  </div>
+                  <div class="flex-1 text-left">
+                    <div class="text-xs font-black uppercase tracking-widest" :class="citizenCurrentTab === 'inbox' ? 'text-indigo-900' : 'text-slate-500'">Official Inbox</div>
+                    <div class="text-[10px] text-slate-400 font-bold">Registry Dispatch</div>
+                  </div>
+                  <span v-if="pendingActions.length > 0" class="badge badge--danger scale-75">{{ pendingActions.length }}</span>
+                </button>
+                
+                <button @click="citizenCurrentTab = 'services'" class="sidebar-nav__item px-6 py-4 flex items-center gap-4 transition-all hover:bg-indigo-50/50 group"
+                  :class="{ 'bg-indigo-50/80 border-l-4 border-indigo-600': citizenCurrentTab === 'services' }">
+                  <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-indigo-600 group-hover:scale-110 transition-transform">
+                    <i class="bi bi-grid-fill"></i>
+                  </div>
+                  <div class="flex-1 text-left">
+                    <div class="text-xs font-black uppercase tracking-widest" :class="citizenCurrentTab === 'services' ? 'text-indigo-900' : 'text-slate-500'">Apply for Services</div>
+                    <div class="text-[10px] text-slate-400 font-bold">Service Discovery</div>
+                  </div>
+                </button>
 
-                  <button @click="citizenCurrentTab = 'services'" class="sidebar-nav__item"
-                    :class="{ 'sidebar-nav__item--active': citizenCurrentTab === 'services' }">
-                    <i class="bi bi-grid-3x3-gap-fill sidebar-nav__icon"></i>
-                    <span class="sidebar-nav__text">Apply for Services</span>
-                    <i v-if="citizenCurrentTab === 'services'" class="bi bi-chevron-right sidebar-nav__arrow"></i>
-                  </button>
+                <div class="mx-6 my-4 border-t border-slate-100"></div>
 
-                  <router-link to="/profile/consent" class="sidebar-nav__item">
-                    <i class="bi bi-shield-check sidebar-nav__icon"></i>
-                    <span class="sidebar-nav__text">Privacy & Consents</span>
-                  </router-link>
-                </nav>
+                <router-link to="/profile" class="sidebar-nav__item px-6 py-4 flex items-center gap-4 transition-all hover:bg-indigo-50/50 group">
+                  <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-indigo-600 group-hover:scale-110 transition-transform">
+                    <i class="bi bi-person-badge-fill"></i>
+                  </div>
+                  <div class="flex-1 text-left">
+                    <div class="text-xs font-black uppercase tracking-widest text-slate-500">My Profile</div>
+                    <div class="text-[10px] text-slate-400 font-bold">Identity & Vault</div>
+                  </div>
+                </router-link>
               </div>
+            </div>
+
+            <!-- Promotion / Help Card -->
+            <div class="mt-8 px-2">
+               <div class="p-6 rounded-[2rem] bg-indigo-900 text-white relative overflow-hidden group shadow-2xl">
+                  <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/5 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+                  <h4 class="text-[10px] font-black uppercase tracking-widest mb-2 opacity-60">Need Assistance?</h4>
+                  <p class="text-xs font-bold mb-6 leading-relaxed">Connect with a citizen support advocate instantly.</p>
+                  <button class="w-full bg-white/10 hover:bg-white/20 border border-white/20 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all">
+                    Open Support Link
+                  </button>
+               </div>
             </div>
           </aside>
 
-          <!-- Main Content Area -->
+          <!-- Main Content -->
           <div class="dashboard-content">
-            <div v-if="citizenCurrentTab === 'inbox'" class="tab-content flex flex-col gap-8">
-              <!-- Digital Wallet Component -->
-              <!-- Digital Wallet Component (Enhanced) -->
-              <div v-if="user.saved_documents?.length" class="card border-0 shadow-2xl overflow-hidden relative"
-                style="background: var(--grad-premium); color: white; border-radius: 1rem;" role="region"
-                aria-label="Digital Wallet Section">
-
-                <!-- Background Decor -->
-                <div
-                  class="absolute top-0 right-0 p-0 transform translate-x-1/3 -translate-y-1/3 opacity-5 pointer-events-none">
-                  <i class="bi bi-wallet2" style="font-size: 20rem; color: white;"></i>
-                </div>
-                <!-- Ambient Glow -->
-                <div class="absolute top-1/2 left-0 w-64 h-64 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"
-                  style="background-color: rgba(236, 35, 42, 0.1);">
-                </div>
-
-                <div class="card__body p-8 relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-                  <div class="flex-1 text-center md:text-left">
-                    <div
-                      class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest mb-4 backdrop-blur-sm"
-                      style="color: var(--icta-green);">
-                      <i class="bi bi-shield-check"></i> Identity Verified
-                    </div>
-                    <h2 class="text-3xl font-black mb-2 text-white tracking-tight">Authoritative <span
-                        style="color: var(--icta-red);">Wallet</span></h2>
-                    <p class="text-slate-400 text-sm mb-6 leading-relaxed max-w-lg">
-                      Secure access to your {{ user.saved_documents.length }} official government credentials.
-                      Documents are cryptographically signed for offline verification and sharing.
-                    </p>
-                    <div class="flex flex-wrap gap-3 justify-center md:justify-start">
-                      <router-link to="/profile"
-                        class="button button--pill px-8 shadow-lg transition-transform flex items-center gap-2"
-                        style="border: none; background: var(--icta-red); color: white; font-weight: 700; box-shadow: 0 4px 12px rgba(236, 35, 42, 0.3);"
-                        aria-label="Open Digital Wallet to view documents">
-                        <i class="bi bi-wallet2"></i> Open Wallet
-                      </router-link>
-                    </div>
-                  </div>
-
-                  <!-- Stacked Cards Visual -->
-                  <div class="relative w-64 h-48 flex-shrink-0 perspective md:mr-8 hidden md:block" aria-hidden="true">
-                    <div v-for="(doc, i) in user.saved_documents.slice(0, 3)" :key="i"
-                      class="absolute top-0 left-0 w-full h-40 bg-white rounded-xl shadow-2xl border border-slate-200 p-4 transition-all duration-500"
-                      :style="{
-                        transform: `translateY(${i * 12}px) scale(${1 - (i * 0.05)})`,
-                        zIndex: 3 - i,
-                        opacity: 0.95 + (i * 0.02),
-                        filter: 'drop-shadow(0 10px 15px rgba(0,0,0,0.2))'
-                      }">
-                      <div class="flex items-center gap-3 mb-3 border-b border-slate-100 pb-2">
-                        <div
-                          class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100">
-                          <i :class="doc.type === 'AUTHORITATIVE_OUTPUT' ? 'bi bi-patch-check-fill' : 'bi bi-file-text-fill'"
-                            class="text-sm"></i>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                          <div class="h-2 bg-slate-800 rounded w-3/4 mb-1"></div>
-                          <div class="h-1.5 bg-slate-300 rounded w-1/2"></div>
-                        </div>
-                      </div>
-                      <div class="space-y-2 opacity-50">
-                        <div class="h-1.5 bg-slate-200 rounded w-full"></div>
-                        <div class="h-1.5 bg-slate-200 rounded w-5/6"></div>
-                        <div class="h-1.5 bg-slate-200 rounded w-4/6"></div>
-                      </div>
-
-                      <!-- Type Badge -->
-                      <div
-                        class="absolute bottom-3 right-3 px-2 py-0.5 bg-slate-50 text-slate-400 border border-slate-100 rounded text-[8px] font-bold uppercase tracking-wider">
-                        GOK-VERIFIED
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- National Lifecycle Journey (Cradle-to-Grave) -->
-              <!-- Application Tracking Section -->
-              <div class="card shadow-lg">
-                <header class="card__header u-flex-col u-md-flex-row u-gap-4 u-items-start u-md-items-center">
-                  <div class="card__title-group">
-                    <h2 class="card__title">Recent Submissions</h2>
-                    <p class="card__subtitle">Track the lifecycle of your active applications</p>
-                  </div>
-                  <div class="toolbar ms-auto u-w-full u-md-w-auto">
-                    <div class="toolbar__filters">
-                      <div class="toolbar__filter-group">
-                        <i class="bi bi-search toolbar__filter-icon"></i>
-                        <input type="text" v-model="requestSearchQuery" placeholder="Tracking ID..."
-                          class="toolbar__filter-input">
-                      </div>
-                      <div class="toolbar__filter-group">
-                        <i class="bi bi-filter toolbar__filter-icon"></i>
-                        <select v-model="myRequestsStatusFilter"
-                          class="toolbar__filter-input toolbar__filter-input--with-arrow">
-                          <option value="">Status Filter</option>
-                          <option value="received">Received</option>
-                          <option value="in_progress">In Progress</option>
-                          <option value="approved">Approved</option>
-                          <option value="rejected">Rejected</option>
-                        </select>
-                        <i class="bi bi-chevron-down toolbar__filter-arrow"></i>
-                      </div>
-                    </div>
-                  </div>
-                </header>
-
-                <div class="card__body p-0">
-                  <div v-if="filteredMyRequests.length === 0"
-                    class="flex flex-col items-center justify-center py-20 text-muted">
-                    <i class="bi bi-folder2-open text-5xl mb-4 opacity-20"></i>
-                    <p class="font-bold uppercase tracking-widest text-xs">No active applications found</p>
-                  </div>
-                  <div v-else class="list">
-                    <div v-for="request in filteredMyRequests" :key="request.id"
-                      class="list__item hover:bg-slate-50 transition-colors p-4 border-b border-border-color flex items-center justify-between">
-                      <router-link :to="`/service-request/${request.id}`" class="flex items-center gap-6 flex-1">
-                        <div
-                          class="w-10 h-10 rounded bg-primary-soft text-primary flex items-center justify-center font-bold text-lg">
-                          {{ request.service_config.service_name.charAt(0) }}
-                        </div>
-                        <div>
-                          <div class="font-black text-main text-sm">{{ request.service_config.service_name }}</div>
-                          <div
-                            class="text-xs font-mono text-muted uppercase tracking-tighter flex items-center gap-2 mt-1">
-                            <span>TRK# {{ request.request_id }}</span>
-                            <span class="w-1 h-1 rounded-full bg-slate-300"></span>
-                            <span>{{ new Date(request.created_at).toLocaleDateString() }}</span>
-                          </div>
-                        </div>
-                      </router-link>
-                      <div class="flex items-center gap-4">
-                        <div class="flex flex-col items-end">
-                          <span class="badge flex items-center gap-1" :class="statusClass(request.status)">
-                            <i :class="statusIcon(request.status)"></i>
-                            {{ getStatusLabelWithContext(request) }}
-                          </span>
-                          <span v-if="request.status === 'in_progress' && request.current_step"
-                            class="text-[9px] font-black text-primary uppercase mt-1 tracking-widest flex items-center gap-1">
-                            <i v-if="request.current_step.role === 'System'" class="bi bi-cpu animate-pulse"></i>
-                            Stage: {{ request.current_step.step_name }}
-                          </span>
-                          <span v-if="request.current_step?.role === 'System'" class="text-[8px] text-muted u-mt-0.5"
-                            style="font-style: italic">
-                            Automated inter-agency verification in progress
-                          </span>
-                        </div>
-                        <i class="bi bi-chevron-right text-muted"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <!-- Inbox / Action Feed -->
+            <div v-if="citizenCurrentTab === 'inbox'" class="tab-content flex flex-col gap-10">
+              <AuthoritativeWallet :documents="user.saved_documents" />
+              <ActionFeed 
+                :pending-actions="pendingActions" 
+                :active-applications="activeApplications" 
+                @explore="citizenCurrentTab = 'services'"
+              />
             </div>
 
-            <!-- Tab: Apply for Services -->
-            <div v-if="citizenCurrentTab === 'services'" class="tab-content animate-slide-in u-flex u-flex-col u-gap-8">
-              <header class="page__header u-justify-between u-items-end u-mb-4 u-gap-4"
-                style="border-bottom: 1px solid var(--color-border); padding-bottom: 1rem;">
-                <div>
-                  <h2 class="page__title" style="font-size: 1.5rem">Unified Service Catalogue</h2>
-                  <p class="page__subtitle">Access authoritative G2C services through the secure Huduma Bridge</p>
-                </div>
-                <div class="toolbar u-w-full">
-                  <div class="toolbar__filters">
-                    <!-- Search -->
-                    <div class="toolbar__filter-group">
-                      <i class="bi bi-search toolbar__filter-icon"></i>
-                      <input type="text" v-model="serviceSearchQuery" placeholder="Search services..."
-                        class="toolbar__filter-input">
-                      <i v-if="serviceSearchQuery" @click="serviceSearchQuery = ''"
-                        class="bi bi-x-circle-fill toolbar__clear-icon"></i>
+            <!-- Life-Event Oriented Service Discovery -->
+            <div v-else-if="citizenCurrentTab === 'services'" class="tab-content flex flex-col gap-10">
+              <ServiceDiscovery :life-events="lifeEvents" />
+            </div>
+
+            <!-- Multi-step Application Flow -->
+            <div v-else-if="citizenCurrentTab === 'application'" class="tab-content u-flex u-flex-col u-gap-10">
+              <div class="u-flex u-items-center u-gap-4 u-mb-4">
+                <button @click="citizenCurrentTab = 'services'" class="u-w-10 u-h-10 u-rounded-full u-bg-slate-100 u-flex u-items-center u-justify-center hover:u-bg-primary-soft transition-colors">
+                  <i class="bi bi-arrow-left"></i>
+                </button>
+                <h1 class="u-text-2xl u-font-black u-text-main">{{ selectedService?.display_name || 'Service Application' }}</h1>
+              </div>
+
+              <!-- Linear Progress Bar -->
+              <nav class="u-mb-10">
+                <ul class="u-flex u-items-center u-list-none u-gap-4 u-overflow-x-auto u-pb-4">
+                  <li v-for="(step, idx) in workflowSteps" :key="step.id" class="u-flex u-items-center u-gap-4 u-flex-shrink-0">
+                    <div class="u-flex u-items-center u-gap-3">
+                      <span class="u-w-10 u-h-10 u-rounded-full u-flex u-items-center u-justify-center u-text-sm u-font-black transition-all"
+                        :class="idx <= currentStepIndex ? 'u-bg-primary u-text-white u-shadow-lg' : 'u-bg-slate-100 u-text-slate-400'">
+                        <i v-if="idx < currentStepIndex" class="bi bi-check-lg"></i>
+                        <span v-else>{{ idx + 1 }}</span>
+                      </span>
+                      <span class="u-text-xs u-font-black u-uppercase u-tracking-widest"
+                        :class="idx === currentStepIndex ? 'u-text-main' : 'u-text-muted'">
+                        {{ step.title }}
+                      </span>
                     </div>
+                    <div v-if="idx < workflowSteps.length - 1" class="u-w-10 u-h-px u-bg-slate-200"></div>
+                  </li>
+                </ul>
+              </nav>
 
-                    <!-- Agency Filter -->
-                    <div class="toolbar__filter-group">
-                      <i class="bi bi-building toolbar__filter-icon"></i>
-                      <input type="text" v-model="mdaSearchLocal" placeholder="Filter by Agency..."
-                        @focus="showMdaDropdown = true" @blur="setTimeout(() => showMdaDropdown = false, 200)"
-                        class="toolbar__filter-input toolbar__filter-input--with-arrow">
-                      <i class="bi bi-chevron-down toolbar__filter-arrow"
-                        :class="{ 'toolbar__filter-arrow--open': showMdaDropdown }"></i>
-                      <i v-if="mdaFilter" @click="selectMda('')"
-                        class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
-
-                      <transition name="dropdown">
-                        <div v-if="showMdaDropdown" class="dropdown-menu">
-                          <div @click="selectMda('')" class="dropdown-item dropdown-item--header">All Agencies</div>
-                          <div v-for="mda in filteredMdas" :key="mda.id" @click="selectMda(mda)" class="dropdown-item">
-                            {{ mda.name }}
-                          </div>
-                        </div>
-                      </transition>
+              <!-- Form Body -->
+              <div class="card u-p-10 shadow-2xl border-0 u-rounded-[2.5rem]">
+                <form @submit.prevent="submitStep" class="u-flex u-flex-col u-gap-8">
+                  <div class="u-grid u-gap-8 lg:u-grid-cols-2">
+                    <div v-for="field in currentStep.fields" :key="field.name" class="u-flex u-flex-col u-gap-2">
+                      <label :for="field.name" class="u-text-sm u-font-black u-text-main u-uppercase u-tracking-widest flex items-center gap-2">
+                        {{ field.label }}
+                        <span v-if="field.help" class="u-cursor-help u-text-muted" :title="field.help">
+                          <i class="bi bi-info-circle-fill"></i>
+                        </span>
+                      </label>
+                      <component :is="field.component" v-model="formData[field.name]" v-bind="field.props" :id="field.name" 
+                        class="u-p-4 u-border-2 u-border-slate-100 u-rounded-2xl u-bg-slate-50 focus:u-border-primary focus:u-bg-white transition-all outline-none"></component>
                     </div>
-
-                    <!-- Life Event Filter -->
-                    <div class="toolbar__filter-group">
-                      <i class="bi bi-calendar-event toolbar__filter-icon"></i>
-                      <input type="text" v-model="lifeEventSearchLocal" placeholder="Filter by Life Event..."
-                        @focus="showLifeEventDropdown = true"
-                        @blur="setTimeout(() => showLifeEventDropdown = false, 200)"
-                        class="toolbar__filter-input toolbar__filter-input--with-arrow">
-                      <i class="bi bi-chevron-down toolbar__filter-arrow"
-                        :class="{ 'toolbar__filter-arrow--open': showLifeEventDropdown }"></i>
-                      <i v-if="lifeEventFilter" @click="selectLifeEvent('')"
-                        class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
-
-                      <transition name="dropdown">
-                        <div v-if="showLifeEventDropdown" class="dropdown-menu">
-                          <div @click="selectLifeEvent('')" class="dropdown-item dropdown-item--header">All Life Events
-                          </div>
-                          <div v-for="event in filteredLifeEvents" :key="event" @click="selectLifeEvent(event)"
-                            class="dropdown-item">
-                            {{ event }}
-                          </div>
-                        </div>
-                      </transition>
-                    </div>
-
-                    <!-- Family Filter -->
-                    <div class="toolbar__filter-group">
-                      <i class="bi bi-diagram-3-fill toolbar__filter-icon"></i>
-                      <input type="text" v-model="familySearchLocal" placeholder="Filter by Family..."
-                        @focus="showFamilyDropdown = true" @blur="setTimeout(() => showFamilyDropdown = false, 200)"
-                        class="toolbar__filter-input toolbar__filter-input--with-arrow">
-                      <i class="bi bi-chevron-down toolbar__filter-arrow"
-                        :class="{ 'toolbar__filter-arrow--open': showFamilyDropdown }"></i>
-                      <i v-if="familyFilter" @click="selectFamily('')"
-                        class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
-                      <transition name="dropdown">
-                        <div v-if="showFamilyDropdown" class="dropdown-menu">
-                          <div @click="selectFamily('')" class="dropdown-item dropdown-item--header">All Families</div>
-                          <div v-for="fam in filteredFamilies" :key="fam" @click="selectFamily(fam)"
-                            class="dropdown-item">
-                            {{ fam }}
-                          </div>
-                        </div>
-                      </transition>
-                    </div>
-
-                    <!-- Group Filter -->
-                    <div class="toolbar__filter-group">
-                      <i class="bi bi-collection toolbar__filter-icon"></i>
-                      <input type="text" v-model="groupSearchLocal" placeholder="Filter by Group..."
-                        @focus="showGroupDropdown = true" @blur="setTimeout(() => showGroupDropdown = false, 200)"
-                        class="toolbar__filter-input toolbar__filter-input--with-arrow">
-                      <i class="bi bi-chevron-down toolbar__filter-arrow"
-                        :class="{ 'toolbar__filter-arrow--open': showGroupDropdown }"></i>
-                      <i v-if="groupFilter" @click="selectGroup('')"
-                        class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
-                      <transition name="dropdown">
-                        <div v-if="showGroupDropdown" class="dropdown-menu">
-                          <div @click="selectGroup('')" class="dropdown-item dropdown-item--header">All Groups</div>
-                          <div v-for="grp in filteredGroups" :key="grp" @click="selectGroup(grp)"
-                            class="dropdown-item">
-                            {{ grp }}
-                          </div>
-                        </div>
-                      </transition>
-                    </div>
-
-                    <!-- Reset Action -->
-                    <button v-if="isAnyServiceFilterActive" @click="resetServiceFilters" class="btn-reset">
-                      <i class="bi bi-arrow-counterclockwise"></i>
-                      <span>Reset</span>
+                  </div>
+                  
+                  <div class="u-flex u-justify-between u-items-center u-mt-10 u-pt-10 u-border-t u-border-slate-100">
+                    <button type="button" @click="currentStepIndex--" :disabled="currentStepIndex === 0" 
+                      class="button button--secondary button--pill px-10 u-font-black u-text-[10px] u-uppercase disabled:u-opacity-30">
+                      Previous Step
+                    </button>
+                    <button type="submit" class="button button--primary button--pill px-12 py-4 shadow-xl hover:-translate-y-1 transition-all u-font-black u-text-xs u-uppercase">
+                      {{ isLastStep ? 'Submit Application' : 'Continue to next stage' }}
                     </button>
                   </div>
-                </div>
-              </header>
-
-              <!-- Active Filter Chips -->
-              <transition-group name="list" tag="div" class="u-flex u-flex-wrap u-gap-2 u-mb-8">
-                <div v-if="serviceSearchQuery" :key="'s-' + serviceSearchQuery" class="filter-chip"
-                  @click="serviceSearchQuery = ''">
-                  <span class="filter-chip__label">Search:</span>
-                  <span class="filter-chip__value">{{ serviceSearchQuery }}</span>
-                  <i class="bi bi-x"></i>
-                </div>
-                <div v-if="mdaFilter" :key="'m-' + mdaFilter" class="filter-chip" @click="selectMda('')">
-                  <span class="filter-chip__label">Agency:</span>
-                  <span class="filter-chip__value">{{ getMdaName(mdaFilter) }}</span>
-                  <i class="bi bi-x"></i>
-                </div>
-                <div v-if="lifeEventFilter" :key="'e-' + lifeEventFilter" class="filter-chip"
-                  @click="selectLifeEvent('')">
-                  <span class="filter-chip__label">Event:</span>
-                  <span class="filter-chip__value">{{ lifeEventFilter }}</span>
-                  <i class="bi bi-x"></i>
-                </div>
-                <div v-if="familyFilter" :key="'f-' + familyFilter" class="filter-chip" @click="selectFamily('')">
-                  <span class="filter-chip__label">Family:</span>
-                  <span class="filter-chip__value">{{ familyFilter }}</span>
-                  <i class="bi bi-x"></i>
-                </div>
-                <div v-if="groupFilter" :key="'g-' + groupFilter" class="filter-chip" @click="selectGroup('')">
-                  <span class="filter-chip__label">Group:</span>
-                  <span class="filter-chip__value">{{ groupFilter }}</span>
-                  <i class="bi bi-x"></i>
-                </div>
-              </transition-group>
-
-              <div v-if="filteredAvailableServices.length === 0"
-                class="u-flex u-flex-col u-items-center u-justify-center u-py-20 u-text-muted u-w-full">
-                <i class="bi bi-cloud-slash u-text-5xl u-mb-4 u-opacity-20"></i>
-                <p class="u-font-black u-uppercase u-tracking-widest u-text-xs">No services currently available</p>
-                <p class="u-text-xs u-mt-2 u-opacity-60">The authoritative catalogue is being updated. Please check back
-                  shortly.</p>
-              </div>
-              <div v-else class="u-flex u-flex-col u-gap-12">
-                <!-- If no family is selected and no other filters, show the list of families -->
-                <div v-if="!selectedFamilyForView && !isAnyServiceFilterActive" class="stats-grid">
-                  <div v-for="group in groupedServicesByFamily" :key="group.name"
-                    @click="selectFamily(group.name)"
-                    class="card u-p-8 u-flex u-flex-col u-items-center u-text-center transition-all hover:u-shadow-xl u-cursor-pointer"
-                    style="border: 1px solid var(--border-color);">
-                    <div class="u-flex u-items-center u-justify-center u-mb-6 u-rounded-lg"
-                      style="width: 4rem; height: 4rem; background: var(--color-primary-soft); color: var(--color-primary); font-size: 1.5rem;">
-                      <i :class="getServiceFamilyIcon(group.name)"></i>
-                    </div>
-                    <h3 class="u-font-bold u-text-main u-mb-2" style="font-size: 1.125rem;">{{ group.name }}</h3>
-                    <p class="u-text-xs u-text-muted u-mb-4 u-line-clamp-2" style="min-height: 2.5rem;">{{
-                      group.family?.description || 'View all associated services' }}</p>
-                    <div class="u-mt-auto">
-                      <span class="badge badge--info">{{ group.services.length }} Services</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- If a family is selected or filters are active, show services directly -->
-                <div v-else class="service-family-group animate-slide-in">
-                  <div class="u-flex u-items-center u-justify-between u-mb-6">
-                    <div class="u-flex u-items-center u-gap-3">
-                      <button @click="resetServiceFiltersAndView" class="button button--ghost button--small u-mr-2">
-                        <i class="bi bi-arrow-left"></i> Back to Families
-                      </button>
-                      <div class="u-w-1 u-h-8 u-bg-primary u-rounded-full"></div>
-                      <div>
-                        <h3 class="u-text-lg u-font-black u-text-main u-uppercase u-tracking-widest">{{
-                          selectedFamilyForView || 'Filtered Search Results' }}</h3>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="stats-grid">
-                    <div
-                      v-for="service in (selectedFamilyForView ? (groupedServicesByFamily.find(g => g.name === selectedFamilyForView)?.services || []) : filteredAvailableServices)"
-                      :key="service.id"
-                      class="card u-p-8 u-flex u-flex-col u-items-center u-text-center transition-all hover:u-shadow-xl"
-                      style="border: none;">
-                      <div class="u-flex u-items-center u-justify-center u-mb-6 u-rounded-lg"
-                        style="width: 4rem; height: 4rem; background: var(--color-primary-soft); color: var(--color-primary); font-size: 1.5rem;">
-                        <i :class="getServiceFamilyIcon(service.service_family_details?.name)"></i>
-                      </div>
-                      <h3 class="u-font-bold u-text-main u-mb-2" style="font-size: 1.125rem;">{{ service.service_name }}
-                      </h3>
-                      <p class="u-text-xs u-font-bold u-text-muted u-uppercase u-mb-8 u-p-1 u-rounded"
-                        style="background: var(--color-background-alt); letter-spacing: 0.1em;">
-                        {{ getMdaName(service.mda) }}
-                      </p>
-                      <router-link :to="`/apply/${service.service_code}`"
-                        class="button button--primary button--pill u-w-full u-mt-auto">
-                        Begin Application
-                      </router-link>
-                    </div>
-                  </div>
-                </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </section>
+
 
       <!-- STAFF OPERATIONS VIEW -->
       <section
         v-else-if="['officer', 'supervisor', 'registrar', 'mda_admin', 'GLOBAL_OFFICER', 'GLOBAL_SUPERVISOR', 'MDA_OFFICER', 'MDA_SUPERVISOR'].includes(user.role)"
-        class="staff-portal flex flex-col gap-8">
-
-        <!-- Top Stats Row -->
-        <WogDashboardStats :stats="serviceConfigStore.catalogueSummary || {}" />
-
-        <div class="grid grid--sidebar gap-8">
-          <!-- Priority Queue -->
-          <div class="card u-overflow-hidden">
-            <header class="card__header u-flex-col u-md-flex-row u-gap-4 u-justify-between">
-              <div class="card__title-group">
-                <h2 class="card__title u-flex u-items-center u-gap-2">
-                  <i class="bi bi-inboxes u-text-primary"></i> Priority Work Queue
-                  <span v-if="filteredAssignedRequests.length" class="badge badge--primary u-text-[10px] u-px-2">{{
-                    filteredAssignedRequests.length }}</span>
-                </h2>
-                <p class="card__subtitle">Tasks specifically assigned to your workstation</p>
-              </div>
-              <div class="toolbar u-w-full u-md-w-auto">
-                <div class="toolbar__filters">
-                  <button @click="showStaffCatalogueModal = true" class="button button--secondary button--small mr-4">
-                    <i class="bi bi-grid-3x3-gap-fill u-mr-1"></i> Open Service Catalogue
-                  </button>
-                  <div class="toolbar__filter-group">
-                    <i class="bi bi-search toolbar__filter-icon"></i>
-                    <input type="text" v-model="queueSearchQuery" placeholder="Filter queue..."
-                      class="toolbar__filter-input">
-                  </div>
-                </div>
-              </div>
-            </header>
-            <div class="card__body u-p-0">
-
-              <div v-if="filteredAssignedRequests.length === 0"
-                class="u-flex u-flex-col u-items-center u-justify-center u-p-20 u-text-muted">
-                <i class="bi bi-check2-circle u-text-5xl u-mb-4 u-text-success"></i>
-                <p class="u-font-bold u-uppercase u-tracking-widest u-text-xs">Workstation Queue Empty</p>
-                <p class="u-text-xs u-mt-2 u-opacity-60">Acquire new tasks from the Universal Pool</p>
-              </div>
-              <div v-else class="u-divide-y">
-                <!-- Active Tasks requiring User Action -->
-                <div v-if="actionableRequests.length > 0">
-                  <div
-                    class="u-p-2 u-bg-bg-page u-text-xs u-font-black u-text-primary u-uppercase u-tracking-widest u-border-b u-border-border-color">
-                    <i class="bi bi-lightning-charge-fill u-mr-1"></i> My Active Tasks
-                  </div>
-                  <div v-for="(request, idx) in actionableRequests" :key="request.id"
-                    class="u-p-4 u-flex u-flex-col u-md-flex-row u-gap-4 u-items-start u-md-items-center u-justify-between transition-colors relative bg-white border-l-4 border-l-primary shadow-sm hover:shadow-md">
-
-                    <!-- Focus Indicator for Top Item -->
-                    <div v-if="idx === 0"
-                      class="u-absolute u-left-0 u-top-0 u-bottom-0 u-w-1 u-bg-primary animate-pulse"></div>
-
-                    <div class="u-flex-1">
-                      <div class="u-flex u-flex-wrap u-items-center u-gap-3 u-mb-2">
-                        <span class="u-font-bold u-text-main u-text-sm">{{ request.service_config.service_name }}</span>
-                        <span class="table__code-badge">#{{ request.request_id }}</span>
-                        <span class="badge" :class="statusClass(request.status)">{{ request.status.replace('_', ' ').toUpperCase() }}</span>
-                        <span class="badge badge--primary u-animate-bounce-short">
-                          <i class="bi bi-exclamation-circle-fill u-mr-1"></i> ACTION REQUIRED
-                        </span>
-                      </div>
-
-                      <div
-                        class="u-flex u-items-center u-gap-4 u-text-xs u-font-bold u-text-muted u-uppercase u-tracking-tighter">
-                        <span><i class="bi bi-diagram-3-fill u-mb-1"></i> {{ request.current_step?.step_name ||
-                          'Processing' }}</span>
-                        <span><i class="bi bi-clock-fill u-mb-1"></i> {{ new
-                          Date(request.created_at).toLocaleDateString() }}</span>
-                      </div>
-                    </div>
-
-                    <div class="u-flex u-gap-2 u-w-full u-md-u-w-auto u-z-base">
-                      <button @click="openCompleteStepModal(request)"
-                        class="button button--primary button--small shadow-lg hover:translate-y-[-2px] transition-all u-font-bold">
-                        <i class="bi bi-lightning-charge-fill u-mr-1"></i> Execute Disposition
-                      </button>
-
-                      <button @click="releaseTask(request.id)" :disabled="releasingId === request.id"
-                        class="button button--secondary button--small border-dashed hover:border-danger hover:text-danger transition-all"
-                        title="Release back to universal pool">
-                        <i
-                          :class="releasingId === request.id ? 'bi bi-arrow-repeat animate-spin' : 'bi bi-arrow-left-circle'"></i>
-                        <span class="u-hidden md:u-inline">{{ releasingId === request.id ? 'Releasing...' : 'Release'
-                          }}</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Tasks currently processing elsewhere -->
-                <div v-if="processingRequests.length > 0">
-                  <div
-                    class="u-p-2 u-bg-bg-page u-text-xs u-font-black u-text-muted u-uppercase u-tracking-widest u-border-b u-border-border-color u-mt-4">
-                    <i class="bi bi-hourglass-split u-mr-1"></i> Pending System / External Action
-                  </div>
-                  <div v-for="request in processingRequests" :key="request.id"
-                    class="u-p-4 u-flex u-flex-col u-md-flex-row u-gap-4 u-items-start u-md-items-center u-justify-between transition-colors relative bg-slate-50 opacity-75 grayscale-[0.5] hover:grayscale-0 hover:opacity-100 border-b border-border-color">
-
-                    <div class="u-flex-1">
-                      <div class="u-flex u-flex-wrap u-items-center u-gap-3 u-mb-2">
-                        <span class="u-font-bold u-text-main u-text-sm">{{ request.service_config.service_name }}</span>
-                        <span class="table__code-badge">#{{ request.request_id }}</span>
-                        <span class="badge" :class="statusClass(request.status)">{{ request.status.replace('_', ' ').toUpperCase() }}</span>
-                        <span class="badge badge--secondary u-text-muted">
-                          <i class="bi bi-gear-wide-connected u-mr-1"></i> PROCESSING
-                        </span>
-                      </div>
-
-                      <div
-                        class="u-flex u-items-center u-gap-4 u-text-xs u-font-bold u-text-muted u-uppercase u-tracking-tighter">
-                        <span><i class="bi bi-diagram-3-fill u-mb-1"></i> {{ request.current_step?.step_name ||
-                          'Processing' }}</span>
-                        <span><i class="bi bi-clock-fill u-mb-1"></i> {{ new
-                          Date(request.created_at).toLocaleDateString() }}</span>
-                      </div>
-                    </div>
-
-                    <div class="u-flex u-gap-2 u-w-full u-md-u-w-auto u-z-base">
-                      <button disabled class="button button--secondary button--small u-opacity-50 u-cursor-not-allowed">
-                        <i class="bi bi-gear-wide-connected u-animate-spin u-mr-1"></i> System Processing
-                      </button>
-                      <button @click="releaseTask(request.id)" :disabled="releasingId === request.id"
-                        class="button button--secondary button--small border-dashed hover:border-danger hover:text-danger transition-all"
-                        title="Release back to universal pool">
-                        <i
-                          :class="releasingId === request.id ? 'bi bi-arrow-repeat animate-spin' : 'bi bi-arrow-left-circle'"></i>
-                        <span class="u-hidden md:u-inline">{{ releasingId === request.id ? 'Releasing...' : 'Release'
-                          }}</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        class="staff-portal">
+        
+        <!-- Contextual Operational Stats Row -->
+        <div class="u-mb-8 u-grid u-grid-cols-1 md:u-grid-cols-3 u-gap-6">
+          <div class="card card--glass u-p-6 u-flex u-items-center u-gap-6 shadow-xl border-0 u-rounded-3xl">
+            <div class="u-w-14 u-h-14 u-bg-primary/10 u-rounded-2xl u-flex u-items-center u-justify-center u-text-primary">
+              <i class="bi bi-person-workspace u-text-2xl"></i>
+            </div>
+            <div>
+              <div class="u-text-[10px] u-font-black u-text-muted u-uppercase u-tracking-widest u-mb-1">My Active Tasks</div>
+              <div class="u-text-2xl u-font-black u-text-main">{{ filteredAssignedRequests.length }}</div>
             </div>
           </div>
-
-          <!-- Activity / KPIs Sidebar -->
-          <div class="card" style="background: var(--color-background-alt)">
-            <header class="card__header u-bg-transparent">
-              <h2 class="card__title u-text-xs u-uppercase u-tracking-widest u-text-muted">Processing Activity</h2>
-            </header>
-            <div class="card__body u-p-0">
-              <div class="u-flex u-flex-col">
-                <div v-for="request in filteredMyRequests.slice(0, 8)" :key="request.id"
-                  class="u-p-3 u-border-b u-border-border-color last:u-border-0 u-flex u-justify-between u-items-center">
-                  <div class="u-min-w-0">
-                    <div class="u-font-bold u-text-main u-text-xs u-truncate" style="max-width: 140px">{{
-                      request.service_config.service_name }}</div>
-                    <div class="u-text-[9px] u-font-mono u-text-muted">{{ request.request_id }}</div>
-                  </div>
-                  <span class="badge badge--small u-scale-90" :class="statusClass(request.status)">{{
-                    request.status.replace('_', ' ') }}</span>
-                </div>
-              </div>
+          <div class="card card--glass u-p-6 u-flex u-items-center u-gap-6 shadow-xl border-0 u-rounded-3xl">
+            <div class="u-w-14 u-h-14 u-bg-info/10 u-rounded-2xl u-flex u-items-center u-justify-center u-text-info">
+              <i class="bi bi-globe u-text-2xl"></i>
+            </div>
+            <div>
+              <div class="u-text-[10px] u-font-black u-text-muted u-uppercase u-tracking-widest u-mb-1">Department Pool</div>
+              <div class="u-text-2xl u-font-black u-text-main">{{ filteredUnassignedRequests.length }}</div>
+            </div>
+          </div>
+          <div class="card card--glass u-p-6 u-flex u-items-center u-gap-6 shadow-xl border-0 u-rounded-3xl">
+            <div class="u-w-14 u-h-14 u-bg-success/10 u-rounded-2xl u-flex u-items-center u-justify-center u-text-success">
+              <i class="bi bi-gear-wide-connected u-text-2xl"></i>
+            </div>
+            <div>
+              <div class="u-text-[10px] u-font-black u-text-muted u-uppercase u-tracking-widest u-mb-1">Processing (System)</div>
+              <div class="u-text-2xl u-font-black u-text-main">{{ processingRequests.length }}</div>
             </div>
           </div>
         </div>
 
-        <!-- Universal Pool -->
-        <section class="card u-overflow-hidden">
-          <header class="card__header u-flex-col u-md-flex-row u-gap-4 u-justify-between">
-            <div class="card__title-group">
-              <h2 class="card__title u-flex u-items-center u-gap-2">
-                <i class="bi bi-globe u-text-info"></i> National Task Pool
-                <span v-if="filteredUnassignedRequests.length" class="badge badge--secondary u-text-[10px] u-px-2">{{
-                  filteredUnassignedRequests.length }}</span>
-              </h2>
-              <p class="card__subtitle">Unassigned requests awaiting institutional action</p>
-            </div>
-            <div class="toolbar u-w-full u-md-w-auto">
-              <div class="toolbar__filters">
-                <div class="toolbar__filter-group">
-                  <i class="bi bi-search toolbar__filter-icon"></i>
-                  <input type="text" v-model="unassignedSearchQuery" placeholder="Search pool..."
-                    class="toolbar__filter-input">
-                </div>
+        <div class="dashboard-layout">
+          <!-- Sidebar Navigation -->
+          <aside class="dashboard-sidebar">
+            <div class="card card--glass overflow-hidden border-0 shadow-xl rounded-[2rem]">
+              <div class="sidebar-nav py-6">
+                <button @click="staffCurrentTab = 'workstation'" class="sidebar-nav__item px-6 py-4 flex items-center gap-4 transition-all hover:bg-red-50/50 group"
+                  :class="{ 'bg-red-50/80 border-l-4 border-primary': staffCurrentTab === 'workstation' }">
+                  <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                    <i class="bi bi-inboxes-fill"></i>
+                  </div>
+                  <div class="flex-1 text-left">
+                    <div class="text-xs font-black uppercase tracking-widest" :class="staffCurrentTab === 'workstation' ? 'text-red-900' : 'text-slate-500'">Workstation</div>
+                    <div class="text-[10px] text-slate-400 font-bold">My Personal Queue</div>
+                  </div>
+                </button>
+                
+                <button @click="staffCurrentTab = 'pool'" class="sidebar-nav__item px-6 py-4 flex items-center gap-4 transition-all hover:bg-blue-50/50 group"
+                  :class="{ 'bg-blue-50/80 border-l-4 border-info': staffCurrentTab === 'pool' }">
+                  <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-info group-hover:scale-110 transition-transform">
+                    <i class="bi bi-globe-central-south"></i>
+                  </div>
+                  <div class="flex-1 text-left">
+                    <div class="text-xs font-black uppercase tracking-widest" :class="staffCurrentTab === 'pool' ? 'text-blue-900' : 'text-slate-500'">Dept. Pool</div>
+                    <div class="text-[10px] text-slate-400 font-bold">Universal Backlog</div>
+                  </div>
+                </button>
+
+                <div class="mx-6 my-4 border-t border-slate-100"></div>
+
+                <button v-if="['supervisor', 'GLOBAL_SUPERVISOR', 'MDA_SUPERVISOR', 'mda_admin'].includes(user.role)"
+                  @click="staffCurrentTab = 'analytics'" class="sidebar-nav__item px-6 py-4 flex items-center gap-4 transition-all hover:bg-amber-50/50 group"
+                  :class="{ 'bg-amber-50/80 border-l-4 border-amber-600': staffCurrentTab === 'analytics' }">
+                  <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-amber-600 group-hover:scale-110 transition-transform">
+                    <i class="bi bi-graph-up-arrow"></i>
+                  </div>
+                  <div class="flex-1 text-left">
+                    <div class="text-xs font-black uppercase tracking-widest" :class="staffCurrentTab === 'analytics' ? 'text-amber-900' : 'text-slate-500'">Oversight</div>
+                    <div class="text-[10px] text-slate-400 font-bold">Analytics & SLA</div>
+                  </div>
+                </button>
+
+                <button @click="staffCurrentTab = 'directory'" class="sidebar-nav__item px-6 py-4 flex items-center gap-4 transition-all hover:bg-slate-50/50 group"
+                  :class="{ 'bg-slate-50/80 border-l-4 border-slate-600': staffCurrentTab === 'directory' }">
+                  <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-slate-600 group-hover:scale-110 transition-transform">
+                    <i class="bi bi-diagram-3-fill"></i>
+                  </div>
+                  <div class="flex-1 text-left">
+                    <div class="text-xs font-black uppercase tracking-widest" :class="staffCurrentTab === 'directory' ? 'text-slate-900' : 'text-slate-500'">Directory</div>
+                    <div class="text-[10px] text-slate-400 font-bold">WOG Catalogue</div>
+                  </div>
+                </button>
               </div>
             </div>
-          </header>
-          <div class="table-container">
-            <table class="table">
-              <thead>
-                <tr class="table__header-row">
-                  <th class="table__header-cell table__header-cell--with-left-padding">Registry Service</th>
-                  <th class="table__header-cell">Internal Ref</th>
-                  <th class="table__header-cell">Priority</th>
-                  <th class="table__header-cell">Submission Date</th>
-                  <th class="table__header-cell table__header-cell--align-right table__header-cell--with-right-padding">
-                    Acquisition</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="request in filteredUnassignedRequests" :key="request.id" class="table__row">
-                  <td class="table__cell table__cell--with-left-padding">
-                    <div class="table__cell--bold">{{ request.service_config.service_name }}</div>
-                    <div class="u-text-primary u-font-bold u-uppercase" style="font-size: 10px">{{
-                      request.current_step?.step_name }}</div>
-                  </td>
-                  <td class="table__cell">
-                    <span class="table__code-badge">{{ request.request_id }}</span>
-                  </td>
-                  <td class="table__cell">
-                    <span class="badge" :class="priorityClass(request.priority)">{{ request.priority.toUpperCase()
-                    }}</span>
-                  </td>
-                  <td class="table__cell u-text-muted">{{ new Date(request.created_at).toLocaleDateString() }}</td>
-                  <td class="table__cell table__cell--align-right table__cell--with-right-padding">
-                    <button @click="claimTask(request.id)"
-                      :disabled="claimingId === request.id || (claimingId && claimingId.toString().startsWith('success-'))"
-                      class="button button--small button--pill shadow-sm transition-all" :class="[
-                        claimingId === request.id ? 'button--primary animate-glow' :
-                          (claimingId === 'success-' + request.id ? 'button--success' : 'button--primary hover:shadow-md')
-                      ]">
-                      <i :class="[
-                        claimingId === request.id ? 'bi bi-arrow-repeat animate-spin' :
-                          (claimingId === 'success-' + request.id ? 'bi bi-check-circle-fill' : 'bi bi-box-arrow-in-right')
-                      ]"></i>
-                      <span class="u-ml-1">{{
-                        claimingId === request.id ? 'Acquiring...' :
-                          (claimingId === 'success-' + request.id ? 'Acquired!' : 'Claim Task')
-                      }}</span>
-                    </button>
-                  </td>
-                </tr>
-                <tr v-if="filteredUnassignedRequests.length === 0">
-                  <td colspan="5" class="table__cell u-text-center u-p-12 u-text-muted" style="font-style: italic">
-                    All registry systems nominal. No pending unassigned requests detected.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
+            
+            <!-- Support Card -->
+            <div class="mt-8 px-2">
+               <div class="p-6 rounded-[2rem] bg-slate-900 text-white relative overflow-hidden group shadow-2xl">
+                  <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/5 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+                  <h4 class="text-[10px] font-black uppercase tracking-widest mb-2 opacity-60">Operations Unit</h4>
+                  <p class="text-xs font-bold mb-6 leading-relaxed">Registry helpdesk is active for all institutional officers.</p>
+                  <button class="w-full bg-white/10 hover:bg-white/20 border border-white/20 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all">
+                    Internal Portal Docs
+                  </button>
+               </div>
+            </div>
+          </aside>
 
-        <!-- Management Reporting -->
-        <section v-if="['supervisor', 'GLOBAL_SUPERVISOR', 'MDA_SUPERVISOR', 'mda_admin'].includes(user.role)"
-          class="pt-8">
-          <header class="mb-4">
-            <h2 class="text-xl font-black text-main">Institutional Oversight Analytics</h2>
-            <p class="text-muted text-sm">Executive monitoring of registry throughput and bottleneck detection</p>
-          </header>
-          <ReportsDashboard />
-        </section>
+          <!-- Main Content -->
+          <div class="dashboard-content">
+            
+            <!-- Workstation Tab -->
+            <div v-if="staffCurrentTab === 'workstation'" class="tab-content u-flex-col u-gap-8">
+               <div class="card overflow-hidden border-0 shadow-xl rounded-3xl">
+                  <header class="u-p-6 u-bg-white u-border-b u-flex u-justify-between u-items-center">
+                    <div>
+                      <h2 class="u-text-lg u-font-black u-text-main u-uppercase u-tracking-widest flex items-center gap-3">
+                        <i class="bi bi-person-workspace u-text-primary"></i> My Active Production Queue
+                      </h2>
+                      <p class="u-text-xs u-text-muted font-bold uppercase tracking-widest">Authenticated Workstation ID: {{ user.id }}</p>
+                    </div>
+                    <div class="u-flex u-gap-2">
+                      <div class="toolbar__filter-group u-bg-slate-50">
+                        <i class="bi bi-search toolbar__filter-icon"></i>
+                        <input type="text" v-model="queueSearchQuery" placeholder="Filter my queue..." class="toolbar__filter-input">
+                      </div>
+                    </div>
+                  </header>
+                  
+                  <div class="card__body u-p-0">
+                    <div v-if="filteredAssignedRequests.length === 0" class="u-p-20 u-text-center">
+                      <div class="u-w-20 u-h-20 u-bg-success/10 u-rounded-full u-flex u-items-center u-justify-center u-mx-auto u-mb-6">
+                        <i class="bi bi-check2-circle u-text-4xl u-text-success"></i>
+                      </div>
+                      <h3 class="u-text-base u-font-black u-text-main u-uppercase u-tracking-widest">Workstation Clear</h3>
+                      <p class="u-text-xs u-text-muted u-mt-2">No active tasks assigned. Switch to Dept. Pool to acquire new items.</p>
+                    </div>
+                    
+                    <div v-else class="u-divide-y u-divide-slate-100">
+                      <!-- Active Human Action Tasks -->
+                      <div v-for="request in actionableRequests" :key="request.id" 
+                        class="u-p-6 hover:u-bg-slate-50/50 transition-all u-flex u-flex-col md:u-flex-row u-gap-6 u-items-start md:u-items-center border-l-4 border-l-primary">
+                        <div class="u-flex-1">
+                          <div class="u-flex u-items-center u-gap-3 u-mb-3">
+                            <span class="badge" :class="priorityClass(request.priority)">{{ request.priority }}</span>
+                            <span class="u-text-sm u-font-black u-text-main uppercase tracking-tight">{{ request.service_config.service_name }}</span>
+                            <span class="u-text-[10px] u-font-mono u-bg-slate-100 u-px-2 u-py-0.5 u-rounded">#{{ request.request_id }}</span>
+                          </div>
+                          <div class="u-flex u-flex-wrap u-gap-4 u-items-center u-text-[10px] u-font-black u-text-muted u-uppercase u-tracking-widest">
+                            <div class="u-flex u-items-center u-gap-1.5"><i class="bi bi-diagram-3"></i> {{ request.current_step?.step_name }}</div>
+                            <div class="u-flex u-items-center u-gap-1.5"><i class="bi bi-building"></i> {{ getMdaName(request.service_config.mda) }}</div>
+                            <div class="u-flex u-items-center u-gap-1.5" :class="getTimeInQueue(request.created_at).variant">
+                              <i class="bi bi-clock-history"></i> {{ getTimeInQueue(request.created_at).label }}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="u-flex u-gap-3">
+                          <button @click="openCompleteStepModal(request)" class="button button--primary button--small button--pill shadow-lg hover:-translate-y-0.5 transition-all u-px-6">
+                            Execute Task
+                          </button>
+                          <button @click="releaseTask(request.id)" class="button button--secondary button--small button--pill border-dashed" title="Release to Pool">
+                            <i class="bi bi-arrow-left-circle"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- System Processing Tasks -->
+                      <div v-for="request in processingRequests" :key="request.id" 
+                        class="u-p-6 u-bg-slate-50/30 opacity-70 grayscale-[0.5] hover:grayscale-0 hover:opacity-100 transition-all u-flex u-flex-col md:u-flex-row u-gap-6 u-items-start md:u-items-center">
+                        <div class="u-flex-1">
+                          <div class="u-flex u-items-center u-gap-3 u-mb-3">
+                            <span class="badge badge--secondary u-scale-90">SYSTEM</span>
+                            <span class="u-text-sm u-font-bold u-text-slate-500 uppercase tracking-tight">{{ request.service_config.service_name }}</span>
+                            <span class="u-text-[10px] u-font-mono u-bg-slate-100/50 u-px-2 u-py-0.5 u-rounded">#{{ request.request_id }}</span>
+                          </div>
+                          <div class="u-flex u-flex-wrap u-gap-4 u-items-center u-text-[10px] u-font-bold u-text-slate-400 u-uppercase u-tracking-widest">
+                            <div class="u-flex u-items-center u-gap-1.5"><i class="bi bi-gear-wide-connected animate-spin"></i> {{ request.current_step?.step_name || 'KeSEL Background Engine' }}</div>
+                            <div class="u-flex u-items-center u-gap-1.5"><i class="bi bi-clock"></i> Established {{ new Date(request.created_at).toLocaleDateString() }}</div>
+                          </div>
+                        </div>
+                        <button disabled class="button button--secondary button--small button--pill u-opacity-50 u-cursor-not-allowed u-text-[10px]">
+                          Syncing Backend...
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <footer v-if="staffStore.assignedMeta.count > 0" class="u-p-4 u-bg-slate-50/50 u-border-t u-flex u-justify-between u-items-center">
+                     <div class="u-text-[10px] u-font-black u-text-muted u-uppercase u-tracking-widest">Loaded {{ filteredAssignedRequests.length }} of {{ staffStore.assignedMeta.count }} total</div>
+                     <div class="u-flex u-gap-2">
+                       <button @click="fetchAssignedRequests(assignedPage - 1)" :disabled="!staffStore.assignedMeta.previous" class="button button--secondary button--tiny button--pill px-4">Prev</button>
+                       <button @click="fetchAssignedRequests(assignedPage + 1)" :disabled="!staffStore.assignedMeta.next" class="button button--secondary button--tiny button--pill px-4">Next</button>
+                     </div>
+                  </footer>
+               </div>
+            </div>
+
+            <!-- Pool Tab -->
+            <div v-else-if="staffCurrentTab === 'pool'" class="tab-content u-flex-col u-gap-8">
+               <div class="card overflow-hidden border-0 shadow-xl rounded-3xl">
+                  <header class="u-p-6 u-bg-white u-border-b u-flex u-justify-between u-items-center">
+                    <div>
+                      <h2 class="u-text-lg u-font-black u-text-main u-uppercase u-tracking-widest flex items-center gap-3">
+                        <i class="bi bi-globe u-text-info"></i> National Task Reservoir
+                      </h2>
+                      <p class="u-text-xs u-text-muted font-bold uppercase tracking-widest">Universal unassigned backlog pool</p>
+                    </div>
+                    <div class="toolbar__filter-group u-bg-slate-50">
+                      <i class="bi bi-search toolbar__filter-icon"></i>
+                      <input type="text" v-model="unassignedSearchQuery" placeholder="Scan pool..." class="toolbar__filter-input">
+                    </div>
+                  </header>
+
+                  <div class="table-container">
+                    <table class="table">
+                      <thead>
+                        <tr class="table__header-row u-bg-slate-50/50">
+                          <th class="table__header-cell u-py-4">Service Cluster</th>
+                          <th class="table__header-cell">Priority</th>
+                          <th class="table__header-cell">Time in Pool</th>
+                          <th class="table__header-cell u-text-right">Acquisition</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="request in filteredUnassignedRequests" :key="request.id" class="table__row hover:u-bg-blue-50/20">
+                          <td class="table__cell">
+                            <div class="u-font-black u-text-main u-text-xs uppercase">{{ request.service_config.service_name }}</div>
+                            <div class="u-text-[10px] u-text-primary u-font-black u-uppercase u-mt-1">{{ request.current_step?.step_name }}</div>
+                          </td>
+                          <td class="table__cell">
+                            <span class="badge" :class="priorityClass(request.priority)">{{ request.priority }}</span>
+                          </td>
+                          <td class="table__cell">
+                            <span class="badge badge--secondary u-text-[10px]" :class="getTimeInQueue(request.created_at).variant">
+                              {{ getTimeInQueue(request.created_at).label }}
+                            </span>
+                          </td>
+                          <td class="table__cell u-text-right">
+                             <button @click="claimTask(request.id)" :disabled="claimingId === request.id" class="button button--primary button--tiny button--pill u-px-4">
+                               <i class="bi bi-plus-lg u-mr-1"></i> Claim Task
+                             </button>
+                          </td>
+                        </tr>
+                        <tr v-if="filteredUnassignedRequests.length === 0">
+                          <td colspan="4" class="u-p-20 u-text-center u-text-muted u-font-bold u-uppercase u-tracking-widest u-text-[10px]">
+                            Pool is completely synchronized. No backlog found.
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <footer v-if="staffStore.unassignedMeta.count > 0" class="u-p-4 u-bg-slate-50/50 u-border-t u-flex u-justify-between u-items-center">
+                    <div class="u-text-[10px] u-font-black u-text-muted u-uppercase u-tracking-widest">Total Global Pool: {{ staffStore.unassignedMeta.count }} items</div>
+                    <div class="u-flex u-gap-2">
+                       <button @click="fetchUnassignedRequests(unassignedPage - 1)" :disabled="!staffStore.unassignedMeta.previous" class="button button--secondary button--tiny button--pill px-4">Prev</button>
+                       <button @click="fetchUnassignedRequests(unassignedPage + 1)" :disabled="!staffStore.unassignedMeta.next" class="button button--secondary button--tiny button--pill px-4">Next</button>
+                    </div>
+                  </footer>
+               </div>
+            </div>
+
+            <!-- Oversight Tab -->
+            <div v-else-if="staffCurrentTab === 'analytics'" class="tab-content u-flex-col u-gap-8">
+               <div v-if="escalatedRequests.length > 0" class="card overflow-hidden border-0 shadow-xl rounded-3xl u-bg-amber-50">
+                  <header class="u-p-6 u-flex u-justify-between u-items-center">
+                    <div>
+                      <h2 class="u-text-lg u-font-black u-text-amber-900 u-uppercase u-tracking-widest flex items-center gap-3">
+                        <i class="bi bi-exclamation-triangle-fill"></i> Critical Escalations
+                      </h2>
+                      <p class="u-text-xs u-text-amber-700 font-bold uppercase tracking-widest">Requiring immediate supervisor intervention</p>
+                    </div>
+                    <span class="badge badge--danger animate-pulse">{{ escalatedRequests.length }} BLOCKED</span>
+                  </header>
+                  <div class="card__body u-p-0 u-px-6 u-pb-6">
+                    <div class="u-flex u-flex-col u-gap-3">
+                      <div v-for="req in escalatedRequests" :key="req.id" class="u-p-4 u-bg-white u-rounded-2xl u-flex u-justify-between u-items-center shadow-sm">
+                        <div>
+                          <div class="u-text-xs u-font-black u-text-main u-uppercase">{{ req.service_config.service_name }}</div>
+                          <div class="u-text-[10px] u-text-muted u-font-bold u-mt-1">ID: #{{ req.request_id }} • Escalated by {{ req.assigned_to_details?.username || 'Officer' }}</div>
+                        </div>
+                        <button class="button button--secondary button--tiny button--pill border-amber-200">Review Block</button>
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+               <ReportsDashboard />
+            </div>
+
+            <!-- Directory Tab -->
+            <div v-else-if="staffCurrentTab === 'directory'" class="tab-content u-flex-col u-gap-8">
+               <div class="card overflow-hidden border-0 shadow-xl rounded-3xl">
+                  <header class="u-p-6 u-bg-slate-900 u-text-white u-flex u-justify-between u-items-center">
+                    <div>
+                      <h2 class="u-text-lg u-font-black u-uppercase u-tracking-widest flex items-center gap-3">
+                        <i class="bi bi-diagram-3-fill u-text-primary"></i> WOG Service Blueprint
+                      </h2>
+                      <p class="u-text-xs u-text-slate-400 font-bold uppercase tracking-widest">Authoritative Registry Mapping tree</p>
+                    </div>
+                    <button @click="serviceConfigStore.fetchCatalogueSummary(true)" class="button button--secondary button--small button--pill text-white border-white/20">
+                      Sync Clusters
+                    </button>
+                  </header>
+                  
+                  <div class="card__body u-p-8 u-bg-slate-50/50">
+                    <div v-if="serviceConfigStore.loadingSummary" class="u-p-20 u-text-center">
+                      <div class="animate-spin u-h-12 u-w-12 u-border-4 u-border-primary u-border-t-transparent u-rounded-full u-mx-auto mb-4"></div>
+                      <p class="u-text-xs u-font-black u-text-muted u-uppercase u-tracking-widest">Rebuilding Registry Model...</p>
+                    </div>
+                    
+                    <div v-else class="wog-tree">
+                      <div v-for="domain in serviceConfigStore.matrixData" :key="domain.domain_name" class="domain-group u-mb-12 last:mb-0">
+                        <div class="u-flex u-items-center u-gap-4 u-mb-6">
+                           <div class="u-h-8 u-w-1.5 u-bg-primary u-rounded-full"></div>
+                           <h3 class="u-text-base u-font-black u-text-main u-uppercase u-tracking-widest">{{ domain.domain_name }}</h3>
+                        </div>
+                        
+                        <div class="u-grid u-grid-cols-1 md:u-grid-cols-2 lg:u-grid-cols-3 u-gap-6">
+                          <div v-for="process in domain.processes" :key="process.process_name" class="card u-border-slate-100 shadow-sm hover:shadow-md transition-all rounded-2xl overflow-hidden">
+                            <div class="u-p-4 u-bg-slate-50 u-border-b u-flex u-items-center u-gap-2">
+                               <i class="bi bi-tags-fill u-text-primary u-text-xs"></i>
+                               <h4 class="u-text-[10px] u-font-black u-text-main u-uppercase u-tracking-widest">{{ process.process_name }}</h4>
+                            </div>
+                            <div class="u-p-4 u-flex u-flex-col u-gap-3">
+                               <div v-for="svc in process.services" :key="svc.service_name" class="u-p-3 u-rounded-xl u-bg-white u-border u-border-slate-50 u-flex u-justify-between u-items-center">
+                                  <div class="u-min-w-0">
+                                     <div class="u-text-[11px] u-font-bold u-text-main u-truncate mr-2">{{ svc.service_name }}</div>
+                                     <div class="u-text-[9px] u-text-muted u-font-black u-uppercase u-mt-0.5">{{ svc.mda }}</div>
+                                  </div>
+                                  <div class="u-flex u-gap-1">
+                                     <button @click="openBpmnModal(svc, 'as_is')" class="u-w-7 u-h-7 u-rounded-lg u-bg-slate-100 u-flex u-items-center u-justify-center hover:u-bg-primary-soft transition-colors" title="As-Is">
+                                        <i class="bi bi-diagram-2 u-text-[10px]"></i>
+                                     </button>
+                                     <button @click="openBpmnModal(svc, 'to_be')" class="u-w-7 u-h-7 u-rounded-lg u-bg-primary/10 u-text-primary u-flex u-items-center u-justify-center hover:u-bg-primary hover:u-text-white transition-colors" title="To-Be">
+                                        <i class="bi bi-lightning-charge u-text-[10px]"></i>
+                                     </button>
+                                  </div>
+                               </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+               </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- Staff Catalogue Modal -->
-      <BaseModal v-model:show="showStaffCatalogueModal" @close="showStaffCatalogueModal = false" :title="'Unified Service Catalogue'" size="full">
-        <div class="u-p-6" style="max-height: 80vh; overflow-y: auto; background: var(--color-background); border-radius: 0.5rem;">
-            <div  class="tab-content animate-slide-in u-flex u-flex-col u-gap-8">
-              <header class="page__header u-justify-between u-items-end u-mb-4 u-gap-4"
-                style="border-bottom: 1px solid var(--color-border); padding-bottom: 1rem;">
-                <div>
-                  <h2 class="page__title" style="font-size: 1.5rem">Unified Service Catalogue</h2>
-                  <p class="page__subtitle">Access authoritative G2C services through the secure Huduma Bridge</p>
+      <BaseModal v-model:show="showStaffCatalogueModal" @close="showStaffCatalogueModal = false"
+        :title="'Unified Service Catalogue'" size="full">
+        <div class="u-p-6"
+          style="max-height: 80vh; overflow-y: auto; background: var(--color-background); border-radius: 0.5rem;">
+          <div class="tab-content animate-slide-in u-flex u-flex-col u-gap-8">
+            <header class="page__header u-justify-between u-items-end u-mb-4 u-gap-4"
+              style="border-bottom: 1px solid var(--color-border); padding-bottom: 1rem;">
+              <div>
+                <h2 class="page__title" style="font-size: 1.5rem">Unified Service Catalogue</h2>
+                <p class="page__subtitle">Access authoritative G2C services through the secure Huduma Bridge</p>
+              </div>
+              <div class="toolbar u-w-full">
+                <div class="toolbar__filters">
+                  <!-- Search -->
+                  <div class="toolbar__filter-group">
+                    <i class="bi bi-search toolbar__filter-icon"></i>
+                    <input type="text" v-model="serviceSearchQuery" placeholder="Search services..."
+                      class="toolbar__filter-input">
+                    <i v-if="serviceSearchQuery" @click="serviceSearchQuery = ''"
+                      class="bi bi-x-circle-fill toolbar__clear-icon"></i>
+                  </div>
+
+                  <!-- Agency Filter -->
+                  <div class="toolbar__filter-group">
+                    <i class="bi bi-building toolbar__filter-icon"></i>
+                    <input type="text" v-model="mdaSearchLocal" placeholder="Filter by Agency..."
+                      @focus="showMdaDropdown = true" @blur="closeDropdownWithDelay('mda')"
+                      class="toolbar__filter-input toolbar__filter-input--with-arrow">
+                    <i class="bi bi-chevron-down toolbar__filter-arrow"
+                      :class="{ 'toolbar__filter-arrow--open': showMdaDropdown }"></i>
+                    <i v-if="mdaFilter" @click="selectMda('')"
+                      class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
+
+                    <transition name="dropdown">
+                      <div v-if="showMdaDropdown" class="dropdown-menu">
+                        <div @click="selectMda('')" class="dropdown-item dropdown-item--header">All Agencies</div>
+                        <div v-for="mda in filteredMdas" :key="mda.id" @click="selectMda(mda)" class="dropdown-item">
+                          {{ mda.name }}
+                        </div>
+                      </div>
+                    </transition>
+                  </div>
+
+                  <!-- Life Event Filter -->
+                  <div class="toolbar__filter-group">
+                    <i class="bi bi-calendar-event toolbar__filter-icon"></i>
+                    <input type="text" v-model="lifeEventSearchLocal" placeholder="Filter by Life Event..."
+                      @focus="showLifeEventDropdown = true" @blur="closeDropdownWithDelay('lifeEvent')"
+                      class="toolbar__filter-input toolbar__filter-input--with-arrow">
+                    <i class="bi bi-chevron-down toolbar__filter-arrow"
+                      :class="{ 'toolbar__filter-arrow--open': showLifeEventDropdown }"></i>
+                    <i v-if="lifeEventFilter" @click="selectLifeEvent('')"
+                      class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
+
+                    <transition name="dropdown">
+                      <div v-if="showLifeEventDropdown" class="dropdown-menu">
+                        <div @click="selectLifeEvent('')" class="dropdown-item dropdown-item--header">All Life Events
+                        </div>
+                        <div v-for="event in filteredLifeEvents" :key="event" @click="selectLifeEvent(event)"
+                          class="dropdown-item">
+                          {{ event }}
+                        </div>
+                      </div>
+                    </transition>
+                  </div>
+
+                  <!-- Family Filter -->
+                  <div class="toolbar__filter-group">
+                    <i class="bi bi-diagram-3-fill toolbar__filter-icon"></i>
+                    <input type="text" v-model="familySearchLocal" placeholder="Filter by Family..."
+                      @focus="showFamilyDropdown = true" @blur="closeDropdownWithDelay('family')"
+                      class="toolbar__filter-input toolbar__filter-input--with-arrow">
+                    <i class="bi bi-chevron-down toolbar__filter-arrow"
+                      :class="{ 'toolbar__filter-arrow--open': showFamilyDropdown }"></i>
+                    <i v-if="familyFilter" @click="selectFamily('')"
+                      class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
+                    <transition name="dropdown">
+                      <div v-if="showFamilyDropdown" class="dropdown-menu">
+                        <div @click="selectFamily('')" class="dropdown-item dropdown-item--header">All Families</div>
+                        <div v-for="fam in filteredFamilies" :key="fam" @click="selectFamily(fam)"
+                          class="dropdown-item">
+                          {{ fam }}
+                        </div>
+                      </div>
+                    </transition>
+                  </div>
+
+                  <!-- Group Filter -->
+                  <div class="toolbar__filter-group">
+                    <i class="bi bi-collection toolbar__filter-icon"></i>
+                    <input type="text" v-model="groupSearchLocal" placeholder="Filter by Group..."
+                      @focus="showGroupDropdown = true" @blur="closeDropdownWithDelay('group')"
+                      class="toolbar__filter-input toolbar__filter-input--with-arrow">
+                    <i class="bi bi-chevron-down toolbar__filter-arrow"
+                      :class="{ 'toolbar__filter-arrow--open': showGroupDropdown }"></i>
+                    <i v-if="groupFilter" @click="selectGroup('')"
+                      class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
+                    <transition name="dropdown">
+                      <div v-if="showGroupDropdown" class="dropdown-menu">
+                        <div @click="selectGroup('')" class="dropdown-item dropdown-item--header">All Groups</div>
+                        <div v-for="grp in filteredGroups" :key="grp" @click="selectGroup(grp)" class="dropdown-item">
+                          {{ grp }}
+                        </div>
+                      </div>
+                    </transition>
+                  </div>
+
+                  <!-- Reset Action -->
+                  <button v-if="isAnyServiceFilterActive" @click="resetServiceFilters" class="btn-reset">
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                    <span>Reset</span>
+                  </button>
                 </div>
-                <div class="toolbar u-w-full">
-                  <div class="toolbar__filters">
-                    <!-- Search -->
-                    <div class="toolbar__filter-group">
-                      <i class="bi bi-search toolbar__filter-icon"></i>
-                      <input type="text" v-model="serviceSearchQuery" placeholder="Search services..."
-                        class="toolbar__filter-input">
-                      <i v-if="serviceSearchQuery" @click="serviceSearchQuery = ''"
-                        class="bi bi-x-circle-fill toolbar__clear-icon"></i>
-                    </div>
+              </div>
+            </header>
 
-                    <!-- Agency Filter -->
-                    <div class="toolbar__filter-group">
-                      <i class="bi bi-building toolbar__filter-icon"></i>
-                      <input type="text" v-model="mdaSearchLocal" placeholder="Filter by Agency..."
-                        @focus="showMdaDropdown = true" @blur="setTimeout(() => showMdaDropdown = false, 200)"
-                        class="toolbar__filter-input toolbar__filter-input--with-arrow">
-                      <i class="bi bi-chevron-down toolbar__filter-arrow"
-                        :class="{ 'toolbar__filter-arrow--open': showMdaDropdown }"></i>
-                      <i v-if="mdaFilter" @click="selectMda('')"
-                        class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
+            <!-- Active Filter Chips -->
+            <transition-group name="list" tag="div" class="u-flex u-flex-wrap u-gap-2 u-mb-8">
+              <div v-if="serviceSearchQuery" :key="'s-' + serviceSearchQuery" class="filter-chip"
+                @click="serviceSearchQuery = ''">
+                <span class="filter-chip__label">Search:</span>
+                <span class="filter-chip__value">{{ serviceSearchQuery }}</span>
+                <i class="bi bi-x"></i>
+              </div>
+              <div v-if="mdaFilter" :key="'m-' + mdaFilter" class="filter-chip" @click="selectMda('')">
+                <span class="filter-chip__label">Agency:</span>
+                <span class="filter-chip__value">{{ getMdaName(mdaFilter) }}</span>
+                <i class="bi bi-x"></i>
+              </div>
+              <div v-if="lifeEventFilter" :key="'e-' + lifeEventFilter" class="filter-chip"
+                @click="selectLifeEvent('')">
+                <span class="filter-chip__label">Event:</span>
+                <span class="filter-chip__value">{{ lifeEventFilter }}</span>
+                <i class="bi bi-x"></i>
+              </div>
+              <div v-if="familyFilter" :key="'f-' + familyFilter" class="filter-chip" @click="selectFamily('')">
+                <span class="filter-chip__label">Family:</span>
+                <span class="filter-chip__value">{{ familyFilter }}</span>
+                <i class="bi bi-x"></i>
+              </div>
+              <div v-if="groupFilter" :key="'g-' + groupFilter" class="filter-chip" @click="selectGroup('')">
+                <span class="filter-chip__label">Group:</span>
+                <span class="filter-chip__value">{{ groupFilter }}</span>
+                <i class="bi bi-x"></i>
+              </div>
+            </transition-group>
 
-                      <transition name="dropdown">
-                        <div v-if="showMdaDropdown" class="dropdown-menu">
-                          <div @click="selectMda('')" class="dropdown-item dropdown-item--header">All Agencies</div>
-                          <div v-for="mda in filteredMdas" :key="mda.id" @click="selectMda(mda)" class="dropdown-item">
-                            {{ mda.name }}
-                          </div>
-                        </div>
-                      </transition>
-                    </div>
-
-                    <!-- Life Event Filter -->
-                    <div class="toolbar__filter-group">
-                      <i class="bi bi-calendar-event toolbar__filter-icon"></i>
-                      <input type="text" v-model="lifeEventSearchLocal" placeholder="Filter by Life Event..."
-                        @focus="showLifeEventDropdown = true"
-                        @blur="setTimeout(() => showLifeEventDropdown = false, 200)"
-                        class="toolbar__filter-input toolbar__filter-input--with-arrow">
-                      <i class="bi bi-chevron-down toolbar__filter-arrow"
-                        :class="{ 'toolbar__filter-arrow--open': showLifeEventDropdown }"></i>
-                      <i v-if="lifeEventFilter" @click="selectLifeEvent('')"
-                        class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
-
-                      <transition name="dropdown">
-                        <div v-if="showLifeEventDropdown" class="dropdown-menu">
-                          <div @click="selectLifeEvent('')" class="dropdown-item dropdown-item--header">All Life Events
-                          </div>
-                          <div v-for="event in filteredLifeEvents" :key="event" @click="selectLifeEvent(event)"
-                            class="dropdown-item">
-                            {{ event }}
-                          </div>
-                        </div>
-                      </transition>
-                    </div>
-
-                    <!-- Family Filter -->
-                    <div class="toolbar__filter-group">
-                      <i class="bi bi-diagram-3-fill toolbar__filter-icon"></i>
-                      <input type="text" v-model="familySearchLocal" placeholder="Filter by Family..."
-                        @focus="showFamilyDropdown = true" @blur="setTimeout(() => showFamilyDropdown = false, 200)"
-                        class="toolbar__filter-input toolbar__filter-input--with-arrow">
-                      <i class="bi bi-chevron-down toolbar__filter-arrow"
-                        :class="{ 'toolbar__filter-arrow--open': showFamilyDropdown }"></i>
-                      <i v-if="familyFilter" @click="selectFamily('')"
-                        class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
-                      <transition name="dropdown">
-                        <div v-if="showFamilyDropdown" class="dropdown-menu">
-                          <div @click="selectFamily('')" class="dropdown-item dropdown-item--header">All Families</div>
-                          <div v-for="fam in filteredFamilies" :key="fam" @click="selectFamily(fam)"
-                            class="dropdown-item">
-                            {{ fam }}
-                          </div>
-                        </div>
-                      </transition>
-                    </div>
-                    
-                    <!-- Group Filter -->
-                    <div class="toolbar__filter-group">
-                      <i class="bi bi-collection toolbar__filter-icon"></i>
-                      <input type="text" v-model="groupSearchLocal" placeholder="Filter by Group..."
-                        @focus="showGroupDropdown = true" @blur="setTimeout(() => showGroupDropdown = false, 200)"
-                        class="toolbar__filter-input toolbar__filter-input--with-arrow">
-                      <i class="bi bi-chevron-down toolbar__filter-arrow"
-                        :class="{ 'toolbar__filter-arrow--open': showGroupDropdown }"></i>
-                      <i v-if="groupFilter" @click="selectGroup('')"
-                        class="bi bi-x-circle-fill toolbar__clear-icon toolbar__clear-icon--with-arrow"></i>
-                      <transition name="dropdown">
-                        <div v-if="showGroupDropdown" class="dropdown-menu">
-                          <div @click="selectGroup('')" class="dropdown-item dropdown-item--header">All Groups</div>
-                          <div v-for="grp in filteredGroups" :key="grp" @click="selectGroup(grp)"
-                            class="dropdown-item">
-                            {{ grp }}
-                          </div>
-                        </div>
-                      </transition>
-                    </div>
-
-                    <!-- Reset Action -->
-                    <button v-if="isAnyServiceFilterActive" @click="resetServiceFilters" class="btn-reset">
-                      <i class="bi bi-arrow-counterclockwise"></i>
-                      <span>Reset</span>
-                    </button>
+            <div v-if="filteredAvailableServices.length === 0"
+              class="u-flex u-flex-col u-items-center u-justify-center u-py-20 u-text-muted u-w-full">
+              <i class="bi bi-cloud-slash u-text-5xl u-mb-4 u-opacity-20"></i>
+              <p class="u-font-black u-uppercase u-tracking-widest u-text-xs">No services currently available</p>
+              <p class="u-text-xs u-mt-2 u-opacity-60">The authoritative catalogue is being updated. Please check back
+                shortly.</p>
+            </div>
+            <div v-else class="u-flex u-flex-col u-gap-12">
+              <!-- If no family is selected and no other filters, show the list of families -->
+              <div v-if="!selectedFamilyForView && !isAnyServiceFilterActive" class="stats-grid">
+                <div v-for="group in groupedServicesByFamily" :key="group.name" @click="selectFamily(group.name)"
+                  class="card u-p-8 u-flex u-flex-col u-items-center u-text-center transition-all hover:u-shadow-xl u-cursor-pointer"
+                  style="border: 1px solid var(--border-color);">
+                  <div class="u-flex u-items-center u-justify-center u-mb-6 u-rounded-lg"
+                    style="width: 4rem; height: 4rem; background: var(--color-primary-soft); color: var(--color-primary); font-size: 1.5rem;">
+                    <i :class="getServiceFamilyIcon(group.name)"></i>
+                  </div>
+                  <h3 class="u-font-bold u-text-main u-mb-2" style="font-size: 1.125rem;">{{ group.name }}</h3>
+                  <p class="u-text-xs u-text-muted u-mb-4 u-line-clamp-2" style="min-height: 2.5rem;">{{
+                    group.family?.description || 'View all associated services' }}</p>
+                  <div class="u-mt-auto">
+                    <span class="badge badge--info">{{ group.services.length }} Services</span>
                   </div>
                 </div>
-              </header>
-
-              <!-- Active Filter Chips -->
-              <transition-group name="list" tag="div" class="u-flex u-flex-wrap u-gap-2 u-mb-8">
-                <div v-if="serviceSearchQuery" :key="'s-' + serviceSearchQuery" class="filter-chip"
-                  @click="serviceSearchQuery = ''">
-                  <span class="filter-chip__label">Search:</span>
-                  <span class="filter-chip__value">{{ serviceSearchQuery }}</span>
-                  <i class="bi bi-x"></i>
-                </div>
-                <div v-if="mdaFilter" :key="'m-' + mdaFilter" class="filter-chip" @click="selectMda('')">
-                  <span class="filter-chip__label">Agency:</span>
-                  <span class="filter-chip__value">{{ getMdaName(mdaFilter) }}</span>
-                  <i class="bi bi-x"></i>
-                </div>
-                <div v-if="lifeEventFilter" :key="'e-' + lifeEventFilter" class="filter-chip"
-                  @click="selectLifeEvent('')">
-                  <span class="filter-chip__label">Event:</span>
-                  <span class="filter-chip__value">{{ lifeEventFilter }}</span>
-                  <i class="bi bi-x"></i>
-                </div>
-                <div v-if="familyFilter" :key="'f-' + familyFilter" class="filter-chip" @click="selectFamily('')">
-                  <span class="filter-chip__label">Family:</span>
-                  <span class="filter-chip__value">{{ familyFilter }}</span>
-                  <i class="bi bi-x"></i>
-                </div>
-                <div v-if="groupFilter" :key="'g-' + groupFilter" class="filter-chip" @click="selectGroup('')">
-                  <span class="filter-chip__label">Group:</span>
-                  <span class="filter-chip__value">{{ groupFilter }}</span>
-                  <i class="bi bi-x"></i>
-                </div>
-              </transition-group>
-
-              <div v-if="filteredAvailableServices.length === 0"
-                class="u-flex u-flex-col u-items-center u-justify-center u-py-20 u-text-muted u-w-full">
-                <i class="bi bi-cloud-slash u-text-5xl u-mb-4 u-opacity-20"></i>
-                <p class="u-font-black u-uppercase u-tracking-widest u-text-xs">No services currently available</p>
-                <p class="u-text-xs u-mt-2 u-opacity-60">The authoritative catalogue is being updated. Please check back
-                  shortly.</p>
               </div>
-              <div v-else class="u-flex u-flex-col u-gap-12">
-                <!-- If no family is selected and no other filters, show the list of families -->
-                <div v-if="!selectedFamilyForView && !isAnyServiceFilterActive" class="stats-grid">
-                  <div v-for="group in groupedServicesByFamily" :key="group.name"
-                    @click="selectFamily(group.name)"
-                    class="card u-p-8 u-flex u-flex-col u-items-center u-text-center transition-all hover:u-shadow-xl u-cursor-pointer"
-                    style="border: 1px solid var(--border-color);">
+
+              <!-- If a family is selected or filters are active, show services directly -->
+              <div v-else class="service-family-group animate-slide-in">
+                <div class="u-flex u-items-center u-justify-between u-mb-6">
+                  <div class="u-flex u-items-center u-gap-3">
+                    <button @click="resetServiceFiltersAndView" class="button button--ghost button--small u-mr-2">
+                      <i class="bi bi-arrow-left"></i> Back to Families
+                    </button>
+                    <div class="u-w-1 u-h-8 u-bg-primary u-rounded-full"></div>
+                    <div>
+                      <h3 class="u-text-lg u-font-black u-text-main u-uppercase u-tracking-widest">{{
+                        selectedFamilyForView || 'Filtered Search Results' }}</h3>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="stats-grid">
+                  <div
+                    v-for="service in (selectedFamilyForView ? (groupedServicesByFamily.find(g => g.name === selectedFamilyForView)?.services || []) : filteredAvailableServices)"
+                    :key="service.id"
+                    class="card u-p-8 u-flex u-flex-col u-items-center u-text-center transition-all hover:u-shadow-xl"
+                    style="border: none;">
                     <div class="u-flex u-items-center u-justify-center u-mb-6 u-rounded-lg"
                       style="width: 4rem; height: 4rem; background: var(--color-primary-soft); color: var(--color-primary); font-size: 1.5rem;">
-                      <i :class="getServiceFamilyIcon(group.name)"></i>
+                      <i :class="getServiceFamilyIcon(service.service_family_details?.name)"></i>
                     </div>
-                    <h3 class="u-font-bold u-text-main u-mb-2" style="font-size: 1.125rem;">{{ group.name }}</h3>
-                    <p class="u-text-xs u-text-muted u-mb-4 u-line-clamp-2" style="min-height: 2.5rem;">{{
-                      group.family?.description || 'View all associated services' }}</p>
-                    <div class="u-mt-auto">
-                      <span class="badge badge--info">{{ group.services.length }} Services</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- If a family is selected or filters are active, show services directly -->
-                <div v-else class="service-family-group animate-slide-in">
-                  <div class="u-flex u-items-center u-justify-between u-mb-6">
-                    <div class="u-flex u-items-center u-gap-3">
-                      <button @click="resetServiceFiltersAndView" class="button button--ghost button--small u-mr-2">
-                        <i class="bi bi-arrow-left"></i> Back to Families
-                      </button>
-                      <div class="u-w-1 u-h-8 u-bg-primary u-rounded-full"></div>
-                      <div>
-                        <h3 class="u-text-lg u-font-black u-text-main u-uppercase u-tracking-widest">{{
-                          selectedFamilyForView || 'Filtered Search Results' }}</h3>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="stats-grid">
-                    <div
-                      v-for="service in (selectedFamilyForView ? (groupedServicesByFamily.find(g => g.name === selectedFamilyForView)?.services || []) : filteredAvailableServices)"
-                      :key="service.id"
-                      class="card u-p-8 u-flex u-flex-col u-items-center u-text-center transition-all hover:u-shadow-xl"
-                      style="border: none;">
-                      <div class="u-flex u-items-center u-justify-center u-mb-6 u-rounded-lg"
-                        style="width: 4rem; height: 4rem; background: var(--color-primary-soft); color: var(--color-primary); font-size: 1.5rem;">
-                        <i :class="getServiceFamilyIcon(service.service_family_details?.name)"></i>
-                      </div>
-                      <h3 class="u-font-bold u-text-main u-mb-2" style="font-size: 1.125rem;">{{ service.service_name }}
-                      </h3>
-                      <p class="u-text-xs u-font-bold u-text-muted u-uppercase u-mb-8 u-p-1 u-rounded"
-                        style="background: var(--color-background-alt); letter-spacing: 0.1em;">
-                        {{ getMdaName(service.mda) }}
-                      </p>
-                      <router-link :to="`/apply/${service.service_code}`"
-                        class="button button--primary button--pill u-w-full u-mt-auto">
-                        Begin Application
-                      </router-link>
-                    </div>
+                    <h3 class="u-font-bold u-text-main u-mb-2" style="font-size: 1.125rem;">{{ service.service_name }}
+                    </h3>
+                    <p class="u-text-xs u-font-bold u-text-muted u-uppercase u-mb-8 u-p-1 u-rounded"
+                      style="background: var(--color-background-alt); letter-spacing: 0.1em;">
+                      {{ getMdaName(service.mda) }}
+                    </p>
+                    <router-link :to="`/apply/${service.service_code}`"
+                      class="button button--primary button--pill u-w-full u-mt-auto">
+                      Begin Application
+                    </router-link>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
         </div>
+      </BaseModal>
+
+      <!-- BPMN Visualization Modal -->
+      <BaseModal v-model:show="showBpmnModal" @close="closeBpmnModal" size="full" headerClass="modal__header--dark">
+        <template #header>
+          <div class="u-flex-1">
+            <h3 class="modal__title">{{ selectedServiceForBpmn?.service_name }}</h3>
+            <p class="modal__subtitle u-font-mono u-uppercase" style="letter-spacing: 0.1em">Authoritative BPMN 2.0 Process orchestration Model</p>
+          </div>
+
+          <div class="tab-bar" style="background: rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.1)">
+            <button @click="activeBpmnStage = 'as_is'" :class="{ 'tab-bar__item--active': activeBpmnStage === 'as_is' }"
+              class="tab-bar__item u-text-xs u-py-1.5" style="border: none">
+              As-Is Manual Friction
+            </button>
+            <button @click="activeBpmnStage = 'to_be'" :class="{ 'tab-bar__item--active': activeBpmnStage === 'to_be' }"
+              class="tab-bar__item u-text-xs u-py-1.5" style="border: none">
+              To-Be Optimized Flow
+            </button>
+          </div>
+        </template>
+
+        <div class="u-flex u-justify-center u-p-6" style="background: var(--bg-page); min-height: 500px;">
+          <BpmnRenderer 
+            v-if="selectedServiceForBpmn" 
+            :steps="selectedServiceForBpmn.workflow_steps?.filter(s => s.lifecycle_stage === activeBpmnStage) || []" 
+            :stage="activeBpmnStage" 
+            class="u-w-full"
+          />
+          <div v-else-if="!selectedServiceForBpmn?.workflow_configured" class="u-flex u-flex-col u-items-center u-justify-center u-text-muted">
+            <i class="bi bi-exclamation-triangle u-text-5xl mb-4"></i>
+            <p class="u-font-bold">No workflow configured for this service.</p>
+          </div>
+        </div>
+
+        <template #footer>
+          <div class="u-text-xs u-text-muted u-font-mono" style="font-style: italic">
+            Source: Unified Governance Registry | Level: {{ activeBpmnStage === 'to_be' ? 'Optimized digital flow' : 'Documented current state' }}
+          </div>
+          <button @click="closeBpmnModal" class="button button--secondary button--pill">
+            Exit Visualization
+          </button>
+        </template>
       </BaseModal>
 
       <!-- SYSTEM ADMINISTRATION VIEW -->
@@ -944,7 +812,15 @@
                 </div>
               </header>
               <div class="card__body p-6">
-                <component :is="activeAdminComponent" />
+                <component :is="activeAdminComponent" 
+                  :active-tab="currentTab"
+                  :mda-filter-id="selectedDrilldownMda?.id"
+                  :service="selectedDrilldownService"
+                  @drilldown-services="(mda) => { selectedDrilldownMda = mda }"
+                  @drilldown-transactions="(svc) => { selectedDrilldownService = svc }"
+                  @go-back-mdas="selectedDrilldownMda = null"
+                  @go-back-services="selectedDrilldownService = null"
+                />
 
                 <div v-if="currentTab === 'System Docs'"
                   class="docs-workstation mt-8 border-t border-border-color pt-8">
@@ -1098,7 +974,13 @@
   import InterDepartmentalMemoView from '../components/Admin/InterDepartmentalMemoView.vue';
   import BpmnRenderer from '../components/Admin/BpmnRenderer.vue';
   import RegistriesMonitor from '../components/Admin/RegistriesMonitor.vue';
+  import ServiceTransactionsView from '../components/Admin/ServiceTransactionsView.vue';
   import BaseModal from '../components/Common/BaseModal.vue';
+  
+  // Citizen Premium Components
+  import AuthoritativeWallet from '../components/Citizen/AuthoritativeWallet.vue';
+  import ActionFeed from '../components/Citizen/ActionFeed.vue';
+  import ServiceDiscovery from '../components/Citizen/ServiceDiscovery.vue';
 
   const authStore = useAuthStore();
   const citizenStore = useCitizenStore();
@@ -1130,6 +1012,9 @@
 
   const showCompleteStepModal = ref(false);
   const showStaffCatalogueModal = ref(false);
+  const showBpmnModal = ref(false);
+  const selectedServiceForBpmn = ref(null);
+  const activeBpmnStage = ref('as_is');
   const currentRequestToComplete = ref(null);
   const stepAction = ref({ action: '', details: '' });
   const showBpmnBlueprint = ref(false);
@@ -1208,6 +1093,84 @@
   const incompleteSearchQuery = ref('');
   const myRequestsStatusFilter = ref('');
   const citizenCurrentTab = ref('inbox');
+  const staffCurrentTab = ref('workstation');
+  
+  // Missing logic for new citizen portal
+  const pendingActions = computed(() => {
+    const actions = [];
+    myRequests.value.filter(r => r.status === 'request_changes').forEach(r => {
+      actions.push({
+        id: `action-req-${r.id}`,
+        type: 'danger',
+        icon: 'bi-exclamation-triangle-fill',
+        title: 'Action Required',
+        message: `Changes requested on your ${r.service_config.service_name} application.`,
+        date: r.updated_at,
+        link: `/service-request/${r.id}`
+      });
+    });
+    if (user.value?.saved_documents?.length) {
+       actions.push({
+         id: 'system-wallet',
+         type: 'success',
+         icon: 'bi-shield-check',
+         title: 'Wallet Active',
+         message: `You have ${user.value.saved_documents.length} authoritative documents ready for use.`,
+         date: new Date().toISOString(),
+         link: '/profile',
+         isSystem: true
+       });
+    }
+    return actions.sort((a, b) => new Date(b.date) - new Date(a.date));
+  });
+
+  const activeApplications = computed(() => {
+    return myRequests.value.filter(r => ['received', 'in_progress', 'payment_pending', 'verification_pending'].includes(r.status)).map(r => ({
+      id: r.id,
+      service_name: r.service_config.service_name,
+      mda_name: getMdaName(r.service_config.mda),
+      current_step_index: r.current_step?.sequence || 1,
+      total_steps: r.service_config.workflow_steps?.length || 5,
+      current_step_name: r.current_step?.step_name || 'Processing'
+    }));
+  });
+
+  const lifeEvents = computed(() => {
+    const groups = {};
+    availableServices.value.forEach(svc => {
+      const gName = svc.life_event_group || 'General Services';
+      if (!groups[gName]) {
+        groups[gName] = {
+          id: gName.toLowerCase().replace(/\s+/g, '-'),
+          name: gName,
+          description: `Authoritative G2C services for ${gName.toLowerCase()}.`,
+          services: []
+        };
+      }
+      groups[gName].services.push({
+        id: svc.service_code,
+        display_name: svc.service_name,
+        mda: svc.mda
+      });
+    });
+    return Object.values(groups);
+  });
+
+  const selectedService = ref(null);
+  const currentStepIndex = ref(0);
+  const formData = ref({});
+  const workflowSteps = computed(() => selectedService.value?.workflow_steps || []);
+  const currentStep = computed(() => workflowSteps.value[currentStepIndex.value] || {});
+  const isLastStep = computed(() => currentStepIndex.value === workflowSteps.value.length - 1);
+
+  const submitStep = async () => {
+    if (isLastStep.value) {
+      citizenCurrentTab.value = 'inbox';
+    } else {
+      currentStepIndex.value++;
+    }
+  };
+
   const queueStatusFilter = ref('');
   const priorityFilter = ref('');
   const prioritySearchLocal = ref('');
@@ -1327,33 +1290,50 @@
   });
 
   const getMdaName = (mdaId) => {
-    // If mdaId is an object (some APIs return expanded mda), use name directly
+    if (!mdaId) return 'All Agencies';
     if (mdaId && typeof mdaId === 'object') return mdaId.name;
-    const mda = mdas.value.find(m => m.id === mdaId);
-    return mda ? mda.name : 'Unknown Agency';
+    const mda = mdas.value.find(m => String(m.id) === String(mdaId));
+    return mda ? mda.name : `Agency #${mdaId}`;
   }
 
   const getServiceFamilyIcon = (familyName) => {
     const icons = {
       'Identity & Civil Registration': 'bi-person-badge-fill',
       'Civil Registration & Identity': 'bi-person-badge-fill',
-      'Immigration & Border Management': 'bi-passport-fill',
+      'Immigration & Border Management': 'bi-passport',
       'Business & Commercial Regulation': 'bi-briefcase-fill',
       'Taxation & Revenue Administration': 'bi-bank2',
       'Social Protection & Welfare': 'bi-heart-pulse-fill',
       'Education & Skills Development': 'bi-mortarboard-fill',
       'Health & Public Health Regulation': 'bi-capsule',
       'Land, Housing & Property Administration': 'bi-house-heart-fill',
-      'Justice & Legal Services': 'bi-balance-scale',
+      'Justice & Legal Services': 'bi-scales',
       'Security & Public Safety': 'bi-shield-shaded',
       'Trade, Industry & Investment': 'bi-graph-up-arrow',
       'Environmental & Natural Resources': 'bi-tree-fill',
       'Transport & Mobility': 'bi-truck',
       'Public Finance & Procurement': 'bi-cash-coin',
-      'Governance & Intergovernmental Coordination': 'bi-building-governance',
-      'Tourism, Heritage & Sports': 'bi-palette-fill'
+      'Governance & Intergovernmental Coordination': 'bi-building-fill',
+      'Tourism, Heritage & Sports': 'bi-palette-fill',
+      'Uncategorized': 'bi-grid-fill'
     };
-    return icons[familyName] || 'bi-lightning-charge-fill';
+    return icons[familyName] || 'bi-grid-fill';
+  };
+
+  const getEventIcon = (eventName) => {
+    const icons = {
+      'Getting Married': 'bi-heart-fill',
+      'Starting a Business': 'bi-briefcase-fill',
+      'Buying Property': 'bi-house-fill',
+      'Having a Child': 'bi-baby-carriage',
+      'Education': 'bi-mortarboard-fill',
+      'Retirement': 'bi-sun-fill',
+      'Death & Cemetery': 'bi-flower1',
+      'Legal Matters': 'bi-scales',
+      'Health & Wellness': 'bi-heart-pulse-fill',
+      'Transport': 'bi-truck'
+    };
+    return icons[eventName] || 'bi-stars';
   };
 
   // --- Helper Functions for UI Focus ---
@@ -1404,13 +1384,46 @@
     showMdaDropdown.value = false;
   };
 
+  const getTimeInQueue = (createdAt) => {
+    const created = new Date(createdAt);
+    const now = new Date();
+    const diffHours = Math.floor((now - created) / (1000 * 60 * 60));
+    const diffDays = Math.floor(diffHours / 24);
+
+    if (diffDays > 0) {
+      return { 
+        label: `${diffDays}d ago`, 
+        variant: diffDays > 3 ? 'badge--danger' : (diffDays > 1 ? 'badge--warning' : 'badge--info')
+      };
+    }
+    return { 
+      label: `${diffHours}h ago`, 
+      variant: diffHours > 12 ? 'badge--warning' : 'badge--info'
+    };
+  };
+
   const filteredAvailableServices = computed(() => {
     let result = availableServices.value;
-    if (mdaFilter.value) result = result.filter(s => s.mda === parseInt(mdaFilter.value));
+    if (mdaFilter.value) {
+      const targetMdaId = String(typeof mdaFilter.value === 'object' ? mdaFilter.value.id : mdaFilter.value);
+      result = result.filter(s => {
+        const sMdaId = String((s.mda && typeof s.mda === 'object') ? s.mda.id : s.mda);
+        return sMdaId === targetMdaId;
+      });
+    }
     if (lifeEventFilter.value) result = result.filter(s => s.life_event_group === lifeEventFilter.value);
-    if (familyFilter.value) result = result.filter(s => String(s.service_family_details?.name || s.service_family) === String(familyFilter.value));
+    if (familyFilter.value) {
+      result = result.filter(s => {
+        const famName = s.service_family_details?.name || s.service_family || 'Uncategorized';
+        return String(famName) === String(familyFilter.value);
+      });
+    }
     if (groupFilter.value) result = result.filter(s => s.service_group_details && s.service_group_details.some(g => g.name === groupFilter.value));
     if (priorityFilter.value) result = result.filter(s => s.priority === priorityFilter.value);
+
+    // If search is active, we should narrow the results, but if the user just started searching 
+    // from a family view, they might expect to find anything. For now, we keep it additive 
+    // but ensure the empty state is clear.
     if (serviceSearchQuery.value) {
       const q = serviceSearchQuery.value.toLowerCase();
       result = result.filter(s =>
@@ -1422,14 +1435,23 @@
     return result;
   });
 
+  const closeDropdownWithDelay = (type) => {
+    setTimeout(() => {
+      if (type === 'mda') showMdaDropdown.value = false;
+      if (type === 'lifeEvent') showLifeEventDropdown.value = false;
+      if (type === 'family') showFamilyDropdown.value = false;
+      if (type === 'group') showGroupDropdown.value = false;
+    }, 200);
+  };
+
   watch([serviceSearchQuery, mdaFilter, lifeEventFilter, familyFilter], (newVals, oldVals) => {
     const [newSearch, newMda, newLife, newFam] = newVals;
     const [oldSearch, oldMda, oldLife, oldFam] = oldVals || [];
-    
+
     // If the family filter was explicitly set
     if (newFam && newFam !== oldFam) {
       selectedFamilyForView.value = newFam;
-    } 
+    }
     // If the family filter was cleared, OR any other structural search/filter changed, clear the category view constraint
     else if ((!newFam && newFam !== oldFam) || newSearch !== oldSearch || newMda !== oldMda || newLife !== oldLife) {
       selectedFamilyForView.value = null;
@@ -1462,86 +1484,106 @@
     }));
   });
 
-  const filteredMyRequests = computed(() => {
-    let result = myRequests.value;
-    if (myRequestsStatusFilter.value) result = result.filter(r => r.status === myRequestsStatusFilter.value);
-    if (requestSearchQuery.value) {
-      const q = requestSearchQuery.value.toLowerCase();
-      result = result.filter(r =>
-        r.service_config?.service_name.toLowerCase().includes(q) ||
-        r.request_id.toLowerCase().includes(q)
-      );
-    }
-    return result;
-  });
+  const myRequestsPage = ref(1);
+  const assignedPage = ref(1);
+  const unassignedPage = ref(1);
+  const mdaPage = ref(1);
 
-  const filteredAssignedRequests = computed(() => {
-    let result = assignedRequests.value;
-    if (queueStatusFilter.value) result = result.filter(r => r.status === queueStatusFilter.value);
-    if (priorityFilter.value) result = result.filter(r => r.priority === priorityFilter.value);
-    if (queueSearchQuery.value) {
-      const q = queueSearchQuery.value.toLowerCase();
-      result = result.filter(r =>
-        r.service_config?.service_name.toLowerCase().includes(q) ||
-        r.request_id.toLowerCase().includes(q) ||
-        r.current_step?.step_name?.toLowerCase().includes(q)
-      );
-    }
-    return result;
-  });
+  const fetchMyRequests = (page = 1) => {
+    myRequestsPage.value = page;
+    citizenStore.fetchMyRequests({
+      status: myRequestsStatusFilter.value,
+      search: requestSearchQuery.value,
+      page
+    });
+  };
 
-  const filteredIncompleteRequests = computed(() => {
-    let result = mdaIncompleteRequests.value;
-    if (incompleteSearchQuery.value) {
-      const q = incompleteSearchQuery.value.toLowerCase();
-      result = result.filter(r =>
-        r.service_config?.service_name.toLowerCase().includes(q) ||
-        r.request_id.toLowerCase().includes(q)
-      );
-    }
-    return result;
-  });
+  const fetchAssignedRequests = (page = 1) => {
+    assignedPage.value = page;
+    staffStore.fetchAssignedRequests({
+      status: queueStatusFilter.value,
+      priority: priorityFilter.value,
+      search: queueSearchQuery.value,
+      page
+    });
+  };
 
-  const filteredUnassignedRequests = computed(() => {
-    let result = unassignedRequests.value;
-    if (priorityFilter.value) result = result.filter(r => r.priority === priorityFilter.value);
-    if (unassignedSearchQuery.value) {
-      const q = unassignedSearchQuery.value.toLowerCase();
-      result = result.filter(r =>
-        r.service_config?.service_name.toLowerCase().includes(q) ||
-        r.request_id.toLowerCase().includes(q) ||
-        r.current_step?.step_name?.toLowerCase().includes(q)
-      );
-    }
-    return result;
-  });
+  const fetchUnassignedRequests = (page = 1) => {
+    unassignedPage.value = page;
+    staffStore.fetchUnassignedRequests({
+      search: unassignedSearchQuery.value,
+      priority: priorityFilter.value,
+      page
+    });
+  };
+
+  const fetchMdaRequests = (page = 1) => {
+    mdaPage.value = page;
+    staffStore.fetchIncompleteMdaRequests({
+      search: incompleteSearchQuery.value,
+      page
+    });
+  };
+
+  // Transactional datasets are now filtered server-side.
+  const filteredMyRequests = computed(() => myRequests.value);
+  const filteredAssignedRequests = computed(() => assignedRequests.value);
+  const filteredIncompleteRequests = computed(() => mdaIncompleteRequests.value);
+  const filteredUnassignedRequests = computed(() => unassignedRequests.value);
+
+  // Watchers to trigger API-based filtering
+  watch([myRequestsStatusFilter, requestSearchQuery], () => {
+    fetchMyRequests(1);
+  }, { debounce: 300 });
+
+  watch([queueStatusFilter, priorityFilter, queueSearchQuery], () => {
+    fetchAssignedRequests(1);
+  }, { debounce: 300 });
+
+  watch([unassignedSearchQuery, priorityFilter], () => {
+    fetchUnassignedRequests(1);
+  }, { debounce: 300 });
+
+  watch([incompleteSearchQuery], () => {
+    fetchMdaRequests(1);
+  }, { debounce: 300 });
+
 
   const adminTabGroups = [
-    { title: 'Entity Management', icon: 'bi-people-fill', tabs: ['Users', 'Roles', 'MDAs'] },
-    { title: 'Operations', icon: 'bi-briefcase-fill', tabs: ['Services', 'Whole-of-Gov Catalogue'] },
-    { title: 'Process Engineering', icon: 'bi-diagram-3-fill', tabs: ['Workflow Orchestration', 'Architecture Pilot', 'Desktop Reviews', 'Registries'] },
-    { title: 'Governance & Comms', icon: 'bi-shield-lock-fill', tabs: ['Reports', 'Audit Logs', 'System Health', 'API Docs', 'Security & Trust', 'Inter-Dept Memos', 'System Docs'] }
+    { title: 'Entity Management', icon: 'bi-people-fill', tabs: ['MDAs', 'Users', 'Roles'] },
+    { title: 'Service Registries', icon: 'bi-grid-3x3-gap-fill', tabs: ['Whole-of-Gov Catalogue', 'Priority MDAs', 'Priority Services', 'Cradle to Death'] },
+    { title: 'System & Security', icon: 'bi-shield-lock-fill', tabs: ['Registries Monitor', 'Audit Logs', 'System Health'] },
+    { title: 'Developer / Documentation', icon: 'bi-file-earmark-code-fill', tabs: ['System Docs'] }
   ];
-  const currentTab = ref('System Docs');
+  const currentTab = ref('MDAs');
+  const selectedDrilldownMda = ref(null);
+  const selectedDrilldownService = ref(null);
+
+  watch(currentTab, () => {
+    selectedDrilldownMda.value = null;
+    selectedDrilldownService.value = null;
+  });
 
   // Dynamic Component Mapping
   const activeAdminComponent = computed(() => {
+    if (currentTab.value === 'MDAs') {
+      if (selectedDrilldownService.value) return ServiceTransactionsView;
+      if (selectedDrilldownMda.value) return ServiceConfigManager;
+      return MdaManager;
+    }
+
     const map = {
       'MDAs': MdaManager,
-      'Services': ServiceConfigManager,
       'Users': UserManager,
-      'Workflow Orchestration': WorkflowStepManager,
-      'Reports': ReportsDashboard,
       'Roles': AdminRolesView,
-      'API Docs': ApiRegistry,
+      'Whole-of-Gov Catalogue': ServiceCatalogueMatrix,
+      'Priority MDAs': ServiceCatalogueMatrix,
+      'Priority Services': ServiceCatalogueMatrix,
+      'Cradle to Death': ServiceCatalogueMatrix,
+      'Registries Monitor': RegistriesMonitor,
       'Audit Logs': AuditLogManager,
       'System Health': SystemHealthView,
-      'Security & Trust': SecurityTrustView,
-      'Architecture Pilot': ArchitectureSimulator,
-      'Whole-of-Gov Catalogue': ServiceCatalogueMatrix,
-      'Desktop Reviews': DesktopReviewManager,
-      'Inter-Dept Memos': InterDepartmentalMemoView,
-      'Registries': RegistriesMonitor
+      'System Docs': DocViewer
     };
     return map[currentTab.value] || null;
   });
@@ -1589,29 +1631,43 @@
   const selectedDoc = ref('docs/architecture/architecture_three.md');
 
   onMounted(async () => {
-    const role = user.value?.role?.toLowerCase();
-    if (role === 'citizen' || role === 'hospital_staff') {
+    // 1. Ensure user data is loaded (essential for role-based logic)
+    if (authStore.isAuthenticated && !authStore.user) {
       await authStore.fetchCurrentUser();
     }
 
-    if (['citizen', 'officer', 'supervisor', 'registrar', 'mda_admin', 'global_officer', 'global_supervisor', 'mda_officer', 'mda_supervisor', 'hospital_staff'].includes(role)) {
+    const role = user.value?.role?.toLowerCase();
+    
+    // 2. Fetch data based on role
+    const citizenRoles = ['citizen', 'hospital_staff'];
+    const staffRoles = ['officer', 'supervisor', 'registrar', 'mda_admin', 'global_officer', 'global_supervisor', 'mda_officer', 'mda_supervisor'];
+    
+    // Data relevant to citizen portal (can also be seen by staff for catalogue view)
+    if (citizenRoles.includes(role) || staffRoles.includes(role)) {
       citizenStore.fetchAvailableServices();
       citizenStore.fetchMyRequests();
       mdaStore.fetchMdas();
       serviceConfigStore.fetchFamilies();
     }
-    if (['officer', 'supervisor', 'registrar', 'mda_admin', 'global_officer', 'global_supervisor', 'mda_officer', 'mda_supervisor'].includes(role)) {
+
+    // Staff specific data
+    if (staffRoles.includes(role)) {
+      serviceConfigStore.fetchCatalogueSummary();
       staffStore.fetchIncompleteMdaRequests();
       staffStore.fetchUnassignedRequests();
       staffStore.fetchAssignedRequests();
+      
       if (['supervisor', 'global_supervisor', 'mda_supervisor', 'mda_admin'].includes(role)) {
         staffStore.fetchTeamRequests();
         staffStore.fetchEscalatedRequests();
       }
-    } else if (role === 'admin') {
+    } 
+    // Admin specific data
+    else if (role === 'admin') {
       mdaStore.fetchMdas();
       serviceConfigStore.fetchServices();
       serviceConfigStore.fetchFamilies();
+      serviceConfigStore.fetchCatalogueSummary();
     }
   });
 
@@ -1706,6 +1762,17 @@
     if (confirm('Are you sure you want to escalate this request?')) {
       try { await staffStore.escalateRequest(requestId); staffStore.fetchAssignedRequests(); } catch (error) { alert('Failed to escalate request: ' + error.message); }
     }
+  };
+
+  const openBpmnModal = (service, stage = 'as_is') => {
+    selectedServiceForBpmn.value = service;
+    activeBpmnStage.value = stage;
+    showBpmnModal.value = true;
+  };
+
+  const closeBpmnModal = () => {
+    showBpmnModal.value = false;
+    selectedServiceForBpmn.value = null;
   };
 
   const claimTask = async (requestId) => {

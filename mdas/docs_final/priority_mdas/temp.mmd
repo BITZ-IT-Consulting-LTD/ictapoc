@@ -1,0 +1,74 @@
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '18px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+flowchart TD
+    %% Events
+    Start((Start))
+    EndProcess(("End - Case Closed"))
+
+    subgraph Citizen["Citizen Reporter"]
+        direction TB
+        DigIntake["Digital case intake"]
+    end
+
+    subgraph CPIMS["System (National CPIMS)"]
+        direction TB
+        IdVerify["Identity verification integration"]
+        RiskScore["AI risk scoring support"]
+        CourtFile["Court filing automation"]
+        SecureDB["Store in secure case database"]
+        EmergGateway{"Emergency response required?"}
+    end
+
+    subgraph ChildOfficer["Children Officer"]
+        direction TB
+        LogInvest["Investigation logging"]
+        DecideAction["Human caseworker decision"]
+        CourtGateway{"Court order required?"}
+        MonVisits["Monitoring visits"]
+        CaseClose["Case closure"]
+    end
+
+    subgraph Judicial [Court]
+        direction TB
+        ProcOrder["Process protection order"]
+    end
+
+    subgraph CareInst["Care Institution"]
+        direction TB
+        ProvideCare["Provide intervention care"]
+    end
+
+    %% Flow connections
+    Start --> DigIntake
+    DigIntake --> IdVerify
+    IdVerify --> RiskScore
+    RiskScore --> EmergGateway
+    
+    EmergGateway -- "Yes" --> LogInvest
+    EmergGateway -- "No" --> LogInvest
+    
+    LogInvest --> DecideAction
+    DecideAction --> CourtGateway
+    
+    CourtGateway -- "Yes" --> CourtFile
+    CourtFile --> ProcOrder
+    ProcOrder --> ProvideCare
+    
+    CourtGateway -- "No" --> ProvideCare
+    
+    ProvideCare --> MonVisits
+    MonVisits --> SecureDB
+    SecureDB --> CaseClose
+    CaseClose --> EndProcess
+
+    %% Styling
+    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333;
+    
+    class Start startEvent;
+    class EndProcess endEvent;
+    class EmergGateway,CourtGateway gateway;
+    class IdVerify,RiskScore,CourtFile,SecureDB serviceTask;
+    class DigIntake,LogInvest,DecideAction,MonVisits,CaseClose,ProcOrder,ProvideCare userTask;

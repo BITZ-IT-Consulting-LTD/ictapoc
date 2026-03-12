@@ -15,10 +15,21 @@
       </div>
     </header>
 
-    <div class="toolbar mb-8">
+    <div class="toolbar mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
       <div class="relative w-full md:w-1/2 lg:w-1/3">
         <i class="bi bi-search absolute left-4 top-1/2 -translate-y-1/2 text-muted"></i>
         <input type="text" v-model="searchQuery" placeholder="Filter MDAs..." class="form__input pl-12 w-full">
+      </div>
+      <div class="flex gap-2">
+        <button @click="handlePrint" class="button button--secondary button--small" title="Print Table">
+          <i class="bi bi-printer"></i>
+        </button>
+        <button @click="handleExportCSV" class="button button--secondary button--small" title="Export CSV">
+          <i class="bi bi-filetype-csv"></i>
+        </button>
+        <button @click="handlePrint" class="button button--secondary button--small" title="Export PDF">
+          <i class="bi bi-filetype-pdf"></i>
+        </button>
       </div>
     </div>
 
@@ -70,6 +81,11 @@
               </td>
               <td class="table__td text-right pr-8">
                 <div class="flex justify-end gap-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button @click="$emit('drilldown-services', mda)"
+                    class="button button--primary button--small hover:shadow-md transition-all"
+                    title="View Services Registry">
+                    <i class="bi bi-diagram-3-fill me-1"></i> Services
+                  </button>
                   <button @click="openEditModal(mda)"
                     class="button button--secondary button--small hover:border-primary hover:text-primary transition-colors"
                     title="Edit Details">
@@ -93,6 +109,25 @@
             </tr>
           </tbody>
         </table>
+      </div>
+      <!-- Pagination Footer -->
+      <div class="u-p-4 u-flex u-items-center u-justify-between u-bg-slate-50 border-t border-border-color">
+        <div class="u-text-[10px] u-font-black u-text-muted/60 u-uppercase u-tracking-widest">
+          Total MDAs: {{ mdaStore.mdaPagination.count }}
+        </div>
+        <div class="u-flex u-gap-2">
+          <button @click="goToPage(currentPage - 1)" :disabled="!mdaStore.mdaPagination.previous" 
+            class="button button--secondary button--small">
+            <i class="bi bi-chevron-left me-1"></i> Prev
+          </button>
+          <div class="u-flex u-items-center u-px-4 u-text-xs u-font-black text-main bg-white border border-border-color u-rounded-lg shadow-sm">
+            PAGE {{ currentPage }}
+          </div>
+          <button @click="goToPage(currentPage + 1)" :disabled="!mdaStore.mdaPagination.next" 
+            class="button button--secondary button--small">
+            Next <i class="bi bi-chevron-right ms-1"></i>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -175,27 +210,60 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, computed } from 'vue';
+  import { ref, onMounted, computed, watch } from 'vue';
   import { useMdaStore } from '../../store/mda';
   import { useServiceConfigStore } from '../../store/serviceConfig';
+  import { useExport } from '../../composables/useExport';
   import WogDashboardStats from './WogDashboardStats.vue';
   import BaseModal from '../Common/BaseModal.vue';
 
+  const emit = defineEmits(['drilldown-services']);
   const mdaStore = useMdaStore();
   const serviceConfigStore = useServiceConfigStore();
+  const { exportToCSV, triggerPrint } = useExport();
+
+  const handleExportCSV = () => {
+    const columns = [
+      { key: 'code', label: 'Code' },
+      { key: 'name', label: 'MDA Name' },
+      { key: 'is_priority', label: 'Priority' },
+      { key: 'head_of_mda', label: 'Head of MDA' },
+      { key: 'contact_email', label: 'Email' }
+    ];
+    exportToCSV(mdas.value, columns, 'MDA_Registry');
+  };
+
+  const handlePrint = () => {
+    triggerPrint();
+  };
   const mdas = computed(() => mdaStore.mdas);
   const auditStats = computed(() => serviceConfigStore.catalogueSummary);
   const searchQuery = ref('');
+  const currentPage = ref(1);
 
-  const filteredMdas = computed(() => {
-    if (!searchQuery.value) return mdas.value;
-    const q = searchQuery.value.toLowerCase();
-    return mdas.value.filter(m =>
-      m.name.toLowerCase().includes(q) ||
-      (m.code && m.code.toLowerCase().includes(q)) ||
-      (m.description && m.description.toLowerCase().includes(q))
-    );
+  const fetchFilteredMdas = () => {
+    mdaStore.fetchMdas({
+      search: searchQuery.value,
+      page: currentPage.value
+    });
+  };
+
+  // Search Debounce Implementation
+  let searchTimeout = null;
+  watch(searchQuery, () => {
+    currentPage.value = 1; // Reset to page 1 on search
+    if (searchTimeout) clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      fetchFilteredMdas();
+    }, 300);
   });
+
+  const goToPage = (page) => {
+    currentPage.value = page;
+    fetchFilteredMdas();
+  };
+
+  const filteredMdas = computed(() => mdas.value);
 
   const showModal = ref(false);
   const form = ref({
@@ -212,7 +280,7 @@
   });
 
   onMounted(() => {
-    mdaStore.fetchMdas();
+    fetchFilteredMdas();
     serviceConfigStore.fetchCatalogueSummary();
   });
 

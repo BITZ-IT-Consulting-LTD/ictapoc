@@ -52,7 +52,7 @@ This document presents the prioritised list of Ministries, Departments, and Agen
 
 ---
 
-# 2. Proposed Next Priority MDAs – 5
+# 2. Proposed Next Priority MDAs – 9
 
 | #   | MDA                                                                                                                 | Tier | DMI   | Weakest Pillar | Citizen Impact | Record Volumes | Complexity | Model Summary        | Intervention Focus     |
 | --- | ------------------------------------------------------------------------------------------------------------------- | ---- | ----- | -------------- | -------------- | -------------- | ---------- | -------------------- | ---------------------- |
@@ -61,6 +61,10 @@ This document presents the prioritised list of Ministries, Departments, and Agen
 | 21  | [Youth Affairs & Creative Economy](./Youth_Affairs___Service_Delivery.md)                                           | T2   | ~1.76 | RMI            | High           | 10K–100K       | Medium     | Programme registries | Programme records      |
 | 22  | [State Department for Energy](./Energy___Service_Delivery.md)                                                       | T2   | ~2.04 | ESMI / GCI     | High           | <10K           | High       | Economic impact      | Licensing digitisation |
 | 23  | [Science, Research & Innovation](./National_Commission_For_Science_Technology_and_Innovation___Service_Delivery.md) | T2   | ~1.60 | RMI / GCI      | Medium         | 10K–100K       | High       | Knowledge records    | Knowledge repositories |
+| 24  | [ICT Authority](./ICT_Authority___Service_Delivery.md)                                                              | T1   | ~2.20 | ESMI           | High           | 1M+            | High       | Digital enablement   | Shared infrastructure  |
+| 25  | [State Department of ICT](./State_Department_of_ICT___Service_Delivery.md)                                          | T1   | ~2.10 | ESMI           | High           | 100K–1M        | High       | Policy leadership    | E-government policy    |
+| 26  | [Civil Registration Services](./_CIVIL_REGISTRATION_SERVICES_CRS____Service_Delivery.md)                             | T2   | ~1.50 | RMI            | Very High      | 10M+           | High       | Vital identity       | CRD digitisation       |
+| 27  | [State Department of ICT (Alternate)](./State_Department_of_ICT.md)                                                 | T1   | ~2.10 | ESMI           | High           | 100K–1M        | High       | Policy leadership    | E-government policy    |
 
 ---
 

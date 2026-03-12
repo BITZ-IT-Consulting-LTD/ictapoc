@@ -4,12 +4,26 @@ import api from '../services/api';
 export const useMdaStore = defineStore('mda', {
   state: () => ({
     mdas: [],
+    mdaPagination: {
+      count: 0,
+      next: null,
+      previous: null
+    }
   }),
   actions: {
-    async fetchMdas() {
+    async fetchMdas(params = { page: 1, search: '' }) {
       try {
-        const response = await api.get('/mdas/');
-        this.mdas = response.data;
+        const response = await api.get('/mdas/', { params });
+        if (response.data.results) {
+          this.mdas = response.data.results;
+          this.mdaPagination = {
+            count: response.data.count,
+            next: response.data.next,
+            previous: response.data.previous
+          };
+        } else {
+          this.mdas = response.data;
+        }
       } catch (error) {
         console.error('Failed to fetch MDAs:', error);
       }

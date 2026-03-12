@@ -5,7 +5,7 @@ from .models import (
     OfficialLetter, CorrespondenceAction, DesktopReview,
     PaymentProvider, PaymentTransaction, RevenueSplit,
     DataPurpose, ConsentRecord, ConsentAccessLog, RegistryAdapter, RegistryEndpoint,
-    ServiceFamily, ServiceGroup
+    ServiceFamily, ServiceGroup, WorkflowStepExecution
 )
 
 class RoleSerializer(serializers.ModelSerializer):
@@ -38,6 +38,24 @@ class UserSerializer(serializers.ModelSerializer):
             user.set_password(password)
             user.save()
         return user
+
+    def validate_role(self, value):
+        request = self.context.get('request')
+        if not request: return value
+        user = request.user
+        if self.instance and self.instance.role != value:
+            if user.role not in ['admin', 'system_admin'] and not user.is_staff:
+                raise serializers.ValidationError("Only administrators can modify user roles.")
+        return value
+
+    def validate_user_role(self, value):
+        request = self.context.get('request')
+        if not request: return value
+        user = request.user
+        if self.instance and self.instance.user_role != value:
+            if user.role not in ['admin', 'system_admin'] and not user.is_staff:
+                raise serializers.ValidationError("Only administrators can modify user role assignments.")
+        return value
 
     def update(self, instance, validated_data):
         password = validated_data.pop('password', None)
@@ -92,19 +110,62 @@ class ServiceConfigSerializer(serializers.ModelSerializer):
     category_details = ServiceCategorySerializer(source='category', read_only=True)
     service_family_details = ServiceFamilySerializer(source='service_family', read_only=True)
     service_group_details = ServiceGroupSerializer(source='service_groups', many=True, read_only=True)
+    effective_form_schema = serializers.SerializerMethodField()
 
     class Meta:
         model = ServiceConfig
         fields = '__all__'
 
+    def get_effective_form_schema(self, obj):
+        return obj.get_effective_form_schema()
+
+class WorkflowStepExecutionSerializer(serializers.ModelSerializer):
+    step_details = WorkflowStepSerializer(source='step', read_only=True)
+    actor_details = UserSerializer(source='actor', read_only=True)
+    
+    class Meta:
+        model = WorkflowStepExecution
+        fields = '__all__'
+
 class ServiceRequestSerializer(serializers.ModelSerializer):
     assigned_to_details = UserSerializer(source='assigned_to', read_only=True)
     citizen_details = UserSerializer(source='citizen', read_only=True)
+    step_executions = WorkflowStepExecutionSerializer(many=True, read_only=True)
     
     class Meta:
         model = ServiceRequest
         fields = '__all__'
         depth = 1 # To show nested service_config and current_step details
+
+    def validate_payload(self, value):
+        import jsonschema
+        from jsonschema import validate as validate_json
+        
+        # Get the service config (this might be tricky in a nested serializer/create context)
+        # But during creation, it's usually passed.
+        service_config = None
+        if self.instance:
+            service_config = self.instance.service_config
+        else:
+            # During creation, we usually get service_code or service_config id
+            # viewpoint: ServiceRequestViewSet.create passes payload to WorkflowEngine
+            # But DRF validation happens first.
+            service_config_id = self.initial_data.get('service_config')
+            if service_config_id:
+                try:
+                    service_config = ServiceConfig.objects.get(id=service_config_id)
+                except ServiceConfig.DoesNotExist:
+                    pass
+
+        if service_config:
+            schema = service_config.get_effective_form_schema()
+            if schema:
+                try:
+                    validate_json(instance=value, schema=schema)
+                except jsonschema.exceptions.ValidationError as e:
+                    raise serializers.ValidationError(f"Payload validation failed: {e.message}")
+        
+        return value
 
 class NestedServiceRequestSerializer(serializers.ModelSerializer):
     service_name = serializers.CharField(source='service_config.service_name', read_only=True)
