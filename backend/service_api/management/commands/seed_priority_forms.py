@@ -132,6 +132,9 @@ CODE_SCHEMAS = {
             "header_4": _s("Digital Uploads"),
             "photo": _f("Passport Photo (ICAO Compliant)", format="data-url"),
             "recommender_id": _f("Recommender ID (Optional)"),
+            "header_5": _s("Verification (Internal Use Only)"),
+            "security_clearance_status": _f("Security Clearance Status", enum=["Clear", "Flagged", "Under Investigation"], internal_only=True),
+            "intelligence_notes": _f("Internal Intelligence Notes", field_type="textarea", internal_only=True),
         },
     },
     # ── NRB: National ID Application ──
@@ -155,6 +158,9 @@ CODE_SCHEMAS = {
             "sub_county": _f("Sub-County"),
             "ward": _f("Ward"),
             "phone_number": _f("Phone Number"),
+            "header_4": _s("Security Vetting (Staff Only)"),
+            "criminal_record_check": _f("Criminal Record Status", enum=["No Record", "Record Found", "Action Required"], internal_only=True),
+            "fingerprint_verification": _f("Fingerprint Match Probability (%)", field_type="number", internal_only=True),
         },
     },
     # ── BRS: Business Name Registration ──
@@ -223,6 +229,9 @@ CODE_SCHEMAS = {
             "header_3": _s("Contact"),
             "phone_number": _f("Phone Number"),
             "email": _f("Email Address"),
+            "header_4": _s("Risk Assessment (Staff Only)"),
+            "tax_risk_profile": _f("Tax Compliance Risk Profile", enum=["Low Risk", "Medium Risk", "High Risk / Auditable"], internal_only=True),
+            "internal_compliance_notes": _f("Compliance Officer Rationale", field_type="textarea", internal_only=True),
         },
     },
     # ── KRA: Tax Compliance Certificate ──

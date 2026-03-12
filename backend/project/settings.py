@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     
     # Local apps
     'service_api',
+    'apps.document_repository',
 ]
 
 AUTHENTICATION_BACKENDS = [

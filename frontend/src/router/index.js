@@ -11,6 +11,11 @@ import ProfileView from '../views/ProfileView.vue'
 import ConsentDashboard from '../views/ConsentDashboard.vue'
 import LifeEventView from '../views/LifeEventView.vue'
 
+// Repository Module
+import ArtifactRegistry from '../modules/repository/pages/ArtifactRegistry.vue'
+import ArtifactDetail from '../modules/repository/pages/ArtifactDetail.vue'
+import RepositoryExplorer from '../modules/repository/pages/RepositoryExplorer.vue'
+
 const routes = [
   { path: '/', name: 'Home', component: HomeView },
   { path: '/login', name: 'Login', component: LoginView },
@@ -23,6 +28,11 @@ const routes = [
   { path: '/life-event/:id', name: 'LifeEvent', component: LifeEventView, meta: { requiresAuth: true } },
   // Admin Routes
   { path: '/admin/roles', name: 'AdminRoles', component: AdminRolesView, meta: { requiresAuth: true, requiresAdmin: true } },
+
+  // Repository Routes
+  { path: '/repository/artifacts', name: 'ArtifactRegistry', component: ArtifactRegistry, meta: { requiresAuth: true } },
+  { path: '/repository/artifacts/:id', name: 'ArtifactDetail', component: ArtifactDetail, meta: { requiresAuth: true } },
+  { path: '/repository/explore/:path*', name: 'RepositoryExplorer', component: RepositoryExplorer, meta: { requiresAuth: true } },
 ]
 
 const router = createRouter({

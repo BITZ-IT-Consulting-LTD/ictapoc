@@ -65,7 +65,8 @@ MISSING_STEPS = {
             dict(sequence=1, step_name="Paper Form Submission at DS Office", step_type="manual",
                  bpmn_element_type="start_event", role="Citizen", lifecycle_stage="as_is"),
             dict(sequence=2, step_name="Document & Birth Certificate Verification", step_type="manual",
-                 bpmn_element_type="user_task", role="Immigration Officer", lifecycle_stage="as_is"),
+                 bpmn_element_type="user_task", role="Immigration Officer", lifecycle_stage="as_is",
+                 api_config={"form_fields": ["security_clearance_status", "intelligence_notes"]}),
             dict(sequence=3, step_name="Biometric Capture (Photo & Fingerprints)", step_type="manual",
                  bpmn_element_type="user_task", role="Biometrics Clerk", lifecycle_stage="as_is"),
             dict(sequence=4, step_name="Passport Book Production & Quality Check", step_type="manual",
@@ -157,7 +158,8 @@ MISSING_STEPS = {
             dict(sequence=1, step_name="Application at District Registrar's Office", step_type="manual",
                  bpmn_element_type="start_event", role="Citizen (18+ Yrs)", lifecycle_stage="as_is"),
             dict(sequence=2, step_name="Physical Vetting & Form ID1 Submission", step_type="manual",
-                 bpmn_element_type="user_task", role="Registration Officer", lifecycle_stage="as_is"),
+                 bpmn_element_type="user_task", role="Registration Officer", lifecycle_stage="as_is",
+                 api_config={"form_fields": ["criminal_record_check", "fingerprint_verification"]}),
             dict(sequence=3, step_name="Biometric Capture (Photo & Fingerprints)", step_type="manual",
                  bpmn_element_type="user_task", role="Biometrics Clerk", lifecycle_stage="as_is"),
             dict(sequence=4, step_name="Card Production at Huduma Centre", step_type="manual",
@@ -533,8 +535,9 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.WARNING(f"  ⚠  Service not found: {code}"))
                 continue
 
+            svc.form_schema = schema["rules"]["schema"]
             svc.config = schema
-            svc.save(update_fields=["config"])
+            svc.save(update_fields=["config", "form_schema"])
             field_count = len(schema["rules"]["schema"]["properties"])
             self.stdout.write(self.style.SUCCESS(f"  ✅  [{code}] {svc.service_name} → {field_count} fields updated"))
             seeded += 1
@@ -552,8 +555,9 @@ class Command(BaseCommand):
                 not_found += 1
                 continue
 
+            svc.form_schema = schema["rules"]["schema"]
             svc.config = schema
-            svc.save(update_fields=["config"])
+            svc.save(update_fields=["config", "form_schema"])
             field_count = len(schema["rules"]["schema"]["properties"])
             self.stdout.write(self.style.SUCCESS(f"  ✅  [{code}] {svc.service_name} → {field_count} fields updated"))
             seeded += 1

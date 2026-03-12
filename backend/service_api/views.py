@@ -363,10 +363,17 @@ class ServiceConfigViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = ServiceConfig.objects.exclude(service_status='deprecated')
+        
+        # Explicit query param filtering to ensure robust scoping from the frontend
         family_id = self.request.query_params.get('service_family')
         if family_id:
             queryset = queryset.filter(service_family_id=family_id)
-        return queryset
+            
+        mda_id = self.request.query_params.get('mda')
+        if mda_id:
+            queryset = queryset.filter(mda_id=mda_id)
+            
+        return queryset.select_related('mda', 'service_family')
 
 class WorkflowStepViewSet(viewsets.ModelViewSet):
     queryset = WorkflowStep.objects.all()
@@ -456,7 +463,7 @@ class ServiceRequestViewSet(viewsets.ModelViewSet):
 
         workflow_engine = WorkflowEngine(request_id=service_request.request_id)
         try:
-            workflow_engine.complete_manual_step(user, action_taken, details)
+            workflow_engine.complete_manual_step(user, action_taken, details, payload=request.data.get('payload'))
             service_request.refresh_from_db() # Refresh to get updated status
             
             # Clear assignment when step is completed so next step starts unassigned

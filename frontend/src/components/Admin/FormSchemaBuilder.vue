@@ -13,7 +13,7 @@
 
     <!-- Field List: Institutional Blueprint -->
     <div class="u-mb-10">
-      <div v-if="Object.keys(schema.properties).length === 0"
+      <div v-if="!modelValue || !modelValue.properties || Object.keys(modelValue.properties).length === 0"
         class="u-p-16 u-text-center u-bg-bg-page u-rounded-[2.5rem] u-border-2 u-border-dashed u-border-border-color/60">
         <div
           class="u-w-16 u-h-16 u-bg-white u-rounded-2xl u-flex u-items-center u-justify-center u-mx-auto u-mb-4 u-shadow-inner u-border">
@@ -28,7 +28,7 @@
       </div>
 
       <div v-else class="u-flex u-flex-col u-gap-3">
-        <div v-for="(field, key) in schema.properties" :key="key"
+        <div v-for="(field, key) in modelValue.properties" :key="key"
           class="card hover:u-border-primary/40 hover:u-shadow-lg transition-all group u-border-border-color">
           <div class="card__body u-p-4">
             <div class="u-flex u-items-center u-justify-between">
@@ -48,6 +48,9 @@
                         }}</span>
                       <span v-if="isRequired(key)" class="u-text-danger u-flex u-items-center u-gap-1">
                         <i class="bi bi-shield-fill-exclamation"></i> Mandatory
+                      </span>
+                      <span v-if="field.internal_only" class="u-text-muted/60 u-flex u-items-center u-gap-1">
+                        <i class="bi bi-person-lock"></i> Staff Only
                       </span>
                     </div>
                   </div>
@@ -177,17 +180,33 @@
         </div>
 
         <!-- Strategy Options -->
-        <div
-          class="u-flex u-justify-between u-items-center u-p-4 u-bg-bg-page u-rounded-xl u-border u-border-border-color">
-          <div class="u-flex u-items-center u-gap-3">
-            <input type="checkbox" v-model="fieldForm.required" id="required-field" class="form__checkbox">
-            <label for="required-field"
-              class="u-text-xs u-font-black u-text-main u-uppercase u-tracking-widest cursor-pointer">
-              Mandatory Institutional Data
-            </label>
+        <div class="u-flex u-flex-col u-gap-3 u-p-4 u-bg-bg-page u-rounded-xl u-border u-border-border-color">
+          <div class="u-flex u-justify-between u-items-center">
+            <div class="u-flex u-items-center u-gap-3">
+              <input type="checkbox" v-model="fieldForm.required" id="required-field" class="form__checkbox">
+              <label for="required-field"
+                class="u-text-xs u-font-black u-text-main u-uppercase u-tracking-widest cursor-pointer">
+                Mandatory Institutional Data
+              </label>
+            </div>
+            <div class="u-flex u-gap-2">
+              <i class="bi bi-shield-fill-check u-text-success text-sm"></i>
+            </div>
           </div>
-          <div class="u-flex u-gap-2">
-            <i class="bi bi-shield-fill-check u-text-success u-text-sm"></i>
+
+          <div class="u-border-t u-border-border-color/40 my-1"></div>
+
+          <div class="u-flex u-justify-between u-items-center">
+            <div class="u-flex u-items-center u-gap-3">
+              <input type="checkbox" v-model="fieldForm.internal_only" id="internal-only-field" class="form__checkbox">
+              <label for="internal-only-field"
+                class="u-text-xs u-font-black u-text-muted u-uppercase u-tracking-widest cursor-pointer">
+                Internal Agency Field (Staff Only)
+              </label>
+            </div>
+            <div class="u-flex u-gap-2">
+              <i class="bi bi-person-lock u-text-muted text-sm"></i>
+            </div>
           </div>
         </div>
 
@@ -234,6 +253,7 @@
     description: '',
     enum: '',
     required: false,
+    internal_only: false,
     registry_adapter: null,
     registry_endpoint: null
   });
@@ -243,14 +263,12 @@
       return registryStore.endpoints.filter(e => e.adapter === fieldForm.value.registry_adapter && e.method === 'GET'); // Only GET for lookups
   });
 
-  watch(() => props.modelValue, (newConfig) => {
-    if (newConfig && newConfig.rules && newConfig.rules.schema) {
-      const s = JSON.parse(JSON.stringify(newConfig.rules.schema)); // Deep copy
-      if (!s.properties) s.properties = {};
-      if (!s.required) s.required = [];
-      schema.value = s;
+  watch(() => props.modelValue, (newSchema) => {
+    if (newSchema && newSchema.properties) {
+      schema.value = JSON.parse(JSON.stringify(newSchema)); // Deep copy
+      if (!schema.value.required) schema.value.required = [];
     } else {
-      schema.value = { properties: {}, required: [] };
+      schema.value = { type: 'object', properties: {}, required: [] };
     }
   }, { immediate: true, deep: true });
 
@@ -259,11 +277,10 @@
     registryStore.fetchEndpoints();
   });
 
-  const isRequired = (key) => schema.value.required?.includes(key);
+  const isRequired = (key) => props.modelValue?.required?.includes(key);
 
   const updateParent = () => {
-    const newConfig = { ...props.modelValue, rules: { ...props.modelValue.rules, schema: schema.value } };
-    emit('update:modelValue', newConfig);
+    emit('update:modelValue', { ...schema.value });
   };
 
   const openCreateModal = () => {
@@ -277,7 +294,7 @@
   };
 
   const addField = () => {
-    const { name, title, type, required, description, enum: enumStr, registry_adapter, registry_endpoint } = fieldForm.value;
+    const { name, title, type, required, internal_only, description, enum: enumStr, registry_adapter, registry_endpoint } = fieldForm.value;
     if (!name || !title) return;
 
     if (isEditing.value && originalFieldName.value && originalFieldName.value !== name) {
@@ -288,6 +305,7 @@
 
     let newField = { title };
     if (description) newField.description = description;
+    if (internal_only) newField.internal_only = true;
 
     switch (type) {
       case 'string':
@@ -396,6 +414,7 @@
     }
 
     fieldForm.value.required = isRequired(key);
+    fieldForm.value.internal_only = !!field.internal_only;
     originalFieldName.value = key;
     isEditing.value = true;
     showModal.value = true;
@@ -418,6 +437,7 @@
       description: '',
       enum: '',
       required: false,
+      internal_only: false,
       registry_adapter: null,
       registry_endpoint: null
     };

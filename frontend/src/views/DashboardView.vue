@@ -67,6 +67,18 @@
                     <div class="text-[10px] text-slate-400 font-bold">Identity & Vault</div>
                   </div>
                 </router-link>
+
+                <div class="mx-6 my-4 border-t border-slate-100"></div>
+
+                <router-link to="/repository/artifacts" class="sidebar-nav__item px-6 py-4 flex items-center gap-4 transition-all hover:bg-emerald-50/50 group">
+                  <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-emerald-600 group-hover:scale-110 transition-transform">
+                    <i class="bi bi-bank2"></i>
+                  </div>
+                  <div class="flex-1 text-left">
+                    <div class="text-xs font-black uppercase tracking-widest text-slate-500">Repository</div>
+                    <div class="text-[10px] text-slate-400 font-bold">Digital Artifacts</div>
+                  </div>
+                </router-link>
               </div>
             </div>
 
@@ -249,6 +261,18 @@
                     <div class="text-[10px] text-slate-400 font-bold">WOG Catalogue</div>
                   </div>
                 </button>
+
+                <div class="mx-6 my-4 border-t border-slate-100"></div>
+
+                <router-link to="/repository/artifacts" class="sidebar-nav__item px-6 py-4 flex items-center gap-4 transition-all hover:bg-emerald-50/50 group">
+                  <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-emerald-600 group-hover:scale-110 transition-transform">
+                    <i class="bi bi-bank2"></i>
+                  </div>
+                  <div class="flex-1 text-left">
+                    <div class="text-xs font-black uppercase tracking-widest text-slate-500">Repository</div>
+                    <div class="text-[10px] text-slate-400 font-bold">Artifact Registry</div>
+                  </div>
+                </router-link>
               </div>
             </div>
             
@@ -793,6 +817,18 @@
                     </div>
                   </div>
                 </div>
+                
+                <div class="p-4 border-t border-border-color bg-slate-50">
+                  <div class="text-[10px] font-black text-muted uppercase tracking-widest mb-3 flex items-center gap-2">
+                    <i class="bi bi-bank2"></i> Official Records
+                  </div>
+                  <div class="flex flex-col gap-1">
+                    <router-link to="/repository/artifacts" class="sidebar-nav__item">
+                      <span class="sidebar-nav__text">Artifact Registry</span>
+                      <i class="bi bi-box-arrow-up-right sidebar-nav__arrow opacity-50 text-[10px]"></i>
+                    </router-link>
+                  </div>
+                </div>
               </div>
             </div>
           </aside>
@@ -928,6 +964,40 @@
           </div>
         </div>
 
+        <div v-if="activeStepFormFields.length > 0" class="u-p-6 u-bg-slate-50 u-rounded-2xl u-border u-border-border-color/60">
+          <div class="u-text-[10px] u-font-black u-text-muted u-uppercase u-mb-4 flex items-center gap-2">
+            <i class="bi bi-ui-checks-grid text-primary"></i> Data Engagement Fields
+          </div>
+          <div class="u-grid u-grid-cols-1 md:u-grid-cols-2 u-gap-6">
+            <div v-for="fieldKey in activeStepFormFields" :key="fieldKey" class="form__group">
+              <label class="form__label u-flex u-items-center u-gap-2">
+                {{ getFieldTitle(fieldKey) }}
+                <span v-if="isFieldRequired(fieldKey)" class="u-text-danger">*</span>
+              </label>
+              
+              <!-- Simple Select Rendering -->
+              <select v-if="getFieldSchema(fieldKey).enum" v-model="stepFormData[fieldKey]" class="form__select w-full" :required="isFieldRequired(fieldKey)">
+                <option value="" disabled>Select option...</option>
+                <option v-for="opt in getFieldSchema(fieldKey).enum" :key="opt" :value="opt">{{ opt }}</option>
+              </select>
+              
+              <!-- Simple Toggle/Checkbox -->
+              <div v-else-if="getFieldSchema(fieldKey).type === 'boolean'" class="u-flex u-items-center u-gap-3 u-p-3 u-bg-white u-border u-rounded-xl">
+                 <input type="checkbox" v-model="stepFormData[fieldKey]" :id="'field-' + fieldKey" class="form__checkbox">
+                 <label :for="'field-' + fieldKey" class="u-text-xs u-font-bold u-text-main cursor-pointer">Confirm {{ getFieldTitle(fieldKey) }}</label>
+              </div>
+
+              <!-- Standard Input -->
+              <input v-else :type="getFieldSchema(fieldKey).type === 'number' ? 'number' : 'text'" 
+                v-model="stepFormData[fieldKey]" class="form__input w-full" 
+                :required="isFieldRequired(fieldKey)"
+                :placeholder="'Enter ' + getFieldTitle(fieldKey) + '...'">
+              
+              <p v-if="getFieldSchema(fieldKey).description" class="u-text-[10px] u-text-muted u-mt-1">{{ getFieldSchema(fieldKey).description }}</p>
+            </div>
+          </div>
+        </div>
+
         <div class="form__group">
           <label class="form__label">Registry Trail / Official Statement</label>
           <textarea v-model="stepAction.details" rows="3" class="form__textarea w-full"
@@ -948,6 +1018,7 @@
 
 <script setup>
   import { ref, onMounted, computed, nextTick, watch } from 'vue';
+  import { useRoute, useRouter } from 'vue-router';
   import mermaid from 'mermaid';
   import { useAuthStore } from '../store/auth';
   import { useCitizenStore } from '../store/citizen';
@@ -1017,8 +1088,32 @@
   const activeBpmnStage = ref('as_is');
   const currentRequestToComplete = ref(null);
   const stepAction = ref({ action: '', details: '' });
+  const stepFormData = ref({});
   const showBpmnBlueprint = ref(false);
   const mermaidContainer = ref(null);
+
+  const activeStepFormFields = computed(() => {
+    return currentRequestToComplete.value?.current_step?.api_config?.form_fields || [];
+  });
+
+  const getServiceSchema = (request) => {
+    const config = request?.service_config?.config || {};
+    return config.rules?.schema?.properties || {};
+  };
+
+  const getFieldSchema = (fieldKey) => {
+    const properties = getServiceSchema(currentRequestToComplete.value);
+    return properties[fieldKey] || {};
+  };
+
+  const getFieldTitle = (fieldKey) => {
+    return getFieldSchema(fieldKey).title || fieldKey;
+  };
+
+  const isFieldRequired = (fieldKey) => {
+    const schema = currentRequestToComplete.value?.service_config?.config?.rules?.schema || {};
+    return schema.required?.includes(fieldKey);
+  };
 
   const mermaidDefinition = computed(() => {
     if (!currentRequestToComplete.value) return '';
@@ -1555,13 +1650,43 @@
     { title: 'System & Security', icon: 'bi-shield-lock-fill', tabs: ['Registries Monitor', 'Audit Logs', 'System Health'] },
     { title: 'Developer / Documentation', icon: 'bi-file-earmark-code-fill', tabs: ['System Docs'] }
   ];
-  const currentTab = ref('MDAs');
+  const route = useRoute();
+  const router = useRouter();
+
+  const currentTab = ref(route.query.tab || 'MDAs');
   const selectedDrilldownMda = ref(null);
   const selectedDrilldownService = ref(null);
 
-  watch(currentTab, () => {
-    selectedDrilldownMda.value = null;
-    selectedDrilldownService.value = null;
+  // Sync state from URL on mount
+  onMounted(async () => {
+    if (route.query.mdaId) {
+      // If we have an MDA ID, we might need the full object or just the ID
+      // Most components just need the ID in props
+      selectedDrilldownMda.value = { id: route.query.mdaId };
+    }
+    if (route.query.serviceId) {
+      selectedDrilldownService.value = { id: route.query.serviceId };
+    }
+  });
+
+  // Update URL when state changes
+  watch([currentTab, selectedDrilldownMda, selectedDrilldownService], () => {
+    const query = { ...route.query, tab: currentTab.value };
+    
+    if (selectedDrilldownMda.value) query.mdaId = selectedDrilldownMda.value.id;
+    else delete query.mdaId;
+    
+    if (selectedDrilldownService.value) query.serviceId = selectedDrilldownService.value.id;
+    else delete query.serviceId;
+
+    router.replace({ query });
+  });
+
+  watch(currentTab, (newTab, oldTab) => {
+    if (newTab !== oldTab) {
+      selectedDrilldownMda.value = null;
+      selectedDrilldownService.value = null;
+    }
   });
 
   // Dynamic Component Mapping
@@ -1732,6 +1857,15 @@
     currentRequestToComplete.value = request;
     showCompleteStepModal.value = true;
     stepAction.value = { action: '', details: '' };
+    
+    // Initialize form data from existing payload
+    const fields = request.current_step?.api_config?.form_fields || [];
+    const initialData = {};
+    fields.forEach(f => {
+      initialData[f] = request.payload?.[f] || '';
+    });
+    stepFormData.value = initialData;
+    
     showBpmnBlueprint.value = false;
   };
 
@@ -1741,7 +1875,12 @@
     if (!currentRequestToComplete.value) return;
     processingId.value = currentRequestToComplete.value.id;
     try {
-      await staffStore.completeWorkflowStep(currentRequestToComplete.value.id, stepAction.value.action, stepAction.value.details);
+      await staffStore.completeWorkflowStep(
+        currentRequestToComplete.value.id, 
+        stepAction.value.action, 
+        stepAction.value.details,
+        stepFormData.value
+      );
       closeCompleteStepModal();
       showFeedback('Task disposition finalized successfully.', 'success');
       await staffStore.fetchAssignedRequests();

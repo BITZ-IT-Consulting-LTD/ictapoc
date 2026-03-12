@@ -69,13 +69,14 @@ export const useStaffStore = defineStore('staff', {
         console.error('Failed to fetch escalated requests:', error);
       }
     },
-    async completeWorkflowStep(requestId, action, details) {
+    async completeWorkflowStep(requestId, action, details, payload = {}) {
       const monitoring = useSystemMonitoringStore();
       try {
         monitoring.broadcastTrace({ type: 'WORKFLOW_STEP_COMPLETION', requestId, action });
         const response = await api.post(`/service-requests/${requestId}/complete_step/`, {
           action,
           details,
+          payload,
         });
         // Update the request in the store
         const index = this.assignedRequests.findIndex(req => req.id === requestId);

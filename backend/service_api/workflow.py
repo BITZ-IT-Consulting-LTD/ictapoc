@@ -339,12 +339,19 @@ class WorkflowEngine:
         )
 
     @transaction.atomic
-    def complete_manual_step(self, user: User, action: str, details: str = None):
+    def complete_manual_step(self, user: User, action: str, details: str = None, payload: dict = None):
         """
         Handles the outcome of an officer's manual review.
         """
         if not self.service_request or not self.service_request.current_step:
             return
+
+        # Update payload if provided (Incremental data capture)
+        if payload:
+            if not self.service_request.payload:
+                self.service_request.payload = {}
+            self.service_request.payload.update(payload)
+            self.service_request.save()
 
         # Ensure user has the right role
         # Ensure user has the right role or is specifically assigned
