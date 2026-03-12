@@ -4,57 +4,67 @@ import { useSystemMonitoringStore } from './systemMonitoring';
 
 export const useStaffStore = defineStore('staff', {
   state: () => ({
-    assignedRequests: [], // Specifically assigned to the logged-in user
-    unassignedRequests: [], // Total unassigned pool for current role/department
-    mdaIncompleteRequests: [], // Full departmental visibility
+    assignedRequests: [],
+    assignedMeta: { count: 0, next: null, previous: null },
+    unassignedRequests: [],
+    unassignedMeta: { count: 0, next: null, previous: null },
+    mdaIncompleteRequests: [],
+    mdaMeta: { count: 0, next: null, previous: null },
     teamRequests: [],
+    teamMeta: { count: 0, next: null, previous: null },
     escalatedRequests: [],
+    escalatedMeta: { count: 0, next: null, previous: null },
     loading: false,
     error: null,
   }),
   actions: {
-    async fetchIncompleteMdaRequests() {
+    async fetchIncompleteMdaRequests(params = {}) {
       try {
-        const response = await api.get('/service-requests/?all_mda=true');
-        this.mdaIncompleteRequests = response.data;
+        const response = await api.get('/service-requests/', { params: { ...params } });
+        this.mdaIncompleteRequests = response.data.results || response.data;
+        this.mdaMeta = response.data.results ? { count: response.data.count, next: response.data.next, previous: response.data.previous } : { count: this.mdaIncompleteRequests.length };
       } catch (error) {
         console.error('Failed to fetch MDA incomplete requests:', error);
       }
     },
-    async fetchAssignedRequests() {
+    async fetchAssignedRequests(params = {}) {
       this.loading = true;
       try {
-        const response = await api.get('/service-requests/?assigned_to_me=true');
-        this.assignedRequests = response.data;
+        const response = await api.get('/service-requests/', { params: { ...params, assigned_to_me: true } });
+        this.assignedRequests = response.data.results || response.data;
+        this.assignedMeta = response.data.results ? { count: response.data.count, next: response.data.next, previous: response.data.previous } : { count: this.assignedRequests.length };
       } catch (error) {
         this.error = 'Failed to fetch assigned requests';
       } finally {
         this.loading = false;
       }
     },
-    async fetchUnassignedRequests() {
+    async fetchUnassignedRequests(params = {}) {
       this.loading = true;
       try {
-        const response = await api.get('/service-requests/?unassigned=true');
-        this.unassignedRequests = response.data;
+        const response = await api.get('/service-requests/', { params: { ...params, unassigned: true } });
+        this.unassignedRequests = response.data.results || response.data;
+        this.unassignedMeta = response.data.results ? { count: response.data.count, next: response.data.next, previous: response.data.previous } : { count: this.unassignedRequests.length };
       } catch (error) {
         this.error = 'Failed to fetch unassigned requests';
       } finally {
         this.loading = false;
       }
     },
-    async fetchTeamRequests() {
+    async fetchTeamRequests(params = {}) {
       try {
-        const response = await api.get('/service-requests/?team_requests=true');
-        this.teamRequests = response.data;
+        const response = await api.get('/service-requests/', { params: { ...params } });
+        this.teamRequests = response.data.results || response.data;
+        this.teamMeta = response.data.results ? { count: response.data.count, next: response.data.next, previous: response.data.previous } : { count: this.teamRequests.length };
       } catch (error) {
         console.error('Failed to fetch team requests:', error);
       }
     },
-    async fetchEscalatedRequests() {
+    async fetchEscalatedRequests(params = {}) {
       try {
-        const response = await api.get('/service-requests/?is_escalated=true');
-        this.escalatedRequests = response.data;
+        const response = await api.get('/service-requests/', { params: { ...params, is_escalated: true } });
+        this.escalatedRequests = response.data.results || response.data;
+        this.escalatedMeta = response.data.results ? { count: response.data.count, next: response.data.next, previous: response.data.previous } : { count: this.escalatedRequests.length };
       } catch (error) {
         console.error('Failed to fetch escalated requests:', error);
       }

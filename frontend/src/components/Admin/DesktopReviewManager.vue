@@ -50,7 +50,7 @@
         <div class="toolbar__filter-group">
           <i class="bi bi-building toolbar__filter-icon"></i>
           <input type="text" v-model="mdaSearchLocal" placeholder="Filter by Agency..." @focus="showMdaDropdown = true"
-            @blur="setTimeout(() => showMdaDropdown = false, 200)"
+            @blur="closeDropdownWithDelay('mda')"
             class="toolbar__filter-input toolbar__filter-input--with-arrow">
           <i class="bi bi-chevron-down toolbar__filter-arrow"
             :class="{ 'toolbar__filter-arrow--open': showMdaDropdown }"></i>
@@ -71,7 +71,7 @@
         <div class="toolbar__filter-group">
           <i class="bi bi-grid-3x3-gap toolbar__filter-icon"></i>
           <input type="text" v-model="sectorSearchLocal" placeholder="Filter by Sector..."
-            @focus="showSectorDropdown = true" @blur="setTimeout(() => showSectorDropdown = false, 200)"
+            @focus="showSectorDropdown = true" @blur="closeDropdownWithDelay('sector')"
             class="toolbar__filter-input toolbar__filter-input--with-arrow">
           <i class="bi bi-chevron-down toolbar__filter-arrow"
             :class="{ 'toolbar__filter-arrow--open': showSectorDropdown }"></i>
@@ -92,7 +92,7 @@
         <div class="toolbar__filter-group">
           <i class="bi bi-bar-chart-steps toolbar__filter-icon"></i>
           <input type="text" v-model="maturitySearchLocal" placeholder="Filter by Maturity..."
-            @focus="showMaturityDropdown = true" @blur="setTimeout(() => showMaturityDropdown = false, 200)"
+            @focus="showMaturityDropdown = true" @blur="closeDropdownWithDelay('maturity')"
             class="toolbar__filter-input toolbar__filter-input--with-arrow">
           <i class="bi bi-chevron-down toolbar__filter-arrow"
             :class="{ 'toolbar__filter-arrow--open': showMaturityDropdown }"></i>
@@ -531,6 +531,14 @@
     selectedMaturity.value = level;
     maturitySearchLocal.value = level ? `Level ${level}` : '';
     showMaturityDropdown.value = false;
+  };
+
+  const closeDropdownWithDelay = (type) => {
+    setTimeout(() => {
+      if (type === 'mda') showMdaDropdown.value = false;
+      if (type === 'sector') showSectorDropdown.value = false;
+      if (type === 'maturity') showMaturityDropdown.value = false;
+    }, 200);
   };
 
   const resetFilters = () => {

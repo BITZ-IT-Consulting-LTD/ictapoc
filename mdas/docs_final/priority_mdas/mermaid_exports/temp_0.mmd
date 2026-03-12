@@ -1,0 +1,34 @@
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+graph TD
+    Start((Start)) --> Reg["Registration "]
+    
+    subgraph Reception["Reception & Registration"]
+        Reg --> Pass["Issue Asylum Pass"]
+    end
+    
+    subgraph Determination["Refugee Status Determination - RSD"]
+        Pass --> Interview["Schedule & Conduct RSD Interview"]
+        Interview --> Assess["Assessment & Evidence Review"]
+        Assess --> RSDComm["RSD Committee Deliberates"]
+        RSDComm --> Decision{"Decision?"}
+        
+        Decision -- "Reject" --> Reject["Prepare Rejection / Appeal"]
+        Decision -- "Approve" --> Recog["Recognition "]
+    end
+    
+    subgraph Documentation [Issuance]
+        Recog --> IDCard["Produce & Issue Refugee ID Card"]
+        IDCard --> TravelDoc["Process Convention Travel Document "]
+    end
+    
+    TravelDoc --> End((End))
+    Reject --> End
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px;;
+    class Start start;
+    class End endNode;
+    class Decision gateway;
+    class Reg,Pass,Interview,Assess,RSDComm,Reject,Recog,IDCard,TravelDoc userTask;

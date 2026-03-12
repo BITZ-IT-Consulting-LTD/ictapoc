@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.contrib.postgres.indexes import GinIndex
 
 class Role(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -163,17 +164,30 @@ class ServiceConfig(models.Model):
     config = models.JSONField(default=dict) # Stores rules, sla, output, etc.
     form_schema = models.JSONField(default=dict, blank=True) # Dynamic form configuration for workflows
     
+    from django.contrib.postgres.indexes import GinIndex
+    class Meta:
+        indexes = [
+            GinIndex(fields=['config']),
+        ]
+
     def get_effective_form_schema(self):
         """
         Returns the effective form schema for this service.
-        If the service has its own schema in 'config', use it.
-        Otherwise, fall back to the service_family's shared_form_schema.
+        Hierarchy:
+        1. Explicit 'config.rules.schema' (Legacy/Detail)
+        2. Explicit 'form_schema' (Modern/Direct)
+        3. ServiceFamily 'shared_form_schema' (Fallback)
         """
         service_schema = self.config.get('rules', {}).get('schema')
         if service_schema:
             return service_schema
+        
+        if self.form_schema:
+            return self.form_schema
+            
         if self.service_family and self.service_family.shared_form_schema:
             return self.service_family.shared_form_schema
+            
         return {}
 
     def __str__(self):
@@ -241,9 +255,47 @@ class ServiceRequest(models.Model):
     ), default='normal')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    completed_at = models.DateTimeField(null=True, blank=True)
+
+    from django.contrib.postgres.indexes import GinIndex
+    class Meta:
+        indexes = [
+            GinIndex(fields=['payload']),
+        ]
 
     def __str__(self):
         return self.request_id
+
+class WorkflowStepExecution(models.Model):
+    """
+    Tracks the lifecycle of an individual step execution within a request.
+    Provides the 'Start' and 'End' signals requested for all workflow items.
+    """
+    STATUS_CHOICES = (
+        ('scheduled', 'Scheduled (System)'),
+        ('pending', 'Pending (User)'),
+        ('in_progress', 'In Progress'),
+        ('completed', 'Completed'),
+        ('failed', 'Failed'),
+    )
+    
+    service_request = models.ForeignKey(ServiceRequest, on_delete=models.CASCADE, related_name='step_executions')
+    step = models.ForeignKey(WorkflowStep, on_delete=models.CASCADE)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    
+    actor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    action_taken = models.CharField(max_length=100, blank=True, null=True)
+    details = models.TextField(blank=True, null=True)
+    
+    started_at = models.DateTimeField(auto_now_add=True)
+    completed_at = models.DateTimeField(null=True, blank=True)
+    duration_seconds = models.IntegerField(null=True, blank=True)
+
+    class Meta:
+        ordering = ['started_at']
+
+    def __str__(self):
+        return f"Execution: {self.service_request.request_id} - Step {self.step.sequence}"
 
 class AuditLog(models.Model):
     # Enforced RBAC Audit structure

@@ -3,9 +3,14 @@
     <WogDashboardStats v-if="auditStats" :stats="auditStats" class="mb-8" />
 
     <header class="page__header u-mb-8">
+      <div v-if="mdaFilterId" class="u-mb-4">
+        <button @click="$emit('go-back-mdas')" class="button button--ghost u-text-xs u-font-black u-uppercase u-tracking-widest p-0">
+          <i class="bi bi-arrow-left me-2 text-primary"></i> Back to MDAs Directory
+        </button>
+      </div>
       <div class="page__title-group">
-        <h1 class="page__title">National Service Registry</h1>
-        <p class="page__subtitle">Centralized configuration for government services and data schemas</p>
+        <h1 class="page__title">{{ mdaFilterId ? 'Services Registry: ' + getMdaName(mdaFilterId) : 'National Service Registry' }}</h1>
+        <p class="page__subtitle">{{ mdaFilterId ? 'Authorized services specifically registered to this MDA' : 'Centralized configuration for government services and data schemas' }}</p>
       </div>
       <div class="page__actions">
         <button @click="openCreateModal" class="button button--primary button--pill">
@@ -27,7 +32,7 @@
         <div class="toolbar__filter-group">
           <i class="bi bi-diagram-3-fill toolbar__filter-icon"></i>
           <input type="text" v-model="familySearchLocal" placeholder="Filter by Family..."
-            @focus="showFamilyFilterDropdown = true" @blur="setTimeout(() => showFamilyFilterDropdown = false, 200)"
+            @focus="showFamilyFilterDropdown = true" @blur="closeDropdownWithDelay('family')"
             class="toolbar__filter-input toolbar__filter-input--with-arrow">
           <i class="bi bi-chevron-down toolbar__filter-arrow"
             :class="{ 'toolbar__filter-arrow--open': showFamilyFilterDropdown }"></i>
@@ -45,10 +50,10 @@
         </div>
 
         <!-- Agency Filter -->
-        <div class="toolbar__filter-group">
+        <div class="toolbar__filter-group" v-if="!mdaFilterId">
           <i class="bi bi-building toolbar__filter-icon"></i>
           <input type="text" v-model="mdaFilterSearchLocal" placeholder="Filter by Agency..."
-            @focus="showMdaFilterDropdown = true" @blur="setTimeout(() => showMdaFilterDropdown = false, 200)"
+            @focus="showMdaFilterDropdown = true" @blur="closeDropdownWithDelay('mda')"
             class="toolbar__filter-input toolbar__filter-input--with-arrow">
           <i class="bi bi-chevron-down toolbar__filter-arrow"
             :class="{ 'toolbar__filter-arrow--open': showMdaFilterDropdown }"></i>
@@ -67,13 +72,18 @@
             </div>
           </transition>
         </div>
+        <div v-else class="toolbar__filter-group bg-slate-100 border-primary shadow-sm u-px-4">
+           <i class="bi bi-building text-primary u-mr-2"></i>
+           <span class="u-text-xs u-font-black text-main">{{ getMdaName(mdaFilterId) }}</span>
+           <i class="bi bi-lock-fill u-ml-auto u-text-[10px] u-text-muted/40"></i>
+        </div>
 
         <!-- Life Event Filter -->
         <div class="toolbar__filter-group">
           <i class="bi bi-calendar-event toolbar__filter-icon"></i>
           <input type="text" v-model="lifeEventSearchLocal" placeholder="Filter by Life Event..."
             @focus="showLifeEventFilterDropdown = true"
-            @blur="setTimeout(() => showLifeEventFilterDropdown = false, 200)"
+            @blur="closeDropdownWithDelay('lifeEvent')"
             class="toolbar__filter-input toolbar__filter-input--with-arrow">
           <i class="bi bi-chevron-down toolbar__filter-arrow"
             :class="{ 'toolbar__filter-arrow--open': showLifeEventFilterDropdown }"></i>
@@ -94,7 +104,7 @@
         <div class="toolbar__filter-group">
           <i class="bi bi-tag-fill toolbar__filter-icon"></i>
           <input type="text" v-model="typeSearchLocal" placeholder="Filter by Type..."
-            @focus="showTypeFilterDropdown = true" @blur="setTimeout(() => showTypeFilterDropdown = false, 200)"
+            @focus="showTypeFilterDropdown = true" @blur="closeDropdownWithDelay('type')"
             class="toolbar__filter-input toolbar__filter-input--with-arrow">
           <i class="bi bi-chevron-down toolbar__filter-arrow"
             :class="{ 'toolbar__filter-arrow--open': showTypeFilterDropdown }"></i>
@@ -115,7 +125,7 @@
         <div class="toolbar__filter-group">
           <i class="bi bi-collection-fill toolbar__filter-icon"></i>
           <input type="text" v-model="groupSearchLocal" placeholder="Filter by Group..."
-            @focus="showGroupFilterDropdown = true" @blur="setTimeout(() => showGroupFilterDropdown = false, 200)"
+            @focus="showGroupFilterDropdown = true" @blur="closeDropdownWithDelay('group')"
             class="toolbar__filter-input toolbar__filter-input--with-arrow">
           <i class="bi bi-chevron-down toolbar__filter-arrow"
             :class="{ 'toolbar__filter-arrow--open': showGroupFilterDropdown }"></i>
@@ -137,6 +147,19 @@
           <i class="bi bi-arrow-counterclockwise"></i>
           <span>Reset</span>
         </button>
+
+        <!-- Export Actions -->
+        <div class="toolbar__export-actions">
+          <button @click="handlePrint" class="button button--secondary button--small" title="Print Table">
+            <i class="bi bi-printer"></i>
+          </button>
+          <button @click="handleExportCSV" class="button button--secondary button--small" title="Export CSV">
+            <i class="bi bi-filetype-csv"></i>
+          </button>
+          <button @click="handlePrint" class="button button--secondary button--small" title="Export PDF">
+            <i class="bi bi-filetype-pdf"></i>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -224,6 +247,9 @@
               </td>
               <td class="table__cell table__cell--align-right table__cell--with-right-padding">
                 <div class="table__actions">
+                  <button @click="$emit('drilldown-transactions', service)" class="button button--primary button--small shadow-sm">
+                    <i class="bi bi-receipt"></i> Transactions
+                  </button>
                   <button @click="openEditModal(service)" class="button button--secondary button--small">
                     <i class="bi bi-sliders"></i> Configure
                   </button>
@@ -240,6 +266,23 @@
             </tr>
           </tbody>
         </table>
+      </div>
+      <!-- Pagination Footer -->
+      <div class="u-p-4 u-flex u-items-center u-justify-between u-bg-slate-50 border-t border-border-color">
+          <div class="u-text-[10px] u-font-black u-text-muted/60 u-uppercase u-tracking-widest">
+            Total Services: {{ serviceConfigStore.servicesPagination.count }}
+          </div>
+          <div class="u-flex u-gap-2">
+            <button @click="goToPage(currentPage - 1)" :disabled="!serviceConfigStore.servicesPagination.previous" class="button button--secondary button--small">
+              <i class="bi bi-chevron-left me-1"></i> Prev
+            </button>
+            <div class="u-flex u-items-center u-px-4 u-text-xs u-font-black text-main bg-white border border-border-color u-rounded-lg shadow-sm">
+              PAGE {{ currentPage }}
+            </div>
+            <button @click="goToPage(currentPage + 1)" :disabled="!serviceConfigStore.servicesPagination.next" class="button button--secondary button--small">
+              Next <i class="bi bi-chevron-right ms-1"></i>
+            </button>
+          </div>
       </div>
     </div>
 
@@ -479,16 +522,38 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, computed } from 'vue';
+  import { ref, onMounted, computed, watch } from 'vue';
   import { useServiceConfigStore } from '../../store/serviceConfig';
   import { useMdaStore } from '../../store/mda';
+  import { useExport } from '../../composables/useExport';
   import WorkflowStepManager from './WorkflowStepManager.vue';
   import FormSchemaBuilder from './FormSchemaBuilder.vue';
   import WogDashboardStats from './WogDashboardStats.vue';
   import BaseModal from '../Common/BaseModal.vue';
 
+  const props = defineProps({
+    mdaFilterId: { type: [Number, String], default: null }
+  });
+
+  const emit = defineEmits(['drilldown-transactions', 'go-back-mdas']);
+
   const serviceConfigStore = useServiceConfigStore();
   const mdaStore = useMdaStore();
+  const { exportToCSV, triggerPrint } = useExport();
+
+  const handleExportCSV = () => {
+    const columns = [
+      { key: 'service_code', label: 'Registry Code' },
+      { key: 'service_name', label: 'Service Name' },
+      { key: 'service_type', label: 'Type' },
+      { key: 'service_family_details.name', label: 'Family' }
+    ];
+    exportToCSV(filteredServices.value, columns, 'Service_Registry');
+  };
+
+  const handlePrint = () => {
+    triggerPrint();
+  };
 
   const auditStats = computed(() => serviceConfigStore.catalogueSummary);
   const services = computed(() => serviceConfigStore.services);
@@ -502,6 +567,31 @@
   const lifeEventFilter = ref('');
   const typeFilter = ref('');
   const groupFilter = ref('');
+  const currentPage = ref(1);
+
+  const fetchFilteredServices = () => {
+    serviceConfigStore.fetchServices({
+      search: searchQuery.value,
+      mda: mdaFilter.value,
+      service_family: familyFilter.value,
+      page: currentPage.value
+    });
+  };
+
+  // Search Debounce Implementation
+  let searchTimeout = null;
+  watch([searchQuery, mdaFilter, familyFilter], () => {
+    currentPage.value = 1; // Reset to page 1 on filter/search
+    if (searchTimeout) clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      fetchFilteredServices();
+    }, 300);
+  });
+
+  const goToPage = (page) => {
+    currentPage.value = page;
+    fetchFilteredServices();
+  };
 
   const mdaFilterSearchLocal = ref('');
   const familySearchLocal = ref('');
@@ -522,7 +612,8 @@
   const familiesSet = computed(() => {
     const list = new Set();
     services.value.forEach(s => {
-      if (s.service_family_details?.name) list.add(s.service_family_details.name);
+      const name = s.service_family_details?.name || s.service_family;
+      if (name && typeof name === 'string') list.add(name);
     });
     return [...list].sort();
   });
@@ -530,7 +621,8 @@
   const categoriesList = computed(() => {
     const list = new Set();
     services.value.forEach(s => {
-      if (s.category_details?.name) list.add(s.category_details.name);
+      const name = s.category_details?.name || s.service_category;
+      if (name && typeof name === 'string') list.add(name);
     });
     return [...list].sort();
   });
@@ -538,7 +630,7 @@
   const lifeEventsList = computed(() => {
     const list = new Set();
     services.value.forEach(s => {
-      if (s.life_event_group) list.add(s.life_event_group);
+      if (s.life_event_group) list.add(String(s.life_event_group));
     });
     return [...list].sort();
   });
@@ -633,40 +725,54 @@
     showGroupFilterDropdown.value = false;
   };
 
+  const closeDropdownWithDelay = (type) => {
+    setTimeout(() => {
+      if (type === 'mda') showMdaFilterDropdown.value = false;
+      if (type === 'family') showFamilyFilterDropdown.value = false;
+      if (type === 'lifeEvent') showLifeEventFilterDropdown.value = false;
+      if (type === 'type') showTypeFilterDropdown.value = false;
+      if (type === 'group') showGroupFilterDropdown.value = false;
+    }, 200);
+  };
+
+  const getMdaName = (mda) => {
+    if (!mda) return 'N/A';
+    // Handle if mda is already an object or just an ID
+    const mdaId = typeof mda === 'object' ? mda.id : mda;
+    const found = mdas.value.find(m => String(m.id) === String(mdaId));
+    if (!found) return typeof mda === 'object' ? mda.name || 'N/A' : 'N/A';
+    return found.code ? `${found.name} (${found.code})` : found.name;
+  };
+
   const filteredServices = computed(() => {
     let result = services.value;
 
-    if (mdaFilter.value) {
-      result = result.filter(s => s.mda === Number(mdaFilter.value));
-    }
-
-    if (familyFilter.value) {
-      result = result.filter(s => s.service_family_details?.name === familyFilter.value);
-    }
-
+    // Remaining local-only filters for POC
     if (categoryFilter.value) {
-      result = result.filter(s => s.category_details?.name === categoryFilter.value);
+      result = result.filter(s => {
+        const catName = s.category_details?.name || s.service_category;
+        return String(catName) === String(categoryFilter.value);
+      });
     }
 
     if (lifeEventFilter.value) {
-      result = result.filter(s => s.life_event_group === lifeEventFilter.value);
+      result = result.filter(s => 
+        String(s.life_event_group).toLowerCase() === String(lifeEventFilter.value).toLowerCase()
+      );
     }
 
     if (typeFilter.value) {
-      result = result.filter(s => s.service_type === typeFilter.value);
+      result = result.filter(s => 
+        String(s.service_type).toLowerCase() === String(typeFilter.value).toLowerCase()
+      );
     }
 
     if (groupFilter.value) {
-      result = result.filter(s => s.service_groups && s.service_groups.includes(Number(groupFilter.value)));
-    }
-
-    if (searchQuery.value) {
-      const q = searchQuery.value.toLowerCase();
-      result = result.filter(s =>
-        s.service_name.toLowerCase().includes(q) ||
-        s.service_code.toLowerCase().includes(q) ||
-        getMdaName(s.mda).toLowerCase().includes(q)
-      );
+      result = result.filter(s => {
+        const matchesIds = Array.isArray(s.service_groups) && s.service_groups.some(g => String(g.id || g) === String(groupFilter.value));
+        const matchesDetails = Array.isArray(s.service_group_details) && s.service_group_details.some(g => String(g.id) === String(groupFilter.value));
+        return matchesIds || matchesDetails;
+      });
     }
 
     return result;
@@ -692,11 +798,15 @@
   });
 
   onMounted(() => {
-    serviceConfigStore.fetchServices();
+    fetchFilteredServices();
     serviceConfigStore.fetchFamilies();
     serviceConfigStore.fetchGroups();
     mdaStore.fetchMdas();
     serviceConfigStore.fetchCatalogueSummary();
+
+    if (props.mdaFilterId) {
+       mdaFilter.value = props.mdaFilterId;
+    }
   });
 
   const resetFilters = () => {
@@ -705,29 +815,31 @@
     familyFilter.value = '';
     categoryFilter.value = '';
     lifeEventFilter.value = '';
+    typeFilter.value = '';
+    groupFilter.value = '';
 
     mdaFilterSearchLocal.value = '';
     familySearchLocal.value = '';
     categorySearchLocal.value = '';
     lifeEventSearchLocal.value = '';
-    typeFilter.value = '';
-    groupFilter.value = '';
     typeSearchLocal.value = '';
     groupSearchLocal.value = '';
+
+    // Close all dropdowns
+    showMdaFilterDropdown.value = false;
+    showFamilyFilterDropdown.value = false;
+    showCategoryFilterDropdown.value = false;
+    showLifeEventFilterDropdown.value = false;
+    showTypeFilterDropdown.value = false;
+    showGroupFilterDropdown.value = false;
   };
 
   const isAnyFilterActive = computed(() => {
     return searchQuery.value || mdaFilter.value || familyFilter.value || categoryFilter.value || lifeEventFilter.value || typeFilter.value || groupFilter.value;
   });
 
-  const getMdaName = (mdaId) => {
-    const mda = mdas.value.find(m => m.id === mdaId);
-    if (!mda) return 'N/A';
-    return mda.code ? `${mda.name} (${mda.code})` : mda.name;
-  };
-
   const getGroupName = (groupId) => {
-    const group = groups.value.find(g => g.id === Number(groupId));
+    const group = groups.value.find(g => String(g.id) === String(groupId));
     return group ? group.name : 'Unknown Group';
   };
 
@@ -1080,6 +1192,12 @@
 
   .table__header-cell {
     color: white !important;
+  }
+
+  .toolbar__export-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: auto;
   }
 
 </style>

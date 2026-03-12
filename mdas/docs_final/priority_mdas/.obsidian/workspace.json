@@ -11,14 +11,12 @@
             "id": "f4e855576f44abc8",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "Agriculture_and_Food_Authority___Service_Delivery.md",
-                "mode": "source",
-                "source": false
+                "file": "exported_mermaids/Office_of_the_Chief_of_Staff_AS_IS.png"
               },
-              "icon": "lucide-file",
-              "title": "Agriculture_and_Food_Authority___Service_Delivery"
+              "icon": "lucide-image",
+              "title": "Office_of_the_Chief_of_Staff_AS_IS"
             }
           }
         ]
@@ -53,7 +51,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "farmer",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,8 +72,7 @@
               "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -95,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Agriculture_and_Food_Authority___Service_Delivery.md",
+                "file": "exported_mermaids/Office_of_the_Chief_of_Staff_AS_IS.png",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +102,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Agriculture_and_Food_Authority___Service_Delivery"
+              "title": "Backlinks for Office_of_the_Chief_of_Staff_AS_IS"
             }
           },
           {
@@ -114,12 +111,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Agriculture_and_Food_Authority___Service_Delivery.md",
+                "file": "exported_mermaids/Office_of_the_Chief_of_Staff_AS_IS.png",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from Agriculture_and_Food_Authority___Service_Delivery"
+              "title": "Outgoing links from Office_of_the_Chief_of_Staff_AS_IS"
             }
           },
           {
@@ -157,21 +154,20 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Agriculture_and_Food_Authority___Service_Delivery.md",
+                "file": "exported_mermaids/Office_of_the_Chief_of_Staff_AS_IS.png",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Agriculture_and_Food_Authority___Service_Delivery"
+              "title": "Outline of Office_of_the_Chief_of_Staff_AS_IS"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -186,32 +182,34 @@
   },
   "active": "f4e855576f44abc8",
   "lastOpenFiles": [
-    "update_mda_metadata.py",
-    "apply_mermaid_visibility.py",
-    "exported_mermaids/Priority_MDAS_template V5.pdf",
-    "State_Department_of_ICT___Service_Delivery.md",
-    "State_Department_of_ICT___Service_Delivery.doc",
-    "State_Department_of_ICT___Service_Delivery.docx",
-    "temp_single_word_export.md",
-    "exported_mermaids/State_Department_of_ICT___Service_Delivery_TO_BE.png",
-    "exported_mermaids/State_Department_of_ICT___Service_Delivery_AS_IS.png",
-    "temp.mmd",
-    "Agriculture_and_Food_Authority___Service_Delivery.md",
-    "~$ate_Department_of_ICT.doc",
-    "State_Department_of_ICT.doc",
-    "State_Department_of_ICT.docx",
-    "export_single_word.py",
-    "~$T_and_Authority_Service_Delivery.doc",
-    "temp_word_export.md",
-    "exported_mermaids/State_Department_of_ICT-2.png",
-    "exported_mermaids/State_Department_of_ICT-1.png",
-    "exported_mermaids/State_Department_of_ICT_TO_BE.png",
-    "exported_mermaids/State_Department_of_ICT_AS_IS.png",
-    "exported_mermaids/ICT_Authority_TO_BE.png",
-    "exported_mermaids/ICT_Authority_AS_IS.png",
-    "ICT_Authority___Service_Delivery.md",
+    "~$KDEAP_PoC_v2_Comprehensive.pptx",
+    "KDEAP_PoC_v2_Comprehensive.pptx",
+    "mermaid_exports/temp_1.png",
+    "mermaid_exports/temp_1.mmd",
+    "mermaid_exports/temp_0.png",
+    "mermaid_exports/temp_0.mmd",
+    "mermaid_exports",
+    "generate_deck_pptx_with_images.py",
+    "~$KDEAP_PoC_v2_Deck.pptx",
+    "KDEAP_PoC_v2_Deck.pptx",
+    "generate_deck_pptx.py",
+    "KDEAP_PoC_v2_Deck.md",
+    "generate_deck.py",
+    "exported_mermaids/Agriculture_and_Food_Authority_AS_IS.png",
+    "temp_mmd_files/_REFUGEE_SERVICES_TO_BE.mmd",
+    "exported_mermaids/Agriculture_and_Food_Authority_TO_BE.png",
+    "exported_mermaids/Office_of_the_Chief_of_Staff_AS_IS-2.png",
+    "exported_mermaids/Office_of_the_Chief_of_Staff_AS_IS-1.png",
+    "exported_mermaids/National_Government_Coordination_TO_BE.png",
+    "exported_mermaids/Office_of_the_Chief_of_Staff_AS_IS.png",
+    "exported_mermaids/Office_of_the_Chief_of_Staff_TO_BE.png",
     "exported_mermaids/_REFUGEE_SERVICES_TO_BE.png",
-    "exported_mermaids/State_Department_of_ICT.md_TO_BE.png",
+    "Untitled.canvas",
+    "Agriculture_and_Food_Authority___Service_Delivery.md",
+    "State_Department_of_ICT___Service_Delivery.md",
+    "temp_single_word_export.md",
+    "temp_word_export.md",
+    "ICT_Authority___Service_Delivery.md",
     "State_Department_of_ICT.md",
     "Priority_MDAs_Justification_Matrix.md",
     "Kenya_National_Qualifications_Authority___Service_Delivery.md",
@@ -230,7 +228,6 @@
     "Government_Spokesperson___Service_Delivery.md",
     "Athi_Water_Works_Development_Agency___Service_Delivery.md",
     "_REFUGEE_SERVICES___Service_Delivery.md",
-    "Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md",
-    "CABINET_OFFICE___Service_Delivery.md"
+    "Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md"
   ]
 }

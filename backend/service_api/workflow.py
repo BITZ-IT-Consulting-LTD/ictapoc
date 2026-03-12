@@ -2,7 +2,7 @@ import uuid
 import json
 import urllib.request
 from django.db import transaction
-from .models import ServiceRequest, ServiceConfig, WorkflowStep, AuditLog, User
+from .models import ServiceRequest, ServiceConfig, WorkflowStep, AuditLog, User, WorkflowStepExecution
 from django.utils import timezone
 from django.core.mail import send_mail
 from django.conf import settings
@@ -10,18 +10,16 @@ from django.conf import settings
 def send_notification(user, message, request=None):
     """
     Sends email and simulates in-app notifications.
-    In a production system, this would trigger a Celery task.
+    Now triggers a Celery task for non-blocking execution.
     """
+    from .tasks import send_notification_task
     subject = f"GOK Platform: Request {request.request_id}" if request else "Government Services Platform Notification"
-    from_email = settings.DEFAULT_FROM_EMAIL
-    recipient_list = [user.email]
-
-    try:
-        # Note: In the POC, email settings might not be configured, so we log as well.
-        send_mail(subject, message, from_email, recipient_list, fail_silently=True)
-        print(f"NOTIFICATION [To: {user.username}]: {message}")
-    except Exception as e:
-        print(f"FAILED NOTIFICATION [To: {user.username}]: {e}")
+    
+    # Trigger background task
+    send_notification_task.delay(user.email, subject, message)
+    
+    # Internal log for visibility
+    print(f"NOTIFICATION_QUEUED [To: {user.username}]: {message}")
 
 class WorkflowEngine:
     """
@@ -33,7 +31,8 @@ class WorkflowEngine:
         self.service_request = None
         if request_id:
             try:
-                self.service_request = ServiceRequest.objects.get(request_id=request_id)
+                # Use select_for_update to lock the row for the duration of the transaction
+                self.service_request = ServiceRequest.objects.select_for_update().get(request_id=request_id)
             except ServiceRequest.DoesNotExist:
                 pass
 
@@ -76,7 +75,24 @@ class WorkflowEngine:
         If target_sequence is provided, jumps to that specific step.
         """
         if not self.service_request:
+            print("ERROR: process_workflow_step called with no service_request.")
             return
+
+        print(f"DEBUG: Entering process_workflow_step. Current: {self.service_request.current_step.step_name if self.service_request.current_step else 'START'}")
+
+        # 1. Complete the current step execution if it exists
+        if self.service_request.current_step:
+            execution = WorkflowStepExecution.objects.filter(
+                service_request=self.service_request,
+                step=self.service_request.current_step,
+                completed_at__isnull=True
+            ).last()
+            if execution:
+                execution.status = 'completed'
+                execution.completed_at = timezone.now()
+                delta = execution.completed_at - execution.started_at
+                execution.duration_seconds = int(delta.total_seconds())
+                execution.save()
 
         service_config = self.service_request.service_config
         current_seq = self.service_request.current_step.sequence if self.service_request.current_step else 0
@@ -108,6 +124,14 @@ class WorkflowEngine:
             self.service_request.status = 'in_progress'
             self.service_request.save()
 
+            # 2. Create the Start signal for the next workflow item
+            exec_status = 'scheduled' if next_step_data.step_type == 'api_call' else 'pending'
+            WorkflowStepExecution.objects.create(
+                service_request=self.service_request,
+                step=next_step_data,
+                status=exec_status
+            )
+
             AuditLog.objects.create(
                 service_request=self.service_request,
                 action='STEP_TRANSITION',
@@ -115,37 +139,44 @@ class WorkflowEngine:
             )
 
             if next_step_data.step_type == 'api_call':
-                self._execute_api_call(next_step_data)
+                from .tasks import execute_system_step_task
+                transaction.on_commit(
+                    lambda: execute_system_step_task.delay(self.service_request.request_id, next_step_data.id)
+                )
             else:
                 self._notify_manual_review(next_step_data)
         else:
             # Workflow complete
             self._finalize_request('approved')
 
-    def _execute_api_call(self, step: WorkflowStep):
-        """
-        Executes an automated check and handles branching outcomes.
-        """
-        print(f"WORKFLOW [Automated]: Executing {step.step_name}")
-        api_config = step.api_config or {}
         
-        # In a real system, we'd call KeSEL here. For branching demo:
-        # We look for a 'success' or 'verified' outcome to determine next sequence.
-        outcomes = api_config.get('outcomes', [])
-        target_seq = None
-        
-        # Mocking a successful exchange
-        for outcome in outcomes:
-            if outcome.get('label', '').lower() in ['verified', 'success', 'approved']:
-                target_seq = outcome.get('target_sequence')
-                break
-        
-    def _execute_api_call(self, step: WorkflowStep):
+    @transaction.atomic
+    def process_async_api_call(self, step_id):
         """
-        Executes an automated check via the Huduma Bridge (KeSEL).
-        Supports outcome-based branching.
+        Executes an automated check via the Huduma Bridge (KeSEL) in a background task.
+        Supports outcome-based branching for both success and failure states.
         """
-        print(f"WORKFLOW [Orchestration]: Initiating secure exchange for step '{step.step_name}'")
+        step = WorkflowStep.objects.get(id=step_id)
+        # Re-fetch with lock for safety
+        self.service_request = ServiceRequest.objects.select_for_update().get(request_id=self.request_id)
+        
+        print(f"WORKFLOW [Orchestration]: Initiating background exchange for step '{step.step_name}'")
+        
+        # Re-verify lock and status
+        if not self.service_request:
+             print("ERROR: Service request missing from engine context.")
+             return
+        
+        # Update execution record to signal it's being processed immediately
+        execution = WorkflowStepExecution.objects.filter(
+            service_request=self.service_request,
+            step=step,
+            completed_at__isnull=True
+        ).last()
+        if execution:
+            execution.status = 'in_progress'
+            execution.details = f"System scheduled process triggered for {step.step_name}..."
+            execution.save()
         
         # 1. Determine Target Registry
         target_registry = None
@@ -167,13 +198,19 @@ class WorkflowEngine:
         if step.action: payload['action'] = step.action
         
         if api_url.startswith('internal://'):
+            print(f"DEBUG: Found internal URL: {api_url}")
             self._execute_internal_action(step, payload)
             return
 
         from .kesel import KeSEL
         try:
+            # Execute the secure exchange via Huduma Bridge
             response = KeSEL.exchange(target_registry, payload, {"signed": True, "cert_id": "GOV-CA-12345"})
             
+            # Map labels to branching logic
+            outcomes = api_config.get('outcomes', [])
+            target_seq = None
+
             if response.get("status") in ["SUCCESS"]:
                 AuditLog.objects.create(
                     service_request=self.service_request,
@@ -181,29 +218,43 @@ class WorkflowEngine:
                     details=f"Verified with {target_registry}: {response.get('message', 'OK')}"
                 )
                 
-                # Check for Outcome-based branching
-                target_seq = None
-                for outcome in api_config.get('outcomes', []):
+                # Check for Success-based branching
+                for outcome in outcomes:
                     if outcome.get('label', '').lower() in ['verified', 'success', 'approved', 'yes']:
                         target_seq = outcome.get('target_sequence')
                         break
                 
                 self.process_workflow_step(target_sequence=target_seq)
             else:
-                self._handle_validation_failure(target_registry, response)
+                # Handle failure branching if defined, otherwise use standard failure logic
+                AuditLog.objects.create(
+                    service_request=self.service_request,
+                    action='KESEL_VALIDATION_FAILED',
+                    details=f"{target_registry} returned: {response.get('message')}"
+                )
+
+                for outcome in outcomes:
+                    if outcome.get('label', '').lower() in ['failure', 'failed', 'rejected', 'no', 'non_compliant']:
+                        target_seq = outcome.get('target_sequence')
+                        break
+                
+                if target_seq:
+                    # Move to manual fallback or gateway as defined in outcomes
+                    self.process_workflow_step(target_sequence=target_seq)
+                else:
+                    self._handle_validation_failure(target_registry, response)
+
         except Exception as e:
+            print(f"EXCEPTION in process_async_api_call: {str(e)}")
+            import traceback
+            traceback.print_exc()
             self._handle_transport_error(target_registry, e)
 
     def _handle_validation_failure(self, registry, response):
-        """Standard handler for business-level validation failures."""
-        AuditLog.objects.create(
-            service_request=self.service_request,
-            action='KESEL_VALIDATION_FAILED',
-            details=f"{registry} returned: {response.get('message')}"
-        )
+        """Standard handler for business-level validation failures when no fallback is defined."""
         self.service_request.status = 'validation_failed'
         self.service_request.save()
-        send_notification(self.service_request.citizen, f"Your request failed automated validation: {response.get('message')}", self.service_request)
+        send_notification(self.service_request.citizen, f"Your request failed automated validation: {response.get('message')}. Please contact Huduma Support.", self.service_request)
 
     def _handle_transport_error(self, registry, error):
         """Standard handler for technical connection errors."""
@@ -303,6 +354,24 @@ class WorkflowEngine:
         if self.service_request.assigned_to != user and not is_privileged:
              raise PermissionError("You must claim this task before you can complete it (only site admins/global supervisors can bypass).")
 
+        # 1.5 Two-Person Rule Enforcement
+        # Prevent the citizen who created the request from approving it
+        if self.service_request.citizen == user and action.lower() in ['approve', 'complete', 'verify']:
+            raise PermissionError("Access Denied: The two-person rule prevents you from approving your own request.")
+
+        # Update execution record with manual disposition
+        execution = WorkflowStepExecution.objects.filter(
+            service_request=self.service_request,
+            step=self.service_request.current_step,
+            completed_at__isnull=True
+        ).last()
+        if execution:
+            execution.actor = user
+            execution.action_taken = action
+            execution.details = details
+            execution.status = 'in_progress'
+            execution.save()
+
         # 2. Dynamic Hierarchy Check: Ensure current step index matches user's role capability
         # In a fully dynamic system, we just check if they are authorized for THIS specific step.
         # We removed the hardcoded 'if officer then supervisor' logic.
@@ -317,6 +386,17 @@ class WorkflowEngine:
         )
 
         if action.lower() == 'reject':
+            # Close the current execution before finalizing
+            execution = WorkflowStepExecution.objects.filter(
+                service_request=self.service_request,
+                step=current_step,
+                completed_at__isnull=True
+            ).last()
+            if execution:
+                execution.status = 'failed'
+                execution.completed_at = timezone.now()
+                execution.save()
+                
             self._finalize_request('rejected')
             return
 
@@ -342,6 +422,7 @@ class WorkflowEngine:
         """
         self.service_request.status = outcome
         self.service_request.current_step = None
+        self.service_request.completed_at = timezone.now()
         self.service_request.save()
 
         AuditLog.objects.create(

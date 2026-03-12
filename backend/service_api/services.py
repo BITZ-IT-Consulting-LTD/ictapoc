@@ -61,27 +61,46 @@ class RegistryService:
 
     @staticmethod
     def _query_api(adapter, identifier, identifier_field):
-        """Logic for real API calls via requests with auth config."""
+        """Logic for real API calls via requests with auth config plus resilience."""
+        import time
+        from requests.exceptions import RequestException
+
         url = f"{adapter.base_url}?{identifier_field}={identifier}"
         headers = adapter.auth_config.get('headers', {})
         
-        try:
-            # Note: In a real environment, this would handle National PKI Certs via (cert, key)
-            response = requests.get(url, headers=headers, timeout=10)
-            response.raise_for_status()
-            raw_data = response.json()
-            
-            # Apply data mapping if defined
-            mapped_data = {}
-            if adapter.data_mapping:
-                for target_field, source_field in adapter.data_mapping.items():
-                    mapped_data[target_field] = raw_data.get(source_field)
-            else:
-                mapped_data = raw_data
+        max_retries = 3
+        backoff_factor = 2
 
-            return {"status": "SUCCESS", "source": "API", "data": mapped_data}
-        except Exception as e:
-            return {"status": "ERROR", "message": str(e)}
+        for attempt in range(max_retries):
+            try:
+                # In a real environment, this would handle National PKI Certs via (cert, key)
+                response = requests.get(url, headers=headers, timeout=10)
+                response.raise_for_status()
+                raw_data = response.json()
+                
+                # Apply data mapping if defined
+                mapped_data = {}
+                if adapter.data_mapping:
+                    for target_field, source_field in adapter.data_mapping.items():
+                        mapped_data[target_field] = raw_data.get(source_field)
+                else:
+                    mapped_data = raw_data
+
+                return {"status": "SUCCESS", "source": "API", "data": mapped_data}
+            except RequestException as e:
+                # Check if it's a retryable error (e.g. timeout, 5xx)
+                status_code = getattr(e.response, 'status_code', None)
+                if status_code and status_code < 500:
+                    # Non-retryable (4xx)
+                    return {"status": "ERROR", "message": f"Registry Client Error: {str(e)}", "retryable": False}
+                
+                if attempt < max_retries - 1:
+                    time.sleep(backoff_factor ** attempt)
+                    continue
+                else:
+                    return {"status": "ERROR", "message": f"Registry Connection Failed after {max_retries} attempts: {str(e)}", "retryable": True}
+            except Exception as e:
+                return {"status": "ERROR", "message": f"Unexpected integration error: {str(e)}", "retryable": False}
 
     @classmethod
     def get_identity(cls, id_number):

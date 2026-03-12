@@ -152,6 +152,19 @@
       </div>
     </div>
 
+    <!-- Live Visual Blueprint: Single Source of Truth for BPMN -->
+    <div v-if="filteredSteps.length > 0" class="u-mt-12 u-border-t u-pt-12">
+      <div class="u-flex u-items-center u-justify-between u-mb-6">
+        <div>
+          <h5 class="u-text-sm u-font-black u-text-main u-uppercase u-tracking-widest">Visual Blueprint</h5>
+          <p class="u-text-[10px] u-text-muted u-mt-1">Real-time BPMN 2.0 orchestration model synchronized with catalogue matrix</p>
+        </div>
+        <span class="badge badge--primary u-font-mono u-text-[9px]">GOK-ADMIN-01 Compliance</span>
+      </div>
+      
+      <BpmnRenderer :steps="filteredSteps" stage="to_be" />
+    </div>
+
     <BaseModal v-model:show="showModal" :title="stepForm.id ? 'Modify Workflow Node' : 'Initialize Workflow Node'"
       subtitle="Define technical data schemas and internal agency workflows" icon="bi-gear-wide-connected" size="md">
       <form @submit.prevent="handleStepSubmit" class="u-flex u-flex-col u-gap-8 u-p-2">
@@ -364,6 +377,7 @@
   import { useServiceConfigStore } from '../../store/serviceConfig';
   import BaseModal from '../Common/BaseModal.vue';
   import RegistryMapper from './RegistryMapper.vue';
+  import BpmnRenderer from './BpmnRenderer.vue';
 
   const props = defineProps({
     serviceConfigId: {

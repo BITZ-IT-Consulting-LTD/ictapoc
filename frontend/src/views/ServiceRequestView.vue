@@ -130,9 +130,12 @@
             </header>
             <div class="card__body flex flex-col gap-6">
 
-              <!-- Workflow Visualization -->
+              <!-- Workflow Visualization with Telemetry -->
               <div v-if="request.service_config && request.service_config.workflow_steps" class="workflow-visualizer">
-                <div class="u-text-[10px] u-font-black u-text-muted u-uppercase u-mb-3">Transaction Lifecycle</div>
+                <div class="u-text-[10px] u-font-black u-text-muted u-uppercase u-mb-3 flex justify-between">
+                  <span>Step-by-Step Telemetry</span>
+                  <span class="text-primary font-mono">Real-time Check</span>
+                </div>
                 <div class="u-flex u-flex-col u-gap-0">
                   <div v-for="(step, index) in sortedWorkflowSteps" :key="step.id" class="u-flex u-gap-3 u-relative">
                     <!-- Connector Line -->
@@ -141,22 +144,52 @@
                          :class="isStepCompleted(step) ? 'u-bg-success' : 'u-bg-slate-200'"></div>
                     
                     <!-- Step Indicator -->
-                    <div class="u-w-6 u-h-6 u-rounded-full u-flex u-items-center u-justify-center u-z-10 u-flex-shrink-0 u-text-[10px] u-font-bold u-border-2 transition-all"
+                    <div class="u-w-6 u-h-6 u-rounded-full u-flex u-items-center u-justify-center u-z-10 u-flex-shrink-0 u-text-[10px] u-font-bold u-border-2 transition-all shadow-sm"
                          :class="getStepIndicatorClass(step)">
                       <i v-if="isStepCompleted(step)" class="bi bi-check-lg"></i>
+                      <i v-else-if="isStepActive(step) && step.step_type === 'api_call'" class="bi bi-cpu animate-spin text-[12px]"></i>
                       <span v-else>{{ index + 1 }}</span>
                     </div>
 
                     <!-- Step Content -->
-                    <div class="u-pb-4 u-flex-1">
+                    <div class="u-pb-6 u-flex-1">
                       <div class="u-flex u-items-center u-justify-between">
                         <span class="u-text-xs u-font-bold" :class="isStepActive(step) ? 'u-text-primary' : (isStepCompleted(step) ? 'u-text-main' : 'u-text-muted')">
                           {{ step.step_name }}
                         </span>
-                        <span v-if="isStepActive(step)" class="badge badge--primary badge--pill u-py-0 u-px-1 u-text-[9px] animate-pulse">ACTIVE</span>
+                        <div class="flex items-center gap-1">
+                          <span v-if="isStepActive(step) && step.step_type === 'api_call'" 
+                                class="badge badge--primary badge--pill u-py-0 u-px-1 u-text-[8px] animate-pulse">SCHEDULED</span>
+                          <span v-if="isStepActive(step) && step.step_type === 'manual'" 
+                                class="badge badge--warning badge--pill u-py-0 u-px-1 u-text-[8px] animate-pulse tracking-tighter">PENDING</span>
+                        </div>
                       </div>
-                      <div class="u-text-[10px] u-text-muted u-mt-0.5 u-uppercase u-tracking-wider">
-                        {{ step.role || 'System' }} {{ step.step_type === 'api_call' ? '(Automated)' : '' }}
+                      
+                      <!-- Telemetry Breakdown -->
+                      <div v-if="getExecution(step)" class="mt-1 transition-all">
+                        <div class="flex flex-col gap-0.5">
+                           <div class="flex items-center gap-1.5 text-[9px] font-mono font-bold">
+                              <span class="text-emerald-600 uppercase">Start:</span>
+                              <span class="text-slate-500">{{ formatDateCompact(getExecution(step).started_at) }}</span>
+                           </div>
+                           <div v-if="getExecution(step).completed_at" class="flex items-center gap-1.5 text-[9px] font-mono font-bold">
+                              <span class="text-rose-600 uppercase">End:</span>
+                              <span class="text-slate-500">{{ formatDateCompact(getExecution(step).completed_at) }}</span>
+                           </div>
+                           <div v-if="getExecution(step).duration_seconds" class="flex items-center gap-2 mt-1">
+                              <div class="flex items-center gap-1 text-[9px] px-1.5 py-0.5 bg-slate-100 rounded text-slate-500 font-black">
+                                <i class="bi bi-clock"></i>
+                                {{ formatDuration(getExecution(step).duration_seconds) }}
+                              </div>
+                              <span v-if="getExecution(step).actor_details" class="text-[9px] text-muted italic">
+                                — {{ getExecution(step).actor_details.username }}
+                              </span>
+                           </div>
+                        </div>
+                      </div>
+
+                      <div v-else class="u-text-[10px] u-text-muted u-mt-0.5 u-uppercase u-tracking-wider opacity-60">
+                         Queue: {{ step.role || 'System' }}
                       </div>
                     </div>
                   </div>
@@ -203,6 +236,32 @@
               <button @click="claimTask" class="button button--primary w-full justify-center">
                 <i class="bi bi-hand-index-thumb me-2"></i> Claim Responsibility
               </button>
+            </div>
+          </div>
+
+          <!-- System Heartbeat Card -->
+          <div class="card card--secondary shadow-sm">
+            <header class="card__header py-3 bg-slate-50 border-b">
+               <div class="flex items-center gap-2">
+                 <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                 <h2 class="card__title text-[10px] uppercase font-black text-slate-500">System Dispatch Signal</h2>
+               </div>
+            </header>
+            <div class="card__body py-3">
+               <div v-if="request.status === 'in_progress'" class="flex flex-col gap-2">
+                  <div class="flex items-center justify-between">
+                     <span class="text-[9px] font-bold text-muted uppercase">Scheduling Mode</span>
+                     <span class="text-[9px] font-bold text-emerald-600">IMMEDIATE_CHECK</span>
+                  </div>
+                  <div class="p-2 border border-emerald-100 bg-emerald-50/30 rounded font-mono text-[9px] text-emerald-800 leading-tight">
+                     [SIGNAL] System process heartbeat active for Node ID #{{ request.current_step?.id || 'REF-0' }}...
+                     <br/>
+                     [QUEUE] Listening for Huduma Bridge response...
+                  </div>
+               </div>
+               <div v-else class="text-[10px] text-muted italic text-center py-2">
+                  No active scheduled process at this time.
+               </div>
             </div>
           </div>
 
@@ -437,6 +496,25 @@
       validation_failed: 'badge--danger',
     };
     return classes[status] || 'badge--secondary';
+  };
+
+  const getExecution = (step) => {
+    if (!request.value || !request.value.step_executions) return null;
+    return request.value.step_executions.find(e => e.step === step.id);
+  };
+
+  const formatDateCompact = (timestamp) => {
+    if (!timestamp) return '...';
+    const date = new Date(timestamp);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  };
+
+  const formatDuration = (seconds) => {
+     if (!seconds) return '0s';
+     if (seconds < 60) return `${seconds}s`;
+     const mins = Math.floor(seconds / 60);
+     const secs = seconds % 60;
+     return `${mins}m ${secs}s`;
   };
 </script>
 

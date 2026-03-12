@@ -1,6 +1,6 @@
 
 from django.http import JsonResponse
-from django.db import connections
+from django.db import connections, transaction
 from django.db.utils import OperationalError
 
 def health_check(request):
@@ -16,7 +16,8 @@ def ready_check(request):
         return JsonResponse({"status": "unready", "reason": "database_connection_failed"}, status=503)
     return JsonResponse({"status": "ready"}, status=200)
 
-from rest_framework import viewsets, permissions, status, serializers
+from rest_framework import viewsets, permissions, status, serializers, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .models import (
@@ -41,6 +42,7 @@ from .serializers import (
 from .services import PaymentService, ConsentService
 from .permissions import IsAdminOrAuthenticatedReadOnly, IsParticipantOrAdmin, AuditLogPermission, IsSystemAdmin, IsClaimAuthorized
 from .workflow import WorkflowEngine, send_notification
+from .filters import ServiceRequestFilter, AuditLogFilter, MemoFilter, PaymentFilter, WorkflowExecutionFilter
 
 class RegistryAdapterViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -49,6 +51,7 @@ class RegistryAdapterViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = RegistryAdapter.objects.all()
     serializer_class = RegistryAdapterSerializer
     permission_classes = [permissions.IsAuthenticated]
+    pagination_class = None
 
 class RegistryEndpointViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -57,6 +60,7 @@ class RegistryEndpointViewSet(viewsets.ReadOnlyModelViewSet):
     """
     serializer_class = RegistryEndpointSerializer
     permission_classes = [permissions.IsAuthenticated]
+    pagination_class = None
 
     def get_queryset(self):
         queryset = RegistryEndpoint.objects.all()
@@ -69,6 +73,8 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    search_fields = ['username', 'email', 'id_number', 'phone_number']
 
     def get_queryset(self):
         user = self.request.user
@@ -196,32 +202,39 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 class RoleViewSet(viewsets.ModelViewSet):
     queryset = Role.objects.all()
     serializer_class = RoleSerializer
-    permission_classes = [IsSystemAdmin] # Restricted to Platform Admins
+    permission_classes = [IsSystemAdmin]
+    pagination_class = None
 
 class MDAViewSet(viewsets.ModelViewSet):
     queryset = MDA.objects.all()
     serializer_class = MDASerializer
     permission_classes = [IsAdminOrAuthenticatedReadOnly]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    search_fields = ['name', 'code', 'description']
 
 class ServiceDomainViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = ServiceDomain.objects.all()
     serializer_class = ServiceDomainSerializer
     permission_classes = [permissions.AllowAny]
+    pagination_class = None
 
 class ServiceCategoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = ServiceCategory.objects.all()
     serializer_class = ServiceCategorySerializer
     permission_classes = [permissions.AllowAny]
+    pagination_class = None
 
 class ServiceFamilyViewSet(viewsets.ModelViewSet):
     queryset = ServiceFamily.objects.all()
     serializer_class = ServiceFamilySerializer
     permission_classes = [IsAdminOrAuthenticatedReadOnly]
+    pagination_class = None
 
 class ServiceGroupViewSet(viewsets.ModelViewSet):
     queryset = ServiceGroup.objects.all()
     serializer_class = ServiceGroupSerializer
     permission_classes = [IsAdminOrAuthenticatedReadOnly]
+    pagination_class = None
 
 class ServiceCatalogViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -230,6 +243,7 @@ class ServiceCatalogViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = ServiceConfig.objects.filter(catalogue_visible=True, service_status='active').order_by('catalogue_order', 'service_name')
     serializer_class = ServiceConfigSerializer
     permission_classes = [permissions.AllowAny]
+    pagination_class = None
     search_fields = ['service_name', 'description', 'life_event_group']
 
     def get_queryset(self):
@@ -248,8 +262,15 @@ class ServiceCatalogViewSet(viewsets.ReadOnlyModelViewSet):
                 Q(service_type__icontains='G2C') | 
                 Q(service_type__icontains='C2G') | 
                 Q(service_type__icontains='B2G') | 
+                Q(service_type__icontains='Transactional') | 
+                Q(service_type__icontains='Regulatory') | 
+                Q(service_type__icontains='Entitlement-Based') | 
+                Q(service_type__icontains='Informational') | 
                 Q(service_type__isnull=True)
-            ).exclude(service_type__icontains='G2G')
+            ).exclude(service_type__icontains='G2G').filter(
+                is_public_facing=True,
+                catalogue_visible=True
+            )
         return queryset
 
     @action(detail=False, methods=['get'])
@@ -285,8 +306,15 @@ class ServiceCatalogViewSet(viewsets.ReadOnlyModelViewSet):
                          Q(service_type__icontains='G2C') | 
                          Q(service_type__icontains='C2G') | 
                          Q(service_type__icontains='B2G') | 
+                         Q(service_type__icontains='Transactional') | 
+                         Q(service_type__icontains='Regulatory') | 
+                         Q(service_type__icontains='Entitlement-Based') | 
+                         Q(service_type__icontains='Informational') | 
                          Q(service_type__isnull=True)
-                     ).exclude(service_type__icontains='G2G')
+                     ).exclude(service_type__icontains='G2G').filter(
+                         is_public_facing=True,
+                         catalogue_visible=True
+                     )
                      
                 for service in services_qs:
                     process_data["services"].append({
@@ -299,6 +327,7 @@ class ServiceCatalogViewSet(viewsets.ReadOnlyModelViewSet):
                         "mda": service.mda.name,
                         "mda_code": service.mda.code if service.mda.code else "",
                         "mda_priority": service.mda.is_priority,
+                        "service_priority": service.priority,
                         "service_family": service.service_family.name if service.service_family else "Uncategorized",
                         "service_family_details": {
                             "id": service.service_family.id,
@@ -328,6 +357,8 @@ class ServiceConfigViewSet(viewsets.ModelViewSet):
     queryset = ServiceConfig.objects.all()
     serializer_class = ServiceConfigSerializer
     permission_classes = [IsAdminOrAuthenticatedReadOnly]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    search_fields = ['service_name', 'service_code', 'mda__name']
     filterset_fields = ['service_family', 'mda', 'service_status']
 
     def get_queryset(self):
@@ -341,6 +372,7 @@ class WorkflowStepViewSet(viewsets.ModelViewSet):
     queryset = WorkflowStep.objects.all()
     serializer_class = WorkflowStepSerializer
     permission_classes = [IsAdminOrAuthenticatedReadOnly]
+    pagination_class = None
 
     def get_queryset(self):
         queryset = WorkflowStep.objects.all()
@@ -353,6 +385,10 @@ class ServiceRequestViewSet(viewsets.ModelViewSet):
     queryset = ServiceRequest.objects.all()
     serializer_class = ServiceRequestSerializer
     permission_classes = [IsParticipantOrAdmin, IsClaimAuthorized]
+    filterset_class = ServiceRequestFilter
+    search_fields = ['request_id', 'service_config__service_name', 'payload__icontains']
+    ordering_fields = ['created_at', 'updated_at', 'priority']
+    ordering = ['-created_at']
 
     def get_queryset(self):
         user = self.request.user
@@ -361,62 +397,28 @@ class ServiceRequestViewSet(viewsets.ModelViewSet):
         if not user.is_authenticated or getattr(self, 'swagger_fake_view', False):
             return queryset.none()
 
-        if user.role == 'admin' or user.is_superuser:
-            return queryset.order_by('-created_at')
+        # Scoping Logic: What is the user ALLOWED to see?
+        if user.role in ['admin', 'system_admin'] or user.is_superuser:
+            return queryset
 
         if user.role == 'citizen':
-            return queryset.filter(citizen=user).order_by('-created_at')
+            return queryset.filter(citizen=user)
 
         if user.role in ['officer', 'supervisor', 'mda_admin', 'registrar', 'GLOBAL_OFFICER', 'GLOBAL_SUPERVISOR', 'MDA_OFFICER', 'MDA_SUPERVISOR']:
             from django.db.models import Q
-            
-            # 1. Global / System Admin Bypass
-            if user.role in ['GLOBAL_OFFICER', 'GLOBAL_SUPERVISOR', 'system_admin', 'admin'] or user.is_superuser:
-                return queryset.order_by('-created_at')
-
-            # 2. Scope Determination (Legacy MDA vs New Assigned MDAs)
             assigned_mda_ids = list(user.assigned_mdas.values_list('id', flat=True))
             if user.mda: assigned_mda_ids.append(user.mda.id)
             
-            # Universal MDA Filter
+            # Universal MDA Filter Scoping
             mda_filter = Q(service_config__mda_id__in=assigned_mda_ids) | Q(current_step__target_mda_id__in=assigned_mda_ids)
             
-            # View-level (detail) bypass
-            if self.action != 'list':
-                return queryset.filter(mda_filter)
-
-            # 3. List Filtering Logic
-            # Higher Authority (Admins/Supervisors) - See Everything in Scope
-            if self.request.query_params.get('all_mda') or \
-               self.request.query_params.get('team_requests') or \
-               user.role in ['mda_admin', 'MDA_SUPERVISOR', 'supervisor', 'registrar']:
-                
-                queryset = queryset.filter(mda_filter).exclude(status__in=['closed', 'approved', 'rejected'])
-                
-                if self.request.query_params.get('unassigned'):
-                    queryset = queryset.filter(assigned_to__isnull=True)
-                elif self.request.query_params.get('assigned_to_me'):
-                     queryset = queryset.filter(assigned_to=user)
-                elif self.request.query_params.get('is_escalated'):
-                     queryset = queryset.filter(is_escalated=True)
-
-            # Standard Officers - Restricted Pool
-            elif user.role in ['officer', 'MDA_OFFICER']:
-                if self.request.query_params.get('assigned_to_me'):
-                    queryset = queryset.filter(mda_filter, assigned_to=user).exclude(status__in=['closed', 'approved', 'rejected'])
-                elif self.request.query_params.get('unassigned'):
-                    queryset = queryset.filter(mda_filter, assigned_to__isnull=True, current_step__role__icontains='officer').exclude(status__in=['closed', 'approved', 'rejected'])
-                else:
-                    # DEFAULT (Inbox): Only show what is assigned to ME
-                    # Unless it's their own citizen request
-                    queryset = queryset.filter(mda_filter).filter(Q(assigned_to=user) | Q(citizen=user)).exclude(status__in=['closed', 'approved', 'rejected'])
+            # Additional role-based baseline restrictions
+            if user.role in ['officer', 'MDA_OFFICER']:
+                # Officers can ONLY see things in their MDA that are EITHER assigned to them OR unassigned
+                # This is the "BASE" queryset for security.
+                return queryset.filter(mda_filter).filter(Q(assigned_to=user) | Q(assigned_to__isnull=True) | Q(citizen=user))
             
-            else:
-                # Catch-all for other MDA roles: basic visibility of assigned MDA requests
-                # Default to assigned to ME for Inbox consistency
-                queryset = queryset.filter(mda_filter, assigned_to=user).exclude(status__in=['closed', 'approved', 'rejected'])
-
-            return queryset.order_by('-created_at', '-updated_at')
+            return queryset.filter(mda_filter)
 
         return queryset.none()
 
@@ -517,27 +519,40 @@ class ServiceRequestViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(service_request)
         return Response(serializer.data)
 
-    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated, IsClaimAuthorized])
     def claim(self, request, pk=None):
-        service_request = self.get_object()
-        user = request.user
+        with transaction.atomic():
+            # Use select_for_update to handle concurrency in claiming
+            try:
+                service_request = ServiceRequest.objects.select_for_update().get(pk=pk)
+            except ServiceRequest.DoesNotExist:
+                return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
 
-        # 1. Enforce Role & Scope
-        from .permissions import RBACScopeManager
-        allowed, reason = RBACScopeManager.evaluate_claim(user, service_request)
-        if not allowed:
-            return Response({"detail": reason}, status=status.HTTP_403_FORBIDDEN)
+            user = request.user
 
-        # 2. Check if already assigned
-        if service_request.assigned_to and service_request.assigned_to != user:
-             return Response({"detail": f"This task is already assigned to {service_request.assigned_to.username}"}, status=status.HTTP_400_BAD_REQUEST)
+            # 1. Enforce Role & Scope
+            from .permissions import RBACScopeManager
+            allowed, reason = RBACScopeManager.evaluate_claim(user, service_request)
+            if not allowed:
+                return Response({"detail": reason}, status=status.HTTP_403_FORBIDDEN)
 
-        service_request.assigned_to = user
-        service_request.save()
+            # 2. Check if already assigned
+            if service_request.assigned_to and service_request.assigned_to != user:
+                 return Response({"detail": f"This task is already assigned to {service_request.assigned_to.username}"}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Logging is handled by evaluate_claim automatically for the attempt, 
-        # but we can add more context if successful.
-        return Response(self.get_serializer(service_request).data)
+            service_request.assigned_to = user
+            service_request.save()
+
+            # Update execution logs if appropriate
+            from .models import AuditLog
+            AuditLog.objects.create(
+                service_request=service_request,
+                actor=user,
+                action='TASK_CLAIMED',
+                details=f"Task claimed by {user.username}."
+            )
+
+        return Response({"status": "success", "message": "Task acquired."})
 
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def release(self, request, pk=None):
@@ -567,7 +582,9 @@ class ReportSummaryView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, format=None):
-        if request.user.role not in ['supervisor', 'mda_admin', 'admin', 'registrar']:
+        # POC: Allow all supervisor, admin, and registrar roles (including global/mda variants)
+        allowed_roles = ['supervisor', 'mda_admin', 'admin', 'registrar', 'GLOBAL_SUPERVISOR', 'MDA_SUPERVISOR', 'system_admin']
+        if request.user.role not in allowed_roles and not request.user.role.lower().endswith('supervisor') and not request.user.role.lower().endswith('admin'):
              return Response({"detail": "You do not have permission to access reports."}, status=status.HTTP_403_FORBIDDEN)
 
         # Base queryset for scoping
@@ -621,9 +638,13 @@ class ReportSummaryView(APIView):
         return Response(summary_data)
 
 class AuditLogViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = AuditLog.objects.all().order_by('-timestamp')
+    queryset = AuditLog.objects.all()
     serializer_class = AuditLogSerializer
     permission_classes = [AuditLogPermission]
+    filterset_class = AuditLogFilter
+    search_fields = ['details', 'action']
+    ordering_fields = ['timestamp']
+    ordering = ['-timestamp']
 
 from .registries import get_registry
 
@@ -642,7 +663,7 @@ class RegistryQueryView(APIView):
         """
         if not registry_code:
             # Legacy Admin Dump behavior
-            if request.user.role != 'admin':
+            if request.user.role not in ['admin', 'system_admin']:
                 return Response({"detail": "Only admins can view registry dumps."}, status=403)
             
             from .models import RegistryAdapter
@@ -779,6 +800,10 @@ class OfficialLetterViewSet(viewsets.ModelViewSet):
 class InterDepartmentalMemoViewSet(viewsets.ModelViewSet):
     serializer_class = InterDepartmentalMemoSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filterset_class = MemoFilter
+    search_fields = ['subject', 'content', 'official_ref']
+    ordering_fields = ['created_at', 'priority']
+    ordering = ['-created_at']
 
     def get_queryset(self):
         user = self.request.user
@@ -816,7 +841,8 @@ class InterDepartmentalMemoViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['post'])
     def approve_memo(self, request, pk=None):
         memo = self.get_object()
-        if request.user.role not in ['supervisor', 'mda_admin', 'admin']:
+        allowed_supervisors = ['supervisor', 'mda_admin', 'admin', 'GLOBAL_SUPERVISOR', 'MDA_SUPERVISOR']
+        if request.user.role not in allowed_supervisors and not request.user.role.lower().endswith('supervisor'):
              return Response({"detail": "Only Supervisors or MDA Admins can approve drafts."}, status=403)
         if memo.status != 'reviewing':
             return Response({"detail": "Memo must be in review to be approved."}, status=400)
@@ -854,7 +880,8 @@ class InterDepartmentalMemoViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['post'])
     def sign_memo(self, request, pk=None):
         memo = self.get_object()
-        if request.user.role not in ['supervisor', 'mda_admin', 'admin']:
+        allowed_signatories = ['supervisor', 'mda_admin', 'admin', 'GLOBAL_SUPERVISOR', 'MDA_SUPERVISOR']
+        if request.user.role not in allowed_signatories and not request.user.role.lower().endswith('supervisor'):
              return Response({"detail": "Only authorized signatories can sign official memos."}, status=403)
         
         if memo.status != 'registered':
@@ -895,6 +922,7 @@ class DesktopReviewViewSet(viewsets.ModelViewSet):
     queryset = DesktopReview.objects.all()
     serializer_class = DesktopReviewSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
 
 class PaymentViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -903,6 +931,9 @@ class PaymentViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = PaymentTransaction.objects.all()
     serializer_class = PaymentTransactionSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filterset_class = PaymentFilter
+    ordering_fields = ['created_at']
+    ordering = ['-created_at']
 
     @action(detail=False, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def initiate(self, request):

@@ -14,7 +14,7 @@
     </header>
 
     <div class="toolbar mb-8">
-      <div class="flex flex-wrap gap-4 w-full">
+      <div class="flex flex-wrap gap-4 w-full items-center">
         <!-- Search Users -->
         <div class="relative flex-1 min-w-[250px]">
           <i class="bi bi-search absolute left-4 top-1/2 -translate-y-1/2 text-muted"></i>
@@ -26,7 +26,7 @@
         <div class="relative flex-1 min-w-[200px]">
           <i class="bi bi-shield-check absolute left-4 top-1/2 -translate-y-1/2 text-muted"></i>
           <input type="text" v-model="roleSearchLocal" placeholder="Filter by System Role..."
-            @focus="showRoleDropdown = true" @blur="setTimeout(() => showRoleDropdown = false, 200)"
+            @focus="showRoleDropdown = true" @blur="closeDropdownWithDelay('role')"
             class="form__input pl-12 pr-10 w-full cursor-pointer">
           <i class="bi bi-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-muted transition-transform"
             :class="{ 'rotate-180': showRoleDropdown }"></i>
@@ -48,7 +48,7 @@
         <div class="relative flex-1 min-w-[250px]">
           <i class="bi bi-building absolute left-4 top-1/2 -translate-y-1/2 text-muted"></i>
           <input type="text" v-model="mdaFilterSearchLocal" placeholder="Filter by Institution (MDA)..."
-            @focus="showMdaFilterDropdown = true" @blur="setTimeout(() => showMdaFilterDropdown = false, 200)"
+            @focus="showMdaFilterDropdown = true" @blur="closeDropdownWithDelay('mda')"
             class="form__input pl-12 pr-10 w-full cursor-pointer">
           <i class="bi bi-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-muted transition-transform"
             :class="{ 'rotate-180': showMdaFilterDropdown }"></i>
@@ -68,6 +68,19 @@
               <i class="bi bi-building text-muted"></i> {{ mda.name }}
             </div>
           </div>
+        </div>
+
+        <!-- Export Actions -->
+        <div class="flex gap-2 ms-auto">
+          <button @click="handlePrint" class="button button--secondary button--small" title="Print Table">
+            <i class="bi bi-printer"></i>
+          </button>
+          <button @click="handleExportCSV" class="button button--secondary button--small" title="Export CSV">
+            <i class="bi bi-filetype-csv"></i>
+          </button>
+          <button @click="handlePrint" class="button button--secondary button--small" title="Export PDF">
+            <i class="bi bi-filetype-pdf"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -139,6 +152,23 @@
             </tr>
           </tbody>
         </table>
+      </div>
+      <!-- Pagination Footer -->
+      <div class="u-p-4 u-flex u-items-center u-justify-between u-bg-slate-50 border-t border-border-color">
+          <div class="u-text-[10px] u-font-black u-text-muted/60 u-uppercase u-tracking-widest">
+            Total Users: {{ adminStore.usersPagination.count }}
+          </div>
+          <div class="u-flex u-gap-2">
+            <button @click="goToPage(currentPage - 1)" :disabled="!adminStore.usersPagination.previous" class="button button--secondary button--small">
+              <i class="bi bi-chevron-left me-1"></i> Prev
+            </button>
+            <div class="u-flex u-items-center u-px-4 u-text-xs u-font-black text-main bg-white border border-border-color u-rounded-lg shadow-sm">
+              PAGE {{ currentPage }}
+            </div>
+            <button @click="goToPage(currentPage + 1)" :disabled="!adminStore.usersPagination.next" class="button button--secondary button--small">
+              Next <i class="bi bi-chevron-right ms-1"></i>
+            </button>
+          </div>
       </div>
     </div>
 
@@ -222,19 +252,63 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, computed } from 'vue';
+  import { ref, onMounted, computed, watch } from 'vue';
   import api from '../../services/api';
   import { useMdaStore } from '../../store/mda';
+  import { useAdminStore } from '../../store/admin';
+  import { useExport } from '../../composables/useExport';
   import BaseModal from '../Common/BaseModal.vue';
 
   const mdaStore = useMdaStore();
-  const mdas = computed(() => mdaStore.mdas);
+  const adminStore = useAdminStore();
+  const { exportToCSV, triggerPrint } = useExport();
 
-  const users = ref([]);
-  const roles = ref([]);
+  const handleExportCSV = () => {
+    const columns = [
+      { key: 'username', label: 'Username' },
+      { key: 'email', label: 'Email' },
+      { key: 'role', label: 'Role' },
+      { key: 'mda', label: 'MDA ID' }
+    ];
+    exportToCSV(users.value, columns, 'User_Registry');
+  };
+
+  const handlePrint = () => {
+    triggerPrint();
+  };
+
+  const mdas = computed(() => mdaStore.mdas);
+  const users = computed(() => adminStore.users);
+  const roles = computed(() => adminStore.roles);
+
   const searchQuery = ref('');
   const roleFilter = ref('');
   const mdaFilter = ref('');
+  const currentPage = ref(1);
+
+  const fetchFilteredUsers = () => {
+    adminStore.fetchUsers({
+      search: searchQuery.value,
+      role: roleFilter.value,
+      mda: mdaFilter.value,
+      page: currentPage.value
+    });
+  };
+
+  // Search Debounce Implementation
+  let searchTimeout = null;
+  watch([searchQuery, roleFilter, mdaFilter], () => {
+    currentPage.value = 1; 
+    if (searchTimeout) clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      fetchFilteredUsers();
+    }, 300);
+  });
+
+  const goToPage = (page) => {
+    currentPage.value = page;
+    fetchFilteredUsers();
+  };
 
   const roleSearchLocal = ref('');
   const mdaFilterSearchLocal = ref('');
@@ -278,34 +352,14 @@
     showMdaFilterDropdown.value = false;
   };
 
-  const filteredUsers = computed(() => {
-    let result = users.value;
+  const closeDropdownWithDelay = (type) => {
+    setTimeout(() => {
+      if (type === 'role') showRoleDropdown.value = false;
+      if (type === 'mda') showMdaFilterDropdown.value = false;
+    }, 200);
+  };
 
-    if (roleFilter.value) {
-      result = result.filter(u => u.user_role === Number(roleFilter.value));
-    }
-
-    if (mdaFilter.value !== '') {
-      // If user selected "All MDAs", mdaFilter is empty string
-      // If user selected "Global / Citizen", mdaFilter is null (from the option value)
-      // Otherwise it's the MDA ID
-      const filterValue = mdaFilter.value === null ? null : (mdaFilter.value === '' ? undefined : Number(mdaFilter.value));
-
-      if (filterValue !== undefined) {
-        result = result.filter(u => u.mda === filterValue);
-      }
-    }
-
-    if (searchQuery.value) {
-      const q = searchQuery.value.toLowerCase();
-      result = result.filter(u =>
-        u.username.toLowerCase().includes(q) ||
-        u.email.toLowerCase().includes(q)
-      );
-    }
-
-    return result;
-  });
+  const filteredUsers = computed(() => users.value);
 
   const mdaDropdownSearch = ref('');
   const filteredMdasForDropdown = computed(() => {
@@ -339,12 +393,7 @@
   };
 
   const fetchRoles = async () => {
-    try {
-      const response = await api.get('/roles/');
-      roles.value = response.data;
-    } catch (e) {
-      console.error("Failed to fetch roles", e);
-    }
+    await adminStore.fetchRoles();
   };
 
   const getMdaName = (mdaId) => {
@@ -363,7 +412,7 @@
   };
 
   onMounted(() => {
-    fetchUsers();
+    fetchFilteredUsers();
     fetchRoles();
     mdaStore.fetchMdas();
   });
@@ -423,12 +472,7 @@
 
   const deleteUser = async (id) => {
     if (confirm('Are you sure you want to delete this user? This cannot be undone.')) {
-      try {
-        await api.delete(`/users/${id}/`);
-        await fetchUsers();
-      } catch (e) {
-        alert("Failed to delete user.");
-      }
+      await adminStore.deleteUser(id);
     }
   };
 </script>

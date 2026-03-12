@@ -227,7 +227,7 @@ const runFullTrace = async () => {
     traceSteps.value[i].status = 'processing';
     
     // Simulate thinking/network time
-    await new Promise(r => setTimeout(r, 1200 + Math.random() * 800));
+    await new Promise(r => window.setTimeout(r, 1200 + Math.random() * 800));
     
     if (bridgeStatus.value === 'Isolated' && i >= 2) {
       traceSteps.value[i].status = 'error';
