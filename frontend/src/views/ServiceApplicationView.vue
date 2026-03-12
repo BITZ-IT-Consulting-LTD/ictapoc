@@ -333,7 +333,7 @@
           description: field.description || '',
           fields: []
         };
-      } else {
+      } else if (!field.internal_only) {
         currentStepInfo.fields.push(key);
       }
     });

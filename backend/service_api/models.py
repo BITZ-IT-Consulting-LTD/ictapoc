@@ -174,16 +174,16 @@ class ServiceConfig(models.Model):
         """
         Returns the effective form schema for this service.
         Hierarchy:
-        1. Explicit 'config.rules.schema' (Legacy/Detail)
-        2. Explicit 'form_schema' (Modern/Direct)
+        1. Explicit 'form_schema' (Modern/Direct)
+        2. Explicit 'config.rules.schema' (Legacy/Detail)
         3. ServiceFamily 'shared_form_schema' (Fallback)
         """
+        if self.form_schema:
+            return self.form_schema
+
         service_schema = self.config.get('rules', {}).get('schema')
         if service_schema:
             return service_schema
-        
-        if self.form_schema:
-            return self.form_schema
             
         if self.service_family and self.service_family.shared_form_schema:
             return self.service_family.shared_form_schema

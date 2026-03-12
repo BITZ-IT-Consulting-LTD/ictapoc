@@ -476,7 +476,7 @@
                   <p class="card__subtitle">Define the form fields citizens will fill</p>
                 </div>
                 <div class="card__body">
-                  <FormSchemaBuilder v-model="editForm.config" />
+                  <FormSchemaBuilder v-model="editForm.form_schema" />
                 </div>
               </div>
             </div>
@@ -795,17 +795,24 @@
     service_type: 'G2C',
     service_groups: [],
     config: { rules: { schema: { properties: {}, required: [] } } },
+    form_schema: { type: 'object', properties: {}, required: [] },
   });
 
   onMounted(() => {
+    if (props.mdaFilterId) {
+      mdaFilter.value = props.mdaFilterId;
+    }
+    
     fetchFilteredServices();
     serviceConfigStore.fetchFamilies();
     serviceConfigStore.fetchGroups();
     mdaStore.fetchMdas();
     serviceConfigStore.fetchCatalogueSummary();
+  });
 
-    if (props.mdaFilterId) {
-       mdaFilter.value = props.mdaFilterId;
+  watch(() => props.mdaFilterId, (newId) => {
+    if (newId) {
+       mdaFilter.value = newId;
     }
   });
 
@@ -866,6 +873,7 @@
       service_type: 'G2C',
       service_groups: [],
       config: { rules: { schema: { properties: {}, required: [] } } },
+      form_schema: { type: 'object', properties: {}, required: [] },
     };
     showModal.value = true;
   };
@@ -884,8 +892,13 @@
       editForm.value.service_groups = service.service_groups;
     }
 
-    if (!editForm.value.config || !editForm.value.config.rules || !editForm.value.config.rules.schema) {
-      editForm.value.config = { rules: { schema: { properties: {}, required: [] } } };
+    if (!editForm.value.form_schema || !editForm.value.form_schema.properties) {
+      if (editForm.value.config?.rules?.schema) {
+        // Migrate legacy schema for the editor if needed
+        editForm.value.form_schema = JSON.parse(JSON.stringify(editForm.value.config.rules.schema));
+      } else {
+        editForm.value.form_schema = { type: 'object', properties: {}, required: [] };
+      }
     }
     showModal.value = true;
   };

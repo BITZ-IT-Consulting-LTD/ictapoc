@@ -299,6 +299,27 @@
                   </div>
                   <p class="u-text-[10px] u-text-muted u-mt-1">Text displayed on the primary action button</p>
                 </div>
+
+                <div class="form__group md:u-col-span-2">
+                  <label class="form__label u-flex u-items-center u-gap-2">
+                    <i class="bi bi-ui-checks text-primary"></i>
+                    Associated Data Engagement
+                  </label>
+                  <div class="u-flex u-flex-wrap u-gap-2 u-p-4 u-bg-white u-border u-rounded-xl min-h-[100px]">
+                    <div v-for="fieldKey in availableFormFields" :key="fieldKey" 
+                      class="u-flex u-items-center u-gap-2 u-px-3 u-py-1.5 u-bg-slate-50 u-border u-rounded-lg hover:u-bg-primary-soft transition-colors cursor-pointer group"
+                      @click="toggleFieldInStep(fieldKey)">
+                      <input type="checkbox" :checked="isFieldInStep(fieldKey)" class="u-pointer-events-none">
+                      <span class="u-text-[10px] u-font-black u-uppercase u-tracking-widest" :class="isFieldInStep(fieldKey) ? 'u-text-primary' : 'u-text-muted'">
+                        {{ fieldKey }}
+                      </span>
+                    </div>
+                    <div v-if="availableFormFields.length === 0" class="u-flex u-items-center u-justify-center u-w-full u-text-[10px] u-text-muted u-italic">
+                      Define fields in the Technical Schema tab first.
+                    </div>
+                  </div>
+                  <p class="u-text-[10px] u-text-muted u-mt-2">Fields chosen here will be presented to the officer during processing.</p>
+                </div>
               </div>
             </div>
           </div>
@@ -465,6 +486,22 @@
   const getRoleLabel = (step) => step.role || 'GOK_OFFICER';
   const getActionLabel = (step) => step.action || 'Default Review';
   const getApiUrlLabel = (step) => step.api_config?.url || 'INTERNAL_REGISTRY_BRIDGE';
+
+  const isFieldInStep = (fieldKey) => {
+    return stepForm.value.api_config?.form_fields?.includes(fieldKey);
+  };
+
+  const toggleFieldInStep = (fieldKey) => {
+    if (!stepForm.value.api_config) stepForm.value.api_config = {};
+    if (!stepForm.value.api_config.form_fields) stepForm.value.api_config.form_fields = [];
+    
+    const index = stepForm.value.api_config.form_fields.indexOf(fieldKey);
+    if (index > -1) {
+      stepForm.value.api_config.form_fields.splice(index, 1);
+    } else {
+      stepForm.value.api_config.form_fields.push(fieldKey);
+    }
+  };
 
   watch(() => props.serviceConfigId, (newId) => {
     if (newId) {
