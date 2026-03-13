@@ -35,12 +35,30 @@ class WorkflowEngine:
                 self.service_request = ServiceRequest.objects.select_for_update().get(request_id=request_id)
             except ServiceRequest.DoesNotExist:
                 pass
-
     @transaction.atomic
     def create_service_request(self, citizen: User, service_config: ServiceConfig, payload: dict):
         """
         Initializes a new service request and starts the workflow.
         """
+        # DRMS Integration: If the payload contains a base64 supporting document, store it in DRMS
+        if isinstance(payload, dict) and 'supporting_document' in payload:
+            doc_data = payload['supporting_document']
+            if isinstance(doc_data, dict) and 'content' in doc_data and str(doc_data['content']).startswith('data:'):
+                try:
+                    from apps.document_repository.utils import create_document_from_base64
+                    drms_doc = create_document_from_base64(
+                        user=citizen,
+                        title=doc_data.get('name', f"Supporting Proof - {service_config.service_name}"),
+                        base64_content=doc_data['content'],
+                        document_type='supporting_proof',
+                        metadata={'service_code': service_config.service_code, 'context': 'request_submission'}
+                    )
+                    if drms_doc:
+                        payload['supporting_document_drms_uuid'] = str(drms_doc.uuid)
+                        # Remove base64 to keep payload lean if desired, or keep it for the first step
+                except ImportError:
+                    pass
+
         self.service_request = ServiceRequest.objects.create(
             request_id=str(uuid.uuid4())[:8].upper(), # Use a short prefix for POC readability
             citizen=citizen,
@@ -299,14 +317,20 @@ class WorkflowEngine:
         """
         from django.db.models import Q, Count
         
-        # 1. Find eligible officers based on role and MDA
         target_role = step.role
         target_mda = step.target_mda or self.service_request.service_config.mda
         
-        eligible_query = Q(role__icontains=target_role) | Q(user_role__name__icontains=target_role)
+        eligible_query = Q(role__icontains=target_role) | Q(user_role__name__icontains=target_role) | Q(role__icontains=f"GLOBAL_{target_role}") | Q(user_role__name__icontains=f"GLOBAL_{target_role}")
+        
         if target_mda:
             # Match users who belong to this MDA or are multi-assigned to it
-            eligible_query &= (Q(mda=target_mda) | Q(assigned_mdas=target_mda))
+            # OR anyone who is a GLOBAL officer/supervisor
+            global_perms = Q(role__in=['GLOBAL_OFFICER', 'GLOBAL_SUPERVISOR', 'admin', 'system_admin']) | \
+                          Q(user_role__name__in=['GLOBAL_OFFICER', 'GLOBAL_SUPERVISOR'])
+            
+            mda_query = Q(mda=target_mda) | Q(assigned_mdas=target_mda)
+            
+            eligible_query &= (mda_query | global_perms)
         
         # 2. Load-Balancing: Find the officer with the least current tasks
         eligible_officers = User.objects.filter(eligible_query).annotate(

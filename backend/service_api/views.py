@@ -407,6 +407,11 @@ class ServiceRequestViewSet(viewsets.ModelViewSet):
         # Scoping Logic: What is the user ALLOWED to see?
         if user.role in ['admin', 'system_admin'] or user.is_superuser:
             return queryset
+            
+        # Global roles should see all requests
+        role_name = user.user_role.name if user.user_role else user.role
+        if role_name in ["GLOBAL_OFFICER", "GLOBAL_SUPERVISOR"]:
+            return queryset
 
         if user.role == 'citizen':
             return queryset.filter(citizen=user)

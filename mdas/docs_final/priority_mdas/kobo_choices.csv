@@ -1,0 +1,36 @@
+list_name,name,label
+days,day1,Day 1: Plenary Presentations
+days,day2,Day 2: MDA Process Feedback
+days,day3,Day 3: Synthesis & Endorsement
+rooms,room1,Room 1: High Impact & Large Registries
+rooms,room2,Room 2: Coordination, Culture & Specialized Services
+rooms,room3,Room 3: Policy, Economy & Foundational Systems
+mdas,afa,Agriculture & Food Authority (AFA)
+mdas,knqa,Kenya National Qualifications Authority (KNQA)
+mdas,moh,Ministry of Health (MoH)
+mdas,immigration,Immigration & Citizen Services
+mdas,head_of_public_service,Office of the Head of Public Service
+mdas,kbc,Kenya Broadcasting Corporation
+mdas,correctional_services,State Department of Correctional Services
+mdas,nema,National Environment Management Authority
+mdas,special_programmes,State Department for Special Programmes
+mdas,culture_arts,State Department for Culture, Arts and Heritage
+mdas,children_services,State Department for Children Services
+mdas,chief_of_staff,Office of the Chief of Staff
+mdas,govt_coordination,National Government Coordination
+mdas,govt_spokesperson,Government Spokesperson
+mdas,athi_water,Athi Water Works Development Agency
+mdas,sports,Department for Sports
+mdas,refugee_services,Department of Refugee Services
+mdas,msmes,State Department for MSMEs
+mdas,cabinet_affairs,Cabinet Affairs
+mdas,assets_recovery,Assets Recovery Agency
+mdas,youth_affairs,Youth Affairs & Creative Economy
+mdas,energy,State Department for Energy
+mdas,science_research,Science, Research & Innovation
+mdas,icta,ICT Authority
+mdas,ict_dept,State Department of ICT
+mdas,civil_registration,Civil Registration Services
+endorsement,yes,Yes, I support the proposed outputs
+endorsement,no,No, I do not support the outputs
+endorsement,conditions,Yes, with conditions

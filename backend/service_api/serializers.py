@@ -59,6 +59,31 @@ class UserSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         password = validated_data.pop('password', None)
+        saved_docs = validated_data.get('saved_documents')
+        
+        # Integration with DRMS: If citizen adds new documents, store them in repository
+        if saved_docs is not None and isinstance(saved_docs, list):
+            try:
+                from apps.document_repository.utils import create_document_from_base64
+                for doc in saved_docs:
+                    # Detect new base64 content that isn't yet synced to DRMS
+                    if isinstance(doc, dict) and 'content' in doc and str(doc['content']).startswith('data:'):
+                        if not doc.get('drms_synced'):
+                            drms_doc = create_document_from_base64(
+                                user=instance,
+                                title=doc.get('name', 'Personal Document'),
+                                base64_content=doc['content'],
+                                document_type='personal_credential',
+                                metadata={'source': 'citizen_profile_wallet'}
+                            )
+                            if drms_doc:
+                                doc['drms_synced'] = True
+                                doc['drms_uuid'] = str(drms_doc.uuid)
+                                # Keep content for frontend display, or we could offload it
+            except ImportError:
+                # Fail gracefully if DRMS app isn't fully initialized or accessible
+                pass
+
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         if password:
