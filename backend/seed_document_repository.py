@@ -9,7 +9,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
 django.setup()
 
 from service_api.models import MDA, User
-from apps.document_repository.models import Project, ProjectPhase, Artifact, Document, DocumentVersion
+from apps.document_repository.models import Project, ProjectPhase, Artifact, ArtifactType, Document, DocumentVersion
 
 def get_or_create_icta():
     icta, created = MDA.objects.get_or_create(
@@ -69,12 +69,16 @@ def seed_database():
 
     # Helper for Artifact creation
     def create_artifact(title, category, phase_seq, status="validated"):
+        artifact_type, _ = ArtifactType.objects.get_or_create(
+            code=category,
+            defaults={"name": category.replace("_", " ").title()}
+        )
         artifact, created = Artifact.objects.get_or_create(
             title=title,
             phase=phase_objects[phase_seq],
             mda_owner=icta,
             defaults={
-                "category": category,
+                "artifact_type": artifact_type,
                 "status": status,
             }
         )
