@@ -38,6 +38,13 @@
             {{ getRelativeTime(artifact?.updated_at) }}
           </div>
         </div>
+        <div v-if="artifact?.submission_deadline">
+          <div class="u-text-[10px] u-font-black text-red-500 u-uppercase u-tracking-widest u-mb-1">Submission Deadline</div>
+          <div class="u-text-sm u-font-black text-red-600 flex items-center gap-2">
+            <i class="bi bi-calendar-check-fill"></i>
+            {{ new Date(artifact.submission_deadline).toLocaleDateString() }}
+          </div>
+        </div>
       </div>
     </div>
   </div>

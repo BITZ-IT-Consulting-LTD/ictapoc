@@ -8,8 +8,6 @@
             <th class="table__header-cell">Classification (Type)</th>
             <th class="table__header-cell">Location</th>
             <th class="table__header-cell">Owner MDA</th>
-            <th class="table__header-cell">Deadline</th>
-            <th class="table__header-cell">Status</th>
             <th class="table__header-cell u-text-right">Actions</th>
           </tr>
         </thead>
@@ -32,32 +30,15 @@
             <td class="table__cell">
               <span class="u-text-xs u-text-slate-500 uppercase">{{ artifact.mda_owner?.name || 'N/A' }}</span>
             </td>
-            <td class="table__cell">
-              <span v-if="artifact.submission_deadline" class="u-text-xs font-bold text-red-500 flex items-center gap-1">
-                <i class="bi bi-calendar-event"></i> {{ new Date(artifact.submission_deadline).toLocaleDateString() }}
-              </span>
-              <span v-else class="u-text-[9px] text-slate-300 uppercase tracking-widest">No Date</span>
-            </td>
-            <td class="table__cell">
-              <span class="badge" :class="getStatusClass(artifact.status)">
-                {{ formatStatus(artifact.status) }}
-              </span>
-            </td>
             <td class="table__cell u-text-right">
-              <button @click="$emit('edit', artifact)" class="text-primary hover:text-indigo-700 transition-colors p-2">
-                <i class="bi bi-pencil-square"></i>
-              </button>
-              <router-link :to="`/repository/artifacts/${artifact.id}`" class="button button--secondary button--tiny button--pill u-px-4">
-                View Details
+              <router-link :to="`/public-repository/${artifact.id}`" class="button button--secondary button--tiny button--pill u-px-4">
+                View Public Details
               </router-link>
-              <button @click="$emit('delete', artifact.id)" class="text-red-500 hover:text-red-700 transition-colors p-2 u-ml-2">
-                <i class="bi bi-trash"></i>
-              </button>
             </td>
           </tr>
           <tr v-if="artifacts.length === 0">
-            <td colspan="6" class="u-p-10 u-text-center u-text-muted u-font-bold u-uppercase u-tracking-widest u-text-[10px]">
-              No artifacts found matching criteria.
+            <td colspan="5" class="u-p-10 u-text-center u-text-muted u-font-bold u-uppercase u-tracking-widest u-text-[10px]">
+              No public artifacts found matching criteria.
             </td>
           </tr>
         </tbody>
@@ -76,32 +57,9 @@ const props = defineProps({
   }
 });
 
-defineEmits(['delete', 'edit']);
-
-const getStatusClass = (status) => {
-  const map = {
-    'draft': 'badge--secondary',
-    'reviewed': 'badge--warning',
-    'validated': 'badge--primary',
-    'final': 'badge--success',
-    'archived': 'badge--danger'
-  };
-  return map[status] || 'badge--secondary';
-};
-
-const formatStatus = (status) => {
-  if (!status) return 'Unknown';
-  return status.charAt(0).toUpperCase() + status.slice(1);
-};
-
-const formatCategory = (cat) => {
-  if (!cat) return 'Other';
-  return cat.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-};
-
 const getRelativeTime = (dateString) => {
   if (!dateString) return '';
   const date = new Date(dateString);
-  return date.toLocaleDateString(); // Simplified for POC
+  return date.toLocaleDateString();
 };
 </script>

@@ -70,6 +70,28 @@ export const useArtifactStore = defineStore('artifact', {
                 this.loading = false;
             }
         },
+        async deleteArtifact(id) {
+            try {
+                await repositoryApi.deleteArtifact(id);
+                this.artifacts = this.artifacts.filter(a => a.id !== id);
+            } catch (err) {
+                console.error("Failed to delete artifact", err);
+                throw err;
+            }
+        },
+        async updateArtifact(id, payload) {
+            try {
+                const res = await repositoryApi.updateArtifact(id, payload);
+                const index = this.artifacts.findIndex(a => a.id === id);
+                if (index !== -1) {
+                    this.artifacts[index] = res.data;
+                }
+                return res.data;
+            } catch (err) {
+                console.error("Failed to update artifact", err);
+                throw err;
+            }
+        },
         async fetchPhases() {
             try {
                 const res = await repositoryApi.getProjectPhases();

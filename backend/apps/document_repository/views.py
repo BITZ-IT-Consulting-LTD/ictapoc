@@ -10,7 +10,8 @@ from .serializers import (
     ArtifactSerializer, ArtifactDetailSerializer, 
     DocumentSerializer, DocumentVersionSerializer,
     ProjectPhaseSerializer, ArtifactTypeSerializer,
-    RegistrySerializer, NodeTypeSerializer, NodeSerializer, NodeMinimalSerializer
+    RegistrySerializer, NodeTypeSerializer, NodeSerializer, NodeMinimalSerializer,
+    ProjectSerializer
 )
 from service_api.models import AuditLog
 import uuid
@@ -20,10 +21,31 @@ class RegistryViewSet(viewsets.ModelViewSet):
     serializer_class = RegistrySerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    def perform_create(self, serializer):
+        # Automatically assign MDA owner if not provided
+        mda = self.request.user.mda if hasattr(self.request.user, 'mda') and self.request.user.mda else None
+        if not mda:
+            from service_api.models import MDA
+            mda = MDA.objects.filter(code='ICTA').first()
+        
+        serializer.save(mda_owner=mda)
+
 class NodeTypeViewSet(viewsets.ModelViewSet):
     queryset = NodeType.objects.all()
     serializer_class = NodeTypeSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+class ProjectViewSet(viewsets.ModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        mda = self.request.user.mda if hasattr(self.request.user, 'mda') and self.request.user.mda else None
+        if not mda:
+            from service_api.models import MDA
+            mda = MDA.objects.filter(code='ICTA').first()
+        serializer.save(mda_owner=mda)
 
 class NodeViewSet(viewsets.ModelViewSet):
     queryset = Node.objects.all()
@@ -91,12 +113,12 @@ class RepositoryViewSet(viewsets.ViewSet):
             "documents": []
         })
 
-class ArtifactTypeViewSet(viewsets.ReadOnlyModelViewSet):
+class ArtifactTypeViewSet(viewsets.ModelViewSet):
     queryset = ArtifactType.objects.all().order_by('name')
     serializer_class = ArtifactTypeSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-class ProjectPhaseViewSet(viewsets.ReadOnlyModelViewSet):
+class ProjectPhaseViewSet(viewsets.ModelViewSet):
     queryset = ProjectPhase.objects.all().order_by('sequence')
     serializer_class = ProjectPhaseSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -174,6 +196,11 @@ class ArtifactViewSet(viewsets.ModelViewSet):
         artifact.save()
         return Response(self.get_serializer(artifact).data)
 
+    def partial_update(self, request, *args, **kwargs):
+        # Allow internal users to toggle is_public and other fields
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
+
     def create(self, request, *args, **kwargs):
         # We need to manually handle mda_owner since it's read_only in serializer
         mda = request.user.mda if hasattr(request.user, 'mda') and request.user.mda else None
@@ -191,6 +218,8 @@ class ArtifactViewSet(viewsets.ModelViewSet):
         phase_id = data.get('phase')
         node_id = data.get('node')
         status_val = data.get('status', 'draft')
+        is_public = data.get('is_public', False)
+        submission_deadline = data.get('submission_deadline')
         
         if not title:
              return Response({"error": "Title is required"}, status=status.HTTP_400_BAD_REQUEST)
@@ -213,7 +242,9 @@ class ArtifactViewSet(viewsets.ModelViewSet):
              phase=phase,
              node=node,
              mda_owner=mda,
-             status=status_val
+             status=status_val,
+             is_public=is_public,
+             submission_deadline=submission_deadline
         )
         
         return Response(self.get_serializer(artifact).data, status=status.HTTP_201_CREATED)
