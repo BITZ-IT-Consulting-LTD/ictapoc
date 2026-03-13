@@ -15,6 +15,9 @@ import LifeEventView from '../views/LifeEventView.vue'
 import ArtifactRegistry from '../modules/repository/pages/ArtifactRegistry.vue'
 import ArtifactDetail from '../modules/repository/pages/ArtifactDetail.vue'
 import RepositoryExplorer from '../modules/repository/pages/RepositoryExplorer.vue'
+import DrmsConfiguration from '../modules/repository/pages/DrmsConfiguration.vue'
+import PublicRepositoryPortal from '../modules/repository/pages/PublicRepositoryPortal.vue'
+import PublicArtifactDetail from '../modules/repository/pages/PublicArtifactDetail.vue'
 
 const routes = [
   { path: '/', name: 'Home', component: HomeView },
@@ -31,8 +34,15 @@ const routes = [
 
   // Repository Routes
   { path: '/repository/artifacts', name: 'ArtifactRegistry', component: ArtifactRegistry, meta: { requiresAuth: true } },
+  { path: '/repository/artifacts/category/:typeId', name: 'ArtifactRegistryCategory', component: ArtifactRegistry, meta: { requiresAuth: true } },
   { path: '/repository/artifacts/:id', name: 'ArtifactDetail', component: ArtifactDetail, meta: { requiresAuth: true } },
   { path: '/repository/explore/:path*', name: 'RepositoryExplorer', component: RepositoryExplorer, meta: { requiresAuth: true } },
+  { path: '/repository/configuration', name: 'DrmsConfiguration', component: DrmsConfiguration, meta: { requiresAuth: true, requiresAdmin: true } },
+
+  // Public Repository Routes
+  { path: '/public-repository', name: 'PublicRepositoryPortal', component: PublicRepositoryPortal },
+  { path: '/public-repository/category/:typeId', name: 'PublicRepositoryCategory', component: PublicRepositoryPortal },
+  { path: '/public-repository/:id', name: 'PublicArtifactDetail', component: PublicArtifactDetail },
 ]
 
 const router = createRouter({

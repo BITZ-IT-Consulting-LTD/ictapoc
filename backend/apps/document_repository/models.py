@@ -13,7 +13,7 @@ class Registry(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
     description = models.TextField(blank=True)
-    mda_owner = models.ForeignKey(MDA, on_delete=models.CASCADE, related_name='registries', null=True)
+    mda_owner = models.ForeignKey(MDA, on_delete=models.CASCADE, related_name='registries', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -111,6 +111,8 @@ class Artifact(models.Model):
     metadata = models.JSONField(default=dict, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
     tags = models.JSONField(default=list, blank=True)
+    is_public = models.BooleanField(default=False, help_text="If True, this artifact and its 'public' classified documents are visible on the public portal.")
+    submission_deadline = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

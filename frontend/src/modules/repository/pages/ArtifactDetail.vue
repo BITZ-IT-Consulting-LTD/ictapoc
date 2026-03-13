@@ -58,6 +58,22 @@
                </button>
             </div>
           </div>
+          
+          <!-- Visibility Controls -->
+          <div class="card overflow-hidden border-0 shadow-lg rounded-2xl u-bg-white" v-if="canManageStatus">
+            <div class="u-p-6 flex items-center justify-between gap-4">
+               <div>
+                 <h3 class="u-text-xs u-font-black u-text-main u-uppercase u-tracking-widest mb-1 flex items-center gap-2">
+                   <i class="bi bi-eye text-primary"></i> Public Visibility
+                 </h3>
+                 <p class="u-text-[10px] u-text-muted leading-tight">Controls whether this artifact appears on the public repository portal.</p>
+               </div>
+               <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                 <input type="checkbox" :checked="isPublic" @change="toggleVisibility" class="sr-only peer">
+                 <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+               </label>
+            </div>
+          </div>
         </div>
       </div>
     </template>
@@ -104,6 +120,7 @@ const canManageStatus = computed(() => {
 });
 
 const currentStatus = computed(() => artifactStore.selectedArtifact?.status);
+const isPublic = computed(() => artifactStore.selectedArtifact?.is_public);
 
 const openPreview = (doc) => {
   previewingDocument.value = doc;
@@ -123,6 +140,18 @@ const updateStatus = async (status) => {
     alert(`Artifact status updated to ${status}.`);
   } catch(err) {
     alert("Unauthorized to alter registry status.");
+  }
+};
+
+const toggleVisibility = async (event) => {
+  const newVisibility = event.target.checked;
+  try {
+    await repositoryApi.updateArtifactVisibility(route.params.id, newVisibility);
+    artifactStore.fetchArtifactDetails(route.params.id);
+  } catch(err) {
+    alert("Failed to update visibility settings.");
+    // Force reset local checkbox state on fail
+    event.target.checked = !newVisibility;
   }
 };
 

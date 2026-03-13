@@ -11,6 +11,9 @@
       
       <div class="page__actions">
         <div class="u-flex u-items-center u-gap-3">
+        <router-link v-if="['admin', 'system_admin'].includes(userRole)" to="/repository/configuration" class="button button--secondary button--tiny button--pill u-px-4">
+           <i class="bi bi-gear-fill u-mr-2"></i> DRMS Config
+        </router-link>
         <router-link to="/repository/explore/project-registry" class="button button--secondary button--tiny button--pill u-px-4">
            <i class="bi bi-diagram-3 u-mr-2"></i> Hierarchical Explorer
         </router-link>
@@ -33,7 +36,7 @@
         <!-- Type Filter -->
         <div class="toolbar__filter-group u-bg-slate-50 u-w-48">
            <i class="bi bi-tag toolbar__filter-icon"></i>
-           <select v-model="filters.artifact_type" class="toolbar__filter-input u-w-full border-0 bg-transparent" @change="fetchArtifacts">
+           <select v-model="filters.artifact_type" class="toolbar__filter-input u-w-full border-0 bg-transparent" @change="handleTypeChange">
              <option value="">All Types</option>
              <option v-for="t in artifactStore.artifactTypes" :key="t.id" :value="t.id">{{ t.name }}</option>
            </select>
@@ -79,15 +82,15 @@
     </div>
 
     <!-- Registry Table Component -->
-    <ArtifactTable v-else :artifacts="artifactStore.artifacts" />
+    <ArtifactTable v-else :artifacts="artifactStore.artifacts" @delete="deleteArtifact" @edit="openEditModal" />
     
     <!-- Meta Summary -->
     <div class="u-mt-6 u-text-[10px] u-font-black u-text-muted u-uppercase u-tracking-widest" v-if="artifactStore.meta.count > 0">
       Displaying records from a total of {{ artifactStore.meta.count }} registry items.
     </div>
 
-    <!-- Add Artifact Form -->
-    <BaseModal v-model:show="showNewModal" title="Register New Artifact" @close="showNewModal = false">
+    <!-- Add/Edit Artifact Form -->
+    <BaseModal v-model:show="showNewModal" :title="isEditing ? 'Edit Artifact' : 'Register New Artifact'" @close="closeModal">
       <div class="u-p-6">
         <form @submit.prevent="handleRegister" class="u-flex u-flex-col u-gap-4">
           <div class="form-group">
@@ -110,12 +113,23 @@
           </div>
 
           <div class="form-group">
+            <label class="form-label u-text-xs u-font-black u-uppercase text-muted">Submission Deadline</label>
+            <input type="date" v-model="newArtifact.submission_deadline" class="form-input w-full p-3 rounded-xl border border-slate-100 mt-1 bg-white">
+          </div>
+
+          <div class="form-group">
             <label class="form-label u-text-xs u-font-black u-uppercase text-muted">Hierarchical Location (Node)</label>
             <select v-model="newArtifact.node" class="form-input w-full p-3 rounded-xl border border-slate-100 mt-1 bg-white" required>
               <option value="" disabled>Select Registry Path...</option>
               <option v-for="node in artifactStore.nodes" :key="node.id" :value="node.id">{{ node.full_path }} ({{ node.node_type_name }})</option>
             </select>
             <p class="u-text-[9px] u-text-primary u-font-bold u-mt-1 uppercase tracking-widest">* Required for authoritative compliance</p>
+          </div>
+
+          <div class="form-group u-flex u-items-center u-gap-3 u-mt-2">
+            <input type="checkbox" id="is_public" v-model="newArtifact.is_public" class="w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary">
+            <label for="is_public" class="u-text-sm u-font-bold u-text-main">Make Publicly Available</label>
+            <p class="u-text-[9px] u-text-muted u-mt-1 w-full basis-full">If checked, approved documents will be visible on the public portal.</p>
           </div>
           
           <div class="u-flex u-justify-end u-gap-3 u-mt-4">
@@ -132,7 +146,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useArtifactStore } from '../stores/artifactStore';
 import { useAuthStore } from '@/store/auth';
 import ArtifactTable from '../components/ArtifactTable.vue';
@@ -140,6 +155,8 @@ import BaseModal from '@/components/Common/BaseModal.vue';
 
 const artifactStore = useArtifactStore();
 const authStore = useAuthStore();
+const route = useRoute();
+const router = useRouter();
 
 const userRole = computed(() => authStore.user?.role || 'citizen');
 
@@ -150,22 +167,53 @@ const filteredNodes = computed(() => {
 
 const showNewModal = ref(false);
 const isRegistering = ref(false);
+const isEditing = ref(false);
+const editingId = ref(null);
 
-const newArtifact = ref({
+const defaultArtifact = {
   title: '',
   artifact_type: '',
   phase: '',
-  node: ''
-});
+  node: '',
+  is_public: false,
+  submission_deadline: ''
+};
+
+const newArtifact = ref({ ...defaultArtifact });
+
+const closeModal = () => {
+  showNewModal.value = false;
+  isEditing.value = false;
+  editingId.value = null;
+  newArtifact.value = { ...defaultArtifact };
+};
+
+const openEditModal = (artifact) => {
+  isEditing.value = true;
+  editingId.value = artifact.id;
+  newArtifact.value = {
+    title: artifact.title,
+    artifact_type: artifact.artifact_type?.id || '',
+    phase: artifact.phase?.id || '',
+    node: artifact.node?.id || '',
+    is_public: artifact.is_public || false,
+    submission_deadline: artifact.submission_deadline || ''
+  };
+  showNewModal.value = true;
+};
 
 const handleRegister = async () => {
   try {
     isRegistering.value = true;
-    await artifactStore.registerArtifact(newArtifact.value);
-    newArtifact.value = { title: '', artifact_type: '', phase: '', node: '' };
-    showNewModal.value = false;
+    if (isEditing.value) {
+      await artifactStore.updateArtifact(editingId.value, newArtifact.value);
+    } else {
+      await artifactStore.registerArtifact(newArtifact.value);
+    }
+    closeModal();
+    fetchArtifacts();
   } catch (err) {
-    alert(artifactStore.error || "Failed to register artifact");
+    alert(artifactStore.error || "Failed to save artifact");
   } finally {
     isRegistering.value = false;
   }
@@ -199,10 +247,36 @@ const fetchArtifacts = async () => {
   await artifactStore.fetchArtifacts(query);
 };
 
+const handleTypeChange = () => {
+  if (filters.value.artifact_type) {
+    router.push({ name: 'ArtifactRegistryCategory', params: { typeId: filters.value.artifact_type } });
+  } else {
+    router.push({ name: 'ArtifactRegistry' });
+  }
+};
+
+// Handle category changes via route
+watch(() => route.params.typeId, (newId) => {
+  filters.value.artifact_type = newId || '';
+  fetchArtifacts();
+}, { immediate: true });
+
+const deleteArtifact = async (id) => {
+  if(confirm("Are you sure you want to delete this artifact?")) {
+      try {
+          await artifactStore.deleteArtifact(id);
+          fetchArtifacts();
+      } catch(err) {
+          alert("Failed to delete. It might be in use.");
+      }
+  }
+};
+
 onMounted(() => {
   artifactStore.fetchRegistries();
   artifactStore.fetchArtifactTypes();
   artifactStore.fetchNodes();
-  fetchArtifacts();
+  artifactStore.fetchPhases();
+  // fetchArtifacts is now handled by the watch immediate
 });
 </script>

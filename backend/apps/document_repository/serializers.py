@@ -13,6 +13,7 @@ class PhaseMinimalSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'sequence']
 
 class RegistrySerializer(serializers.ModelSerializer):
+    mda_owner = MdaMinimalSerializer(read_only=True)
     class Meta:
         model = Registry
         fields = '__all__'
@@ -28,6 +29,7 @@ class NodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Node
         fields = '__all__'
+        read_only_fields = ['slug', 'full_path']
 
     def get_inherited_metadata(self, obj):
         return obj.get_inherited_metadata()
@@ -70,8 +72,17 @@ class DocumentSerializer(serializers.ModelSerializer):
 class ArtifactSerializer(serializers.ModelSerializer):
     mda_owner = MdaMinimalSerializer(read_only=True)
     phase = PhaseMinimalSerializer(read_only=True)
+    phase_id = serializers.PrimaryKeyRelatedField(
+        queryset=ProjectPhase.objects.all(), source='phase', write_only=True, required=False, allow_null=True
+    )
     artifact_type = ArtifactTypeSerializer(read_only=True)
+    artifact_type_id = serializers.PrimaryKeyRelatedField(
+        queryset=ArtifactType.objects.all(), source='artifact_type', write_only=True, required=False, allow_null=True
+    )
     node = NodeMinimalSerializer(read_only=True)
+    node_id = serializers.PrimaryKeyRelatedField(
+        queryset=Node.objects.all(), source='node', write_only=True, required=False, allow_null=True
+    )
     latest_version = serializers.SerializerMethodField()
     
     inherited_metadata = serializers.SerializerMethodField()
@@ -79,9 +90,10 @@ class ArtifactSerializer(serializers.ModelSerializer):
     class Meta:
         model = Artifact
         fields = [
-            'id', 'title', 'artifact_type', 'node', 'phase', 'mda_owner',
-            'status', 'tags', 'metadata', 'created_at', 'updated_at', 'latest_version',
-            'inherited_metadata'
+            'id', 'title', 'artifact_type', 'artifact_type_id', 'node', 'node_id', 
+            'phase', 'phase_id', 'mda_owner', 'status', 'tags', 'metadata', 
+            'is_public', 'submission_deadline', 'created_at', 'updated_at', 
+            'latest_version', 'inherited_metadata'
         ]
         
     def get_latest_version(self, obj):
@@ -100,6 +112,12 @@ class ArtifactDetailSerializer(ArtifactSerializer):
 
     class Meta(ArtifactSerializer.Meta):
         fields = ArtifactSerializer.Meta.fields + ['documents']
+
+class ProjectSerializer(serializers.ModelSerializer):
+    mda_owner = MdaMinimalSerializer(read_only=True)
+    class Meta:
+        model = Project
+        fields = '__all__'
 
 class ProjectPhaseSerializer(serializers.ModelSerializer):
     class Meta:
