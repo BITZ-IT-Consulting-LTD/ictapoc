@@ -66,8 +66,28 @@ class DocumentGenerator:
     @staticmethod
     def archive_to_edrms(document):
         """
-        Simulates sending the document to the Electronic Document Records Management System.
+        Sends the document to the internal Document repository for authoritative record keeping.
         """
-        print(f"EDRMS [ARCHIVE]: Archiving document {document['authoritative_id']} to remote storage...")
-        # In a real system, this would be a POST request to an EDRMS API
-        return True
+        print(f"EDRMS [ARCHIVE]: Archiving document {document.get('authoritative_id')} to DRMS...")
+        try:
+            from apps.document_repository.utils import create_document_from_base64
+            from service_api.models import User
+            
+            # Identify the citizen owner
+            user = User.objects.filter(username=document.get('issued_to')).first()
+            if not user:
+                 return False
+
+            # Persist to DRMS using our existing high-performance utility
+            drms_doc = create_document_from_base64(
+                user=user,
+                title=document.get('name', 'Authoritative Document'),
+                base64_content=document.get('content'),
+                document_type='authoritative_output',
+                classification='internal',
+                metadata=document.get('metadata', {})
+            )
+            return bool(drms_doc)
+        except Exception as e:
+            print(f"EDRMS [ERROR]: Failed to archive to repository: {str(e)}")
+            return False

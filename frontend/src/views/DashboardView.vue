@@ -232,8 +232,12 @@
                     <i class="bi bi-globe-central-south"></i>
                   </div>
                   <div class="flex-1 text-left">
-                    <div class="text-xs font-black uppercase tracking-widest" :class="staffCurrentTab === 'pool' ? 'text-blue-900' : 'text-slate-500'">Dept. Pool</div>
-                    <div class="text-[10px] text-slate-400 font-bold">Universal Backlog</div>
+                    <div class="text-xs font-black uppercase tracking-widest" :class="staffCurrentTab === 'pool' ? 'text-blue-900' : 'text-slate-500'">
+                      {{ ['GLOBAL_OFFICER', 'GLOBAL_SUPERVISOR'].includes(user.role) ? 'Global Pool' : 'Dept. Pool' }}
+                    </div>
+                    <div class="text-[10px] text-slate-400 font-bold">
+                      {{ ['GLOBAL_OFFICER', 'GLOBAL_SUPERVISOR'].includes(user.role) ? 'Universal Backlog' : 'Section Inbox' }}
+                    </div>
                   </div>
                 </button>
 
