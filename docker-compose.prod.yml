@@ -5,11 +5,11 @@ services:
     build:
       context: .
       dockerfile: ./docker/prod/backend/Dockerfile
-    # The entrypoint script handles migrations, static collection, and seeding
     entrypoint: ["/app/entry.sh"]
     command: gunicorn -c gunicorn_config.py project.wsgi:application
     volumes:
       - static_volume:/app/staticfiles
+      - media_volume:/app/media
     env_file:
       - .env
     depends_on:
@@ -27,19 +27,29 @@ services:
     networks:
       - intranet
 
-  nginx:
+  frontend:
     build:
       context: .
       dockerfile: ./docker/prod/frontend/Dockerfile
-    volumes:
-      - static_volume:/app/staticfiles:ro
-      # Uncomment below for production SSL with Certbot
-      # - /etc/letsencrypt:/etc/letsencrypt:ro
+    restart: always
+    networks:
+      - intranet
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/prod/nginx/Dockerfile
     ports:
-      - "8087:80"
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - media_volume:/app/media:ro
     depends_on:
       backend:
         condition: service_healthy
+      frontend:
+        condition: service_started
     restart: always
     networks:
       - intranet
@@ -79,3 +89,4 @@ networks:
 volumes:
   postgres_prod_data:
   static_volume:
+  media_volume:

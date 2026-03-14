@@ -1,20 +1,16 @@
-# Build Stage
-FROM node:18-alpine as build-stage
-WORKDIR /app
-COPY frontend/package*.json ./
-RUN npm install
-COPY ./frontend .
-RUN npm run build
+# --- Production Proxy ---
+# This container acts as the SSL-terminating Reverse Proxy
+FROM nginx:1.25-alpine
 
-# Production Stage to serve with Nginx
-FROM nginx:alpine as production-stage
-COPY --from=build-stage /app/dist /usr/share/nginx/html
-
-# Remove default nginx config
+# Remove default config
 RUN rm /etc/nginx/conf.d/default.conf
 
-# Copy custom config
-COPY docker/prod/nginx/default.conf /etc/nginx/conf.d/
+# Copy the specialized proxy configuration (SSL, Buffer tuning, Upstreams)
+COPY docker/prod/nginx/default.conf /etc/nginx/conf.d/default.conf
 
-EXPOSE 80
+# SSL certificates are mounted via volumes in docker-compose for security and persistence
+# No build-stage here, this is a pure lightweight router
+
+EXPOSE 80 443
+
 CMD ["nginx", "-g", "daemon off;"]
