@@ -202,3 +202,8 @@ SWAGGER_SETTINGS = {
         }
     }
 }
+
+# --- FILE UPLOADS ---
+# Increase limits to match Nginx client_max_body_size (100MB)
+DATA_UPLOAD_MAX_MEMORY_SIZE = 104857600 # 100MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 104857600 # 100MB
