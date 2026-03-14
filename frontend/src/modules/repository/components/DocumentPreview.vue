@@ -18,6 +18,22 @@
         </p>
       </div>
       <div class="u-flex u-gap-3">
+        <div v-if="isPdf" class="u-flex u-bg-slate-800/50 u-p-1 u-rounded-xl border border-slate-700">
+           <button 
+             @click="pdfMode = 'enhanced'" 
+             class="u-px-3 u-py-1 u-rounded-lg u-text-[9px] u-font-black u-uppercase u-transition-all" 
+             :class="pdfMode === 'enhanced' ? 'u-bg-primary u-text-white' : 'u-text-slate-400 hover:u-text-white'"
+           >
+             Enhanced
+           </button>
+           <button 
+             @click="pdfMode = 'native'" 
+             class="u-px-3 u-py-1 u-rounded-lg u-text-[9px] u-font-black u-uppercase u-transition-all" 
+             :class="pdfMode === 'native' ? 'u-bg-primary u-text-white' : 'u-text-slate-400 hover:u-text-white'"
+           >
+             Native
+           </button>
+        </div>
         <button @click="initiateDownload" class="button button--primary button--tiny button--pill">
           <i class="bi bi-download u-mr-1"></i> Download Securely
         </button>
@@ -33,11 +49,18 @@
 
       <!-- Native PDF Viewer Component -->
       <div v-else-if="previewUrl && isPdf" class="u-flex-1 u-bg-slate-200 u-overflow-y-auto u-flex u-justify-center u-p-6">
-         <div class="u-w-full u-max-w-4xl u-shadow-2xl u-rounded-xl u-bg-white overflow-hidden">
+         <div class="u-w-full u-max-w-5xl u-shadow-2xl u-rounded-xl u-bg-white overflow-hidden u-flex">
             <VuePdfEmbed
+              v-if="pdfMode === 'enhanced'"
               :source="previewUrl"
-              class="w-full"
+              class="u-w-full"
             />
+            <iframe 
+              v-else
+              :src="previewUrl" 
+              class="u-w-full u-h-full u-border-0"
+              style="min-height: 75vh"
+            ></iframe>
          </div>
       </div>
 
@@ -147,6 +170,7 @@ const previewUrl = ref(null);
 const downloadUrl = ref(null);
 const markdownContent = ref('');
 const markdownMode = ref('rendered'); // 'rendered' | 'source'
+const pdfMode = ref('enhanced'); // 'enhanced' | 'native'
 const isLoading = ref(false);
 const markdownBody = ref(null);
 
@@ -303,12 +327,13 @@ const fetchMarkdownContent = async () => {
   isLoading.value = true;
   try {
     const res = await repositoryApi.previewDocument(props.document.uuid);
-    const text = await res.data.text();
+    const blob = res.data;
+    const text = await blob.text();
     markdownContent.value = text;
     
-    const resDownload = await repositoryApi.downloadDocument(props.document.uuid);
-    const blobDownload = new Blob([resDownload.data], { type: resDownload.headers['content-type'] });
-    downloadUrl.value = URL.createObjectURL(blobDownload);
+    // Reuse the same blob for download to save memory and network
+    if (downloadUrl.value) URL.revokeObjectURL(downloadUrl.value);
+    downloadUrl.value = URL.createObjectURL(blob);
   } catch (error) {
     console.error("Failed to fetch markdown content.", error);
   } finally {
@@ -358,8 +383,21 @@ const fetchPreviewUrl = async () => {
   isLoading.value = true;
   try {
     const resPreview = await repositoryApi.previewDocument(props.document.uuid);
-    const blobPreview = new Blob([resPreview.data], { type: resPreview.headers['content-type'] });
+    const blobPreview = resPreview.data;
+    
+    // Auto-switch to native for large PDFs (> 5MB)
+    if (isPdf.value && blobPreview.size > 5 * 1024 * 1024) {
+      pdfMode.value = 'native';
+    } else {
+      pdfMode.value = 'enhanced';
+    }
+
+    if (previewUrl.value) URL.revokeObjectURL(previewUrl.value);
     previewUrl.value = URL.createObjectURL(blobPreview);
+    
+    // Also set download URL for the button
+    if (downloadUrl.value) URL.revokeObjectURL(downloadUrl.value);
+    downloadUrl.value = previewUrl.value;
   } catch (error) {
     console.error("Failed to generate secure document stream.", error);
   } finally {

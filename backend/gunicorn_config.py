@@ -11,7 +11,7 @@ worker_class = "gthread"
 threads = 4
 
 # Timeouts
-timeout = 60
+timeout = 300
 graceful_timeout = 30
 keepalive = 2
 
