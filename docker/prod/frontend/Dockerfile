@@ -3,35 +3,31 @@ FROM node:20-alpine AS build-stage
 
 WORKDIR /app
 
-# Enable legacy peer deps for compatibility if needed
+# Install dependencies
 COPY frontend/package*.json ./
 RUN npm ci
 
-# Copy frontend source
+# Copy frontend source and build
 COPY ./frontend .
-
-# Build the static application
 RUN npm run build
 
-# --- Stage 2: Production Runtime ---
+# --- Stage 2: Internal Static Server ---
 FROM nginx:1.25-alpine-slim
 
 # Copy the build artifacts from the build stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
-# Remove default nginx config and replace with our hardened version
+# Replace default config with the internal frontend config (listens on 8087)
 RUN rm /etc/nginx/conf.d/default.conf
-# Note: The custom config is mounted via volume in docker-compose.prod.yml
-# but we can also copy it here for a self-contained image.
-COPY docker/prod/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY docker/prod/nginx/frontend.conf /etc/nginx/conf.d/default.conf
 
-# Set up permissions for non-root user (Standard Nginx image uses 'nginx' user)
-# We ensure the pid file and cache are writable
+# Set up permissions for non-root user
 RUN touch /var/run/nginx.pid && \
     chown -R nginx:nginx /var/run/nginx.pid /var/cache/nginx /var/log/nginx /usr/share/nginx/html
 
 USER nginx
 
-EXPOSE 80
+# Internal port as requested by user
+EXPOSE 8087
 
 CMD ["nginx", "-g", "daemon off;"]

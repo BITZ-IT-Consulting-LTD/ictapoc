@@ -344,7 +344,8 @@ class DocumentViewSet(viewsets.ModelViewSet):
         )
 
         # 1. High Performance Mode: X-Accel-Redirect
-        if settings.USE_X_ACCEL_REDIRECT:
+        # Only use if file actually exists on disk, otherwise fall through to dummy stream
+        if settings.USE_X_ACCEL_REDIRECT and version.file and version.file.storage.exists(version.file.name):
             response = HttpResponse()
             # Nginx location is /_protected_media/, file path is relative to MEDIA_ROOT
             response['X-Accel-Redirect'] = f"{settings.INTERNAL_MEDIA_PATH}{version.file.name}"
@@ -358,6 +359,9 @@ class DocumentViewSet(viewsets.ModelViewSet):
 
         # 2. Standard Mode: FileResponse (Streams through Django)
         try:
+             if not version.file or not version.file.storage.exists(version.file.name):
+                 raise FileNotFoundError("Physical file missing")
+                 
              response = FileResponse(version.file.open(), content_type=version.mime_type)
              if attachment:
                 filename = version.file.name.split("/")[-1]
@@ -369,7 +373,18 @@ class DocumentViewSet(viewsets.ModelViewSet):
              # POC Fallback for Seed Scripts which write string definitions instead of real files
              import io
              is_pdf = 'pdf' in (version.mime_type or '').lower()
-             dummy = b"%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\ntrailer\n<< /Size 4 /Root 1 0 R >>\n%%EOF" if is_pdf else b"POC Dummy Stream"
+             # A more valid (though minimal) PDF content
+             dummy_pdf = (
+                b"%PDF-1.4\n"
+                b"1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n"
+                b"2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n"
+                b"3 0 obj\n<< /Type /Page /Parent 2 0 R /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>\nendobj\n"
+                b"4 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>\nendobj\n"
+                b"5 0 obj\n<< /Length 44 >>\nstream\nBT /F1 12 Tf 100 700 Td (POC Placeholder Document) Tj ET\nendstream\nendobj\n"
+                b"trailer\n<< /Size 6 /Root 1 0 R >>\n"
+                b"%%EOF"
+             )
+             dummy = dummy_pdf if is_pdf else b"POC Dummy Stream Content"
              response = FileResponse(io.BytesIO(dummy), content_type=version.mime_type)
              response['Content-Disposition'] = f'attachment; filename="dummy_{uuid}.pdf"' if attachment else 'inline'
              return response

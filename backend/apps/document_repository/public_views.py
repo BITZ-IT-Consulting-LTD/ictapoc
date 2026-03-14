@@ -3,7 +3,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponse
+from django.conf import settings
 
 from .models import ProjectPhase, Artifact, Document, ArtifactType, Registry, NodeType, Node
 from .serializers import (
@@ -87,46 +88,67 @@ class PublicDocumentViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=False, methods=['get'], url_path='(?P<uuid>[^/.]+)/download')
     def download(self, request, uuid=None):
-        doc = get_object_or_404(Document, uuid=uuid, artifact__status__in=['validated', 'final'], artifact__is_public=True)
-        version = doc.versions.order_by('-version_number').first()
-        if not version or not version.file:
-            return Response({'error': 'File not found'}, status=status.HTTP_404_NOT_FOUND)
-            
-        try:
-             response = FileResponse(version.file.open(), content_type=version.mime_type)
-             response['Content-Disposition'] = f'attachment; filename="{version.file.name.split("/")[-1]}"'
-             return response
-        except Exception:
-             # POC Fallback for Seed Scripts which write string definitions instead of real files
-             import io
-             dummy = b"%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] >>\nendobj\ntrailer\n<< /Size 4 /Root 1 0 R >>\n%%EOF" if 'pdf' in version.mime_type else b"POC Dummy Stream"
-             response = FileResponse(io.BytesIO(dummy), content_type=version.mime_type)
-             response['Content-Disposition'] = f'attachment; filename="dummy_{uuid}.pdf"'
-             
-             # Audit Emission on success (fallback)
-             actor = request.user if request.user.is_authenticated else None
-             AuditLog.objects.create(
-                actor=actor,
-                action="PUBLIC_DOCUMENT_DOWNLOAD",
-                actor_role=actor.role if actor else 'public',
-                details=f"Publicly downloaded document {doc.title}"
-             )
-             return response
+        return self._serve_versioned_file(request, uuid, attachment=True)
         
     @action(detail=False, methods=['get'], url_path='(?P<uuid>[^/.]+)/preview')
     def preview(self, request, uuid=None):
+        return self._serve_versioned_file(request, uuid, attachment=False)
+
+    def _serve_versioned_file(self, request, uuid, attachment=False):
         doc = get_object_or_404(Document, uuid=uuid, artifact__status__in=['validated', 'final'], artifact__is_public=True)
         version = doc.versions.order_by('-version_number').first()
         if not version or not version.file:
             return Response({'error': 'File not found'}, status=status.HTTP_404_NOT_FOUND)
-            
+
+        # Audit Emission
+        actor = request.user if request.user.is_authenticated else None
+        AuditLog.objects.create(
+            actor=actor,
+            action="PUBLIC_DOCUMENT_ACCESS",
+            actor_role=actor.role if actor else 'public',
+            details=f"Publicly {'downloaded' if attachment else 'previewed'} document {doc.title}"
+        )
+
+        # 1. High Performance Mode: X-Accel-Redirect
+        # Only use if file actually exists on disk, otherwise fall through to dummy stream
+        if settings.USE_X_ACCEL_REDIRECT and version.file and version.file.storage.exists(version.file.name):
+            response = HttpResponse()
+            response['X-Accel-Redirect'] = f"{settings.INTERNAL_MEDIA_PATH}{version.file.name}"
+            response['Content-Type'] = version.mime_type
+            if attachment:
+                filename = version.file.name.split("/")[-1]
+                response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            else:
+                response['Content-Disposition'] = 'inline'
+            return response
+
+        # 2. Standard Mode: FileResponse
         try:
+             if not version.file or not version.file.storage.exists(version.file.name):
+                 raise FileNotFoundError("Physical file missing")
+                 
              response = FileResponse(version.file.open(), content_type=version.mime_type)
-             response['Content-Disposition'] = 'inline'
+             if attachment:
+                filename = version.file.name.split("/")[-1]
+                response['Content-Disposition'] = f'attachment; filename="{filename}"'
+             else:
+                response['Content-Disposition'] = 'inline'
              return response
         except Exception:
              import io
-             dummy = b"%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] >>\nendobj\ntrailer\n<< /Size 4 /Root 1 0 R >>\n%%EOF" if 'pdf' in version.mime_type else b"POC Dummy Stream"
+             is_pdf = 'pdf' in (version.mime_type or '').lower()
+             # A more valid (though minimal) PDF content
+             dummy_pdf = (
+                b"%PDF-1.4\n"
+                b"1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n"
+                b"2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n"
+                b"3 0 obj\n<< /Type /Page /Parent 2 0 R /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>\nendobj\n"
+                b"4 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>\nendobj\n"
+                b"5 0 obj\n<< /Length 44 >>\nstream\nBT /F1 12 Tf 100 700 Td (POC Placeholder Document) Tj ET\nendstream\nendobj\n"
+                b"trailer\n<< /Size 6 /Root 1 0 R >>\n"
+                b"%%EOF"
+             )
+             dummy = dummy_pdf if is_pdf else b"POC Dummy Stream Content"
              response = FileResponse(io.BytesIO(dummy), content_type=version.mime_type)
-             response['Content-Disposition'] = 'inline'
+             response['Content-Disposition'] = f'attachment; filename="dummy_{uuid}.pdf"' if attachment else 'inline'
              return response
