@@ -3,7 +3,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponse
+from django.conf import settings
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from .models import Project, ProjectPhase, Artifact, Document, DocumentVersion, ArtifactType, Registry, NodeType, Node
 from .serializers import (
@@ -320,48 +321,55 @@ class DocumentViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(doc)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    # Note using lookup_field = 'uuid' is preferred, but viewset defaults to pk
     @action(detail=False, methods=['get'], url_path='(?P<uuid>[^/.]+)/download')
     def download(self, request, uuid=None):
+        return self._serve_versioned_file(request, uuid, attachment=True)
+        
+    @action(detail=False, methods=['get'], url_path='(?P<uuid>[^/.]+)/preview')
+    def preview(self, request, uuid=None):
+        return self._serve_versioned_file(request, uuid, attachment=False)
+
+    def _serve_versioned_file(self, request, uuid, attachment=False):
         doc = get_object_or_404(Document, uuid=uuid)
         version = doc.versions.order_by('-version_number').first()
         if not version or not version.file:
             return Response({'error': 'File not found'}, status=status.HTTP_404_NOT_FOUND)
-            
+
+        # Audit Emission (Shared for both preview/download)
+        AuditLog.objects.create(
+            actor=request.user,
+            action="DOCUMENT_ACCESS",
+            actor_role=request.user.role,
+            details=f"{'Downloaded' if attachment else 'Previewed'} document {doc.title}"
+        )
+
+        # 1. High Performance Mode: X-Accel-Redirect
+        if settings.USE_X_ACCEL_REDIRECT:
+            response = HttpResponse()
+            # Nginx location is /_protected_media/, file path is relative to MEDIA_ROOT
+            response['X-Accel-Redirect'] = f"{settings.INTERNAL_MEDIA_PATH}{version.file.name}"
+            response['Content-Type'] = version.mime_type
+            if attachment:
+                filename = version.file.name.split("/")[-1]
+                response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            else:
+                response['Content-Disposition'] = 'inline'
+            return response
+
+        # 2. Standard Mode: FileResponse (Streams through Django)
         try:
              response = FileResponse(version.file.open(), content_type=version.mime_type)
-             response['Content-Disposition'] = f'attachment; filename="{version.file.name.split("/")[-1]}"'
+             if attachment:
+                filename = version.file.name.split("/")[-1]
+                response['Content-Disposition'] = f'attachment; filename="{filename}"'
+             else:
+                response['Content-Disposition'] = 'inline'
              return response
         except Exception:
              # POC Fallback for Seed Scripts which write string definitions instead of real files
              import io
-             dummy = b"%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] >>\nendobj\ntrailer\n<< /Size 4 /Root 1 0 R >>\n%%EOF" if 'pdf' in version.mime_type else b"POC Dummy Stream"
+             is_pdf = 'pdf' in (version.mime_type or '').lower()
+             dummy = b"%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\ntrailer\n<< /Size 4 /Root 1 0 R >>\n%%EOF" if is_pdf else b"POC Dummy Stream"
              response = FileResponse(io.BytesIO(dummy), content_type=version.mime_type)
-             response['Content-Disposition'] = f'attachment; filename="dummy_{uuid}.pdf"'
-             
-             # Audit Emission on success (fallback)
-             AuditLog.objects.create(
-                actor=request.user,
-                action="DOCUMENT_DOWNLOAD",
-                actor_role=request.user.role,
-                details=f"Downloaded document {doc.title}"
-             )
-             return response
-        
-    @action(detail=False, methods=['get'], url_path='(?P<uuid>[^/.]+)/preview')
-    def preview(self, request, uuid=None):
-        doc = get_object_or_404(Document, uuid=uuid)
-        version = doc.versions.order_by('-version_number').first()
-        if not version or not version.file:
-            return Response({'error': 'File not found'}, status=status.HTTP_404_NOT_FOUND)
-            
-        try:
-             response = FileResponse(version.file.open(), content_type=version.mime_type)
-             response['Content-Disposition'] = 'inline'
-             return response
-        except Exception:
-             import io
-             dummy = b"%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] >>\nendobj\ntrailer\n<< /Size 4 /Root 1 0 R >>\n%%EOF" if 'pdf' in version.mime_type else b"POC Dummy Stream"
-             response = FileResponse(io.BytesIO(dummy), content_type=version.mime_type)
-             response['Content-Disposition'] = 'inline'
+             response['Content-Disposition'] = f'attachment; filename="dummy_{uuid}.pdf"' if attachment else 'inline'
              return response
