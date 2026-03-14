@@ -41,6 +41,54 @@
          </div>
       </div>
 
+      <!-- Markdown Viewer -->
+      <div v-else-if="markdownContent && isMarkdown" class="u-flex-1 u-bg-white u-overflow-y-auto u-flex u-flex-col">
+        <!-- Renderer Toolbar -->
+        <div class="u-border-b u-border-slate-100 u-p-4 u-flex u-justify-between u-items-center u-bg-slate-50/50 shrink-0">
+           <div class="u-flex u-items-center u-gap-3">
+              <div class="u-flex u-items-center u-gap-2">
+                <i class="bi bi-cpu text-primary"></i>
+                <span class="u-text-[10px] u-font-black u-text-main u-uppercase u-tracking-widest">Public Markdown Renderer</span>
+              </div>
+              <div class="u-h-4 u-w-px u-bg-slate-300"></div>
+              <span class="u-text-[10px] u-font-bold u-text-muted u-uppercase tracking-wider">Secure Mermaid Stream</span>
+           </div>
+           <div class="u-flex u-bg-slate-200/50 u-p-1 u-rounded-xl border border-slate-200">
+              <button 
+                @click="markdownMode = 'rendered'" 
+                class="u-px-4 u-py-1.5 u-rounded-lg u-text-[10px] u-font-black u-uppercase u-transition-all" 
+                :class="markdownMode === 'rendered' ? 'u-bg-white u-text-primary u-shadow-sm' : 'u-text-slate-500 hover:u-text-primary'"
+              >
+                View Rendered
+              </button>
+              <button 
+                @click="markdownMode = 'source'" 
+                class="u-px-4 u-py-1.5 u-rounded-lg u-text-[10px] u-font-black u-uppercase u-transition-all" 
+                :class="markdownMode === 'source' ? 'u-bg-white u-text-primary u-shadow-sm' : 'u-text-slate-500 hover:u-text-primary'"
+              >
+                Source Code
+              </button>
+           </div>
+        </div>
+
+        <!-- Rendered Content -->
+        <div class="u-flex-1 u-p-8 u-overflow-y-auto custom-scrollbar">
+          <div v-if="markdownMode === 'rendered'" class="u-max-w-4xl u-mx-auto prose prose-slate prose-indigo">
+            <div ref="markdownBody" v-html="renderedMarkdown" class="markdown-body"></div>
+          </div>
+          <!-- Raw Source Code -->
+          <div v-else class="u-max-w-4xl u-mx-auto">
+             <div class="u-bg-slate-900 u-rounded-2xl u-overflow-hidden u-shadow-2xl border border-slate-800">
+                <div class="u-flex u-items-center u-justify-between u-px-4 u-py-2 u-bg-slate-800/50 u-border-b u-border-slate-700">
+                   <span class="u-text-[9px] u-font-mono u-text-slate-400 uppercase tracking-widest">public_source.md</span>
+                   <i class="bi bi-code-slash u-text-slate-500"></i>
+                </div>
+                <pre class="u-p-6 u-text-slate-300 u-font-mono u-text-xs u-leading-relaxed u-overflow-x-auto"><code>{{ markdownContent }}</code></pre>
+             </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Image Preview -->
       <div v-else-if="previewUrl && isImage" class="u-flex-1 u-flex u-items-center u-justify-center u-p-10 u-overflow-auto">
         <img :src="previewUrl" alt="Document Preview" class="u-max-w-full u-max-h-full u-object-contain u-rounded-2xl u-shadow-2xl">
@@ -63,12 +111,15 @@
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue';
+import { ref, watch, computed, nextTick, onMounted } from 'vue';
 import publicRepositoryApi from '../services/publicRepositoryApi';
 import BaseModal from '@/components/Common/BaseModal.vue';
 import VuePdfEmbed from 'vue-pdf-embed';
 import 'vue-pdf-embed/dist/styles/annotationLayer.css';
 import 'vue-pdf-embed/dist/styles/textLayer.css';
+import { marked } from 'marked';
+import mermaid from 'mermaid';
+import DOMPurify from 'dompurify';
 
 const props = defineProps({
   document: {
@@ -85,15 +136,51 @@ const emit = defineEmits(['update:modelValue', 'close']);
 
 const isOpen = ref(props.modelValue);
 const previewUrl = ref(null);
+const markdownContent = ref('');
+const markdownMode = ref('rendered'); // 'rendered' | 'source'
 const isLoading = ref(false);
+const markdownBody = ref(null);
+
+const renderedMarkdown = computed(() => {
+  if (!markdownContent.value) return '';
+  const html = marked.parse(markdownContent.value);
+  // Ensure we allow the classes needed for mermaid and other stylings
+  return DOMPurify.sanitize(html, {
+    ADD_ATTR: ['class', 'data-processed'],
+    ADD_TAGS: ['style']
+  });
+});
 
 watch(() => props.modelValue, (val) => {
   isOpen.value = val;
   if (val && props.document) {
-    fetchPreviewUrl();
+    if (isMarkdown.value) {
+      fetchMarkdownContent();
+    } else {
+      fetchPreviewUrl();
+    }
   } else {
     if (previewUrl.value) URL.revokeObjectURL(previewUrl.value);
     previewUrl.value = null;
+    markdownContent.value = '';
+  }
+});
+
+watch(renderedMarkdown, () => {
+  if (isMarkdown.value && markdownMode.value === 'rendered' && !isLoading.value) {
+    renderMermaid();
+  }
+});
+
+watch(markdownMode, (mode) => {
+  if (mode === 'rendered' && !isLoading.value) {
+    renderMermaid();
+  }
+});
+
+watch(isLoading, (loading) => {
+  if (!loading && isMarkdown.value && markdownMode.value === 'rendered') {
+    renderMermaid();
   }
 });
 
@@ -101,11 +188,110 @@ watch(isOpen, (val) => {
   emit('update:modelValue', val);
 });
 
+onMounted(() => {
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'default',
+    securityLevel: 'loose',
+    fontFamily: 'Outfit, Inter, sans-serif',
+    flowchart: { useMaxWidth: false, htmlLabels: true, curve: 'basis' },
+    sequence: { useMaxWidth: false },
+  });
+});
+
 const handleClose = () => {
   isOpen.value = false;
   emit('close');
   if (previewUrl.value) URL.revokeObjectURL(previewUrl.value);
   previewUrl.value = null;
+  markdownContent.value = '';
+};
+
+const renderMermaid = async () => {
+  if (!markdownContent.value) return;
+  await nextTick();
+  
+  if (!markdownBody.value) {
+    console.warn('Mermaid (public): markdownBody ref not found');
+    return;
+  }
+
+  // Search for anything that looks like a mermaid block
+  const allCodeBlocks = markdownBody.value.querySelectorAll('pre code, code');
+  const blocksToProcess = [];
+
+  for (const block of allCodeBlocks) {
+    const content = block.textContent.trim();
+    const isMermaidClass = block.className.includes('mermaid') || 
+                          (block.parentElement && block.parentElement.className.includes('mermaid'));
+    const isMermaidContent = content.startsWith('graph ') || 
+                             content.startsWith('sequenceDiagram') || 
+                             content.startsWith('gannt') || 
+                             content.startsWith('classDiagram') ||
+                             content.startsWith('stateDiagram') ||
+                             content.startsWith('pie') ||
+                             content.startsWith('flowchart');
+
+    if ((isMermaidClass || isMermaidContent) && !block.getAttribute('data-mermaid-processed')) {
+      blocksToProcess.push(block);
+    }
+  }
+
+  if (blocksToProcess.length === 0) return;
+
+  const nodesToProcess = [];
+
+  for (const block of blocksToProcess) {
+    const pre = block.parentElement;
+    const code = block.textContent.trim();
+
+    // Create a styled wrapper
+    const wrapper = document.createElement('div');
+    wrapper.className = 'mermaid-wrapper relative group bg-slate-50 rounded-xl p-8 border border-slate-100 my-8 transition-all hover:shadow-lg flex justify-center w-full';
+    
+    block.setAttribute('data-mermaid-processed', 'true');
+
+    const mermaidDiv = document.createElement('div');
+    mermaidDiv.className = 'mermaid';
+    mermaidDiv.textContent = code;
+    const id = `mermaid-v10-public-${Math.random().toString(36).substring(2, 11)}`;
+    mermaidDiv.id = id;
+
+    wrapper.appendChild(mermaidDiv);
+    
+    // Replace the container (pre or code)
+    if (pre && pre.tagName === 'PRE') {
+      pre.replaceWith(wrapper);
+    } else {
+      block.replaceWith(wrapper);
+    }
+    
+    nodesToProcess.push(mermaidDiv);
+  }
+
+  try {
+    console.log(`Mermaid (public): Running transformation on ${nodesToProcess.length} nodes...`);
+    await mermaid.run({
+      nodes: nodesToProcess,
+      suppressErrors: true
+    });
+    console.log('Mermaid (public): Transformation complete.');
+  } catch (e) {
+    console.error('Mermaid render error (public):', e);
+  }
+};
+
+const fetchMarkdownContent = async () => {
+  isLoading.value = true;
+  try {
+    const res = await publicRepositoryApi.previewDocument(props.document.uuid);
+    const text = await res.data.text();
+    markdownContent.value = text;
+  } catch (error) {
+    console.error("Failed to fetch public markdown content.", error);
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const fetchPreviewUrl = async () => {
@@ -124,11 +310,23 @@ const fetchPreviewUrl = async () => {
 const initiateDownload = async () => {
    try {
        const res = await publicRepositoryApi.downloadDocument(props.document.uuid);
-       const url = window.URL.createObjectURL(new Blob([res.data]));
+       const contentType = res.headers['content-type'];
+       const blob = new Blob([res.data], { type: contentType });
+       const url = window.URL.createObjectURL(blob);
        const link = document.createElement('a');
        link.href = url;
-       const title = props.document.title;
-       const fileName = title ? (title.toLowerCase().endsWith('.pdf') ? title : `${title}.pdf`) : `document_${props.document.uuid}.pdf`;
+       
+       let extension = '';
+       if (contentType === 'application/pdf') extension = '.pdf';
+       else if (contentType === 'text/markdown' || contentType === 'text/x-markdown') extension = '.md';
+       else if (contentType === 'image/png') extension = '.png';
+       else if (contentType === 'image/jpeg') extension = '.jpg';
+       
+       let fileName = props.document.title || `document_${props.document.uuid}`;
+       if (extension && !fileName.toLowerCase().endsWith(extension)) {
+           fileName += extension;
+       }
+       
        link.setAttribute('download', fileName);
        document.body.appendChild(link);
        link.click();
@@ -156,6 +354,23 @@ const isPdf = computed(() => {
   return false;
 });
 
+const isMarkdown = computed(() => {
+  const mt = currentVersionMimeType.value;
+  if (mt && (mt === 'text/markdown' || mt === 'text/x-markdown' || mt === 'application/octet-stream')) {
+    return true;
+  }
+  const title = props.document?.title?.toLowerCase() || '';
+  if (title.endsWith('.md') || title.endsWith('.markdown')) return true;
+  
+  // Also check filename in versions if available
+  const versions = props.document?.versions;
+  if (versions && versions.length > 0) {
+    const latest = versions[0];
+    if (latest.file && latest.file.toLowerCase().endsWith('.md')) return true;
+  }
+  return false;
+});
+
 const isImage = computed(() => {
   const mt = currentVersionMimeType.value;
   if (mt && mt.startsWith('image/')) return true;
@@ -163,3 +378,22 @@ const isImage = computed(() => {
   return title.match(/\.(jpeg|jpg|gif|png|webp|svg)$/) != null;
 });
 </script>
+
+<style scoped>
+.markdown-body {
+  font-family: inherit;
+}
+:deep(.mermaid-svg) {
+  background: white;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  margin: 2rem 0;
+}
+:deep(.markdown-body pre) {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+</style>
