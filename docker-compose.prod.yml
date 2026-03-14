@@ -40,7 +40,9 @@ services:
       dockerfile: ./docker/prod/nginx/Dockerfile
     # Expose only internal port; host Nginx handles 80/443
     ports:
-      - "8087:80"  # internal HTTP for host Nginx reverse proxy
+      - "8087:80"
+    volumes:
+      - media_volume:/app/media:ro # Required for X-Accel-Redirect PDF preview
     depends_on:
       backend:
         condition: service_healthy
