@@ -39,8 +39,9 @@ services:
     build:
       context: .
       dockerfile: ./docker/prod/nginx/Dockerfile
+    # Expose only internal port; host Nginx handles 80/443
     ports:
-      - "8087:80"   # Receives HTTP traffic from Host SSL Nginx
+      - "8087:80"  # internal HTTP for host Nginx reverse proxy
     depends_on:
       backend:
         condition: service_healthy
