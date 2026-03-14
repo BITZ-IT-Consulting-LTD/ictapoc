@@ -28,8 +28,8 @@ RUN groupadd -g 1000 appuser && \
     useradd -u 1000 -g appuser -s /bin/sh appuser
 
 # Pre-prepare directories for volumes to ensure correct permissions
-RUN mkdir -p /app/staticfiles && \
-    chown -R appuser:appuser /app /app/staticfiles
+RUN mkdir -p /app/staticfiles /app/media && \
+    chown -R appuser:appuser /app/staticfiles /app/media
 
 # Switch to non-privileged user
 USER appuser

@@ -1,15 +1,16 @@
 # --- Production Proxy ---
-# This container acts as the SSL-terminating Reverse Proxy
 FROM nginx:1.25-alpine
 
 # Remove default config
 RUN rm /etc/nginx/conf.d/default.conf
 
-# Copy the specialized proxy configuration (SSL, Buffer tuning, Upstreams)
-COPY docker/prod/nginx/default.conf /etc/nginx/conf.d/default.conf
+# Match the UID/GID of the backend appuser (1000) for shared volume health
+RUN apk add --no-cache shadow && \
+    usermod -u 1000 nginx && \
+    groupmod -g 1000 nginx
 
-# SSL certificates are mounted via volumes in docker-compose for security and persistence
-# No build-stage here, this is a pure lightweight router
+# Copy the specialized proxy configuration
+COPY docker/prod/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80 443
 
