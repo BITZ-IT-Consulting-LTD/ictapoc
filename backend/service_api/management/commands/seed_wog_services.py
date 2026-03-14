@@ -23,39 +23,31 @@ class Command(BaseCommand):
                 # 1. Get/Create MDA
                 mda_name = row['Department_Agency']
                 ministry = row['Ministry']
-                mda = MDA.objects.filter(name=mda_name).first()
-                if not mda:
-                    mda = MDA.objects.create(
-                        name=mda_name,
-                        description=f'Agency under {ministry}'
-                    )
+                mda, created = MDA.objects.get_or_create(
+                    name=mda_name,
+                    defaults={'description': f'Agency under {ministry}'}
+                )
                 
-                if not mda.code:
+                if created or not mda.code:
                     base_code = mda_name.split(' ')[0][:5].upper()
                     mda.code = f"MDA-{base_code}-{mda.id}"
-                    mda.save()
+                    mda.save(update_fields=['code'])
 
                 # 2. Get/Create Service Family
                 family_name = row['Service_Family']
-                family = ServiceFamily.objects.filter(name=family_name).first()
-                if not family:
-                    family = ServiceFamily.objects.create(
-                        name=family_name,
-                        description=f'Family of services grouped under {family_name}'
-                    )
+                family, _ = ServiceFamily.objects.get_or_create(
+                    name=family_name,
+                    defaults={'description': f'Family of services grouped under {family_name}'}
+                )
 
                 # 3. Get/Create Service Domain & Category
-                domain = ServiceDomain.objects.filter(name=family_name).first()
-                if not domain:
-                    domain = ServiceDomain.objects.create(name=family_name)
+                domain, _ = ServiceDomain.objects.get_or_create(name=family_name)
                 
                 category_name = row['Service_Category']
-                category = ServiceCategory.objects.filter(name=category_name, domain=domain).first()
-                if not category:
-                    category = ServiceCategory.objects.create(
-                        name=category_name,
-                        domain=domain
-                    )
+                category, _ = ServiceCategory.objects.get_or_create(
+                    name=category_name,
+                    domain=domain
+                )
 
                 # 4. Map Priority
                 priority_map = {'Tier 1': 'high', 'Tier 2': 'normal', 'Tier 3': 'low'}

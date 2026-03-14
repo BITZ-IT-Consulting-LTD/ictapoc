@@ -104,7 +104,7 @@ def seed_data():
     ]
     
     for m_data in mdas_data:
-        MDA.objects.get_or_create(code=m_data['code'], defaults=m_data)
+        MDA.objects.update_or_create(code=m_data['code'], defaults=m_data)
         print(f"Ensured MDA: {m_data['code']}")
 
     print("Core Seeding complete!")
