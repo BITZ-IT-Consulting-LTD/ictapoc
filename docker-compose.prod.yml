@@ -40,11 +40,7 @@ services:
       context: .
       dockerfile: ./docker/prod/nginx/Dockerfile
     ports:
-      - "80:80"     # Primary HTTP entry
-      - "443:443"   # Primary HTTPS/SSL entry
-    volumes:
-      - /etc/letsencrypt:/etc/letsencrypt:ro
-      - media_volume:/app/media:ro
+      - "8087:80"   # Receives HTTP traffic from Host SSL Nginx
     depends_on:
       backend:
         condition: service_healthy
