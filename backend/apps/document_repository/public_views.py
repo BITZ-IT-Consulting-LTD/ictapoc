@@ -137,7 +137,8 @@ class PublicDocumentViewSet(viewsets.ReadOnlyModelViewSet):
         except Exception:
              import io
              is_pdf = 'pdf' in (version.mime_type or '').lower()
-             # A more valid (though minimal) PDF content
+             # Standard compliant minimal PDF that actually renders a message
+             is_pdf = 'pdf' in (version.mime_type or '').lower()
              dummy_pdf = (
                 b"%PDF-1.4\n"
                 b"1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n"
@@ -149,6 +150,7 @@ class PublicDocumentViewSet(viewsets.ReadOnlyModelViewSet):
                 b"%%EOF"
              )
              dummy = dummy_pdf if is_pdf else b"POC Dummy Stream Content"
-             response = FileResponse(io.BytesIO(dummy), content_type=version.mime_type)
+             content_type = "application/pdf" if is_pdf else version.mime_type
+             response = FileResponse(io.BytesIO(dummy), content_type=content_type)
              response['Content-Disposition'] = f'attachment; filename="dummy_{uuid}.pdf"' if attachment else 'inline'
              return response
