@@ -40,9 +40,8 @@ services:
       context: .
       dockerfile: ./docker/prod/nginx/Dockerfile
     ports:
-      - "8087:80"   # HTTP Entry (Host Nginx proxies / to here)
-      - "8000:80"   # API Entry (Host Nginx proxies /api/ to here)
-      - "8443:443"  # SSL Backup (Host Nginx can proxy to here if needed)
+      - "80:80"     # Primary HTTP entry
+      - "443:443"   # Primary HTTPS/SSL entry
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - media_volume:/app/media:ro
