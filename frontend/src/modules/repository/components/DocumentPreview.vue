@@ -7,35 +7,35 @@
     headerClass="modal__header--dark"
     @close="handleClose"
   >
-    <template #header>
-      <div class="u-flex-1">
-        <h3 class="modal__title flex items-center gap-3">
-          <i class="bi bi-file-earmark-pdf u-text-primary"></i> 
+    <template #header="{ titleId }">
+      <div class="u-flex-1 u-min-w-0">
+        <h3 :id="titleId" class="modal__title flex items-center gap-3 u-truncate">
+          <i class="bi bi-file-earmark-pdf u-text-primary" aria-hidden="true"></i> 
           {{ document.title }}
         </h3>
-        <p class="modal__subtitle u-font-mono u-uppercase" style="letter-spacing: 0.1em">
+        <p class="modal__subtitle u-font-mono u-uppercase u-text-slate-300 u-truncate" style="letter-spacing: 0.1em">
           Authoritative Preview • v{{ document.current_version_number || 1 }} • {{ formatCategory(document.classification_level) }}
         </p>
       </div>
-      <div class="u-flex u-gap-3">
-        <div v-if="isPdf" class="u-flex u-bg-slate-800/50 u-p-1 u-rounded-xl border border-slate-700">
-           <button 
-             @click="pdfMode = 'enhanced'" 
-             class="u-px-3 u-py-1 u-rounded-lg u-text-[9px] u-font-black u-uppercase u-transition-all" 
-             :class="pdfMode === 'enhanced' ? 'u-bg-primary u-text-white' : 'u-text-slate-400 hover:u-text-white'"
-           >
-             Enhanced
-           </button>
-           <button 
-             @click="pdfMode = 'native'" 
-             class="u-px-3 u-py-1 u-rounded-lg u-text-[9px] u-font-black u-uppercase u-transition-all" 
-             :class="pdfMode === 'native' ? 'u-bg-primary u-text-white' : 'u-text-slate-400 hover:u-text-white'"
-           >
-             Native
-           </button>
+      <div class="u-flex u-items-center u-gap-6 u-ml-4">
+        <div v-if="isPdf" class="u-flex u-bg-slate-800/50 u-p-1 u-rounded-xl border u-border-slate-700">
+            <button 
+              @click="pdfMode = 'enhanced'" 
+              class="u-px-4 u-py-1.5 u-rounded-lg u-text-[11px] u-font-black u-uppercase u-transition-all" 
+              :class="pdfMode === 'enhanced' ? 'u-bg-primary u-text-white shadow-sm' : 'u-text-slate-300 hover:u-text-white'"
+            >
+              Enhanced
+            </button>
+            <button 
+              @click="pdfMode = 'native'" 
+              class="u-px-4 u-py-1.5 u-rounded-lg u-text-[11px] u-font-black u-uppercase u-transition-all" 
+              :class="pdfMode === 'native' ? 'u-bg-primary u-text-white shadow-sm' : 'u-text-slate-300 hover:u-text-white'"
+            >
+              Native
+            </button>
         </div>
-        <button @click="initiateDownload" class="button button--primary button--tiny button--pill">
-          <i class="bi bi-download u-mr-1"></i> Download Securely
+        <button @click="initiateDownload" class="button button--primary button--sm button--pill u-shadow-lg">
+          <i class="bi bi-download u-mr-1.5"></i> Download Securely
         </button>
       </div>
     </template>
