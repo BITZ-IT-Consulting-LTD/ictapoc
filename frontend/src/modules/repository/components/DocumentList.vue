@@ -10,35 +10,41 @@
     
     <div class="u-divide-y u-divide-slate-100">
       <div v-for="doc in documents" :key="doc.uuid" class="u-p-6 transition-all hover:u-bg-slate-50/50">
-        <div class="u-flex u-justify-between u-items-start u-gap-4">
+        <div class="u-flex u-justify-between u-items-start u-gap-6">
           <!-- Document Info -->
           <div class="u-flex-1">
-            <h4 class="u-text-sm u-font-black u-text-main flex items-center gap-2">
-              <i class="bi bi-file-earmark-text-fill u-text-slate-400"></i>
+            <div class="u-flex u-items-center u-gap-2 u-mb-1">
+               <span class="u-text-[9px] u-font-black u-bg-primary/10 u-text-primary u-px-2 u-py-0.5 u-rounded u-uppercase u-tracking-tighter">Authoritative Preview</span>
+               <span class="u-text-[9px] u-font-black u-bg-slate-100 u-text-slate-500 u-px-2 u-py-0.5 u-rounded u-uppercase u-tracking-tighter">Verified Asset</span>
+            </div>
+            <h4 class="u-text-base u-font-black u-text-main u-leading-tight u-mb-2">
               {{ doc.title }}
             </h4>
-            <div class="u-text-[10px] u-font-bold u-text-muted u-uppercase u-tracking-widest u-mt-1.5 u-flex u-flex-wrap u-gap-3 u-items-center">
-              <span>Type: <span class="u-text-info">{{ doc.document_type }}</span></span>
-               <span class="w-1 h-1 bg-slate-200 rounded-full"></span>
-              <span>Level: <span :class="getClassificationColor(doc.classification_level)">{{ doc.classification_level }}</span></span>
-              <span class="w-1 h-1 bg-slate-200 rounded-full"></span>
-              <span>Version: v{{ doc.current_version_number }}</span>
+            <div class="u-flex u-items-center u-gap-2 u-text-[10px] u-font-bold u-text-muted u-uppercase u-tracking-widest">
+              <span class="u-flex u-items-center u-gap-1">
+                <i class="bi bi-file-earmark-text u-text-slate-400"></i>
+                {{ doc.document_type }}
+              </span>
+              <span class="u-text-slate-300">•</span>
+              <span class="u-text-primary">v{{ doc.current_version_number }}</span>
+              <span class="u-text-slate-300">•</span>
+              <span :class="getClassificationColor(doc.classification_level)">{{ doc.classification_level }}</span>
             </div>
 
             <!-- Business Metadata Chips -->
-            <div v-if="doc.metadata && Object.keys(doc.metadata).length > 0" class="u-mt-3 u-flex u-flex-wrap u-gap-2">
-              <span v-for="(val, key) in doc.metadata" :key="key" class="u-px-2 u-py-0.5 u-bg-slate-100 u-text-slate-600 u-rounded-md u-text-[10px] u-font-black u-uppercase u-tracking-tighter">
+            <div v-if="doc.metadata && Object.keys(doc.metadata).length > 0" class="u-mt-4 u-flex u-flex-wrap u-gap-2">
+              <span v-for="(val, key) in doc.metadata" :key="key" class="u-px-2.5 u-py-1 u-bg-white u-border u-border-slate-200 u-text-slate-600 u-rounded-lg u-text-[9px] u-font-black u-uppercase u-tracking-tighter shadow-sm">
                 {{ key.replace('_', ' ') }}: <span class="u-text-primary">{{ val }}</span>
               </span>
             </div>
           </div>
           
           <!-- Actions -->
-          <div class="u-flex u-items-center u-gap-2">
-            <button @click="$emit('preview', doc)" class="button button--ghost button--tiny button--pill" title="Preview securely">
-              <i class="bi bi-eye"></i> View
+          <div class="u-flex u-items-center u-gap-3">
+            <button @click="$emit('preview', doc)" class="button button--ghost button--sm button--pill u-bg-slate-100 hover:u-bg-slate-200" title="Preview securely">
+              <i class="bi bi-eye u-mr-1.5"></i> View
             </button>
-            <a :href="`/api/v1/documents/${doc.uuid}/download/`" target="_blank" class="button button--primary button--tiny button--pill" title="Download payload">
+            <a :href="`/api/v1/documents/${doc.uuid}/download/`" target="_blank" class="button button--primary button--sm button--pill shadow-lg shadow-primary/20" title="Download payload">
               <i class="bi bi-download"></i>
             </a>
           </div>

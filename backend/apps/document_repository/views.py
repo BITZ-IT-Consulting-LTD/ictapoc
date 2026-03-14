@@ -385,6 +385,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
                 b"%%EOF"
              )
              dummy = dummy_pdf if is_pdf else b"POC Dummy Stream Content"
-             response = FileResponse(io.BytesIO(dummy), content_type=version.mime_type)
+             content_type = "application/pdf" if is_pdf else version.mime_type
+             response = FileResponse(io.BytesIO(dummy), content_type=content_type)
              response['Content-Disposition'] = f'attachment; filename="dummy_{uuid}.pdf"' if attachment else 'inline'
              return response

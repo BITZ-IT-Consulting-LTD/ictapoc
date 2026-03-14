@@ -1,15 +1,15 @@
 <template>
     <Teleport to="body">
         <Transition name="modal-fade">
-            <div v-if="show" class="modal" role="dialog" aria-modal="true" @mousedown.self="onBackdropClick">
+            <div v-if="show" class="modal" role="dialog" aria-modal="true" :aria-labelledby="titleId" @mousedown.self="onBackdropClick">
                 <div class="modal__overlay"></div>
                 <div ref="modalCard" class="modal__card" :class="[`modal__card--${size}`]" tabindex="-1"
                     @keydown.esc="close">
                     <!-- Header -->
                     <header v-if="$slots.header || title" class="modal__header" :class="headerClass">
-                        <slot name="header">
+                        <slot name="header" :titleId="titleId">
                             <div class="modal__header-content">
-                                <h3 class="modal__title">{{ title }}</h3>
+                                <h3 :id="titleId" class="modal__title">{{ title }}</h3>
                                 <p v-if="subtitle" class="modal__subtitle">{{ subtitle }}</p>
                             </div>
                         </slot>
@@ -50,7 +50,10 @@
 
     const props = defineProps({
         show: Boolean,
-        title: String,
+        title: {
+            type: String,
+            default: 'Modal Dialog'
+        },
         subtitle: String,
         icon: String,
         error: String,
@@ -74,6 +77,7 @@
 
     const emit = defineEmits(['update:show', 'close']);
     const modalCard = ref(null);
+    const titleId = `modal-title-${Math.random().toString(36).substr(2, 9)}`;
 
     const close = () => {
         emit('update:show', false);

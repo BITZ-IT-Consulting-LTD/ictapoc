@@ -31,6 +31,8 @@ staticfiles/
 
 # Environment
 .env
+.env.*
+*.env
 .venv
 env/
 venv/
