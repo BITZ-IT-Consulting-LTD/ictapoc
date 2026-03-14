@@ -17,14 +17,14 @@
         @drop.prevent="handleDrop"
         @click="$refs.fileInput.click()"
       >
-        <input type="file" ref="fileInput" class="hidden" @change="handleFileSelect" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.xls,.xlsx" />
+        <input type="file" ref="fileInput" class="hidden" @change="handleFileSelect" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.xls,.xlsx,.md" />
         
         <i class="bi bi-file-earmark-arrow-up u-text-4xl u-text-slate-400 u-mb-4" :class="{'u-text-primary': isDragging || selectedFile}"></i>
         <div class="u-text-sm u-font-black u-text-main" v-if="!selectedFile">Click to browse or drag file here</div>
         <div class="u-text-sm u-font-black u-text-primary" v-else>{{ selectedFile.name }}</div>
         
         <div class="u-text-[10px] u-font-bold u-text-muted u-mt-2 uppercase tracking-widest whitespace-nowrap">
-          <span v-if="!selectedFile">Supported: PDF, DOCX, XLSX, JPG, PNG (Max 50MB)</span>
+          <span v-if="!selectedFile">Supported: PDF, DOCX, XLSX, JPG, PNG, MD (Max 50MB)</span>
           <span v-else>{{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB • Ready for upload</span>
         </div>
       </div>

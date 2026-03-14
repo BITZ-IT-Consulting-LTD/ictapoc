@@ -287,10 +287,23 @@ const formatSize = (bytes) => {
 const download = async (uuid, title) => {
    try {
        const res = await publicRepositoryApi.downloadDocument(uuid);
-       const url = window.URL.createObjectURL(new Blob([res.data]));
+       const contentType = res.headers['content-type'];
+       const blob = new Blob([res.data], { type: contentType });
+       const url = window.URL.createObjectURL(blob);
        const link = document.createElement('a');
        link.href = url;
-       const fileName = title ? (title.toLowerCase().endsWith('.pdf') ? title : `${title}.pdf`) : `document_${uuid}.pdf`;
+       
+       let extension = '';
+       if (contentType === 'application/pdf') extension = '.pdf';
+       else if (contentType === 'text/markdown' || contentType === 'text/x-markdown') extension = '.md';
+       else if (contentType === 'image/png') extension = '.png';
+       else if (contentType === 'image/jpeg') extension = '.jpg';
+       
+       let fileName = title || `document_${uuid}`;
+       if (extension && !fileName.toLowerCase().endsWith(extension)) {
+           fileName += extension;
+       }
+       
        link.setAttribute('download', fileName);
        document.body.appendChild(link);
        link.click();
