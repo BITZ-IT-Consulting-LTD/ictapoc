@@ -17,6 +17,10 @@
           <router-link to="/dashboard" class="navbar__link navbar__link--button">
             Dashboard <i class="bi bi-arrow-right-short ms-1"></i>
           </router-link>
+          
+          <button @click="toggleTheme" class="theme-toggle" :title="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+            <i :class="isDark ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill'"></i>
+          </button>
         </div>
       </nav>
     </header>
@@ -80,13 +84,43 @@
 </template>
 
 <style>
-  /* Global Layout Overrides if necessary, preferably in base.css */
+  .theme-toggle {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-hover);
+    color: var(--icta-dark);
+    transition: all 0.2s ease;
+    border: 1px solid var(--icta-border);
+  }
+
+  .theme-toggle:hover {
+    transform: rotate(15deg) scale(1.1);
+    background: var(--primary-soft);
+    color: var(--primary);
+  }
+
+  .dark .theme-toggle {
+    background: #1e293b;
+    border-color: #334155;
+    color: #fbbf24;
+  }
 </style>
 
 <script setup>
-  import { computed } from 'vue';
+  import { computed, onMounted } from 'vue';
   import { useRoute } from 'vue-router';
+  import { useTheme } from './composables/useTheme';
 
   const route = useRoute();
   const isDashboard = computed(() => route.path === '/dashboard');
+  
+  const { isDark, toggleTheme, initTheme } = useTheme();
+  
+  onMounted(() => {
+    initTheme();
+  });
 </script>

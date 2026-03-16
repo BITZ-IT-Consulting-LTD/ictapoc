@@ -38,7 +38,14 @@ class DocumentGenerator:
         
         # 2. Extract specific data points based on service type
         payload = service_request.payload
-        subject_name = payload.get('child_full_name') or payload.get('business_name') or citizen.get_full_name() or citizen.username
+        subject_name = (
+            payload.get('child_full_name') or 
+            payload.get('child_name') or 
+            payload.get('business_name') or 
+            payload.get('mda_requesting') or
+            citizen.get_full_name() or 
+            citizen.username
+        )
         
         # 3. Construct the "Digital Document" Structure
         document = {

@@ -57,6 +57,187 @@
   --bg-hover: #f1f5f9;
 }
 
+/* ==========================================================================
+   ULTRA-CONTRAST DARK MODE ENGINE
+   ========================================================================== */
+
+:root.dark {
+  color-scheme: dark;
+  
+  /* Core Dark Palette - High Contrast */
+  --bg-page: #020617;        /* Deepest Navy */
+  --bg-surface: #0f172a;     /* Standard Card/Surface */
+  --bg-surface-alt: #1e293b; /* Hover/Secondary Surface */
+  --bg-input: #020617;
+  
+  --border-dim: #1e293b;
+  --border-main: #334155;
+  --border-highlight: #475569;
+  
+  --text-primary: #ffffff;   /* Pure White Headers */
+  --text-secondary: #cbd5e1; /* High Contrast Secondary */
+  --text-dim: #94a3b8;       /* Readable Muted Text */
+  
+  --icta-red-glow: rgba(236, 35, 42, 0.15);
+  --glass-dark: rgba(2, 6, 23, 0.8);
+  
+  /* Override ICTA Global Variables */
+  --icta-white: var(--bg-surface);
+  --icta-dark: var(--text-primary);
+  --icta-text: var(--text-secondary);
+  --icta-grey: var(--text-dim);
+  --icta-border: var(--border-main);
+  --icta-light: var(--bg-page);
+  
+  /* Shadow Overrides */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.6);
+}
+
+/* Global Dark Mode Rules */
+.dark body, .dark #app {
+  background-color: var(--bg-page) !important;
+  color: var(--text-secondary) !important;
+}
+
+.dark *, .dark *::before, .dark *::after {
+  border-color: var(--border-main);
+}
+
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6,
+.dark .page__title, .dark .card__title, .dark .modal__title, .dark .modal-title,
+.dark strong, .dark b, .dark th {
+  color: var(--text-primary) !important;
+}
+
+.dark p, .dark span, .dark li, .dark td, .dark div:not([class*="bg-"]), .dark a:not([class*="btn"]) {
+  color: var(--text-secondary);
+}
+
+/* 1. Component Overrides - Surfaces & Borders */
+.dark .card, 
+.dark .icta-card, 
+.dark .modal-card, 
+.dark .modal__card, 
+.dark .toolbar, 
+.dark .layout__header,
+.dark .sidebar-nav__item,
+.dark .navbar,
+.dark .panel,
+.dark .list__item,
+.dark .list-group-item,
+.dark .stats-card {
+  background-color: var(--bg-surface) !important;
+  background-image: none !important;
+  border-color: var(--border-main) !important;
+  color: var(--text-secondary) !important;
+}
+
+.dark .card__header, 
+.dark .modal-header, 
+.dark .modal__header, 
+.dark .card__footer, 
+.dark .modal-footer, 
+.dark .modal__footer {
+  background-color: var(--bg-page) !important;
+  border-color: var(--border-main) !important;
+}
+
+/* 2. Enhanced Table Contrast */
+.dark table, .dark .table {
+  color: var(--text-secondary) !important;
+  border-color: var(--border-main) !important;
+}
+
+.dark th, .dark .table__th, .dark .table__header-cell {
+  background-color: var(--bg-page) !important;
+  color: var(--text-primary) !important;
+  border-bottom: 2px solid var(--border-main) !important;
+}
+
+.dark td, .dark .table__td, .dark .table__cell {
+  border-color: var(--border-dim) !important;
+  color: var(--text-secondary) !important;
+}
+
+.dark .table__row:hover, .dark tr:hover, .dark .list__item:hover {
+  background-color: var(--bg-surface-alt) !important;
+  box-shadow: inset 4px 0 0 var(--icta-red) !important;
+}
+
+/* 3. Form Elements - High Legibility */
+.dark .icta-input, .dark .icta-select, .dark .form__input, .dark .form__select, .dark .form__textarea, .dark input, .dark select, .dark textarea {
+  background-color: var(--bg-input) !important;
+  border-color: var(--border-main) !important;
+  color: var(--text-primary) !important;
+}
+
+.dark .icta-input:focus, .dark .form__input:focus {
+  border-color: var(--icta-red) !important;
+  box-shadow: 0 0 0 4px var(--icta-red-glow) !important;
+}
+
+.dark .icta-label, .dark .form__label, .dark label {
+  color: var(--text-secondary) !important;
+  font-weight: 700 !important;
+}
+
+/* 4. Navigation & Toolbars */
+.dark .navbar__link, .dark .tabs__item, .dark .sidebar-nav__item, .dark .navbar__brand {
+  color: var(--text-dim) !important;
+}
+
+.dark .navbar__link--active, .dark .tabs__item--active, .dark .sidebar-nav__item--active, .dark .navbar__link:hover {
+  color: var(--text-primary) !important;
+  background-color: var(--bg-surface-alt) !important;
+}
+
+.dark .navbar__brand {
+  color: var(--text-primary) !important;
+}
+
+/* 5. Utility Catch-all Overrides - Aggressive */
+.dark .u-bg-white { background-color: var(--bg-surface) !important; }
+.dark .u-bg-slate-50, .dark .u-bg-slate-100 { background-color: var(--bg-page) !important; }
+.dark .u-bg-slate-200 { background-color: var(--border-main) !important; }
+
+.dark .u-text-main, .dark .u-text-slate-900 { color: var(--text-primary) !important; }
+.dark .u-text-slate-500, .dark .u-text-slate-600, .dark .u-text-muted { color: var(--text-dim) !important; }
+
+.dark .u-border-slate-100, .dark .u-border-slate-200, .dark .u-border-slate-300 { border-color: var(--border-main) !important; }
+
+/* Catch hardcoded inline styles from screenshot audit */
+.dark [style*="background: white"], 
+.dark [style*="background-color: white"],
+.dark [style*="background: #ffffff"],
+.dark [style*="background-color: #ffffff"],
+.dark [style*="background:white"] {
+  background-color: var(--bg-surface) !important;
+  color: var(--text-secondary) !important;
+}
+
+/* 6. Status Badge Enhancements */
+.dark .badge, .dark .icta-badge {
+  border-width: 1px !important;
+  border-style: solid !important;
+}
+
+.dark .badge--info, .dark .icta-badge-received { background: rgba(14, 165, 233, 0.2) !important; color: #7dd3fc !important; border-color: rgba(14, 165, 233, 0.4) !important; }
+.dark .badge--warning, .dark .icta-badge-progress { background: rgba(245, 158, 11, 0.2) !important; color: #fcd34d !important; border-color: rgba(245, 158, 11, 0.4) !important; }
+.dark .badge--success, .dark .icta-badge-approved { background: rgba(16, 185, 129, 0.2) !important; color: #6ee7b7 !important; border-color: rgba(16, 185, 129, 0.4) !important; }
+.dark .badge--danger, .dark .icta-badge-rejected { background: rgba(239, 68, 68, 0.2) !important; color: #fca5a5 !important; border-color: rgba(239, 68, 68, 0.4) !important; }
+
+/* Sidebar Background Force */
+.dark .sidebar-nav {
+  background-color: var(--bg-surface) !important;
+}
+
+/* Modal Backdrop */
+.dark .modal-overlay, .dark .modal__overlay {
+  background: rgba(2, 6, 23, 0.85) !important;
+}
+
 /* Premium Animations */
 @keyframes float {
   0% { transform: translateY(0px); }

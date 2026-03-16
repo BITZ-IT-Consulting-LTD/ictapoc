@@ -320,6 +320,10 @@ class WorkflowEngine:
         target_role = step.role
         target_mda = step.target_mda or self.service_request.service_config.mda
         
+        if not target_role:
+            print(f"WORKFLOW [Warning]: No role assigned to step {step.step_name}. Skipping auto-assignment.")
+            return
+
         eligible_query = Q(role__icontains=target_role) | Q(user_role__name__icontains=target_role) | Q(role__icontains=f"GLOBAL_{target_role}") | Q(user_role__name__icontains=f"GLOBAL_{target_role}")
         
         if target_mda:

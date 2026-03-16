@@ -1438,10 +1438,19 @@
   // --- Helper Functions for UI Focus ---
 
   const getActionState = (request) => {
+    if (!user.value) return 'processing';
+    
+    // Normalize IDs for comparison (handle both integer and nested object cases)
+    const userId = Number(user.value.id);
+    const assignedId = request.assigned_to && typeof request.assigned_to === 'object' 
+      ? Number(request.assigned_to.id) 
+      : Number(request.assigned_to);
+
     // If status is 'in_progress' and assigned to me -> Action Required
-    if (request.status === 'in_progress' && user.value && request.assigned_to === user.value.id) {
-      // Double check if step role matches just in case
-      if (request.current_step && request.current_step.role === 'System') return 'processing';
+    if (request.status === 'in_progress' && assignedId === userId) {
+      // Double check if step role matches just in case (Case-insensitive 'system' check)
+      const stepRole = request.current_step?.role?.toLowerCase();
+      if (stepRole === 'system') return 'processing';
       return 'action_required';
     }
     return 'processing';
@@ -1649,10 +1658,10 @@
 
 
   const adminTabGroups = [
-    { title: 'Entity Management', icon: 'bi-people-fill', tabs: ['MDAs', 'Users', 'Roles'] },
-    { title: 'Service Registries', icon: 'bi-grid-3x3-gap-fill', tabs: ['Whole-of-Gov Catalogue', 'Priority MDAs', 'Priority Services', 'Cradle to Death'] },
-    { title: 'System & Security', icon: 'bi-shield-lock-fill', tabs: ['Registries Monitor', 'Audit Logs', 'System Health'] },
-    { title: 'Developer / Documentation', icon: 'bi-file-earmark-code-fill', tabs: ['System Docs'] }
+    { title: 'Governance & Strategy', icon: 'bi-shield-shaded', tabs: ['MDAs', 'Prioritization', 'Access Governance'] },
+    { title: 'Service Architecture', icon: 'bi-diagram-3-fill', tabs: ['Whole-of-Gov Catalogue', 'Cradle to Death', 'Architecture Designer'] },
+    { title: 'Data & Interoperability', icon: 'bi-database-fill-check', tabs: ['Shared Registries', 'API Gateway', 'Trust & Identity'] },
+    { title: 'Security & Operations', icon: 'bi-cpu-fill', tabs: ['Audit Logs', 'Platform Health', 'Technical Specs'] }
   ];
   const route = useRoute();
   const router = useRouter();
@@ -1703,16 +1712,20 @@
 
     const map = {
       'MDAs': MdaManager,
-      'Users': UserManager,
-      'Roles': AdminRolesView,
+      'Prioritization': ServiceCatalogueMatrix,
+      'Access Governance': AdminRolesView,
+      
       'Whole-of-Gov Catalogue': ServiceCatalogueMatrix,
-      'Priority MDAs': ServiceCatalogueMatrix,
-      'Priority Services': ServiceCatalogueMatrix,
       'Cradle to Death': ServiceCatalogueMatrix,
-      'Registries Monitor': RegistriesMonitor,
+      'Architecture Designer': ArchitectureSimulator,
+      
+      'Shared Registries': RegistriesMonitor,
+      'API Gateway': ApiRegistry,
+      'Trust & Identity': UserManager,
+      
       'Audit Logs': AuditLogManager,
-      'System Health': SystemHealthView,
-      'System Docs': DocViewer
+      'Platform Health': SystemHealthView,
+      'Technical Specs': DocViewer
     };
     return map[currentTab.value] || null;
   });

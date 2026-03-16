@@ -434,6 +434,7 @@ class ServiceRequestViewSet(viewsets.ModelViewSet):
 
         return queryset.none()
 
+    @transaction.atomic
     def create(self, request, *args, **kwargs):
         citizen = request.user
         service_code = request.data.get('service_code')
@@ -453,6 +454,7 @@ class ServiceRequestViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    @transaction.atomic
     def complete_step(self, request, pk=None):
         service_request = self.get_object()
         user = request.user
@@ -469,18 +471,21 @@ class ServiceRequestViewSet(viewsets.ModelViewSet):
         workflow_engine = WorkflowEngine(request_id=service_request.request_id)
         try:
             workflow_engine.complete_manual_step(user, action_taken, details, payload=request.data.get('payload'))
-            service_request.refresh_from_db() # Refresh to get updated status
-            
-            # Clear assignment when step is completed so next step starts unassigned
-            service_request.assigned_to = None
-            service_request.save()
+            service_request.refresh_from_db() # Refresh to get updated status and assignment
             
             serializer = self.get_serializer(service_request)
             return Response(serializer.data)
         except (ValueError, PermissionError) as e:
             return Response({"detail": str(e)}, status=status.HTTP_403_FORBIDDEN)
         except Exception as e:
-            return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            import traceback
+            error_trace = traceback.format_exc()
+            print(f"ERROR in complete_step: {str(e)}\n{error_trace}")
+            return Response({
+                "detail": "Internal Server Error",
+                "message": str(e),
+                "traceback": error_trace
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def escalate(self, request, pk=None):
