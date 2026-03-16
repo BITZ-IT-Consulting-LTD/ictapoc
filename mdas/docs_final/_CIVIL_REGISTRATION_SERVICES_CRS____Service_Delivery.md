@@ -16,22 +16,26 @@ Civil Registration Services (CRS) is mandated to register all births and deaths 
 
 ## Process 1: Birth Registration
 
-### 1.1 AS-IS Process Flowchart (BPMN 2.0)
+### 1.1 AS-IS Process Flow (BPMN 2.0)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-    S1["Birth Occurs (Hospital issues Notification; Home birth reported to Chief)"] --> S2
-    S2["Parent visits CRS Office/Huduma Centre with Notification & IDs"] --> S3
-    S3["Parent manually fills Form B3"] --> S4
-    S4["CRS Officer verifies documents against physical records"] --> S5
-    S5["Officer records details in physical Birth Register"] --> S6
-    S6["Certificate is typed/printed and signed by District Registrar"] --> S7
-    S7["Parent pays fee and collects physical Birth Certificate"] --> End((End))
+flowchart TD
+    subgraph Parent["Parent / Informant"]
+        Start(( )) --> A1[Visit CRS Office / Huduma Centre]
+        A1 --> A2[Manually fill Form B3]
+        A5[Pay Processing Fee] --> A6[Collect Physical Certificate]
+        A6 --> End((( )))
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph CRS["CRS / Sub-County Registry"]
+        A2 --> B1[Verify ID & Notification]
+        B1 --> B2[Capture in Physical Register]
+        B2 --> B3[Type & Print Certificate]
+        B3 --> B4[Registrar Reviews & Signs]
+        B4 --> A5
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ### 1.2 Detailed Process (AS-IS)
@@ -45,22 +49,33 @@ graph TD
 | 6 | CRS Officer | **Generation:** Types and prints the Birth Certificate; signed by Registrar. | Legacy Printer | |
 | 7 | Parent | **Collection:** Pays certificate fee (if late/extra) and collects physical copy. | Cash/M-Pesa | |
 
-### 1.3 TO-BE Process (POC v2 Aligned)
-**Design Principles:** Event-Driven Architecture, Source Data Capture, NPKI Signing, Wallet-First Delivery.
-
+### 1.3 TO-BE Process (BPMN 2.0 - POC v2 Aligned)
 ```mermaid
-graph TD
-    Start((Start)) --> T1
-    T1["Health Staff logs birth in MOH Afya App (Event Trigger)"] --> T2
-    T2["Huduma Bridge fetches Mother's identity via X-Road (KeSEL)"] --> T3
-    T3["System mints Unique Personal Identifier (Maisha Namba)"] --> T4
-    T4["NPKI Service cryptographically signs the Digital Birth Certificate"] --> T5
-    T5["Certificate pushed to Citizen's Mobile Wallet & eCitizen Vault"] --> End((End))
+flowchart TD
+    subgraph Facility["MOH / Medical Facility"]
+        Start(( )) --> T1[Capture Birth in Afya App]
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph Bridge["Huduma Bridge / KeSEL"]
+        T1 --> T2[X-Road: Fetch Parent IPRS Data]
+    end
+
+    subgraph Registry["CRS Central Registry"]
+        T2 --> T3[Mint Unique Maisha Namba]
+        T3 --> T4[Store in Vital Events Vault]
+    end
+
+    subgraph Trust["Trust Hub / NPKI"]
+        T4 --> T5[NPKI: Sign Digital Certificate]
+    end
+
+    subgraph Wallet["eCitizen Wallet"]
+        T5 --> T6[Issue Verifiable Credential]
+        T6 --> End((( )))
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 | Step | Role | Action | System / Platform |
@@ -75,23 +90,29 @@ graph TD
 
 ## Process 2: Death Registration and Issuance of Death Certificate
 
-### 2.1 AS-IS Process Flowchart (BPMN 2.0)
+### 2.1 AS-IS Process Flow (BPMN 2.0)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-    S1["Death Occurs (Hospital, Home, or Other)"] --> S2
-    S2["Death Notification Issued (Form D1 by Hospital or Letter by Chief)"] --> S3
-    S3["Family submits notification to CRS/Sub-County Office"] --> S4
-    S4["Burial Permit Issued (Burial can proceed)"] --> S5
-    S5["Next of Kin visits CRS to apply for Death Certificate with IDs & Form D1"] --> S6
-    S6["Registration Officer completes Death Registration Form"] --> S7
-    S7["Official Death Record created in CRS Registry"] --> S8
-    S8["Death Certificate Generated and Issued to Applicant"] --> End((End))
+flowchart TD
+    subgraph Family["Family / Next of Kin"]
+        Start(( )) --> F1[Report Death to Hospital/Chief]
+        F3[Submit Notification to CRS] --> F4[Apply for Death Cert]
+        F8[Receive Death Certificate] --> End((( )))
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph Agency["Hospital / Chief"]
+        F1 --> A1[Issue Death Notification - D1]
+    end
+
+    subgraph CRS["CRS Registry"]
+        A1 --> F3
+        F4 --> C1[Issue Burial Permit]
+        C1 --> C2[Register Death in System]
+        C2 --> C3[Print Death Certificate]
+        C3 --> F8
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ### 2.2 Detailed Process (AS-IS)
@@ -107,22 +128,29 @@ graph TD
 | 8 | Registry | **Generation:** System prepares the Death Certificate. | Printer | |
 | 9 | Next of Kin | **Issuance:** Collects the final Death Certificate. | Physical | |
 
-### 2.3 TO-BE Process (POC v2 Aligned)
-**Design Principles:** Digital Source Capture, Automated IPRS Status Update (Broadcast), NPKI Signing.
-
+### 2.3 TO-BE Process (BPMN 2.0 - POC v2 Aligned)
 ```mermaid
-graph TD
-    Start((Start)) --> T1
-    T1["Medical Personnel/Chief captures Death Event in MOH Afya App"] --> T2
-    T2["Huduma Bridge broadcasts 'Deceased' status to IPRS & NTSA via X-Road"] --> T3
-    T3["System auto-generates Digital Burial Permit with NPKI Signature"] --> T4
-    T4["Next of Kin notified via SMS; applies for Certificate on eCitizen"] --> T5
-    T5["Payment processed via GPA; Cryptographic Cert issued to Wallet"] --> End((End))
+flowchart TD
+    subgraph Medical["Medical / Chief"]
+        Start(( )) --> M1[Log Death in Afya App]
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph Interop["Huduma Bridge"]
+        M1 --> I1[X-Road: Broadcast 'Deceased' to IPRS]
+    end
+
+    subgraph Trust["Trust Hub"]
+        I1 --> T1[Generate Signed Burial Permit]
+    end
+
+    subgraph Citizen["eCitizen / GPA"]
+        T1 --> C1[Next of Kin Pays via GPA]
+        C1 --> C2[Issue Digital Cert to Wallet]
+        C2 --> End((( )))
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 | Step | Role | Action | System / Platform |

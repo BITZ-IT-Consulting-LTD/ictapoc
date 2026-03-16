@@ -18,50 +18,30 @@ Civil Registration Services (CRS) is the authoritative custodian of vital life e
 
 ---
 
-## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (Birth & Death Registration based on Deep Dive).*
-
+### 1.1 AS-IS Process Flow (BPMN 2.0)
 ```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-graph TD
-    Start((Start)) --> Source{"Event Source?"}
-    
-    subgraph Capture["Point of Occurrence"]
-        Source -- "Hospital" --> Notification["Hospital Notification / Medical Cert"]
-        Source -- "Home" --> Community["Community Report (Chief/Informant)"]
-        Notification --> Form["Complete Form (Birth/Death)"]
-        Community --> Form
+flowchart TD
+    subgraph Location["Medical Facility / Chief"]
+        Start(( )) --> A1[Notify Birth/Death]
     end
-    
-    subgraph Vetting["Verification & Approval"]
-        Form --> Attach["Attach Parent IDs / Marriage Cert / Evidence"]
-        Attach --> Review["Officer Reviews Documents"]
-        Review --> Verify["Verify Parents / Cause of Death"]
-        Verify --> Complete{"Is Data Complete?"}
-        
-        Complete -- "No" --> MoreInfo["Request More Info/Docs"]
-        MoreInfo --> Form
-        
-        Complete -- "Yes" --> Register["Enter in Register & Assign Entry Number"]
-    end
-    
-    subgraph Issuance["Payment & Production"]
-        Register --> Sign["Registrar Signs Record"]
-        Sign --> Payment["Process Payment (Manual/eCitizen)"]
-        Payment --> Print["Print Certificate / Burial Permit"]
-        Print --> Issue["Issue Certificate to Informant"]
-    end
-    
-    Issue --> End((End))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px;;
-    class Start start;
-    class End endNode;
-    class Source,Complete gateway;
-    class Notification,Community,Form,Attach,Review,Verify,MoreInfo,Register,Sign,Payment,Print,Issue userTask;
+    subgraph Informant["Citizen / Informant"]
+        A1 --> B1[Collect Notification Paperwork]
+        B1 --> B2[Visit CRS / Huduma Centre]
+        B2 --> B3[Complete Form & Attach ID]
+        B7[Pay via Finance/eCitizen] --> B8[Collect Physical Certificate]
+        B8 --> End((( )))
+    end
+
+    subgraph CRS["CRS / Registry Office"]
+        B3 --> C1[Officer Verifies Documents]
+        C1 --> C2[Register & Assign Entry No]
+        C2 --> C3[Registrar Reviews & Signs]
+        C3 --> B7
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ---
@@ -112,44 +92,33 @@ Vital Event Registration (Births and Deaths) and Certificate Issuance
 
 ---
 
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
-
+### 1.2 TO-BE Process (BPMN 2.0 - POC v2 Aligned)
 ```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-graph TD
-    Start((Start)) --> Event["Birth/Death Occurs at Facility"]
-    
-    subgraph Layer1["Access - Point of Care"]
-        Event --> MOH["MOH System Logs Event('Afya App')"]
+flowchart TD
+    subgraph MOH["Ministry of Health / Chief"]
+        Start(( )) --> T1[Log Event via Afya App]
     end
-    
-    subgraph Layer3["Huduma Bridge / X-Road"]
-        MOH --> XRoad["X-Road: Secure Push to CRS Database"]
-        XRoad --> IPRS["X-Road: Verify Parent/Deceased via IPRS"]
-    end
-    
-    subgraph Layer4["Authoritative Registry"]
-        IPRS --> Mint["CRS: Auto-Mint Maisha Namba / Update Status"]
-        Mint --> Vault["Store in Secure Vital Events Vault"]
-    end
-    
-    subgraph Output["Digital Issuance & Trust"]
-        Vault --> Sign["NPKI: Cryptographically Sign Certificate"]
-        Sign --> GPA["GPA: Process Split-Fee Payment (if any)"]
-        GPA --> Wallet["Issue Verifiable Digital Certificate to Wallet"]
-    end
-    
-    Wallet --> End((End))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px,font-size:24px;;
-    class Start start;
-    class End endNode;
-    class Event,MOH userTask;
-    class XRoad,IPRS,Mint,Vault,Sign,GPA,Wallet serviceTask;
+    subgraph Bridge["Huduma Bridge"]
+        T1 --> T2[X-Road: Verify Maisha Identity]
+    end
+
+    subgraph Registry["CRS Registry"]
+        T2 --> T3[Mint UPI & Store in Vault]
+    end
+
+    subgraph Trust["Trust Hub / NPKI"]
+        T3 --> T4[Digital Multi-Sign Certificate]
+    end
+
+    subgraph Citizen["eCitizen Wallet / GPA"]
+        T4 --> C1[Process GPA Payment]
+        C1 --> C2[Deliver Verifiable Cert to Wallet]
+        C2 --> End((( )))
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ## Future State Process (TO-BE)
