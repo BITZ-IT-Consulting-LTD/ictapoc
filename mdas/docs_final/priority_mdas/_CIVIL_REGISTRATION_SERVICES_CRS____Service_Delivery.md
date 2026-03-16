@@ -134,9 +134,10 @@ graph TD
         Mint --> Vault["Store in Secure Vital Events Vault"]
     end
     
-    subgraph Output["Digital Issuance"]
-        Vault --> Notify["Notify Parents/Kin via eCitizen App"]
-        Notify --> Wallet["Issue Verifiable Digital Certificate to Wallet"]
+    subgraph Output["Digital Issuance & Trust"]
+        Vault --> Sign["NPKI: Cryptographically Sign Certificate"]
+        Sign --> GPA["GPA: Process Split-Fee Payment (if any)"]
+        GPA --> Wallet["Issue Verifiable Digital Certificate to Wallet"]
     end
     
     Wallet --> End((End))
@@ -148,7 +149,7 @@ graph TD
     class Start start;
     class End endNode;
     class Event,MOH userTask;
-    class XRoad,IPRS,Mint,Vault,Notify,Wallet serviceTask;
+    class XRoad,IPRS,Mint,Vault,Sign,GPA,Wallet serviceTask;
 ```
 
 ## Future State Process (TO-BE)
@@ -165,9 +166,10 @@ graph TD
 |---|---|---|---|
 | 1 | Health Worker | Records the birth/death in the facility EMR. | MOH Afya App |
 | 2 | System | Automatically verifies the parents' IDs against Maisha Namba via X-Road. | IPRS / KeSEL |
-| 3 | CRS Registry | Receives the validated packet and mints a UPI (Maisha Namba) for the child. | CRS / Workflow Engine |
-| 4 | System | Notifies the parents/kin via SMS/eCitizen that the registration is complete. | Notification Gateway |
-| 5 | Citizen | Accesses the verifiable digital certificate via their mobile phone for use in other government services. | Digital Wallet |
+| 3 | CRS Registry | Receives validated packet, mints UPI (Maisha Namba) and stores in Vault. | CRS / Workflow Engine |
+| 4 | Trust Hub | **NPKI Signing:** Cryptographically signs the record for non-repudiation. | NPKI Service |
+| 5 | Finance | **Payment:** GPA processes fees and performs revenue split (National/County). | GPA |
+| 6 | Citizen | **Issuance:** Verifiable digital certificate delivered to Passport/Mobile Wallet. | Digital Wallet |
 
 ---
 
