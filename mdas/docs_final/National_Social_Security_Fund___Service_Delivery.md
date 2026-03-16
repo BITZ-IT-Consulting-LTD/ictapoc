@@ -14,38 +14,24 @@ The National Social Security Fund (NSSF) is a statutory public institution in Ke
 
 ---
 
-## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization.*
-
+### 1.1 AS-IS Process Flow (BPMN 2.0)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-
-    subgraph Applicant [Applicant]
-        S1["Applicant accesses NSSF Self Service Portal or USSD."]
-        S2["Applicant enters National ID/Alien ID number and details."]
-        S5["Applicant prints the NSSF card/membership details."]
+flowchart TD
+    subgraph Applicant["Citizen / Employee"]
+        Start(( )) --> A1[Access Self Service Portal/USSD]
+        A1 --> A2[Enter ID Manually]
+        A3[Print Membership Details] --> End((( )))
     end
 
-    subgraph System [System]
-        S3["System validates details from IPRS."]
-        S4["System generates NSSF Number immediately."]
+    subgraph System["NSSF Core"]
+        A2 --> B1[Manual IPRS Validation]
+        B1 --> B2[Generate NSSF Number]
     end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> End((End))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    B2 --> A3
 
-    class Start start;
-    class End endNode;
-    class S1,S2,S5 userTask;
-    class S3,S4 serviceTask;
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ---
@@ -105,46 +91,30 @@ Service Delivery
 
 ---
 
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Optimized).*
-
+### 2.1 TO-BE Process (BPMN 2.0 - POC v2 Aligned)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-
-    subgraph System [System]
-        S1["Trigger Event: Citizen becomes eligible (Employment/18 yrs/Portal)"]
-        S2["System retrieves IPRS data and creates NSSF Profile"]
-        S3["System generates NSSF Number and notifies Citizen"]
-        S6["Real-Time Contribution Posting to Citizen Account"]
+flowchart TD
+    subgraph Event["Point of Event"]
+        Start(( )) --> E1[Life Event: Turning 18 / Employment]
     end
 
-    subgraph Employer [Employer]
-        S4["Employer links Employee to NSSF via Payroll API"]
-        S5["Employer system automatically submits contributions"]
+    subgraph Hub["Huduma Bridge / X-Road"]
+        E1 --> H1[X-Road: Auto-fetch IPRS Profile]
     end
 
-    subgraph Citizen [Citizen]
-        S7["Citizen views details on unified self-service portal"]
+    subgraph NSSF["NSSF System"]
+        H1 --> N1[Auto-Generate NSSF Number]
+        N1 --> N2[API-Driven Employer Linking]
     end
 
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> End((End))
+    subgraph Payroll["Employer Payroll"]
+        N2 --> P1[Instant Real-Time Contribution Posting]
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    P1 --> End((( )))
 
-    class Start start;
-    class End endNode;
-    class S1,S2,S3,S6 serviceTask;
-    class S4,S5,S7 userTask;
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ## Future State Process (TO-BE)

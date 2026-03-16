@@ -14,46 +14,30 @@ Represents 'Social Protection Culture and Recreation' cluster for balanced cover
 
 ---
 
-## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization.*
-
+### 1.1 AS-IS Process Flow (BPMN 2.0)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-
-    subgraph Citizen [Citizen]
-        S1["Citizen/Stakeholder submits inquiry, complaint, or policy..."]
+flowchart TD
+    subgraph Citizen["Citizen / Applicant"]
+        Start(( )) --> A1[Submit Inquiry / Proposal]
     end
 
-    subgraph Registry [Registry]
-        S2["Central Registry receives and tags the correspondence."]
+    subgraph Ministry["Ministry Registry"]
+        A1 --> B1[Receive & Tag Correspondence]
+        B1 --> B2[Route to Technical Directorate]
     end
 
-    subgraph Directorate [Directorate]
-        S3["Relevant Technical Directorate reviews and drafts respons..."]
+    subgraph Directorate["Technical Directorate"]
+        B2 --> C1[Review & Draft Response]
+        C1 --> C2[Seek PS/Director Approval]
     end
 
-    subgraph PS_Director [PS/Director]
-        S4["Principal Secretary/Director approves the response."]
+    subgraph Outcome["Service Outcome"]
+        C2 --> D1[Issue Official Response / Guideline]
+        D1 --> End((( )))
     end
 
-    subgraph Ministry [Ministry]
-        S5["Ministry issues official response or policy guideline."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> End((End))
-
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
-    class Start start;
-    class End endNode;
-    class S1,S2,S3,S4,S5 userTask;
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ---
@@ -116,45 +100,31 @@ Service Delivery
 
 ---
 
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Optimized).*
-
+### 2.1 TO-BE Process (BPMN 2.0 - POC v2 Aligned)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-
-    subgraph Applicant [Applicant]
-        S1["Applicant logs in via Single Sign-On (SSO) and selects th..."]
-        S4["Applicant pays fees via the Government Payment Gateway; S..."]
+flowchart TD
+    subgraph Applicant["Citizen / Benefit Recipient"]
+        Start(( )) --> T1[SSO Login via eCitizen]
     end
 
-    subgraph System [System]
-        S2["Applicant enters Business Registration Number; System aut..."]
-        S3["System performs auto-validation of compliance (e.g., KRA ..."]
-        S5["Application is processed by the Rules Engine. (Low-risk c..."]
-        S7["System generates a Verifiable Digital Certificate (QR Cod..."]
+    subgraph Hub["Huduma Bridge / X-Road"]
+        T1 --> T2[X-Road: Auto-fetch Vulnerability Data]
+        T2 --> T3[X-Road: Cross-check IPRS / NSSF]
     end
 
-    subgraph Officer [Officer]
-        S6["Complex cases are routed to the Officer Workbench for dig..."]
+    subgraph System["Social Protection Engine"]
+        T3 --> S1[AI-Driven Eligibility Scoring]
+        S1 --> S2[1-Click Disbursement Approval]
     end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> End((End))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    subgraph Finance["GPA / eCitizen Wallet"]
+        S2 --> F1[Direct Cash Transfer to Wallet]
+    end
 
-    class Start start;
-    class End endNode;
-    class S1,S4,S6 userTask;
-    class S2,S3,S5,S7 serviceTask;
+    F1 --> End((( )))
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ## Future State Process (TO-BE)

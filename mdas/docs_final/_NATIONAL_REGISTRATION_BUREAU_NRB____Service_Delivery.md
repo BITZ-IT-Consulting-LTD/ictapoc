@@ -14,50 +14,35 @@ The National Registration Bureau (NRB) is responsible for the identification and
 
 ---
 
-## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (Semi-Manual / Fingerprint Intensive).*
-
+### 1.1 AS-IS Process Flow (BPMN 2.0)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-
-    subgraph Applicant [Applicant]
-        S1["**Preparation:** Obtains parents' ID copies and Birth Cer..."]
-        S3["**Application:** Visits the NRB office (Registrar of Pers..."]
-        S7["**Collection:** Applicant receives SMS (sometimes), visit..."]
+flowchart TD
+    subgraph Applicant["Citizen / Applicant"]
+        Start(( )) --> A1[Obtain Parent ID & Birth Cert]
+        A1 --> A2[Visit Local Chief for Vetting]
+        A2 --> A3[Visit NRB Registrar Office]
+        A3 --> A4[Fill Physical Form REG.136A]
     end
 
-    subgraph Chief___Assistant_Chief [Chief / Assistant Chief]
-        S2["**Vetting:** Visits the local administrator for verificat..."]
+    subgraph NRB_Officer["NRB Registrar Booth"]
+        A4 --> B1[Manual Document Review]
+        B1 --> B2[Capture Biometrics (Ink/Scan)]
     end
 
-    subgraph NRB_Officer [NRB Officer]
-        S4["**Data Capture:** Officer verifies documents against orig..."]
+    subgraph NRB_HQ["NRB HQ / production"]
+        B2 --> C1[Data Transmission to Nairobi]
+        C1 --> C2[AFIS Fingerprint Matching]
+        C2 --> C3[Card Production & Personalization]
     end
 
-    subgraph NRB_HQ [NRB HQ]
-        S5["**Processing:** Data transmitted to HQ (Nairobi)."]
+    subgraph Logistics["Logistics Hub"]
+        C3 --> L1[Dispatch Batch to District]
+        L1 --> A5[Citizen Collects Physical ID]
+        A5 --> End((( )))
     end
 
-    subgraph Logistics [Logistics]
-        S6["**Dispatch:** Cards are batched and sent back to the dist..."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> End((End))
-
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
-    class Start start;
-    class End endNode;
-    class S1,S2,S3,S4,S5,S6,S7 userTask;
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ---
@@ -131,52 +116,34 @@ National Identity Card Registration (New Application & Replacement)
 
 ---
 
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Repeatable WoG Platform).*
-
+### 2.1 TO-BE Process (BPMN 2.0 - POC v2 Aligned)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-
-    subgraph Citizen [Citizen via eCitizen]
-        S1["Logs in & Selects 'Upgrade to Adult ID'"]
-        S2["System Auto-Fetches Child UPI Data"]
-        S3["Updates Photo & Address (Self-Service)"]
+flowchart TD
+    subgraph Citizen["Citizen / eCitizen"]
+        Start(( )) --> T1[SSO Login & Select ID Upgrade]
+        T1 --> T2[Update Live Photo via Mobile App]
     end
 
-    subgraph WoG_Platform [Service Engine]
-        S4["Auto-Vets Citizenship via CRS/IPRS"]
-        S5["Schedules Biometric Capture at Local Hub"]
+    subgraph Hub["Huduma Bridge / X-Road"]
+        T2 --> T3[X-Road: Auto-fetch Birth Data from CRS]
+        T3 --> T4[Execute System-Driven Vetting Logic]
     end
 
-    subgraph Registration_Officer [Biometric Hub]
-        S6["Captures Fingerprints & Live Photo"]
-        S7["System Links Biometrics to Existing UPI"]
+    subgraph Biometrics["Local Biometric Hub"]
+        T4 --> B1[Schedule Quick Biometric Appointment]
+        B1 --> B2[Capture Fingerprints & Live Audit]
     end
 
-    subgraph NRB_Core [National Identity System]
-        S8["Instantly Issues Virtual ID to eCitizen"]
-        S9["Triggers Printing of Physical Card (Optional)"]
+    subgraph NRB["NRB Core Engine"]
+        B2 --> I1[Digital linkage to Maisha Namba]
+        I1 --> I2[Instant Virtual ID Issuance]
+        I2 --> I3[Trigger Physical Card Print]
     end
-    
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> S8
-    S8 --> S9
-    S9 --> End((End))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    I3 --> End((( )))
 
-    class Start start;
-    class End endNode;
-    class S1,S2,S3,S4,S5,S6,S7,S8,S9 userTask;
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ## Detailed Process (TO-BE) - Biometric Upgrade
