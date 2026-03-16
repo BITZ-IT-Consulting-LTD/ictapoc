@@ -2599,6 +2599,9 @@ Youth Internship Placement, AGPO Registration, and Film Production Licensing
 - **Document Version:** 2.1
 - **Date:** 2026-02-24
 - **Classification:** Official
+- **Strategic Category:** Priority MDA
+- **Service Model:** G2C
+- **Life-Cycle Group:** Cradle to Death (1. The Cradle)
 
 ---
 
@@ -2610,11 +2613,48 @@ Civil Registration Services (CRS) is the authoritative custodian of vital life e
 ## 1. AS-IS Process Flowchart (BPMN 2.0)
 *Current State visualization (Birth & Death Registration based on Deep Dive).*
 
+```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+graph TD
+    Start((Start)) --> Source{"Event Source?"}
+    
+    subgraph Capture["Point of Occurrence"]
+        Source -- "Hospital" --> Notification["Hospital Notification / Medical Cert"]
+        Source -- "Home" --> Community["Community Report (Chief/Informant)"]
+        Notification --> Form["Complete Form (Birth/Death)"]
+        Community --> Form
+    end
+    
+    subgraph Vetting["Verification & Approval"]
+        Form --> Attach["Attach Parent IDs / Marriage Cert / Evidence"]
+        Attach --> Review["Officer Reviews Documents"]
+        Review --> Verify["Verify Parents / Cause of Death"]
+        Verify --> Complete{"Is Data Complete?"}
+        
+        Complete -- "No" --> MoreInfo["Request More Info/Docs"]
+        MoreInfo --> Form
+        
+        Complete -- "Yes" --> Register["Enter in Register & Assign Entry Number"]
+    end
+    
+    subgraph Issuance["Payment & Production"]
+        Register --> Sign["Registrar Signs Record"]
+        Sign --> Payment["Process Payment (Manual/eCitizen)"]
+        Payment --> Print["Print Certificate / Burial Permit"]
+        Print --> Issue["Issue Certificate to Informant"]
+    end
+    
+    Issue --> End((End))
 
-
-![Process Flow](temp_images/28a4e30dc15c7e4fe40df193576d01ec.png)
-
-
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px;;
+    class Start start;
+    class End endNode;
+    class Source,Complete gateway;
+    class Notification,Community,Form,Attach,Review,Verify,MoreInfo,Register,Sign,Payment,Print,Issue userTask;
+```
 
 ---
 
@@ -2667,11 +2707,42 @@ Vital Event Registration (Births and Deaths) and Certificate Issuance
 ## 2. TO-BE Process Flowchart (BPMN 2.0)
 *Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
 
+```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+graph TD
+    Start((Start)) --> Event["Birth/Death Occurs at Facility"]
+    
+    subgraph Layer1["Access - Point of Care"]
+        Event --> MOH["MOH System Logs Event('Afya App')"]
+    end
+    
+    subgraph Layer3["Huduma Bridge / X-Road"]
+        MOH --> XRoad["X-Road: Secure Push to CRS Database"]
+        XRoad --> IPRS["X-Road: Verify Parent/Deceased via IPRS"]
+    end
+    
+    subgraph Layer4["Authoritative Registry"]
+        IPRS --> Mint["CRS: Auto-Mint Maisha Namba / Update Status"]
+        Mint --> Vault["Store in Secure Vital Events Vault"]
+    end
+    
+    subgraph Output["Digital Issuance & Trust"]
+        Vault --> Sign["NPKI: Cryptographically Sign Certificate"]
+        Sign --> GPA["GPA: Process Split-Fee Payment (if any)"]
+        GPA --> Wallet["Issue Verifiable Digital Certificate to Wallet"]
+    end
+    
+    Wallet --> End((End))
 
-
-![Process Flow](temp_images/13c62b14c56ed555a8e47d4d112d9df0.png)
-
-
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px,font-size:24px;;
+    class Start start;
+    class End endNode;
+    class Event,MOH userTask;
+    class XRoad,IPRS,Mint,Vault,Sign,GPA,Wallet serviceTask;
+```
 
 ## Future State Process (TO-BE)
 ### Narrative
@@ -2687,9 +2758,10 @@ Vital Event Registration (Births and Deaths) and Certificate Issuance
 |---|---|---|---|
 | 1 | Health Worker | Records the birth/death in the facility EMR. | MOH Afya App |
 | 2 | System | Automatically verifies the parents' IDs against Maisha Namba via X-Road. | IPRS / KeSEL |
-| 3 | CRS Registry | Receives the validated packet and mints a UPI (Maisha Namba) for the child. | CRS / Workflow Engine |
-| 4 | System | Notifies the parents/kin via SMS/eCitizen that the registration is complete. | Notification Gateway |
-| 5 | Citizen | Accesses the verifiable digital certificate via their mobile phone for use in other government services. | Digital Wallet |
+| 3 | CRS Registry | Receives validated packet, mints UPI (Maisha Namba) and stores in Vault. | CRS / Workflow Engine |
+| 4 | Trust Hub | **NPKI Signing:** Cryptographically signs the record for non-repudiation. | NPKI Service |
+| 5 | Finance | **Payment:** GPA processes fees and performs revenue split (National/County). | GPA |
+| 6 | Citizen | **Issuance:** Verifiable digital certificate delivered to Passport/Mobile Wallet. | Digital Wallet |
 
 ---
 

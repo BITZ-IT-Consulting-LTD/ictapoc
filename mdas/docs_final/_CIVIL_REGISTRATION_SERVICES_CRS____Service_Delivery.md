@@ -45,17 +45,17 @@ graph TD
 | 6 | CRS Officer | **Generation:** Types and prints the Birth Certificate; signed by Registrar. | Legacy Printer | |
 | 7 | Parent | **Collection:** Pays certificate fee (if late/extra) and collects physical copy. | Cash/M-Pesa | |
 
-### 1.3 TO-BE Process (Inferred)
-**Design Principles:** Source Data Capture, Instant UPI Minting, Digital Certificates.
+### 1.3 TO-BE Process (POC v2 Aligned)
+**Design Principles:** Event-Driven Architecture, Source Data Capture, NPKI Signing, Wallet-First Delivery.
 
 ```mermaid
 graph TD
     Start((Start)) --> T1
-    T1["Health Staff enters birth details into Hospital EMR / Chief's Tablet"] --> T2
-    T2["System auto-fetches Mother's ID via IPRS/Maisha Namba"] --> T3
-    T3["System mints Maisha Namba (UPI) for the newborn immediately"] --> T4
-    T4["Digital Birth Record created in CRS database (Source of Truth)"] --> T5
-    T5["Parent receives SMS with UPI and link to Verifiable Digital Certificate"] --> End((End))
+    T1["Health Staff logs birth in MOH Afya App (Event Trigger)"] --> T2
+    T2["Huduma Bridge fetches Mother's identity via X-Road (KeSEL)"] --> T3
+    T3["System mints Unique Personal Identifier (Maisha Namba)"] --> T4
+    T4["NPKI Service cryptographically signs the Digital Birth Certificate"] --> T5
+    T5["Certificate pushed to Citizen's Mobile Wallet & eCitizen Vault"] --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
@@ -63,13 +63,13 @@ graph TD
     class End endNode;
 ```
 
-| Step | Role | Action | System |
+| Step | Role | Action | System / Platform |
 |---|---|---|---|
-| 1 | Health Staff | **Source Capture:** Enters birth details directly at point of event. | Hospital EMR / Tablet |
-| 2 | System | **Identity Link:** Auto-fetches and validates Mother's details. | IPRS / Maisha Namba |
-| 3 | System | **UPI Minting:** Generates Maisha Namba (UPI) for the newborn. | Civil Registration System |
-| 4 | System | **Notification:** Sends SMS to Parent with UPI and cert link. | Notification Gateway |
-| 5 | Parent | **Issuance:** Views/Downloads Verifiable Digital Certificate via portal. | eCitizen Portal |
+| 1 | Health Staff | **Event Trigger:** Capture birth details at source immediately. | MOH Afya App |
+| 2 | Huduma Bridge | **Identity Pull:** Auto-verifies parent details via X-Road (Once-Only Principle). | KeSEL / IPRS |
+| 3 | CRS Engine | **UPI Minting:** Assigns a permanent Maisha Namba to the infant. | Civil Registration System |
+| 4 | Trust Hub | **Digital Signing:** Signs the record using National PKI (NPKI) for non-repudiation. | NPKI Service |
+| 5 | Citizen | **Instant Issuance:** Accesses verifiable certificate via Mobile Wallet. | eCitizen Mobile / Wallet |
 
 ---
 
@@ -107,17 +107,17 @@ graph TD
 | 8 | Registry | **Generation:** System prepares the Death Certificate. | Printer | |
 | 9 | Next of Kin | **Issuance:** Collects the final Death Certificate. | Physical | |
 
-### 2.3 TO-BE Process (Inferred)
-**Design Principles:** Digital Source Capture, Automated IPRS Status Update, Verifiable E-Certificates.
+### 2.3 TO-BE Process (POC v2 Aligned)
+**Design Principles:** Digital Source Capture, Automated IPRS Status Update (Broadcast), NPKI Signing.
 
 ```mermaid
 graph TD
     Start((Start)) --> T1
-    T1["Medical Personnel/Chief captures Death Notification (D1) digitally"] --> T2
-    T2["System auto-fetches deceased details from IPRS and updates status to 'Deceased'"] --> T3
-    T3["System instantly generates Digital Burial Permit (QR Code) and SMS to Next of Kin"] --> T4
-    T4["Next of Kin logs into eCitizen to apply for Death Certificate online"] --> T5
-    T5["System processes Gov Gateway payment and generates Verifiable Digital Death Certificate"] --> End((End))
+    T1["Medical Personnel/Chief captures Death Event in MOH Afya App"] --> T2
+    T2["Huduma Bridge broadcasts 'Deceased' status to IPRS & NTSA via X-Road"] --> T3
+    T3["System auto-generates Digital Burial Permit with NPKI Signature"] --> T4
+    T4["Next of Kin notified via SMS; applies for Certificate on eCitizen"] --> T5
+    T5["Payment processed via GPA; Cryptographic Cert issued to Wallet"] --> End((End))
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
@@ -125,14 +125,13 @@ graph TD
     class End endNode;
 ```
 
-| Step | Role | Action | System |
+| Step | Role | Action | System / Platform |
 |---|---|---|---|
-| 1 | Medical Staff/Chief | **Source Capture:** Logs death details (ICD-11 code, date) via EMR or mobile app. | EMR / Chief's App |
-| 2 | System | **IPRS Update:** Fetches ID and instantly updates IPRS status to 'Deceased' to prevent fraud. | IPRS / X-Road |
-| 3 | System | **Burial Permit:** Auto-generates verifiable Digital Burial Permit (QR Code) to family. | CRS System / SMS |
-| 4 | Next of Kin | **Application:** Applies for Death Certificate via eCitizen using Digital Burial Permit ID. | eCitizen Portal |
-| 5 | System | **Payment:** Calculates and processes processing fees. | Gov Payment Gateway |
-| 6 | System | **Issuance:** Generates and deposits Verifiable Digital Death Certificate in applicant's wallet. | Digital Registry |
+| 1 | Medical/Chief | **Event Capture:** Captures death details digitally (ICD-11 compliant). | MOH Afya App |
+| 2 | Interop Layer | **Registry Sync:** Updates IPRS status; triggers downstream invalidation (KRA, NTSA). | KeSEL (X-Road) |
+| 3 | Trust Hub | **Burial Auth:** Generates NPKI-signed Digital Burial Permit (QR Code). | NPKI / CRS |
+| 4 | GPA | **Payment:** Processes fees via Government Payment Aggregator (revenue split). | GPA |
+| 5 | Citizen | **Issuance:** Secure certificate delivered to Passport/Mobile Wallet. | eCitizen Wallet |
 
 ---
 
