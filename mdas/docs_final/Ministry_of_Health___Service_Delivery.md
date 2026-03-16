@@ -14,25 +14,26 @@ The Ministry of Health plays a foundational role in the citizen lifecycle by act
 
 ---
 
-## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (Manual & Semi-Digital Notification).*
-
+### 1.1 AS-IS Process Flow (BPMN 2.0)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-    S1["Birth/Death occurs at a registered Health Facility"] --> S2
-    S2["Health Facility fills Birth/Death Notification Form"] --> S3
-    S3["Health Personnel verifies IDs and record consistency"] --> S4
-    S4["Submit Notification to MOH (DHIS2 or physically)"] --> S5
-    S5["MOH or County Health Office Validates Submission"] --> S6
-    S6["MOH Confirms Record for health statistics"] --> S7
-    S7["Forwarding to CRS for civil registration & cert issuance"] --> S8
-    S8["MOH keeps aggregated reports for vital statistics"] --> End((End))
+flowchart TD
+    subgraph Facility["Health Facility"]
+        Start(( )) --> A1[Collect Birth/Death Data]
+        A1 --> A2[Fill Paper Notification Forms]
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph MOH_County["MOH / County Health Office"]
+        A2 --> B1[Review & Validate Submission]
+        B1 --> B2[Input into DHIS2 / Statistics]
+    end
+
+    subgraph Registry["CRS Registry"]
+        B2 --> C1[Process Batch for Official Registration]
+        C1 --> End((( )))
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ---
@@ -86,23 +87,30 @@ Notification of Birth/Death
 
 ---
 
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Real-Time Vital Event Notification).*
-
+### 2.1 TO-BE Process (BPMN 2.0 - POC v2 Aligned)
 ```mermaid
-graph TD
-    Start((Start)) --> T1
-    T1["Health Worker logs event directly into Hospital EMR / Afya App"] --> T2
-    T2["System instantly queries IPRS to validate Mother/Deceased ID"] --> T3
-    T3["Validated data is securely pushed to MOH DHIS2 & CRS via X-Road API"] --> T4
-    T4["CRS system automatically mints UPI (Birth) or updates status to Deceased (Death)"] --> T5
-    T5["DHIS2 auto-aggregates data for national epidemiology dashboards"] --> T6
-    T6["Citizen receives SMS notification confirming the event registration"] --> End((End))
+flowchart TD
+    subgraph Hospital["Hospital / Afya App"]
+        Start(( )) --> T1[Log Event at Point-of-Care]
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph Interop["Huduma Bridge / X-Road"]
+        T1 --> T2[X-Road: Query IPRS for ID Validation]
+        T2 --> T3[X-Road: Auto-Push to CRS & DHIS2]
+    end
+
+    subgraph Systems["Core Systems"]
+        T3 --> S1[CRS: Mint UPI / Update Status]
+        T3 --> S2[MOH: Record Vital Health Stats]
+    end
+
+    subgraph Notify["Notification Gateway"]
+        S1 --> N1[Deliver SMS Confirmation to Next-of-Kin]
+        N1 --> End((( )))
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ## Future State Process (TO-BE)

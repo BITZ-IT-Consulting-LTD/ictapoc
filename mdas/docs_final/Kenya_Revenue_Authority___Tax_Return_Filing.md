@@ -16,22 +16,24 @@ The Kenya Revenue Authority (KRA) is the principal government agency responsible
 
 ## Process 1: KRA PIN Registration
 
-### 1.1 AS-IS Process Flowchart (BPMN 2.0)
+### 1.1 AS-IS Process Flow: PIN Registration (BPMN 2.0)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-    S1["Determine Eligibility (Citizen, Resident, Business)"] --> S2
-    S2["Gather Required Documents (ID, BRS Cert, Utility Bills)"] --> S3
-    S3["Log into iTax Portal & Create Account"] --> S4
-    S4["Fill PIN Registration Form (Personal or Business details)"] --> S5
-    S5["Submit Application Online via iTax & Get Acknowledgement"] --> S6
-    S6["KRA Verifies Identity (IPRS/NRB) & Business validity (BRS)"] --> S7
-    S7["PIN Issuance (Linked to individual/business profile)"] --> End((End))
+flowchart TD
+    subgraph Applicant["Citizen / Business"]
+        Start(( )) --> A1[Gather ID & Supporting Docs]
+        A1 --> A2[Create iTax Account]
+        A2 --> A3[Fill Manual PIN Form]
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph KRA["KRA iTax Engine"]
+        A3 --> B1[Manual Identity/BRS Verification]
+        B1 --> B2[Issue PIN Certificate]
+    end
+
+    B2 --> End((( )))
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ### 1.2 Detailed Process (AS-IS)
@@ -48,18 +50,28 @@ graph TD
 ### 1.3 TO-BE Process (Inferred)
 **Design Principles:** Zero-Registration (Auto-PIN Generation), Real-time Inter-agency Sync.
 
+### 1.3 TO-BE Process: Zero-Touch PIN (BPMN 2.0 - POC v2 Aligned)
 ```mermaid
-graph TD
-    Start((Start)) --> T1
-    T1["Trigger: Citizen turns 18 (NRB) or Business is Registered (BRS)"] --> T2
-    T2["System automatically generates KRA PIN via X-Road API"] --> T3
-    T3["KRA securely stores PIN linked to Maisha Namba/Business No."] --> T4
-    T4["Auto-notification sent to Citizen/Business with digital PIN Certificate"] --> End((End))
+flowchart TD
+    subgraph Event["Point of Event"]
+        Start(( )) --> E1[Citizen turns 18 / Business Incorporated]
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph Hub["Huduma Bridge / X-Road"]
+        E1 --> H1[X-Road: Trigger KRA PIN Generation]
+    end
+
+    subgraph KRA["KRA Core"]
+        H1 --> K1[Auto-mint PIN & Link to Maisha Namba]
+    end
+
+    subgraph Wallet["eCitizen Wallet"]
+        K1 --> W1[Deliver Digital PIN Certificate]
+        W1 --> End((( )))
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 | Step | Role | Action | System |
@@ -73,21 +85,22 @@ graph TD
 
 ## Process 2: Tax Return Filing
 
-### 2.1 AS-IS Process Flowchart (BPMN 2.0)
+### 2.1 AS-IS Process Flow: Tax Filing (BPMN 2.0)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-    S1["Taxpayer logs into iTax using PIN and Password"] --> S2
-    S2["Select Tax Type (PAYE, VAT, Income Tax, Corporate)"] --> S3
-    S3["Prepare Tax Return (Enter Income, Expenses, Tax Payable)"] --> S4
-    S4["Submit Tax Return online & Get Acknowledgement Receipt"] --> S5
-    S5["Pay Tax Due (M-Pesa, Bank Transfer, Card)"] --> S6
-    S6["KRA Updates Compliance Records and Tax Return History"] --> End((End))
+flowchart TD
+    subgraph Taxpayer["Citizen / Entity"]
+        Start(( )) --> A1[Login to iTax Portal]
+        A1 --> A2[Manual Data Entry (Excel/Web)]
+        A2 --> A3[Submit Return & Pay Dues]
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph KRA["KRA Backend"]
+        A3 --> B1[Update Compliance Record]
+        B1 --> End((( )))
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ### 2.2 Detailed Process (AS-IS)
@@ -103,19 +116,29 @@ graph TD
 ### 2.3 TO-BE Process (Inferred)
 **Design Principles:** Auto-Populated Returns, Open Banking Integration, Smart Compliance.
 
+### 2.3 TO-BE Process: Automated Filing (BPMN 2.0 - POC v2 Aligned)
 ```mermaid
-graph TD
-    Start((Start)) --> T1
-    T1["Taxpayer accesses KRA via eCitizen SSO"] --> T2
-    T2["System auto-populates Income/VAT data from eTIMS, IFMIS, and Banks"] --> T3
-    T3["Taxpayer reviews auto-calculated draft return and deductions"] --> T4
-    T4["Taxpayer digitally signs and submits return with one click"] --> T5
-    T5["Instant payment via Gov Gateway & auto-issuance of Compliance Cert"] --> End((End))
+flowchart TD
+    subgraph Taxpayer["Taxpayer / eCitizen"]
+        Start(( )) --> T1[SSO Login to KRA Module]
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph Hub["Huduma Bridge / X-Road"]
+        T1 --> H1[X-Road: Auto-fetch Income/eTIMS data]
+    end
+
+    subgraph KRA["KRA Portal"]
+        H1 --> K1[Pre-fill Draft Return & AI Audit]
+        K1 --> K2[1-Click Digital Signature & Submit]
+    end
+
+    subgraph Finance["Payment Gateway"]
+        K2 --> F1[Instant Settlement & Clearance]
+        F1 --> End((( )))
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 | Step | Role | Action | System |

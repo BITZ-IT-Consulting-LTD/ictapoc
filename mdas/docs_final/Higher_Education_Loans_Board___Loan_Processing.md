@@ -14,26 +14,30 @@ The Higher Education Loans Board (HELB) is a statutory body mandated to provide 
 
 ---
 
-## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (Manual/Semi-Digital Loan Processing).*
-
+### 1.1 AS-IS Process Flow (BPMN 2.0)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-    S1["Student provides KCSE results & Admission Letter (KUCCPS)"] --> S2
-    S2["HELB manually verifies eligibility and admission"] --> S3
-    S3["Student creates application profile on HELB Portal"] --> S4
-    S4["Student inputs details & uploads scanned documents (ID, Bank, etc.)"] --> S5
-    S5["Student submits loan form specifying fees and expenses"] --> S6
-    S6["HELB reviews uploaded documents and verifies identity"] --> S7
-    S7["HELB calculates and approves loan amount for eligible students"] --> S8
-    S8["Disbursement: Tuition paid to institution, expenses to student"] --> S9
-    S9["HELB creates repayment schedule and reports to MOE & Treasury"] --> End((End))
+flowchart TD
+    subgraph Student["Student / Applicant"]
+        Start(( )) --> A1[Create Profile on HELB Portal]
+        A1 --> A2[Upload Scanned ID & Bank Docs]
+        A2 --> A3[Submit Loan Form]
+        A5[Wait for Disbursement] --> End((( )))
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph HELB["HELB Core"]
+        A3 --> B1[Manual Document Review]
+        B1 --> B2[Identity/Admission Verification]
+        B2 --> B3[Manual Means Testing]
+        B3 --> B4[Approve Loan Allocation]
+    end
+
+    subgraph Finance["Finance / Bank"]
+        B4 --> C1[Process Batch Bank Transfer]
+        C1 --> A5
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ---
@@ -87,24 +91,36 @@ Loan Processing
 
 ---
 
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Automated API-Driven Loan Processing).*
-
+### 2.1 TO-BE Process (BPMN 2.0 - POC v2 Aligned)
 ```mermaid
-graph TD
-    Start((Start)) --> T1
-    T1["Student logs into HELB via eCitizen SSO"] --> T2
-    T2["System auto-fetches Admission details from KUCCPS & Identity from IPRS"] --> T3
-    T3["System auto-fetches Parent financial status via KRA/NSSF for Means Testing"] --> T4
-    T4["Student confirms auto-populated application and signs digitally"] --> T5
-    T5["AI Engine auto-calculates and approves the exact loan allocation"] --> T6
-    T6["Smart Contract executes dual-disbursement (Tuition to Uni, Upkeep to Student Wallet)"] --> T7
-    T7["Repayment ledger instantly updated and synced to KRA for future deductions"] --> End((End))
+flowchart TD
+    subgraph Citizen["Student / eCitizen"]
+        Start(( )) --> T1[SSO Login & Consent]
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph Hub["Huduma Bridge / X-Road"]
+        T1 --> T2[X-Road: Fetch Admission from KUCCPS]
+        T2 --> T3[X-Road: Fetch Financial Docs from KRA/NSSF]
+    end
+
+    subgraph HELB["AI Assessment Engine"]
+        T3 --> S1[Automated Means Testing]
+        S1 --> S2[Digital Loan Agreement Signature]
+        S2 --> S3[Approve Precise Allocation]
+    end
+
+    subgraph Finance["Payment Bus"]
+        S3 --> F1[Smart Contract: Dual Disbursement]
+    end
+
+    subgraph Banks["Institutional Banks"]
+        F1 --> B1[Tuition to University API]
+        F1 --> B2[Upkeep to Student Wallet]
+        B2 --> End((( )))
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ## Future State Process (TO-BE)

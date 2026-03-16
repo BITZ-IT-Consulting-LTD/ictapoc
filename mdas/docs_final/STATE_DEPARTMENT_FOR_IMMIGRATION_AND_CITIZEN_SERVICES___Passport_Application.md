@@ -29,61 +29,30 @@ The Directorate of Immigration Services (DIS) is responsible for the issuance of
 | Biometrics Officer        | Captures fingerprints/photo |
 | Passport Production Unit  | Prints passport          |
 
-### AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (eCitizen Application -> Physical Queue).*
-
+### 1.1 AS-IS Process Flow (BPMN 2.0)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-
-    subgraph Citizen [Citizen - Applicant]
-        S1["Creates / Logs into eCitizen Account"]
-        S2["Select Passport Application Service"]
-        S3["Fill Passport Application Form - Form 19"]
-        S4["Upload Supporting Documents"]
-        S6["Pay Passport Fees"]
-        S7["Book Biometrics Appointment"]
-        S12["Passport Collection"]
+flowchart TD
+    subgraph Citizen["Citizen / Applicant"]
+        Start(( )) --> A1[Create/Log into eCitizen]
+        A1 --> A2[Fill Passport Form 19]
+        A2 --> A3[Upload Docs & Pay Fees]
+        A6[Book & Attend Biometrics] --> End((( )))
     end
 
-    subgraph eCitizen_System [eCitizen System]
-        S5["Submit Application - Generates Reference Number"]
+    subgraph Office["Immigration Office"]
+        A3 --> B1[Review Application Data]
+        A6 --> B2[Biometric Capture & Verification]
+        B2 --> B3[Senior Officer Approval]
     end
 
-    subgraph Immigration_Office [Immigration Officer / Biometrics Officer]
-        S8["Biometric Capture"]
-        S9["Identity Verification"]
+    subgraph Hub["Production & Logistics"]
+        B3 --> C1[Print Passport Booklet]
+        C1 --> C2[Logistics Dispatch to Regional Hub]
+        C2 --> A6
     end
 
-    subgraph Immigration_Approval [Senior Immigration Officer]
-        S10["Application Approval - Approved or Rejected"]
-    end
-
-    subgraph Passport_Production [Passport Production Unit]
-        S11["Passport Production - Passport Printed"]
-    end
-
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> S8
-    S8 --> S9
-    S9 --> S10
-    S10 --> S11
-    S11 --> S12
-    S12 --> End((End))
-
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-    class Start start;
-    class End endNode;
-    class S1,S2,S3,S4,S6,S7,S8,S9,S10,S12 userTask;
-    class S5,S11 serviceTask;
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ### Process Overview
@@ -153,47 +122,33 @@ Passport Application (New / Renewal / Replacement)
 
 ## 2. TO-BE PROCESS: Passport Application and Issuance (Optimized)
 
-### TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Repeatable WoG Platform).*
-
+### 2.1 TO-BE Process (BPMN 2.0 - POC v2 Aligned)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-
-    subgraph Citizen [Citizen]
-        S1["Requests passport on eCitizen App. Takes ICAO-compliant s..."]
+flowchart TD
+    subgraph Citizen["Citizen / Applicant"]
+        Start(( )) --> T1[Request Passport via eCitizen App]
+        T1 --> T2[Take AI-Driven ICAO Photo]
     end
 
-    subgraph WoG_Platform [WoG Platform]
-        S2["Fetches fingerprints from NRB and validates identity."]
+    subgraph Hub["Huduma Bridge / X-Road"]
+        T2 --> T3[X-Road: Fetch Biometrics from NRB]
+        T3 --> T4[Auto-Validate Identity & Status]
     end
 
-    subgraph Immigration [Immigration]
-        S3["Auto-approves application."]
+    subgraph Immigration["Immigration Workflow"]
+        T4 --> S1[Digital Approval Engine]
+        S1 --> S2[Trigger DTC Virtual Passport Issuance]
     end
 
-    subgraph Factory [Factory]
-        S4["Prints booklet."]
+    subgraph Logistics["Logistics & Production"]
+        S2 --> L1[Secure Booklet Printing]
+        L1 --> L2[Posta: Doorstep Dispatch]
     end
 
-    subgraph Posta [Posta]
-        S5["Delivers passport to citizen's doorstep."]
-    end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> End((End))
+    L2 --> End((( )))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
-    class Start start;
-    class End endNode;
-    class S1 userTask;
-    class S2,S3,S4,S5 serviceTask;
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ### Future State Process (TO-BE)

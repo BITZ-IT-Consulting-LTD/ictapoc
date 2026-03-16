@@ -14,26 +14,30 @@ The Kenya National Examinations Council (KNEC) is responsible for setting and ma
 
 ---
 
-## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (Semi-Manual Exam Administration).*
-
+### 1.1 AS-IS Process Flow (BPMN 2.0)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-    S1["Candidate Registration (via School or KNEC Office)"] --> S2
-    S2["KNEC Verifies Candidate Data (NEMIS/IPRS, School, Eligibility)"] --> S3
-    S3["KNEC Assigns Unique Exam Index Number"] --> S4
-    S4["Exam Preparation (Timetables, Centers, Security)"] --> S5
-    S5["Conduct of Examination at Assigned Center"] --> S6
-    S6["Collection and Marking of Exam Scripts"] --> S7
-    S7["Marks Compiled in Result Management System"] --> S8
-    S8["Issue of Results Slips (Online) and Formal Certificates"] --> S9
-    S9["Reporting & Record-Keeping (Data pushed to KUCCPS)"] --> End((End))
+flowchart TD
+    subgraph School["Candidate / School"]
+        Start(( )) --> A1[Register via NEMIS]
+        A1 --> A2[Submit Physical Birth Cert/ID]
+        A2 --> A3[Sit for Examination]
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph KNEC["KNEC Core"]
+        A2 --> B1[Manual Data Verification]
+        B1 --> B2[Assign Index Number]
+        B2 --> B3[Arrange Secure Logistics]
+        A3 --> B4[Marking & Compilation]
+        B4 --> B5[Publish Results Online]
+        B5 --> B6[Print Physical Certificates]
+    end
+
+    subgraph Outcome["Service Outcome"]
+        B6 --> End((( )))
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ---
@@ -91,24 +95,36 @@ Exam Administration
 
 ---
 
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Digitized Exam Administration).*
-
+### 2.1 TO-BE Process (BPMN 2.0 - POC v2 Aligned)
 ```mermaid
-graph TD
-    Start((Start)) --> T1
-    T1["System auto-registers eligible candidates by pulling data from NEMIS & IPRS"] --> T2
-    T2["Digital Exam Index Numbers auto-assigned and visible on School Dashboard"] --> T3
-    T3["Secure digital exam dispatch & localized secure printing at centers"] --> T4
-    T4["Candidate sits exam; Identity verified biometrically at center"] --> T5
-    T5["Scripts marked using OCR/ICR or digital tablets; Marks auto-sync to DB"] --> T6
-    T6["AI engine validates marks and generates final verified results"] --> T7
-    T7["Verifiable Digital Certificates pushed to eCitizen Wallet & API pushes data to KUCCPS"] --> End((End))
+flowchart TD
+    subgraph Registry["National Registries"]
+        Start(( )) --> T1[NEMIS/IPRS: Pull Eligible Candidates]
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph KNEC["KNEC Digital Engine"]
+        T1 --> T2[Auto-assign Digital Indexing]
+        T2 --> T3[Secure Digital Exam Dispatch]
+    end
+
+    subgraph Center["Examination Center"]
+        T3 --> C1[Biometric Identity Verification]
+        C1 --> C2[Just-in-Time Secure Printing]
+    end
+
+    subgraph Assessment["Smart Marking"]
+        C2 --> D1[OCR/Tablets Mark Submission]
+        D1 --> D2[AI Results Validation]
+    end
+
+    subgraph Wallet["eCitizen Wallet / APIs"]
+        D2 --> E1[Deliver Verifiable Digital Cert]
+        E1 --> E2[API Push to KUCCPS]
+        E2 --> End((( )))
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ## Future State Process (TO-BE)

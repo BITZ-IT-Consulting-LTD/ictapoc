@@ -17,44 +17,28 @@ The National Health Insurance Fund (transitioning to the Social Health Authority
 ## 1. AS-IS Process Flowchart (BPMN 2.0)
 *Current State visualization (SHA Registration).*
 
+### 1.1 AS-IS Process Flow (BPMN 2.0)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-
-    subgraph Citizen [Citizen]
-        S1["Access SHA Registration (Portal/eCitizen/USSD/Center)"]
-        S2["Enter National ID Number"]
-        S4["Provide Additional Household Details"]
-        S5["Confirm and submit registration"]
-        S8["Make contribution (Mobile Money/Bank/Employer)"]
+flowchart TD
+    subgraph Citizen["Citizen / Applicant"]
+        Start(( )) --> A1[Access SHA Registration]
+        A1 --> A2[Enter National ID Number]
+        A4[Provide Household Details] --> A5[Submit Registration]
+        A8[Make Contribution] --> A9[Coverage Activated]
     end
 
-    subgraph System [System]
-        S3["Retrieve Citizen Details (Name, DOB, Gender)"]
-        S6["Create SHA Membership Record linked to ID"]
-        S7["Determine Contribution Assessment (Means Testing)"]
-        S9["Coverage Activated"]
+    subgraph System["SHA System"]
+        A2 --> B1[Fetch Bio-data from IPRS]
+        B1 --> A4
+        A5 --> B2[Create Membership Record]
+        B2 --> B3[Execute Means Testing Assessment]
+        B3 --> A8
     end
 
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> S8
-    S8 --> S9
-    S9 --> End((End))
+    A9 --> End((( )))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
-    class Start start;
-    class End endNode;
-    class S1,S2,S4,S5,S8 userTask;
-    class S3,S6,S7,S9 serviceTask;
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ---
@@ -129,48 +113,31 @@ Member Registration & Benefit Access (UHC)
 ---
 
 ## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Automated SHA Registration & Assessment).*
-
+### 2.1 TO-BE Process (BPMN 2.0 - POC v2 Aligned)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-
-    subgraph System [System]
-        S1["Trigger Event: Citizen gets ID, gets employed, or registers birth/marriage"]
-        S2["System retrieves IPRS & CRS data to create/update SHA Profile"]
-        S3["System auto-links Dependants via Civil Registration (CRS)"]
-        S4["System queries KRA/Mobile Money for income data (Means Testing)"]
-        S5["System calculates Contribution Amount automatically"]
-        S8["Coverage Activated Instantly"]
+flowchart TD
+    subgraph Event["Point of Event"]
+        Start(( )) --> E1[Life Event: ID Issuance / Birth / Employment]
     end
 
-    subgraph Employer [Employer]
-        S6["Employer payroll auto-deducts and remits via API (Formal)"]
+    subgraph System["SHA Core Engine"]
+        E1 --> S1[Query IPRS/CRS for Profile Creation]
+        S1 --> S2[Auto-link Dependants]
+        S2 --> S3[Intelligent Means Testing]
+        S3 --> S4[Calculate Contribution Target]
     end
 
-    subgraph Citizen [Citizen]
-        S7["Citizen receives Notification & pays via auto-deduction (Informal)"]
+    subgraph Finance["Payment Gateway / Employer"]
+        S4 --> F1[Auto-deduction & API Remittance]
     end
 
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> S6
-    S5 --> S7
-    S6 --> S8
-    S7 --> S8
-    S8 --> End((End))
+    subgraph Final["Citizen Engagement"]
+        F1 --> C1[Coverage Activated Instantly]
+        C1 --> End((( )))
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
-    class Start start;
-    class End endNode;
-    class S1,S2,S3,S4,S5,S8 serviceTask;
-    class S6,S7 userTask;
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ## Future State Process (TO-BE)

@@ -16,22 +16,30 @@ The Integrated Population Registration System (IPRS) serves as the "Single Sourc
 
 ## Process 1: IPRS Identity Registration and Verification
 
-### 1.1 AS-IS Process Flowchart (BPMN 2.0)
+### 1.1 AS-IS Process Flow (BPMN 2.0)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-    S1["Citizen Record Created in Source Registry (CRS/NRB)"] --> S2
-    S2["Data transmitted and stored in IPRS Console"] --> S3
-    S3["Citizen applies for a service at a Gov Agency (e.g., KRA, NTSA)"] --> S4
-    S4["Agency submits identity query via secure network"] --> S5
-    S5["IPRS checks details against stored records"] --> S6
-    S6["IPRS returns Match/No Match response"] --> S7
-    S7["Agency proceeds with or rejects service provision"] --> End((End))
+flowchart TD
+    subgraph Registry["Source Registry (CRS/NRB)"]
+        Start(( )) --> A1[Create Citizen Record]
+        A1 --> A2[Transmit to IPRS Console]
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph Agency["Government Agency"]
+        A2 --> B1[Submit Identity Query]
+    end
+
+    subgraph IPRS["IPRS Engine"]
+        B1 --> C1[Check Details vs Golden Record]
+        C1 --> C2[Return Match/No-Match]
+    end
+
+    subgraph Final["Service Delivery"]
+        C2 --> D1[Proceed or Reject Service]
+        D1 --> End((( )))
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ### 1.2 Detailed Process (AS-IS)
@@ -49,19 +57,25 @@ graph TD
 
 ## Process 2: IPRS Record Update
 
-### 2.1 AS-IS Process Flowchart (BPMN 2.0)
+### 2.1 AS-IS Process Flow: Life Event Sync (BPMN 2.0)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-    S1["Citizen life event occurs (e.g., ID Issuance, Death)"] --> S2
-    S2["Source Registry updates citizen record locally"] --> S3
-    S3["Source Registry sends update batch/file to IPRS"] --> S4
-    S4["IPRS updates citizen population record status"] --> End((End))
+flowchart TD
+    subgraph Event["Point of Event"]
+        Start(( )) --> E1[Citizen life event occurs]
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph Registry["Source Registry"]
+        E1 --> R1[Update record locally]
+        R1 --> R2[Send update batch to IPRS]
+    end
+
+    subgraph IPRS["IPRS Core"]
+        R2 --> I1[Update Population Record Status]
+        I1 --> End((( )))
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ### 2.2 Detailed Process (AS-IS)
@@ -88,23 +102,32 @@ graph TD
 
 ---
 
-## 3. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Real-Time & Event-Driven IPRS).*
-
+### 3.1 TO-BE Process (BPMN 2.0 - POC v2 Aligned)
 ```mermaid
-graph TD
-    Start((Start)) --> T1
-    T1["Source Registry (CRS/NRB) registers event & instantly mints/updates Maisha Namba"] --> T2
-    T2["Data pushed to IPRS via real-time X-Road API"] --> T3
-    T3["IPRS updates the Golden Record instantly"] --> T4
-    T4["Event Bus broadcasts status change to all subscribing MDAs (KRA, NTSA, SHA)"] --> T5
-    T5["Subscribing MDAs auto-update their local records (e.g., auto-cancel DL on death)"] --> T6
-    T6["Citizen requests service: Agency verifies identity instantly via Biometric/UPI API"] --> End((End))
+flowchart TD
+    subgraph Registry["Source Registry"]
+        Start(( )) --> T1[Register Event & Mint UPI]
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph Hub["Huduma Bridge / X-Road"]
+        T1 --> T2[X-Road: Real-Time Golden Record Sync]
+    end
+
+    subgraph IPRS["IPRS Event Bus"]
+        T2 --> T3[Broadcast Status Change to MDAs]
+    end
+
+    subgraph MDAs["Subscribing MDAs"]
+        T3 --> M1[Auto-execute Business Rules]
+    end
+
+    subgraph Consumer["Service Consumer"]
+        M1 --> A1[Query Biometric/UPI API]
+        A1 --> End((( )))
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ## Future State Process (TO-BE)

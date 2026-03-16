@@ -14,41 +14,27 @@ The Business Registration Service (BRS) is a semi-autonomous government agency u
 
 ---
 
-## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (Name Search / Manual Review).*
-
+### 1.1 AS-IS Process Flow (BPMN 2.0)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-
-    subgraph Entrepreneur [Entrepreneur]
-        S1["**Name Search:** Applicant proposes 1-3 names. Pays KES 150."]
-        S3["**Application:** Once approved, applicant fills CR1 (App)..."]
-        S4["**Payment:** Pays registration fee (KES 950 for BN; KES 1..."]
-        S7["**Output:** Downloads Certificate and CR12 (list of direc..."]
+flowchart TD
+    subgraph Entrepreneur["Entrepreneur / Applicant"]
+        Start(( )) --> A1[Propose Multi-Name Search]
+        A3[Fill CR1/2/8 Forms Manually] --> A4[Print, Sign, Scan & Re-upload]
+        A4 --> A5[Pay Registration Fee]
+        A7[Download Cert & CR12] --> End((( )))
     end
 
-    subgraph BRS_Officer [BRS Officer]
-        S2["**Vetting:** Registrar manually checks name against 'Proh..."]
-        S5["**Review:** Officer opens the digital file to verify sign..."]
-        S6["**Approval:** If compliant, Officer approves. System gene..."]
+    subgraph BRS["BRS Registrar"]
+        A1 --> B1[Manual Name Vetting]
+        B1 --> A3
+        A5 --> B2[Verify Signatures & ID Scans]
+        B2 --> B3[Issue Certificate & CR12]
     end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> S6
-    S6 --> S7
-    S7 --> End((End))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+    B3 --> A7
 
-    class Start start;
-    class End endNode;
-    class S1,S2,S3,S4,S5,S6,S7 userTask;
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ---
@@ -115,43 +101,28 @@ Registration of Private Limited Company / Business Name
 
 ---
 
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Repeatable WoG Platform).*
-
+### 2.1 TO-BE Process (BPMN 2.0 - POC v2 Aligned)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-
-    subgraph Entrepreneur [Entrepreneur]
-        S1["Inputs name and directors' IDs."]
-        S4["Pays single bundled fee."]
+flowchart TD
+    subgraph Enterprise["Entrepreneur"]
+        Start(( )) --> T1[Instant AI Name Availability Check]
     end
 
-    subgraph WoG_AI [WoG AI]
-        S2["Approves name and verifies directors."]
+    subgraph eCitizen["eCitizen App"]
+        T1 --> T2[Digital Consent Prompt to Directors]
     end
 
-    subgraph Directors [Directors]
-        S3["Consent via App notification."]
+    subgraph Hub["Huduma Bridge / X-Road"]
+        T2 --> H1[X-Road: Bundled Registration (KRA/NSSF/NHIF)]
     end
 
-    subgraph Integrated_Systems [Integrated Systems]
-        S5["Issue all certificates instantly."]
+    subgraph BRS["BRS Core"]
+        H1 --> B1[Instant Business Pack Generation]
+        B1 --> End((( )))
     end
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> S5
-    S5 --> End((End))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
-
-    class Start start;
-    class End endNode;
-    class S1,S2,S3,S4,S5 userTask;
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ## Future State Process (TO-BE)

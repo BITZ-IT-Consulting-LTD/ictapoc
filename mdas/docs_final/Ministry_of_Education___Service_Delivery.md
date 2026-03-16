@@ -14,25 +14,30 @@ The Ministry of Education (MoE) is responsible for national education policy and
 
 ---
 
-## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (Manual School-Led Registration).*
-
+### 1.1 AS-IS Process Flow (BPMN 2.0)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-    S1["Child reaches school age & Parent decides on placement"] --> S2
-    S2["Parent approaches school with Birth Cert, ID, and Health Records"] --> S3
-    S3["School prepares manual Registration Form with child & parent details"] --> S4
-    S4["School Officer logs into NEMIS portal & inputs data"] --> S5
-    S5["School verifies data against physical Birth Certificate"] --> S6
-    S6["NEMIS System confirms registration & issues NEMIS Number"] --> S7
-    S7["School issues Admission Letter with NEMIS Number to Parent"] --> S8
-    S8["School submits manual monthly/annual reports to County & MOE"] --> End((End))
+flowchart TD
+    subgraph Parent["Parent / Guardian"]
+        Start(( )) --> A1[Visit School with Birth Cert/ID]
+        A1 --> A2[Complete Registration Form]
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph School["School Registry"]
+        A2 --> B1[Input Data into NEMIS Portal]
+        B1 --> B2[Verify Birth Cert Manually]
+    end
+
+    subgraph NEMIS["NEMIS System"]
+        B2 --> C1[Assign Student UPI / NEMIS No]
+    end
+
+    subgraph Outcome["Service Outcome"]
+        C1 --> D1[Issue Admission Letter to Parent]
+        D1 --> End((( )))
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ---
@@ -87,24 +92,34 @@ Student Registration & Transition (NEMIS)
 
 ---
 
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Parent-Led Digital Enrollment).*
-
+### 2.1 TO-BE Process (BPMN 2.0 - POC v2 Aligned)
 ```mermaid
-graph TD
-    Start((Start)) --> T1
-    T1["Parent logs into eCitizen and selects 'School Enrollment'"] --> T2
-    T2["System auto-fetches Child details via Maisha Namba/UPI from CRS"] --> T3
-    T3["Parent selects preferred School; System checks capacity via Schools Registry"] --> T4
-    T4["Digital enrollment request sent to Head Teacher's Workbench"] --> T5
-    T5["Head Teacher reviews and approves request with one click"] --> T6
-    T6["NEMIS instantly activates student and triggers Capitation Funding"] --> T7
-    T7["Parent receives Digital Admission Letter via eCitizen Wallet/SMS"] --> End((End))
+flowchart TD
+    subgraph Citizen["Parent / Student"]
+        Start(( )) --> T1[Initiate Enrollment on eCitizen]
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph Hub["Huduma Bridge"]
+        T1 --> T2[X-Road: Auto-fetch Child Data from CRS]
+    end
+
+    subgraph Registry["National Schools Registry"]
+        T2 --> T3[Check Institutional Capacity]
+    end
+
+    subgraph School["School Head"]
+        T3 --> T4[Review & Approve Digital Request]
+    end
+
+    subgraph NEMIS["NEMIS Engine"]
+        T4 --> T5[Activate Student & Trigger Capitation]
+        T5 --> T6[Generate Digital Admission Letter]
+    end
+
+    T6 --> End((( )))
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ## Future State Process (TO-BE)

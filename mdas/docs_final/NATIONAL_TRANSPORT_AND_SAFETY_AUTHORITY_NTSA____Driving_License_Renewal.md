@@ -14,26 +14,24 @@ The National Transport and Safety Authority (NTSA) is mandated to harmonize the 
 
 ---
 
-## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (TIMS Portal Renewal).*
-
+### 1.1 AS-IS Process Flow (BPMN 2.0)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-    S1["Citizen accesses NTSA TIMS Portal & logs in"] --> S2
-    S2["Citizen selects 'Driving License' -> 'Renewal'"] --> S3
-    S3["System displays current License details; Citizen confirms"] --> S4
-    S4["Citizen selects renewal period (1 or 3 Years)"] --> S5
-    S5["System calculates fee & generates Payment Invoice"] --> S6
-    S6["Citizen pays renewal fee (M-Pesa, Bank, Card)"] --> S7
-    S7["System confirms payment automatically"] --> S8
-    S8["System updates DL Status to 'Renewed' & assigns new expiry"] --> S9
-    S9["Citizen downloads DL Receipt & accesses Digital DL via TIMS"] --> End((End))
+flowchart TD
+    subgraph Citizen["Citizen / Driver"]
+        Start(( )) --> A1[Access TIMS Portal]
+        A1 --> A2[Select Renewal & Duration]
+        A2 --> A3[Pay Renewal Fee]
+        A4[Download Receipt / Digital DL] --> End((( )))
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph NTSA["NTSA System"]
+        A3 --> B1[Update DL Status in Registry]
+        B1 --> B2[Assign New Expiry Date]
+        B2 --> A4
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ---
@@ -91,23 +89,31 @@ Driving License Renewal
 
 ---
 
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Proactive & Unified Renewal).*
-
+### 2.1 TO-BE Process (BPMN 2.0 - POC v2 Aligned)
 ```mermaid
-graph TD
-    Start((Start)) --> T1
-    T1["System sends proactive expiry alert to Citizen via eCitizen/SMS"] --> T2
-    T2["Citizen logs into eCitizen (SSO) and clicks '1-Click Renew'"] --> T3
-    T3["System auto-verifies active status and checks for pending traffic fines via API"] --> T4
-    T4["Citizen selects duration and authorizes instant payment via Gov Gateway"] --> T5
-    T5["System instantly updates NTSA registry validity"] --> T6
-    T6["Verifiable Digital Driving License (QR Code) pushed to Citizen's Digital Wallet"] --> End((End))
+flowchart TD
+    subgraph System["Proactive Service Hub"]
+        Start(( )) --> S1[Auto-detect Expiry & Send SMS Alert]
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph Citizen["Citizen / eCitizen"]
+        S1 --> T1[1-Click Auth via eCitizen SSO]
+        T1 --> T2[Select Plan & Authorize GPA Payment]
+    end
+
+    subgraph Hub["Huduma Bridge / X-Road"]
+        T2 --> H1[X-Road: Check Fine/Warrant Status]
+    end
+
+    subgraph NTSA["NTSA Core Registry"]
+        H1 --> N1[Instantly Update DL Expiry]
+        N1 --> N2[Push Verifiable Digital DL to Wallet]
+    end
+
+    N2 --> End((( )))
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ## Future State Process (TO-BE)

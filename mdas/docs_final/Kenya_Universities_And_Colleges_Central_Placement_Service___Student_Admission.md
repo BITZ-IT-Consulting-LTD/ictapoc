@@ -14,27 +14,29 @@ The Kenya Universities and Colleges Central Placement Service (KUCCPS) is mandat
 
 ---
 
-## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (KUCCPS Student Admission).*
-
+### 1.1 AS-IS Process Flow (BPMN 2.0)
 ```mermaid
-graph TD
-    Start((Start)) --> S1
-    S1["Candidate provides KCSE slip & ID/NEMIS Info"] --> S2
-    S2["KUCCPS verifies entry requirements and identity"] --> S3
-    S3["Candidate creates profile on KUCCPS portal"] --> S4
-    S4["Candidate inputs personal details, results, and preferences"] --> S5
-    S5["Candidate submits up to 6 course & institution preferences"] --> S6
-    S6["KUCCPS evaluates qualifications vs requirements, slots, and quotas"] --> S7
-    S7["KUCCPS makes Placement Decision (University or TVET)"] --> S8
-    S8["Placement communicated via Portal, SMS, or Email"] --> S9
-    S9["Candidate confirms acceptance through KUCCPS portal"] --> S10
-    S10["Institution is notified & KUCCPS updates central database"] --> End((End))
+flowchart TD
+    subgraph Candidate["Student / Candidate"]
+        Start(( )) --> A1[Create KUCCPS Profile]
+        A1 --> A2[Input Results & ID Manually]
+        A2 --> A3[Select Course Preferences]
+        A6[Confirm Acceptance on Portal] --> End((( )))
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph KUCCPS["KUCCPS Core"]
+        A3 --> B1[Evaluate Qualifications vs Slots]
+        B1 --> B2[Execute Placement Decision]
+        B2 --> B3[Issue Notification via Portal/SMS]
+    end
+
+    subgraph Tertiary["University / TVET"]
+        B3 --> C1[Receive Placement List]
+        C1 --> A6
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ---
@@ -90,24 +92,31 @@ Student Admission / Placement
 
 ---
 
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Seamless & Integrated Placement).*
-
+### 2.1 TO-BE Process (BPMN 2.0 - POC v2 Aligned)
 ```mermaid
-graph TD
-    Start((Start)) --> T1
-    T1["Student logs into KUCCPS portal via eCitizen SSO"] --> T2
-    T2["System auto-fetches verified KCSE results from KNEC & Identity from IPRS"] --> T3
-    T3["AI Recommender suggests optimal courses based on grades & quotas"] --> T4
-    T4["Student selects and submits final preferences"] --> T5
-    T5["Algorithmic engine performs automated matching & assigns placement"] --> T6
-    T6["Digital Placement Letter generated & student confirms acceptance instantly"] --> T7
-    T7["Placement data is automatically pushed to the University and HELB via API"] --> End((End))
+flowchart TD
+    subgraph Citizen["Student / eCitizen"]
+        Start(( )) --> T1[SSO Login to KUCCPS Portal]
+    end
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
-    class Start start;
-    class End endNode;
+    subgraph Hub["Huduma Bridge / X-Road"]
+        T1 --> T2[X-Road: Fetch KNEC Results & IPRS ID]
+        T2 --> T3[AI: Optimal Course Recommendations]
+    end
+
+    subgraph KUCCPS["Placement Engine"]
+        T3 --> T4[Process preferences vs Merit & Capacity]
+        T4 --> T5[Generate Verifiable Digital Placement]
+    end
+
+    subgraph Ecosystem["Integration Bus"]
+        T5 --> E1[Push Data to Institution API]
+        T1 --> E2[Push Data to HELB for Loan Scoring]
+        E1 --> End((( )))
+    end
+
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
 ## Future State Process (TO-BE)
