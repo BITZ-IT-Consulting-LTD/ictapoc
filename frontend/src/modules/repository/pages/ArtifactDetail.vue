@@ -26,6 +26,9 @@
           <DocumentList 
             :documents="artifactStore.documents" 
             @preview="openPreview" 
+            @digitize="handleDigitize"
+            @approve-qa="handleApproveQA"
+            @delete="handleDelete"
           />
         </div>
         
@@ -130,6 +133,41 @@ const openPreview = (doc) => {
 const handleUploadSuccess = () => {
   // Re-fetch details to sync versions correctly (store does optimistic append but re-fetch is safer for timeline)
   artifactStore.fetchArtifactDetails(route.params.id);
+};
+
+const handleDigitize = async (doc) => {
+  try {
+    await repositoryApi.digitizeDocument(doc.uuid);
+    artifactStore.fetchArtifactDetails(route.params.id);
+    alert('Document processed via IDP Engine successfully.');
+  } catch (error) {
+    console.error(error);
+    alert('Failed to digitize document.');
+  }
+};
+
+const handleApproveQA = async (doc) => {
+  try {
+    await repositoryApi.approveQADocument(doc.uuid);
+    artifactStore.fetchArtifactDetails(route.params.id);
+    alert('OCR extraction approved.');
+  } catch (error) {
+    console.error(error);
+    alert('Failed to approve QA.');
+  }
+};
+
+const handleDelete = async (doc) => {
+  if (confirm(`Are you sure you want to delete "${doc.title}"? This action cannot be undone.`)) {
+    try {
+      await repositoryApi.deleteDocument(doc.uuid);
+      artifactStore.fetchArtifactDetails(route.params.id);
+      alert('Document deleted successfully.');
+    } catch (error) {
+      console.error(error);
+      alert('Failed to delete document.');
+    }
+  }
 };
 
 const updateStatus = async (status) => {

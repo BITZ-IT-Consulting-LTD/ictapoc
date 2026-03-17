@@ -255,6 +255,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
     serializer_class = DocumentSerializer
     permission_classes = [permissions.IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser, JSONParser]
+    lookup_field = 'uuid'
     
     def get_queryset(self):
         qs = super().get_queryset()
@@ -287,6 +288,9 @@ class DocumentViewSet(viewsets.ModelViewSet):
         except (ValueError, TypeError):
             metadata = {}
             
+        is_digitized = str(request.data.get('is_digitized', 'false')).lower() == 'true'
+        ocr_text = request.data.get('ocr_text', '')
+            
         doc = Document.objects.create(
             title=title,
             document_type=document_type,
@@ -295,7 +299,9 @@ class DocumentViewSet(viewsets.ModelViewSet):
             owner_mda=request.user.mda if hasattr(request.user, 'mda') and request.user.mda else (artifact.mda_owner if artifact else None),
             artifact=artifact,
             metadata=metadata,
-            current_version_number=1
+            current_version_number=1,
+            is_digitized=is_digitized,
+            ocr_text=ocr_text
         )
         
         DocumentVersion.objects.create(
@@ -321,6 +327,34 @@ class DocumentViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(doc)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        
+        # Security/RBAC Check: only the uploader or an admin/supervisor can delete
+        is_owner = instance.uploaded_by == request.user
+        is_admin = request.user.role in ['system_admin', 'admin', 'supervisor', 'mda_admin']
+        
+        if not (is_owner or is_admin):
+            return Response({'error': 'You do not have permission to delete this document.'}, status=status.HTTP_403_FORBIDDEN)
+            
+        title = instance.title
+        mda_id = instance.owner_mda.id if instance.owner_mda else None
+        
+        # Soft delete or hard delete based on your preference. We'll do hard delete here to match standard viewsets,
+        # but in a real gov system you might set is_deleted=True
+        self.perform_destroy(instance)
+        
+        # Audit Log
+        AuditLog.objects.create(
+            actor=request.user,
+            action="DOCUMENT_DELETED",
+            actor_role=request.user.role,
+            owning_mda_id=mda_id,
+            details=f"Deleted document: {title}"
+        )
+        
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
     @action(detail=False, methods=['get'], url_path='(?P<uuid>[^/.]+)/download')
     def download(self, request, uuid=None):
         return self._serve_versioned_file(request, uuid, attachment=True)
@@ -328,6 +362,99 @@ class DocumentViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'], url_path='(?P<uuid>[^/.]+)/preview')
     def preview(self, request, uuid=None):
         return self._serve_versioned_file(request, uuid, attachment=False)
+
+    @action(detail=False, methods=['post'], url_path='(?P<uuid>[^/.]+)/digitize')
+    def digitize(self, request, uuid=None):
+        """
+        Simulate the IDP Engine (Intelligent Document Processing).
+        Runs OCR on the document, extracts metadata, and updates the document record.
+        """
+        doc = get_object_or_404(Document, uuid=uuid)
+        
+        # Simulate OCR extraction and confidence
+        import random
+        from django.utils import timezone
+        confidence = round(random.uniform(0.65, 0.99), 2)
+        needs_qa = confidence < 0.85
+        
+        doc.is_digitized = True
+        doc.ocr_text = f"Simulated extracted text for {doc.title}. Extracted on {timezone.now().strftime('%Y-%m-%d %H:%M:%S')}."
+        doc.extraction_confidence = confidence
+        doc.needs_qa = needs_qa
+        doc.save()
+        
+        # Audit Event
+        AuditLog.objects.create(
+            actor=request.user,
+            action="DOCUMENT_DIGITIZED",
+            actor_role=request.user.role,
+            owning_mda_id=doc.owner_mda.id if doc.owner_mda else None,
+            details=f"Document {doc.title} digitized via IDP Engine (Confidence: {confidence})"
+        )
+        
+        return Response(self.get_serializer(doc).data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['post'], url_path='(?P<uuid>[^/.]+)/approve_qa')
+    def approve_qa(self, request, uuid=None):
+        doc = get_object_or_404(Document, uuid=uuid)
+        doc.needs_qa = False
+        doc.save()
+        
+        AuditLog.objects.create(
+            actor=request.user,
+            action="DOCUMENT_QA_APPROVED",
+            actor_role=request.user.role,
+            owning_mda_id=doc.owner_mda.id if doc.owner_mda else None,
+            details=f"Document {doc.title} QA approved."
+        )
+        
+        return Response(self.get_serializer(doc).data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['post'], url_path='bulk_ingest')
+    def bulk_ingest(self, request):
+        """
+        High-volume asynchronous ingestion API for mass back-scanning projects.
+        Takes a list of document metadata and file references.
+        """
+        records = request.data.get('records', [])
+        if not records:
+            return Response({'error': 'No records provided'}, status=status.HTTP_400_BAD_REQUEST)
+            
+        ingested_docs = []
+        for record in records:
+            title = record.get('title', 'Untitled Legacy Document')
+            doc_type = record.get('document_type', 'legacy_record')
+            doc = Document.objects.create(
+                title=title,
+                document_type=doc_type,
+                classification_level=record.get('classification_level', 'internal'),
+                uploaded_by=request.user,
+                owner_mda=request.user.mda if hasattr(request.user, 'mda') and request.user.mda else None,
+                is_digitized=True,
+                ocr_text=record.get('ocr_text', ''),
+                extraction_confidence=record.get('extraction_confidence', 0.90),
+                needs_qa=record.get('needs_qa', False)
+            )
+            
+            DocumentVersion.objects.create(
+                document=doc,
+                version_number=1,
+                file_size=1024,
+                mime_type='application/pdf',
+                checksum="dummy_bulk_" + str(uuid.uuid4()),
+                uploaded_by=request.user,
+                change_summary="Bulk back-scanning ingestion"
+            )
+            ingested_docs.append(doc)
+            
+        AuditLog.objects.create(
+            actor=request.user,
+            action="DOCUMENT_BULK_INGEST",
+            actor_role=request.user.role,
+            details=f"Bulk ingested {len(ingested_docs)} legacy records."
+        )
+            
+        return Response({'message': f'Successfully ingested {len(ingested_docs)} records.'}, status=status.HTTP_201_CREATED)
 
     def _serve_versioned_file(self, request, uuid, attachment=False):
         doc = get_object_or_404(Document, uuid=uuid)

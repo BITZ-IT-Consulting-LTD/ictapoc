@@ -1,5 +1,5 @@
 # Kenya DSAP Architecture – Huduma Bridge (GEA Compliant)
-## (with NPKI, Decentralized Mediation, and Payment Aggregation)
+## (with NPKI, Decentralized Mediation, Payment Aggregation, and Digitization)
 
 ### System Architecture Overview
 ```mermaid
@@ -21,8 +21,8 @@ graph TD
         direction TB
         CP["💻 Citizen/Business Portals (eCitizen)"]:::access
         MA["📱 Mobile App / USSD"]:::access
-        OW["👤 Officer Workbench"]:::access
-        SC["🏢 Huduma Centers"]:::access
+        OW["👤 Officer Workbench (with Scanning/QA)"]:::access
+        SC["🏢 Huduma Centers (Intake & Capture)"]:::access
     end
 
     %% Layer 2: Core Platform
@@ -39,12 +39,13 @@ graph TD
             SSE["Reusable Government Services"]:::core
             NOTIFY["📨 Notification Service (SMS / Email / Push)"]:::core
             DOCGEN["📄 Document Generator (Permits / Certificates)"]:::core
+            IDP["🖨️ Intelligent Document Processing (OCR/Digitization)"]:::core
         end
         
         subgraph TrustHub["🔐 Trust Hub"]
             direction LR
             CM["✓ Consent Manager"]:::trust
-            IDP["🆔 Identity Federation (Maisha Namba)"]:::trust
+            IDP_ID["🆔 Identity Federation (Maisha Namba)"]:::trust
             NPKI["🔑 National PKI (Root + Govt CA)"]:::trust
         end
         
@@ -55,9 +56,10 @@ graph TD
         WE --> SharedServices
         SharedServices --> NOTIFY
         SharedServices --> DOCGEN
+        SharedServices --> IDP
         
-        CM --> IDP
-        IDP --> NPKI
+        CM --> IDP_ID
+        IDP_ID --> NPKI
         
         OBS -.-> AG
         OBS -.-> WE
@@ -68,7 +70,7 @@ graph TD
         direction TB
         KeSEL["🌉 Kenya Secure Exchange Layer (X-Road)"]:::bridge
         CSC["📚 Central Service Catalogue"]:::bridge
-        Adapters["🔧 Legacy System Adapters"]:::bridge
+        Adapters["🔧 Legacy System Adapters & Bulk Ingestion APIs"]:::bridge
         
         KeSEL --> CSC
         KeSEL --> Adapters
@@ -84,7 +86,7 @@ graph TD
             R2["BRS / LMS / NTSA / KRA<br/>Business & Revenue Registries"]:::registry
             R_SEC["Agriculture / Education / Health<br/>World Bank Priority Sectors"]:::registry
             R4["Immigration / Judiciary / SP<br/>Social & Legal Registries"]:::registry
-            EDRMS["📚 National EDRMS / Government Records Registry"]:::registry
+            EDRMS["📚 National EDRMS (Digital Archives & Scanned Records)"]:::registry
         end
         
         NDW["🗄️ National Data Warehouse (Analytics)"]:::registry
@@ -123,6 +125,7 @@ graph TD
 
     %% Document flow
     DOCGEN --> EDRMS
+    IDP --> EDRMS
 
     %% Trust integration
     TrustHub -.- KeSEL
@@ -164,31 +167,51 @@ sequenceDiagram
     SSA-->>Portal: Service Delivered
 ```
 
+### Digitization Flow Pattern (Paper to Structured Data)
+
+```mermaid
+sequenceDiagram
+    participant Citizen
+    participant Officer as Officer Workbench
+    participant IDP as IDP Engine (OCR)
+    participant WE as Workflow Engine
+    participant CM as Consent Manager
+    participant EDRMS as National EDRMS
+
+    Citizen->>Officer: Submits Physical Document
+    Officer->>IDP: Scans & Uploads Document
+    IDP->>IDP: OCR & Data Extraction
+    alt Low Confidence Extraction
+        IDP-->>Officer: Request Manual QA / Verification
+        Officer->>IDP: Confirms/Corrects Data
+    end
+    IDP->>WE: Submit Structured Payload & PDF
+    WE->>CM: Log Digitization Event (Citizen Notified)
+    WE->>EDRMS: Store Digitally Signed PDF
+    EDRMS-->>WE: Archival Reference ID
+    WE-->>Officer: Intake Complete, Workflow Initiated
+```
+
 ### 1. Access Channels (Citizen-Centric Design)
 Aligned with GEA Principle: **Citizen-Centricity**.
 - **Unified Front-End:** Single-window access via eCitizen for all services.
 - **Omnichannel:** Seamless experience across Web, Mobile App, USSD, and physical Huduma Centers.
 - **Accessibility:** Designed for inclusivity (USSD for feature phones, Assistive Tech for PWDs).
-
----
+- **Digitization at the Edge:** Huduma Centers and Officer Workbenches are equipped with document capture interfaces (scanning/QA) to intercept and digitize physical records at the point of service.
 
 ### 2. Trust, Security & Consent (Data Protection Act Compliance)
 Aligned with GEA Principle: **Security & Privacy by Design**.
-- **Consent Manager:** Centralized module to capture, track, and revoke citizen consent for data sharing as required by the **Data Protection Act (2019)**. No data moves without explicit user permission.
-- **National PKI (NPKI):** All transactions are digitally signed using certificates issued by the Government CA (ICTA), ensuring non-repudiation.
+- **Consent Manager:** Centralized module to capture, track, and revoke citizen consent for data sharing as required by the **Data Protection Act (2019)**. No data moves without explicit user permission. Logs events when legacy records are digitized.
+- **National PKI (NPKI):** All transactions and newly digitized records are digitally signed using certificates issued by the Government CA (ICTA), ensuring non-repudiation.
 - **Identity Federation:** Integration with **Maisha Namba** (IPRS) for single sign-on (SSO) and robust identity verification.
-
----
 
 ### 3. Orchestration & Shared Services
 Aligned with GEA Principle: **Standards-Driven & Open Architecture**.
 - **Workflow Engine:** Uses **BPMN 2.0** (e.g., Camunda/Flowable) to model long-running government processes. Decouples business logic from code.
 - **Dynamic Forms:** JSON-schema driven forms that render automatically on any channel.
 - **API Gateway:** Centralized entry point for traffic management, rate limiting, and threat protection (WAF).
-- **Shared Services Engine:** Reusable modules (Notification, SMS, Document Management) to drive cost-efficiency.
+- **Shared Services Engine:** Reusable modules (Notification, SMS, Document Management) to drive cost-efficiency. Now includes an **Intelligent Document Processing (IDP)** engine for OCR, data extraction, and metadata tagging to convert unstructured legacy paper into structured digital assets.
 - **Observability & Analytics:** Real-time monitoring of service KPIs and system health (World Bank mandatory requirement).
-
----
 
 ### 4. Interoperability & Cross-Cutting Resilience
 Aligned with GEA Principle: **Interoperability & Resilience by Design**.
@@ -196,8 +219,7 @@ Aligned with GEA Principle: **Interoperability & Resilience by Design**.
 - **Disaster Recovery (DR) & BCP:** Mandatory "Real Active Backup" model ensuring service continuity.
 - **Security Operations Center (SOC):** Reactive and proactive threat monitoring across the digital ecosystem.
 - **Central Service Catalogue:** A discoverable registry of all available government APIs (G2G) to promote reuse.
-
----
+- **Bulk Ingestion APIs:** Legacy adapters facilitate high-volume, asynchronous ingestion for mass back-scanning projects.
 
 ### 5. Government Payment Aggregator (GPA)
 Aligned with GEA Principle: **Reuse & Modularity**.
@@ -205,8 +227,6 @@ Aligned with GEA Principle: **Reuse & Modularity**.
 - **Split Payments:** Built-in logic to automatically split revenue at the source (e.g., a single permit fee is split into County Revenue, National Treasury, and Regulatory Agency accounts instantly).
 - **Reconciliation:** Automated daily reconciliation reports for the Auditor General.
 - **Real-Time Settlement:** Instant payment notifications (IPN) to service workflows to prevent service delivery delays.
-
----
 
 ### 6. Authoritative Registries & Data Analytics
 Aligned with GEA Principle: **Data as a Strategic Asset**.
@@ -219,8 +239,7 @@ The platform integrates directly with **National Master Data Sources** and a cen
 -   **NTSA & KRA:** Integration for transport and tax compliance.
 -   **NLIMS (Ardhisasa):** Validates land ownership and parcels.
 -   **Civil Registration (CRS):** Authoritative source for Births and Deaths records.
-
----
+-   **National EDRMS:** Serves as the definitive, legal digital archive for both natively generated documents and newly digitized legacy paper records.
 
 ### 7. Governance & Standards Compliance
 - **ISO 27001:** Information Security Management.
