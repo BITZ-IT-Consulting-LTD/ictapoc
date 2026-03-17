@@ -66,7 +66,8 @@ class DocumentSerializer(serializers.ModelSerializer):
         fields = [
             'uuid', 'title', 'document_type', 'classification_level',
             'uploaded_by', 'owner_mda', 'current_version_number', 
-            'metadata', 'created_at', 'versions'
+            'metadata', 'is_digitized', 'ocr_text', 'extraction_confidence', 'needs_qa',
+            'created_at', 'versions'
         ]
 
 class ArtifactSerializer(serializers.ModelSerializer):

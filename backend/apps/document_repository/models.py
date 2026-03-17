@@ -145,6 +145,13 @@ class Document(models.Model):
     
     metadata = models.JSONField(default=dict, blank=True)
     is_deleted = models.BooleanField(default=False)
+    
+    # Digitization Tracking Fields
+    is_digitized = models.BooleanField(default=False, help_text="True if this document was digitized from a paper record")
+    ocr_text = models.TextField(blank=True, help_text="Extracted text from intelligent document processing")
+    extraction_confidence = models.FloatField(null=True, blank=True, help_text="Confidence score from OCR engine")
+    needs_qa = models.BooleanField(default=False, help_text="Flags documents that require human-in-the-loop verification")
+    
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

@@ -35,11 +35,20 @@ export default {
             },
         });
     },
+    deleteDocument(uuid) {
+        return api.delete(`/v1/documents/${uuid}/`);
+    },
     downloadDocument(uuid) {
         return api.get(`/v1/documents/${uuid}/download/`, { responseType: 'blob' });
     },
     previewDocument(uuid) {
         return api.get(`/v1/documents/${uuid}/preview/`, { responseType: 'blob' });
+    },
+    digitizeDocument(uuid) {
+        return api.post(`/v1/documents/${uuid}/digitize/`);
+    },
+    approveQADocument(uuid) {
+        return api.post(`/v1/documents/${uuid}/approve_qa/`);
     },
 
     // Projects & Phases

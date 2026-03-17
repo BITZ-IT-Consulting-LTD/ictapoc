@@ -88,6 +88,17 @@
         </div>
       </div>
 
+      <!-- Digitization Settings -->
+      <div class="u-p-6 u-bg-amber-50/50 u-border u-border-amber-100 u-rounded-xl u-mt-2">
+        <label class="u-flex u-items-center u-gap-3 u-cursor-pointer">
+          <input type="checkbox" v-model="formData.is_digitized" class="u-w-5 u-h-5 u-rounded u-border-amber-300 u-text-amber-600 focus:u-ring-amber-500">
+          <div>
+            <div class="u-text-sm u-font-black u-text-main">Legacy Paper Record (Digitization)</div>
+            <div class="u-text-[10px] u-text-muted u-mt-0.5 leading-tight">Check this if you are uploading a scan of a physical paper document. It will automatically be sent to the IDP Engine for OCR extraction.</div>
+          </div>
+        </label>
+      </div>
+
       <div class="u-flex u-justify-end u-mt-4">
         <button type="submit" class="button button--primary button--pill u-px-8" :disabled="!selectedFile || isUploading">
           <i v-if="isUploading" class="bi bi-arrow-repeat animate-spin u-mr-2"></i>
@@ -125,7 +136,8 @@ const formData = ref({
   title: '',
   classification_level: 'internal',
   document_type: 'report',
-  version_number: 1
+  version_number: 1,
+  is_digitized: false
 });
 
 const metadataValues = ref({});
@@ -175,9 +187,21 @@ const handleUpload = async () => {
   payload.append('document_type', formData.value.document_type);
   payload.append('artifact_id', props.artifactId);
   payload.append('metadata', JSON.stringify(metadataValues.value));
+  payload.append('is_digitized', formData.value.is_digitized);
 
   try {
     const newDoc = await artifactStore.uploadDocument(payload);
+    
+    // Auto-trigger IDP digitization if the user checked the box
+    if (formData.value.is_digitized && newDoc && newDoc.uuid) {
+      try {
+         // Optionally wait for the digitization to finish before emitting to refresh UI
+         await import('../services/repositoryApi').then(m => m.default.digitizeDocument(newDoc.uuid));
+      } catch(e) {
+         console.warn("Auto-digitization failed", e);
+      }
+    }
+
     emit('uploaded', newDoc);
     
     // Reset
@@ -185,6 +209,7 @@ const handleUpload = async () => {
     formData.value.title = '';
     formData.value.classification_level = 'internal';
     formData.value.document_type = 'report';
+    formData.value.is_digitized = false;
     metadataValues.value = {};
   } catch (error) {
     alert(error.response?.data?.message || 'Failed to upload document');

@@ -16,6 +16,12 @@
             <div class="u-flex u-items-center u-gap-2 u-mb-1">
                <span class="u-text-[9px] u-font-black u-bg-primary/10 u-text-primary u-px-2 u-py-0.5 u-rounded u-uppercase u-tracking-tighter">Authoritative Preview</span>
                <span class="u-text-[9px] u-font-black u-bg-slate-100 u-text-slate-500 u-px-2 u-py-0.5 u-rounded u-uppercase u-tracking-tighter">Verified Asset</span>
+               <span v-if="doc.is_digitized" class="u-text-[9px] u-font-black u-bg-success/10 u-text-success u-px-2 u-py-0.5 u-rounded u-uppercase u-tracking-tighter">
+                 <i class="bi bi-robot"></i> Digitized (Conf: {{ doc.extraction_confidence || 'N/A' }})
+               </span>
+               <span v-if="doc.needs_qa" class="u-text-[9px] u-font-black u-bg-danger/10 u-text-danger u-px-2 u-py-0.5 u-rounded u-uppercase u-tracking-tighter animate-pulse">
+                 <i class="bi bi-exclamation-triangle"></i> Needs QA
+               </span>
             </div>
             <h4 class="u-text-base u-font-black u-text-main u-leading-tight u-mb-2">
               {{ doc.title }}
@@ -31,6 +37,12 @@
               <span :class="getClassificationColor(doc.classification_level)">{{ doc.classification_level }}</span>
             </div>
 
+            <!-- OCR Text Preview (if Needs QA) -->
+            <div v-if="doc.needs_qa && doc.ocr_text" class="u-mt-3 u-p-3 u-bg-amber-50 u-rounded-lg u-border u-border-amber-200">
+              <div class="u-text-[10px] u-font-black u-text-amber-800 u-uppercase u-tracking-widest u-mb-1"><i class="bi bi-text-left"></i> Extracted OCR Text (Review Required)</div>
+              <p class="u-text-xs u-text-amber-900 u-font-mono u-whitespace-pre-wrap">{{ doc.ocr_text }}</p>
+            </div>
+
             <!-- Business Metadata Chips -->
             <div v-if="doc.metadata && Object.keys(doc.metadata).length > 0" class="u-mt-4 u-flex u-flex-wrap u-gap-2">
               <span v-for="(val, key) in doc.metadata" :key="key" class="u-px-2.5 u-py-1 u-bg-white u-border u-border-slate-200 u-text-slate-600 u-rounded-lg u-text-[9px] u-font-black u-uppercase u-tracking-tighter shadow-sm">
@@ -41,12 +53,21 @@
           
           <!-- Actions -->
           <div class="u-flex u-items-center u-gap-3">
+            <button v-if="!doc.is_digitized" @click="$emit('digitize', doc)" class="button button--secondary button--sm button--pill shadow-sm" title="Run Intelligent Document Processing">
+              <i class="bi bi-cpu u-mr-1.5"></i> Digitize
+            </button>
+            <button v-if="doc.needs_qa" @click="$emit('approve-qa', doc)" class="button button--success button--sm button--pill shadow-sm" title="Approve OCR Text">
+              <i class="bi bi-check-circle u-mr-1.5"></i> Approve QA
+            </button>
             <button @click="$emit('preview', doc)" class="button button--ghost button--sm button--pill u-bg-slate-100 hover:u-bg-slate-200" title="Preview securely">
               <i class="bi bi-eye u-mr-1.5"></i> View
             </button>
             <a :href="`/api/v1/documents/${doc.uuid}/download/`" target="_blank" class="button button--primary button--sm button--pill shadow-lg shadow-primary/20" title="Download payload">
               <i class="bi bi-download"></i>
             </a>
+            <button @click="$emit('delete', doc)" class="button button--danger button--sm button--pill shadow-sm ml-2" title="Delete Document">
+              <i class="bi bi-trash"></i>
+            </button>
           </div>
         </div>
         
@@ -87,7 +108,7 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(['preview']);
+const emit = defineEmits(['preview', 'digitize', 'approve-qa', 'delete']);
 
 const getClassificationColor = (level) => {
   const map = {
