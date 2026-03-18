@@ -31,41 +31,35 @@ flowchart TD
     EndProcess(("End"))
  
     subgraph Stakeholders ["MDA's Stakeholders"]
-        direction LR
-        Submit["Submit Inquiry / Complaint\n/ Petition / Policy Proposal\n(Email or Physical Office)"]
+        Submit["MDA's Stakeholders"]
     end
  
-    subgraph Registry ["Central Registry"]
-        direction TB
-        LogApp["Receive, Tag and Log\nCorrespondence Manually"]
-    end
+    CentralRegistry["Central Registry"]
  
-    subgraph PSLayer ["PS and OPCs"]
+    subgraph PSLayer ["PS / OPCs"]
         direction LR
-        PS["Principal Secretary (PS)\nReviews and Assigns\nHandwritten Instructions"]
-        OPCs["OPCs\nProvides Guidance\nand Precedents"]
+        PS["PS"]
+        OPCs["OPCs"]
         PS <--> OPCs
     end
  
-    subgraph Officers ["Action Officers"]
-        direction TB
-        PrepareResponse["Draft Response\nor Action Memo\n(MS Word / Manual)"]
-        RequireOPS{"Require\nOPS Sign-off?"}
-    end
+    ActionOfficers["Action Officers"]
  
-    Sign["PS Signs Final\nResponse (Physical)"]
-    Dispatch["Dispatch to\nOriginating Stakeholder\n(Post / Courier)"]
+    RequireOPS{"Require OPS"}
+ 
+    Sign["Sign"]
+    Dispatch["Dispatch"]
  
     Start --> Submit
-    Submit --> LogApp
-    LogApp --> PS
-    PS --> PrepareResponse
-    PrepareResponse --> RequireOPS
+    Submit --> CentralRegistry
+    OPCs --> CentralRegistry
+    CentralRegistry --> PS
+    PS --> ActionOfficers
+    ActionOfficers --> RequireOPS
  
     RequireOPS -- "No" --> Sign
     RequireOPS -- "Yes" --> OPCs
-    OPCs -- "Returns approved\ndraft to PS" --> Sign
-    OPCs -- "Logs update\nback to registry" --> LogApp
+    OPCs --> Sign
  
     Sign --> Dispatch
     Dispatch --> EndProcess
@@ -78,7 +72,7 @@ flowchart TD
     class Start startEvent;
     class EndProcess endEvent;
     class RequireOPS gateway;
-    class Submit,LogApp,PS,OPCs,PrepareResponse,Sign,Dispatch userTask;
+    class Submit,CentralRegistry,PS,OPCs,ActionOfficers,Sign,Dispatch userTask;
 ```
  
 ---
