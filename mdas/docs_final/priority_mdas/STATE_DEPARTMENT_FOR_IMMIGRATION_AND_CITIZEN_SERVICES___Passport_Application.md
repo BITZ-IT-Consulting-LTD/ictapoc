@@ -304,13 +304,6 @@ The proposed process leverages a **Whole-of-Government digital platform** to del
 
 ---
 
-<<<<<<< HEAD
 ### Validation Survey
 Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
 
-=======
-## Feedback
-We value your input on this blueprint. Please take a moment to provide your feedback using the link below:
-
-[Provide Feedback](https://ee.kobotoolbox.org/x/4Ls7SlCG)
->>>>>>> fa7c468774fe7aa62241faa0890b6d9a0f43c246
