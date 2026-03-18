@@ -55,6 +55,7 @@ Detailed matrices and notes for each session can be found in their respective do
     *   [Government Press (Strategic Records Infrastructure)](./Government_Press___Service_Delivery.md)
     *   [TVET](./Technical_Vocational_Education_and_Training___Service_Delivery.md)
     *   [State Dept for Co-operatives](./Cooperatives___Service_Delivery.md)
+    *   [State Department for Economic Planning](./State_Department_for_Economic_Planning___Service_Delivery.md)
 
 
 ---

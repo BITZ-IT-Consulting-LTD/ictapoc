@@ -20,6 +20,7 @@
 - **[Government Press (Medium–Large – Strategic Records Infrastructure)](./Government_Press___Service_Delivery.md)**: Produces statutory notices, gazette supplements, and official documents, providing legally authoritative public information.
 - **[TVET](./Technical_Vocational_Education_and_Training___Service_Delivery.md)**: Policy and regulatory framework for Technical and Vocational Education and Training.
 - **[State Dept for Co-operatives](./Cooperatives___Service_Delivery.md)**: Formulates policy for the growth, regulation, and capacity building of the cooperative movement.
+- **[State Department for Economic Planning](./State_Department_for_Economic_Planning___Service_Delivery.md)**: Provides leadership in national development planning and ensuring government policies are evidence-based and aligned with long-term goals.
 
 
 ---
