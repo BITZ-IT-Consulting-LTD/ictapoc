@@ -10,6 +10,7 @@
 - **[Kenya Broadcasting Corporation](./Kenya_Broadcasting_Corporation___Service_Delivery.md)**: Provides public service broadcasting through radio and television to facilitate national development.
 - **[State Department for Special Programmes](./State_Department_for_Special_Programmes___Service_Delivery.md)**: Management of social protection, emergency responses, and drought management programs.
 - **[State Department for Culture, The Arts and Heritage](./Culture_and_Heritage___Service_Delivery.md)**: Preservation of national heritage, promotion of cultural identity, and oversight of museums and archives.
+- **[State House](./State_House___Service_Delivery.md)**: Manages official executive correspondence, mail handling, sorting, and records management to support the Presidency and ensure seamless communication across government.
 - **[Office of the Chief of Staff and Head of the Public Service](./OFFICE_OF_THE_CHIEF_OF_STAFF___Whole_of_Government_Oversight.md)**: Provides high-level advisory and administrative support to the Presidency, oversees whole-of-government operations, and manages executive coordination.
 - **[National Government Coordination](./National_Government_Coordination___Service_Delivery.md)**: Responsible for the oversight and coordination of national government functions and administrative actions across counties.
 - **[Office of the Government Spokesperson](./Government_Spokesperson___Service_Delivery.md)**: Official channel for government communication, dissemination of policy information, and public relations.

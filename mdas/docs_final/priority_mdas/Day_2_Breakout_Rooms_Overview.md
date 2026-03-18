@@ -32,6 +32,7 @@ Detailed matrices and notes for each session can be found in their respective do
     *   [National Government Coordination](./National_Government_Coordination___Service_Delivery.md)
     *   [Office of the Chief of Staff](./OFFICE_OF_THE_CHIEF_OF_STAFF___Whole_of_Government_Oversight.md)
     *   [Office of the Head of Public Service (OHPS)](./OFFICE_OF_THE_HEAD_OF_PUBLIC_SERVICE_OHPS___Executive_Coordination.md)
+    *   [State House](./State_House___Service_Delivery.md)
     *   [Sports and the Arts](./Sports_and_the_Arts___Service_Delivery.md)
     *   [State Department for Special Programmes](./State_Department_for_Special_Programmes___Service_Delivery.md)
     *   [Youth Affairs](./Youth_Affairs___Service_Delivery.md)
