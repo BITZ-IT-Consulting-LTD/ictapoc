@@ -18,3 +18,4 @@
 - **[Sports and the Arts](./Sports_and_the_Arts___Service_Delivery.md)**: Focused on the development and promotion of sports talent, creative industries, and the arts sector.
 - **[State Department for Special Programmes](./State_Department_for_Special_Programmes___Service_Delivery.md)**: Management of social protection, emergency responses, and drought management programs.
 - **[Youth Affairs](./Youth_Affairs___Service_Delivery.md)**: Empowering youth through policy development, skill training, and the management of youth-targeted economic programs.
+- **[State Dept for Parliamentary Affairs](./STATE_DEPARTMENT_FOR_PARLIAMENTARY_AFFAIRS___Service_Delivery.md)**: Coordinates the National Government's legislative agenda and facilitates interaction between the Executive and Parliament.

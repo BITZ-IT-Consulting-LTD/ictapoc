@@ -17,7 +17,7 @@ This document presents the prioritised list of Ministries, Departments, and Agen
 
 | #   | MDA                                                                                                                 | Tier | DMI   | Weakest Pillar(s) | Citizen Impact | Record Volumes                                            | Service Complexity | Model Application                                                      | Primary Intervention Focus                               |
 | --- | ------------------------------------------------------------------------------------------------------------------- | ---- | ----- | ----------------- | -------------- | --------------------------------------------------------- | ------------------ | ---------------------------------------------------------------------- | -------------------------------------------------------- |
-| 1   | [Agriculture & Food Authority (AFA)](./Agriculture_and_Food_Authority___Service_Delivery.md) + KIAMIS               | T2   | ~2.4  | RMI / DMI         | Very High      | Farmer profiles >7.1M; permits, inspections, traceability | Very High          | High transaction intensity; national registries; scalable integrations | Farmer registries, licensing, inspections, traceability  |
+| 1   | [Livestock & Food Authority (AFA)](./Agriculture_and_Food_Authority___Service_Delivery.md) + National Livestock Platforms (KIAMIS) | T2   | ~2.4  | RMI / DMI         | Very High      | Farmer profiles >7.1M; permits, inspections, traceability | Very High          | High transaction intensity; national registries; scalable integrations | Farmer registries, licensing, inspections, traceability  |
 | 2   | [Kenya National Qualifications Authority (KNQA)](./Kenya_National_Qualifications_Authority___Service_Delivery.md)   | T2   | ~2.2  | RMI / ESMI        | Very High      | Qualification applications; validation reports            | High               | Cross-MDA dependency; regulatory mandate                               | Qualifications registry, validation workflows            |
 | 3   | [Ministry of Health (MoH)](./Ministry_of_Health___Service_Delivery.md)                                              | T1   | ~2.6  | DMI / RMI / ESMI  | Extremely High | 55M+ patient profiles; 300M+ encounters annually          | Very High          | Highest transaction intensity; national shared services                | Shared Health Record; patient identity; interoperability |
 | 4   | [Immigration & Citizen Services](./STATE_DEPARTMENT_FOR_IMMIGRATION_AND_CITIZEN_SERVICES___Passport_Application.md) | T2   | ~1.40 | RMI               | Very High      | >10 million records                                       | High               | High citizen reach; bounded registries                                 | Identity registries; records governance                  |
@@ -52,7 +52,7 @@ This document presents the prioritised list of Ministries, Departments, and Agen
 
 ---
 
-# 2. Proposed Next Priority MDAs – 9
+# 2. Proposed Next Priority MDAs – 15
 
 | #   | MDA                                                                                                                 | Tier | DMI   | Weakest Pillar | Citizen Impact | Record Volumes | Complexity | Model Summary        | Intervention Focus     |
 | --- | ------------------------------------------------------------------------------------------------------------------- | ---- | ----- | -------------- | -------------- | -------------- | ---------- | -------------------- | ---------------------- |
@@ -65,6 +65,12 @@ This document presents the prioritised list of Ministries, Departments, and Agen
 | 25  | [State Department of ICT](./State_Department_of_ICT___Service_Delivery.md)                                          | T1   | ~2.10 | ESMI           | High           | 100K–1M        | High       | Policy leadership    | E-government policy    |
 | 26  | [Civil Registration Services](./_CIVIL_REGISTRATION_SERVICES_CRS____Service_Delivery.md)                             | T2   | ~1.50 | RMI            | Very High      | 10M+           | High       | Vital identity       | CRD digitisation       |
 | 27  | [State Department of ICT (Alternate)](./State_Department_of_ICT.md)                                                 | T1   | ~2.10 | ESMI           | High           | 100K–1M        | High       | Policy leadership    | E-government policy    |
+| 28  | [TVET](./Technical_Vocational_Education_and_Training___Service_Delivery.md)                                         | -    | -     | -              | -              | -              | -          | -                    | -                      |
+| 29  | [Internal Security and National Administration](./Internal_Security_and_National_Administration___Service_Delivery.md) | -    | -     | -              | -              | -              | -          | -                    | -                      |
+| 30  | [Cabinet Office](./CABINET_OFFICE___Cabinet_Memo_Processing.md)                                                     | -    | -     | -              | -              | -              | -          | -                    | -                      |
+| 31  | [State Dept for Co-operatives](./Cooperatives___Service_Delivery.md)                                                | -    | -     | -              | -              | -              | -          | -                    | -                      |
+| 32  | [Office of the Attorney General — Marriages](./OFFICE_OF_THE_ATTORNEY_GENERAL_AG____Service_Delivery.md)            | -    | -     | -              | -              | -              | -          | -                    | -                      |
+| 33  | [State Dept for Parliamentary Affairs](./STATE_DEPARTMENT_FOR_PARLIAMENTARY_AFFAIRS___Service_Delivery.md)          | -    | -     | -              | -              | -              | -          | -                    | -                      |
 
 ---
 
