@@ -16,7 +16,7 @@ Detailed matrices and notes for each session can be found in their respective do
     *   [State Department for Correctional Services](./STATE_DEPARTMENT_FOR_CORRECTIONAL_SERVICES___Service_Delivery.md)
     *   [State Department for Immigration and Citizen Services](./STATE_DEPARTMENT_FOR_IMMIGRATION_AND_CITIZEN_SERVICES___Passport_Application.md)
     *   [Internal Security and National Administration](./Internal_Security_and_National_Administration___Service_Delivery.md)
-    *   [Office of the Attorney General — Marriages](./OFFICE_OF_THE_ATTORNEY_GENERAL_AG____Service_Delivery.md)
+    *   [State law office registra of Marriages](./OFFICE_OF_THE_ATTORNEY_GENERAL_AG____Service_Delivery.md)
 
 #### [Room 2: Coordination, Culture & Specialised Services](./Breakout_Room_2_Coordination_Culture_Specialised.md)
 *   **Facilitator:** Joash
