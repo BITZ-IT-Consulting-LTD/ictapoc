@@ -179,10 +179,3 @@ The To-Be process leverages the Government Service Bus to integrate with BRS (Bu
 
 ## References
 Derived from official mandates.
-
----
-
-## Feedback
-We value your input on this blueprint. Please take a moment to provide your feedback using the link below:
-
-[Provide Feedback](https://ee.kobotoolbox.org/x/4Ls7SlCG)
