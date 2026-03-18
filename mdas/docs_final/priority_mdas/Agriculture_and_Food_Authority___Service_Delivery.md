@@ -1,7 +1,7 @@
-# Agriculture and Food Authority (AFA) – Service Delivery
+# State Department for Livestock Development
 
 ## Cover Page
-- **Ministry/Department/Agency (MDA):** Agriculture and Food Authority
+- **Ministry/Department/Agency (MDA):** State Department for Livestock Development
 - **Process Name:** Farmer Registration & Licensing
 - **Document Version:** 2.1
 - **Date:** 2026-03-04
