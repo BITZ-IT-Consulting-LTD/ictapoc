@@ -85,6 +85,7 @@ End-to-End Archival Retrieval, Digitization, and Content Licensing
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Client | Submits a manual request for a specific historical event or footage. | Paper/Email | |
@@ -158,6 +159,7 @@ graph TD
 - **Security & Provenance:** Every digital download is watermarked and issued with a **Digital Verifiable License (QR)** to ensure legal use and non-repudiation.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Client | Searches for content on the KBC eCitizen Portal using keywords (e.g., "Madaraka Day 1963"). | eCitizen / AI Search |

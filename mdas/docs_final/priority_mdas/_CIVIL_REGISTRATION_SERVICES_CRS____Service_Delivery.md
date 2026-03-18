@@ -69,6 +69,7 @@ Vital Event Registration (Births and Deaths) and Certificate Issuance
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Informant/Chief | Reports the event at a CRS office or via the eCitizen portal. | Manual/Digital | |
@@ -131,6 +132,7 @@ flowchart TD
 - **Digital First:** Paper certificates are replaced by **Verifiable Digital Credentials** issued to the parents' eCitizen wallets, which can be presented at schools or for passport applications without needing a physical copy.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Health Worker | Records the birth/death in the facility EMR. | MOH Afya App |

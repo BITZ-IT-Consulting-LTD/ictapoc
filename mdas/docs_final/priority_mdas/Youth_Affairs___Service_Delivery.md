@@ -87,6 +87,7 @@ Youth Internship Placement, AGPO Registration, and Film Production Licensing
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Applicant | Logs into eCitizen and fills forms for Internship or AGPO. | eCitizen / Portal | |
@@ -160,6 +161,7 @@ graph TD
 - **Smart Internships:** The **Workflow Engine** uses AI to place interns in agencies nearest to their residence (verified via GPS/Maisha Namba), reducing transport costs for the youth.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Youth Applicant | Logs into eCitizen using Maisha Namba. All personal and education details are already pre-populated. | eCitizen / SSO |

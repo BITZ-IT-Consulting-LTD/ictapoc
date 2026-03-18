@@ -96,6 +96,7 @@ End-to-End Water Infrastructure Development (Study to Handover)
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Planning Engineer | Identifies the study area and collects site data for feasibility. | Manual/GIS | |
@@ -170,6 +171,7 @@ graph TD
 - **Inter-Agency Transparency:** All environmental approvals (NEMA) and land clearances are handled via **X-Road APIs**, eliminating the "paper chase."
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Planning Team | Checks the proposed project against the GIS-based Water Master Plan. | GIS / Dashboard |

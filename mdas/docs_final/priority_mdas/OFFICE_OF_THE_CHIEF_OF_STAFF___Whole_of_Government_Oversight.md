@@ -117,6 +117,7 @@ End-to-End Whole-of-Government Oversight (Tasking to Follow-Up)
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Head of Public Service | Receives Presidential Directive. | Physical/Memo | Originates from Cabinet or Presidential instruction. |

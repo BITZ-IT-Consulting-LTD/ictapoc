@@ -86,6 +86,7 @@ Sports Federation Registration, Grant Disbursement, and Facility Booking
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Federation | Submits application for registration along with constitution and list of officials. | Manual/Portal | |
@@ -155,6 +156,7 @@ graph TD
 - **Financial Integrity:** All payments (G2C grants and C2G fees) are routed through the **Government Payment Aggregator**, ensuring auditability.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Athlete | Logs into the Sports Portal using their Maisha Namba for SSO. | Sports Portal |

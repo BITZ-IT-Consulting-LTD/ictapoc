@@ -122,6 +122,7 @@ End-to-End Inmate Case Management (Admission to Release)
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Police | Escorts the inmate to the correctional facility. | Transport | |
@@ -252,6 +253,7 @@ The To-Be process shifts from a siloed, paper-based operation to a **digital cor
 - **Vocational Certification Systems (KNQA):** Digitally registers skills acquired during incarceration.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Judiciary System | Pushes a digitally signed committal warrant via X-Road to the correctional facility. | Judiciary CMS / X-Road |
