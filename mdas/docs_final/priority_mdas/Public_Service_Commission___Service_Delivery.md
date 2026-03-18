@@ -16,7 +16,7 @@
 ---
 
 ## Executive Summary
-The Public Service Commission (PSC) is constitutionally mandated to ensure an efficient and effective public service. A key aspect of this mandate is upholding ethics and integrity within the public service. Under the Public Officer Ethics Act, public officers are required to submit a Declaration of Income, Assets and Liabilities (DIAL) every two years, as well as upon initial appointment and exit from service. The current process involves manual or fragmented semi-digital submissions that pose challenges in verification, tracking, and compliance monitoring. The transition to a unified, digital-first architecture aims to automate submissions, integrate with foundational identity and asset registries for real-time verification, and ensure seamless compliance tracking.
+The Public Service Commission (PSC) is constitutionally mandated to ensure an efficient and effective public service. A key aspect of this mandate is upholding ethics and integrity within the public service. Under the Public Officer Ethics Act, public officers are required to submit a Declaration of Income, Assets and Liabilities (DIAL) every two years, as well as upon initial appointment and exit from service. The current process is purely manual, relying entirely on physical paper forms, which poses significant challenges in verification, tracking, and compliance monitoring. The transition to a unified, digital-first architecture aims to automate submissions, integrate with foundational identity and asset registries for real-time verification, and ensure seamless compliance tracking.
 
 ---
 
@@ -83,11 +83,11 @@ Declaration of Income, Assets and Liabilities (DIAL)
 
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
-| 1 | Public Officer | Obtains, fills out, and signs the physical or downloadable PDF DIAL form. | Manual/PDF | Often requires manual data entry of extensive financial details. |
-| 2 | MDA HR Officer | Receives the form, logs the submission, and checks for physical completeness. | Manual/Spreadsheet | Labor-intensive tracking during peak declaration periods. |
-| 3 | MDA HR Officer | Compiles a list of compliant and non-compliant officers and forwards forms to PSC. | Manual/Email | Risk of document loss or unauthorized access in transit. |
-| 4 | PSC Ethics Officer | Receives forms from various MDAs, manually verifies data, and files them. | Physical Registry / Legacy System | Verification of assets is difficult and rarely done in real-time. |
-| 5 | PSC Compliance | Identifies non-compliant officers and initiates follow-up or disciplinary procedures. | Manual | Delays in identifying defaulters due to manual aggregation. |
+| 1 | Public Officer | Obtains, fills out, and signs the physical paper DIAL form. | Manual / Paper | Often requires manual data entry of extensive financial details. |
+| 2 | MDA HR Officer | Receives the physical form, logs the submission, and checks for physical completeness. | Manual / Physical Ledger | Labor-intensive tracking during peak declaration periods. |
+| 3 | MDA HR Officer | Compiles a physical list of compliant and non-compliant officers and dispatches forms to PSC. | Manual / Dispatch | Risk of document loss or unauthorized access in transit. |
+| 4 | PSC Ethics Officer | Receives forms from various MDAs, manually verifies data, and files them. | Physical Registry | Verification of assets is difficult and rarely done in real-time. |
+| 5 | PSC Compliance | Identifies non-compliant officers and initiates follow-up or disciplinary procedures. | Manual / Files | Delays in identifying defaulters due to manual aggregation. |
 
 ---
 
