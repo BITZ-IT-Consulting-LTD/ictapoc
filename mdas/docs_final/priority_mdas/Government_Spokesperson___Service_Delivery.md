@@ -13,6 +13,20 @@
 
 ---
 
+## Service Mandate
+The Office of the Government Spokesperson (OGS) serves as the primary communication hub for the national government of Kenya. Its core mandate is to ensure coherence, alignment, and consistency in how government priorities, policies, and programs are communicated to the public.
+
+**Official Website:** [www.communication.go.ke](http://www.communication.go.ke)
+
+**Key Functions:**
+- **Official Communication:** Issuing official government statements and clarifying policy matters on behalf of the Republic of Kenya.
+- **Coordination:** Planning and managing the communication of government policies and initiatives across all Ministries, Departments, and Agencies (MDAs).
+- **Oversight:** Providing technical oversight for several key information bodies, including the Directorates of Information, Public Communication, Film Services, Kenya News Agency (KNA), and the Government Advertising Agency (GAA).
+- **Public Engagement:** Leveraging modern communication tools alongside traditional channels (radio, barazas) to bridge the gap between the government and citizens.
+- **Feedback Mechanism:** Acting as a conduit for citizen feedback to reach policymakers.
+
+---
+
 ## Executive Summary
 The Office of the Government Spokesperson manages official government communication, public messaging, and media coordination. Currently, information collection and message clearance are sequential and semi-manual. The transition to the Kenya DSAP Architecture aims to establish a secure, multi-channel dissemination portal with automated AI archiving and blockchain-based verifiable statements.
 

@@ -13,6 +13,20 @@
 
 ---
 
+## Service Mandate
+The State Department for Children Services is mandated to safeguard the rights and promote the welfare of all children in Kenya. Drawing its authority from the Constitution of Kenya and the Children Act 2022, the department provides leadership in child protection and the implementation of family and child welfare policies.
+
+**Official Website:** [https://www.childrenservices.go.ke](https://www.childrenservices.go.ke)
+
+**Key Functions:**
+- **Child Protection:** Preventing and responding to violence, exploitation, and abuse, including harmful cultural practices and child labor.
+- **Social Support Programs:** Administering Cash Transfer for Orphans and Vulnerable Children (CT-OVC), Presidential Secondary School Bursary (PSSB), and Nutrition Improvement through Cash and Health Education (NICHE).
+- **Case Management:** Operating the Child Protection Information Management System (CPIMS) to track and manage child welfare cases nationwide.
+- **Alternative Care:** Overseeing adoption, foster care, and the regulation of Charitable Children’s Institutions (CCIs).
+- **Counter-Trafficking:** Implementing the Counter-Trafficking in Persons Act to protect children from trafficking.
+
+---
+
 ## Executive Summary
 The State Department for Children Services, under the Ministry of Gender, Culture and Children Services (created 16th April 2025 following the reorganization of the Government structure per Executive Order No. 1 of 2025), is mandated to safeguard the rights and promote the welfare of all children in Kenya. The department operates through eight divisions providing child protection, cash transfer programmes for vulnerable children, educational support, the Child Helpline (116), counter-trafficking efforts, and the Child Protection Information Management System (CPIMS). The current case management process is heavily paper-based, leading to delays in interventions, difficulty in tracking child history across regions, and risks of data loss. The transition to the Kenya DSAP Architecture aims to implement a secure, digital CPIMS integrated with the national identity ecosystem.
 

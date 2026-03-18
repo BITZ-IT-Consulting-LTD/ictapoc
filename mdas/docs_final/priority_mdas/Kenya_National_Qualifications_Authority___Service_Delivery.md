@@ -11,6 +11,16 @@
 - **Service Model:** G2C
 - **Life-Cycle Group:** Cradle to Death (2. Childhood & Education)
 
+## Service Mandate
+The Kenya National Qualifications Authority (KNQA) is the body mandated to manage the Kenya National Qualifications Framework (KNQF). Established in 2015 under the KNQF Act No. 22 of 2014, its primary role is to coordinate and harmonize education, training, assessment, and quality assurance of all qualifications awarded in Kenya. Its mandate covers the entire education spectrum, including Basic, TVET, and University sub-sectors. Key functions include:
+1. **Policy Coordination:** Developing and supervising national policies on qualifications.
+2. **Accreditation:** Accrediting Qualification Awarding Bodies (QABs) such as universities, polytechnics, and professional examination bodies.
+3. **Standard Setting:** Defining levels of qualifications and setting benchmarks for skills, knowledge, and attitudes.
+4. **Recognition of Prior Learning (RPL):** Providing a framework for recognizing skills and competencies acquired through informal or non-formal learning.
+5. **Equation & Validation:** Evaluating foreign qualifications to determine their Kenyan equivalents.
+6. **Database Management:** Maintaining the National Qualifications Database (NQD), a central registry of all quality-assured qualifications and learners in Kenya.
+7. **Mobility & Credit Transfer:** Facilitating credit transfers and vertical/horizontal mobility for learners across different education levels.
+
 ---
 
 ## Executive Summary

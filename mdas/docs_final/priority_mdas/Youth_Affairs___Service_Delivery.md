@@ -13,6 +13,20 @@
 
 ---
 
+## Service Mandate
+The State Department for Youth Affairs and Creative Economy is responsible for the development and empowerment of the youth and the promotion of the creative industry in Kenya. Its mandate is anchored in Article 55 of the Constitution of Kenya 2010 and focuses on harnessing youth talent in arts, film, music, and other creative sectors to drive economic growth.
+
+**Official Website:** [https://www.moyasa.go.ke](https://www.moyasa.go.ke)
+
+**Key Functions:**
+- **Youth Empowerment:** Developing and implementing policies that promote youth participation in national development and economic activities.
+- **Creative Economy Development:** Promoting talents in the arts, film, and music sectors to drive economic growth.
+- **Talent Development:** Identifying, nurturing, and developing youth talents for national and global competitiveness.
+- **Mainstreaming Youth Affairs:** Ensuring that youth concerns are integrated into all sectors of national development.
+- **Stakeholder Collaboration:** Overseeing and collaborating with various stakeholders engaged in youth promotion.
+
+---
+
 ## Executive Summary
 The State Department for Youth Affairs is responsible for the economic empowerment of Kenyan youth through initiatives like the Public Service Internship Programme (PSIP) and the Access to Government Procurement Opportunities (AGPO) registration for youth-owned enterprises. Currently, these processes rely on manual uploads of academic documents and business certificates. The transition to the Kenya DSAP Architecture aims to automate eligibility verification via IPRS and BRS, enabling instant internship matching and AGPO certification.
 

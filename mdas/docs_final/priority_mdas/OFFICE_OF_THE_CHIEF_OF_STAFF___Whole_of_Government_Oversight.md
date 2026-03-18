@@ -13,6 +13,22 @@
 
 ---
 
+## Service Mandate
+The Office of the Chief of Staff and Head of Public Service is a critical administrative and policy coordination hub within the Executive Office of the President. It is responsible for the overall management of the Executive Office of the President and the strategic coordination of the entire Public Service.
+
+**Official Website:** [https://www.president.go.ke](https://www.president.go.ke)
+
+**Key Functions:**
+- **Policy Coordination:** Coordinating the formulation and implementation of government policies across all ministries and state departments.
+- **Staff Supervision:** Managing and supervising staff activities within the Executive Office of the President to ensure efficiency.
+- **Presidential Support:** Providing substantive support to the President in the execution of his constitutional mandate.
+- **Inter-Ministerial Communication:** Serving as the primary link between the President and MDAs on day-to-day government operations.
+- **Project Oversight:** Overseeing the planning, delivery, and monitoring of all flagship programs and projects under the Executive Office of the President.
+- **Public Service Leadership:** Providing strategic leadership to the civil service, ensuring adherence to values and principles of public service.
+- **Cabinet Support:** Assisting in the coordination of Cabinet affairs and ensuring that Cabinet decisions are communicated and implemented.
+
+---
+
 ## Executive Summary
 The Office of the Chief of Staff coordinates whole-of-government performance monitoring and strategic oversight. The current process relies on manual data collection from MDAs, leading to analysis lags. The transition to the Kenya DSAP Architecture aims to establish an automated performance engine that "pulls" data directly from MDA registries via the Huduma Bridge.
 

@@ -9,6 +9,23 @@
 
 ---
 
+## Service Mandate
+**Official Website:** [www.ict.go.ke](https://www.ict.go.ke)
+
+The State Department for Broadcasting and Telecommunications is responsible for the development of mass media, telecommunications, and postal services in Kenya. It develops and reviews policies and laws that regulate standards and services in the ICT, telecommunications, and media industries.
+
+**Key Functions:**
+- **Telecommunication Policy:** Overseeing the strategic direction and regulatory framework for the telecommunications sector.
+- **Broadcasting Policy:** Managing the growth and standards of the broadcasting industry.
+- **Public Communication:** Coordinating government communication and disseminating information to the public.
+- **Government Advertising Agency (GAA):** Coordinating and managing all national government advertising services.
+- **Postal and Courier Services:** Developing policies for the postal and courier sub-sectors.
+- **Film Services:** Overseeing the development and regulation of the film industry in Kenya.
+- **ICT Training and Standards:** Developing ICT standards and capacity in mass media and ICT skills.
+- **E-Government Promotion:** Facilitating the adoption of digital services within the government to improve service delivery.
+
+---
+
 ## Executive Summary
 The Communications Authority of Kenya (CA) is the independent regulatory agency for the Information, Communications and Technology (ICT) industry in Kenya, established in 1999 by the Kenya Information and Communications Act, 1998. Its mandate encompasses licensing, spectrum management, market development, consumer protection, and cybersecurity. The CA aims to ensure a vibrant, accessible, secure, and well-regulated ICT sector that fosters innovation, economic growth, and social development, while upholding consumer rights and promoting fair competition.
 

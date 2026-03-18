@@ -13,6 +13,20 @@
 
 ---
 
+## Service Mandate
+The Athi Water Works Development Agency (AWWDA) is a state corporation under the Ministry of Water, Sanitation & Irrigation, established under the Water Act 2016. It is mandated to undertake the development, maintenance, and management of National Public Waterworks in Nairobi, Kiambu, and Murang’a counties.
+
+**Official Website:** [https://www.awwda.go.ke/](https://www.awwda.go.ke/)
+
+**Key Functions:**
+- **Infrastructure Development:** Undertake the development, maintenance, and management of National Public Waterworks.
+- **Bulk Water Services:** Operate waterworks and provide bulk water services as a Water Service Provider (WSP) until such assets are handed over to a County Government or another provider.
+- **Reserve Capacity:** Provide reserve capacity for the purposes of providing water services.
+- **Technical Services & Capacity Building:** Providing technical services and capacity building to County Governments and Water Service Providers within its area of jurisdiction.
+- **Technical Support:** Providing technical support to the Cabinet Secretary in the discharge of functions regarding water and sanitation.
+
+---
+
 ## Executive Summary
 Athi Water Works Development Agency (AWWDA) is responsible for the planning and development of water and sewerage infrastructure within its area of jurisdiction. The infrastructure lifecycle involves complex feasibility studies, procurement, construction supervision, and final commissioning. The current process is hampered by manual data collection and fragmented tracking of contractors and project milestones. The transition to the Kenya DSAP Architecture aims to provide a unified project management ecosystem integrated with GIS and IFMIS.
 

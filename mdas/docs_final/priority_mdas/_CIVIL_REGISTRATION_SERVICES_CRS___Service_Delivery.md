@@ -15,6 +15,22 @@
 
 ---
 
+## Service Mandate
+**Official Website:** [crs.ecitizen.go.ke](https://crs.ecitizen.go.ke/)
+
+Civil Registration Services is responsible for the compulsory and immediate registration of all births and deaths occurring in Kenya, as well as those of Kenyan citizens occurring abroad. It derives its mandate from the Births and Deaths Registration Act (Cap. 149) and the Legitimacy Act (Cap. 145).
+
+**Key Functions:**
+- **Registration of Births:** Compulsory registration of all births in Kenya and those of Kenyan citizens abroad.
+- **Registration of Deaths:** Compulsory registration of all deaths in Kenya and those of Kenyan citizens abroad.
+- **Issuance of Certificates:** Issuance of birth and death certificates through centralized and digital platforms.
+- **Record Management:** Safe custody, preservation, and maintenance of all birth and death records and registers.
+- **Vital Statistics:** Production and dissemination of vital statistics to inform national government planning.
+- **Legitimacy & Re-registration:** Handling recognition and re-registration of births upon legitimization.
+- **Authentication:** Verification and authentication of birth and death certificates for legal or official use.
+
+---
+
 ## Executive Summary
 Civil Registration Services (CRS) is the authoritative custodian of vital life events in Kenya, including births and deaths. These events form the bedrock of a citizen's legal identity (Maisha Namba). The current process relies on semi-digital systems (CRVS) and manual paper notifications from hospitals and administrative chiefs. The transition to the Kenya DSAP Architecture aims to establish real-time, event-driven registration triggered at the point of occurrence.
 

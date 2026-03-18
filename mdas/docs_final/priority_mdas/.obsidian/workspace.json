@@ -11,12 +11,13 @@
             "id": "f4e855576f44abc8",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "bases",
               "state": {
-                "file": "exported_mermaids/Office_of_the_Chief_of_Staff_AS_IS.png"
+                "file": "Untitled.base",
+                "viewName": "Table"
               },
-              "icon": "lucide-image",
-              "title": "Office_of_the_Chief_of_Staff_AS_IS"
+              "icon": "lucide-table",
+              "title": "Untitled"
             }
           }
         ]
@@ -72,7 +73,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -92,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "exported_mermaids/Office_of_the_Chief_of_Staff_AS_IS.png",
+                "file": "Untitled.base",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Office_of_the_Chief_of_Staff_AS_IS"
+              "title": "Backlinks for Untitled"
             }
           },
           {
@@ -182,6 +184,9 @@
   },
   "active": "f4e855576f44abc8",
   "lastOpenFiles": [
+    "Untitled 2.canvas",
+    "Untitled.base",
+    "Untitled 1.canvas",
     "~$KDEAP_PoC_v2_Comprehensive.pptx",
     "KDEAP_PoC_v2_Comprehensive.pptx",
     "mermaid_exports/temp_1.png",
@@ -194,9 +199,7 @@
     "KDEAP_PoC_v2_Deck.pptx",
     "generate_deck_pptx.py",
     "KDEAP_PoC_v2_Deck.md",
-    "generate_deck.py",
     "exported_mermaids/Agriculture_and_Food_Authority_AS_IS.png",
-    "temp_mmd_files/_REFUGEE_SERVICES_TO_BE.mmd",
     "exported_mermaids/Agriculture_and_Food_Authority_TO_BE.png",
     "exported_mermaids/Office_of_the_Chief_of_Staff_AS_IS-2.png",
     "exported_mermaids/Office_of_the_Chief_of_Staff_AS_IS-1.png",

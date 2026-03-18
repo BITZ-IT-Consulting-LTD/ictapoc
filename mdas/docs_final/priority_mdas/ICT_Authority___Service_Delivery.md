@@ -13,6 +13,22 @@
 
 ---
 
+## Service Mandate
+**Official Website:** [www.icta.go.ke](https://www.icta.go.ke)
+
+The Information and Communication Technology (ICT) Authority is a State Corporation under the Ministry of Information, Communications, and the Digital Economy. It is tasked with rationalizing and streamlining the management of all Government of Kenya ICT functions, including enforcing standards and promoting ICT literacy.
+
+**Key Functions:**
+- **Standardization & Enforcement:** Setting and enforcing ICT standards and guidelines for human resources, infrastructure, processes, and systems across the public service.
+- **Infrastructure Management:** Establishing and maintaining secure ICT infrastructure (e.g., NOFBI) and the Government Data Center (GDC).
+- **e-Government Services:** Spearheading the digitalization of government services through platforms like e-Citizen.
+- **Digital Literacy & Capacity Building:** Promoting ICT literacy through programs like the Digital Literacy Programme (DLP) and DigiTalent.
+- **Innovation & Enterprise:** Encouraging the development of local ICT solutions and supporting the growth of the digital economy.
+- **Cybersecurity Oversight:** Developing and implementing strategic ICT security policies and incident response systems for the government.
+- **Project Supervision:** Overseeing the design and implementation of critical ICT projects across all MCDAs.
+
+---
+
 ## Executive Summary
 The ICT Authority (ICTA) is the principal implementing agency responsible for coordinating, implementing, and standardizing ICT initiatives across the Government of Kenya.
 

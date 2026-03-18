@@ -1,5 +1,18 @@
 # Government Press - Service Delivery
 
+## Service Mandate
+**Official Website:** [governmentpress.ecitizen.go.ke](https://governmentpress.ecitizen.go.ke)
+
+The Government Press is the primary publishing and printing department for the Kenyan government, operating under the Executive Office of the President. Its mandate is to serve as the centralized facility for creating, authenticating, disseminating, and archiving official government information to ensure transparency and accountability.
+
+**Key Functions:**
+- **Publishing the Kenya Gazette:** Responsible for the weekly publication of official notices, legislative updates, and legal appointments.
+- **Printing Official Documents:** Producing Acts of Parliament, Bills, Legal Notices, Subsidiary Legislations, and Government Reports.
+- **Revenue & Accountable Documents:** Printing secure, accountable documents used for government revenue collection (e.g., receipt books, permits).
+- **Document Authentication:** Ensuring the authenticity of official publications through specialized printing and official sealing.
+- **Cataloging & Archiving:** Maintaining a comprehensive catalog of government publications and preserving historical records for archival purposes.
+- **Public Services via eCitizen:** Facilitating legal notices, advertisements, and sales of publications digitally.
+
 ## MDA Overview
 The **Government Press** is a Medium–Large Strategic Records Infrastructure institution. It is responsible for publishing the Kenya Gazette, laws, statutory instruments, government notices, and official publications. It serves as the centralized national facility for the legally authoritative dissemination and archiving of public information.
 

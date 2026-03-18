@@ -13,6 +13,22 @@
 
 ---
 
+## Service Mandate
+The National Commission for Science, Technology and Innovation (NACOSTI) is the primary agency for regulating and assuring quality in the science, technology, and innovation (STI) sector in Kenya. Established under the Science, Technology and Innovation Act 2013, its core mandate is to regulate and advise the government on all matters related to STI.
+
+**Official Website:** [https://www.nacosti.go.ke](https://www.nacosti.go.ke)
+
+**Key Functions:**
+- **Policy Advisory:** Advising national and county governments on STI policy, planning, and financial resource assessment.
+- **Research Licensing:** Licensing all scientific research conducted in Kenya to ensure it meets national standards and ethical guidelines.
+- **Registration & Accreditation:** Registering and accrediting research institutions to maintain high standards.
+- **Setting Priorities:** Developing national priorities for scientific and technological activities in consultation with stakeholders.
+- **Coordination & Monitoring:** Coordinating, monitoring, and evaluating activities related to scientific research and technology development.
+- **STI Mainstreaming:** Spearheading the integration of science and technology within MDAs.
+- **International Focal Point:** Serving as the national focal point for international treaties and protocols related to research and technology.
+
+---
+
 ## Executive Summary
 NACOSTI is the primary agency responsible for regulating and assuring quality in the science, technology, and innovation sector. Its key mandate is to license all research activities in Kenya. The current process involves manual document vetting, physical bank payments, and sequential expert reviews. The transition to the Kenya DSAP Architecture aims to establish an automated research portal integrated with KNQA for researcher verification and the Government Payment Aggregator for instant licensing.
 

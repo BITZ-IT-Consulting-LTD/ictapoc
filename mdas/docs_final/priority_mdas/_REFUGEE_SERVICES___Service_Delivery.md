@@ -13,6 +13,21 @@
 
 ---
 
+## Service Mandate
+The Department of Refugee Services (DRS) is mandated by the Refugees Act 2021 to provide and coordinate protection and assistance to refugees and asylum seekers in Kenya. It is responsible for the management of refugee affairs, succeeding the former Refugee Affairs Secretariat (RAS), and operates under the Ministry of Interior and National Administration.
+
+**Official Website:** [https://www.refugees.go.ke/](https://www.refugees.go.ke/)
+
+**Key Functions:**
+- **Registration and Documentation:** Receiving and registering asylum seekers; issuing identification documents including Asylum Seeker Passes, Refugee ID Cards (Maisha Cards), and Convention Travel Documents.
+- **Refugee Status Determination (RSD):** Processing and deciding on all applications for asylum through detailed interviews and legal criteria assessment.
+- **Management of Refugee Camps:** Overseeing the administration of major refugee camps such as Dadaab and Kakuma, and the Kalobeyei Settlement.
+- **Protection and Welfare:** Coordinating with international agencies (UNHCR) and NGOs to provide essential services like food, healthcare, and education.
+- **Durable Solutions:** Facilitating Voluntary Repatriation, coordinating Resettlement to third countries, and implementing the Shirika Plan for socio-economic integration.
+- **Policy Advisory:** Advising the government on refugee policy and ensuring compliance with international conventions.
+
+---
+
 ## Executive Summary
 The Department of Refugee Services (DRS) is mandated to manage refugee affairs in Kenya, including registration, Refugee Status Determination (RSD), and the issuance of identification and travel documents. Currently, the process is heavily manual, involving multiple physical interviews and siloed databases (like UNHCR proGres). The transition to the Kenya DSAP Architecture aims to integrate refugee data seamlessly with the national identity ecosystem (IPRS/Maisha Namba) to provide secure, verifiable digital credentials.
 

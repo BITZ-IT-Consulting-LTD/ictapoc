@@ -13,6 +13,21 @@
 
 ---
 
+## Service Mandate
+The Cabinet Affairs Office is a key department within the Executive Office of the President, primarily responsible for the coordination of government business and providing support to the Cabinet. Its mandate is derived from Article 154 of the Constitution and various Executive Orders.
+
+**Official Website:** [https://www.president.go.ke](https://www.president.go.ke)
+
+**Key Functions:**
+- **Cabinet Secretariat:** Serving as the secretariat to the Cabinet and its Committees.
+- **Coordination of Government Business:** Organizing and coordinating the execution of government policies across various ministries and departments.
+- **Policy Management:** Initiating, tracking, and monitoring the implementation of Cabinet decisions.
+- **Advisory Services:** Providing policy advisory services to the President, the Cabinet, and other public agencies.
+- **Records Management:** Maintaining a register of all Cabinet decisions and ensuring appropriate action by authorities.
+- **Meeting Management:** Arranging the business and keeping the minutes of Cabinet meetings.
+
+---
+
 ## Executive Summary
 The State Department for Cabinet Affairs is responsible for the efficient management of the Cabinet's business. This includes the processing of Cabinet Memoranda (CABMEMO), tracking the implementation of Cabinet decisions through the GDMIS, and managing centralized executive resources like the government fleet. The current process is transitioning from a semi-digital state (using EDRMS) to a fully integrated digital workflow.
 

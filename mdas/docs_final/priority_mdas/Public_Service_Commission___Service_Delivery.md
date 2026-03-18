@@ -13,6 +13,13 @@
 - **Facilitator:** Auto-generated
 - **Assistant:** AI Assistant
 
+## Service Mandate
+The Public Service Commission (PSC) of Kenya derives its mandate primarily from Articles 233 and 234 of the Constitution of Kenya (2010). Its core functions include:
+1. **Human Resource Management:** Appointing persons to hold or act in offices in the public service, confirming appointments, exercising disciplinary control, and developing human resources while reviewing conditions of service and qualifications.
+2. **Promotion of Values and Principles:** Promoting the values and principles of public service (as outlined in Articles 10 and 232) throughout the service and investigating, monitoring, and evaluating the organization, administration, and personnel practices of the public service.
+3. **Efficiency and Effectiveness:** Ensuring the public service is efficient and effective and making recommendations to the national government regarding the public service.
+4. **Appeals and Petitions:** Hearing and determining appeals from persons in the county governments (in specific circumstances) and other public bodies.
+
 ---
 
 ## Executive Summary

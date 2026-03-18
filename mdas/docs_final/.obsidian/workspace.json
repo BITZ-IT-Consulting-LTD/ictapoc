@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "84c166e5ddc1cc01",
+        "id": "d62d0db5a8887265",
         "type": "tabs",
         "children": [
           {
-            "id": "62ad2050f3216d67",
+            "id": "6d5dedc3555c9844",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Cradle_to_Death_MDAs.md",
+                "file": "Kenya_Government_Services_Master_Inventory.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Cradle_to_Death_MDAs"
+              "title": "Kenya_Government_Services_Master_Inventory"
             }
           }
         ]
@@ -183,8 +183,11 @@
       "bases:Create new base": false
     }
   },
-  "active": "62ad2050f3216d67",
+  "active": "6d5dedc3555c9844",
   "lastOpenFiles": [
+    "priority_mdas/Government_Spokesperson___Service_Delivery.md",
+    "Kenya_Government_Services_Master_Inventory.md",
+    "Cradle_to_Death_MDAs.md",
     "priority_mdas/~$iority_MDAS_template.docx",
     "priority_mdas/Priority_MDAS_template.docx",
     "priority_mdas/~$port_Template.docx",
@@ -200,18 +203,15 @@
     "priority_mdas/temp_images/969c42bc5ba0a23b64d694254e66457b.png",
     "priority_mdas/temp_images/969c42bc5ba0a23b64d694254e66457b.mmd",
     "priority_mdas/temp_images/7a7718b29bdbe08e6cc9b8f5f02300cb.png",
-    "priority_mdas/temp_images/7a7718b29bdbe08e6cc9b8f5f02300cb.mmd",
     "priority_mdas/temp_images/ead87b31fda022b3c1b2a7c1e3e75a3b.png",
     "priority_mdas/temp_images/236e11fbd85290706ef68259eb833d7d.png",
     "priority_mdas/temp_images/818928e09eabf3268610a73c53e83842.png",
     "priority_mdas/temp_images/060ecabaa64f3f94f8294e4a550d8f88.png",
     "priority_mdas/temp_images/311fdd6fd732d999febced989ee519cc.png",
-    "priority_mdas/Government_Spokesperson___Service_Delivery.md",
     "priority_mdas/Office_of_the_Chief_of_Staff___Service_Delivery.md",
     "priority_mdas/State_Department_for_Special_Programmes___Service_Delivery.md",
     "Priority_MDAs_Justification_Matrix.md",
     "National_Health_Insurance_Fund___Service_Delivery.md",
-    "Cradle_to_Death_MDAs.md",
     "_INTEGRATED_POPULATION_REGISTRATION_SYSTEM___Service_Delivery.md",
     "Ministry_of_Health___Service_Delivery.md",
     "_CIVIL_REGISTRATION_SERVICES_CRS____Service_Delivery.md",
