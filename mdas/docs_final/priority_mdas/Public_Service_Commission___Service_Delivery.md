@@ -76,7 +76,6 @@ Declaration of Income, Assets and Liabilities (DIAL)
 ### Policy Context
 - Public Officer Ethics Act; The Constitution of Kenya (Chapter Six on Leadership and Integrity); Data Protection Act 2019.
 
-<<<<<<< HEAD
 ---
 
 ## Detailed Process (AS-IS)
@@ -167,14 +166,8 @@ flowchart TD
 - Public Officer Ethics Act
 - Constitution of Kenya (Chapter 6)
 - Data Protection Act 2019
-=======
->>>>>>> main
 
 ---
 
 ### Validation Survey
 Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
-<<<<<<< HEAD
-=======
-
->>>>>>> main
