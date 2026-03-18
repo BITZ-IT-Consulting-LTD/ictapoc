@@ -131,3 +131,10 @@ While the current process is well-structured legally, it relies heavily on manua
 - Enable automatic metadata extraction and indexing upon document ingestion.
 - Enforce strict, system-level Role-Based Access Control (RBAC) in compliance with the Data Protection Act.
 - Automate retention schedules, prompting registry staff when files are due for archival or secure digital destruction.
+
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

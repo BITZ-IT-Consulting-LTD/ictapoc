@@ -256,3 +256,9 @@ The To-Be architecture transforms the manual beadwork value chain into a **digit
 - https://www.sportsheritage.go.ke
 - Culture Policy
 - Desk Review
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

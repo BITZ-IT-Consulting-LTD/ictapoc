@@ -226,3 +226,10 @@ flowchart TD
 - https://www.knqa.go.ke
 - Kenya National Qualifications Framework (KNQF) Act
 - Desk Review
+
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

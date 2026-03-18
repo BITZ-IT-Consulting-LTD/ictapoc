@@ -171,3 +171,9 @@ If endorsement is provided with conditions, participants should clearly specify:
 *   Outstanding issues
 *   Required revisions
 *   Additional consultations needed before implementation.
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

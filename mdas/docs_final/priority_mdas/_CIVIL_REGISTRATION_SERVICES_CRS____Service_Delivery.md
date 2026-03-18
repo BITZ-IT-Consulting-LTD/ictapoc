@@ -8,8 +8,10 @@
 - **Date:** 2026-02-24
 - **Classification:** Official
 - **Strategic Category:** Priority MDA
-- **Service Model:** G2C
 - **Life-Cycle Group:** Cradle to Death (1. The Cradle)
+- **Breakout Room:** Room 1 (High Impact & Large Registries)
+- **Facilitator:** Nelson
+- **Assistant:** Newton
 
 ---
 
@@ -146,3 +148,10 @@ flowchart TD
 - https://www.immigration.go.ke
 - Births and Deaths Registration Act
 - Desk Review
+
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

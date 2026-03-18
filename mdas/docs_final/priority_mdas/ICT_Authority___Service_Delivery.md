@@ -217,3 +217,10 @@ ICT Authority transitions from merely reviewing ICT projects to operating shared
 - Government Enterprise Architecture Framework
 - Data Protection Act (2019)
 - National Cybersecurity Strategy
+
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

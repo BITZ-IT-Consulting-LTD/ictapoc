@@ -172,3 +172,10 @@ graph TD
 - https://www.msme.go.ke
 - Micro and Small Enterprises Act
 - Desk Review
+
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

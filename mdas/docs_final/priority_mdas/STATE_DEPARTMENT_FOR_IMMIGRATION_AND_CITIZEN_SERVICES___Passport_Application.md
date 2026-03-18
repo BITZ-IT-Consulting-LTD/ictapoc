@@ -296,3 +296,9 @@ The proposed process leverages a **Whole-of-Government digital platform** to del
 - https://www.immigration.go.ke
 - Kenya Citizenship and Immigration Act
 - Desk Review
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+
