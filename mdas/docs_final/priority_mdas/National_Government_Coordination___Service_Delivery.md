@@ -181,3 +181,10 @@ graph TD
 - https://www.interior.go.ke
 - Executive Order No. 1 of 2023
 - Desk Review
+
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

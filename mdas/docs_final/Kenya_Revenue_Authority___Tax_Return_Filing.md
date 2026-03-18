@@ -154,3 +154,8 @@ flowchart TD
 ## References
 - Kenya Revenue Authority Act.
 - Income Tax Act.
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)

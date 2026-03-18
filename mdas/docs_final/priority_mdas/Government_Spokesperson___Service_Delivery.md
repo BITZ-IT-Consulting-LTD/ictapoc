@@ -121,3 +121,10 @@ The To-Be process uses a **Secure Shared Service Portal** for collaborative draf
 - https://www.spokesperson.go.ke
 - Communications Act
 - Desk Review
+
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

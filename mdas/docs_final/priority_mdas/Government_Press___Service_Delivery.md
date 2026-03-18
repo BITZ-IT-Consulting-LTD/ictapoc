@@ -47,3 +47,10 @@ graph TD
 - **Digital Publishing Workflows:** Implementing a secure portal where MDAs and the AG's office can submit cryptographically signed, pre-formatted digital drafts.
 - **Automated Formatting:** Using standardized templates and ingestion tools to automatically format submissions into the Gazette layout without manual typesetting.
 - **Searchable Digital Archive:** Digitizing historical records and implementing a powerful indexing and search engine for public and legal reference.
+
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

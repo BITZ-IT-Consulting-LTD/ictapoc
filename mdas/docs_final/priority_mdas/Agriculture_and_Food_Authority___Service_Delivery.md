@@ -238,3 +238,9 @@ flowchart TD
 - https://afa.go.ke
 - Agriculture and Food Authority Act
 - Desk Review
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

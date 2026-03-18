@@ -47,3 +47,10 @@ graph TD
 - **Automated Alerts and Escalations:** Configure the system to automatically notify MDA focal points of impending deadlines and escalate overdue items to higher authorities.
 - **Digital Evidence Repository:** Allow MDAs to securely upload proof of implementation (documents, photos, API links) directly to the platform for instant review.
 - **Data Analytics and Dashboards:** Generate automated, real-time visual reports for the Presidency to gauge overall government performance and policy execution.
+
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

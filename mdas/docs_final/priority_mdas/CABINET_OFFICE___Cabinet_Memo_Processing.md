@@ -180,3 +180,10 @@ The To-Be process utilizes a secure e-Cabinet System where Ministers access pape
 
 ## References
 Derived from official mandates.
+
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

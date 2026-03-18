@@ -136,3 +136,8 @@ graph TD
 | 4 | Buyer | Process Stamp Duty and transfer fees seamlessly. | Payment Gateway |
 | 5 | System/Registrar| Execute transfer via rules engine/smart contract; final digital approval. | Smart Contract / Workbench |
 | 6 | System | Issue new digital title to buyer; permanently archive previous ownership record. | Blockchain / Immutable Ledger |
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)

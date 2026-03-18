@@ -174,3 +174,10 @@ graph TD
 - https://www.kbc.co.ke
 - Kenya Broadcasting Corporation Act
 - Desk Review
+
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

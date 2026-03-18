@@ -175,3 +175,10 @@ graph TD
 - https://energy.go.ke
 - Energy Act 2019
 - Desk Review
+
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

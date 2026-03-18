@@ -288,3 +288,9 @@ The To-Be process envisions a fully integrated **digital environmental permittin
 - https://www.nema.go.ke
 - Environmental Management and Coordination Act (EMCA)
 - Desk Review
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

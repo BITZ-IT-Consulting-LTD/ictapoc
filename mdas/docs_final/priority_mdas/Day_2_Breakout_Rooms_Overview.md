@@ -9,6 +9,7 @@ Detailed matrices and notes for each session can be found in their respective do
 *   **Assistant:** Newton
 *   **Category:** National registries, large-scale citizen systems, and critical service databases.
 *   **Participating MDAs:**
+    *   [Civil Registration Services (CRS)](./_CIVIL_REGISTRATION_SERVICES_CRS____Service_Delivery.md)
     *   [Ministry of Health (MoH) – National Shared Health Record & Digital Health Ecosystem](./Ministry_of_Health___Service_Delivery.md)
     *   [State Department for Immigration & Citizen Services – Directorate of Immigration Services](./STATE_DEPARTMENT_FOR_IMMIGRATION_AND_CITIZEN_SERVICES___Passport_Application.md)
     *   [Public Service Commission](./Public_Service_Commission___Service_Delivery.md)
@@ -23,17 +24,17 @@ Detailed matrices and notes for each session can be found in their respective do
 *   **Assistant:** Miriam
 *   **Category:** Coordination functions, cultural institutions, specialized services, and cross-sector oversight.
 *   **Participating MDAs:**
-    *   [Kenya Broadcasting Corporation](./Kenya_Broadcasting_Corporation___Service_Delivery.md)
-    *   [State Department for Special Programmes](./State_Department_for_Special_Programmes___Service_Delivery.md)
-    *   [State Department for Culture, The Arts and Heritage](./Culture_and_Heritage___Service_Delivery.md)
-    *   [Office of the Chief of Staff and Head of the Public Service](./OFFICE_OF_THE_CHIEF_OF_STAFF___Whole_of_Government_Oversight.md)
-    *   [National Government Coordination](./National_Government_Coordination___Service_Delivery.md)
-    *   [Office of the Government Spokesperson](./Government_Spokesperson___Service_Delivery.md)
-    *   [Department for Sports](./Sports_and_the_Arts___Service_Delivery.md)
-    *   [State Department for Cabinet Affairs](./State_Department_for_Cabinet_Affairs___Service_Delivery.md)
     *   [Assets Recovery Agency](./Assets_Recovery_Agency___Service_Delivery.md)
-    *   [State Department for Youth Affairs & Creative Economy](./Youth_Affairs___Service_Delivery.md)
     *   [Cabinet Office](./CABINET_OFFICE___Service_Delivery.md)
+    *   [Culture and Heritage](./Culture_and_Heritage___Service_Delivery.md)
+    *   [Government Spokesperson](./Government_Spokesperson___Service_Delivery.md)
+    *   [Kenya Broadcasting Corporation](./Kenya_Broadcasting_Corporation___Service_Delivery.md)
+    *   [National Government Coordination](./National_Government_Coordination___Service_Delivery.md)
+    *   [Office of the Chief of Staff](./OFFICE_OF_THE_CHIEF_OF_STAFF___Whole_of_Government_Oversight.md)
+    *   [Office of the Head of Public Service (OHPS)](./OFFICE_OF_THE_HEAD_OF_PUBLIC_SERVICE_OHPS___Executive_Coordination.md)
+    *   [Sports and the Arts](./Sports_and_the_Arts___Service_Delivery.md)
+    *   [State Department for Special Programmes](./State_Department_for_Special_Programmes___Service_Delivery.md)
+    *   [Youth Affairs](./Youth_Affairs___Service_Delivery.md)
     *   [State Dept for Parliamentary Affairs](./STATE_DEPARTMENT_FOR_PARLIAMENTARY_AFFAIRS___Service_Delivery.md)
 
 #### [Room 3: Policy, Economy & Foundational Systems](./Breakout_Room_3_Policy_Economy_Foundational.md)
@@ -59,3 +60,10 @@ Detailed matrices and notes for each session can be found in their respective do
     *   [Government Press (Medium–Large – Strategic Records Infrastructure)](./Government_Press___Service_Delivery.md)
     *   [TVET](./Technical_Vocational_Education_and_Training___Service_Delivery.md)
     *   [State Dept for Co-operatives](./Cooperatives___Service_Delivery.md)
+
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

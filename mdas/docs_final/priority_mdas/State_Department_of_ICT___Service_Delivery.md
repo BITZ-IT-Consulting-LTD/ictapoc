@@ -198,3 +198,10 @@ The State Department for ICT and the Digital Economy will transition government 
 - Data Protection Act (2019)
 - Government Enterprise Architecture (GEA) Framework
 - ICT Authority Standards and Guidelines
+
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

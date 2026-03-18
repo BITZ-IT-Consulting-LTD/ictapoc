@@ -180,3 +180,10 @@ graph TD
 - https://www.nacosti.go.ke
 - Science, Technology and Innovation Act 2013
 - Desk Review
+
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

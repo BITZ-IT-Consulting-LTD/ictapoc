@@ -262,3 +262,9 @@ The To-Be process envisions a fully integrated **digital social protection platf
 - https://www.socialprotection.go.ke
 - National Social Protection Policy
 - Desk Review
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

@@ -186,3 +186,8 @@ graph TD
 | 3 | State Counsel | Reviews request utilizing AI-powered legal research tools. | Legal AI Assistant |
 | 4 | Management | Electronically reviews and applies digital signature. | e-Signature Workflow |
 | 5 | System | Transmits official legal opinion back to the institution's dashboard. | Gov Legal Portal |
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
