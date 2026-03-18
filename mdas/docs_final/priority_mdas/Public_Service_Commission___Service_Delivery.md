@@ -164,6 +164,7 @@ flowchart TD
 
 ## References
 - Public Officer Ethics Act
+- Public Service Act
 - Constitution of Kenya (Chapter 6)
 - Data Protection Act 2019
 
