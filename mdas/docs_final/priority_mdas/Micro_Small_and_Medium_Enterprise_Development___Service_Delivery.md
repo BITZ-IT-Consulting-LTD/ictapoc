@@ -13,6 +13,22 @@
 
 ---
 
+## Service Mandate
+The State Department for Micro, Small and Medium Enterprises (MSMEs) Development is mandated to coordinate and mainstream the MSMEs development function in Kenya. Established via Executive Order No. 1 of 2023, it supports the growth of MSMEs to drive socioeconomic transformation, job creation, and innovation.
+
+**Official Website:** [https://msme.go.ke/](https://msme.go.ke/)
+
+**Key Functions:**
+- **Policy Formulation:** Developing and implementing MSME and SME financing policies.
+- **Financial Inclusion:** Administering the Financial Inclusion Fund (Hustler Fund) and other affirmative funds to enhance MSME competitiveness.
+- **Capacity Building:** Providing entrepreneurship training, modern management practices, and business innovation support.
+- **Market Development:** Facilitating access to domestic and export markets, product design, and packaging.
+- **Infrastructure & Technology:** Establishing integrated infrastructure and supporting technology modernization and upgrades.
+- **Government Procurement:** Administering preferences for MSME products and services in government tenders.
+- **Cottage Industry:** Promoting and developing the cottage industry and production clusters.
+
+---
+
 ## Executive Summary
 The State Department for MSME Development is mandated to support the growth of small businesses through access to affordable credit (Hustler Fund, Uwezo Fund), capacity building, and apprenticeships (NYOTA). While the Hustler Fund is highly digitized, other funds like Uwezo still rely on manual group registrations and physical bank accounts. The transition to the Kenya DSAP Architecture aims to unify all MSME support into a single digital ecosystem integrated with BRS and the national identity system.
 

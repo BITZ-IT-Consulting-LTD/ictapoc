@@ -1,309 +1,184 @@
 # STATE DEPARTMENT FOR IMMIGRATION AND CITIZEN SERVICES – Passport Application
 
 ## Cover Page
-- **Ministry/Department/Agency (MDA):** STATE DEPARTMENT FOR IMMIGRATION AND CITIZEN SERVICES
-- **Process Name:** Passport Application & Issuance
-- **Document Version:** 1.4
-- **Date:** 2026-03-04
+- **Ministry/Department/Agency (MDA):** State Department for Immigration and Citizen Services
+- **Department:** Directorate of Immigration Services (DIS) - Registry & Issuance
+- **Process Name:** Passport Application, Registry Management & Issuance
+- **Document Version:** 1.5
+- **Date:** 2026-03-18
 - **Classification:** Official
 - **Strategic Category:** Priority MDA
 - **Service Model:** G2C
 - **Life-Cycle Group:** Cradle to Death (3. Identity & Travel)
+- **Facilitator:** Nelson
+- **Assistant:** Newton
+
+## Service Mandate
+The State Department for Immigration and Citizen Services, under the Ministry of Interior and National Administration, derives its mandate from the Constitution of Kenya (2010) and the Kenya Citizenship and Immigration Act (2011). Its core responsibilities include:
+1. **Border Management:** Control and regulation of entry and exit of all persons at airports, seaports, and land border posts.
+2. **Travel Documents:** Issuance and replacement of Kenyan passports and other travel documents.
+3. **Residency & Permits:** Regulation of residency through the issuance and renewal of work permits, residence permits, and various passes (student, special, dependant).
+4. **Citizenship:** Processing and granting of Kenyan citizenship and permanent residence to qualifying foreigners.
+5. **Foreign National Management:** Registration of all non-citizens resident in Kenya and issuance of Alien Cards (Foreign National Certificates).
+6. **Electronic Travel Authorisation (eTA):** Management of the mandatory digital authorization for visitors entering Kenya.
+7. **Consular Services:** Provision of immigration services to Kenyan nationals and foreigners at Kenya’s missions abroad.
+8. **Enforcement:** Identification and removal of prohibited immigrants and enforcement of immigration laws.
 
 ---
 
 ## Executive Summary
-The Directorate of Immigration Services (DIS) is responsible for the issuance of travel documents (passports, visas) to Kenyan citizens and foreign nationals. The passport application process has been digitized via eCitizen but faces significant bottlenecks in biometric capture, processing, and printing.
+The Directorate of Immigration Services (DIS) is mandated to issue secure travel documents to Kenyan citizens. A critical component of this mandate is the management of the **Immigration Registry**, which holds the foundational documents for every passport holder. Currently, the registry relies heavily on physical files, manual indexing, and paper-based archiving, leading to retrieval delays and security risks. This proposed transformation centers on the implementation of an **Electronic Document and Records Management System (EDRMS)**. By digitizing the registry at the point of entry, all applicant dossiers—including birth certificates, IDs, and recommender forms—are automatically indexed, securely stored, and instantly retrievable, ensuring a seamless and verifiable issuance process.
 
 ---
 
-## 1. AS-IS PROCESS: Passport Application and Issuance
-
-### BUSINESS PROCESS OVERVIEW
-**Process Name:** Passport Application and Issuance
-**Trigger:** Citizen applies for a new passport, renewal, replacement, or change of details
-
-### ACTORS
-
-| Actor                     | Role                     |
-|---------------------------|--------------------------|
-| Citizen (Applicant)       | Applies for passport     |
-| eCitizen System           | Captures application     |
-| Immigration Officer       | Verifies and approves    |
-| Biometrics Officer        | Captures fingerprints/photo |
-| Passport Production Unit  | Prints passport          |
-
-### AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (End-to-End Passport Services based on Deep Dive).*
-
+### 1.1 AS-IS Process Flow (BPMN 2.0)
 ```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
-    %% Events
-    Start((Start))
-    EndProcess(("End Process"))
-
-    subgraph Applicant [Applicant]
-        direction LR
-        Login["Login to eCitizen"]
-        FillForm["Fill passport form"]
-        UploadDocs["Upload documents"]
-        SubmitApp["Submit application"]
-        PayFee["Pay passport fee"]
-        BookAppt["Book biometric appointment"]
-        Collect["Passport collection by citizen"]
+    subgraph Applicant["Citizen / Applicant"]
+        Start(( )) --> A1[Apply via eCitizen]
+        A1 --> A2[Upload Scanned Documents]
+        A2 --> A3[Attend Biometric Appointment]
     end
 
-    subgraph ImmOffice["Immigration Office"]
-        direction TB
-        BioCapture["Biometric capture"]
-        IdVerify["Identity verification against IPRS"]
-        DocVerify["Document verification"]
-        Approval["Senior officer approval decision"]
-        ApprGateway{"Application approved?"}
-        NotifyReject["Notify applicant"]
+    subgraph Registry["Physical Registry / Records"]
+        A3 --> B1[Print Application & Attach Photos]
+        B1 --> B2[Create Physical File / Folder]
+        B2 --> B3[Manual Stamping & Indexing]
+        B3 --> B4[Physical Dispatch to Verification]
     end
 
-    subgraph ProdUnit["Production Unit"]
-        direction TB
-        QueueProd["Queue for passport production"]
-        Print["Passport printing"]
-        QA["Quality assurance"]
-        Dispatch["Dispatch to collection center"]
+    subgraph Verification["Verification & Approval"]
+        B4 --> C1[Manual Document Cross-Check]
+        C1 --> C2[Physical File Review by Senior Officer]
+        C2 --> C3{Approved?}
+        C3 -- No --> C4[Physical File to Rejected Archive]
+        C3 -- Yes --> C5[Forward File to Production]
     end
 
-    %% Flow connections
-    Start --> Login
-    Login --> FillForm
-    FillForm --> UploadDocs
-    UploadDocs --> SubmitApp
-    SubmitApp --> PayFee
-    PayFee --> BookAppt
-    
-    BookAppt --> BioCapture
-    BioCapture --> IdVerify
-    IdVerify --> DocVerify
-    DocVerify --> Approval
-    Approval --> ApprGateway
-    
-    ApprGateway -- "No" --> NotifyReject
-    NotifyReject --> EndProcess
-    
-    ApprGateway -- "Yes" --> QueueProd
-    QueueProd --> Print
-    Print --> QA
-    QA --> Dispatch
-    Dispatch --> Collect
-    Collect --> EndProcess
+    subgraph Issuance["Production & Archival"]
+        C5 --> D1[Passport Printing]
+        D1 --> D2[Return File to Registry]
+        D2 --> D3[Physical Indexing in Archives]
+        D3 --> End((( )))
+    end
 
-    %% Styling
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px,font-size:24px;;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px;;
-    
-    class Start startEvent;
-    class EndProcess endEvent;
-    class ApprGateway gateway;
-    class Login,FillForm,UploadDocs,SubmitApp,PayFee,BookAppt,Collect,BioCapture,IdVerify,DocVerify,Approval,NotifyReject,QueueProd,Print,QA,Dispatch userTask;
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
-### Process Overview
+---
+
+## Process Overview
 ### Process Name
-Passport Application (New / Renewal / Replacement)
+Passport Application and Digital Registry Management
 
 ### Service Category
 - G2C (Government to Citizen)
 
 ### Scope
-- **In Scope:** Ordinary (A, B, C series), Diplomatic, and Service Passports.
-- **Out of Scope:** Visa processing (evisa.go.ke).
+- **In Scope:** Digital dossier creation; automated indexing of supporting documents; electronic review and approval; secure digital archival of issued records.
+- **Out of Scope:** Visa processing; Citizenship adjudications.
 
 ### Triggers
-- Need for international travel.
-- Expiry of current passport.
-- New application, renewal, replacement, or change of details.
+- **Event-based:** New passport application or renewal submitted via the eCitizen portal.
 
 ### End States
-- **Successful:** Issuance of e-Passport.
+- **Successful:** Digital dossier archived in the EDRMS; Verifiable e-Passport issued to the citizen.
+- **Exception:** Rejection based on fraudulent documents; file flagged in the EDRMS audit trail.
 
-### Policy Context
-- Kenya Citizenship and Immigration Act, 2011; ICAO Doc 9303.
+---
 
-### Stakeholders
+## Detailed Process (AS-IS)
 
-| Stakeholder         | Role      | Responsibilities                                                |
-| ------------------- | --------- | --------------------------------------------------------------- |
-| Citizen (Applicant) | Applicant | Completes online form, pays fee, attends appointment.           |
-| Immigration Officer | Enroller  | Captures biometrics and verifies original documents.            |
-| Production Staff    | Processor | Operates printing machines, quality assurance.                  |
-| Courier Service     | Logistics | Delivers passports to regional offices (Mombasa, Kisumu, etc.). |
-
-### Detailed Process (AS-IS)
-
-| Step | Actor                     | Action                                                                                                                                           | Tool / System      | Notes                                                                    |
-|------|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|--------------------------------------------------------------------------|
-| 1    | Citizen (Applicant)       | **Logs into eCitizen:** Creates account or logs in using National ID Number and Password.                                                         | eCitizen Portal    |                                                                          |
-| 2    | Citizen (Applicant)       | **Fill Passport Form:** Selects application type (First Time, Renewal, Replacement) and inputs personal/parent details.                           | eCitizen Portal    |                                                                          |
-| 3    | Citizen (Applicant)       | **Upload Documents:** Uploads National ID, Birth Certificate, Passport Photo, Recommender ID, and old passport (if applicable).                  | eCitizen Portal    |                                                                          |
-| 4    | Citizen (Applicant)       | **Submit Application:** Submits the digital form and generates reference number.                                                                 | eCitizen System    |                                                                          |
-| 5    | Citizen (Applicant)       | **Pay Passport Fee:** Pays via Mobile Money, Card, or Bank.                                                                                      | Payment Gateway    |                                                                          |
-| 6    | Citizen (Applicant)       | **Book Biometric Appointment:** Selects an Immigration Office and books available date.                                                          | eCitizen Portal    |                                                                          |
-| 7    | Biometrics Officer        | **Biometric Capture:** Applicant visits Immigration Office for fingerprints, photo, and signature capture.                                       | Biometric Kit      |                                                                          |
-| 8    | Immigration Officer       | **Identity & Document Verification:** Verifies identity against IPRS and checks physical documents.                                              | IPRS / Manual      |                                                                          |
-| 9    | Senior Immigration Officer| **Senior Officer Approval Decision:** Reviews the verified file and decides to approve or reject.                                                | Internal System    | Rejections trigger a notification to the applicant.                      |
-| 10   | Passport Production Unit  | **Queue & Print:** Approved applications enter the production queue. Passport printing takes place.                                              | Production System  |                                                                          |
-| 11   | Passport Production Unit  | **Quality Assurance:** Printed passports undergo QA to ensure ICAO compliance and accurate chip encoding.                                        | Quality Station    |                                                                          |
-| 12   | Courier / Dispatch        | **Dispatch:** Passport is dispatched to the designated collection center.                                                                        | Logistics          |                                                                          |
-| 13   | Citizen (Applicant)       | **Passport Collection:** Citizen collects the printed passport in person.                                                                        | Collection Desk    |                                                                          |
+| Step | Role | Action | Tool/System | Notes |
+|---|---|---|---|---|
+| 1 | Applicant | Submits application and uploads documents online. | eCitizen | First point of digital entry. |
+| 2 | Registry Clerk | Prints the application form and physical photos to create a paper folder. | Physical Printer | Causes immediate duplication and waste. |
+| 3 | Records Officer | Manually indexes the file and places it in a physical "Pending" crate. | Physical Ledger | Hard to track the location of the file in real-time. |
+| 4 | Immigration Officer | Receives physical files in batches and cross-checks with IPRS screens. | Manual / IPRS | Slow and prone to misplacing documents. |
+| 5 | Senior Officer | Reviews the physical file and signs off on the approval/rejection. | Pen & Paper | Lack of a secure digital audit trail for approvals. |
+| 6 | Archival Clerk | Receives processed files and manually indexes them in the central registry. | Physical Registry | Retrieval of historical files takes days or weeks. |
 
 ---
 
 ## Pain Points & Opportunities
 ### Pain Points
-- **Booklet Shortage:** Frequent delays due to lack of blank passport booklets.
-- **Machine Breakdown:** Few printing machines (mainly in Nairobi), causing national backlog.
-- **Appointment Delays:** Slots booked out for months; forced to travel to other towns.
-- **Corruption:** "Brokers" promising faster processing or appointment slots.
-- **Communication:** Lack of transparency on application status ("Stuck at Printing").
+- **Physical File Bottlenecks:** The reliance on moving physical folders between offices causes significant delays and "missing files."
+- **Manual Indexing Errors:** Physical ledgers are prone to human error, making file retrieval difficult and inconsistent.
+- **Registry Security:** Sensitive physical documents are vulnerable to unauthorized access, loss, or damage (fire/water).
+- **Retrieval Latency:** Accessing an applicant's historical file for renewal or investigation is extremely slow due to manual archival methods.
 
 ### Opportunities
-- **Decentralized Printing:** Install printers in key regional offices (Mombasa, Kisumu).
-- **Mobile Enrollment:** Portable biometric kits for diaspora or remote areas.
-- **Auto-Approval:** Integrate with IPRS/NRB to auto-approve renewal applications (no new biometrics needed if data hasn't changed).
-- **Home Delivery:** Partner with Postal Corporation for secure delivery to home/office.
+- **EDRMS Registry:** A centralized digital repository where all documents are uploaded, OCR-processed, and automatically indexed.
+- **Digital Dossier Tracking:** Real-time visibility of an application's status and the officer currently reviewing the digital file.
+- **Automated Verification:** Integration via Huduma Bridge to instantly verify uploaded certificates against the Civil Registration (CRS) EDRMS.
+- **Secure Vault Archival:** Lifetime storage of digitized records with cryptographic signatures (NPKI) to ensure non-repudiation and immediate retrieval.
 
 ---
 
-## 2. TO-BE PROCESS: Passport Application and Issuance (Optimized)
-
-### TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Kenya DSAP Architecture - Whole-of-Government).*
-
+### 1.2 TO-BE Process (BPMN 2.0 - EDRMS Centered)
 ```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
-    %% Events
-    Start((Start))
-    EndProcess(("End Process"))
-
-    subgraph Citizen [Citizen]
-        direction LR
-        Submit["Submit application"]
-        CapBio["Capture biometrics"]
-        Receive["Receive/Collect passport"]
+    subgraph Applicant["Citizen (via Portal)"]
+        Start(( )) --> T1[Submit Application & Digital Docs]
     end
 
-    subgraph eCitizen["eCitizen Platform"]
-        direction TB
-        Notify["Notify citizen"]
+    subgraph Bridge["Huduma Bridge / X-Road"]
+        T1 --> T2[Verify IDs vs IPRS/Maisha]
+        T2 --> T3[Verify Birth Certs vs CRS EDRMS]
     end
 
-    subgraph ImmSys["Immigration System"]
-        direction TB
-        Verify["Verify identity"]
-        FirstGateway{"First passport?"}
-        Process["Process application"]
-        ApprGateway{"Application approved?"}
+    subgraph DigitalRegistry["Immigration EDRMS"]
+        T3 --> T4[Auto-Create Digital Dossier]
+        T4 --> T5[OCR Metadata Extraction & Auto-Indexing]
+        T5 --> T6[Assign Secure File Tracking ID]
     end
 
-    subgraph ProdUnit["Passport Production Unit"]
-        direction TB
-        Print["Print passport"]
+    subgraph Review["Digital Review Workspace"]
+        T6 --> R1[Officer Review via Digital Dashboard]
+        R1 --> R2[Senior Officer Digital Sign-off (NPKI)]
     end
 
-    subgraph Courier["Courier Service"]
-        direction TB
-        Dispatch["Dispatch passport"]
+    subgraph Issuance["Production & Secure Vault"]
+        R2 --> P1[Automated Production Queue]
+        P1 --> P2[Mint Verifiable Record]
+        P2 --> P3[Auto-Archive in Secure Digital Vault]
+        P3 --> End((( )))
     end
 
-    %% Flow connections
-    Start --> Submit
-    Submit --> Verify
-    Verify --> FirstGateway
-    
-    FirstGateway -- "Yes" --> CapBio
-    FirstGateway -- "No" --> Process
-    CapBio --> Process
-    
-    Process --> ApprGateway
-    
-    ApprGateway -- "No" --> Notify
-    ApprGateway -- "Yes" --> Print
-    
-    Print --> Dispatch
-    Dispatch --> Notify
-    Dispatch --> Receive
-    Receive --> EndProcess
-    Notify --> EndProcess
-
-    %% Styling
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px,font-size:24px;;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px;;
-    
-    class Start startEvent;
-    class EndProcess endEvent;
-    class FirstGateway,ApprGateway gateway;
-    class Notify,Verify,Process,Print,Dispatch serviceTask;
-    class Submit,CapBio,Receive userTask;
+    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
 ```
 
-### Future State Process (TO-BE)
+## Future State Process (TO-BE)
 ### Narrative
-The proposed process leverages a **Whole-of-Government digital platform** to deliver a seamless, transparent, and scalable service.
+**TO-BE Process: Zero-Paper & EDRMS-Centered Registry**
 
-1. **Identity Verification:** The system instantly queries the National Population Register (IPRS / Maisha Namba) using X-Road, verifying applicant identity at the moment of submission.
-2. **Application Processing:** Citizen data is auto-populated to reduce errors, and supporting documents are verified digitally through integration with civil registries.
-3. **Decision Logic:** 
-   - **Renewal:** Existing biometrics are reused directly from the NRB/Maisha Namba repository, eliminating the need for physical appointments.
-   - **First Application:** Physical biometric capture is strictly reserved for first-time applicants or exceptional cases requiring updates.
-4. **Production:** Approved applications are sent to an automated production queue and printed across decentralized printing centers, eliminating the Nairobi bottleneck.
-5. **Delivery:** The printed passport is dispatched via a secure courier service directly to the citizen's address, or sent to a designated collection center based on user preference.
-6. **Notifications:** Real-time SMS and eCitizen status updates proactively notify the citizen at every milestone (e.g., application received, printing, dispatched, ready).
+**Design Principles:**
+- **Digital Dossier at Entry:** From the moment of submission, the **EDRMS** creates a unique digital dossier for the applicant. There is no printing of forms. Supporting documents (ID, Birth Certificate) are fetched directly from foundational registries via **Huduma Bridge** or verified digitally if uploaded.
+- **Automated Indexing & OCR:** The EDRMS uses **Optical Character Recognition (OCR)** to extract metadata from documents, automatically indexing them by name, ID number, and application type. This ensures that every document is searchable and linked to the correct identity.
+- **Secure Workflow & Archival:** The file moves through a **Digital Review Workspace**. Approvals are secured using **NPKI Digital Signatures**, creating a tamper-proof audit trail. Once the passport is issued, the entire dossier is moved to a **Secure Digital Vault** for lifetime storage, ensuring that records are never lost and can be retrieved in milliseconds for future renewals or security checks.
 
 ### Optimized Steps (Digital)
 
 | Step | Actor | Action | System |
 |---|---|---|---|
-| 1 | Citizen | Submits application online. Chooses delivery method. | eCitizen App |
-| 2 | Immigration System | Verifies identity via National Population Register. | IPRS / Maisha Namba API |
-| 3 | Immigration System | Determines if biometric capture is needed (First Passport) or reuses existing biometrics (Renewal). | Workflow Engine |
-| 4 | Citizen | Captures biometrics (only if required). | Biometric Kit |
-| 5 | Immigration System | Processes application with digital document verification. | Rules Engine |
-| 6 | Passport Production Unit | Prints passport via automated queue in decentralized centers. | Production System |
-| 7 | Courier Service | Dispatches passport directly to the citizen or a local center. | Logistics Tracking |
-| 8 | eCitizen Platform | Sends SMS/Portal notifications at every major stage. | Notification Gateway |
-
----
-
-## 3. Standard Data Inputs
-*Required fields for the WoG Digital Service.*
-
-### A. Passport Application (Renewal/New)
-
-| Field Name | Type | Source | Validation |
-|---|---|---|---|
-| Citizen ID (Maisha) | String | System Fetch (NRB) | Read-only |
-| Passport Type | Enum | User Input | 32/50/66 Pages |
-| Current Photo | Image | User Capture (App) | AI ICAO Check |
-| Delivery Address | Geo-Loc | User Input | Verified via Google Maps |
-| Recommender ID | String | User Input | Optional (if NRB verified) |
-| Reason for Travel | Enum | User Input | Tourism / Business / Medical |
-| Emergency Contact | String | User Input | Validated vs IPRS |
+| 1 | Citizen | Submits application and uploads digital supporting evidence. | eCitizen / Passport Portal |
+| 2 | System | Verifies authenticity of documents against foundational registries. | Huduma Bridge / CRS / IPRS |
+| 3 | **EDRMS** | **Dossier Creation:** Automatically indexes and stores all verified digital files. | **Immigration EDRMS** |
+| 4 | Officer | Reviews the digital dossier and biometrics via a unified dashboard. | Digital Review Workspace |
+| 5 | Senior Officer | Applies a digital signature to approve the issuance. | NPKI Signing Service |
+| 6 | **EDRMS** | **Secure Archival:** Moves the finalized record to a high-security digital vault. | **Digital Vault / Archive** |
 
 ---
 
 ## References
-- https://www.immigration.go.ke
 - Kenya Citizenship and Immigration Act
-- Desk Review
+- Records Disposal Act
+- Data Protection Act 2019
+- Public Service Act
 
 ---
 
 ### Validation Survey
 Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
-

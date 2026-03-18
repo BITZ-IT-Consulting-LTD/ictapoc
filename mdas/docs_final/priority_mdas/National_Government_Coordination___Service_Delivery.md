@@ -13,6 +13,22 @@
 
 ---
 
+## Service Mandate
+National Government Coordination is primarily managed through the Ministry of Interior and National Administration and the National Government Coordination Secretariat (NGCS). Its mandate, derived from the National Government Co-ordination Act 2013, is to establish an administrative framework for coordinating national government functions at both national and county levels, ensuring that services are accessible in all parts of the Republic.
+
+**Official Website:** [https://www.interior.go.ke](https://www.interior.go.ke) / [https://www.opcs.go.ke](https://www.opcs.go.ke)
+
+**Key Functions:**
+- **Service Delivery Coordination:** Overseeing the implementation of national government programs and projects across all ministries and state departments.
+- **Internal Security:** Maintaining law and order through the coordination of security agencies and the National Government Administrative Officers (NGAO) structure.
+- **National Government Administration:** Managing the hierarchy of administrative officers from the Regional level down to the Sub-location level.
+- **Policy Implementation:** Ensuring that national policies (such as the Bottom-Up Economic Transformation Agenda - BETA) are executed effectively at the grassroots.
+- **Monitoring and Evaluation:** Using tools like the National Government Dashboard (NGD) to track project delivery and performance indicators of various MDAs.
+- **Disaster Management:** Coordinating responses to national emergencies and disasters.
+- **Citizen Engagement:** Acting as the primary link between the national government and the public for feedback and participation.
+
+---
+
 ## Executive Summary
 National Government Coordination is responsible for the seamless alignment of government activities across all MDAs and regions. Its primary function is to manage information tasking, data collection for national priorities, and the escalation of critical issues to the Presidency. Currently, this coordination is highly transactional and relies on manual requests, templates, and follow-ups. The transition to the Kenya DSAP Architecture aims to establish an automated coordination hub that leverages the national service bus for real-time status tracking.
 

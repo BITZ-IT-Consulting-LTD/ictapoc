@@ -13,6 +13,22 @@
 
 ---
 
+## Service Mandate
+The State Department for Energy is mandated to develop and implement policies that create an enabling environment for the efficient operation and growth of Kenya’s energy sector. Aligned with Kenya Vision 2030, the department sets strategic directions to facilitate sector growth and ensures a long-term vision for all energy players.
+
+**Official Website:** [https://energy.go.ke/](https://energy.go.ke/)
+
+**Key Functions:**
+- **National Energy Policy Development:** Formulating and managing policies for the energy sector.
+- **Electrical Power Development:** Overseeing the generation, transmission, and distribution of electricity.
+- **Hydropower Development:** Managing and developing water-based power resources.
+- **Geothermal Exploration:** Leading the exploration and development of geothermal energy resources.
+- **Renewable Energy Promotion:** Developing and promoting alternative energy sources including solar, wind, and biomass.
+- **Rural Electrification:** Managing programs to expand the power grid to rural and underserved areas.
+- **Energy Regulation and Security:** Ensuring the security of energy supply and enforcing conservation measures.
+
+---
+
 ## Executive Summary
 The State Department for Energy is responsible for the regulation and licensing of energy entities and the management of critical sector records. The current records management process is a hybrid of paper and digital, leading to delays in correspondence and licensing approvals. The transition to the Kenya DSAP Architecture aims to establish a fully digital EDRMS integrated with the national service bus to automate licensing and digitize the archival process.
 

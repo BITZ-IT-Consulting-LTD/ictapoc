@@ -11,6 +11,16 @@
 - **Service Model:** G2G
 - **Life-Cycle Group:** Cradle to Death (5. Social Protection & Justice)
 
+## Service Mandate
+The State Department for Correctional Services' mandate is derived from Executive Order No. 1 of 2018 (Revised) and includes:
+* **Containment and Safe Custody:** Ensuring the secure and humane containment of inmates.
+* **Rehabilitation and Reintegration:** Supervision, reformation, and reintegration of offenders back into society.
+* **Administration of Justice:** Facilitating the justice system and providing information to courts and penal institutions.
+* **Treatment of Young Offenders:** Managing correctional institutions and Youth Corrective Training Centers.
+* **Child Welfare:** Providing facilities for children aged four and below who accompany their mothers in prison.
+* **Non-Custodial Services:** Managing probation and aftercare services for offenders serving community-based sentences.
+The Department oversees two primary services: Kenya Prisons Service (KPS) and Probation and Aftercare Service (PAS).
+
 ---
 
 ## Executive Summary

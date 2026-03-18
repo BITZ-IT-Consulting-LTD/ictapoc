@@ -13,6 +13,23 @@
 
 ---
 
+## Service Mandate
+**Official Website:** [www.ict.go.ke](https://www.ict.go.ke)
+
+The State Department for ICT and Digital Economy is mandated to facilitate the development of the ICT sector and the digital economy to drive Kenya’s socio-economic transformation. Its core focus is on the Digital Superhighway to enhance government service delivery, create jobs, and foster innovation.
+
+**Key Functions:**
+- **Policy Formulation:** Developing policies, legal, and institutional frameworks for the ICT sector and the digital economy.
+- **Digital Infrastructure:** Overseeing the expansion of the National Optic Fibre Backbone Infrastructure (NOFBI) and universal broadband access.
+- **Digital Government Services:** Coordinating the digitization and automation of all government services through platforms like e-Citizen.
+- **Digital Economy Promotion:** Supporting e-commerce, digital entrepreneurship, and the growth of the Business Process Outsourcing (BPO) sector.
+- **ICT Standards & Governance:** Setting and enforcing ICT standards across the public service to ensure secure and integrated systems.
+- **Digital Literacy & Skills:** Promoting digital talent development and literacy programs (e.g., Jitume and Ajira Digital).
+- **Cybersecurity:** Developing frameworks to secure Kenya’s digital space and protect critical information infrastructure.
+- **Innovation & Research:** Fostering an environment for ICT innovation and the adoption of emerging technologies like AI and Blockchain.
+
+---
+
 ## Executive Summary
 The State Department for ICT and the Digital Economy is the national policy authority responsible for the development, coordination, and governance of Kenya’s digital transformation agenda.
 

@@ -13,6 +13,21 @@
 
 ---
 
+## Service Mandate
+The Assets Recovery Agency (ARA) is a body corporate established under the Proceeds of Crime and Anti-Money Laundering Act (POCAMLA). Its primary mandate is to implement the provisions of POCAMLA focused on combating financial crimes, including money laundering and terrorism financing, through the identification, tracing, and recovery of proceeds of crime.
+
+**Official Website:** [https://www.ara.go.ke/](https://www.ara.go.ke/)
+
+**Key Functions:**
+- **Identification and Tracing:** Identifying and tracing proceeds and instrumentalities of crime.
+- **Legal Proceedings:** Instituting court proceedings for the freezing, seizure, preservation, forfeiture, and confiscation of criminal proceeds.
+- **Asset Management:** Managing all preserved and forfeited assets within the provisions of POCAMLA.
+- **Inter-Agency Cooperation:** Cooperating with other law enforcement agencies (EACC, DCI) in the recovery of proceeds of crime.
+- **Fund Administration:** Administering the Criminal Assets Recovery Fund.
+- **International Assistance:** Providing international assistance in asset recovery investigations and legal proceedings.
+
+---
+
 ## Executive Summary
 The Assets Recovery Agency (ARA) is mandated to identify, trace, freeze, and recover proceeds of crime. Currently, the evidence management process is heavily reliant on physical files and manual tracking across different registries (Lands, NTSA, BRS). The transition to the Kenya DSAP Architecture aims to establish a central "Case and Evidence Registry" integrated with national foundational registries via X-Road to enable real-time asset tracing.
 

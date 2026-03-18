@@ -11,7 +11,21 @@
 - **Life-Cycle Group:** Government Administration
 - **Breakout Room:** Executive Services
 - **Facilitator:** Auto-generated
-- **Assistant:** AI Assistant
+
+---
+
+## Service Mandate
+State House Kenya serves as the official residence and administrative office of the President of the Republic of Kenya. Its primary mandate is to provide the necessary support to the President in the execution of their constitutional duties as the Head of State, Head of Government, and Commander-in-Chief of the Kenya Defence Forces.
+
+**Official Website:** [https://www.statehouse.go.ke](https://www.statehouse.go.ke)
+
+**Key Functions:**
+- **Executive Support:** Facilitating the President's daily operations, including scheduling, correspondence, and administrative management.
+- **Policy Coordination:** Assisting in the formulation and implementation of national policies and government agendas.
+- **State Ceremonies:** Organizing and hosting official state functions, including the reception of foreign dignitaries and national holiday celebrations.
+- **Communication:** Managing the President's public relations, press releases, and official communications to the nation.
+- **Advisory Services:** Providing the President with strategic advice on national and international matters through specialized directorates.
+- **Inter-Governmental Relations:** Facilitating coordination between the Executive and other arms of government and County Governments.
 
 ---
 

@@ -11,6 +11,18 @@
 - **Service Model:** G2B
 - **Life-Cycle Group:** Cradle to Death (4. Employment & Business)
 
+## Service Mandate
+Established under the Environmental Management and Coordination Act (EMCA) No. 8 of 1999, NEMA's mandate is:
+1. To ensure sustainable management of the environment through general supervision and coordination of all matters relating to the environment.
+2. To be the principal instrument of Government in the implementation of all policies relating to the environment.
+Key Functions include:
+* **Coordination:** Harmonizing environmental management activities undertaken by various lead agencies.
+* **Regulation & Licensing:** Issuing licenses and permits, including Environmental Impact Assessment (EIA) and Environmental Audit (EA) approvals.
+* **Policy Implementation:** Executing government policies and advising on land-use planning and natural resource conservation.
+* **Monitoring & Enforcement:** Monitoring environmental quality and ensuring compliance with environmental standards and greenhouse gas emission levels.
+* **Public Awareness:** Promoting environmental education and public participation in environmental management.
+* **Reporting:** Preparing and issuing the annual "State of Environment" report in Kenya.
+
 ---
 
 ## Executive Summary

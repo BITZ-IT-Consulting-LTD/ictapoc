@@ -13,6 +13,21 @@
 
 ---
 
+## Service Mandate
+The State Department for Culture and Heritage is responsible for the promotion, preservation, and development of Kenya's diverse cultural heritage. Its mandate is to develop, promote, and coordinate national culture and heritage policies to ensure the protection of both tangible and intangible cultural heritage while fostering national cohesion and pride.
+
+**Official Website:** [https://www.sportsheritage.go.ke/](https://www.sportsheritage.go.ke/)
+
+**Key Functions:**
+- **Cultural Promotion:** Developing performing arts, visual arts, and indigenous languages (including Kiswahili and Kenya Sign Language).
+- **Infrastructure Development:** Building and maintaining national cultural infrastructure.
+- **Documentation:** Coordinating the documentation of national cultural inventories and safeguarding intangible heritage.
+- **Capacity Building:** Supporting County Governments in developing their own cultural programs.
+- **Research & Education:** Conducting research on indigenous health, nutrition, and traditional knowledge systems.
+- **Registration:** Registering cultural practitioners, artistic groups, and traditional medical practitioners.
+
+---
+
 ## Executive Summary
 The State Department for Culture, Arts and Heritage oversees the Ushanga Kenya initiative, which empowers pastoralist women through the beadwork value chain. The current process involves manual product aggregation, physical quality inspections, and traditional market placement (exhibitions/retail). The transition to the Kenya DSAP Architecture aims to digitize the inventory, provide verifiable product traceability, and automate payments to cooperatives via the government payment aggregator.
 

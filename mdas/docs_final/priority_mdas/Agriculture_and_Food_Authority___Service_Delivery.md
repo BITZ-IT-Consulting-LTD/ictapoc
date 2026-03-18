@@ -10,6 +10,14 @@
 - **Service Model:** G2B
 - **Life-Cycle Group:** Cradle to Death (4. Employment & Business)
 
+## Service Mandate
+The Agriculture and Food Authority (AFA) is the primary regulatory body for the crops sector in Kenya. It was established under the Agriculture and Food Authority Act (No. 13 of 2013) to operationalize the Crops Act (No. 16 of 2013). Its primary role is to regulate, develop, and promote scheduled crops value chains for increased economic growth. Specific mandates include:
+* **Regulation:** Administering the Crops Act and regulating the production, processing, marketing, grading, storage, and transportation of agricultural products (excluding livestock).
+* **Promotion:** Promoting best practices in the agricultural sector to ensure sustainability and competitiveness.
+* **Data Management:** Collecting and collating data to maintain a database on agricultural products and players.
+* **Research & Policy:** Determining research priorities in agriculture and advising both National and County governments on agricultural levies and policies.
+* **Food Security:** Ensuring the smooth operation of the food crops sub-sector to contribute to national food security.
+
 ---
 
 ## Executive Summary

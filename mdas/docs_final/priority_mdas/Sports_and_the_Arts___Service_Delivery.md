@@ -13,6 +13,22 @@
 
 ---
 
+## Service Mandate
+The State Department for Sports is responsible for the development, promotion, and management of sports activities and infrastructure across Kenya. Its mandate is derived from the Sports Act No. 25 of 2013 and focuses on nurturing talent and positioning Kenya as a global sporting powerhouse.
+
+**Official Website:** [https://www.moyasa.go.ke](https://www.moyasa.go.ke)
+
+**Key Functions:**
+- **Policy Development:** Formulating and reviewing national sports policies and legal frameworks to govern the sports sector.
+- **Sports Promotion:** Promoting, coordinating, and implementing grassroots, national, and international sports programs.
+- **Infrastructure Development:** Overseeing the development, management, and maintenance of sports facilities (e.g., stadiums) through its agency, Sports Kenya.
+- **Talent Identification:** Identifying, nurturing, and developing sporting talent across all levels.
+- **International Participation:** Facilitating the participation of Kenyan athletes in regional, continental, and international competitions.
+- **Regulation:** Licensing and regulating sports organizations and professional sports persons in liaison with the Sports Registrar.
+- **Funding:** Managing and allocating resources for sports development, including coordination with the Sports, Arts and Social Development Fund.
+
+---
+
 ## Executive Summary
 The State Department for Sports is responsible for the regulation of sports federations, management of athlete grants, and the administration of national sports facilities. The current process is transitioning to digital for facility booking but remains manual for federation oversight and grant management. The transition to the Kenya DSAP Architecture aims to unify these services into a single "Sports Portal" integrated with IPRS for athlete verification and the Government Payment Aggregator for facility fees and grant disbursements.
 

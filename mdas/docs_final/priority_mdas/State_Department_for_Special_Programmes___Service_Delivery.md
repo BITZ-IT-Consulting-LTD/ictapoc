@@ -13,6 +13,23 @@
 
 ---
 
+## Service Mandate
+The State Department for Special Programmes (SDSP) is the primary government body responsible for disaster management, humanitarian aid, and emergency response in Kenya. Its mandate is to provide leadership in the development of risk reduction measures and disaster management for sustainable development. It serves as the frontline for disaster response and humanitarian aid, focusing on building resilient communities and ensuring timely interventions during crises.
+
+**Official Website:** [https://specialprogrammes.go.ke/](https://specialprogrammes.go.ke/)
+
+**Key Functions:**
+- **Disaster Coordination:** Coordinating disaster preparedness, response, and recovery efforts for crises such as floods, droughts, fires, pandemics, and geological disasters.
+- **Food Aid & Relief:** Providing food aid and essential supplies to affected populations, often in collaboration with the National Youth Service (NYS).
+- **Strategic Food Reserve:** Maintaining the nation's Strategic Food Reserve to ensure food security during emergencies.
+- **Rescue & Infrastructure:** Coordinating rescue assistance with National and County Governments and providing emergency shelter and mobility solutions (e.g., mobile bridges).
+- **Information Management:** Managing public communication and information during emergencies in collaboration with the Office of the Government Spokesperson.
+- **Resilience & Mitigation:** Developing programs to help communities adapt to and mitigate the impact of disasters, including early warning systems and evacuation drills.
+- **Recovery & Resettlement:** Implementing recovery programs to restore livelihoods and managing the settlement of families displaced by natural calamities.
+- **Resource Mobilization:** Establishing frameworks for coordinating public donations and mobilizing the NYS as a standby emergency force.
+
+---
+
 ## Executive Summary
 The State Department for Special Programmes is responsible for social protection interventions targeting vulnerable populations. This includes safety net programmes, emergency relief, and beneficiary support. The current process is heavily manual, leading to identification delays and disbursement risks. The transition to the Kenya DSAP Architecture aims to establish a real-time, biometric-linked social registry.
 

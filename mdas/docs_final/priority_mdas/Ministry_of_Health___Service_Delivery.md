@@ -10,6 +10,19 @@
 - **Service Model:** G2C
 - **Life-Cycle Group:** Cradle to Death (1. The Cradle)
 
+## Service Mandate
+The Ministry of Health’s (MoH) primary mandate is to build a progressive, responsive, and sustainable healthcare system to ensure all Kenyans attain the highest standard of health, as enshrined in the Constitution of Kenya 2010. Following the devolution of government in 2013, the Ministry’s role is structured around four core pillars:
+1. **Health Policy:** Formulating national policies, standards, and guidelines.
+2. **Health Regulation:** Oversight of health services, professionals, and products.
+3. **National Referral Facilities:** Management of tertiary hospitals (e.g., Kenyatta National Hospital, Moi Teaching and Referral Hospital).
+4. **Capacity Building & Technical Assistance:** Supporting the 47 County Governments, which are responsible for direct service delivery.
+Core Functions include:
+* **Preventive & Promotive Health:** Disease surveillance, immunization, and public health education.
+* **Curative Services:** Oversight of clinical standards and specialized treatment.
+* **Sanitation & Food Safety:** Policy and inspection for environmental health and food handling.
+* **Health Research:** Coordinating research through agencies like KEMRI.
+* **Universal Health Coverage (UHC):** Implementing reforms such as the Social Health Authority (SHA) to ensure affordable access to care.
+
 ---
 
 ## Executive Summary

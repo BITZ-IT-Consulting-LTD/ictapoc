@@ -11,6 +11,14 @@
 - **Service Model:** G2C
 - **Life-Cycle Group:** Cradle to Death (4. Employment & Business)
 
+## Service Mandate
+According to the KBC Act (CAP 221) of the Laws of Kenya, the Kenya Broadcasting Corporation (KBC) is a state-owned public broadcaster with the following primary mandate:
+* **Core Purpose:** To provide independent and impartial broadcasting services of information, education, and entertainment.
+* **Language:** Services are provided in English, Kiswahili, and over 23 other indigenous languages.
+* **Public Service:** To contribute to the economic, educational, cultural, and social well-being of Kenyans through high-quality broadcasts.
+* **National Development:** To increase public understanding of government development policies and strategies and promote the use of radio and television as tools for national development.
+* **Universal Coverage:** To maintain universal coverage to ensure even the most remote areas of Kenya have access to information.
+
 ---
 
 ## Executive Summary
