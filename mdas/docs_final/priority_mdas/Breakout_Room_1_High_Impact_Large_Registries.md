@@ -13,3 +13,5 @@
 - **[State Department for Children Services](./State_Department_for_Children_Services___Service_Delivery.md)**: Tasked with safeguarding child rights, overseeing child welfare programs, and managing adoption and protection registries.
 - **[State Department for Correctional Services](./STATE_DEPARTMENT_FOR_CORRECTIONAL_SERVICES___Service_Delivery.md)**: Manages the containment and rehabilitation of offenders through the prison service and probation system.
 - **[State Department for Immigration and Citizen Services](./STATE_DEPARTMENT_FOR_IMMIGRATION_AND_CITIZEN_SERVICES___Passport_Application.md)**: Oversees border control, issuance of passports and visas, and the management of citizenship and residency records.
+- **[Internal Security and National Administration](./Internal_Security_and_National_Administration___Service_Delivery.md)**: Manages governance, justice, law and order, and national administration processes.
+- **[Office of the Attorney General — Marriages](./OFFICE_OF_THE_ATTORNEY_GENERAL_AG____Service_Delivery.md)**: Mandated to register, solemnize, and maintain records of statutory civil marriages and divorces.

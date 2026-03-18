@@ -16,3 +16,5 @@
 - **[National Commission For Science Technology and Innovation (NACOSTI)](./National_Commission_For_Science_Technology_and_Innovation___Service_Delivery.md)**: Regulation of science, technology, and research sectors to ensure quality and ethical standards in innovation.
 - **[National Environment Management Authority (NEMA)](./National_Environment_Management_Authority___Service_Delivery.md)**: Oversight of environmental management, environmental impact assessments (EIA), and enforcement of environmental regulations.
 - **[State Department of ICT](./State_Department_of_ICT___Service_Delivery.md)**: Development of digital infrastructure, standardisation of government software, and promotion of the digital economy.
+- **[TVET](./Technical_Vocational_Education_and_Training___Service_Delivery.md)**: Policy and regulatory framework for Technical and Vocational Education and Training.
+- **[State Dept for Co-operatives](./Cooperatives___Service_Delivery.md)**: Formulates policy for the growth, regulation, and capacity building of the cooperative movement.
