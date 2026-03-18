@@ -244,18 +244,9 @@ The To-Be process eliminates "Reporting Fatigue" by automatically pulling eviden
 - Executive Order No. 1 of 2023
 - Desk Review
 
-<<<<<<< HEAD
 
 ---
 
 ### Validation Survey
 Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
 
-=======
----
-
-## Feedback
-We value your input on this blueprint. Please take a moment to provide your feedback using the link below:
-
-[Provide Feedback](https://ee.kobotoolbox.org/x/4Ls7SlCG)
->>>>>>> fa7c468774fe7aa62241faa0890b6d9a0f43c246

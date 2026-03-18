@@ -1,7 +1,7 @@
 # STATE DEPARTMENT FOR CHILDREN SERVICES – Service Delivery
 
 ## Cover Page
-- **Ministry/Department/Agency (MDA):** Ministry of Labour and Social Protection
+- **Ministry/Department/Agency (MDA):** Ministry of Gender, Culture and Children Services
 - **Department:** State Department for Children Services
 - **Process Name:** Child Protection Case Management
 - **Document Version:** 2.1
@@ -14,7 +14,7 @@
 ---
 
 ## Executive Summary
-The State Department for Children Services is responsible for the protection and well-being of children in Kenya. The current case management process is entirely paper-based, leading to delays in interventions, difficulty in tracking child history across regions, and risks of data loss. The transition to the Kenya DSAP Architecture aims to implement a secure, digital Child Protection Information Management System (CPIMS) integrated with the national identity ecosystem.
+The State Department for Children Services, under the Ministry of Gender, Culture and Children Services (created 16th April 2025 following the reorganization of the Government structure per Executive Order No. 1 of 2025), is mandated to safeguard the rights and promote the welfare of all children in Kenya. The department operates through eight divisions providing child protection, cash transfer programmes for vulnerable children, educational support, the Child Helpline (116), counter-trafficking efforts, and the Child Protection Information Management System (CPIMS). The current case management process is heavily paper-based, leading to delays in interventions, difficulty in tracking child history across regions, and risks of data loss. The transition to the Kenya DSAP Architecture aims to implement a secure, digital CPIMS integrated with the national identity ecosystem.
 
 ---
 
@@ -266,19 +266,11 @@ The To-Be process envisions a fully integrated **National Child Protection Infor
 ---
 
 ## References
-- https://www.socialprotection.go.ke
+- https://www.childrenservices.go.ke
 - Children Act 2022
 - Desk Review
 
 ---
 
-<<<<<<< HEAD
 ### Validation Survey
 Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
-
-=======
-## Feedback
-We value your input on this blueprint. Please take a moment to provide your feedback using the link below:
-
-[Provide Feedback](https://ee.kobotoolbox.org/x/4Ls7SlCG)
->>>>>>> fa7c468774fe7aa62241faa0890b6d9a0f43c246
