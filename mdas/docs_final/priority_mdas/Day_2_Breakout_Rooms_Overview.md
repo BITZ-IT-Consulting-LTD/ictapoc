@@ -43,7 +43,7 @@ Detailed matrices and notes for each session can be found in their respective do
 *   **Assistant:** Brenda
 *   **Category:** Policy direction, economic systems, planning, regulatory frameworks, and foundational digital infrastructure.
 *   **Participating MDAs:**
-    *   [Livestock and Food Authority](./Agriculture_and_Food_Authority___Service_Delivery.md)
+    *   [Agriculture_and_Food_Authority](./Agriculture_and_Food_Authority___Service_Delivery.md)
     *   [Athi Water Works Development Agency](./Athi_Water_Works_Development_Agency___Service_Delivery.md)
     *   [Energy](./Energy___Service_Delivery.md)
     *   [ICT Authority](./ICT_Authority___Service_Delivery.md)
@@ -57,6 +57,7 @@ Detailed matrices and notes for each session can be found in their respective do
     *   [TVET](./Technical_Vocational_Education_and_Training___Service_Delivery.md)
     *   [State Dept for Co-operatives](./Cooperatives___Service_Delivery.md)
     *   [State Department for Economic Planning](./State_Department_for_Economic_Planning___Service_Delivery.md)
+    *   [State Department for Livestock Development (SDLD)](./State_Department_for_Livestock_Development___Service_Delivery.md)
 
 
 ---
