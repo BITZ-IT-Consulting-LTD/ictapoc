@@ -24,6 +24,7 @@ The Directorate of Immigration Services (DIS) is responsible for the issuance of
 **Trigger:** Citizen applies for a new passport, renewal, replacement, or change of details
 
 ### ACTORS
+
 | Actor                     | Role                     |
 |---------------------------|--------------------------|
 | Citizen (Applicant)       | Applies for passport     |
@@ -131,6 +132,7 @@ Passport Application (New / Renewal / Replacement)
 - Kenya Citizenship and Immigration Act, 2011; ICAO Doc 9303.
 
 ### Stakeholders
+
 | Stakeholder         | Role      | Responsibilities                                                |
 | ------------------- | --------- | --------------------------------------------------------------- |
 | Citizen (Applicant) | Applicant | Completes online form, pays fee, attends appointment.           |
@@ -139,6 +141,7 @@ Passport Application (New / Renewal / Replacement)
 | Courier Service     | Logistics | Delivers passports to regional offices (Mombasa, Kisumu, etc.). |
 
 ### Detailed Process (AS-IS)
+
 | Step | Actor                     | Action                                                                                                                                           | Tool / System      | Notes                                                                    |
 |------|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|--------------------------------------------------------------------------|
 | 1    | Citizen (Applicant)       | **Logs into eCitizen:** Creates account or logs in using National ID Number and Password.                                                         | eCitizen Portal    |                                                                          |
@@ -263,6 +266,7 @@ The proposed process leverages a **Whole-of-Government digital platform** to del
 6. **Notifications:** Real-time SMS and eCitizen status updates proactively notify the citizen at every milestone (e.g., application received, printing, dispatched, ready).
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Citizen | Submits application online. Chooses delivery method. | eCitizen App |
@@ -280,6 +284,7 @@ The proposed process leverages a **Whole-of-Government digital platform** to del
 *Required fields for the WoG Digital Service.*
 
 ### A. Passport Application (Renewal/New)
+
 | Field Name | Type | Source | Validation |
 |---|---|---|---|
 | Citizen ID (Maisha) | String | System Fetch (NRB) | Read-only |

@@ -114,6 +114,7 @@ Government ICT Project Governance and Implementation
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | MDA | Identifies need for ICT system | Internal | |
@@ -201,6 +202,7 @@ ICT Authority transitions from merely reviewing ICT projects to operating shared
 - **Secure Digital Trust:** Systems utilize National PKI, identity verification services, and cybersecurity frameworks.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | MDA | Designs digital service aligned with GEA | Architecture Portal |

@@ -17,7 +17,7 @@ Detailed matrices and notes for each session can be found in their respective do
     *   [State Department for Children Services](./State_Department_for_Children_Services___Service_Delivery.md)
     *   [Department of Refugee Services](./_REFUGEE_SERVICES___Service_Delivery.md)
     *   [Internal Security and National Administration](./Internal_Security_and_National_Administration___Service_Delivery.md)
-    *   [Office of the Attorney General — Marriages](./OFFICE_OF_THE_ATTORNEY_GENERAL_AG____Service_Delivery.md)
+    *   [State law office registra of Marriages](./OFFICE_OF_THE_ATTORNEY_GENERAL_AG____Service_Delivery.md)
 
 #### [Room 2: Coordination, Culture & Specialised Services](./Breakout_Room_2_Coordination_Culture_Specialised.md)
 *   **Facilitator:** Joash
@@ -42,8 +42,13 @@ Detailed matrices and notes for each session can be found in their respective do
 *   **Assistant:** Brenda
 *   **Category:** Policy direction, economic systems, planning, regulatory frameworks, and foundational digital infrastructure.
 *   **Participating MDAs:**
-    *   [Livestock & Food Authority (AFA) + National Livestock Platforms (KIAMIS)](./Agriculture_and_Food_Authority___Service_Delivery.md)
-    *   [Kenya National Qualifications Authority (KNQA) – Alignment & Validation of Qualifications](./Kenya_National_Qualifications_Authority___Service_Delivery.md)
+    *   [Livestock and Food Authority](./Agriculture_and_Food_Authority___Service_Delivery.md)
+    *   [Athi Water Works Development Agency](./Athi_Water_Works_Development_Agency___Service_Delivery.md)
+    *   [Energy](./Energy___Service_Delivery.md)
+    *   [ICT Authority](./ICT_Authority___Service_Delivery.md)
+    *   [Kenya National Qualifications Authority](./Kenya_National_Qualifications_Authority___Service_Delivery.md)
+    *   [Micro, Small and Medium Enterprise Development](./Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md)
+    *   [National Commission For Science Technology and Innovation (NACOSTI)](./National_Commission_For_Science_Technology_and_Innovation___Service_Delivery.md)
     *   [National Environment Management Authority (NEMA)](./National_Environment_Management_Authority___Service_Delivery.md)
     *   [Athi Water Works Development Agency](./Athi_Water_Works_Development_Agency___Service_Delivery.md)
     *   [State Department for MSMEs](./Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md)

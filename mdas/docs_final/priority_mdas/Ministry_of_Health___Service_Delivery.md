@@ -115,6 +115,7 @@ Health Service Delivery & Identity
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Patient | Patient arrives at facility. | Physical | |
@@ -239,6 +240,7 @@ flowchart TD
 - **Provider Registry:** Authoritative source for healthcare workers.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Health Worker | Patient identified using Maisha Namba or biometrics. | Facility EMR |

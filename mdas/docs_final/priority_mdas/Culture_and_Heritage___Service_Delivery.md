@@ -122,6 +122,7 @@ End-to-End Ushanga Kenya Value Chain (Aggregation to Payment)
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Artisan / Cooperative Leader | Coordinates the onboarding of the cooperative and aggregation of beadwork from members. Travels to the aggregation center. | Physical | |
@@ -240,6 +241,7 @@ The To-Be architecture transforms the manual beadwork value chain into a **digit
 - **Automated Payment Settlement:** Integrates with the Government Payment Aggregator for instant fund disbursement.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Center Officer | Performs digital product intake using a mobile inventory scanning app, instantly verifying the cooperative's registration. | Ushanga Mobile App |

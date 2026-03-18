@@ -103,6 +103,7 @@ End-to-End Farmer Registration, Export Permits, and Trading Licenses
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Applicant | Completes application, attaches paper copies of required documents, submits application, and pays the application fee. | Paper/Bank/Portal | High manual effort. |
@@ -222,6 +223,7 @@ flowchart TD
 - **Exception-Based Human Review:** Manual processing and physical inspections are reserved strictly for high-risk or flagged applications.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Applicant | Accesses eCitizen, selects the required license type, confirms auto-populated data, and makes digital payment. | eCitizen Portal / GPA |

@@ -82,6 +82,7 @@ Asset Identification, Tracing, and Forfeiture Lifecycle
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Investigator | Receives a lead and sends physical requests to NTSA, Lands, and BRS to find assets owned by a suspect. | Physical Letters | Slow and prone to leakage. |
@@ -154,6 +155,7 @@ graph TD
 - **Instant Freezing:** Once a court order is issued digitally, the **Workflow Engine** pings the relevant registries (Lands/NTSA) to place an instant digital "Caution" on the assets, preventing their sale.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | ARA Analyst | Inputs a suspect's Maisha Namba into the ARA Investigation Portal. | ARA Portal |

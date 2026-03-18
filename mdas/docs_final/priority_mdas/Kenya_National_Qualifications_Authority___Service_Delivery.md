@@ -93,6 +93,7 @@ End-to-End Qualification Validation and Recognition of Prior Learning
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role              | Action                                                                           | Tool/System         | Notes              |
 | ---- | ----------------- | -------------------------------------------------------------------------------- | ------------------- | ------------------ |
 | 1    | Applicant         | Submits application form and scans of certificates/transcripts.                  | Manual/Portal       |                    |
@@ -211,6 +212,7 @@ flowchart TD
 - **Digital Issuance:** Upon approval, validation letters are digitally generated, featuring a QR verification code, verification ID, and an official registry entry for instantaneous third-party verification.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Applicant | Submits a validation request via the digital portal. Does not upload certificates if records exist in registries. | eCitizen / Digital Portal |

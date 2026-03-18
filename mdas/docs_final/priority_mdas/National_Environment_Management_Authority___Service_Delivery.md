@@ -137,6 +137,7 @@ Environmental Impact Assessment (EIA) Licensing and Compliance Monitoring
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Proponent / Registered Environmental Expert | Submits the EIA project report and pays the statutory processing fee. | Physical / Portal | |
@@ -270,6 +271,7 @@ The To-Be process envisions a fully integrated **digital environmental permittin
 - **Lead Agency Consultation:** Routes EIA documents simultaneously to KFS, WRA, County Governments, etc., for concurrent digital review.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Proponent | Logs into eCitizen and submits the EIA digitally. Business ownership and expert registration are verified instantly. | eCitizen / X-Road (BRS) |

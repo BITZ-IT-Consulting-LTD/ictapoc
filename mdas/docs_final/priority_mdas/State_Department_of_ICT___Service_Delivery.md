@@ -94,6 +94,7 @@ Digital Government Policy Coordination and ICT Infrastructure Enablement
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | MDA | Identifies need for digital service or ICT project | Internal | |
@@ -180,6 +181,7 @@ The State Department for ICT and the Digital Economy will transition government 
 - **Citizen-Centric Service Delivery:** Services are published through eCitizen or government digital portals, enabling citizens to access services digitally without visiting physical offices.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | MDA | Designs digital service aligned with GEA | Digital Architecture Framework |

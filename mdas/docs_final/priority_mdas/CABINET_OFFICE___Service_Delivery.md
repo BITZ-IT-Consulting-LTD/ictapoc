@@ -85,6 +85,7 @@ Cabinet Memorandum (CABMEMO) Processing and GDMIS Registration
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Ministry | Prepares a Cabinet Memorandum and obtains approval from the Principal Secretary and Cabinet Secretary. | Manual/Word | |
@@ -156,6 +157,7 @@ graph TD
 - **Transparency:** Once a decision is reached, the result is auto-synced to the **GDMIS** (Government Delivery Management Information System) via **X-Road**, enabling immediate tracking of implementation by the Head of Public Service.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | CS / PS | Drafts and reviews the memorandum within the secure Executive Portal. | Executive Portal |
