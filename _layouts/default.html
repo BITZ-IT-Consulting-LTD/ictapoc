@@ -11,6 +11,40 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     {% include head-custom.html %}
+    <style>
+      .main-content table {
+        display: table;
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5em 0;
+        font-size: 0.95em;
+      }
+      .main-content table th,
+      .main-content table td {
+        border: 1px solid #ddd;
+        padding: 8px 12px;
+        text-align: left;
+        vertical-align: top;
+      }
+      .main-content table th {
+        background-color: #159957;
+        color: #fff;
+        font-weight: 600;
+      }
+      .main-content table tr:nth-child(even) {
+        background-color: #f4f8f4;
+      }
+      .main-content table tr:hover {
+        background-color: #e8f0e8;
+      }
+      @media screen and (max-width: 768px) {
+        .main-content table {
+          display: block;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+      }
+    </style>
   </head>
   <body>
     <a id="skip-to-content" href="#content">Skip to the content.</a>
