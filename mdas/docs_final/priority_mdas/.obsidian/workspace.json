@@ -11,13 +11,10 @@
             "id": "f4e855576f44abc8",
             "type": "leaf",
             "state": {
-              "type": "bases",
-              "state": {
-                "file": "Untitled.base",
-                "viewName": "Table"
-              },
-              "icon": "lucide-table",
-              "title": "Untitled"
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
             }
           }
         ]
@@ -94,7 +91,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Untitled.base",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +100,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Untitled"
+              "title": "Backlinks"
             }
           },
           {
@@ -182,31 +178,38 @@
       "bases:Create new base": false
     }
   },
-  "active": "f4e855576f44abc8",
+  "active": "82927f003136ab8b",
   "lastOpenFiles": [
-    "Untitled 2.canvas",
     "Untitled.base",
+    "Untitled 2.canvas",
     "Untitled 1.canvas",
+    "workshop_mdas.csv",
+    "assets/awwda/Water Treatment Process Flow Chart.png",
+    "assets/awwda/Treatment Bulk Water Transmission Flowchart.png",
+    "assets/awwda/Supply Biling and Collection Flowchart.png",
+    "assets/awwda/Raw water storage and abstraction .png",
+    "assets/awwda/README.md",
+    "assets/awwda/Infrastructure Planning Process Flow Chart.png",
+    "assets/awwda/Infrastructure Development Process Flow Chart .png",
+    "assets/awwda/Infrastructure Design Process Flow chart .png",
+    "assets/awwda/Engineering Research and Innovation.png",
+    "assets/awwda/Dam Saafety Monitoring Flow Chart.png",
+    "assets/awwda/Application of environmental Permits:Liscence.png",
+    "assets/awwda",
+    "assets",
+    "_CIVIL_REGISTRATION_SERVICES_CRS___Service_Delivery.md",
+    "State_House___Service_Delivery.md",
+    "State_Department_for_Livestock_Development___Service_Delivery.md",
+    "OFFICE_OF_THE_ATTORNEY_GENERAL_AG___Service_Delivery.md",
+    "_CIVIL_REGISTRATION_SERVICES_CRS____Service_Delivery.md",
+    "OFFICE_OF_THE_ATTORNEY_GENERAL_AG____Service_Delivery.md",
     "~$KDEAP_PoC_v2_Comprehensive.pptx",
     "KDEAP_PoC_v2_Comprehensive.pptx",
-    "mermaid_exports/temp_1.png",
     "mermaid_exports/temp_1.mmd",
-    "mermaid_exports/temp_0.png",
     "mermaid_exports/temp_0.mmd",
     "mermaid_exports",
     "generate_deck_pptx_with_images.py",
-    "~$KDEAP_PoC_v2_Deck.pptx",
-    "KDEAP_PoC_v2_Deck.pptx",
-    "generate_deck_pptx.py",
     "KDEAP_PoC_v2_Deck.md",
-    "exported_mermaids/Agriculture_and_Food_Authority_AS_IS.png",
-    "exported_mermaids/Agriculture_and_Food_Authority_TO_BE.png",
-    "exported_mermaids/Office_of_the_Chief_of_Staff_AS_IS-2.png",
-    "exported_mermaids/Office_of_the_Chief_of_Staff_AS_IS-1.png",
-    "exported_mermaids/National_Government_Coordination_TO_BE.png",
-    "exported_mermaids/Office_of_the_Chief_of_Staff_AS_IS.png",
-    "exported_mermaids/Office_of_the_Chief_of_Staff_TO_BE.png",
-    "exported_mermaids/_REFUGEE_SERVICES_TO_BE.png",
     "Untitled.canvas",
     "Agriculture_and_Food_Authority___Service_Delivery.md",
     "State_Department_of_ICT___Service_Delivery.md",
@@ -224,13 +227,6 @@
     "National_Environment_Management_Authority___Service_Delivery.md",
     "State_Department_for_Special_Programmes___Service_Delivery.md",
     "Culture_and_Heritage___Service_Delivery.md",
-    "Sports_and_the_Arts___Service_Delivery.md",
-    "State_Department_for_Children_Services___Service_Delivery.md",
-    "Office_of_the_Chief_of_Staff___Service_Delivery.md",
-    "National_Government_Coordination___Service_Delivery.md",
-    "Government_Spokesperson___Service_Delivery.md",
-    "Athi_Water_Works_Development_Agency___Service_Delivery.md",
-    "_REFUGEE_SERVICES___Service_Delivery.md",
-    "Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md"
+    "Sports_and_the_Arts___Service_Delivery.md"
   ]
 }
