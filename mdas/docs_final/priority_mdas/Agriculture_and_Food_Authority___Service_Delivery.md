@@ -1,7 +1,7 @@
-# State Department for Livestock Development
+# Agriculture and Food Authority
 
 ## Cover Page
-- **Ministry/Department/Agency (MDA):** State Department for Livestock Development
+- **Ministry/Department/Agency (MDA):** Agriculture and Food Authority
 - **Process Name:** Farmer Registration & Licensing
 - **Document Version:** 2.1
 - **Date:** 2026-03-04
@@ -13,7 +13,7 @@
 ---
 
 ## Executive Summary
-The State Department for Livestock Development regulates, develops, and promotes scheduled crops (coffee, tea, nuts, etc.). The current manual and fragmented licensing processes lead to delays in export permits, trading licenses, and farmer registration. The transition to the Kenya DSAP Architecture aims to establish KIAMIS as the single source of truth for farmers, while integrating with BRS, KRA, and Kentrade to automate compliance and licensing.
+The Agriculture and Food Authority regulates, develops, and promotes scheduled crops (coffee, tea, nuts, etc.). The current manual and fragmented licensing processes lead to delays in export permits, trading licenses, and farmer registration. The transition to the Kenya DSAP Architecture aims to establish KIAMIS as the single source of truth for farmers, while integrating with BRS, KRA, and Kentrade to automate compliance and licensing.
 
 ---
 
