@@ -41,7 +41,7 @@ Detailed matrices and notes for each session can be found in their respective do
 *   **Assistant:** Brenda
 *   **Category:** Policy direction, economic systems, planning, regulatory frameworks, and foundational digital infrastructure.
 *   **Participating MDAs:**
-    *   [Agriculture and Food Authority](./Agriculture_and_Food_Authority___Service_Delivery.md)
+    *   [Livestock and Food Authority](./Agriculture_and_Food_Authority___Service_Delivery.md)
     *   [Athi Water Works Development Agency](./Athi_Water_Works_Development_Agency___Service_Delivery.md)
     *   [Energy](./Energy___Service_Delivery.md)
     *   [ICT Authority](./ICT_Authority___Service_Delivery.md)
