@@ -3,6 +3,10 @@ description: Kenya's Repeatable Government Services Platform - Workshop Document
 theme: jekyll-theme-cayman
 markdown: kramdown
 
+include:
+  - _CIVIL_REGISTRATION_SERVICES_CRS____Service_Delivery.md
+  - _REFUGEE_SERVICES___Service_Delivery.md
+
 exclude:
   - frontend
   - backend
