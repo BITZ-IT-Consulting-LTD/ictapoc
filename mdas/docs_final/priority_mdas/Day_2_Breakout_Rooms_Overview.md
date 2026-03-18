@@ -56,6 +56,7 @@ Detailed matrices and notes for each session can be found in their respective do
     *   [TVET](./Technical_Vocational_Education_and_Training___Service_Delivery.md)
     *   [State Dept for Co-operatives](./Cooperatives___Service_Delivery.md)
     *   [State Department for Economic Planning](./State_Department_for_Economic_Planning___Service_Delivery.md)
+    *   [State Department for Livestock Development (SDLD)](./State_Department_for_Livestock_Development___Service_Delivery.md)
 
 
 ---
