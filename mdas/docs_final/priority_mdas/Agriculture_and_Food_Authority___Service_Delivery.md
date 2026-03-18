@@ -1,4 +1,4 @@
-# Agriculture and Food Authority (AFA) – Service Delivery
+# Agriculture and Food Authority
 
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** Agriculture and Food Authority
@@ -13,7 +13,7 @@
 ---
 
 ## Executive Summary
-The Agriculture and Food Authority (AFA) regulates, develops, and promotes scheduled crops (coffee, tea, nuts, etc.). The current manual and fragmented licensing processes lead to delays in export permits, trading licenses, and farmer registration. The transition to the Kenya DSAP Architecture aims to establish KIAMIS as the single source of truth for farmers, while integrating with BRS, KRA, and Kentrade to automate compliance and licensing.
+The Agriculture and Food Authority regulates, develops, and promotes scheduled crops (coffee, tea, nuts, etc.). The current manual and fragmented licensing processes lead to delays in export permits, trading licenses, and farmer registration. The transition to the Kenya DSAP Architecture aims to establish KIAMIS as the single source of truth for farmers, while integrating with BRS, KRA, and Kentrade to automate compliance and licensing.
 
 ---
 
