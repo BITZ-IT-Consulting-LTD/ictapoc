@@ -15,69 +15,24 @@
 ## Executive Summary
 Athi Water Works Development Agency (AWWDA) is responsible for the development, rehabilitation, and operation of water and sanitation infrastructure in Kenya's greater Nairobi and Coast regions, serving millions of citizens and industrial consumers. AWWDA's core service delivery spans three operational domains: infrastructure planning, design and development; water operations including raw water abstraction, treatment, and bulk transmission; and environmental compliance covering permits, health and safety, and climate change.
  
-Currently, these twelve inter-connected processes are managed through paper-based workflows, spreadsheets, and fragmented departmental systems with no central digital backbone. This leads to delays in infrastructure approvals, manual compliance tracking, reactive rather than predictive operations, and an inability to provide real-time service performance data to regulators and the public.
+Currently, these ten inter-connected processes are managed through paper-based workflows, spreadsheets, and fragmented departmental systems with no central digital backbone. This leads to delays in infrastructure approvals, manual compliance tracking, reactive rather than predictive operations, and an inability to provide real-time service performance data to regulators and the public.
  
-The transition to the Kenya DSAP Architecture aims to digitize all twelve core processes through a unified AWWDA Digital Operations Platform — integrating with PIMIS, KRA, NEMA, WRMA, and the Government Payment Aggregator (GPA) to automate approvals, compliance monitoring, and bulk water billing.
+The transition to the Kenya DSAP Architecture aims to digitize all core processes through a unified AWWDA Digital Operations Platform — integrating with PIMIS, KRA, NEMA, WRMA, and the Government Payment Aggregator (GPA) to automate approvals, compliance monitoring, and bulk water billing.
  
 ---
  
 ## Part 1 — Infrastructure
  
+---
+ 
 ### 1.1 Infrastructure Planning
  
-#### 1. AS-IS Process Flowchart (BPMN 2.0)
+#### 1. AS-IS Process Flowchart
 *Current State — Infrastructure Planning Process*
  
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start))
-    EndApprove(("End - Approved\nInvestment Pipeline"))
+![Infrastructure Planning AS-IS](assets/awwda/Infrastructure%20Planning%20Process%20Flow%20Chart.png)
  
-    IdentifyGaps["Identify Service Gaps\nand Infrastructure Needs"]
-    CollectData["Collect and Analyze\nPlanning and Demand Data"]
-    DevelopConcept["Develop Concept Notes\nand Investment Proposals"]
-    CEOReviewConcept{"CEO Review and\nApproval of Concept\nNote / PIMIS"}
-    TechnicalSurveys["Undertake Required\nTechnical Surveys\nand Analysis"]
-    PreparePlans["Prepare Master Plans,\nFeasibility Study,\nConceptual and Preliminary\nDesigns + Internal Tech Review"]
-    ReviewCEO{"Review and Approval\nby CEO of FS, MP\nand IP / PIMIS"}
-    SubmitPIMIS["Submit to PIMIS\nand Prioritize Projects"]
-    AlignFrameworks["Align Projects with\nStrategic and\nFinancing Frameworks"]
-    CEOPipeline{"CEO Approval of\nPrioritized Investment\nPipeline"}
-    DonorEngagement["Donor Engagement\nand Financing Arrangement"]
- 
-    Start --> IdentifyGaps
-    IdentifyGaps --> CollectData
-    CollectData --> DevelopConcept
-    DevelopConcept --> CEOReviewConcept
- 
-    CEOReviewConcept -- "No" --> DevelopConcept
-    CEOReviewConcept -- "Yes" --> TechnicalSurveys
- 
-    TechnicalSurveys --> PreparePlans
-    PreparePlans --> ReviewCEO
- 
-    ReviewCEO -- "No" --> PreparePlans
-    ReviewCEO -- "Yes" --> SubmitPIMIS
- 
-    SubmitPIMIS --> AlignFrameworks
-    AlignFrameworks --> CEOPipeline
- 
-    CEOPipeline -- "No" --> AlignFrameworks
-    CEOPipeline -- "Yes" --> DonorEngagement
- 
-    DonorEngagement --> EndApprove
- 
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px;
- 
-    class Start startEvent;
-    class EndApprove endEvent;
-    class CEOReviewConcept,ReviewCEO,CEOPipeline gateway;
-    class IdentifyGaps,CollectData,DevelopConcept,TechnicalSurveys,PreparePlans,SubmitPIMIS,AlignFrameworks,DonorEngagement userTask;
-```
+---
  
 #### Detailed Process (AS-IS)
  
@@ -177,10 +132,10 @@ flowchart TD
 |---|---|---|---|
 | 1 | System | Live SCADA, customer complaint, and WSP data feeds trigger automated gap alerts when thresholds are breached. | AWWDA Analytics Platform / SCADA |
 | 2 | Planning Officer | Drafts concept note in the collaborative digital planning portal; data auto-populated from demand analytics. | AWWDA Planning Portal / PIMIS API |
-| 3 | CEO | Receives digital approval request with SLA countdown. Approves or returns with comments. Decision logged with timestamp. | Digital Approval Workflow Engine |
+| 3 | CEO | Receives digital approval request with SLA countdown. Approves or returns with comments — decision timestamped. | Digital Approval Workflow Engine |
 | 4 | Technical Team | Commissions geo-tagged surveys via the mobile field app; reports uploaded digitally to the central repository. | AWWDA Field App / Document Repository |
-| 5 | Technical Team | Prepares Master Plans, FS, and Preliminary Designs in the central repository. Peer review routed automatically. | Central Document Repository / e-Signature |
-| 6 | System | Scoring engine auto-prioritises pipeline based on defined strategic criteria. Aligned against financing frameworks automatically. | AWWDA Pipeline Engine / PIMIS API |
+| 5 | Technical Team | Prepares Master Plans, FS, and Preliminary Designs in the central repository with automated peer review routing. | Central Document Repository / e-Signature |
+| 6 | System | Scoring engine auto-prioritises pipeline based on defined strategic criteria, aligned against financing frameworks. | AWWDA Pipeline Engine / PIMIS API |
 | 7 | CEO | Reviews and digitally approves the prioritised investment pipeline. Approval auto-syncs to PIMIS. | Digital Approval Workflow / PIMIS |
 | 8 | Finance | Engages donors through the digital financing portal; deal status tracked in real time. | Financing Portal / CRM |
  
@@ -188,79 +143,37 @@ flowchart TD
  
 ### 1.2 Infrastructure Design
  
-#### 1. AS-IS Process Flowchart (BPMN 2.0)
+#### 1. AS-IS Process Flowchart
 *Current State — Infrastructure Design Process*
  
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start))
-    EndApprove(("End - Procurement\nReady Designs"))
+![Infrastructure Design AS-IS](assets/awwda/Infrastructure%20Design%20Process%20Flow%20chart%20.png)
  
-    ConfirmInputs["Confirm Approved Design Inputs\n(FS, MP, PD, Surveys, Safeguards)"]
-    PrepareDraft["Prepare Draft\nEngineering Designs"]
-    InternalReview{"Internal Design\nReview and Verification"}
-    PrepareFinal["Prepare Final Detailed\nEngineering Designs"]
-    StakeholderReview["Conduct Internal and\nStakeholder Design Reviews"]
-    ApprovalDetailed{"Undertake Review and\nApproval of Detailed Designs"}
-    ManageControl["Management and\nControl of Designs"]
-    PrepareBidding["Preparation of Bidding\nDocuments and Obtain Permits"]
-    BiddingApproval{"Approval of\nBidding Documents"}
- 
-    Start --> ConfirmInputs
-    ConfirmInputs --> PrepareDraft
-    PrepareDraft --> InternalReview
- 
-    InternalReview -- "No" --> PrepareDraft
-    InternalReview -- "Yes" --> PrepareFinal
- 
-    PrepareFinal --> StakeholderReview
-    StakeholderReview --> ApprovalDetailed
- 
-    ApprovalDetailed -- "No" --> StakeholderReview
-    ApprovalDetailed -- "Yes" --> ManageControl
- 
-    ManageControl --> PrepareBidding
-    PrepareBidding --> BiddingApproval
- 
-    BiddingApproval -- "No" --> PrepareBidding
-    BiddingApproval -- "Yes" --> EndApprove
- 
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px;
- 
-    class Start startEvent;
-    class EndApprove endEvent;
-    class InternalReview,ApprovalDetailed,BiddingApproval gateway;
-    class ConfirmInputs,PrepareDraft,PrepareFinal,StakeholderReview,ManageControl,PrepareBidding userTask;
-```
+---
  
 #### Detailed Process (AS-IS)
  
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
-| 1 | Design Engineer | Confirms approved design inputs: FS, Master Plan, Preliminary Design, Surveys, and Safeguards documentation. | Manual / File System | Design inputs assembled from multiple disconnected sources and file locations. |
+| 1 | Design Engineer | Confirms approved design inputs: FS, Master Plan, Preliminary Design, Surveys, and Safeguards. | Manual / File System | Design inputs assembled from multiple disconnected sources and file locations. |
 | 2 | Design Engineer | Prepares draft engineering designs. | AutoCAD / Manual | No design management system; files emailed between team members. |
-| 3 | Chief Engineer | Conducts internal design review and verification. If not approved, designs are revised. | Printed drawings / Manual markup | Review comments on printed drawings; no digital redlining. |
+| 3 | Chief Engineer | Conducts internal design review and verification. If not approved, designs are revised. | Printed Drawings / Manual Markup | Review comments on printed drawings; no digital redlining. |
 | 4 | Design Engineer | Prepares final detailed engineering designs following internal approval. | AutoCAD | Final designs stored on individual workstations; version conflicts common. |
 | 5 | Internal + External Stakeholders | Conducts internal and stakeholder design review sessions. | Physical Meetings | Stakeholder comments captured manually; no formal response tracking. |
 | 6 | CEO / Director | Reviews and approves the detailed designs. If rejected, stakeholder review is repeated. | Manual / Committee | Approval cycles can extend 6–10 weeks with no SLA tracking. |
 | 7 | Design Team | Manages and controls approved design documents. | File System / Manual | No change control register; design revisions untracked after approval. |
-| 8 | Procurement Officer | Prepares bidding documents and obtains requisite permits. | Manual / Word | Permit applications submitted manually to NEMA, county governments. |
-| 9 | Director / CEO | Approves bidding documents. If rejected, bidding documents are revised. | Manual | No digital record of bidding document approval history. |
+| 8 | Procurement Officer | Prepares bidding documents and obtains requisite permits. | Manual / Word | Permit applications submitted manually to NEMA and county governments. |
+| 9 | Director / CEO | Approves bidding documents. | Manual | No digital record of bidding document approval history. |
  
 #### Pain Points & Opportunities
 ##### Pain Points
 - **No Design Collaboration Platform:** Engineering drawings are exchanged via email and USB drives, causing version conflicts and loss of design intent.
-- **Manual Review Cycles:** Design review comments are captured on printed drawings, making it impossible to track the resolution of review findings digitally.
-- **Permit Applications are Manual:** Applications to NEMA, Water Resources Authority, and county governments are submitted as physical documents, causing unpredictable delays.
-- **No Change Control:** After approval, design changes are not formally logged, creating a risk of construction proceeding on superseded designs.
+- **Manual Review Cycles:** Design review comments are captured on printed drawings, making it impossible to track resolution of findings digitally.
+- **Manual Permit Applications:** Applications to NEMA, WRA, and county governments are submitted as physical documents, causing unpredictable delays.
+- **No Change Control:** After approval, design changes are not formally logged, creating risk of construction proceeding on superseded designs.
  
 ##### Opportunities
-- **Integrated Design Management System:** Deploy a central CAD/BIM-compatible platform with version control, digital redlining, review routing, and change control register.
-- **Digital Permit Submission:** Integrate with NEMA's ePERMIT and WRA's digital portal via KeSEL to auto-submit permit applications and track status.
+- **Integrated Design Management System:** Deploy a central BIM/CAD-compatible platform with version control, digital redlining, review routing, and change control register.
+- **Digital Permit Submission:** Integrate with NEMA ePERMIT and WRA digital portal via KeSEL to auto-submit permit applications and track status in real time.
 - **Automated Stakeholder Review Workflow:** Circulate designs digitally to stakeholders, log comments, and track responses through a structured review register.
  
 ---
@@ -325,98 +238,16 @@ flowchart TD
     class DraftDesigns,FinalDesigns,StakeholderPortal,ChangeControl,BiddingDocs userTask;
 ```
  
-##### Optimized Steps (Digital)
- 
-| Step | Actor | Action | System |
-|---|---|---|---|
-| 1 | System | Auto-retrieves approved design inputs (FS, surveys, safeguards) from the central document repository and pre-loads the design workspace. | Design Management Platform / Document Repository |
-| 2 | Design Engineer | Prepares engineering designs collaboratively on the BIM/CAD platform; all changes version-controlled automatically. | AWWDA Design Platform (BIM/CAD) |
-| 3 | Chief Engineer | Conducts digital internal review with redline markups on the platform. Review comments tracked and resolved digitally. | Digital Review Workflow |
-| 4 | Stakeholders | Receives design package via digital portal; submits comments through structured review form; responses tracked in comment register. | Stakeholder Review Portal |
-| 5 | Director / CEO | Reviews and digitally approves final designs with e-signature. Approval logged with timestamp. | Digital Approval Workflow / e-Signature |
-| 6 | System | Submits permit applications automatically to NEMA ePERMIT and WRA digital portal via KeSEL integration. Status tracked in real time. | KeSEL / NEMA ePERMIT / WRA API |
-| 7 | Procurement Officer | Prepares bidding documents from digital templates auto-populated with approved design data. | AWWDA Procurement Module |
-| 8 | Director / CEO | Reviews and digitally approves bidding documents. Approved package auto-packaged for tender advertisement. | Digital Approval Workflow |
- 
 ---
  
 ### 1.3 Infrastructure Development
  
-#### 1. AS-IS Process Flowchart (BPMN 2.0)
+#### 1. AS-IS Process Flowchart
 *Current State — Infrastructure Development Process*
  
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start))
-    End1(("End"))
+![Infrastructure Development AS-IS](assets/awwda/Infrastructure%20Development%20Process%20Flow%20Chart%20.png)
  
-    SiteHandover["Commencement of Services\nor Works / Site Handover"]
-    WorksExecution["Works Execution, Monitoring,\nSupervision and Quality Control"]
-    Valuation["Valuation / Measurement\nof Services or Works"]
-    SubstantialComplete{"Substantial\nComplete Works?"}
-    PrepIPC["Preparation of IPC"]
-    CertIAC["Certification by IAC / CIT"]
-    ApprovalDID{"Approval by\nDID, DF, CEO"}
-    PaymentIPC["Payment of IPCs"]
-    CompletionReport["IAC/CIT Prepare Completion Report\nand Engineer Issues Substantial\nCompletion Certificate"]
-    NatPublicWorks{"National\nPublic Works?"}
-    MonitorDLP_A["Monitoring of\nWorks during DLP"]
-    FinalInsp_A["Final Inspection"]
-    FinalCert_A{"Final Works\nCertified?"}
-    IssueCert_A["Issuance of\nCompletion Certificate"]
-    MonitorDLP_B["Monitoring of\nWorks during DLP"]
-    FinalInsp_B["Final Inspection"]
-    FinalCert_B{"Final Works\nCertified?"}
-    IssueCert_B["Issuance of\nCompletion Certificate"]
-    HandoverWSP["Handover Works\nto WSP"]
-    ContractClosure["Contract Closure\nand Archiving"]
-    HandoverBulk["Hand over to\nBulk Operations"]
- 
-    Start --> SiteHandover
-    SiteHandover --> WorksExecution
-    WorksExecution --> Valuation
-    Valuation --> SubstantialComplete
- 
-    SubstantialComplete -- "No" --> WorksExecution
-    SubstantialComplete -- "Yes" --> PrepIPC
- 
-    PrepIPC --> CertIAC
-    CertIAC --> ApprovalDID
- 
-    ApprovalDID -- "No" --> WorksExecution
-    ApprovalDID -- "Yes" --> PaymentIPC
- 
-    PaymentIPC --> CompletionReport
-    CompletionReport --> NatPublicWorks
- 
-    NatPublicWorks -- "No" --> MonitorDLP_A
-    MonitorDLP_A --> FinalInsp_A
-    FinalInsp_A --> FinalCert_A
-    FinalCert_A -- "No" --> FinalInsp_A
-    FinalCert_A -- "Yes" --> IssueCert_A
-    IssueCert_A --> HandoverWSP
-    HandoverWSP --> ContractClosure
-    ContractClosure --> HandoverBulk
-    HandoverBulk --> End1
- 
-    NatPublicWorks -- "Yes" --> MonitorDLP_B
-    MonitorDLP_B --> FinalInsp_B
-    FinalInsp_B --> FinalCert_B
-    FinalCert_B -- "No" --> FinalInsp_B
-    FinalCert_B -- "Yes" --> IssueCert_B
-    IssueCert_B --> ContractClosure
- 
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px;
- 
-    class Start startEvent;
-    class End1 endEvent;
-    class SubstantialComplete,ApprovalDID,NatPublicWorks,FinalCert_A,FinalCert_B gateway;
-    class SiteHandover,WorksExecution,Valuation,PrepIPC,CertIAC,PaymentIPC,CompletionReport,MonitorDLP_A,FinalInsp_A,IssueCert_A,HandoverWSP,ContractClosure,HandoverBulk,MonitorDLP_B,FinalInsp_B,IssueCert_B userTask;
-```
+---
  
 #### Detailed Process (AS-IS)
  
@@ -425,25 +256,23 @@ flowchart TD
 | 1 | Contractor / AWWDA | Commences services or works following site handover. | Site Register / Manual | Handover records paper-based; no digital site handover certificate. |
 | 2 | Contractor / Supervisor | Executes works with supervision and quality control checks. | Physical Inspections / Manual Logs | Supervision reports handwritten; quality non-conformances not tracked digitally. |
 | 3 | Engineer | Valuates and measures completed works for payment certification. | Manual Measurement / Spreadsheets | Measurement disputes common due to no digital evidence trail. |
-| 4 | IAC / CIT | Assesses substantial completion. If not met, works continue. | Physical Inspection | Substantial completion assessment criteria inconsistently applied across projects. |
-| 5 | IAC / CIT | Prepares Interim Payment Certificate (IPC) and submits for approval. | Manual / Word | IPC processing averages 4–6 weeks; no automated routing. |
-| 6 | DID / DF / CEO | Reviews and approves IPC. If rejected, contractor returns to site. | Manual / Email | No digital audit trail of IPC approval; delayed payments affect contractor cash flow. |
-| 7 | Finance | Processes payment of IPCs to contractor. | Manual / Banking | Payment delays of 2–8 weeks after approval are common. |
-| 8 | IAC/CIT + Engineer | Prepare completion report and issue Substantial Completion Certificate. | Manual / Word | SCC not registered in any central system. |
-| 9 | AWWDA / WSP | Monitors works during Defects Liability Period (DLP) and conducts final inspection. | Physical / Manual Logs | DLP monitoring is sporadic; defects often undiscovered until after DLP expires. |
-| 10 | AWWDA | Issues completion certificate, hands over works, closes contract, and archives records. | Manual / Physical Filing | Contract archiving on paper; records often lost or inaccessible. |
+| 4 | IAC / CIT | Assesses substantial completion. Prepares IPC if met; works continue if not. | Physical Inspection | Substantial completion criteria inconsistently applied across projects. |
+| 5 | DID / DF / CEO | Reviews and approves IPC. | Manual / Email | IPC processing averages 4–6 weeks; no digital audit trail of approval. |
+| 6 | Finance | Processes payment of IPCs to contractor. | Manual / Banking | Payment delays of 2–8 weeks after approval are common. |
+| 7 | IAC/CIT + Engineer | Prepares completion report and issues Substantial Completion Certificate. | Manual / Word | SCC not registered in any central system. |
+| 8 | AWWDA | Monitors works during DLP, conducts final inspection, issues completion certificate, and archives contract. | Physical / Manual / Paper Files | DLP monitoring is sporadic; contract archiving on paper; records frequently inaccessible. |
  
 #### Pain Points & Opportunities
 ##### Pain Points
-- **No Digital Site Supervision:** Supervision reports, quality control logs, and defect notices are all paper-based, with no photo or geo-tagged evidence for disputes.
+- **No Digital Site Supervision:** Supervision reports, quality control logs, and defect notices are all paper-based with no photo or geo-tagged evidence for disputes.
 - **Slow IPC Processing:** Interim payment certificates take 4–6 weeks from measurement to payment due to manual routing and approvals.
-- **DLP Monitoring Gaps:** Defects Liability Period monitoring is sporadic and undocumented, leading to defects being discovered after the contractor's liability expires.
-- **Paper Contract Archives:** Contract documents and completion records are stored in physical files that are frequently inaccessible or lost.
+- **DLP Monitoring Gaps:** Defects Liability Period monitoring is sporadic, leading to defects discovered after the contractor's liability expires.
+- **Paper Contract Archives:** Contract documents are stored in physical files that are frequently inaccessible or lost.
  
 ##### Opportunities
-- **Digital Site Supervision App:** Field engineers use a mobile app to log supervision checks, upload photos, record quality observations, and issue digital defect notices.
-- **Automated IPC Workflow:** IPC preparation, routing, and approval fully digitised with SLA tracking and auto-notification to finance for payment processing.
-- **DLP Tracker:** Digital DLP monitoring schedule with automated field visit reminders, defect logging, and contractor response tracking.
+- **Digital Site Supervision App:** Field engineers log supervision checks, upload photos, record quality observations, and issue digital defect notices via mobile app.
+- **Automated IPC Workflow:** IPC preparation, routing, and approval fully digitised with SLA tracking and auto-notification to finance.
+- **DLP Tracker:** Digital monitoring schedule with automated field visit reminders, defect logging, and contractor response tracking.
  
 ---
  
@@ -522,81 +351,16 @@ flowchart TD
     class DigitalHandover,MobileSupervision,DigitalValuation,DigitalCert,DigitalSCC,DLPTracker,FinalInspApp,DigitalCC,DigitalArchive,HandoverBulk userTask;
 ```
  
-##### Optimized Steps (Digital)
- 
-| Step | Actor | Action | System |
-|---|---|---|---|
-| 1 | AWWDA / Contractor | Digital site handover certificate generated and QR-stamped; signed electronically by both parties. | AWWDA Project Management System |
-| 2 | Site Engineer | Logs daily supervision reports via mobile app with photos, geo-tags, and structured quality checklists. Defect notices issued digitally. | AWWDA Site Supervision App |
-| 3 | Engineer | Records digital measurements and valuations; measurement data auto-populates the IPC template. | Digital Measurement Module |
-| 4 | System | Auto-generates IPC from measurement data and routes to IAC/CIT for certification with SLA countdown. | Automated IPC Workflow |
-| 5 | IAC / CIT | Reviews and digitally certifies IPC. Approved IPC auto-routed to DID/DF/CEO for approval. | Digital Certification Workflow |
-| 6 | DID / DF / CEO | Reviews and digitally approves IPC. Auto-notification sent to Finance to initiate payment. | Digital Approval Workflow / e-Signature |
-| 7 | System | Payment to contractor auto-initiated via GPA / Banking API within defined SLA. Receipt generated and archived. | GPA / Banking API |
-| 8 | System | DLP monitoring tracker issues automated field visit reminders and logs all inspection outcomes digitally. | DLP Tracker Module |
-| 9 | AWWDA | Final inspection conducted via mobile app; completion certificate issued digitally and registered in the contract repository. | Mobile Inspection App / Digital Archive |
- 
 ---
  
 ### 1.4 Engineering Research and Innovation
  
-#### 1. AS-IS Process Flowchart (BPMN 2.0)
+#### 1. AS-IS Process Flowchart
 *Current State — Engineering Research and Innovation Process*
  
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start))
-    End1(("End"))
+![Engineering Research and Innovation AS-IS](assets/awwda/Engineering%20Research%20and%20Innovation.png)
  
-    IdentifyNeeds["Identify Priority\nResearch Needs"]
-    DefineResources["Define Required Resources,\nPartnerships, Budget and Timelines"]
-    FeasibleGateway{"Is the Plan\nFeasible?"}
-    LitReview["Initiate Literature Reviews,\nFeasibility Studies,\nBenchmarking and Documentation"]
-    DevelopProposals["Develop Research /\nInnovation Proposals"]
-    ReviewProposals["Review of Proposals"]
-    ApprovalGateway{"Approval\nof Proposal?"}
-    PilotImplement["Pilot Project\nImplementation"]
-    MonitorEval["Monitoring and\nEvaluation"]
-    ValidatePilot["Validation of Pilot"]
-    ObjectivesGateway{"Does it Meet\nObjectives?"}
-    Institutionalize["Institutionalization\nor Scale-Up"]
-    Disseminate["Disseminate Research Outputs\nthrough Peer-reviewed Journals,\nConferences and Publications"]
- 
-    Start --> IdentifyNeeds
-    IdentifyNeeds --> DefineResources
-    DefineResources --> FeasibleGateway
- 
-    FeasibleGateway -- "No" --> DefineResources
-    FeasibleGateway -- "Yes" --> LitReview
- 
-    LitReview --> DevelopProposals
-    DevelopProposals --> ReviewProposals
-    ReviewProposals --> ApprovalGateway
- 
-    ApprovalGateway -- "No" --> DevelopProposals
-    ApprovalGateway -- "Yes" --> PilotImplement
- 
-    PilotImplement --> MonitorEval
-    MonitorEval --> ValidatePilot
-    ValidatePilot --> ObjectivesGateway
- 
-    ObjectivesGateway -- "No" --> DevelopProposals
-    ObjectivesGateway -- "Yes" --> Institutionalize
- 
-    Institutionalize --> Disseminate
-    Disseminate --> End1
- 
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px;
- 
-    class Start startEvent;
-    class End1 endEvent;
-    class FeasibleGateway,ApprovalGateway,ObjectivesGateway gateway;
-    class IdentifyNeeds,DefineResources,LitReview,DevelopProposals,ReviewProposals,PilotImplement,MonitorEval,ValidatePilot,Institutionalize,Disseminate userTask;
-```
+---
  
 #### 2. TO-BE Process Flowchart (BPMN 2.0)
 *Future State — Engineering Research and Innovation*
@@ -607,7 +371,7 @@ flowchart TD
     Start((Start))
     End1(("End"))
  
-    subgraph KnowledgeMgmt["Knowledge & Analytics Platform"]
+    subgraph KnowledgeMgmt["Knowledge and Analytics Platform"]
         direction LR
         DataDrivenNeeds["Data-driven Research\nNeed Identification\n(Operational Analytics)"]
         KnowledgeBase["Auto-retrieve Literature\nfrom Knowledge Repository"]
@@ -661,49 +425,16 @@ flowchart TD
  
 ## Part 2 — Operations
  
+---
+ 
 ### 2.1 Raw Water Storage and Abstraction
  
-#### 1. AS-IS Process Flowchart (BPMN 2.0)
+#### 1. AS-IS Process Flowchart
 *Current State — Raw Water Storage and Abstraction*
  
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start))
-    End1(("End"))
+![Raw Water Storage and Abstraction AS-IS](assets/awwda/Raw%20water%20storage%20and%20abstraction%20.png)
  
-    CheckReservoir["Check the\nReservoir Level"]
-    RecordInflow["Record the Inflow Volume\nand Water Quality to the Dam"]
-    IntakeLevelCheck{"Confirm Active Intake Level\nMeets Current Requirements"}
-    SwitchDraw["Switch to the\nAppropriate Draw Level"]
-    WTPCheck{"Confirm WTP Abstraction\nand Ecological Flows Meet\nRegulatory Requirements"}
-    AdjustFlow["Adjust the Flow\nto the Required Rate"]
-    GenerateReports["Generate Reports"]
- 
-    Start --> CheckReservoir
-    CheckReservoir --> RecordInflow
-    RecordInflow --> IntakeLevelCheck
- 
-    IntakeLevelCheck -- "No" --> SwitchDraw
-    SwitchDraw --> WTPCheck
-    IntakeLevelCheck -- "Yes" --> WTPCheck
- 
-    WTPCheck -- "No" --> AdjustFlow
-    AdjustFlow --> GenerateReports
-    WTPCheck -- "Yes" --> GenerateReports
- 
-    GenerateReports --> End1
- 
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px;
- 
-    class Start startEvent;
-    class End1 endEvent;
-    class IntakeLevelCheck,WTPCheck gateway;
-    class CheckReservoir,RecordInflow,SwitchDraw,AdjustFlow,GenerateReports userTask;
-```
+---
  
 #### 2. TO-BE Process Flowchart (BPMN 2.0)
 *Future State — Raw Water Storage and Abstraction (SCADA Integration)*
@@ -729,7 +460,7 @@ flowchart TD
         AlertOfficer["Alert Operations Officer\n(SMS / Dashboard)"]
     end
  
-    AutoReport["Auto-generate and\nPublish Real-time Reports\n(Dashboard / WRMA)"]
+    AutoReport["Auto-generate and Publish\nReal-time Reports\n(Dashboard / WRMA)"]
  
     Start --> AutoReservoir
     AutoReservoir --> AutoInflow
@@ -763,50 +494,12 @@ flowchart TD
  
 ### 2.2 Dam Safety Monitoring
  
-#### 1. AS-IS Process Flowchart (BPMN 2.0)
+#### 1. AS-IS Process Flowchart
 *Current State — Dam Safety Monitoring*
  
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start))
-    End1(("End"))
+![Dam Safety Monitoring AS-IS](assets/awwda/Dam%20Saafety%20Monitoring%20Flow%20Chart.png)
  
-    InspectInstrument{"Inspect the\nInstrument"}
-    RepairReplace["Repair or Replace\nInstrument"]
-    LogData["Log in Monitoring Data\nin Standard Data Sheets"]
-    DataReduction["Data Reduction\nand Interpretation"]
-    BehaviourTrends["Analysis and Behaviour\nTrends Curves Generation"]
-    DailyReport["Daily Report\nRecording"]
-    CompareBaseline{"Compare Data with Baseline Values\nand Defined Trigger Levels\nto Determine Conformity"}
-    GenerateReports["Generate Reports"]
-    CorrectiveAction["Carry out\nCorrective Action"]
-    PrepCARs["Prepare Corrective\nAction Reports"]
- 
-    Start --> InspectInstrument
-    InspectInstrument -- "Faulty" --> RepairReplace
-    RepairReplace --> InspectInstrument
-    InspectInstrument -- "Not Faulty" --> LogData
-    LogData --> DataReduction
-    DataReduction --> BehaviourTrends
-    BehaviourTrends --> DailyReport
-    DailyReport --> CompareBaseline
-    CompareBaseline -- "Conformance" --> GenerateReports
-    GenerateReports --> End1
-    CompareBaseline -- "Non-conformance" --> CorrectiveAction
-    CorrectiveAction --> PrepCARs
-    PrepCARs --> InspectInstrument
- 
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px;
- 
-    class Start startEvent;
-    class End1 endEvent;
-    class InspectInstrument,CompareBaseline gateway;
-    class RepairReplace,LogData,DataReduction,BehaviourTrends,DailyReport,GenerateReports,CorrectiveAction,PrepCARs userTask;
-```
+---
  
 #### 2. TO-BE Process Flowchart (BPMN 2.0)
 *Future State — Dam Safety Monitoring (Automated IoT + SCADA)*
@@ -868,66 +561,12 @@ flowchart TD
  
 ### 2.3 Water Treatment
  
-#### 1. AS-IS Process Flowchart (BPMN 2.0)
+#### 1. AS-IS Process Flowchart
 *Current State — Water Treatment Process*
  
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start))
-    End1(("End"))
+![Water Treatment AS-IS](assets/awwda/Water%20Treatment%20Process%20Flow%20Chart.png)
  
-    ReceiveRaw["Receive Raw Water"]
-    QualityCheck{"Check Raw Water\nQuantity and Quality"}
-    ConductTests["Conduct Tests to Determine\nChemical to be Used\nand Dosage Rate"]
-    PreTreatment["Pre-Treatment\n(Aeration and Oxidation)"]
-    MainTreatment["Main Treatment\n(Coagulation and Flocculation)"]
-    Sedimentation["Sedimentation /\nDissolved Air Floatation (DAF)"]
-    TurbidityTest{"Test Effectiveness\nof Treatment (Turbidity)"}
-    Filtration["Filtration"]
-    Disinfection["Disinfection"]
-    DisinfectTest1{"Test Effectiveness\nof Disinfection"}
-    AdjustDosage["Adjust Chemical\nDosage"]
-    DisinfectTest2{"Test Effectiveness\nof Disinfection"}
-    Washout["Initiate Washout\n(Dispose)"]
-    Release["Release Treated Water\nfor Transmission"]
- 
-    Start --> ReceiveRaw
-    ReceiveRaw --> QualityCheck
- 
-    QualityCheck -- "Does Not Meet Requirements" --> ReceiveRaw
-    QualityCheck -- "Meets Requirements" --> ConductTests
- 
-    ConductTests --> PreTreatment
-    PreTreatment --> MainTreatment
-    MainTreatment --> Sedimentation
-    Sedimentation --> TurbidityTest
- 
-    TurbidityTest -- "Treatment Ineffective" --> MainTreatment
-    TurbidityTest -- "Effectively Treated" --> Filtration
- 
-    Filtration --> Disinfection
-    Disinfection --> DisinfectTest1
- 
-    DisinfectTest1 -- "Ineffectively Disinfected" --> AdjustDosage
-    AdjustDosage --> DisinfectTest2
-    DisinfectTest2 -- "Ineffectively Disinfected" --> Washout
-    DisinfectTest2 -- "Effectively Disinfected" --> Release
-    DisinfectTest1 -- "Effectively Disinfected" --> Release
- 
-    Washout --> End1
-    Release --> End1
- 
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px;
- 
-    class Start startEvent;
-    class End1 endEvent;
-    class QualityCheck,TurbidityTest,DisinfectTest1,DisinfectTest2 gateway;
-    class ReceiveRaw,ConductTests,PreTreatment,MainTreatment,Sedimentation,Filtration,Disinfection,AdjustDosage,Washout,Release userTask;
-```
+---
  
 #### 2. TO-BE Process Flowchart (BPMN 2.0)
 *Future State — Water Treatment (Automated SCADA + IoT Sensors)*
@@ -1004,52 +643,12 @@ flowchart TD
  
 ### 2.4 Treated Bulk Water Transmission
  
-#### 1. AS-IS Process Flowchart (BPMN 2.0)
+#### 1. AS-IS Process Flowchart
 *Current State — Treated Bulk Water Transmission*
  
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start))
-    End1(("End"))
+![Treated Bulk Water Transmission AS-IS](assets/awwda/Treatment%20Bulk%20Water%20Transmission%20Flowchart.png)
  
-    CheckWTP["Check Flows and Volumes\nat the WTP Outlet using SCADA"]
-    CheckTerminal["Check Supply Flows and Volumes\nat Terminal Tanks and Offtakes"]
-    WaterBalance{"Water Supply\nBalance"}
-    CheckLeaks["Check the PRVs, WOs, AVs\nfor any Leakages"]
-    LeakageGateway{"Is the Leakage at\nthe PRVs, WOs or AVs?"}
-    MaintainPRV["Maintain the Leaking\nPRVs, WOs or AVs"]
-    LinePatrol["Line Patrol, Operation\nand Routine Maintenance\nof the Pipeline"]
-    CheckPipeline["Check the Pipeline for\nAny Leaks or Illegal Connections"]
-    LeakRepair["Carry out Leak Repair"]
- 
-    Start --> CheckWTP
-    CheckWTP --> CheckTerminal
-    CheckTerminal --> WaterBalance
- 
-    WaterBalance -- "No Water Losses Detected" --> LinePatrol
-    LinePatrol --> End1
- 
-    WaterBalance -- "Water Losses Detected" --> CheckLeaks
-    CheckLeaks --> LeakageGateway
- 
-    LeakageGateway -- "Yes" --> MaintainPRV
-    MaintainPRV --> LinePatrol
- 
-    LeakageGateway -- "No" --> CheckPipeline
-    CheckPipeline --> LeakRepair
-    LeakRepair --> End1
- 
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px;
- 
-    class Start startEvent;
-    class End1 endEvent;
-    class WaterBalance,LeakageGateway gateway;
-    class CheckWTP,CheckTerminal,CheckLeaks,MaintainPRV,LinePatrol,CheckPipeline,LeakRepair userTask;
-```
+---
  
 #### 2. TO-BE Process Flowchart (BPMN 2.0)
 *Future State — Treated Bulk Water Transmission (SCADA + GIS Integration)*
@@ -1115,70 +714,33 @@ flowchart TD
  
 ### 2.5 Supply, Billing and Collection
  
-#### 1. AS-IS Process Flowchart (BPMN 2.0)
+#### 1. AS-IS Process Flowchart
 *Current State — Supply, Billing and Collection*
  
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start))
-    End1(("End"))
+![Supply Billing and Collection AS-IS](assets/awwda/Supply%20Biling%20and%20Collection%20Flowchart.png)
  
-    JointReading["Conduct Joint Meter Readings\nwith the Relevant WSPs"]
-    AgreeFirst{"Do the Parties Agree\nwith the Meter Readings?"}
-    VerifyClamp["Verify the Joint Meter Readings\nUsing a Clamp-on Meter\nwith the Relevant WSPs"]
-    AgreeVerified{"Do the Parties Agree\nwith the Verified\nMeter Readings?"}
-    DisputeResolution["Dispute Resolution"]
-    GenerateInvoice1["Generate and Issue\nBilling Invoice"]
-    GenerateInvoice2["Generate and Issue\nBilling Invoice"]
-    KRACollection["Bulk Water Revenue\nCollection by KRA\nthrough the SLA"]
- 
-    Start --> JointReading
-    JointReading --> AgreeFirst
- 
-    AgreeFirst -- "Yes" --> GenerateInvoice1
-    GenerateInvoice1 --> KRACollection
-    KRACollection --> End1
- 
-    AgreeFirst -- "No" --> VerifyClamp
-    VerifyClamp --> AgreeVerified
- 
-    AgreeVerified -- "Yes" --> GenerateInvoice1
-    AgreeVerified -- "No" --> DisputeResolution
-    DisputeResolution --> GenerateInvoice2
-    GenerateInvoice2 --> End1
- 
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px;
- 
-    class Start startEvent;
-    class End1 endEvent;
-    class AgreeFirst,AgreeVerified gateway;
-    class JointReading,VerifyClamp,DisputeResolution,GenerateInvoice1,GenerateInvoice2,KRACollection userTask;
-```
+---
  
 #### Detailed Process (AS-IS)
  
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | AWWDA / WSP | Conducts joint meter readings at bulk water offtake points with the relevant Water Service Providers. | Physical Meter Reading | Readings scheduled monthly; no digital record at point of reading. Disputes are common. |
-| 2 | AWWDA / WSP | If parties do not agree, verifies readings using a clamp-on meter. | Clamp-on Meter | Secondary verification process adds 3–7 days to billing cycle. |
+| 2 | AWWDA / WSP | If parties do not agree, verifies readings using a clamp-on meter. | Clamp-on Meter | Secondary verification adds 3–7 days to billing cycle. |
 | 3 | AWWDA / WSP | If parties still do not agree, escalates to formal dispute resolution. | Manual / Legal | Dispute process is lengthy and untracked; some cases unresolved for months. |
 | 4 | AWWDA Finance | Generates and issues billing invoice to the WSP. | Manual / Excel | Invoice generation is manual; no auto-calculation from meter data. |
-| 5 | KRA / AWWDA | Bulk water revenue collected by KRA through the SLA arrangement. | KRA / Manual | Collection cycle disconnected from billing cycle; reconciliation is manual. |
+| 5 | KRA / AWWDA | Bulk water revenue collected by KRA through the SLA arrangement. | KRA / Manual | Collection cycle disconnected from billing; reconciliation is manual. |
  
 #### Pain Points & Opportunities
 ##### Pain Points
-- **Manual Meter Reading:** Joint meter readings are manual, unverifiable in real time, and frequently disputed. No digital timestamping or photographic evidence at point of reading.
+- **Manual Meter Reading:** Joint meter readings are manual, unverifiable in real time, and frequently disputed with no digital timestamping or photographic evidence.
 - **Disconnected Billing Cycle:** Invoice generation is manual and decoupled from meter data, leading to billing errors and delayed revenue collection.
 - **Untracked Dispute Process:** Billing disputes have no structured digital workflow; resolution timelines are unmonitored and frequently exceed 30 days.
 - **KRA Reconciliation Delays:** Revenue collected by KRA via the SLA is manually reconciled against AWWDA billing records, creating a persistent revenue accounting lag.
  
 ##### Opportunities
-- **SCADA-driven Automated Billing:** Replace manual joint readings with SCADA-metered data from smart bulk meters. Auto-generate invoices from certified meter readings.
-- **Digital Dispute Portal:** Provide WSPs with a digital portal to query and dispute readings; all dispute communications timestamped and tracked to resolution.
+- **SCADA-driven Automated Billing:** Replace manual joint readings with SCADA-metered data from smart bulk meters; auto-generate invoices from certified meter readings.
+- **Digital Dispute Portal:** Provide WSPs with a digital portal to query and dispute readings; all communications timestamped and tracked to resolution.
 - **GPA Integration:** Integrate with the Government Payment Aggregator to enable real-time payment tracking and automated revenue reconciliation with KRA.
  
 ---
@@ -1246,53 +808,16 @@ flowchart TD
  
 ## Part 3 — Environment and Safeguards
  
+---
+ 
 ### 3.1 Environmental Permits and Licenses
  
-#### 1. AS-IS Process Flowchart (BPMN 2.0)
+#### 1. AS-IS Process Flowchart
 *Current State — Application for Environmental Permits / Licenses*
  
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start))
-    End1(("End"))
+![Environmental Permits and Licenses AS-IS](assets/awwda/Application%20of%20environmental%20Permits%3ALiscence.png)
  
-    EnvFeasibility["Environmental and\nSocial Feasibility Assessment"]
-    IdentifyPermits["Identify Applicable\nPermits and Licenses"]
-    EnvScreening["Environmental\nScreening"]
-    StakeholderConsult["Stakeholders\nConsultation"]
-    PrepareAppDocs["Prepare Application\nDocuments"]
-    InternalReview{"Internal Reviews\nand Approval"}
-    SubmitRegulatory["Submission to\nRegulatory Authority"]
-    ApprovedGateway{"Approved?"}
-    IssuedPermit["Issued Permit\nor License"]
-    ReviseResubmit["Revise and\nResubmit"]
- 
-    Start --> EnvFeasibility
-    EnvFeasibility --> IdentifyPermits
-    IdentifyPermits --> EnvScreening
-    EnvScreening --> StakeholderConsult
-    StakeholderConsult --> PrepareAppDocs
-    PrepareAppDocs --> InternalReview
-    InternalReview --> SubmitRegulatory
-    SubmitRegulatory --> ApprovedGateway
- 
-    ApprovedGateway -- "Yes" --> IssuedPermit
-    IssuedPermit --> End1
- 
-    ApprovedGateway -- "No" --> ReviseResubmit
-    ReviseResubmit --> InternalReview
- 
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px;
- 
-    class Start startEvent;
-    class End1 endEvent;
-    class InternalReview,ApprovedGateway gateway;
-    class EnvFeasibility,IdentifyPermits,EnvScreening,StakeholderConsult,PrepareAppDocs,SubmitRegulatory,IssuedPermit,ReviseResubmit userTask;
-```
+---
  
 #### 2. TO-BE Process Flowchart (BPMN 2.0)
 *Future State — Environmental Permits / Licenses (KeSEL + NEMA ePERMIT Integration)*
@@ -1354,279 +879,19 @@ flowchart TD
  
 ---
  
-### 3.2 Environmental Health and Safety (EHS)
- 
-#### 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State — Environmental Health and Safety (EHS)*
- 
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start))
-    End1(("End"))
- 
-    IdentifyActivity["Identify Activity"]
-    HazardID["Hazard Identification\n(Environmental, Health, Safety)"]
-    RiskAssess["Risk Assessment\n(Likelihood x Severity)"]
-    RiskAcceptable1{"Is Risk\nAcceptable?"}
-    ReassessRisk["Reassess Risk"]
-    ApplyControls["Apply Control Measures\n(Elimination → Substitution →\nEngineering → Administrative → PPE)"]
-    RiskAcceptable2{"Is Risk\nAcceptable?"}
-    StopWork["STOP WORK /\nRedesign Task"]
-    Training["Training and Authorization\n(Permits, SOPs, Toolbox Talk)"]
-    PerformTask["Perform Task Safely"]
-    MonitorInspect["Monitoring\nand Inspection"]
-    IncidentGateway{"Incident /\nNear Miss?"}
-    IncidentReport["Incident Reporting"]
-    Investigation["Investigation and\nRoot Cause Analysis"]
-    CorrPrevent["Corrective and\nPreventive Actions"]
-    UpdateRiskAssess["Update Risk Assessment\nand Procedures"]
-    ManagementReview["Management Review"]
- 
-    Start --> IdentifyActivity
-    IdentifyActivity --> HazardID
-    HazardID --> RiskAssess
-    RiskAssess --> RiskAcceptable1
- 
-    RiskAcceptable1 -- "No" --> ReassessRisk
-    ReassessRisk --> RiskAcceptable1
-    RiskAcceptable1 -- "Yes" --> ApplyControls
- 
-    ApplyControls --> RiskAcceptable2
-    RiskAcceptable2 -- "No" --> StopWork
-    StopWork --> IdentifyActivity
-    RiskAcceptable2 -- "Yes" --> Training
- 
-    Training --> PerformTask
-    PerformTask --> MonitorInspect
-    MonitorInspect --> IncidentGateway
- 
-    IncidentGateway -- "Yes" --> IncidentReport
-    IncidentReport --> Investigation
-    Investigation --> CorrPrevent
-    CorrPrevent --> UpdateRiskAssess
-    UpdateRiskAssess --> MonitorInspect
- 
-    IncidentGateway -- "No" --> UpdateRiskAssess
-    UpdateRiskAssess --> ManagementReview
-    ManagementReview --> End1
- 
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px;
- 
-    class Start startEvent;
-    class End1 endEvent;
-    class RiskAcceptable1,RiskAcceptable2,IncidentGateway gateway;
-    class IdentifyActivity,HazardID,RiskAssess,ReassessRisk,ApplyControls,StopWork,Training,PerformTask,MonitorInspect,IncidentReport,Investigation,CorrPrevent,UpdateRiskAssess,ManagementReview userTask;
-```
- 
-#### 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State — Environmental Health and Safety (Digital EHS Management System)*
- 
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start))
-    End1(("End"))
- 
-    subgraph RiskEngine["Digital Risk Assessment Engine"]
-        direction TB
-        DigitalHazardID["Digital Hazard Identification\n(Structured EHS Register)"]
-        AutoRiskScore["Auto-calculate Risk Score\n(Likelihood x Severity Matrix)"]
-        RiskAcceptable1{"Risk Score\nWithin Threshold?"}
-        AutoControlRec["Auto-recommend Control\nMeasures (Risk Register)"]
-        RiskAcceptable2{"Residual Risk\nAcceptable?"}
-        AutoStopWork["Auto-issue Stop Work Notice\nand Redesign Alert"]
-    end
- 
-    subgraph TaskExecution["Digital Task Execution"]
-        direction TB
-        DigitalPermit["Issue Digital Work\nPermit (Mobile App)"]
-        IoTMonitor["IoT Environmental\nand Safety Monitoring\n(Gas, Noise, Temperature)"]
-        IncidentGateway{"Incident /\nNear Miss Detected?"}
-        AutoIncidentReport["Auto-generate Incident\nReport (Mobile App)"]
-        DigitalRCA["Digital Root Cause\nAnalysis Workflow"]
-        DigitalCAPA["Digital CAPA Tracking\n(Assign + Deadline + Close)"]
-        AutoUpdateRegister["Auto-update Risk\nRegister and Procedures"]
-    end
- 
-    ManagementDashboard["Real-time EHS\nManagement Dashboard\nand Regulatory Reports"]
- 
-    Start --> DigitalHazardID
-    DigitalHazardID --> AutoRiskScore
-    AutoRiskScore --> RiskAcceptable1
- 
-    RiskAcceptable1 -- "No" --> AutoRiskScore
-    RiskAcceptable1 -- "Yes" --> AutoControlRec
- 
-    AutoControlRec --> RiskAcceptable2
-    RiskAcceptable2 -- "No" --> AutoStopWork
-    AutoStopWork --> DigitalHazardID
-    RiskAcceptable2 -- "Yes" --> DigitalPermit
- 
-    DigitalPermit --> IoTMonitor
-    IoTMonitor --> IncidentGateway
- 
-    IncidentGateway -- "Yes" --> AutoIncidentReport
-    AutoIncidentReport --> DigitalRCA
-    DigitalRCA --> DigitalCAPA
-    DigitalCAPA --> AutoUpdateRegister
-    AutoUpdateRegister --> IoTMonitor
- 
-    IncidentGateway -- "No" --> AutoUpdateRegister
-    AutoUpdateRegister --> ManagementDashboard
-    ManagementDashboard --> End1
- 
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px;
- 
-    class Start startEvent;
-    class End1 endEvent;
-    class RiskAcceptable1,RiskAcceptable2,IncidentGateway gateway;
-    class AutoRiskScore,AutoControlRec,AutoIncidentReport,AutoUpdateRegister serviceTask;
-    class DigitalHazardID,AutoStopWork,DigitalPermit,IoTMonitor,DigitalRCA,DigitalCAPA,ManagementDashboard userTask;
-```
- 
----
- 
-### 3.3 Climate Change and Sustainability
- 
-#### 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State — Climate Change and Sustainability*
- 
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start))
-    End1(("End"))
- 
-    OrgCommitment["Organizational\nCommitment"]
-    ClimatScreening["Climate and\nSustainability Screening"]
-    ClimateRisk["Climate Risk and\nOpportunity Identification"]
-    IntegrationDesign["Integration into\nDesign and Procurement"]
-    Implementation["Implementation, Monitoring,\nMeasurement and\nPerformance Evaluation"]
-    RegulatoryClimate["Regulatory, Climate\nand Safeguards\nCompliance Review"]
-    ManagementReview["Management\nReview"]
- 
-    Start --> OrgCommitment
-    OrgCommitment --> ClimatScreening
-    ClimatScreening --> ClimateRisk
-    ClimateRisk --> IntegrationDesign
-    IntegrationDesign --> Implementation
-    Implementation --> RegulatoryClimate
-    RegulatoryClimate --> ManagementReview
-    ManagementReview --> End1
- 
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;
- 
-    class Start startEvent;
-    class End1 endEvent;
-    class OrgCommitment,ClimatScreening,ClimateRisk,IntegrationDesign,Implementation,RegulatoryClimate,ManagementReview userTask;
-```
- 
-#### Detailed Process (AS-IS)
- 
-| Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
-| 1 | Leadership | Makes organizational commitment to climate-aligned operations and sustainability principles. | Policy Documents / Manual | Commitments documented in policy papers with no digital tracking or KPI framework. |
-| 2 | Environment Team | Conducts climate and sustainability screening for projects and operations. | Spreadsheets / Manual Reports | Screening criteria inconsistently applied across project types. |
-| 3 | Environment Team | Identifies climate risks and opportunities relevant to the project or operational context. | Manual Risk Registers | Climate risk registers are static documents, not linked to project or operations dashboards. |
-| 4 | Design / Procurement | Integrates climate and sustainability requirements into design specifications and procurement criteria. | Manual / Word / Spreadsheets | No standard climate integration checklist or procurement criteria scoring tool. |
-| 5 | Implementation Team | Implements climate measures and conducts monitoring, measurement, and performance evaluation. | Manual Field Checks / Excel | Monitoring data not aggregated; no carbon or sustainability performance dashboard. |
-| 6 | Compliance Team | Reviews regulatory, climate, and safeguards compliance. | Manual / Spreadsheets | Compliance status tracked in spreadsheets; no automated regulatory update alert. |
-| 7 | Management | Reviews climate and sustainability performance. | Physical Meetings / Reports | Management review reports compiled manually; no live performance data access. |
- 
-#### Pain Points & Opportunities
-##### Pain Points
-- **Static Climate Risk Registers:** Climate risk assessments are one-off documents not linked to real-time weather, hydrology, or operational data.
-- **No Carbon / Sustainability Dashboard:** There is no platform aggregating energy, water, and carbon performance metrics for management review or public reporting.
-- **Manual Regulatory Tracking:** Compliance with evolving climate and environmental regulations (NDCs, Nationally Determined Contributions, NEMA requirements) is tracked manually with no automated alert system.
-- **Procurement Not Climate-scored:** Procurement evaluation criteria do not have an embedded climate or sustainability scoring component.
- 
-##### Opportunities
-- **Real-time Climate Risk Monitoring:** Integrate with Kenya Meteorological Department (KMD) APIs and WRMA hydrology data for live climate risk alerts linked to project and operations dashboards.
-- **Sustainability Performance Dashboard:** Deploy a digital ESG/sustainability dashboard aggregating energy consumption, water losses, carbon emissions, and regulatory compliance status.
-- **Climate-integrated Procurement Scoring:** Build climate and sustainability criteria into the digital procurement evaluation module with automatic scoring.
- 
----
- 
-#### 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State — Climate Change and Sustainability (Digital ESG + Regulatory Integration)*
- 
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start))
-    End1(("End - Sustainability\nReport Published"))
- 
-    subgraph ClimateIntelligence["Climate Intelligence Layer"]
-        direction LR
-        LiveClimate["Live Climate Risk Feed\n(KMD + WRMA API)"]
-        AutoRiskID["Auto-identify Project\nand Operations Climate Risks"]
-    end
- 
-    subgraph DigitalIntegration["Digital Climate Integration"]
-        direction TB
-        ClimateProcurement["Climate Scoring Auto-applied\nin Procurement Evaluation"]
-        DigitalImplement["Digital Implementation Tracker\n(Climate Measures + KPIs)"]
-        AutoMonitoring["Automated Monitoring:\nEnergy, Water, Carbon,\nBiodiversity Metrics"]
-        RegComplianceCheck{"Regulatory\nCompliance Check\n(NEMA / NDC Requirements)"}
-        AutoComplianceAlert["Auto-generate Compliance\nAlert and Action Plan"]
-    end
- 
-    ESGDashboard["Live ESG / Sustainability\nDashboard (Internal +\nPublic Reporting)"]
-    DigitalMgmtReview["Digital Management\nReview (Dashboard-driven)"]
- 
-    Start --> LiveClimate
-    LiveClimate --> AutoRiskID
-    AutoRiskID --> ClimateProcurement
-    ClimateProcurement --> DigitalImplement
-    DigitalImplement --> AutoMonitoring
-    AutoMonitoring --> RegComplianceCheck
- 
-    RegComplianceCheck -- "Non-compliant" --> AutoComplianceAlert
-    AutoComplianceAlert --> DigitalImplement
- 
-    RegComplianceCheck -- "Compliant" --> ESGDashboard
-    ESGDashboard --> DigitalMgmtReview
-    DigitalMgmtReview --> End1
- 
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px;
- 
-    class Start startEvent;
-    class End1 endEvent;
-    class RegComplianceCheck gateway;
-    class LiveClimate,AutoRiskID,AutoMonitoring,AutoComplianceAlert serviceTask;
-    class ClimateProcurement,DigitalImplement,ESGDashboard,DigitalMgmtReview userTask;
-```
- 
----
- 
 ## Process Overview
  
 ### Service Category
 - G2B (Government to Business) — Water Service Providers (WSPs), contractors, consultants
-- G2C (Government to Citizen) — Bulk water consumers, communities served by WSPs
+- G2C (Government to Citizen) — Bulk water consumers and communities served by WSPs
  
 ### Scope
-- **In Scope:** All 12 core AWWDA processes across Infrastructure, Operations, and Environment & Safeguards as documented herein.
+- **In Scope:** All 10 core AWWDA processes across Infrastructure, Operations, and Environment & Safeguards as documented herein.
 - **Out of Scope:** Last-mile retail distribution to end consumers (managed by WSPs); wastewater treatment operations (separate entity).
  
 ### Policy Context
 - Water Act (2016)
 - Environmental Management and Coordination Act (EMCA, Cap. 387)
-- Digital Health Act 2023 *(cross-sector data standards)*
 - Kenya Data Protection Act (2019)
 - Kenya National Climate Change Action Plan
 - Kenya DSAP Architecture — Huduma Bridge Technical Specification
