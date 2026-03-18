@@ -17,7 +17,7 @@ Detailed matrices and notes for each session can be found in their respective do
     *   [State Department for Children Services](./State_Department_for_Children_Services___Service_Delivery.md)
     *   [Department of Refugee Services](./_REFUGEE_SERVICES___Service_Delivery.md)
     *   [Internal Security and National Administration](./Internal_Security_and_National_Administration___Service_Delivery.md)
-    *   [State law office registra of Marriages](./OFFICE_OF_THE_ATTORNEY_GENERAL_AG____Service_Delivery.md)
+    *   [State law office registra of Marriages](./OFFICE_OF_THE_ATTORNEY_GENERAL_AG___Service_Delivery.md)
 
 #### [Room 2: Coordination, Culture & Specialised Services](./Breakout_Room_2_Coordination_Culture_Specialised.md)
 *   **Facilitator:** Joash
