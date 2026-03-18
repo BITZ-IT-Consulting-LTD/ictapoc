@@ -84,6 +84,7 @@ End-to-End Refugee Status Determination and Documentation
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Registration Officer | Receives asylum seeker, verifies entry documents, and captures photos/fingerprints to issue an Asylum Pass. | Refugee System / UNHCR proGres | Dual entry often required. |
@@ -165,6 +166,7 @@ graph TD
 - **Financial & Social Inclusion:** By minting a standardized **Maisha Namba** upon recognition, refugees can immediately access integrated eCitizen services, pay via the **Government Payment Aggregator (GPA)**, and enroll in the Social Health Authority (SHA).
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Registration Officer | Captures biometrics via integrated kits. System instantly queries IPRS and Immigration databases via X-Road to ensure the individual is not already registered. | eCitizen / X-Road |

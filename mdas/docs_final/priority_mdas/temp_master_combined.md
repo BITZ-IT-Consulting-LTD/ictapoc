@@ -183,6 +183,7 @@ End-to-End Farmer Registration, Export Permits, and Trading Licenses
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Applicant | Fills application forms for licenses or permits and attaches paper copies of BRS certificates and land documents. | Paper/Portal | High manual effort. |
@@ -225,6 +226,7 @@ End-to-End Farmer Registration, Export Permits, and Trading Licenses
 - **Automated Orchestration:** The Camunda workflow engine applies risk profiles to auto-approve standard renewals, reserving manual inspections only for high-risk or first-time applicants.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Applicant | Logs into eCitizen and selects the required AFA service (e.g., Export Permit). | eCitizen Portal |
@@ -298,6 +300,7 @@ Asset Identification, Tracing, and Forfeiture Lifecycle
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Investigator | Receives a lead and sends physical requests to NTSA, Lands, and BRS to find assets owned by a suspect. | Physical Letters | Slow and prone to leakage. |
@@ -340,6 +343,7 @@ Asset Identification, Tracing, and Forfeiture Lifecycle
 - **Instant Freezing:** Once a court order is issued digitally, the **Workflow Engine** pings the relevant registries (Lands/NTSA) to place an instant digital "Caution" on the assets, preventing their sale.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | ARA Analyst | Inputs a suspect's Maisha Namba into the ARA Investigation Portal. | ARA Portal |
@@ -413,6 +417,7 @@ End-to-End Water Infrastructure Development (Study to Handover)
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Planning Engineer | Identifies the study area and collects site data for feasibility. | Manual/GIS | |
@@ -456,6 +461,7 @@ End-to-End Water Infrastructure Development (Study to Handover)
 - **Inter-Agency Transparency:** All environmental approvals (NEMA) and land clearances are handled via **X-Road APIs**, eliminating the "paper chase."
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Planning Team | Checks the proposed project against the GIS-based Water Master Plan. | GIS / Dashboard |
@@ -529,6 +535,7 @@ Cabinet Memorandum (CABMEMO) Processing and GDMIS Registration
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Ministry | Prepares a Cabinet Memorandum and obtains approval from the Principal Secretary and Cabinet Secretary. | Manual/Word | |
@@ -571,6 +578,7 @@ Cabinet Memorandum (CABMEMO) Processing and GDMIS Registration
 - **Transparency:** Once a decision is reached, the result is auto-synced to the **GDMIS** (Government Delivery Management Information System) via **X-Road**, enabling immediate tracking of implementation by the Head of Public Service.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | CS / PS | Drafts and reviews the memorandum within the secure Executive Portal. | Executive Portal |
@@ -644,6 +652,7 @@ End-to-End Ushanga Kenya Value Chain (Aggregation to Payment)
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Artisans | Cooperatives gather beadwork from members and travel to a central aggregation center. | Physical | |
@@ -686,6 +695,7 @@ End-to-End Ushanga Kenya Value Chain (Aggregation to Payment)
 - **Global Reach:** By exposing inventory via the **Huduma Bridge APIs**, Ushanga products can be listed on international marketplaces while maintaining a single authoritative source of truth for stock.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Center Officer | Scans the cooperative's digital ID to start the intake session. | Ushanga App |
@@ -759,6 +769,7 @@ End-to-End Records Management and Energy Sector Licensing
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Registry Clerk | Receives mail, sorts it into priority categories (Urgent/Normal/Confidential), and date-stamps it. | Physical Stamp | |
@@ -801,6 +812,7 @@ End-to-End Records Management and Energy Sector Licensing
 - **Inter-Agency Vetting:** Energy licensing applications are automatically vetted against **BRS** (ownership) and **KRA** (tax) via **X-Road**, reducing approval time from months to days.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Applicant | Submits an application for an energy permit via the eCitizen business portal. | eCitizen Portal |
@@ -948,6 +960,7 @@ End-to-End Archival Retrieval, Digitization, and Content Licensing
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Client | Submits a manual request for a specific historical event or footage. | Paper/Email | |
@@ -990,6 +1003,7 @@ End-to-End Archival Retrieval, Digitization, and Content Licensing
 - **Security & Provenance:** Every digital download is watermarked and issued with a **Digital Verifiable License (QR)** to ensure legal use and non-repudiation.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Client | Searches for content on the KBC eCitizen Portal using keywords (e.g., "Madaraka Day 1963"). | eCitizen / AI Search |
@@ -1063,6 +1077,7 @@ End-to-End Qualification Validation and Recognition of Prior Learning
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Applicant | Submits application form and scans of certificates/transcripts. | Manual/Portal | |
@@ -1106,6 +1121,7 @@ End-to-End Qualification Validation and Recognition of Prior Learning
 - **Digital Trust:** All validation letters are issued as **Verifiable Digital Credentials**, eliminating the possibility of forgery and removing the need for employers to call KNQA for verification.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Applicant | Logs into eCitizen and selects "Qualification Validation." | eCitizen / SSO |
@@ -1179,6 +1195,7 @@ MSME Credit Access (Hustler/Uwezo), Repayment, and NYOTA Apprenticeship
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Applicant | Accesses the fund portal (USSD/Web) and registers using their National ID. | USSD / Web Portal | |
@@ -1221,6 +1238,7 @@ MSME Credit Access (Hustler/Uwezo), Repayment, and NYOTA Apprenticeship
 - **Instant Inclusion:** Replacing physical bank accounts with **GPA-linked Digital Wallets**, allowing for instant disbursement and automated split-repayments (e.g., a portion of daily sales goes back to the loan).
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Applicant | Logs in via eCitizen SSO and selects the appropriate MSME fund or support program. | Unified MSME Portal |
@@ -1293,6 +1311,7 @@ Health Service Delivery & Identity
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Patient | Arrives at Facility A. | Physical | |
@@ -1336,6 +1355,7 @@ Health Service Delivery & Identity
 - **Automated Claims:** Seamless integration with the Social Health Authority (SHA) for real-time claims and coverage checks.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Health Worker | Inputs Maisha Namba or captures biometrics to identify the patient upon arrival. | Facility EMR |
@@ -1410,6 +1430,7 @@ End-to-End Research Application, Vetting, and Licensing
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Researcher | Submits research proposal, ethical clearance, and academic certificates. | Manual/Portal | |
@@ -1452,6 +1473,7 @@ End-to-End Research Application, Vetting, and Licensing
 - **Data as a Strategic Asset:** Every license issued automatically populates the national research repository, ensuring the government has visibility into all studies conducted in the country.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Researcher | Logs into the research portal. Personal and institutional data is pre-populated via IPRS and CUE. | eCitizen / SSO |
@@ -1525,6 +1547,7 @@ Environmental Impact Assessment (EIA) Licensing and Compliance Monitoring
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Proponent | Submits a hard copy project report through a registered environmental expert. | Physical Paper | |
@@ -1567,6 +1590,7 @@ Environmental Impact Assessment (EIA) Licensing and Compliance Monitoring
 - **Risk-Based Vetting:** Small-scale, low-impact projects are auto-approved by the **AI Rules Engine**, freeing up NEMA experts to focus on complex, high-risk industrial developments.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Proponent | Logs into eCitizen. Business ownership and expert registration are verified instantly. | eCitizen / X-Road |
@@ -1640,6 +1664,7 @@ End-to-End Inter-Agency Coordination and Situation Reporting
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Coordination Officer | Identifies a coordination need (e.g., Drought Response) and defines the deliverables required from MDAs. | Manual | |
@@ -1682,6 +1707,7 @@ End-to-End Inter-Agency Coordination and Situation Reporting
 - **Proactive Management:** Instead of waiting for a crisis to be reported, the system uses AI to detect "Negative Trends" (e.g., slow absorption of funds in a region) and alerts the coordinators automatically.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Leadership | Defines a new national priority and sets the target KPIs in the Coordination Portal. | Executive Portal |
@@ -1829,6 +1855,7 @@ Executive Coordination, Directive Tracking, and Performance Monitoring
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Head of Public Service | Receives a Presidential Directive and translates it into specific instructions for relevant Ministries. | Memo/Letter | |
@@ -1871,6 +1898,7 @@ Executive Coordination, Directive Tracking, and Performance Monitoring
 - **Proactive Escalation:** The **API Gateway** monitors response times, automatically flagging delays to the Head of Public Service before they become national bottlenecks.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Head of Public Service | Enters a directive into the Executive Coordination Portal, defining the Lead MDA and key milestones. | Executive Portal |
@@ -1944,6 +1972,7 @@ End-to-End Inmate Case Management (Admission to Release)
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Reception Officer | Verifies the physical committal warrant from the court. | Physical Paper | High risk of errors. |
@@ -1986,6 +2015,7 @@ End-to-End Inmate Case Management (Admission to Release)
 - **Algorithmic Sentence Tracking:** The **Workflow Engine** calculates remission and release dates automatically, providing a live countdown for every inmate.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Admission Officer | Scans the inmate's biometrics. System pulls their legal identity and prior history via X-Road. | eCitizen / Prisons Kit |
@@ -2031,6 +2061,7 @@ The Directorate of Immigration Services (DIS) is responsible for the issuance of
 **Trigger:** Citizen applies for a new passport, renewal, replacement, or change of details
 
 ### ACTORS
+
 | Actor                     | Role                     |
 |---------------------------|--------------------------|
 | Citizen (Applicant)       | Applies for passport     |
@@ -2071,6 +2102,7 @@ Passport Application (New / Renewal / Replacement)
 - Kenya Citizenship and Immigration Act, 2011; ICAO Doc 9303.
 
 ### Stakeholders
+
 | Stakeholder          | Role                     | Responsibilities                                                               |
 |----------------------|--------------------------|--------------------------------------------------------------------------------|
 | Citizen (Applicant)  | Applicant                | Completes online form, pays fee, attends appointment. |
@@ -2080,6 +2112,7 @@ Passport Application (New / Renewal / Replacement)
 
 
 ### Detailed Process (AS-IS)
+
 | Step | Actor                     | Action                                                                                                                                           | Tool / System      | Notes                                                                    |
 |------|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|--------------------------------------------------------------------------|
 | 1    | Citizen (Applicant)       | **Creates / Logs into eCitizen Account:** Logs in using National ID Number and Password.                                                         | eCitizen Portal    |                                                                          |
@@ -2134,6 +2167,7 @@ The process is **Shared-Service Driven** and **Logistics-Integrated**.
 5.  **Digital Travel Credential (DTC):** A virtual passport is issued immediately to the phone for use at e-Gates.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Citizen | Requests passport on eCitizen App. Takes ICAO-compliant selfie. | eCitizen App / AI |
@@ -2148,6 +2182,7 @@ The process is **Shared-Service Driven** and **Logistics-Integrated**.
 *Required fields for the WoG Digital Service.*
 
 ### A. Passport Application (Renewal/New)
+
 | Field Name | Type | Source | Validation |
 |---|---|---|---|
 | Citizen ID (Maisha) | String | System Fetch (NRB) | Read-only |
@@ -2223,6 +2258,7 @@ Sports Federation Registration, Grant Disbursement, and Facility Booking
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Federation | Submits application for registration along with constitution and list of officials. | Manual/Portal | |
@@ -2265,6 +2301,7 @@ Sports Federation Registration, Grant Disbursement, and Facility Booking
 - **Financial Integrity:** All payments (G2C grants and C2G fees) are routed through the **Government Payment Aggregator**, ensuring auditability.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Athlete | Logs into the Sports Portal using their Maisha Namba for SSO. | Sports Portal |
@@ -2338,6 +2375,7 @@ End-to-End Child Protection Case Management (Reporting to Closure)
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Children Officer | Records case details from the reporting party and manually assigns a case reference. | Paper Ledger | |
@@ -2380,6 +2418,7 @@ End-to-End Child Protection Case Management (Reporting to Closure)
 - **Cross-Agency Collaboration:** The **Huduma Bridge** enables real-time data sharing between Children Services, the Judiciary (for court orders), and Health (for medical reports), ensuring a holistic response.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Citizen | Reports a case via the mobile app, providing GPS coordinates for the location of the incident. | CPIMS App |
@@ -2527,6 +2566,7 @@ Youth Internship Placement, AGPO Registration, and Film Production Licensing
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Applicant | Logs into eCitizen and fills forms for Internship or AGPO. | eCitizen / Portal | |
@@ -2569,6 +2609,7 @@ Youth Internship Placement, AGPO Registration, and Film Production Licensing
 - **Smart Internships:** The **Workflow Engine** uses AI to place interns in agencies nearest to their residence (verified via GPS/Maisha Namba), reducing transport costs for the youth.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Youth Applicant | Logs into eCitizen using Maisha Namba. All personal and education details are already pre-populated. | eCitizen / SSO |
@@ -2661,6 +2702,7 @@ Vital Event Registration (Births and Deaths) and Certificate Issuance
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Informant/Chief | Reports the event at a CRS office or via the eCitizen portal. | Manual/Digital | |
@@ -2723,6 +2765,7 @@ flowchart TD
 - **Digital First:** Paper certificates are replaced by **Verifiable Digital Credentials** issued to the parents' eCitizen wallets, which can be presented at schools or for passport applications without needing a physical copy.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Health Worker | Records the birth/death in the facility EMR. | MOH Afya App |
@@ -2798,6 +2841,7 @@ End-to-End Refugee Status Determination and Documentation
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Registration Officer | Receives asylum seeker, verifies entry documents, and captures photos/fingerprints to issue an Asylum Pass. | Refugee System / UNHCR proGres | Dual entry often required. |
@@ -2840,6 +2884,7 @@ End-to-End Refugee Status Determination and Documentation
 - **Financial & Social Inclusion:** By minting a standardized **Maisha Namba** upon recognition, refugees can immediately access integrated eCitizen services, pay via the **Government Payment Aggregator (GPA)**, and enroll in the Social Health Authority (SHA).
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Registration Officer | Captures biometrics via integrated kits. System instantly queries IPRS and Immigration databases via X-Road to ensure the individual is not already registered. | eCitizen / X-Road |

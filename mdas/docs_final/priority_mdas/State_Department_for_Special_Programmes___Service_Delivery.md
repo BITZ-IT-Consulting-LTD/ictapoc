@@ -126,6 +126,7 @@ End-to-End Special Programmes Delivery (Registration to Assistance)
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Community Leaders / Chiefs | Identifies vulnerable households within their jurisdiction and conducts outreach drives. | Manual | Prone to inclusion/exclusion errors. |
@@ -243,6 +244,7 @@ The To-Be process envisions a fully integrated **digital social protection platf
 - **Means Testing:** Integration with other government datasets (e.g., KRA, NTSA, NHIF) to accurately verify income and asset ownership.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Citizen / Beneficiary | Registers for support via the online social protection portal or with the help of a Registration Officer. | eCitizen / Social Portal |

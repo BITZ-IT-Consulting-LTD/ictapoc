@@ -129,6 +129,7 @@ End-to-End Child Protection Case Management (Reporting to Closure)
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Reporter / Children Officer | A report is made regarding a child at risk. The Children Officer performs manual case registration and assigns a reference ID. | Paper Ledger | |
@@ -250,6 +251,7 @@ The To-Be process envisions a fully integrated **National Child Protection Infor
 - **Health System Integration:** Links to national health registries (e.g., SHA) to verify medical histories and coverage for the child.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Citizen Reporter | Reports a case via a digital portal or mobile app, initiating the digital case intake process. | CPIMS Portal |

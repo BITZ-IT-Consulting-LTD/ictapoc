@@ -86,6 +86,7 @@ MSME Credit Access (Hustler/Uwezo), Repayment, and NYOTA Apprenticeship
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Applicant | Accesses the fund portal (USSD/Web) and registers using their National ID. | USSD / Web Portal | |
@@ -158,6 +159,7 @@ graph TD
 - **Instant Inclusion:** Replacing physical bank accounts with **GPA-linked Digital Wallets**, allowing for instant disbursement and automated split-repayments (e.g., a portion of daily sales goes back to the loan).
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Applicant | Logs in via eCitizen SSO and selects the appropriate MSME fund or support program. | Unified MSME Portal |

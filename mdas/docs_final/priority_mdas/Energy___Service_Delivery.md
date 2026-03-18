@@ -90,6 +90,7 @@ End-to-End Records Management and Energy Sector Licensing
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Registry Clerk | Receives mail, sorts it into priority categories (Urgent/Normal/Confidential), and date-stamps it. | Physical Stamp | |
@@ -159,6 +160,7 @@ graph TD
 - **Inter-Agency Vetting:** Energy licensing applications are automatically vetted against **BRS** (ownership) and **KRA** (tax) via **X-Road**, reducing approval time from months to days.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Applicant | Submits an application for an energy permit via the eCitizen business portal. | eCitizen Portal |

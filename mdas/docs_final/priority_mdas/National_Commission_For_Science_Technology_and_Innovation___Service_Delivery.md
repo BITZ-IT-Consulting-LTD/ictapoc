@@ -92,6 +92,7 @@ End-to-End Research Application, Vetting, and Licensing
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
 | 1 | Researcher | Submits research proposal, ethical clearance, and academic certificates. | Manual/Portal | |
@@ -164,6 +165,7 @@ graph TD
 - **Data as a Strategic Asset:** Every license issued automatically populates the national research repository, ensuring the government has visibility into all studies conducted in the country.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Researcher | Logs into the research portal. Personal and institutional data is pre-populated via IPRS and CUE. | eCitizen / SSO |

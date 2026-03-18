@@ -85,6 +85,7 @@ Cabinet Memo Processing
 ---
 
 ## Stakeholders
+
 | Stakeholder | Role | Responsibilities |
 |---|---|---|
 | The Cabinet | Process Actor | Performs actions as defined in steps. |
@@ -97,6 +98,7 @@ Cabinet Memo Processing
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool | Notes |
 |---|---|---|---|---|
 | 1 | Ministry PS | Ministry/State Department submits a Draft Cabinet Memo to the Head of Public Service. | Manual | |
@@ -165,6 +167,7 @@ graph TD
 The To-Be process utilizes a secure e-Cabinet System where Ministers access papers via tablets, and decisions are digitally tracked.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | PS | Ministry uploads Memo to secure e-Cabinet Portal. | e-Cabinet |
