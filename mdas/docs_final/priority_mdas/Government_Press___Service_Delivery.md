@@ -48,9 +48,18 @@ graph TD
 - **Automated Formatting:** Using standardized templates and ingestion tools to automatically format submissions into the Gazette layout without manual typesetting.
 - **Searchable Digital Archive:** Digitizing historical records and implementing a powerful indexing and search engine for public and legal reference.
 
+<<<<<<< HEAD
 
 ---
 
 ### Validation Survey
 Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
 
+=======
+---
+
+## Feedback
+We value your input on this blueprint. Please take a moment to provide your feedback using the link below:
+
+[Provide Feedback](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+>>>>>>> fa7c468774fe7aa62241faa0890b6d9a0f43c246
