@@ -74,6 +74,7 @@ Service Delivery
 ---
 
 ## Stakeholders
+
 | Stakeholder | Role | Responsibilities |
 |---|---|---|
 | Sales Department | Process Actor | Performs actions as defined in steps. |
@@ -83,6 +84,7 @@ Service Delivery
 ---
 
 ## Detailed Process (AS-IS)
+
 | Step | Role | Action | Tool | Notes |
 |---|---|---|---|---|
 | 1 | Customer | Customer submits an order or request for goods/services. | Manual | |
@@ -154,6 +156,7 @@ graph TD
 The To-Be process leverages the Government Service Bus to integrate with BRS (Business Registry) and the Payment Gateway. Manual data entry and document uploads are replaced by real-time API validations, enabling a paperless, cashless, and presence-less service experience.
 
 ### Optimized Steps (Digital)
+
 | Step | Actor | Action | System |
 |---|---|---|---|
 | 1 | Applicant | Applicant logs in via Single Sign-On (SSO) and selects the service. | Citizen Portal / SSO |
