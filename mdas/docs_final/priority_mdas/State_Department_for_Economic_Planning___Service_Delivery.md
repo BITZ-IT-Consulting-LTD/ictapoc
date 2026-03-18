@@ -136,7 +136,8 @@ flowchart TD
     end
 
     subgraph Approval["Executive & Issuance"]
-        P3 --> A1[Refined Plan Submission]
+        P3 --> A0[PS Technical Sign-off]
+        A0 --> A1[CS Policy Approval]
         A1 --> A2[Presidential/Cabinet E-Approval]
         A2 --> A3[Digital Publication & NIMES Integration]
         A3 --> End((( )))
@@ -152,6 +153,7 @@ flowchart TD
 
 **Design Principles:**
 - **Smart Planning Guidelines:** Guidelines are no longer just static PDFs. They are issued as **Smart Templates** within the Planning Portal, where data validation rules ensure that any entry made by a County or MDA is checked for consistency and strategic alignment at the point of entry.
+- **Multi-Level Digital Approval:** The system incorporates secure electronic approval gates. The **Principal Secretary (PS)** provides technical sign-off on the consolidated data, followed by the **Cabinet Secretary (CS)** who provides policy-level approval via a secure **Executive Dashboard** before the plan is submitted to the Cabinet.
 - **Automated Interoperability:** Through the **Huduma Bridge**, the planning portal integrates with **IFMIS** (Treasury) to ensure that development plans are linked to actual budget allocations. It also pulls real-time project implementation data to feed into the **National Integrated Monitoring and Evaluation System (NIMES)**.
 - **Inclusive Digital Democracy:** Public participation is transformed through a **Digital Participation Hub**. Citizens can interact with plan summaries on their mobile devices, provide structured feedback, and see how their input is incorporated, with AI helping the SDEP summarize thousands of submissions in hours rather than weeks.
 
@@ -162,9 +164,10 @@ flowchart TD
 | 1 | SDEP Planning | Issues digital guidelines and data-driven templates. | National Planning Portal |
 | 2 | MDA / County | Submits sector plans/CIDPs via structured digital forms. | National Planning Portal |
 | 3 | Rules Engine | Automatically reviews submissions for alignment with BETA/Vision 2030. | AI-Assisted Alignment Engine |
-| 4 | System | Auto-consolidates verified plans into the live national MTP draft. | EDRMS / Planning Portal |
-| 5 | Public | Reviews and provides structured feedback on the draft plan. | Digital Participation Hub |
-| 6 | Cabinet | Reviews the final consolidated plan and provides digital approval. | Presidential E-Cabinet System |
+| 4 | **Principal Secretary (PS)** | **Technical Sign-off:** Reviews consolidated data and budget alignment. | Executive Approval Dashboard |
+| 5 | **Cabinet Secretary (CS)** | **Policy Approval:** Digitally signs off on the plan for strategic alignment. | Executive Approval Dashboard |
+| 6 | Public | Reviews and provides structured feedback on the draft plan. | Digital Participation Hub |
+| 7 | Cabinet | Reviews the final consolidated plan and provides digital approval. | Presidential E-Cabinet System |
 
 ---
 
