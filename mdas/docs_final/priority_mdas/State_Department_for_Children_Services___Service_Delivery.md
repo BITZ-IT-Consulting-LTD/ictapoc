@@ -269,3 +269,10 @@ The To-Be process envisions a fully integrated **National Child Protection Infor
 - https://www.socialprotection.go.ke
 - Children Act 2022
 - Desk Review
+
+---
+
+## Feedback
+We value your input on this blueprint. Please take a moment to provide your feedback using the link below:
+
+[Provide Feedback](https://ee.kobotoolbox.org/x/4Ls7SlCG)

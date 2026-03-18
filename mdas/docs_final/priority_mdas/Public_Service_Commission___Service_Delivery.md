@@ -48,3 +48,10 @@ This process outlines how the Public Service Commission identifies, recruits, an
 - **End-to-End E-Recruitment Portal:** Implementing a fully digital portal for applications, automated shortlisting based on criteria, and interview scheduling.
 - **Integration with Foundational Systems:** Integrating the HR system with CRS, KRA, EACC, and DCI for real-time background checks and vetting.
 - **Digital Records Management:** Creating a secure electronic registry for all applicant and employee files.
+
+---
+
+## Feedback
+We value your input on this blueprint. Please take a moment to provide your feedback using the link below:
+
+[Provide Feedback](https://ee.kobotoolbox.org/x/4Ls7SlCG)

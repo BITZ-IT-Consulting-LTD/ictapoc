@@ -170,3 +170,10 @@ graph TD
 - https://ara.go.ke
 - Proceeds of Crime and Anti-Money Laundering Act
 - Desk Review
+
+---
+
+## Feedback
+We value your input on this blueprint. Please take a moment to provide your feedback using the link below:
+
+[Provide Feedback](https://ee.kobotoolbox.org/x/4Ls7SlCG)

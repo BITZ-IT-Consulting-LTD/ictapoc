@@ -243,3 +243,10 @@ The To-Be process eliminates "Reporting Fatigue" by automatically pulling eviden
 - https://www.president.go.ke
 - Executive Order No. 1 of 2023
 - Desk Review
+
+---
+
+## Feedback
+We value your input on this blueprint. Please take a moment to provide your feedback using the link below:
+
+[Provide Feedback](https://ee.kobotoolbox.org/x/4Ls7SlCG)

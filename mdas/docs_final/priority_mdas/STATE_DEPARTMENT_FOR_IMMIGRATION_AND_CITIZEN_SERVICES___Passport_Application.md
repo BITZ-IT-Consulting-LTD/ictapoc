@@ -301,3 +301,10 @@ The proposed process leverages a **Whole-of-Government digital platform** to del
 - https://www.immigration.go.ke
 - Kenya Citizenship and Immigration Act
 - Desk Review
+
+---
+
+## Feedback
+We value your input on this blueprint. Please take a moment to provide your feedback using the link below:
+
+[Provide Feedback](https://ee.kobotoolbox.org/x/4Ls7SlCG)

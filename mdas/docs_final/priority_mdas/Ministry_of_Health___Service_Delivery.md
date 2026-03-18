@@ -258,3 +258,10 @@ flowchart TD
 - https://www.health.go.ke
 - Digital Health Act 2023
 - Desk Review
+
+---
+
+## Feedback
+We value your input on this blueprint. Please take a moment to provide your feedback using the link below:
+
+[Provide Feedback](https://ee.kobotoolbox.org/x/4Ls7SlCG)
