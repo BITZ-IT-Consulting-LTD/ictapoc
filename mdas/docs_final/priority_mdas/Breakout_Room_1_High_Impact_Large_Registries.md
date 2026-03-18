@@ -7,7 +7,7 @@
 
 ## Participating MDAs & Service Mandates
 
-- **[Civil Registration Services (CRS)](./_CIVIL_REGISTRATION_SERVICES_CRS____Service_Delivery.md)**: Responsible for the registration of vital life events including births and deaths, and the issuance of primary identity documents.
+- **[Civil Registration Services (CRS)](./_CIVIL_REGISTRATION_SERVICES_CRS___Service_Delivery.md)**: Responsible for the registration of vital life events including births and deaths, and the issuance of primary identity documents.
 - **[Ministry of Health (MoH) – National Shared Health Record & Digital Health Ecosystem](./Ministry_of_Health___Service_Delivery.md)**: Mandated to provide health policy, support universal health coverage, and oversee national health systems and registries.
 - **[State Department for Immigration & Citizen Services – Directorate of Immigration Services](./STATE_DEPARTMENT_FOR_IMMIGRATION_AND_CITIZEN_SERVICES___Passport_Application.md)**: Oversees border control, issuance of passports and visas, and the management of citizenship and residency records.
 - **[Public Service Commission](./Public_Service_Commission___Service_Delivery.md)**: Human resource management, development, and administration for the public service.
