@@ -4,8 +4,14 @@ theme: jekyll-theme-cayman
 markdown: kramdown
 
 include:
+<<<<<<< HEAD
+  - "_*.md"
+  - "mdas/**/*.md"
+  - "mdas/docs_final/priority_mdas/_*.md"
+=======
   - _CIVIL_REGISTRATION_SERVICES_CRS____Service_Delivery.md
   - _REFUGEE_SERVICES___Service_Delivery.md
+>>>>>>> main
 
 exclude:
   - frontend
