@@ -3,6 +3,11 @@ description: Kenya's Repeatable Government Services Platform - Workshop Document
 theme: jekyll-theme-cayman
 markdown: kramdown
 
+include:
+  - "_*.md"
+  - "mdas/**/*.md"
+  - "mdas/docs_final/priority_mdas/_*.md"
+
 exclude:
   - frontend
   - backend
