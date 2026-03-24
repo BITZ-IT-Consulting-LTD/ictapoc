@@ -23,7 +23,7 @@ This document formally separates the workflows for Birth and Death registration 
 The scope is refactored to include critical but previously omitted services:
 1.  **Birth Registration:** Current (under 6 months) and Late (after 6 months).
 2.  **Death Registration:** Current (under 6 months) and Late (after 6 months).
-3.  **Re-registration:** Legal amendments via Adoption, Recognition, and Legitimization.
+3.  **Re-registration:** Legal amendments via Adoption, Recognition, and Legitimacy-bound amendments.
 4.  **Foreign Event Registration:** Births and Deaths of Kenyans occurring outside national borders.
 5.  **Assumption of Death:** Registration of deaths based on High Court orders for missing persons.
 
@@ -56,21 +56,21 @@ Unlike previous versions, these flows distinguish between the manual "Legacy" tr
 ```mermaid
 flowchart TD
     subgraph Facility_Chief["Health Facility / Chief"]
-        Start1(( )) --> A1[Issue Physical Notification]
+        Start1((" ")) --> A1["Issue Physical Notification"]
     end
 
     subgraph Informant["Parent / Informant"]
-        A1 --> B1[Collect Notification & Documents]
-        B1 --> B2[Visit CRS District Office]
-        B2 --> B3[Submit Physical Forms & ID copies]
-        B7[Pay via eCitizen/Finance] --> B8[Collect Handwritten Cert]
-        B8 --> End1((( )))
+        A1 --> B1["Collect Notification & Documents"]
+        B1 --> B2["Visit CRS District Office"]
+        B2 --> B3["Submit Physical Forms & ID copies"]
+        B7["Pay via eCitizen / Finance"] --> B8["Collect Handwritten Cert"]
+        B8 --> End1(((" ")))
     end
 
     subgraph CRS["CRS District Registry"]
-        B3 --> C1[Officer Verifies Paperwork]
-        C1 --> C2[Register in Physical Book A]
-        C2 --> C3[Registrar Signs Register]
+        B3 --> C1["Officer Verifies Paperwork"]
+        C1 --> C2["Register in Physical Book A"]
+        C2 --> C3["Registrar Signs Register"]
         C3 --> B7
     end
 ```
@@ -94,20 +94,20 @@ flowchart TD
 ```mermaid
 flowchart TD
     subgraph Facility["Health Facility"]
-        Start2(( )) --> D1[Log Birth in CRS Notification App]
+        Start2((" ")) --> D1["Log Birth in CRS Notification App"]
     end
 
     subgraph CRVSS_System["CRVSS Cloud"]
-        D1 --> D2[Sync Notification Metadata]
-        D3[Verify Parent ID via IPRS] --> D4[Create Digital Entry]
+        D1 --> D2["Sync Notification Metadata"]
+        D3["Verify Parent ID via IPRS"] --> D4["Create Digital Entry"]
     end
 
     subgraph Citizen["Parent / Informant"]
-        D2 --> E1[Apply via eCitizen Portal]
+        D2 --> E1["Apply via eCitizen Portal"]
         E1 --> D3
-        D4 --> E2[Process Digital GPA Payment]
-        E2 --> E3[Download / Collect Cert]
-        E3 --> End2((( )))
+        D4 --> E2["Process Digital GPA Payment"]
+        E2 --> E3["Download / Collect Cert"]
+        E3 --> End2(((" ")))
     end
 ```
 
@@ -128,20 +128,20 @@ flowchart TD
 ```mermaid
 flowchart TD
     subgraph Authority["Hospital / Police / Chief"]
-        Start3(( )) --> F1[Issue Burial Permit / Notification]
+        Start3((" ")) --> F1["Issue Burial Permit / Notification"]
     end
 
     subgraph Informant_D["Relative / Informant"]
-        F1 --> G1[Collect Original Documents]
-        G1 --> G2[Visit CRS Office]
-        G2 --> G3[Fill Death Registration Forms]
-        G6[Pay Fees] --> G7[Collect Manual Cert]
-        G7 --> End3((( )))
+        F1 --> G1["Collect Original Documents"]
+        G1 --> G2["Visit CRS Office"]
+        G2 --> G3["Fill Death Registration Forms"]
+        G6["Pay Fees"] --> G7["Collect Manual Cert"]
+        G7 --> End3(((" ")))
     end
 
     subgraph CRS_D["CRS Registry"]
-        G3 --> H1[Verify Cause of Death Proof]
-        H1 --> H2[Record in Death Register]
+        G3 --> H1["Verify Cause of Death Proof"]
+        H1 --> H2["Record in Death Register"]
         H2 --> G6
     end
 ```
@@ -161,15 +161,15 @@ flowchart TD
 ```mermaid
 flowchart TD
     subgraph Hospital["Medical Facility"]
-        Start4(( )) --> I1[Digital Death Notification]
+        Start4((" ")) --> I1["Digital Death Notification"]
     end
 
     subgraph Citizen_D["Informant"]
-        I1 --> J1[Apply for Death Cert on eCitizen]
-        J1 --> K1[Verify Deceased ID in IPRS]
-        K2[Approval in CRVSS] --> J2[Pay via GPA]
-        J2 --> J3[Digital Certificate Issued]
-        J3 --> End4((( )))
+        I1 --> J1["Apply for Death Cert on eCitizen"]
+        J1 --> K1["Verify Deceased ID in IPRS"]
+        K2["Approval in CRVSS"] --> J2["Pay via GPA"]
+        J2 --> J3["Digital Certificate Issued"]
+        J3 --> End4(((" ")))
     end
 
     subgraph CRVSS_D["CRVSS System"]
@@ -239,22 +239,22 @@ The CRS technical architecture is NOT "future state" only; it is an active ecosy
 ```mermaid
 flowchart TD
     subgraph Source["Facility / Community"]
-        Start_T(( )) --> L1[Event Captured via CRS Notification App]
+        Start_T((" ")) --> L1["Event Captured via CRS Notification App"]
     end
 
     subgraph Backend["CRVSS Core / Huduma Bridge"]
-        L1 --> L2[Verify Identity via IPRS / Maisha]
-        L2 --> L3[Auto-Mint UPI for Births]
-        L3 --> L4[Digitally Sign Record (NPKI)]
+        L1 --> L2["Verify Identity via IPRS / Maisha"]
+        L2 --> L3["Auto-Mint UPI for Births"]
+        L3 --> L4["Digitally Sign Record (NPKI)"]
     end
 
     subgraph Finance_GPA["GPA Payment"]
-        L4 --> M1[Process Fee & Revenue Split]
+        L4 --> M1["Process Fee & Revenue Split"]
     end
 
     subgraph Delivery["Civil Wallet / eCitizen"]
-        M1 --> N1[Issue Verifiable Digital Credential]
-        N1 --> End_T((( )))
+        M1 --> N1["Issue Verifiable Digital Credential"]
+        N1 --> End_T(((" ")))
     end
 
     style Start_T fill:#fff,stroke:#27ae60,stroke-width:2px
