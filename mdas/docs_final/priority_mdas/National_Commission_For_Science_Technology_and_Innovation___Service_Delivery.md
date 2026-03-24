@@ -1,205 +1,136 @@
-# NATIONAL COMMISSION FOR SCIENCE, TECHNOLOGY AND INNOVATION (NACOSTI) – Service Delivery
+# STATE DEPARTMENT FOR SCIENCE, RESEARCH AND INNOVATION (SRI) – Advanced Research Ecosystem
 
 ## Cover Page
 - **Ministry/Department/Agency (MDA):** Ministry of Education
-- **Authority:** National Commission for Science, Technology and Innovation (NACOSTI)
-- **Process Name:** Research Licensing and Knowledge Management
-- **Document Version:** 2.1
-- **Date:** 2026-02-24
+- **Department:** State Department for Science, Research and Innovation (SRI)
+- **Primary Authority:** National Commission for Science, Technology and Innovation (NACOSTI)
+- **Document Type:** End-to-End Service Lifecycle Document (BPR Aligned)
+- **Document Version:** 3.1 (Strategic Governance Model)
+- **Date:** 2026-03-24
 - **Classification:** Official
 - **Strategic Category:** Priority MDA
-- **Service Model:** G2B
-- **Life-Cycle Group:** Cradle to Death (4. Employment & Business)
+- **Service Model:** G2B / G2C
+- **Reviewer:** Senior Government Transformation Consultant
 
 ---
 
-## Service Mandate
-The National Commission for Science, Technology and Innovation (NACOSTI) is the primary agency for regulating and assuring quality in the science, technology, and innovation (STI) sector in Kenya. Established under the Science, Technology and Innovation Act 2013, its core mandate is to regulate and advise the government on all matters related to STI.
+# PART 1: EXECUTIVE SUMMARY
 
-**Official Website:** [https://www.nacosti.go.ke](https://www.nacosti.go.ke)
+The State Department for Science, Research and Innovation (SRI) is the strategic engine for Kenya's knowledge economy. This document refactors the research licensing and regulatory process into a **Full Service Lifecycle Model**. 
 
-**Key Functions:**
-- **Policy Advisory:** Advising national and county governments on STI policy, planning, and financial resource assessment.
-- **Research Licensing:** Licensing all scientific research conducted in Kenya to ensure it meets national standards and ethical guidelines.
-- **Registration & Accreditation:** Registering and accrediting research institutions to maintain high standards.
-- **Setting Priorities:** Developing national priorities for scientific and technological activities in consultation with stakeholders.
-- **Coordination & Monitoring:** Coordinating, monitoring, and evaluating activities related to scientific research and technology development.
-- **STI Mainstreaming:** Spearheading the integration of science and technology within MDAs.
-- **International Focal Point:** Serving as the national focal point for international treaties and protocols related to research and technology.
+The transition shifts the department from a "transactional permit issuer" to a **comprehensive research governance authority**. By integrating Pre-service guidance, Core-service automated vetting, and Post-service compliance monitoring, the department ensures that all scientific activities in Kenya are ethically sound, strategically aligned with national priorities (e.g., KJET, Digitization), and captured as high-value intellectual capital within the **National Research Repository**.
 
 ---
 
-## Executive Summary
-NACOSTI is the primary agency responsible for regulating and assuring quality in the science, technology, and innovation sector. Its key mandate is to license all research activities in Kenya. The current process involves manual document vetting, physical bank payments, and sequential expert reviews. The transition to the Kenya DSAP Architecture aims to establish an automated research portal integrated with KNQA for researcher verification and the Government Payment Aggregator for instant licensing.
+# PART 2: ENHANCED SERVICE LIFECYCLE MODEL
+
+The SRI service model is structured into three distinct phases to ensure operational realism and regulatory depth.
+
+### 2.1 The Research Lifecycle Journey
+1.  **Pre-Service (Awareness & Guidance):** Proactive engagement via the SRI portal to provide "Researcher Onboarding Kits" and ethical guidelines before an application is even started.
+2.  **Core-Service (The Licensing Track):** The streamlined path from Digital Application to Vetting, Approval, and Issuance.
+3.  **Post-Service (Monitoring & Compliance):** Ongoing tracking of research progress, mandatory reporting of findings, and feedback loops for policy improvement.
 
 ---
 
-## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (End-to-End Research Licensing based on Deep Dive).*
+# PART 3: UPDATED PROCESS DESIGN (DETAILED)
 
 ```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-graph TD
-    Start((Start)) --> Submit["Complete Application & Attach Research Proposal"]
+flowchart TD
+    Start(("Pre-Service Layer")) --> Guidance["1. Applicant Guidance & Sensitization"]
+    Guidance --> Apply["2. Digital Application (eCitizen SSO)"]
     
-    subgraph Intake["Reception & Acknowledgment"]
-        Submit --> Comp{"Complete?"}
-        Comp -- "No" --> Return["Return for Completion"]
-        Return --> Submit
-        
-        Comp -- "Yes" --> Log["Log in Register & Assign Reference"]
-        Log --> Acknowledge["Issue Acknowledgment Letter"]
+    subgraph Vetting_Layer["Core Service: Technical Vetting"]
+        Apply --> Vetting_Rules["3. Automated Compliance Check (X-Road: KNQA/IPRS)"]
+        Vetting_Rules --> Ethics["4. Ethics Review Committee (ERC) Validation"]
+        Ethics --> Expert_Assign["5. SME Assignment (AI Rules Engine)"]
+        Expert_Assign --> Quality_Review["6. Technical Quality & Strategic Alignment Assessment"]
     end
-    
-    subgraph Vetting["Technical Review"]
-        Acknowledge --> Identify["Identify Subject-Matter Examiner"]
-        Identify --> Assess["Assess Research Criteria & Ethical Compliance"]
-        Assess --> Verify["Verify Qualifications & Institution"]
-        Verify --> Report["Prepare Vetting Report"]
-    end
-    
-    subgraph Approval["Payment & Licensing"]
-        Report --> Recommend{"Recommendation?"}
-        
-        Recommend -- "Revise" --> ReqRev["Request Revision from Researcher"]
-        ReqRev --> Submit
-        
-        Recommend -- "Approve" --> PayReq["Calculate Fees & Issue Payment Request"]
-        PayReq --> ResearcherPay["Researcher Pays via Bank & Submits Receipt"]
-        
-        ResearcherPay --> VerifyPay["Verify Bank Receipt & Issue Official Receipt"]
-        VerifyPay --> GenLicense["Generate Research License & Notify Applicant"]
-    end
-    
-    GenLicense --> End((End))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px;;
-    class Start start;
-    class End endNode;
-    class Comp,Recommend gateway;
-    class Submit,Return,Log,Acknowledge,Identify,Assess,Verify,Report,ReqRev,PayReq,ResearcherPay,VerifyPay,GenLicense userTask;
+    subgraph Decision_Layer["Approval and Issuance"]
+        Quality_Review --> Decision{"Approval Criteria Met?"}
+        Decision -- "No" --> Rej["Reasoned Rejection / Request for Revision"]
+        Decision -- "Yes" --> Pay["7. Automated Fee Payment (GPA)"]
+        Pay --> License["8. Digital Research License (Verifiable QR)"]
+    end
+
+    subgraph Monitoring_Layer["Post-Service: Governance"]
+        License --> Track["9. Real-time Monitoring & Progress Reporting"]
+        Track --> Feed["10. Research Findings Sync to National Knowledge Lake"]
+        Feed --> End(("End Cycle"))
+    end
 ```
 
----
-
-## Process Overview
-### Process Name
-End-to-End Research Application, Vetting, and Licensing
-
-### Service Category
-- G2C (Researchers) / G2B (Institutions)
-
-### Scope
-- **In Scope:** Application for research permits, ethical clearance vetting, fee processing, and issuance of licenses.
-- **Out of Scope:** Actual funding of research projects.
-
-### Triggers
-- A researcher (local or foreign) applying for a permit to conduct a study in Kenya.
-
-### End States
-- **Successful:** Research License issued; Study metadata logged in the national repository.
-
-### Policy Context
-- Science, Technology and Innovation Act 2013; Data Protection Act 2019.
+### 3.1 Decision Logic and SLAs
+- **Standard Vetting:** (Local Students) Target SLA: **48 Hours**. Decision rules based on pre-vetted institutional lists.
+- **Complex Vetting:** (Foreign Experts / High Sensitive Areas) Target SLA: **10 Business Days**. Requires human-in-the-loop SME review and multi-agency clearance.
 
 ---
 
-## Detailed Process (AS-IS)
+# PART 4: PRE + CORE + POST SERVICE STRUCTURE
 
-| Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
-| 1 | Researcher | Submits research proposal, ethical clearance, and academic certificates. | Manual/Portal | |
-| 2 | NACOSTI Officer | Manually checks if all documents are attached and assigns a physical file reference. | Manual | |
-| 3 | Examiner | Reviews the proposal for technical validity and alignment with national priorities. | Manual/Word | |
-| 4 | Finance Officer | Issues a payment demand note; waits for the researcher to pay at a bank and upload the slip. | Standalone System | Major delay (2-5 days). |
-| 5 | NACOSTI Admin | Manually verifies the bank slip against bank statements before generating the final PDF license. | Manual | |
-
----
-
-## Pain Points & Opportunities
-### Pain Points
-- **Payment Latency:** Waiting for manual bank reconciliation stalls the process even after technical approval.
-- **Manual Verification:** Confirming researcher credentials (from Universities) is done via email/phone.
-- **Fragmented Repositories:** Research findings are not automatically captured in a searchable national knowledge base.
-
-### Opportunities
-- **Instant GPA Integration:** Using the **Government Payment Aggregator** for real-time mobile/card payments and instant license generation.
-- **Automated Credential Vetting:** Integrating with **KNQA** and **CUE** via **X-Road** to verify academic standing instantly.
-- **Digital Research Repository:** Automatically archiving the research abstract into a national knowledge lake once the license is issued.
+| Phase | Category | Process Element | Mode |
+| :--- | :--- | :--- | :--- |
+| **Pre-Service** | Guidance | Access to "Research Priority Areas" and "Ethics Standards" dashboard. | Digital (Open Access) |
+| **Core-Service** | Application | Researcher identity (IPRS) and academic standing (KNQA/CUE) verification. | Fully Digital (X-Road) |
+| **Core-Service** | Vetting | Assignment to **Subject Matter Examiners (SMEs)** based on research cluster tagging. | Hybrid (System Assignment + Human Review) |
+| **Core-Service** | Approval | Automated approval for low-risk renewals; DG wet-signature replaced by NPKI Digital Signature. | Digital |
+| **Post-Service** | Monitoring | Submission of progress reports and metadata capture for the national repository. | Digital / Field Audit |
 
 ---
 
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
+# PART 5: RECORDS & DATA GOVERNANCE
 
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-graph TD
-    Start((Start)) --> Portal["Researcher Logs in via eCitizen (SSO)"]
-    
-    subgraph Layer2["Identity & Trust Hub"]
-        Portal --> Verify["X-Road: Verify academic standing via KNQA"]
-        Verify --> Workflow["Workflow Engine: Initiate Case File"]
-    end
-    
-    subgraph Layer3["Huduma Bridge / X-Road"]
-        Workflow --> EthicCheck["X-Road: Cross-check Ethical Clearance (ERC)"]
-        EthicCheck --> Rules["AI Rules Engine: Auto-match Examiner"]
-    end
-    
-    subgraph Layer4["Settlement & Issuance"]
-        Rules --> Pay["Initiate Payment via GPA('Real-time')"]
-        Pay --> License["Auto-generate Verifiable Digital License (QR)"]
-    end
-    
-    subgraph Knowledge_Lake["Authoritative Registry"]
-        License --> Sync["Sync Abstract to National Research Repository"]
-    end
-    
-    Sync --> End((End))
-
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px,font-size:24px;;
-    class Start start;
-    class End endNode;
-    class Portal userTask;
-    class Verify,Workflow,EthicCheck,Rules,Pay,License,Sync serviceTask;
-```
-
-## Future State Process (TO-BE)
-### Narrative
-**TO-BE Process: Automated Science & Research Vetting**
-
-**Design Principles:**
-- **Zero-Touch Licensing:** For standard academic research by recognized students, the system uses **AI Rules** to auto-approve the permit once the fee is paid via **GPA**.
-- **Cross-Registry Trust:** Ethical clearance from Institutional Review Boards (IRBs) is pulled via **X-Road APIs**, removing the need for physical letters.
-- **Data as a Strategic Asset:** Every license issued automatically populates the national research repository, ensuring the government has visibility into all studies conducted in the country.
-
-### Optimized Steps (Digital)
-
-| Step | Actor | Action | System |
-|---|---|---|---|
-| 1 | Researcher | Logs into the research portal. Personal and institutional data is pre-populated via IPRS and CUE. | eCitizen / SSO |
-| 2 | System | Fetches the researcher's ethical clearance status directly from the Ethics Review Committee (ERC) portal via X-Road. | KeSEL / X-Road |
-| 3 | System | Calculates the fee and allows the researcher to pay instantly via M-Pesa or Card. | GPA |
-| 4 | System | Upon successful payment, the workflow engine triggers the issuance of a digital verifiable research license. | Output Generator |
-| 5 | System | Automatically creates a record in the National Knowledge Repository, tracking the study's start and end dates. | Research Registry |
+1.  **Digital Records Lifecycle:** All research proposals, emails, and data artifacts are captured and retained according to the **National Records Retention Policy**.
+2.  **Intellectual Property (IP) Protection:** Integration of **KIPI** data to ensure research findings don't infringe on existing patents and to facilitate IP registration of new innovations.
+3.  **Data Protection:** Full compliance with the **Data Protection Act (2019)** regarding the storage and sharing of researcher sensitive data and study findings.
+4.  **Classification:** Data is classified (Open, Restricted, Confidential) based on its strategic impact on national security or commercial value.
 
 ---
 
-## References
-- https://www.nacosti.go.ke
-- Science, Technology and Innovation Act 2013
-- Desk Review
+# PART 6: DPI & INTEGRATION
 
+The SRI platform acts as a terminal within the **Kenya DSAP Architecture**:
+- **Identity:** Using **Maisha Namba** for researcher identity and **BRS** for institutional verification.
+- **Interoperability:** **X-Road** for cross-referencing ethics approval from IRBs and academic credentials from KNQA/Universities.
+- **Trust:** **NPKI (National PKI)** for sealing research licenses with a cryptographic signature, making them globally verifiable.
+- **Settlement:** **GPA (Government Payment Aggregator)** for seamless fee collection and reconciliation across different fund categories (NACOSTI, NRF).
 
 ---
 
-### Validation Survey
-Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+# PART 7: IMPLEMENTATION PHASING
 
+- **Short-Term (0-6 Months):** Digitization of the Application and Payment layers. Transition of physical licenses to PDF with QR codes. (Hybrid Model).
+- **Medium-Term (6-18 Months):** Full API integration with KNQA, CUE, and major universities via X-Road. Implementation of the **Full Ethics Sync** (ERC).
+- **Long-Term (18+ Months):** Deployment of the **AI Rules Engine** for automated SME matching and predictive risk categorization for research projects.
+
+---
+
+# PART 8: GOVERNANCE & CAPACITY
+
+### 8.1 Institutional Roles
+- **Ministry (SRI):** Policy oversight and high-level strategic direction.
+- **NACOSTI:** Primary regulator and licensing authority.
+- **KENIA / NRF:** Coordination for innovation commercialization and research funding.
+- **DTU:** The **Digital Transformation Unit** coordinates cross-agency system uptime and data sharing agreements.
+
+### 8.2 Capacity Building
+- **Digital Literacy:** Training for technical examiners on using the new workflow engine.
+- **Data Governance Skills:** Workshops on IP law, data privacy, and secure research handling for all NACOSTI staff.
+- **AI Literacy:** Training for the technical committee on interpreting AI-driven risk scores.
+
+---
+
+# PART 9: CHANGE LOG
+
+| Area | Original Issue | Change Made | Impact |
+| :--- | :--- | :--- | :--- |
+| **Service Scope** | Just Application/Issuance | **Full Lifecycle (Pre/Core/Post)** | Comprehensive regulatory coverage. |
+| **Decision Logic** | No defined SLAs/Criteria | **SLA-based Rules Engine** | Operational realism and predictability. |
+| **Integration** | Disconnected from registries | **Deep X-Road (KNQA+ERC) Sync** | Removal of manual vetting delays. |
+| **Governance** | Lacked IP/Legal layer | **Integrated IP & Legal Structure** | Secure knowledge economy protection. |
+| **Records** | Passive storage | **Active Records Lifecycle Management**| Persistent intellectual capital preservation. |
+| **Post-Service** | Omitted | **Monitoring & Reporting Workflow** | Real-time compliance and impact tracking. |
+
+---
+**[End of Document]**

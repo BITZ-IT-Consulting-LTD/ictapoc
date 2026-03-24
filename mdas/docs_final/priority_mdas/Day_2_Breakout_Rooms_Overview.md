@@ -9,7 +9,7 @@ Detailed matrices and notes for each session can be found in their respective do
 *   **Assistant:** Newton
 *   **Category:** National registries, large-scale citizen systems, and critical service databases.
 *   **Participating MDAs:**
-    *   [Civil Registration Services (CRS) (Updated)](./_CIVIL_REGISTRATION_SERVICES_CRS___Service_Delivery.md)
+    *   [Civil Registration Services (CRS) <span style="color: green;">(Updated)</span>](./_CIVIL_REGISTRATION_SERVICES_CRS___Service_Delivery.md)
     *   [Ministry of Health (MoH) – National Shared Health Record & Digital Health Ecosystem](./Ministry_of_Health___Service_Delivery.md)
     *   [State Department for Immigration & Citizen Services – Directorate of Immigration Services](./STATE_DEPARTMENT_FOR_IMMIGRATION_AND_CITIZEN_SERVICES___Passport_Application.md)
     *   [Public Service Commission](./Public_Service_Commission___Service_Delivery.md)
@@ -45,12 +45,12 @@ Detailed matrices and notes for each session can be found in their respective do
 *   **Participating MDAs:**
     *   [Agriculture_and_Food_Authority](./Agriculture_and_Food_Authority___Service_Delivery.md)
     *   [Athi Water Works Development Agency](./Athi_Water_Works_Development_Agency___Service_Delivery.md)
-    *   [Energy (Updated)](./Energy___Service_Delivery.md)
+    *   [Energy <span style="color: green;">(Updated)</span>](./Energy___Service_Delivery.md)
     *   [ICT Authority](./ICT_Authority___Service_Delivery.md)
-    *   [Kenya National Qualifications Authority (Updated)](./Kenya_National_Qualifications_Authority___Service_Delivery.md)
-    *   [Micro, Small and Medium Enterprise Development (Updated)](./Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md)
-    *   [National Commission For Science Technology and Innovation (NACOSTI)](./National_Commission_For_Science_Technology_and_Innovation___Service_Delivery.md)
-    *   [National Environment Management Authority (NEMA) (Updated)](./National_Environment_Management_Authority___Service_Delivery.md)
+    *   [Kenya National Qualifications Authority <span style="color: green;">(Updated)</span>](./Kenya_National_Qualifications_Authority___Service_Delivery.md)
+    *   [Micro, Small and Medium Enterprise Development <span style="color: green;">(Updated)</span>](./Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md)
+    *   [National Commission For Science Technology and Innovation (NACOSTI) <span style="color: green;">(Updated)</span>](./National_Commission_For_Science_Technology_and_Innovation___Service_Delivery.md)
+    *   [National Environment Management Authority (NEMA) <span style="color: green;">(Updated)</span>](./National_Environment_Management_Authority___Service_Delivery.md)
     *   [State Department for ICT and the Digital Economy (Strategic)](./State_Department_of_ICT___Service_Delivery.md)
     *   [State Department for Broadcasting and Telecommunications (Strategic)](./Broadcasting_and_Telecommunications___Service_Delivery.md)
     *   [Government Press (Strategic Records Infrastructure)](./Government_Press___Service_Delivery.md)
