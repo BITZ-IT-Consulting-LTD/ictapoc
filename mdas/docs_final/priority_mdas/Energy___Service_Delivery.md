@@ -1,8 +1,8 @@
 # STATE DEPARTMENT FOR ENERGY – Service Delivery IMPROVED
 
 ## Cover Page
-- **Ministry/Department/Agency (MDA):** Ministry of Energy and Petroleum
-- **Department:** State Department for Energy
+- **Ministry:** Ministry of Energy and Petroleum
+- **State Department:** State Department for Energy
 - **Process Name:** Digital Records Management & Energy Sector Licensing
 - **Document Version:** 3.1 (Consultant Validated)
 - **Date:** 2026-03-24

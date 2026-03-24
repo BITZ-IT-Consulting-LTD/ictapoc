@@ -9,15 +9,15 @@ Detailed matrices and notes for each session can be found in their respective do
 *   **Assistant:** Newton
 *   **Category:** National registries, large-scale citizen systems, and critical service databases.
 *   **Participating MDAs:**
-    *   [Civil Registration Services (CRS) <span style="color: green;">(Updated)</span>](./_CIVIL_REGISTRATION_SERVICES_CRS___Service_Delivery.md)
-    *   [Ministry of Health (MoH) – National Shared Health Record & Digital Health Ecosystem](./Ministry_of_Health___Service_Delivery.md)
-    *   [State Department for Immigration & Citizen Services – Directorate of Immigration Services](./STATE_DEPARTMENT_FOR_IMMIGRATION_AND_CITIZEN_SERVICES___Passport_Application.md)
-    *   [Public Service Commission](./Public_Service_Commission___Service_Delivery.md)
+    *   [Department of Civil Registration Services (CRS) <span style="color: green;">(Updated)</span>](./_CIVIL_REGISTRATION_SERVICES_CRS___Service_Delivery.md)
+    *   [Ministry of Health – National Shared Health Record & Digital Health Ecosystem](./Ministry_of_Health___Service_Delivery.md)
+    *   [State Department for Immigration and Citizen Services](./STATE_DEPARTMENT_FOR_IMMIGRATION_AND_CITIZEN_SERVICES___Passport_Application.md)
+    *   [Public Service Commission (PSC)](./Public_Service_Commission___Service_Delivery.md)
     *   [State Department of Correctional Services](./STATE_DEPARTMENT_FOR_CORRECTIONAL_SERVICES___Service_Delivery.md)
     *   [State Department for Children Services](./State_Department_for_Children_Services___Service_Delivery.md)
     *   [Department of Refugee Services](./_REFUGEE_SERVICES___Service_Delivery.md)
-    *   [Internal Security and National Administration](./Internal_Security_and_National_Administration___Service_Delivery.md)
-    *   [State law office registra of Marriages](./OFFICE_OF_THE_ATTORNEY_GENERAL_AG___Service_Delivery.md)
+    *   [State Department for Internal Security and National Administration](./Internal_Security_and_National_Administration___Service_Delivery.md)
+    *   [Office of the Attorney General and Department of Justice](./OFFICE_OF_THE_ATTORNEY_GENERAL_AG___Service_Delivery.md)
 
 #### [Room 2: Coordination, Culture & Specialised Services](./Breakout_Room_2_Coordination_Culture_Specialised.md)
 *   **Facilitator:** Joash
@@ -26,36 +26,36 @@ Detailed matrices and notes for each session can be found in their respective do
 *   **Participating MDAs:**
     *   [Assets Recovery Agency](./Assets_Recovery_Agency___Service_Delivery.md)
     *   [Cabinet Office](./CABINET_OFFICE___Service_Delivery.md)
-    *   [Culture and Heritage](./Culture_and_Heritage___Service_Delivery.md)
-    *   [Government Spokesperson](./Government_Spokesperson___Service_Delivery.md)
+    *   [State Department for Culture and Heritage](./Culture_and_Heritage___Service_Delivery.md)
+    *   [Office of the Government Spokesperson](./Government_Spokesperson___Service_Delivery.md)
     *   [Kenya Broadcasting Corporation](./Kenya_Broadcasting_Corporation___Service_Delivery.md)
-    *   [National Government Coordination](./National_Government_Coordination___Service_Delivery.md)
+    *   [State Department for National Government Coordination](./National_Government_Coordination___Service_Delivery.md)
     *   [Office of the Chief of Staff](./OFFICE_OF_THE_CHIEF_OF_STAFF___Whole_of_Government_Oversight.md)
     *   [Office of the Head of Public Service (OHPS)](./OFFICE_OF_THE_HEAD_OF_PUBLIC_SERVICE_OHPS___Executive_Coordination.md)
     *   [State House](./State_House___Service_Delivery.md)
-    *   [Sports and the Arts](./Sports_and_the_Arts___Service_Delivery.md)
+    *   [State Department for Sports and the Arts](./Sports_and_the_Arts___Service_Delivery.md)
     *   [State Department for Special Programmes](./State_Department_for_Special_Programmes___Service_Delivery.md)
-    *   [Youth Affairs](./Youth_Affairs___Service_Delivery.md)
-    *   [State Dept for Parliamentary Affairs](./STATE_DEPARTMENT_FOR_PARLIAMENTARY_AFFAIRS___Service_Delivery.md)
+    *   [State Department for Youth Affairs](./Youth_Affairs___Service_Delivery.md)
+    *   [State Department for Parliamentary Affairs](./STATE_DEPARTMENT_FOR_PARLIAMENTARY_AFFAIRS___Service_Delivery.md)
 
 #### [Room 3: Policy, Economy & Foundational Systems](./Breakout_Room_3_Policy_Economy_Foundational.md)
 *   **Facilitator:** Abel
 *   **Assistant:** Brenda
 *   **Category:** Policy direction, economic systems, planning, regulatory frameworks, and foundational digital infrastructure.
 *   **Participating MDAs:**
-    *   [Agriculture_and_Food_Authority](./Agriculture_and_Food_Authority___Service_Delivery.md)
+    *   [Agriculture and Food Authority (AFA)](./Agriculture_and_Food_Authority___Service_Delivery.md)
     *   [Athi Water Works Development Agency](./Athi_Water_Works_Development_Agency___Service_Delivery.md)
-    *   [Energy <span style="color: green;">(Updated)</span>](./Energy___Service_Delivery.md)
+    *   [State Department for Energy <span style="color: green;">(Updated)</span>](./Energy___Service_Delivery.md)
     *   [ICT Authority](./ICT_Authority___Service_Delivery.md)
-    *   [Kenya National Qualifications Authority <span style="color: green;">(Updated)</span>](./Kenya_National_Qualifications_Authority___Service_Delivery.md)
-    *   [Micro, Small and Medium Enterprise Development <span style="color: green;">(Updated)</span>](./Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md)
-    *   [National Commission For Science Technology and Innovation (NACOSTI) <span style="color: green;">(Updated)</span>](./National_Commission_For_Science_Technology_and_Innovation___Service_Delivery.md)
+    *   [Kenya National Qualifications Authority (KNQA) <span style="color: green;">(Updated)</span>](./Kenya_National_Qualifications_Authority___Service_Delivery.md)
+    *   [State Department for MSME Development <span style="color: green;">(Updated)</span>](./Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md)
+    *   [State Department for Science, Research and Innovation (SRI / NACOSTI) <span style="color: green;">(Updated)</span>](./National_Commission_For_Science_Technology_and_Innovation___Service_Delivery.md)
     *   [National Environment Management Authority (NEMA) <span style="color: green;">(Updated)</span>](./National_Environment_Management_Authority___Service_Delivery.md)
     *   [State Department for ICT and the Digital Economy (Strategic)](./State_Department_of_ICT___Service_Delivery.md)
     *   [State Department for Broadcasting and Telecommunications (Strategic)](./Broadcasting_and_Telecommunications___Service_Delivery.md)
     *   [Government Press (Strategic Records Infrastructure)](./Government_Press___Service_Delivery.md)
-    *   [TVET](./Technical_Vocational_Education_and_Training___Service_Delivery.md)
-    *   [State Dept for Co-operatives](./Cooperatives___Service_Delivery.md)
+    *   [State Department for Technical and Vocational Education and Training (TVET)](./Technical_Vocational_Education_and_Training___Service_Delivery.md)
+    *   [State Department for Co-operatives](./Cooperatives___Service_Delivery.md)
     *   [State Department for Economic Planning](./State_Department_for_Economic_Planning___Service_Delivery.md)
     *   [State Department for Livestock Development (SDLD)](./State_Department_for_Livestock_Development___Service_Delivery.md)
 

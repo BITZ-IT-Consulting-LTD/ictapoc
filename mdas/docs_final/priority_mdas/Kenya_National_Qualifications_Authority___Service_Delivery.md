@@ -1,7 +1,8 @@
 # KENYA NATIONAL QUALIFICATIONS AUTHORITY (KNQA) – Service Delivery
 
 ## Cover Page
-- **Ministry/Department/Agency (MDA):** Ministry of Education
+- **Ministry:** Ministry of Education
+- **State Department:** State Department for Science, Research and Innovation (SRI)
 - **Authority:** Kenya National Qualifications Authority (KNQA)
 - **Process Name:** End-to-End Qualification Validation and Alignment
 - **Document Version:** 3.0 (Government Process Re-engineered)

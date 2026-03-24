@@ -1,7 +1,7 @@
 # NATIONAL ENVIRONMENT MANAGEMENT AUTHORITY (NEMA) – Advanced Regulatory Ecosystem
 
 ## Cover Page
-- **Ministry/Department/Agency (MDA):** Ministry of Environment, Climate Change and Forestry
+- **Ministry:** Ministry of Environment, Climate Change and Forestry
 - **Authority:** National Environment Management Authority (NEMA)
 - **Document Type:** Regulatory System Enhancement Document (BPR Aligned)
 - **Document Version:** 3.1 (Strategic Maturity Model)

@@ -1,8 +1,8 @@
 # STATE DEPARTMENT FOR SCIENCE, RESEARCH AND INNOVATION (SRI) – Advanced Research Ecosystem
 
 ## Cover Page
-- **Ministry/Department/Agency (MDA):** Ministry of Education
-- **Department:** State Department for Science, Research and Innovation (SRI)
+- **Ministry:** Ministry of Education
+- **State Department:** State Department for Science, Research and Innovation (SRI)
 - **Primary Authority:** National Commission for Science, Technology and Innovation (NACOSTI)
 - **Document Type:** End-to-End Service Lifecycle Document (BPR Aligned)
 - **Document Version:** 3.1 (Strategic Governance Model)
@@ -22,18 +22,67 @@ The transition shifts the department from a "transactional permit issuer" to a *
 
 ---
 
-# PART 2: ENHANCED SERVICE LIFECYCLE MODEL
+---
+
+# PART 2: AS-IS PROCESS (LEGACY REALITY)
+
+The current operational state of research licensing is characterized by manual intersections, bank-based financial reconciliation, and fragmented communication with Institutional Review Boards (IRBs).
+
+### 2.1 AS-IS Process Flowchart (Manual/Sequential)
+
+```mermaid
+flowchart TD
+    Start(("Start")) --> Submit["1. Manual / Portal Submission of Proposal"]
+    
+    subgraph Intake_Layer["Document Intake"]
+        Submit --> Vet["2. Physical Review for Completeness"]
+        Vet --> Ack["3. Issue Manual Acknowledgment"]
+    end
+
+    subgraph Vetting_Layer["Technical Review"]
+        Ack --> Assign["4. Manual Identification of SMEs"]
+        Assign --> ExpertRev["5. Expert Review via Email/Hardcopy"]
+    end
+
+    subgraph Finance_Layer["Settlement"]
+        ExpertRev --> Demand["6. Issue Manual Payment Demand"]
+        Demand --> Bank["7. Researcher Pays at Bank & Returns Slip"]
+        Bank --> Reconcile["8. Office Verification of Bank Slip"]
+    end
+
+    subgraph Outcome_Layer["Certification"]
+        Reconcile --> Appr["9. Final Approval & DG Signing"]
+        Appr --> Issue["10. Issuance of Physical / PDF License"]
+    end
+
+    Issue --> End(("End Cycle"))
+```
+
+### 2.2 AS-IS Process Details
+
+| Step | Role | Action | Tool/System | Pain Points |
+| :--- | :--- | :--- | :--- | :--- |
+| **1** | Researcher | **Submission:** Enters details and uploads proposal. | Portal / Email | No real-time link to academic standing registries. |
+| **2** | Clerk | **Completeness Check:** Manually verifies documents. | Checklist | Subjective and slow. |
+| **3** | Technical Officer| **Expert Assignment:** Searches for a suitable examiner. | Spreadsheet / Memory | Inefficient; potential for bias or delays. |
+| **4** | Examiner | **Review:** Vets the study's technical and ethical merit. | Word / Email | No integration with the ethics committee's system. |
+| **5** | Finance Officer | **Reconciliation:** Wait for bank slip to clear manually. | Bank Statements | **Primary Bottleneck:** Takes 3-5 business days. |
+| **6** | Director Gen. | **Sign-off:** Final decision on the permit. | Physical / Digitized Sign | Non-verifiable output for many field officers. |
+
+---
+
+# PART 3: ENHANCED SERVICE LIFECYCLE MODEL (TO-BE)
 
 The SRI service model is structured into three distinct phases to ensure operational realism and regulatory depth.
 
-### 2.1 The Research Lifecycle Journey
+### 3.1 The Research Lifecycle Journey
 1.  **Pre-Service (Awareness & Guidance):** Proactive engagement via the SRI portal to provide "Researcher Onboarding Kits" and ethical guidelines before an application is even started.
 2.  **Core-Service (The Licensing Track):** The streamlined path from Digital Application to Vetting, Approval, and Issuance.
 3.  **Post-Service (Monitoring & Compliance):** Ongoing tracking of research progress, mandatory reporting of findings, and feedback loops for policy improvement.
 
 ---
 
-# PART 3: UPDATED PROCESS DESIGN (DETAILED)
+# PART 4: UPDATED PROCESS DESIGN (DETAILED)
 
 ```mermaid
 flowchart TD
@@ -61,13 +110,13 @@ flowchart TD
     end
 ```
 
-### 3.1 Decision Logic and SLAs
+### 4.1 Decision Logic and SLAs
 - **Standard Vetting:** (Local Students) Target SLA: **48 Hours**. Decision rules based on pre-vetted institutional lists.
 - **Complex Vetting:** (Foreign Experts / High Sensitive Areas) Target SLA: **10 Business Days**. Requires human-in-the-loop SME review and multi-agency clearance.
 
 ---
 
-# PART 4: PRE + CORE + POST SERVICE STRUCTURE
+# PART 5: PRE + CORE + POST SERVICE STRUCTURE
 
 | Phase | Category | Process Element | Mode |
 | :--- | :--- | :--- | :--- |
@@ -79,7 +128,7 @@ flowchart TD
 
 ---
 
-# PART 5: RECORDS & DATA GOVERNANCE
+# PART 6: RECORDS & DATA GOVERNANCE
 
 1.  **Digital Records Lifecycle:** All research proposals, emails, and data artifacts are captured and retained according to the **National Records Retention Policy**.
 2.  **Intellectual Property (IP) Protection:** Integration of **KIPI** data to ensure research findings don't infringe on existing patents and to facilitate IP registration of new innovations.
@@ -88,7 +137,7 @@ flowchart TD
 
 ---
 
-# PART 6: DPI & INTEGRATION
+# PART 7: DPI & INTEGRATION
 
 The SRI platform acts as a terminal within the **Kenya DSAP Architecture**:
 - **Identity:** Using **Maisha Namba** for researcher identity and **BRS** for institutional verification.
@@ -98,7 +147,7 @@ The SRI platform acts as a terminal within the **Kenya DSAP Architecture**:
 
 ---
 
-# PART 7: IMPLEMENTATION PHASING
+# PART 8: IMPLEMENTATION PHASING
 
 - **Short-Term (0-6 Months):** Digitization of the Application and Payment layers. Transition of physical licenses to PDF with QR codes. (Hybrid Model).
 - **Medium-Term (6-18 Months):** Full API integration with KNQA, CUE, and major universities via X-Road. Implementation of the **Full Ethics Sync** (ERC).
@@ -106,7 +155,7 @@ The SRI platform acts as a terminal within the **Kenya DSAP Architecture**:
 
 ---
 
-# PART 8: GOVERNANCE & CAPACITY
+# PART 9: GOVERNANCE & CAPACITY
 
 ### 8.1 Institutional Roles
 - **Ministry (SRI):** Policy oversight and high-level strategic direction.
@@ -121,7 +170,7 @@ The SRI platform acts as a terminal within the **Kenya DSAP Architecture**:
 
 ---
 
-# PART 9: CHANGE LOG
+# PART 10: CHANGE LOG
 
 | Area | Original Issue | Change Made | Impact |
 | :--- | :--- | :--- | :--- |
