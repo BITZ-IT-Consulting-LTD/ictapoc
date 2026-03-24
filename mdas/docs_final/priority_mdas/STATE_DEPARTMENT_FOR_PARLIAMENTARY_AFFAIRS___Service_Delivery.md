@@ -11,7 +11,12 @@
 - **Life-Cycle Group:** Cradle to Death (5. Civic Participation & Governance)
  
 ---
- 
+
+## Service Mandate
+The State Department for Parliamentary Affairs is mandated to coordinate the identification, prioritization, and enactment of policy and legislative initiatives within the Executive branch. It acts as a bridge between the Executive and Parliament, facilitating the interaction for effective government business, ensuring public participation in the legislative process, and monitoring the progress of government-sponsored bills and policies in the legislature.
+
+---
+
 ## Executive Summary
 The State Department for Parliamentary Affairs is mandated to coordinate the National Government's legislative agenda, facilitate seamless interaction between the Executive and Parliament, and strengthen policy coordination across Ministries, Departments, and Agencies (MDAs). It ensures effective government business and enhances accountability.
  

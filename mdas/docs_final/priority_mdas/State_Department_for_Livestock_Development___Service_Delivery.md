@@ -12,6 +12,11 @@
 
 ---
 
+## Service Mandate
+The State Department for Livestock Development is mandated to promote, regulate, and facilitate the development of the livestock sector in Kenya. Its core responsibilities include livestock policy formulation, improving livestock productivity and quality, managing livestock health and disease control, promoting innovation and digital agriculture within the livestock industry, and supporting farmers through capacity building and infrastructure development such as milk coolers.
+
+---
+
 ## Executive Summary
 The State Department for Livestock Development (SDLD) regulates veterinary services, slaughterhouse operations, and livestock health across Kenya. The current licensing process for veterinary practitioners and slaughterhouse operators is entirely manual and paper-based, administered at county level with no integration between the Kenya Veterinary Board (KVB), KRA, and national livestock databases. This fragmentation leads to significant processing delays, undetected expired licences, and inconsistent compliance enforcement across counties. The transition to the Kenya DSAP Architecture aims to establish the National Livestock Digital Registry (NLDR) as the single source of truth for all practitioners and facilities, while integrating with KVB, KRA, IPRS, and the Government Payment Aggregator (GPA) to automate credential verification, risk-based licensing, and digital certificate issuance.
 

@@ -15,6 +15,11 @@
 
 ---
 
+## Service Mandate
+The State Department for Economic Planning is mandated to coordinate national and sectoral development planning in Kenya. Its functions include managing national statistics (KNBS), population policy management, monitoring and evaluation of economic trends through the National Integrated Monitoring and Evaluation System (NIMES), facilitating the implementation of Sustainable Development Goals (SDGs), and integrating county development planning with national frameworks.
+
+---
+
 ## Executive Summary
 The State Department for Economic Planning (SDEP) is the central agency responsible for national development planning and policy coordination in Kenya. It ensures that all government actions, at both national and county levels, are evidence-based and aligned with long-term strategic goals like Kenya Vision 2030 and the Bottom-up Economic Transformation Agenda (BETA). Currently, the National Development Planning process is hindered by manual document submissions, fragmented data in silos, and slow physical validation cycles. The proposed digital transformation aims to establish a **Unified National Planning & M&E Portal**, integrating with MDAs and Counties via the **Huduma Bridge** to automate alignment checks, streamline public participation, and enable real-time tracking of development outcomes.
 

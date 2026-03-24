@@ -11,7 +11,12 @@
 - **Life-Cycle Group:** Cradle to Death (4. Employment & Business)
  
 ---
- 
+
+## Service Mandate
+The Ministry of Co-operatives and Micro, Small and Medium Enterprises (MSMEs) Development is mandated to formulate, adopt, and implement policy and legal frameworks for the development and growth of all co-operatives and MSMEs in Kenya. Its key functions include cooperative policy development, promotion of cooperative ventures, supervision and oversight of cooperative societies, cooperative auditing, financial services policy, and coordinating the transformation of the MSME sector through capacity development and financial inclusion.
+
+---
+
 ## Executive Summary
 The Ministry of Co-operatives and Micro, Small and Medium Enterprises (MSMEs) Development is mandated to formulate, adopt, and implement policy and legal frameworks for the development and growth of all co-operatives in Kenya. The Ministry is responsible for the registration, regulation, oversight, promotion, and capacity building of the cooperative sector, aiming to enhance economic growth, financial inclusion, wealth creation, and improved livelihoods for millions of Kenyans.
  

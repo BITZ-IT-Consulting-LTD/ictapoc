@@ -70,8 +70,7 @@
               "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -178,7 +177,7 @@
       "bases:Create new base": false
     }
   },
-  "active": "82927f003136ab8b",
+  "active": "41af491c0ab1eed6",
   "lastOpenFiles": [
     "workshop_mdas.csv",
     "assets/awwda/Water Treatment Process Flow Chart.png",
