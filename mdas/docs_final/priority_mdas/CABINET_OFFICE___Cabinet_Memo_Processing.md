@@ -9,8 +9,15 @@
 
 ---
 
+---
+
+## Service Mandate
+The Cabinet Office, under the Executive Office of the President, is mandated to facilitate the efficient functioning of the Cabinet. It is responsible for the preparation, processing, and circulation of Cabinet Memoranda, maintaining the official records of Cabinet meetings, coordinating the implementation of Cabinet decisions, and providing administrative support to the Cabinet and its committees.
+
+---
+
 ## Executive Summary
-The Ministry of Investment, Trade and Industry in Kenya is dedicated to driving economic recovery, growth, and transformation. It achieves this by promoting and facilitating domestic and foreign investments, enhancing trade opportunities, and fostering industrial development through initiatives like Special Economic Zones, Export Processing Zones, and value addition programs.
+The Cabinet Office is the core administrative engine of the National Executive. This process focuses on the end-to-end lifecycle of Cabinet Memoranda (CABMEMO)—from submission by line ministries, through technical vetting for policy and fiscal alignment, to final deliberation and recording of resolutions. The transition from a manual, paper-based workflow to a secure Digital Cabinet System aims to eliminate delays, prevent information leakage, and ensure an immutable record of all executive decisions.
 
 ---
 

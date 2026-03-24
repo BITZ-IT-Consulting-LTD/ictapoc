@@ -9,6 +9,11 @@
 
 ---
 
+## Service Mandate
+The State Department for Internal Security and National Administration is mandated to provide internal security oversight and coordinate National Government functions at the county level. Its responsibilities include national government administration, border management, national cohesion and integration policy, disaster and emergency response coordination, registration of persons (IPRS), management of the National Integrated Identity Management System (NIIMS), and oversight of betting, lotteries, and gaming.
+
+---
+
 ## Executive Summary
 Represents 'Governance Justice Law and Order' cluster for balanced coverage; entity type: Department. Included as Tier 3 for light‑touch desk review/survey.
 

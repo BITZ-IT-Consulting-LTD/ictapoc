@@ -13,6 +13,11 @@
 
 ---
 
+## Service Mandate
+The Office of the Head of Public Service is responsible for managing the operations of the public service, coordinating policies across ministries, and supervising the implementation of government programs. Under Executive Order No. 2 of 2023, it oversees the administration of all State Corporations and public entities, facilitates communication between the Presidency and MDAs, and ensures the general efficiency and effectiveness of the civil service.
+
+---
+
 ## Executive Summary
 The Office of the Head of Public Service (OHPS) is the apex office for coordinating government-wide policy implementation and tracking the execution of Presidential Directives across all MDAs. The current process is heavily reliant on manual tracking, memo-based communication, and periodic quarterly reports from Principal Secretaries. The transition to the Kenya DSAP Architecture aims to create a real-time, digital "Executive Dashboard" that tracks compliance and performance via the national service bus.
 

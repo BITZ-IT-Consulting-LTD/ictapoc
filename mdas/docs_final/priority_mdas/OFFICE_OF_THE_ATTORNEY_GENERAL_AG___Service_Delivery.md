@@ -9,6 +9,11 @@
 
 ---
 
+## Service Mandate
+The Office of the Attorney General is established under Article 156 of the Constitution of Kenya to serve as the principal legal adviser to the National Government. Its mandate includes promoting, protecting, and upholding the rule of law, defending the public interest, advising government ministries and departments on legal matters, negotiating and drafting local and international agreements, and representing the National Government in court in all civil and constitutional matters.
+
+---
+
 ## Executive Summary
 The Office of the Attorney General (through the Registrar of Marriages) is mandated to register, solemnize, and maintain records of statutory marriages in Kenya. This includes processing notices of marriage, issuing certificates, conducting civil weddings, and updating the registry following court-ordered divorce decrees. The department plays a critical role in providing secure vital life-event records and family status documentation for citizens.
 

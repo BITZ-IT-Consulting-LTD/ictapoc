@@ -11,7 +11,12 @@
 - **Life-Cycle Group:** Cradle to Death (3. Living & Working)
  
 ---
- 
+
+## Service Mandate
+The Athi Water Works Development Agency (AWWDA) is mandated under the Water Act 2016 to develop, maintain, and manage national public water works in Nairobi, Kiambu, and Murang'a counties. Its responsibilities include operating water works, providing bulk water services, developing water and sewerage infrastructure, and providing technical services and capacity building to county governments and other water service providers.
+
+---
+
 ## Executive Summary
 Athi Water Works Development Agency (AWWDA) is responsible for the development, rehabilitation, and operation of water and sanitation infrastructure in Kenya's greater Nairobi and Coast regions, serving millions of citizens and industrial consumers. AWWDA's core service delivery spans three operational domains: infrastructure planning, design and development; water operations including raw water abstraction, treatment, and bulk transmission; and environmental compliance covering permits, health and safety, and climate change.
  

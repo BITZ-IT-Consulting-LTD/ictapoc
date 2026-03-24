@@ -9,6 +9,11 @@
 
 ---
 
+## Service Mandate
+The State Department for Technical and Vocational Education and Training (TVET) is responsible for the development and coordination of a national technical and vocational training system. Mandated by the TVET Act 2013, its functions include policy formulation for tertiary technical education, curriculum development and assessment, promoting access and equity in training, and overseeing the quality and relevance of skills development to meet the country's labor market needs.
+
+---
+
 ## Executive Summary
 The State Department for TVET manages its records following a strict lifecycle approach: **Creation → Use → Maintenance → Storage → Archival → Disposal**. This process ensures compliance with legal requirements including the Kenya National Archives and Documentation Service (KNADS) Cap. 19, the Data Protection Act 2019, Public Service Commission guidelines, and ICT Authority standards. The process governs both physical and digital records, managing their journey from initial capture to permanent preservation or secure destruction.
 
