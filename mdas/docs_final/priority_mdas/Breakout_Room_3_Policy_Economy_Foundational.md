@@ -7,19 +7,19 @@
 
 ## Participating MDAs & Service Mandates
 
-- **[Livestock & Food Authority (AFA) + National Livestock Platforms (KIAMIS)](./Agriculture_and_Food_Authority___Service_Delivery.md)**: Regulation and promotion of specific scheduled crops, ensuring food safety standards, and agricultural market development.
+- **[Agriculture and Food Authority (AFA)](./Agriculture_and_Food_Authority___Service_Delivery.md)**: Regulation and promotion of specific scheduled crops, ensuring food safety standards, and agricultural market development.
 - **[Kenya National Qualifications Authority (KNQA) <span style="color: green;">(Updated)</span> – Alignment and Validation of Qualifications](./Kenya_National_Qualifications_Authority___Service_Delivery.md)**: Establishes and manages the national qualifications framework to ensure standards and quality in education and training.
 - **[National Environment Management Authority (NEMA) <span style="color: green;">(Updated)</span>](./National_Environment_Management_Authority___Service_Delivery.md)**: Oversight of environmental management, environmental impact assessments (EIA), and enforcement of environmental regulations.
 - **[Athi Water Works Development Agency](./Athi_Water_Works_Development_Agency___Service_Delivery.md)**: Responsible for the development and management of water and sewerage infrastructure within the Nairobi metropolitan region.
-- **[State Department for MSMEs <span style="color: green;">(Updated)</span>](./Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md)**: Promotion and development of MSMEs through policy support and business empowerment programs.
+- **[State Department for MSME Development <span style="color: green;">(Updated)</span>](./Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md)**: Promotion and development of MSMEs through policy support and business empowerment programs.
 - **[State Department for Energy <span style="color: green;">(Updated)</span>](./Energy___Service_Delivery.md)**: Formulation of energy policies, oversight of power generation/distribution, and promotion of renewable energy sources.
-- **[State Department for Science, Research & Innovation <span style="color: green;">(Updated)</span>](./National_Commission_For_Science_Technology_and_Innovation___Service_Delivery.md)**: Regulation of science, technology, and research sectors to ensure quality and ethical standards in innovation.
+- **[State Department for Science, Research and Innovation (SRI / NACOSTI) <span style="color: green;">(Updated)</span>](./National_Commission_For_Science_Technology_and_Innovation___Service_Delivery.md)**: Regulation of science, technology, and research sectors to ensure quality and ethical standards in innovation.
 - **[State Department for ICT and the Digital Economy (Large – Strategic)](./State_Department_of_ICT___Service_Delivery.md)**: Development of digital infrastructure, standardisation of government software, and promotion of the digital economy.
 - **[State Department for Broadcasting and Telecommunications (Large – Strategic)](./Broadcasting_and_Telecommunications___Service_Delivery.md)**: Oversight of broadcasting, government communication, and telecommunication services affecting national information access.
 - **[ICT Authority (ICTA) (Large – Strategic / Technical Enabler)](./ICT_Authority___Service_Delivery.md)**: Implements the national ICT strategy, manages e-government services, and coordinates digital shared services across government.
 - **[Government Press (Medium–Large – Strategic Records Infrastructure)](./Government_Press___Service_Delivery.md)**: Produces statutory notices, gazette supplements, and official documents, providing legally authoritative public information.
-- **[TVET](./Technical_Vocational_Education_and_Training___Service_Delivery.md)**: Policy and regulatory framework for Technical and Vocational Education and Training.
-- **[State Dept for Co-operatives](./Cooperatives___Service_Delivery.md)**: Formulates policy for the growth, regulation, and capacity building of the cooperative movement.
+- **[State Department for Technical and Vocational Education and Training (TVET)](./Technical_Vocational_Education_and_Training___Service_Delivery.md)**: Policy and regulatory framework for Technical and Vocational Education and Training.
+- **[State Department for Co-operatives](./Cooperatives___Service_Delivery.md)**: Formulates policy for the growth, regulation, and capacity building of the cooperative movement.
 - **[State Department for Economic Planning](./State_Department_for_Economic_Planning___Service_Delivery.md)**: Provides leadership in national development planning and ensuring government policies are evidence-based and aligned with long-term goals.
 
 

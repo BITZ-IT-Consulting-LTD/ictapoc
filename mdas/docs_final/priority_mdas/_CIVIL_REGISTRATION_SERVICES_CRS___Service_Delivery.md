@@ -1,7 +1,8 @@
 # CIVIL REGISTRATION SERVICES (CRS) – Service Delivery Refactored
 
 ## Cover Page
-- **Ministry/Department/Agency (MDA):** Ministry of Interior and National Administration
+- **Ministry:** Ministry of Interior and National Administration
+- **State Department:** State Department for Immigration and Citizen Services
 - **Department:** Department of Civil Registration Services (CRS)
 - **Document Type:** Business Process Document (Refactored)
 - **Document Version:** 3.0 (Government Ready)

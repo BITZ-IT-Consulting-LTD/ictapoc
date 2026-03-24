@@ -1,8 +1,8 @@
 # STATE DEPARTMENT FOR MSME DEVELOPMENT – MSME Programme Ecosystem
 
 ## Cover Page
-- **Ministry/Department/Agency (MDA):** Ministry of Co-operatives and MSMEs
-- **Department:** State Department for MSME Development
+- **Ministry:** Ministry of Co-operatives and Micro, Small and Medium Enterprises (MSMEs) Development
+- **State Department:** State Department for MSME Development
 - **Document Type:** Integrated Programme Ecosystem Document (BPR Aligned)
 - **Document Version:** 4.1 (Strategic Transformation Template)
 - **Date:** 2026-03-24
@@ -21,11 +21,56 @@ This document refactors the model to center on a **multi-path MSME journey**. By
 
 ---
 
-# PART 2: MSME PROGRAMME ECOSYSTEM MODEL
+---
+
+# PART 2: AS-IS PROCESS (CURRENT REALITY)
+
+The current operational state of MSME support is characterized by siloed, fund-centric workflows that operate independently of a unified MSME development strategy.
+
+### 2.1 AS-IS Process Flowchart (Linear/Disbursement-Centric)
+
+```mermaid
+flowchart TD
+    Start(("Start")) --> Apply["1. Manual / Fund-Portal Application"]
+    
+    subgraph Review_Layer["Siloed Review"]
+        Apply --> DocCheck["2. Manual Document Verification"]
+        DocCheck --> CreditEval["3. Field-Based Credit Assessment"]
+    end
+
+    subgraph Decision_Layer["Committee Approval"]
+        CreditEval --> CommReview["4. Management Committee Review"]
+        CommReview --> ApprGateway{"Approved?"}
+    end
+
+    subgraph Operations["Disbursement & Tracking"]
+        ApprGateway -- "Yes" --> Disburse["5. Manual Bank / Mobile Disbursement"]
+        ApprGateway -- "No" --> Notify["6. Notification of Rejection"]
+        Disburse --> Monitor["7. Periodic Manual Field Monitoring"]
+    end
+
+    Notify --> End(("End Cycle"))
+    Monitor --> End
+```
+
+### 2.2 AS-IS Process Details
+
+| Step | Role | Action | Tool/System | Pain Points |
+| :--- | :--- | :--- | :--- | :--- |
+| **1** | Applicant | **Application:** Applies for a specific fund (e.g., Uwezo, WEF, Hustler). | Paper / Web Portal | Siloed entry; no "once-only" data reuse. |
+| **2** | Fund Officer | **Verification:** Checks business certificates and ID copies. | Manual / BRS Lookup | Redundant verification if already known to another fund. |
+| **3** | Credit Officer | **Assessment:** Evaluates business viability via physical visits. | Physical Visit | High operational cost; no central digital history. |
+| **4** | Committee | **Approval:** Collective decision-making on funding. | Meeting / Letter | Bottlenecks due to scheduled meetings. |
+| **5** | Finance Dept | **Disbursement:** Transfers funds to the MSME. | Bank / M-Pesa | Fragmented disbursement rails. |
+| **6** | Field Officer | **Monitoring:** Manual follow-ups on business performance. | Field Notes / Paper | No real-time data on business impact or jobs. |
+
+---
+
+# PART 3: MSME PROGRAMME ECOSYSTEM MODEL (TO-BE)
 
 The MSME model is redefined as a **Lifecycle-Based Ecosystem** rather than a standalone financial service.
 
-### 2.1 The MSME Lifecycle Journey
+### 3.1 The MSME Lifecycle Journey
 1.  **Onboarding & Identity:** Creating a legal "MSME Persona" via the **MSME Registry**.
 2.  **Profiling & Needs Assessment:** Using digital diagnostic tools to identify the business's current maturity (Startup, Growth, Mature).
 3.  **Path Routing:** Directing the MSME to one or more specialized support tracks (e.g., KJET Clusters, Training, or Finance).
@@ -34,7 +79,7 @@ The MSME model is redefined as a **Lifecycle-Based Ecosystem** rather than a sta
 
 ---
 
-# PART 3: UPDATED PROCESS ARCHITECTURE
+# PART 4: UPDATED PROCESS ARCHITECTURE
 
 ## 3.1 End-to-End MSME Journey (Non-Linear)
 
@@ -83,7 +128,7 @@ flowchart TD
 
 ---
 
-# PART 4: KJET INTEGRATION (FLAGSHIP PROGRAMME)
+# PART 5: KJET INTEGRATION (FLAGSHIP PROGRAMME)
 
 The **Kenya Jobs and Economic Transformation (KJET)** programme is embedded as the high-tier "Impact Service" within the department.
 
@@ -94,7 +139,7 @@ The **Kenya Jobs and Economic Transformation (KJET)** programme is embedded as t
 
 ---
 
-# PART 5: HYBRID IMPLEMENTATION MODEL
+# PART 6: HYBRID IMPLEMENTATION MODEL
 
 To ensure practical execution within the current legal framework:
 
@@ -106,7 +151,7 @@ To ensure practical execution within the current legal framework:
 
 ---
 
-# PART 6: DIGITAL PUBLIC INFRASTRUCTURE (DPI) ALIGNMENT
+# PART 7: DIGITAL PUBLIC INFRASTRUCTURE (DPI) ALIGNMENT
 
 1.  **Unified MSME Registry:** A single source of truth for business metadata, replacing siloed fund-specific databases.
 2.  **Huduma Bridge (X-Road):** Real-time identity verification with IPRS and business compliance checks with BRS/KRA.
@@ -115,7 +160,7 @@ To ensure practical execution within the current legal framework:
 
 ---
 
-# PART 7: POLICY & LEGAL CONSTRAINTS
+# PART 8: POLICY & LEGAL CONSTRAINTS
 
 ### 7.1 Identified Constraints
 - **PFMA Act Requirements:** The Public Finance Management Act currently mandates physical vouchers and non-digital signatures for certain fund categories (Uwezo/WEF).
@@ -128,7 +173,7 @@ To ensure practical execution within the current legal framework:
 
 ---
 
-# PART 8: CHANGE LOG
+# PART 9: CHANGE LOG
 
 | Area | Original Issue | Change Made | Impact |
 | :--- | :--- | :--- | :--- |
