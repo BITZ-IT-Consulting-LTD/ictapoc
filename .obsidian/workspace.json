@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/guides/poc_deployment_dev_ops_plan.md",
+                "file": "mdas/docs_final/priority_mdas/Kenya_National_Qualifications_Authority___Service_Delivery.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "poc_deployment_dev_ops_plan"
+              "title": "Kenya_National_Qualifications_Authority___Service_Delivery"
             }
           }
         ]
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 794.5
   },
   "right": {
     "id": "8a18ffc997ca36ca",
@@ -183,21 +183,30 @@
       "bases:Create new base": false
     }
   },
-  "active": "a2b5e9b947f75dec",
+  "active": "d6da66a7c74293a3",
   "lastOpenFiles": [
-    "frontend/dist/assets/flowchart-elk-definition-6af322e1-DnE6-shA.js",
-    "frontend/dist/assets/mindmap-definition-8da855dc-Bt6WKFd-.js",
-    "frontend/dist/assets/index-Dj542UI7.js",
-    "frontend/dist/assets/createText-1719965b-rddhY7AE.js",
-    "frontend/dist/assets/edges-96097737-DfPi7h5W.js",
-    "frontend/dist/assets/graph-BEbKayvQ.js",
-    "frontend/dist/assets/line-ObP8uqJf.js",
-    "frontend/dist/assets/blockDiagram-c4efeb88-Be4mYiHX.js",
-    "frontend/dist/assets/clone-BfYCadCj.js",
-    "frontend/dist/assets/sankeyDiagram-a04cb91d-CUydXbAH.js",
-    "frontend/dist/assets/channel-DPijjxAc.js",
-    "docs/guides/huduma_bridge_instructions.md",
+    "mdas/docs_final/priority_mdas/KNQA_Validation_Report.md",
+    "mdas/docs_final/priority_mdas/Kenya_National_Qualifications_Authority___Service_Delivery_files/libs/quarto-html/tabsets/tabsets.js",
+    "mdas/docs_final/priority_mdas/Kenya_National_Qualifications_Authority___Service_Delivery_files/libs/quarto-html/axe/axe-check.js",
+    "mdas/docs_final/priority_mdas/Kenya_National_Qualifications_Authority___Service_Delivery_files/libs/quarto-html/tippy.umd.min.js",
+    "mdas/docs_final/priority_mdas/Kenya_National_Qualifications_Authority___Service_Delivery_files/libs/quarto-html/tippy.css",
+    "mdas/docs_final/priority_mdas/Kenya_National_Qualifications_Authority___Service_Delivery_files/libs/quarto-html/tabsets",
+    "mdas/docs_final/priority_mdas/Kenya_National_Qualifications_Authority___Service_Delivery_files/libs/quarto-html/quarto.js",
+    "mdas/docs_final/priority_mdas/Kenya_National_Qualifications_Authority___Service_Delivery_files/libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css",
+    "mdas/docs_final/priority_mdas/Kenya_National_Qualifications_Authority___Service_Delivery_files/libs/quarto-html/popper.min.js",
+    "mdas/docs_final/priority_mdas/Kenya_National_Qualifications_Authority___Service_Delivery_files/libs/quarto-html/axe",
+    "mdas/docs_final/priority_mdas/Kenya_National_Qualifications_Authority___Service_Delivery_files/libs/quarto-html/anchor.min.js",
+    "mdas/docs_final/priority_mdas/Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md",
+    "mdas/docs_final/priority_mdas/Kenya_National_Qualifications_Authority___Service_Delivery.md",
+    "mdas/docs_final/priority_mdas/Energy___Service_Delivery.md",
+    "mdas/docs_final/priority_mdas/Day_2_Breakout_Rooms_Overview.md",
+    "frontend/dist/docs/architecture/BPMN_WORKFLOW_ENHANCEMENT.md",
+    "frontend/public/docs/architecture/BPMN_WORKFLOW_ENHANCEMENT.md",
+    "mdas/docs_final/priority_mdas/Energy_Business_Process_Improvement_Report.md",
+    "mdas/docs_final/priority_mdas/_CIVIL_REGISTRATION_SERVICES_CRS___Service_Delivery.md",
+    "mdas/docs_final/priority_mdas/CRS_Business_Process_Improvement_Report.md",
     "docs/guides/poc_deployment_dev_ops_plan.md",
+    "docs/guides/huduma_bridge_instructions.md",
     "docs/guides/FRONTEND_CACHE_ISSUE.md",
     "docs/guides/DEPLOYMENT.md",
     "docs/archive/developer_handover/poc_algorithm_workflow_documentation.md",
