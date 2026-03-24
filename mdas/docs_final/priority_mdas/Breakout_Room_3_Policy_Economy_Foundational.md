@@ -8,11 +8,11 @@
 ## Participating MDAs & Service Mandates
 
 - **[Livestock & Food Authority (AFA) + National Livestock Platforms (KIAMIS)](./Agriculture_and_Food_Authority___Service_Delivery.md)**: Regulation and promotion of specific scheduled crops, ensuring food safety standards, and agricultural market development.
-- **[Kenya National Qualifications Authority (KNQA) – Alignment & Validation of Qualifications](./Kenya_National_Qualifications_Authority___Service_Delivery.md)**: Establishes and manages the national qualifications framework to ensure standards and quality in education and training.
+- **[Kenya National Qualifications Authority (KNQA) (Updated) – Alignment and Validation of Qualifications](./Kenya_National_Qualifications_Authority___Service_Delivery.md)**: Establishes and manages the national qualifications framework to ensure standards and quality in education and training.
 - **[National Environment Management Authority (NEMA)](./National_Environment_Management_Authority___Service_Delivery.md)**: Oversight of environmental management, environmental impact assessments (EIA), and enforcement of environmental regulations.
 - **[Athi Water Works Development Agency](./Athi_Water_Works_Development_Agency___Service_Delivery.md)**: Responsible for the development and management of water and sewerage infrastructure within the Nairobi metropolitan region.
 - **[State Department for MSMEs](./Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md)**: Promotion and development of MSMEs through policy support and business empowerment programs.
-- **[State Department for Energy](./Energy___Service_Delivery.md)**: Formulation of energy policies, oversight of power generation/distribution, and promotion of renewable energy sources.
+- **[State Department for Energy (Updated)](./Energy___Service_Delivery.md)**: Formulation of energy policies, oversight of power generation/distribution, and promotion of renewable energy sources.
 - **[State Department for Science, Research & Innovation](./National_Commission_For_Science_Technology_and_Innovation___Service_Delivery.md)**: Regulation of science, technology, and research sectors to ensure quality and ethical standards in innovation.
 - **[State Department for ICT and the Digital Economy (Large – Strategic)](./State_Department_of_ICT___Service_Delivery.md)**: Development of digital infrastructure, standardisation of government software, and promotion of the digital economy.
 - **[State Department for Broadcasting and Telecommunications (Large – Strategic)](./Broadcasting_and_Telecommunications___Service_Delivery.md)**: Oversight of broadcasting, government communication, and telecommunication services affecting national information access.
