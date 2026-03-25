@@ -1,4 +1,4 @@
-# OFFICE OF THE GOVERNMENT SPOKESPERSON – Business Process Architecture (Updated)
+# Government Spokesperson – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Information, Communications and the Digital Economy
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Governance / Communication (Public Information)
 - **Breakout Room Classification:** Room 2 (Coordination, Culture & Specialised Services)
-- **Lead MDA (Standardised Name):** Office of the Government Spokesperson
+- **Lead MDA (Standardised Name):** Government Spokesperson
 - **Related Cross-Cutting Services:**
     - National Communication Hub (Secure Portal)
     - Identity Layer (IPRS / Maisha Namba - Spokesperson Tier)

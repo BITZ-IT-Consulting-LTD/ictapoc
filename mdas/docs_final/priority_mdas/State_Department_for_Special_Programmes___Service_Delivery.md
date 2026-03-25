@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR SPECIAL PROGRAMMES – Business Process Architecture (Updated)
+# State Department for Special Programmes – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of East African Community, the ASALs and Regional Development

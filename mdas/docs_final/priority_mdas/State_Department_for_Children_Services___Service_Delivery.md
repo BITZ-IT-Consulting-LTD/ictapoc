@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR CHILDREN SERVICES – Business Process Architecture (Updated)
+# State Department for Children Services – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Labour and Social Protection

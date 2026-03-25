@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR PARLIAMENTARY AFFAIRS – Business Process Architecture (Updated)
+# State Department for Parliamentary Affairs – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Office of the Deputy President

@@ -1,4 +1,4 @@
-# EXECUTIVE OFFICE OF THE PRESIDENT - STATE HOUSE – Business Process Architecture (Updated)
+# State House – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Executive Office of the President

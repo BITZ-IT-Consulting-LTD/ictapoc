@@ -1,4 +1,4 @@
-# AGRICULTURE AND FOOD AUTHORITY (AFA) – Business Process Architecture (Updated)
+# Livestock and Food Authority – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Agriculture and Livestock Development
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 1
 - **Strategic Category:** Economy / Agriculture (Food Security)
 - **Breakout Room Classification:** Room 3 (Agriculture & Economic Development)
-- **Lead MDA (Standardised Name):** Agriculture and Food Authority (AFA)
+- **Lead MDA (Standardised Name):** Livestock and Food Authority
 - **Related Cross-Cutting Services:**
     - KIAMIS (Kenya Integrated Agricultural Management Information System)
     - Identity Layer (IPRS / Maisha Namba - Farmer/Trader ID)

@@ -1,4 +1,4 @@
-# ATHI WATER WORKS DEVELOPMENT AGENCY (AWWDA) – Business Process Architecture (Updated)
+# Athi Water Works Development Agency – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Water, Sanitation and Irrigation

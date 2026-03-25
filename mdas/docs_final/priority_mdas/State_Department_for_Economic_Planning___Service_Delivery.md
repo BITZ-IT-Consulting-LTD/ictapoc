@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR ECONOMIC PLANNING – Business Process Architecture (Updated)
+# State Department for Economic Planning – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** The National Treasury and Economic Planning

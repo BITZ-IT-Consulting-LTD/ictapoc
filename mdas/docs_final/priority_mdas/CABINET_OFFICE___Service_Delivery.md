@@ -1,4 +1,4 @@
-# CABINET OFFICE – Business Process Architecture (Updated)
+# Cabinet Office – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Executive Office of the President

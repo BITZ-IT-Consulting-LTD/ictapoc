@@ -1,4 +1,4 @@
-# KENYA NATIONAL QUALIFICATIONS AUTHORITY (KNQA) – Business Process Architecture (Updated)
+# Kenya National Qualifications Authority – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Education

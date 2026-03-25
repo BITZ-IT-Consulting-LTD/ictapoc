@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR MSME DEVELOPMENT – Business Process Architecture (Updated)
+# Micro, Small and Medium Enterprise Development – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Co-operatives and Micro, Small and Medium Enterprises (MSME) Development
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Economy / Jobs (KJET Flagship)
 - **Breakout Room Classification:** Room 3 (Policy, Economy & Foundational Systems)
-- **Lead MDA (Standardised Name):** State Department for MSME Development
+- **Lead MDA (Standardised Name):** Micro, Small and Medium Enterprise Development
 - **Related Cross-Cutting Services:**
     - Unified MSME Registry
     - Identity Layer (IPRS / Maisha Namba)

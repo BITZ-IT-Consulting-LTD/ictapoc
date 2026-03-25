@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR NATIONAL GOVERNMENT COORDINATION – Business Process Architecture (Updated)
+# National Government Coordination – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Interior and National Administration
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Governance / Coordination (Executive Oversight)
 - **Breakout Room Classification:** Room 2 (Coordination, Culture & Specialised Services)
-- **Lead MDA (Standardised Name):** State Department for National Government Coordination
+- **Lead MDA (Standardised Name):** National Government Coordination
 - **Related Cross-Cutting Services:**
     - National Government Dashboard (NGD - Real-time)
     - Identity Layer (IPRS / Maisha Namba - Officer Tier)

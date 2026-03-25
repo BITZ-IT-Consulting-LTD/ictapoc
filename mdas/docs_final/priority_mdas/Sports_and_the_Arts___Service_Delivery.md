@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR SPORTS AND THE ARTS – Business Process Architecture (Updated)
+# Sports and the Arts – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Youth Affairs, Creative Economy and Sports
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Social / Identity / Economy (Athlete Talent Pipeline)
 - **Breakout Room Classification:** Room 2 (Coordination, Culture & Specialised Services)
-- **Lead MDA (Standardised Name):** State Department for Sports and the Arts
+- **Lead MDA (Standardised Name):** Sports and the Arts
 - **Related Cross-Cutting Services:**
     - National Athlete Registry (Unified)
     - Identity Layer (IPRS / Maisha Namba)

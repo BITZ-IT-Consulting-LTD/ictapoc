@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR ICT AND THE DIGITAL ECONOMY – Business Process Architecture (Updated)
+# State Department for ICT and the Digital Economy – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Information, Communications and the Digital Economy
