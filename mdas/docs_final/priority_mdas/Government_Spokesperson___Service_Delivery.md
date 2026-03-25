@@ -1,4 +1,4 @@
-# OFFICE OF THE GOVERNMENT SPOKESPERSON – Business Process Architecture
+# OFFICE OF THE GOVERNMENT SPOKESPERSON – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Executive Office of the President

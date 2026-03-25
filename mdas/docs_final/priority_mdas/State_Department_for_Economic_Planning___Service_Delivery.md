@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR ECONOMIC PLANNING (SDEP) – Business Process Architecture
+# STATE DEPARTMENT FOR ECONOMIC PLANNING (SDEP) – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of National Treasury and Economic Planning

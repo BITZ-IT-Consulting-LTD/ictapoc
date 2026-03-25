@@ -1,4 +1,4 @@
-# OFFICE OF THE CHIEF OF STAFF – Business Process Architecture
+# OFFICE OF THE CHIEF OF STAFF – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Executive Office of the President

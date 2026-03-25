@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR CO-OPERATIVES – Business Process Architecture
+# STATE DEPARTMENT FOR CO-OPERATIVES – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Co-operatives and Micro, Small and Medium Enterprises (MSMEs) Development

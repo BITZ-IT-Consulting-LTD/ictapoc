@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR CULTURE, ARTS AND HERITAGE – Business Process Architecture
+# STATE DEPARTMENT FOR CULTURE, ARTS AND HERITAGE – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Youth Affairs, Creative Economy and Sports

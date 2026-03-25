@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR SPECIAL PROGRAMMES – Business Process Architecture
+# STATE DEPARTMENT FOR SPECIAL PROGRAMMES – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Labour and Social Protection
