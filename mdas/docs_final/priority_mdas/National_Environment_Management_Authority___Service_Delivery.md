@@ -30,9 +30,11 @@ NEMA currently operates a **mature digital licensing portal** that facilitates:
 - **Record Archive:** Digital repository of historical licenses.
 
 **Gaps for Strategic Enhancement:**
-- **Manual Site Logs:** Lack of a standardized, geo-tagged mobile inspection framework.
+- **Service Diversification:** Integrating all regulatory permit types, including **Registration of Environmental Experts, Environmental Audits, Effluent Discharge, Emission, and Waste Transport Licenses**, into a single unified window.
+- **Manual Site Logs:** Transitioning from individual, un-coordinated physical site visits to a **Joint/Multi-Agency Geo-Tagged Mobile Inspection** framework for complex projects.
 - **Inter-Agency Latency:** Lead agency consultations (KFS, WRA) still rely on external email/physical protocols rather than native system-to-system integration.
-- **Passive Compliance:** Monitoring is largely reactive rather than based on real-time data or remote sensing.
+- **Feedback Transparency:** The lack of a formal digital mechanism for proponents to respond to specific technical concerns raised by NEMA during the review process.
+- **Public Participation:** The legal requirement for **publication of projects for public comments** needs to be structured as a digital notice-and-objection workflow.
 
 ---
 
@@ -96,10 +98,11 @@ flowchart TD
     SiteInsp --> LeadCons
     LeadCons --> RevFind
     
-    RevFind --> CommRev
-    CommRev --> DGDecision
-    DGDecision --> DecGateway
-    
+    RevFind --> Public["Public Participation & Lead Agency Comments"]
+    Public --> PropFeed["Proponent Response to Concerns/Queries"]
+    PropFeed --> CommRev["Technical committee review"]
+    CommRev --> DGDecision["Director General decision"]
+    DGDecision --> DecGateway{"Decision outcome?"}
     DecGateway -- "Reject" --> IssueRej
     DecGateway -- "Approve" --> IssueLic
     
@@ -127,8 +130,9 @@ flowchart TD
 | **3** | Env. Officer | **Screening:** Review of the project's impact level and risk category. | Internal Workflow | Determines if full EIA is needed. |
 | **4** | Env. Officer | **Site Visit:** Physical inspection of the project site. | Manual / Field Trip | **Critical Pain Point:** Lack of geo-tagging. |
 | **5** | Lead Agencies | **Inter-Agency Review:** Consultations with KFS, Water Authority, etc. | Portals / Email | **Significant Delay:** (Avg. 30 days). |
-| **6** | Committee | **Technical Review:** Consolidation of all comments and inspection data. | Committee System | Final technical oversight. |
-| **7** | Director General | **Approval:** Sign-off on the license or rejection. | DG Portal | Digital signature exists but non-NPKI. |
+| **6** | Proponent | **Proponent Feedback Loop:** Opportunity to respond to concerns. | NEMA Portal | NEW: Ensures procedural fairness. |
+| **7** | Committee | **Technical Review:** Consolidation of all comments and inspection data. | Committee System | Final technical oversight. |
+| **8** | Director General | **Approval:** Sign-off on the license or rejection. | DG Portal | Digital signature exists but non-NPKI. |
 
 ---
 

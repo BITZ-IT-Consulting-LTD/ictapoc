@@ -64,6 +64,9 @@ flowchart TD
 | **5** | Finance Dept | **Disbursement:** Transfers funds to the MSME. | Bank / M-Pesa | Fragmented disbursement rails. |
 | **6** | Field Officer | **Monitoring:** Manual follow-ups on business performance. | Field Notes / Paper | No real-time data on business impact or jobs. |
 
+> [!IMPORTANT]
+> **Manual Compliance (Uwezo Fund):** Under the **PFMA Act**, certain funds like Uwezo require mandatory physical forms, deposit slips, and manual records validation. The AS-IS reflects this legal requirement for physical signatures and paper-based audit trails.
+
 ---
 
 # PART 3: MSME PROGRAMME ECOSYSTEM MODEL (TO-BE)
@@ -130,12 +133,20 @@ flowchart TD
 
 # PART 5: KJET INTEGRATION (FLAGSHIP PROGRAMME)
 
-The **Kenya Jobs and Economic Transformation (KJET)** programme is embedded as the high-tier "Impact Service" within the department.
+The **Kenya Jobs and Economic Transformation (KJET)** programme (supported by the World Bank) is embedded as the high-tier "Impact Service" within the department.
 
-1.  **Cluster-Based Model:** MSMEs are grouped into production clusters (e.g., Textiles, Leather, Agri-processing).
-2.  **Multi-MDA Coordination:** Shared platform with the Ministry of Trade to ensure MSMEs meet export quality standards.
-3.  **Investor Linkage:** Digital "Investment Readiness" profiles shared with verified private investors via the Investment Authority portal.
-4.  **Outcome Metrics:** Direct tracking of **Direct Jobs Created** per cluster and **Sectoral GVA** contribution.
+**Strategic Alignment (Investor Inputs):**
+KJET offers a coordinated entry point for investors by aligning three key inputs:
+1. **Stronger & Predictable Business Environment:** Streamlined regulatory and policy frameworks.
+2. **Targeted Support to MSME Clusters:** Direct technical and operational assistance to high-potential sectoral groups.
+3. **Green & Sustainable Finance:** Access to innovative financing instruments that reduce risk and improve returns.
+
+**Operational Model:**
+1.  **Cluster-Based Model:** MSMEs are grouped into production clusters (e.g., Textiles, Leather, Agri-processing) to enhance competitiveness and market access.
+2.  **Beyond Disbursement:** The TO-BE model focuses on non-financial outcomes such as **Training, Business Incubation, and Market Linkages** as primary outputs of the KJET project.
+3.  **Multi-MDA Coordination:** Shared platform with the Ministry of Trade to ensure MSMEs meet export quality standards.
+4.  **Investor Linkage:** Digital "Investment Readiness" profiles shared with verified private investors via the Investment Authority portal.
+5.  **Outcome Metrics:** Direct tracking of **Direct Jobs Created** per cluster and **Sectoral GVA** contribution.
 
 ---
 

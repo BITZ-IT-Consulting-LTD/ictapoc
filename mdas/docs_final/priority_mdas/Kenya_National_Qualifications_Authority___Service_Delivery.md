@@ -16,7 +16,7 @@
 
 ## Service Mandate
 
-The Kenya National Qualifications Authority (KNQA) is mandated under the KNQF Act No. 22 of 2014 to manage the Kenya National Qualifications Framework (KNQF). The primary mandate of the Authority is the **implementation of the Kenya National Qualifications Framework (KNQF) to ensure that qualifications awarded in Kenya are of high quality and nationally and internationally recognized.** 
+The Kenya National Qualifications Authority (KNQA) is mandated under the KNQF Act No. 22 of 2014 to manage the Kenya National Qualifications Framework (KNQF). The primary mandate of the Authority is the **implementation of the Kenya National Qualifications Framework (KNQF) to ensure that qualifications awarded in Kenya at all levels are of the highest quality and are nationally and internationally recognized.** 
 
 Key operational functions include:
 
@@ -55,16 +55,16 @@ flowchart TD
         Comp -- "Yes" --> Log["Assign to QAV Officer"]
     end
     
-    subgraph Validation["Validation and Alignment Stage"]
-        Log --> AuthCert["Verify Academic Certificates"]
-        AuthCert --> VerifyQAB["Verify with Qualification Awarding Body (QAB)"]
-        VerifyQAB --> MapKNQF["Validate and Align to KNQF Levels"]
+    subgraph Validation["Validation and Alignment"]
+        Log --> AuthCert["1.1 Verification of Academic Certificates"]
+        AuthCert --> Eval["1.2 Assigned to Evaluator"]
+        Eval --> VerifyQAB["1.3 Verify with Qualification Awarding Body (QAB)"]
+        VerifyQAB --> MapKNQF["1.4 Validation / Alignment to the KNQF"]
     end
     
     subgraph Finalization["Approval and Issuance"]
-        MapKNQF --> QAVApprove["QAV Officer Review and Approval"]
-        QAVApprove --> GenCert["Generate Validation and Alignment Certificate"]
-        GenCert --> Issue["Issue Certificate and Update NQD"]
+        MapKNQF --> QAVApprove["Reviews mapping, approves equivalency, & issues Validation & Alignment Certificate"]
+        QAVApprove --> Issue["Generate Certificate & Update NQD"]
     end
     
     Issue --> End(("End"))
@@ -111,11 +111,10 @@ End-to-End Qualification Validation and Alignment
 | Step | Role | Action | Tool/System | Notes |
 | :--- | :--- | :--- | :--- | :--- |
 | **1** | Applicant | **Application Submission:** Submits copies of certificates, transcripts, and ID documents. | Portal / Manual | Citizen initiates the request. |
-| **2** | KNQA Clerk | **Reception & Intake:** Confirms payment and validates that all required documents are attached. | Manual / Finance | Gateway for processing. |
-| **3** | QAV Officer | **Validation and Alignment Stage:** Authenticates certificates; contacts QABs (e.g., KNEC, Universities) for verification. | Email / Web Portal | **Critical Pain Point:** External verification latency. |
-| **4** | QAV Officer | **Validation and Alignment Stage:** Maps the verified credential against the 10 levels of the KNQF. | KNQF Matrix / Excel | Determines the local equivalency. |
-| **5** | QAV Officer | **Approval:** Reviews the alignment findings and formally approves the equivalency. | Management System | Final technical decision. |
-| **6** | QAV Officer | **Issuance:** Generates the Certificate, applies the seal, and updates the registry. | Standalone Registry | Replaces redundant admin steps. |
+| **2** | QAV Officer | **Reception & Intake:** Confirms payment and validates that all required documents are attached. | Manual / Finance | Gateway for processing. |
+| **3** | QAV Officer | **Validation & Alignment:** Authenticates certificates; contacts QABs (e.g., KNEC, Universities) for verification. | Email / Web Portal | **Critical Pain Point:** External verification latency. |
+| **4** | QAV Officer | **Validation & Alignment:** Maps the verified credential against the 10 levels of the KNQF. | KNQF Matrix / Excel | Determines the local equivalency. |
+| **5** | QAV Officer | **Final Decision:** Reviews the mapping, approves the equivalency and issues a Validation & Alignment Certificate. | Management System | Final technical decision. |
 
 ---
 

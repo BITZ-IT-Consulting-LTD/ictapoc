@@ -105,11 +105,14 @@ Sports Federation Registration, Grant Disbursement, and Facility Booking
 
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
-| 1 | Federation | Submits application for registration along with constitution and list of officials. | Manual/Portal | |
-| 2 | Sports Officer | Verifies the regional representation of the federation as required by the Sports Act. | Manual | |
-| 3 | Athlete | Submits a grant application for international competitions or training. | Manual Forms | |
-| 4 | Facility Manager | Reviews booking requests and checks for conflicts with national team schedules. | Standalone System | |
-| 5 | Finance Officer | Processes facility payments and grant disbursements via bank transfers. | Manual/IFMIS | |
+| **1** | Federation | **Letter to PS:** Submits a formal request for funding (e.g., for international travel). | Manual / Email | Citizen-led trigger. |
+| **2** | Sports Officer | **Confirmation:** Verifies that the federation/athlete meets all statutory SASDF requirements. | Manual / eCitizen | Registration is already on e-Citizen. |
+| **3** | Budgeting Committee | **Verification:** Reviews the requested budget against the available annual allocation. | Committee System | Financial gatekeeping. |
+| **4** | PS Sports | **Clearance:** Issues the formal approval/clearance for the expenditure. | PS Portal / Manual | Statutory authorization. |
+| **5** | Finance / SASDF | **Funding (Payment):** Processes the disbursement via the Government Payment Aggregator. | IFMIS / GPA | Final settlement. |
+
+> [!NOTE]
+> **SASDF Integration:** All funding requests must comply with the **Sports, Arts and Social Development Fund (SASDF)** application criteria. While registration is digitized on e-Citizen, the internal "Funding Travelling" track remains a high-touch governance process.
 
 ---
 

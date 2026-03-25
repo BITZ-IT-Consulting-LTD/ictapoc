@@ -1,143 +1,119 @@
-# OFFICE OF THE ATTORNEY GENERAL (AG) – Marriages & Divorces
+# REGISTRAR OF MARRIAGES (OFFICE OF THE ATTORNEY GENERAL) – Service Delivery
 
 ## Cover Page
-- **Ministry/Department/Agency (MDA):** OFFICE OF THE ATTORNEY GENERAL (AG) - REGISTRAR OF MARRIAGES
-- **Process Name:** Civil Marriages & Divorces Registry
-- **Document Version:** 2.0
-- **Date:** 2026-03-17
-- **Classification:** Official
+- **Ministry/Department/Agency (MDA):** Office of the Attorney General & Department of Justice
+- **Department:** Registrar of Marriages
+- **Process Name:** Civil, Customary, and Professional Marriage Registration
+- **Document Version:** 3.0 (Validated)
+- **Date:** 2026-03-25
+- **Classification:** Official / Sensitive
+- **Strategic Category:** Priority MDA
+- **Service Model:** G2C / G2B
+- **Life-Cycle Group:** Cradle to Death (4. Marriage & Family)
 
 ---
 
 ## Service Mandate
-The Office of the Attorney General is established under Article 156 of the Constitution of Kenya to serve as the principal legal adviser to the National Government. Its mandate includes promoting, protecting, and upholding the rule of law, defending the public interest, advising government ministries and departments on legal matters, negotiating and drafting local and international agreements, and representing the National Government in court in all civil and constitutional matters.
+**Official Website:** [www.statelaw.go.ke](https://www.statelaw.go.ke)
+
+The Office of the Attorney General & Department of Justice (through the Registrar of Marriages) is mandated under the **Marriage Act, Cap 150** to:
+- Perform and register all statutory marriages in Kenya.
+- Issue marriage certificates for all registered unions.
+- Determine the rules governing customary marriages and objections to notices of intention to marry.
+- Appoint and license marriage officers (National and County levels) and Ministers of Faith.
+- Register divorces and maintain marriage/divorce registers.
+- Undertake public education and awareness on marital legal frameworks.
 
 ---
 
 ## Executive Summary
-The Office of the Attorney General (through the Registrar of Marriages) is mandated to register, solemnize, and maintain records of statutory marriages in Kenya. This includes processing notices of marriage, issuing certificates, conducting civil weddings, and updating the registry following court-ordered divorce decrees. The department plays a critical role in providing secure vital life-event records and family status documentation for citizens.
+The Registrar of Marriages provides secure vital life-event records that are foundational to family status documentation in Kenya. This BPD outlines the transition to a fully digital workflow that eliminates manual "courier" steps for divorce registration and formalizes the 21-day public notice period within the **Digital Government Architecture (DSAP)**. 
+
+A primary strategic priority is the **digitization of millions of previous marriage records** scattered across DCC offices and ministers of faith, bringing them into a centralized **National Marriages Registry** accessible via the **Huduma Bridge (KeSEL / X-Road)**.
 
 ---
 
-## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (Manual/Semi-Automated Marriage & Divorce Processing).*
+## 1. SERVICE CATALOGUE
 
-```mermaid
-graph TD
-    Start((Start)) --> S1
-
-    subgraph Citizen [Citizen]
-        S1["Citizen creates eCitizen account & selects Marriage Service"] --> S2
-        S2["Applicant fills online Notice of Marriage form & uploads documents (IDs, Photos)"] --> S3
-        S3["Applicant pays statutory fee via eCitizen (e.g., KES 600)"] --> S4
-        S4["Applicant prints system-generated Notice and books appointment"] --> S5
-        S5["Citizen visits Sheria House / Registrar physically for document verification"] --> S14
-        
-        S20["Citizen receives Divorce Decree Absolute from High Court"] --> S21
-        S21["Citizen physically submits Decree to Registrar to update marital status"] --> S22
-    end
-
-    subgraph Registrar_of_Marriages [Registrar of Marriages / AG]
-        S6["Registrar verifies physical IDs and uploaded documents"] --> S7
-        S7["Notice is pinned on the physical Notice Board for 21 days"] --> S8
-        S8{"Any Objections raised during 21 days?"}
-        
-        S8 -- Yes --> S9["Hearing scheduled to resolve objection"]
-        S9 --> S10{"Objection Valid?"}
-        S10 -- Yes --> S11["Application Rejected / Terminated"]
-        S10 -- No --> S12["Proceed to next step"]
-        
-        S8 -- No --> S12
-        
-        S12["Registrar issues Registrar's Certificate"] --> S13
-        S13["Couple books date for solemnization/wedding at Sheria House"] --> S14
-        
-        S14["Ceremony conducted by Registrar"] --> S15
-        S15["Physical Marriage Register signed by couple & witnesses"] --> S16
-        S16["Registrar prints and issues physical Marriage Certificate"]
-        
-        S22["Registrar manually updates physical registry to reflect divorce"] --> S23
-        S23["Registrar issues certified copy of search/update if requested"]
-    end
-    
-    S11 --> End((End))
-    S16 --> End
-    S23 --> End
-```
+| # | Service Name | Target Population |
+|---|---|---|
+| **1** | Registration of Marriage by Notice | Civil, Christian, and Hindu Marriages |
+| **2** | Registration of Marriage by Special Licence | Expedited Marriages (Civil/Christian/Hindu) |
+| **3** | Certified Copy of Marriage Certificate | Citizens requiring replacements/certified copies |
+| **4** | Certificate of No Impediment to Marriage | Kenyans marrying abroad |
+| **5** | Registration of Existing Hindu Marriages | Couples with previous Hindu ceremony |
+| **6** | Registration of Customary Marriages | New and existing customary unions |
+| **7** | Licensing of Ministers of Faith | Religious leaders authorized to officiate |
+| **8** | Issuance of Marriage Books | Licensed institutions and officers |
+| **9** | Registration of Foreign Marriages | Kenyans who married outside national borders |
+| **10**| Registration of Divorces | Citizens with Decree Absolutes from Courts |
 
 ---
 
-## 2. Weaknesses & Pain Points (The "Why")
-- **Manual Physical Presence Required:** Even though eCitizen handles the payment and initial application, couples must physically visit the registry for document verification and the ceremony, creating long queues.
-- **Physical Notice Boards:** Relying on physical pin-boards for the 21-day statutory notice is outdated and fails to provide national visibility for objections.
-- **Disconnected Divorce Updates:** The Judiciary handles divorces, but there is no automated API linking the High Court's Case Management System to the AG's Marriage Registry. Divorced individuals must manually carry court decrees to update their status.
-- **Paper Registers:** The final legal artifact is still a physical signature in a large paper register book, making historical searches and certificate replacements very slow.
+## 2. AS-IS WORKFLOW (CIVIL MARRIAGE BY NOTICE)
+
+The current workflow leverages eCitizen for the intake but maintains manual "ceremony" and interview stages.
+
+### Stage 1: Application Submission and Review
+1. **Submission:** Client submits marriage application via eCitizen portal.
+2. **Review:** Marriage Clerk retrieves applications from the queue on a first-come, first-served basis.
+3. **Decision:** Clerk approves, rejects, or returns for correction.
+
+### Stage 2: Notice Fee Payment & Public Notice
+1. **Payment:** Upon approval, client pays the prescribed **Notice Fee** via eCitizen.
+2. **Display:** System automatically forwards the application to the **Digital Noticeboard**.
+3. **Notice Period:** Application remains on the public noticeboard for **21 days** for objections.
+
+### Stage 3: Appointment Booking & Interview
+1. **Booking:** After 21 days, client is notified to book an interview appointment.
+2. **Interview:** Parties appear before a Gazetted Registrar with original documents to verify capacity and document authenticity.
+3. **Approval:** Registrar approves and commissions signed affidavits.
+
+### Stage 4: Booking and Celebration
+1. **Solemnization Fee:** Parties pay the final prescribed fee.
+2. **Celebration:** Registrar books the marriage date; parties and witnesses appear for solemnization.
+3. **Issuance:** Registrar officiates and issues marriage certificates.
+4. **Digitization:** Triplicate copies are scanned and uploaded to create the database.
 
 ---
 
-## 3. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Fully Digitized with Identity Federation).*
+## 3. REGISTRATION OF DIVORCES
 
-```mermaid
-graph TD
-    Start((Start)) --> S1
-
-    subgraph Citizen [Citizen]
-        S1["Citizen logs in via Maisha Namba / eCitizen"] --> S2
-        S2["Initiates Marriage Notice (System auto-pulls both partners' details from NRB)"] --> S3
-        S3["Completes biometric/facial liveness check for consent"] --> S4
-        S4["Pays consolidated fee digitally"]
-        
-        S12["Couple attends Virtual or Physical Solemnization"] --> S13
-        S13["Couple signs digitally via secure portal/biometrics"]
-    end
-
-    subgraph Platform_Services [Shared Platform / Integrations]
-        S4 --> S5["Payment Gateway processes and splits funds"]
-        S5 --> S6["Integration Engine checks marital status in Registry (Prevents Bigamy)"]
-        S6 --> S7["Digital Notice published on National e-Gazette/Portal for 21 days"]
-        
-        S14["Digital e-Certificate generated with QR Code"] --> S15
-        S15["National Marriages Registry Database Updated"]
-        
-        S20["Judiciary API automatically sends Divorce Decree to Registry"] --> S21
-        S21["Marital status automatically updated to 'Divorced' in Registry"]
-    end
-
-    subgraph Registrar_of_Marriages [Registrar of Marriages / AG]
-        S7 --> S8{"Digital Objections raised?"}
-        S8 -- Yes --> S9["Online Tribunal/Hearing scheduled"]
-        S9 --> S10{"Objection Valid?"}
-        S10 -- Yes --> S11["Application Terminated"]
-        S10 -- No --> S12
-        
-        S8 -- No --> S12
-    end
-    
-    S11 --> End((End))
-    S15 --> End
-    S21 --> End
-```
+1. **Trigger:** Court delivers a certified copy of the **Divorce Decree Absolute** to the Registrar of Marriages.
+2. **Action:** Registrar registers the divorce in the **Divorce Register**.
+3. **Registry Update:** The original marriage record is marked to reflect the change in marital status.
 
 ---
 
-## 4. Automation & Digitization Opportunities (The "How")
-- **National Population Register (NRB) Integration:** Auto-populate partner details to prevent identity fraud and automatically flag if a partner is already legally married in the system (preventing bigamy).
-- **Digital Notice Board (e-Gazette):** Replace physical pin-boards with a centralized, searchable online portal where citizens can view notices and lodge objections digitally.
-- **Judiciary API (Divorce decrees):** Establish a system-to-system integration with the Judiciary so that when a divorce is finalized in court, the AG's marriage registry is instantly updated without the citizen needing to act as a courier.
-- **E-Certificates:** Issue digitally signed, QR-coded marriage certificates that can be instantly verified by embassies, banks, and other MDAs.
+## 4. TO-BE PROCESS (DPI ALIGNED)
+
+### 4.1 Digital Architecture Mapping
+- **Access Layer:** Marriage applications and interview bookings via **eCitizen / Officer Workbench**.
+- **Core Platform:** **BPMN Workflow Engine** manages the 21-day countdown and objection tracking. **NPKI (Trust Hub)** seals the digital certificate copies.
+- **Interoperability (KeSEL):** Automatic marital status check against **NRB/IPRS** to detect bigamy. Automatic receipt of Decree Absolutes from the **Judiciary Case Management System**.
+- **Registries:** **National Marriages Registry** (Sectoral) and **EDRMS** (National Records Registry for legal archival).
+
+### 4.2 Future-State Principles
+- **Digital Noticeboard:** Moving from physical notice boards to a national searchable e-Gazette/Portal.
+- **Biometric Consent:** Using Maisha Namba biometrics to ensure the consent of both parties during application.
+- **Integrated Legal Chain:** Seamless data transfer from Marriage (AG) -> Divorce (Judiciary) -> New Status (AG).
 
 ---
 
-## 5. Required Integrations
-- **NRB / IPRS:** For citizen identity verification and liveness checks.
-- **Judiciary Case Management System (CMS):** To automatically receive and process absolute divorce decrees.
-- **eCitizen / PayPay:** For payment processing.
-- **Government e-Gazette:** For publishing 21-day marriage notices electronically.
+## 5. STRATEGIC PRIORITIES (12-MONTH PLAN)
 
+1. **Backlog Digitization:** Digitizing historical marriage records from DCC offices nationwide.
+2. **Amendment of Marriage Rules:** Updating legal rules to explicitly recognize digital certificates and Virtual Solemnization.
+3. **Integration with Judiciary:** Establishing the automated API link for divorce decrees.
+
+---
+
+## References
+- Marriage Act, Cap 150
+- Data Protection Act (2019)
+- Civil Registration and Vital Statistics (CRVS) Framework
 
 ---
 
 ### Validation Survey
 Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
-

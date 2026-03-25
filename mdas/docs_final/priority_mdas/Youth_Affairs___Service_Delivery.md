@@ -35,46 +35,33 @@ The State Department for Youth Affairs is responsible for the economic empowerme
 ## 1. AS-IS Process Flowchart (BPMN 2.0)
 *Current State visualization (Youth Internship & AGPO Registration based on Deep Dive).*
 
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-graph TD
-    Start((Start)) --> Access["Access eCitizen / Portal"]
-    
-    subgraph Internship["Youth Internship Placement"]
-        Access --> Form["Complete Form & Upload Documents"]
-        Form --> Review["Officer Reviews Application"]
-        Review --> Verify["Verify Eligibility (Academic/Age)"]
-        Verify --> Eligible{"Eligible?"}
-        
-        Eligible -- "Yes" --> Search["Search & Match Skills to Opportunities"]
-        Search --> Issue["Issue Letter & Notify Host"]
-        Eligible -- "No" --> Reject["Notify Rejection"]
+    subgraph Initiative["Initiative Development"]
+        Start --> Mob["1. Resource Mobilization & Budgeting"]
+        Mob --> Approve["2. Formal Internal Approval Workflow"]
+        Approve --> Launch["3. Initiative Launch & Communication"]
+    end
+
+    subgraph Participation["Youth Engagement"]
+        Launch --> Access["4. Access eCitizen / Portal"]
+        Access --> Form["5. Complete Form & Upload Documents"]
+        Form --> Vetting["6. Vetting, Verification & Decision Documentation"]
+        Vetting --> Impact["7. Implementation & Continuous Monitoring"]
     end
     
-    subgraph AGPO["AGPO Registration"]
-        Access --> AGPO_Form["Complete AGPO Form"]
-        AGPO_Form --> Attach["Attach Business & ID Documents"]
-        Attach --> Vetting["Manual Vetting: Verify Ownership & Age('18-35')"]
-        Vetting --> Appr{"Approve?"}
-        
-        Appr -- "Yes" --> Cert["Generate Certificate & Update Registry"]
-        Appr -- "No" --> Rej_AGPO["Reject Application"]
+    subgraph Outcomes["Evaluation & Feedback"]
+        Impact --> Report["8. Reporting and Participant Data Capture"]
+        Report --> Feed["9. Feedback Incorporation for Future Initiatives"]
+        Feed --> End((End))
     end
-    
-    Issue --> End((End))
-    Cert --> End
-    Reject --> End
-    Rej_AGPO --> End
 
     classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
     classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
     classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px;;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px,font-size:24px;;
+    
     class Start start;
     class End endNode;
-    class Eligible,Appr gateway;
-    class Access,Form,Review,Verify,Search,Issue,Reject,AGPO_Form,Attach,Vetting,Cert,Rej_AGPO userTask;
-```
+    class Mob,Approve,Launch,Access,Form,Vetting,Impact,Report,Feed userTask;
 
 ---
 
@@ -104,11 +91,13 @@ Youth Internship Placement, AGPO Registration, and Film Production Licensing
 
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
-| 1 | Applicant | Logs into eCitizen and fills forms for Internship or AGPO. | eCitizen / Portal | |
-| 2 | Applicant | Uploads PDF copies of National ID, Academic Certificates, and BRS Business Registrations. | Manual Upload | |
-| 3 | Youth Officer | Manually reviews the documents to ensure the applicant is between 18-35 years old. | Manual | High duplication of effort. |
-| 4 | Programme Officer | For internships, manually matches the applicant's course of study with available slots in government agencies. | Excel / Manual | |
-| 5 | AGPO Officer | Verifies business ownership details against BRS certificates before approving the AGPO status. | Manual | |
+| **1** | Planning Unit | **Resource Mobilization:** Budgeting and identification of implementation partners. | IFMIS / Manual | Starting point for any initiative. |
+| **2** | Youth Officer | **Intake & Vetting:** Manually reviews the academic documents and IDs to ensure age compliance. | Manual Review | High duplication of effort. |
+| **3** | M&E Officer | **Implementation Monitoring:** Collecting data on youth participation during program rollout. | Field Reports | Ensuring targets are met. |
+| **4** | Project Lead | **Reporting & Data Capture:** Managing the participant registry and capturing feedback for future planning. | Manual / Excel | **Critical Data Gap:** No central participant database. |
+
+> [!IMPORTANT]
+> **Process Accuracy Update:** Stakeholders identified that previous process maps omitted the critical **Budgeting** and **Approval** stages. The AS-IS has been updated to reflect these internal governance milestones.
 
 ---
 
