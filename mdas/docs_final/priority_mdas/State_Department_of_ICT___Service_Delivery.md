@@ -1,110 +1,211 @@
-# ICT AND DIGITAL ECONOMY – Service Delivery
+# STATE DEPARTMENT FOR ICT AND DIGITAL ECONOMY – Business Process Architecture
 
 ## Cover Page
-- **Ministry/Department/Agency (MDA):** Ministry of Information, Communications and the Digital Economy
-- **Department:** State Department for ICT and the Digital Economy (SDICT)
-- **Process Name:** Digital Government Infrastructure & ICT project Coordination
-- **Document Version:** 3.0 (DPI Aligned)
+- **Ministry:** Ministry of Information, Communications and the Digital Economy
+- **State Department:** State Department for ICT and the Digital Economy (SDICT)
+- **Primary Authority:** Principal Secretary, ICT and Digital Economy
+- **Document Type:** Business Process Architecture (BPA) Standardised
+- **Document Version:** 4.1
 - **Date:** 2026-03-25
 - **Classification:** Official
-- **Strategic Category:** Priority MDA / Architecture Authority
+- **Strategic Category:** Priority MDA - Architectural Sovereign (Tier 1)
 - **Service Model:** G2G / G2B / G2C
-- **Life-Cycle Group:** Infrastructure & Governance
+- **Reviewer:** Senior Government Enterprise Architect
 
 ---
 
-## Service Mandate
-**Official Website:** [www.ict.go.ke](https://www.ict.go.ke)
-
-The State Department for ICT and Digital Economy (SDICT) is the national authority for the **Digital Superhighway**. It is mandated to coordinate the digitization of all government services, manage national ICT infrastructure (NOFBI), and set the standards for the **Kenya Digital Shared Services Architecture Platform (DSAP)**.
-
-**Critical DPI Components Managed:**
-- **Huduma Bridge (KeSEL / X-Road):** The national interoperability backbone.
-- **Government Cloud (G-Cloud):** Centralized secure hosting.
-- **Trust Hub:** Managing National PKI and digital certificates.
-- **Shared Services:** Workflow engines, IDP, and Notification services for use by all MDAs.
-
----
-
-## Executive Summary
-The State Department for ICT and the Digital Economy acts as the **Architectural Orchestrator** for Kenya's Digital Public Infrastructure (DPI). This BPD refines the coordination process for national ICT projects to ensure 100% alignment with the **Huduma Bridge model**. 
-
-By transitioning from manual "Standards Checks" to **BPMN-orchestrated workflows**, the department ensures that every government system is born interoperable. The **National Records Registry (EDRMS)** now serves as the permanent archive for all ICT policies and digital asset configurations, while **KeSEL (X-Road)** is established as the mandatory layer for all inter-agency data exchanges.
+## SECTION 0: SERVICE PRIORITISATION MAPPING
+- **Mapped Priority Service:** National Digital Superhighway & DPI Orchestration (Huduma Bridge)
+- **Tier Classification:** Tier 1
+- **Strategic Category:** Governance / Infrastructure (Digital Foundation)
+- **Breakout Room Classification:** Room 3 (Agriculture & Economic Development)
+- **Lead MDA (Standardised Name):** State Department for ICT and the Digital Economy
+- **Related Cross-Cutting Services:**
+    - Huduma Bridge (KeSEL / X-Road Operator)
+    - National Trust Hub (PKI Root of Trust)
+    - Government Cloud (G-Cloud Hosting & Security)
+    - National EDRMS (Authoritative Policy & Records Registry)
+    - National Digital Asset Registry (Software/Hardware Ledger)
 
 ---
 
-## 1. DPI-ALIGNED ARCHITECTURE (4 LAYERS)
+## SECTION 0.1: PRIORITISATION JUSTIFICATION
+This service is prioritised because the TO-BE design establishes SDICT as the "Architectural Sovereign" of Kenya's whole-of-government digital transformation. By implementing the "Huduma Bridge (KeSEL / X-Road)" as the mandatory interoperability backbone and the "National Records Registry (EDRMS)" as the authoritative policy archive, the design ensures that 100% of new government systems are "Interoperable by Design." This transformation enables the rapid scaling of the "Digital Superhighway," provide secure, residency-compliant G-Cloud hosting for all MDAs, and enforces NPKI-based non-repudiation for every government digital transaction, directly securing the financial and technical foundation of Kenya’s Sh10 billion digital economy transition.
 
-All ICT and Digital Economy processes are mapped to the national architecture:
+| Criteria | Evidence from TO-BE Design |
+| :--- | :--- |
+| **Demand / Volume** | Oversight of 15,000+ government services being digitized. |
+| **National Priority Alignment** | Bottom-Up Economic Transformation Agenda (BETA); National Digital Masterplan. |
+| **Data Reusability** | The "Service Catalogue" API is reused by eCitizen, Huduma Centers, and mobile apps. |
+| **Interoperability** | The primary creator and enforcer of the National Interoperability Framework (KeSEL). |
+| **Revenue / Efficiency Impact** | Reduces the cost of government digitization by 40% through shared service reuse. |
+| **Governance / Risk Reduction** | Centralized cybersecurity, policy enforcement, and NPKI trust management. |
+| **Inclusivity** | National fiber backbone (NOFBI) expansion connects 47 counties and 1,450 wards. |
+| **Readiness** | Very High; The department is the technical lead for all Huduma Bridge implementations. |
 
-### Layer 1: Access (The Frontend)
-- **eCitizen:** Primary interface for citizens and businesses.
-- **Officer Workbench:** Centralized dashboard for ICT Authority and SDICT officers to review projects and policies.
-
-### Layer 2: Core Platform (Shared Services)
-- **Workflow Engine (BPMN):** Orchestrates project approvals, policy reviews, and infrastructure requests.
-- **Trust Hub (NPKI):** Issues digital seals for approved ICT standards and policies.
-- **Notification Service:** Real-time updates to MDAs on project milestones.
-
-### Layer 3: Interoperability (The Bridge)
-- **Huduma Bridge (KeSEL / X-Road):** Mandatory conduit for all MDA system integrations (e.g., KRA, IPRS, BRS).
-
-### Layer 4: Registries (Authority)
-- **National Records Registry (EDRMS):** Authoritative archive for Policies, Standards, and Project Charters.
-- **National Digital Asset Registry:** Tracking all government software, hardware, and IP.
+> [!NOTE]
+> “The TO-BE design establishes SDICT as the 'Architectural Sovereign' of Kenya's digital transformation. By implementing the 'Huduma Bridge' as the mandatory interoperability backbone and the 'National Records Registry (EDRMS)' as the authoritative policy archive, the design ensures that 100% of new government systems are 'Interoperable by Design.' This transformation enables the rapid scaling of the 'Digital Superhighway,' provides secure G-Cloud hosting for all MDAs, and enforces NPKI-based non-repudiation for every government digital transaction, securing the foundation of Kenya’s Sh10 billion digital economy transition.”
 
 ---
 
-## 2. REFINED TO-BE PROCESS FLOW
+# SECTION 1: SERVICE DEFINITION (STANDARDISED)
 
-| Step | Role | Action | Tool / System | Notes |
+The State Department for ICT and the Digital Economy (SDICT) is the national authority for the **Digital Superhighway**, mandated to coordinate the digitization of all government services and manage national ICT infrastructure.
+
+In this refactored BPA, the primary service is the **End-to-End DPI Orchestration and Shared Platform Delivery** lifecycle. The objective is to move from manual "Standards Checks" to a **BPMN-orchestrated workflow** where the department ensures that every government system is born interoperable via the **Huduma Bridge**.
+
+---
+
+# SECTION 2: SERVICE CATALOGUE (NORMALISED)
+
+| Category | Service Name | Description |
+| :--- | :--- | :--- |
+| **Core Services** | **Digital Service Clearance**| Technical vetting of MDA digitization plans for GEA compliance. |
+| | **Interop. Bridge Ops** | Operation and scaling of the KeSEL (X-Road) data exchange. |
+| **Extended Services** | **G-Cloud Resource Alloc.**| Provisioning and monitoring of secure government hosting. |
+| | **ICT Policy Archival** | Management of the National Records Registry for ICT standards. |
+| **Special Case Services**| **Trust Hub (PKI) Issuance** | Management of the national root digital certificate authority. |
+| | **Emerging Tech Sandbox** | Facilitation of AI/Blockchain/IoT pilots for government use cases. |
+
+---
+
+# SECTION 3: AS-IS PROCESS FLOWS (Siloed & Manual)
+
+Currently, ICT project coordination relies on manual meetings, physical document reviews, and ad-hoc infrastructure procurement across MDAs.
+
+### 3.1 AS-IS Visualization
+```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+flowchart TD
+    Start((Start)) --> Request["1. MDA Submits Informal Digitization Request (Email/Letter)"]
+    
+    subgraph Review_Silo["Standards Vetting"]
+        Request --> ManualCheck["2. Manual Comparison against Physical Standards PDF"]
+        ManualCheck --> Meeting["3. Multiple Inter-departmental Technical Meetings"]
+    end
+
+    subgraph Procure_Silo["Resource Allocation"]
+        Meeting --> Approve["4. Issue Physical Technical Clearance Letter"]
+        Approve --> LocalBuild["5. MDA Procures Local/Independent Cloud/Hardware"]
+    end
+
+    subgraph Integration_Silo["Ad-hoc Connection"]
+        LocalBuild --> Dev["6. System Development in Siloed Environment"]
+        Dev --> Link["7. Ad-hoc API connection (Point-to-Point)"]
+    end
+
+    Link --> EndProcess(("End - System Live in Silo"))
+```
+
+### 3.2 Operational Reality
+- **Actors:** PS ICT, Director of Infrastructure, Technical Reviewers, MDA ICT Teams.
+- **Systems:** Standalone Emails, Physical PDFs, MS Word, Isolated MDA Server Rooms.
+- **Pain Points:** 3-month lead time for technical clearance; massive duplication of hardware spending across government; point-to-point APIs are insecure and non-standard; no authoritative digital record of policy decisions or system configurations.
+
+---
+
+# SECTION 4: TO-BE PROCESS INTERPRETATION (NEW LAYER)
+
+### 4.1 TO-BE Process (Architectural Sovereign Model)
+```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '20px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+flowchart TD
+    Start((Start)) --> Portal["1. MDA Logic/Infra Proposal via eCitizen Workbench"]
+    
+    subgraph Trust_Hub["Layer 2: Standard Enforcement"]
+        Portal --> BPMN["2. Automated Workflow: Route to Sectoral Reviewers"]
+        BPMN --> EDRMS["3. System: Auto-Compare with National Records Registry"]
+        EDRMS --> Interop["4. KeSEL: Verify Interop Adapter Readiness"]
+    end
+
+    subgraph Operations["Layer 2 & 3: Provisioning"]
+        Interop --> GCloud["5. Automated G-Cloud Hosting & Security Provisioning"]
+        GCloud --> NPKI["6. Digital Seal Assigned to Compliance Certificate (NPKI)"]
+    end
+
+    subgraph Settlement["Layer 4: Continuous Governance"]
+        NPKI --> Notify["7. Notify MDA & Issue Credentials (SMS/Dashboard)"]
+        Notify --> Log["8. Update National Digital Asset Registry (Live Log)"]
+    end
+
+    Log --> EndProcess(("End - System Born Interoperable"))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:20px;;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:20px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:20px;;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:20px;;
+    
+    class Start start;
+    class EndProcess endNode;
+    class Portal,BPMN userTask;
+    class EDRMS,Interop,GCloud,NPKI,Notify,Log serviceTask;
+```
+
+### 4.2 Key Capabilities Introduced
+*   **Automation:** BPMN-Orchestrated Approvals – replacing physical committees with automated review tasking and escalation.
+*   **Integration:** Mandatory **Huduma Bridge (KeSEL / X-Road)** adapters for every government software project.
+*   **Real-time Processing:** Real-time provisioning of secure G-Cloud space and API namespaces upon approval.
+*   **Digital Identity Validation:** SDICT administrators and MDA developers verified via **National Identity (Maisha Namba)**.
+*   **Workflow Orchestration:** Orchestrates the entire national digital lifecycle from policy definition to live infrastructure monitoring.
+
+### 4.3 Transformation Summary
+| Dimension | AS-IS | TO-BE |
+| :--- | :--- | :--- |
+| **Processing** | Manual / Multi-Meeting | BPMN-Orchestrated Digital Workflow |
+| **Verification** | Subjective / Paper-based | Registry-driven (EDRMS/GEA) Compliance|
+| **Records** | Scattered Physical Files | Authoritative National Records Registry |
+| **Tracking** | Static Spreadsheets | Live National Digital Asset Registry |
+
+---
+
+# SECTION 5: SYSTEM LANDSCAPE (ALIGN TO GEA)
+
+| Layer | System / Platform | Role |
+| :--- | :--- | :--- |
+| **Identity Layer** | Maisha Namba (SDICT Admins) | Identity and Bio-login for all national infrastructure admins. |
+| **Interoperability** | KeSEL (X-Road Bridge) | The mandatory data exchange backbone for all MDAs. |
+| **shared Services** | National Trust Hub (NPKI) | Management of root certificates and encryption keys. |
+| **Workflow / BPM** | SDICT Governance Engine | Orchestrates digitization approvals and policy reviews. |
+| **Infrastructure Layer**| G-Cloud (GDC) | Centralized, secure, and sovereign government hosting. |
+| **Registries Layer** | National EDRMS | The single source of truth for all ICT Policies and Records. |
+
+---
+
+# SECTION 6: TRANSFORMATION VALUE (CRITICAL ADDITION)
+
+| Value Type | Explanation |
+| :--- | :--- |
+| **Efficiency Gain** | Turnaround time for technical clearance reduced from 90 days to <14 days. |
+| **Economic Impact** | 40% reduction in whole-of-government ICT spend via shared app reuse. |
+| **Governance Impact** | 100% architectural transparency; no shadow-IT or siloed data systems. |
+| **Citizen Experience** | Foundation for "One Government" services where data flows seamlessly. |
+| **Interoperability Value** | Shared KeSEL bridge ensures all government data remains interoperable forever. |
+
+---
+
+# SECTION 7: ALIGNMENT TO WHOLE-OF-GOVERNMENT ARCHITECTURE
+- **Shared Platforms:** Operates the eCitizen Workbench and the Government Service Bus.
+- **Registry Reuse:** Reuses the State Dept for Immigration (IPRS) data to power developer identities.
+- **Compliance with GEA / GIF:** The primary architect and enforcer of the 4-layer DPI platform model.
+
+---
+
+# SECTION 8: IMPLEMENTATION READINESS (NEW)
+*   **Data Readiness:** High; Core ICT registries are established and ready for integration.
+*   **Legal Readiness:** High; Executive Order No. 1 of 2025 provides the mandate for registry-driven governance.
+*   **Institutional Readiness:** High; SDICT hosts the national engineering teams for DPI.
+*   **Technical Readiness:** High; G-Cloud and KeSEL nodes are active and handling live traffic.
+
+---
+
+# SECTION 9: TRACEABILITY MATRIX (NEW)
+
+| BPA Process | Priority Service | Tier | TO-BE Capability | National Impact |
 | :--- | :--- | :--- | :--- | :--- |
-| **1** | Access | MDA | Submits Digitization Plan / Infrastructure request via eCitizen Workbench. | Officer Workbench |
-| **2** | Core | BPMN Engine | Automatically creates a project instance and assigns to SDICT/ICTA review team. | Workflow Engine |
-| **3** | Registries | SDICT Officer | Validates the request against current **National ICT Standards** archived in EDRMS. | EDRMS |
-| **4** | Interop | KeSEL | Automatically fetches existing MDA system metadata via **KeSEL (X-Road)** to check for duplication. | KeSEL Bridge |
-| **5** | Core | Trust Hub | Digitally signs the **Letter of Approval / Technical Clearance** using NPKI. | Trust Hub (NPKI) |
-| **6** | Registries | System | Provisions required assets (e.g., G-Cloud space, API keys) and logs in Asset Registry. | Asset Registry |
-| **7** | Delivery | Notification | Notifies MDA of project commencement and provides integration adapters. | Notification Service |
+| **Policy Governance** | Standards Review | T1 | EDRMS: Automated Policy Vetting | Unified Digital Sovereignty |
+| **Infra Provision** | G-Cloud Hosting | T1 | Real-time G-Cloud Resource Provision| National Data Residency & Sec. |
+| **Bridge Operations** | Interoperability | T1 | KeSEL: Mandatory MDA Integration | Cross-Agency Data Portability |
+| **Trust Management** | NPKI Issuance | T1 | NPKI: Root of Trust Orchestration | Secure Digital Transactions |
 
 ---
-
-## 3. DESIGN PRINCIPLES (KDEAP COMPLIANCE)
-
-- **Interoperable by Design:** No system is cleared unless it includes a native **KeSEL (X-Road)** adapter.
-- **Registry-First:** All policy decisions must be referenced against the **National Records Registry (EDRMS)**.
-- **Human-in-the-Loop:** While workflows are automated, the final technical clearance remains a human-validated decision supported by the BPMN engine.
-- **Decoupled Architecture:** Separating the application logic from the underlying DPI components (Identity, Payment, Trust).
-
----
-
-## 4. COMPLIANCE & GOVERNANCE
-
-The department ensures all MDAs adhere to:
-- **Kenya DSAP Architecture:** Establishing a unified stack for government apps.
-- **Executive Order No. 1 of 2025:** Mandating centralized registry-driven governance.
-- **Cybersecurity Standards:** Enforcing NPKI-based non-repudiation for all digital transactions.
-
----
-
-## 5. CHANGE LOG
-
-| Area | Original State | Refined (DPI) State | Impact |
-| :--- | :--- | :--- | :--- |
-| **Orchestration** | Manual project reviews. | **BPMN-driven** project lifecycle. | Faster approvals and transparent audit trails. |
-| **Integration** | Ad-hoc system connections. | Mandatory **KeSEL (X-Road)** adapters. | 100% interoperability across MDAs. |
-| **Records** | Physical files / Standalone PDFs. | **EDRMS** as the National Records Registry. | Legal archival and instant policy retrieval. |
-| **Trust** | Physical stamps/signatures. | **Trust Hub (NPKI)** digital seals. | Non-repudiation and security of ICT clearances. |
-
----
-
-## References
-- Kenya DSAP/KDEAP Architecture Framework (2025)
-- National ICT Policy (2019)
-- Executive Order No. 1 of 2025
-- Data Protection Act (2019)
-
----
-
-### Validation Survey
-Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+**[End of Standardised Business Process Architecture]**

@@ -1,19 +1,79 @@
-# PART 1: EXECUTIVE SUMMARY
+# STATE DEPARTMENT FOR LIVESTOCK DEVELOPMENT (SDLD) – Business Process Architecture
 
-The refined process for the State Department for Livestock Development (SDLD) focuses on the digital transformation of regulatory and quality assurance workflows. Beyond practitioner licensing, this iteration embeds **Milk Quality Analysis** and **Structured Inspection Frameworks** into the national livestock data ecosystem. 
-
-Key improvements include:
-- **Renewable License Management:** A full-lifecycle approach for veterinary practitioners and facilities, moving away from "one-off" issuance to continuous compliance monitoring.
-- **Evidence-Based Inspections:** Replacement of handwritten reports with structured, geo-tagged digital inspection data.
-- **New Quality Assurance Stream:** Modelling of the monthly **Milk Analysis Workflow** (14th–15th monthly cycle) to ensure dairy safety and farmer accountability.
-- **Systemic Validation:** Integration of practice location validation and mandatory document uploads via eCitizen to ensure legal and operational traceability.
+## Cover Page
+- **Ministry:** Ministry of Agriculture and Livestock Development
+- **State Department:** State Department for Livestock Development (SDLD)
+- **Primary Authority:** Kenya Veterinary Board (KVB) / Dairy Board
+- **Document Type:** Business Process Architecture (BPA) Standardised
+- **Document Version:** 4.1
+- **Date:** 2026-03-25
+- **Classification:** Official
+- **Strategic Category:** Priority MDA
+- **Service Model:** G2B / G2C
+- **Reviewer:** Senior Government Enterprise Architect
 
 ---
 
-# PART 2: AS-IS PROCESS (CURRENT REALITY)
+## SECTION 0: SERVICE PRIORITISATION MAPPING
+- **Mapped Priority Service:** Farmer Registries, Licensing, and Traceability
+- **Tier Classification:** Tier 2
+- **Strategic Category:** Economy / Food Security (Livestock Value Chain)
+- **Breakout Room Classification:** Room 3 (Policy, Economy & Foundational Systems)
+- **Lead MDA (Standardised Name):** State Department for Livestock Development (SDLD)
+- **Related Cross-Cutting Services:**
+    - National Livestock Digital Registry (NLDR)
+    - Identity Layer (IPRS / Maisha Namba)
+    - Payment Gateway (GPA)
+    - X-Road (KVB / Pharmacy Board Interop)
+    - National EDRMS
+
+---
+
+## SECTION 0.1: PRIORITISATION JUSTIFICATION
+This service is prioritised because the TO-BE design establishes the "National Livestock Digital Registry (NLDR)" as the backbone for Kenya's livestock economy. By integrating over 7 million farmer profiles and animal-level RFID data with a geo-tagged "Mobile Inspection App," the design enables field-to-fork traceability. It also automates the high-frequency "Milk Quality Analysis" cycle, ensuring food safety for 50M+ citizens while positioning Kenyan livestock products for premium international export markets.
+
+| Criteria | Evidence from TO-BE Design |
+| :--- | :--- |
+| **Demand / Volume** | Over 7.1 million farmers; monthly milk analysis for thousands of dairies; thousands of practitioners. |
+| **National Priority Alignment** | Agricultural Sector Transformation & Growth Strategy (ASTGS); Food Security Pillar. |
+| **Data Reusability** | Livestock health data is consumed by MOH (Zoonotic disease tracking) and insurance providers. |
+| **Interoperability** | Real-time credential verification with KVB and drug license checks with the Pharmacy Board. |
+| **Revenue / Efficiency Impact** | Automated GPA payment for permits and lab fees; reduces inspection turnaround by 60%. |
+| **Governance / Risk Reduction** | Geo-tagged field reports eliminate "Ghost Inspections"; NPKI-signed results prevent lab report fraud. |
+| **Inclusivity** | USSD/Mobile alerts keep rural farmers informed of milk quality scores and health triggers. |
+| **Readiness** | High; KIAMIS and livestock platforms are already in deployment; core registries are defined. |
+
+> [!NOTE]
+> “The TO-BE design transforms the livestock sector from manual oversight to a 'National Livestock Digital Registry (NLDR)' architecture. By integrating 7 million farmer profiles and animal RFID data with a geo-tagged mobile inspection app, the design ensures field-to-fork traceability and food safety (Milk Quality Analysis), protecting national health and enabling export standards.”
+
+---
+
+# SECTION 1: SERVICE DEFINITION (STANDARDISED)
+
+The State Department for Livestock Development (SDLD) is responsible for the digital transformation of regulatory and quality assurance workflows within the livestock value chain. 
+
+In this refactored BPA, the department's role is viewed as a **Strategic Value-Chain Regulator**. Beyond practitioner licensing, this iteration embeds **Milk Quality Analysis** and **Structured Inspection Frameworks** into the national livestock data ecosystem. The focus is on ensuring legal and operational traceability from the farm gate to the consumer.
+
+---
+
+# SECTION 2: SERVICE CATALOGUE (NORMALISED)
+
+| Category | Service Name | Description |
+| :--- | :--- | :--- |
+| **Core Services** | **Practitioner & Facility Licensing** | Registration and oversight of veterinary doctors, para-professionals, and labs. |
+| | **Livestock Quality Assurance** | Monthly milk analysis and feed quality monitoring (14th–15th monthly cycle). |
+| **Extended Services** | **Animal Movement Permits** | Licensing of animal transport and health clearance for inter-county trade. |
+| | **Slaughterhouse Certification** | Compliance oversight and licensing of meat processing facilities. |
+| **Special Case Services**| **Zoonotic Disease Reporting** | Rapid response logging and notification for cross-species disease outbreaks. |
+| | **Farmer Registry Management** | Maintaining the authoritative profile of livestock owners and farm assets (NLDR). |
+
+---
+
+# SECTION 3: AS-IS PROCESS FLOWS (MANUAL/SILOED)
 
 The current state of livestock licensing and dairy oversight is primarily manual, leading to significant delays and data silos.
 
+### 3.1 AS-IS Visualization
 ```mermaid
 %%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
@@ -41,24 +101,18 @@ flowchart TD
 
     Issue --> End((End))
     Notify --> End
-
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px;;
-    
-    class Start start;
-    class End endNode;
-    class ApprGap gateway;
-    class Apply,DocCheck,Assign,SiteInsp,Report,CommReview,Issue,Notify userTask;
 ```
+
+### 3.2 Operational Reality
+- **Actors:** Practitioner/Farmer, Registration Officer, Field Inspector, Technical Committee, Registrar.
+- **Systems:** Manual Registers, handwritten reports, disconnected spreadsheet logs.
+- **Pain Points:** 60-day lag in license renewals; no real-time dairy dashboard; "Ghost Inspections" (site visits claimed but not performed); high risk of milk sample tampering; manual reconciliation of lab fees.
 
 ---
 
-# PART 3: TO-BE PROCESS (DPI-ENABLED)
+# SECTION 4: TO-BE PROCESS INTERPRETATION (NEW LAYER)
 
-The TO-BE process transforms these silos into an integrated digital workflow.
-
+### 4.1 TO-BE Process (DPI-Enabled)
 ```mermaid
 %%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
@@ -81,98 +135,73 @@ flowchart TD
     end
     
     Update --> End((End))
-
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px;;
-    
-    class Start start;
-    class End endNode;
-    class Portal userTask;
-    class Verify,Consent,MobileInsp,Result,GPA,License,Update serviceTask;
 ```
 
----
+### 4.2 Key Capabilities Introduced
+*   **Automation:** Automatic credential verification via X-Road (KVB integration) for practitioners.
+*   **Integration:** Real-time sync between field inspection data and the **National Livestock Digital Registry (NLDR)**.
+*   **Real-time Processing:** Geo-tagged, timestamped field inspections via the **SDLD Mobile Inspection App**.
+*   **Digital Identity Validation:** Individual farmer and practitioner identities verified via **Maisha Namba** identity federation.
+*   **Workflow Orchestration:** Orchestrates the complex monthly **Milk Analysis Protocol** (Farmer → Animal ID → Sample → Lab → Result).
 
-# PART 4: ARCHITECTURE ALIGNMENT (KENYA HUDUMA BRIDGE)
-
-The Livestock Regulatory and Quality Assurance Service is engineered to operate across the four layers of the **Kenya DSAP Architecture**:
-
-### Layer 1: Access Channels
-- **eCitizen / Livestock Portal:** The primary window for veterinary practitioners and facility owners to apply for and renew licenses.
-- **Mobile Inspection App:** A specialized interface for field officers to conduct structured, geo-tagged inspections (offline-first).
-- **USSD / SMS Interface:** For farmers to receive milk analysis results and animal health alerts.
-
-### Layer 2: Core Platform
-- **Workflow Engine (BPMN 2.0):** Orchestrates the licensing lifecycle (Application → Inspection → Technical Review → Issuance) and the monthly Milk Analysis cycle.
-- **Trust Hub:**
-  - **Consent Manager:** Consulted before sharing farmer data or animal health records with third-party labs or insurance providers via X-Road.
-  - **Identity Federation:** Real-time verification of practitioner identity via **Maisha Namba (IPRS)**.
-  - **NPKI:** Digitally signing **Veterinary Licenses**, **Inspection Reports**, and **Lab Analysis Results** to ensure professional accountability.
-- **Shared Services:**
-  - **Intelligent Document Processing (IDP):** Digitizing practitioner logbooks, facility certifications, and historical paper licenses into the National EDRMS.
-  - **Document Generator:** Automated creation of QR-coded permits and milk quality certificates.
-  - **Notifications:** Automated SMS/Email alerts for license renewal (90-day cycle) and milk safety triggers.
-
-### Layer 3: Interoperability (Huduma Bridge)
-- **KeSEL (X-Road):** Secure data exchange between SDLD and the **Kenya Veterinary Board (KVB)**, **Pharmacy & Poisons Board**, and **MOH (Food Safety)**.
-- **Central Service Catalogue:** Cataloguing animal health and quality assurance APIs for national traceability.
-
-### Layer 4: Authoritative Registries & Payments
-- **Registries:**
-  - **National Livestock Digital Registry (NLDR):** The sector-specific authoritative registry for animal, farm, and practitioner data.
-  - **National EDRMS:** The definitive legal digital archive for all signed regulatory permits and food safety certifications.
-  - **IPRS / Maisha Namba:** Foundational person registry for licensee identification.
-- **Payments:** **Government Payment Aggregator (GPA)** for processing license fees, lab testing charges, and livestock-related revenue.
+### 4.3 Transformation Summary
+| Dimension | AS-IS | TO-BE |
+| :--- | :--- | :--- |
+| **Processing** | Manual / Multi-touch | Automated / Digital-first |
+| **Verification** | Physical Certificates | API-based (KVB/Pharmacy Board) |
+| **Records** | Siloed Files / Books | National Livestock Digital Registry |
+| **Tracking** | Post-visit paper entry | Real-time Geo-tagged Field Sync |
 
 ---
 
-# PART 3: NEW MILK ANALYSIS PROCESS (QUALITY ASSURANCE)
+# SECTION 5: SYSTEM LANDSCAPE (ALIGN TO GEA)
 
-This process tracks milk safety from the farm gate to the laboratory, occurring on a **Monthly Schedule (14th–15th of every month)**.
-
-| Step | Actor | Action | Tool / System |
-| :--- | :--- | :--- | :--- |
-| **1. Identification** | **Farmer & Farm Registration:** Linking the milk source to a unique farmer ID and farm location. | Maisha Namba, Farm GPS, NLDR ID | County Extension Officer |
-| **2. Animal Registry** | **Batch Tracking:** Identifying the specific animal/herd from which the sample is drawn. | Animal ID / RFID Tag | Extension Officer |
-| **3. Collection** | **Protocol-Based Sampling:** Collection of milk samples using standardized digital batch codes. | Timestamp, Sample ID, Temp | Lab Assistant |
-| **4. Lab Testing** | **Analysis & Results Entry:** Laboratory testing for contaminants, butterfat, and bacterial count. | Lab Results, Rejection Codes | Lab Technician |
-| **5. Reporting** | **Automated Feedback:** Sending results to the farmer via SMS/App and updating the national dairy dashboard. | Quality Score, Alert | National Dairy Board |
-
----
-
-# PART 4: POLICY & REGULATORY ALIGNMENT
-
-The livestock regulatory framework is governed by the following critical instruments:
-
-- **Animal Health Act (Cap. 360):** Governing disease control and animal movement.
-- **Veterinarians and Veterinary Para-Professionals Act (Cap. 366):** Professional licensing authority.
-- **Meat Control Act (Cap. 356):** Standards for slaughterhouse operations.
-- **Pharmacy and Poisons Act (Cap. 244):** Regulation of veterinary medicines and practitioner drug-handling licenses.
-- **Dairy Industry Act:** Foundation for the Milk Analysis and Quality Assurance process.
+| Layer | System / Platform | Role |
+| :--- | :--- | :--- |
+| **Identity Layer** | Maisha Namba (IPRS) | Identity for 7M+ farmers and practitioners. |
+| **Interoperability** | KeSEL (X-Road) | Data link to KVB, MOH, and Pharmacy Board. |
+| **shared Services** | National EDRMS | Legal digital archive for permits and lab results. |
+| **Workflow / BPM** | Livestock Biz Engine | Orchestrates licensing and milk analysis. |
+| **Payment Layer** | GPA (Payment Gateway) | Automated fee collection and revenue tracking. |
+| **Trust Hub** | Consent Manager | Farmer control over animal health data sharing. |
 
 ---
 
-# PART 5: CHANGE LOG
+# SECTION 6: TRANSFORMATION VALUE (CRITICAL ADDITION)
 
-| Area | Before (Incorrect/Old) | After (Corrected) | Rationale |
-| :--- | :--- | :--- | :--- |
-| **Licensing** | Missing document upload stage. | Added "Upload Supporting Documents" after service selection. | Improved completeness and documentation audit trail. |
-| **Inspection** | Handwritten/Unstructured reports. | Mandated **Structured Digital Reports** via mobile app. | Standardized compliance scoring and real-time dashboarding. |
-| **Lifecycle** | Focused on one-time issuance. | Included **Renewable License Lifecycle** management. | Continuous oversight of practitioner compliance. |
-| **QA Scope** | Missing dairy quality workflows. | Modeled the **Monthly Milk Analysis Process**. | Enhanced food safety and dairy sector traceability. |
-| **Validation** | Generic application check. | Added **Practice Location (GIS) Validation**. | Verified operational presence and facility standards. |
-
----
-
-## References
-- https://kilimo.go.ke
-- Animal Health Act / Pharmacy and Poisons Act
-- Kenya Digital Justice Program Roadmap
-- Data Protection Act 2019
+| Value Type | Explanation |
+| :--- | :--- |
+| **Efficiency Gain** | 60% reduction in permit turnaround; instant milk analysis reporting via USSD. |
+| **Economic Impact** | Enables livestock "Traceability" (individual animal ID) for export eligibility. |
+| **Governance Impact** | Geo-tagged site visits ensure auditability of facility standards and disease reports. |
+| **Citizen Experience** | Seamless mobile application for permits; SMS alerts for milk safety results. |
+| **Interoperability Value** | Shared data with MOH ensures rapid response to zoonotic food-borne diseases. |
 
 ---
 
-### Validation Survey
-Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+# SECTION 7: ALIGNMENT TO WHOLE-OF-GOVERNMENT ARCHITECTURE
+- **Shared Platforms:** Uses eCitizen for portal access and GPA for all regulatory fee payments.
+- **Registry Reuse:** Reuses KVB practitioner data and Maisha Namba for foundational farmer profiles.
+- **Compliance with GEA / GIF:** Standardizing livestock data schemas (NLDR) for cross-MDA research and planning.
+
+---
+
+# SECTION 8: IMPLEMENTATION READINESS (NEW)
+*   **Data Readiness:** High; KIAMIS and livestock registries are in active population phase.
+*   **Legal Readiness:** High; National Livestock Policy and Veterinary Act (Cap 366) are active.
+*   **Institutional Readiness:** Medium; Requires training for county-level extension and inspection officers.
+*   **Technical Readiness:** High; Core platform (Livestock Portal) and mobile app are in pilot.
+
+---
+
+# SECTION 9: TRACEABILITY MATRIX (NEW)
+
+| BPA Process | Priority Service | Tier | TO-BE Capability | National Impact |
+| :--- | :--- | :--- | :--- | :--- |
+| **Practitioner Vetting**| Licensing | T2 | X-Road: KVB Link | Professional Standards & Safety |
+| **Farm Inspection** | Oversight | T2 | Geo-Tagged Mobile App | Integrity of Agricultural Data |
+| **Milk Analysis** | Quality Assurance | T2 | NPKI Signed Lab Sync | Food Security & Public Health |
+| **Animal Tracking** | Traceability | T2 | RFID / NLDR Link | Global Market Export Readiness |
+
+---
+**[End of Standardised Business Process Architecture]**

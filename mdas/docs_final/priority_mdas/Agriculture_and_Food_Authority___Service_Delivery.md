@@ -1,254 +1,214 @@
-# Agriculture and Food Authority
+# AGRICULTURE AND FOOD AUTHORITY (AFA) – Business Process Architecture
 
 ## Cover Page
-- **Ministry/Department/Agency (MDA):** Agriculture and Food Authority
-- **Process Name:** Farmer Registration & Licensing
-- **Document Version:** 2.1
-- **Date:** 2026-03-04
+- **Ministry:** Ministry of Agriculture and Livestock Development
+- **Authority:** Agriculture and Food Authority (AFA)
+- **Primary Authority:** Director General, AFA
+- **Document Type:** Business Process Architecture (BPA) Standardised
+- **Document Version:** 4.1
+- **Date:** 2026-03-25
 - **Classification:** Official
-- **Strategic Category:** Priority MDA
-- **Service Model:** G2B
-- **Life-Cycle Group:** Cradle to Death (4. Employment & Business)
-
-## Service Mandate
-The Agriculture and Food Authority (AFA) is the primary regulatory body for the crops sector in Kenya. It was established under the Agriculture and Food Authority Act (No. 13 of 2013) to operationalize the Crops Act (No. 16 of 2013). Its primary role is to regulate, develop, and promote scheduled crops value chains for increased economic growth. Specific mandates include:
-* **Regulation:** Administering the Crops Act and regulating the production, processing, marketing, grading, storage, and transportation of agricultural products (excluding livestock).
-* **Promotion:** Promoting best practices in the agricultural sector to ensure sustainability and competitiveness.
-* **Data Management:** Collecting and collating data to maintain a database on agricultural products and players.
-* **Research & Policy:** Determining research priorities in agriculture and advising both National and County governments on agricultural levies and policies.
-* **Food Security:** Ensuring the smooth operation of the food crops sub-sector to contribute to national food security.
+- **Strategic Category:** Priority MDA - System Anchor (Tier 1)
+- **Service Model:** G2B / G2C
+- **Reviewer:** Senior Government Enterprise Architect
 
 ---
 
-## Executive Summary
-The Agriculture and Food Authority regulates, develops, and promotes scheduled crops (coffee, tea, nuts, etc.). The current manual and fragmented licensing processes lead to delays in export permits, trading licenses, and farmer registration. The transition to the Kenya DSAP Architecture aims to establish KIAMIS as the single source of truth for farmers, while integrating with BRS, KRA, and Kentrade to automate compliance and licensing.
+## SECTION 0: SERVICE PRIORITISATION MAPPING
+- **Mapped Priority Service:** Farmer Registration, Crop Licensing, and Export Permitting
+- **Tier Classification:** Tier 1
+- **Strategic Category:** Economy / Agriculture (Food Security)
+- **Breakout Room Classification:** Room 3 (Agriculture & Economic Development)
+- **Lead MDA (Standardised Name):** Agriculture and Food Authority (AFA)
+- **Related Cross-Cutting Services:**
+    - KIAMIS (Kenya Integrated Agricultural Management Information System)
+    - Identity Layer (IPRS / Maisha Namba - Farmer/Trader ID)
+    - X-Road (BRS / KRA / Kentrade / KEPHIS Interop)
+    - Government Payment Aggregator (GPA / Cess & License Fees)
+    - National EDRMS (Regulatory Document Vault)
 
 ---
 
-## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (End-to-End AFA Services based on Deep Dive).*
+## SECTION 0.1: PRIORITISATION JUSTIFICATION
+This service is prioritised because the TO-BE design transforms agricultural regulation from a manual "paper-permit" system into an "Automated Agri-Trade Hub." By integrating the KIAMIS (National Farmer Registry) with BRS (Business) and KRA (Tax) via X-Road (Huduma Bridge), the design enables a "Zero-Upload" licensing experience where business ownership and tax compliance are verified instantly. This transformation eliminates the historical 14-day inspection backlog for low-risk renewals, automates cess and fee collection via the Government Payment Aggregator (GPA), and ensures that Kenyan agricultural exports (Tea, Coffee, Horticulture) are backed by verifiable digital certificates, directly boosting national food security, farmer incomes, and global export competitiveness.
 
+| Criteria | Evidence from TO-BE Design |
+| :--- | :--- |
+| **Demand / Volume** | Over 7.1 million farmer profiles; thousands of export permits processed weekly. |
+| **National Priority Alignment** | Agricultural Sector Transformation & Growth Strategy (ASTGS); BETA Agenda. |
+| **Data Reusability** | Farmer data is the primary input for National Fertilizer Subsidy and Crop Insurance. |
+| **Interoperability** | Multi-agency data pipeline between AFA, KEPHIS, and Kentrade via X-Road. |
+| **Revenue / Efficiency Impact** | Automated cess collection via GPA; reduces permit processing from 14 days to <2 hours. |
+| **Governance / Risk Reduction** | Digital traceability from farm to port prevents "Crop Hawking" and illegal exports. |
+| **Inclusivity** | Mobile-first USSD registration ensures smallholder farmers in remote areas are profiled. |
+| **Readiness** | High; KIAMIS is already operational; AFA IMIS and Kentrade are digital-ready. |
+
+> [!NOTE]
+> “The TO-BE design transforms agricultural regulation from a manual 'paper-permit' system into an 'Automated Agri-Trade Hub.' By integrating KIAMIS (Farmer Registry) with BRS and KRA via X-Road, the design enables 'Zero-Upload' licensing where business ownership and tax compliance are verified instantly. This transformation eliminates the 14-day inspection backlog for low-risk traders, automates cess and fee collection via the Government Payment Aggregator (GPA), and ensures that Kenyan agricultural exports are backed by verifiable digital certificates, directly boosting national food security and export competitiveness.”
+
+---
+
+# SECTION 1: SERVICE DEFINITION (STANDARDISED)
+
+The Agriculture and Food Authority (AFA) is the primary regulatory body for the crops sector in Kenya, mandated under the **AFA Act (No. 13 of 2013)** and the **Crops Act (No. 16 of 2013)**. 
+
+In this refactored BPA, the primary service is the **End-to-End Agri-Business Compliance & Export Lifecycle**. The objective is to move from manual physical "Document Reviews" and inspections to an **Automated Risk-Based Licensing Engine** where farmer data is pulled from **KIAMIS** and trade permits are issued as **Verifiable Digital Credentials**.
+
+---
+
+# SECTION 2: SERVICE CATALOGUE (NORMALISED)
+
+| Category | Service Name | Description |
+| :--- | :--- | :--- |
+| **Core Services** | **Farmer Registration**| Biometric/ID-led profiling of farmers in KIAMIS (G2C). |
+| | **Agri-Export Permitting** | Real-time issuance of crop export certificates (G2B). |
+| **Extended Services** | **Product Trading License** | Registration of warehouses, millers, and dealers in scheduled crops. |
+| | **Inspection QR Issuance** | Digital, GPS-tagged inspection reports for processing plants. |
+| **Special Case Services**| **Cess Collection Payout** | Automated fee collection and revenue sharing with Counties (GPA). |
+| | **Traceability Audit** | API-based tracking of crop movement from farm-gate to port. |
+
+---
+
+# SECTION 3: AS-IS PROCESS FLOWS (MANUAL/PAPER-LED)
+
+Currently, licensing and permitting rely on manual document submissions and physical inspections, leading to significant delays and friction for traders.
+
+### 3.1 AS-IS Visualization
 ```mermaid
 %%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
-    %% Events
-    Start((Start))
-    EndApprove(("End - Approved"))
-    EndReject(("End - Rejected"))
-
-    subgraph Applicant [Applicant]
-        direction LR
-        CompleteApp["Complete App"] --> AttachDocs["Attach Docs"]
-        AttachDocs --> SubmitApp[Submit]
-        SubmitApp --> PayFee["Pay Fee"]
-        ProvideMoreInfo["Provide Info"]
-    end
-
-    subgraph AFA["AFA Workflow"]
-        direction TB
-        LogApp["Log Application"] --> ReviewDocs["Review Docs"]
-        ReviewDocs --> DocsGateway{Complete?}
-        
-        DocsGateway -- "No" --> ProvideMoreInfo
-        ProvideMoreInfo --> ReviewDocs
-        
-        DocsGateway -- "Yes" --> VerifyBRS["Verify BRS"]
-        VerifyBRS --> VerifyCompliance["Verify Compliance"]
-        VerifyCompliance --> ScheduleInsp["Schedule Inspection"]
-        ScheduleInsp --> PhysInsp["Physical Inspection"]
-        PhysInsp --> SubmitInspReport["Submit Report"]
-        SubmitInspReport --> OfficerRec["Officer Rec"]
-        OfficerRec --> DirApproval["Committee Approval"]
-        DirApproval --> ApprovalGateway{Decision?}
-        
-        ApprovalGateway -- "Approved" --> GenLicense["Generate License"]
-        GenLicense --> NotifyApp["Notify Applicant"]
-        NotifyApp --> UpdateReg["Update Registry"]
-        
-        ApprovalGateway -- "Rejected" --> NotifyReject["Notify Rejection"]
-    end
-
-    %% Flow connections between subgraphs
-    Start --> CompleteApp
-    PayFee --> LogApp
-    UpdateReg --> EndApprove
-    NotifyReject --> EndReject
-
-    %% Styling
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px;;
+    Start((Start)) --> Apply["1. Applicant Completes Paper/Portal Form"]
     
-    class Start startEvent;
-    class EndApprove,EndReject endEvent;
-    class DocsGateway,ApprovalGateway gateway;
-    class CompleteApp,AttachDocs,SubmitApp,PayFee,ProvideMoreInfo,LogApp,ReviewDocs,VerifyBRS,VerifyCompliance,ScheduleInsp,PhysInsp,SubmitInspReport,OfficerRec,DirApproval,GenLicense,NotifyApp,UpdateReg,NotifyReject userTask;
+    subgraph Verification_Silo["Compliance Check"]
+        Apply --> Attach["2. Manually Attach ID/BRS/KRA Copies"]
+        Attach --> Desk["3. AFA Officer Reviews Documents (Manual Walk-in)"]
+    end
+
+    subgraph Operation_Silo["Inspection Delay"]
+        Desk --> Insp["4. Physical Inspection Scheduled (Manual Logistics)"]
+        Insp --> Report["5. Inspection Report Written (Paper-based)"]
+    end
+
+    subgraph Settlement_Layer["Approval Transition"]
+        Report --> Comm["6. Committee Review & Manual Decision (Weekly)"]
+        Comm --> Pay["7. Payment of Fee (Manual Bank Slips/Vouchers)"]
+        Pay --> Cert["8. Physical License Issued (Courier/Collection)"]
+    end
+
+    Cert --> EndProcess(("End - Permission to Trade/Export"))
 ```
 
----
-
-## Process Overview
-### Process Name
-End-to-End Farmer Registration, Export Permits, and Trading Licenses
-
-### Service Category
-- G2B (Government to Business) / G2C (Government to Citizen)
-
-### Scope
-- **In Scope:** Farmer profiling (KIAMIS), issuing trading licenses, and approving export/import permits.
-- **Out of Scope:** Customs clearance at the port (handled by KRA/Kentrade).
-
-### Triggers
-- A trader applying for a license or a farmer registering to supply scheduled crops.
-
-### End States
-- **Successful:** Verifiable Digital Trading License or Export Permit issued.
-
-### Policy Context
-- Agriculture and Food Authority Act; Crops Act.
+### 3.2 Operational Reality
+- **Actors:** Farmer/Trader, AFA Clerk, Inspector, Committee Members, Finance Officer.
+- **Systems:** Paper Forms, AFA IMIS (Siloed), Kentrade (Disconnected), Physical Registers.
+- **Pain Points:** 10-14 day delay for standard renewals; manual verification of BRS/KRA documents is prone to fraud; physical inspections for every applicant create massive backlogs; lack of real-time sync with port authorities creates bottlenecks at the border.
 
 ---
 
-## Detailed Process (AS-IS)
+# SECTION 4: TO-BE PROCESS INTERPRETATION (NEW LAYER)
 
-| Step | Role | Action | Tool/System | Notes |
+### 4.1 TO-BE Process (Automated Agri-Trade Hub)
+```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '20px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+flowchart TD
+    Start((Start)) --> Portal["1. Applicant SSO Login & Permit Request (eCitizen)"]
+    
+    subgraph Trust_Hub["Layer 2: Zero-Touch Verification"]
+        Portal --> Verify["2. X-Road: Auto-verify BRS/KRA/KIAMIS Credentials"]
+        Verify --> Payment["3. GPA: Automated Cess/License Fee Collection"]
+    end
+
+    subgraph Operations["Layer 2 & 3: Risk-Based Engines"]
+        Payment --> Risk["4. AI Rules Engine: Run Risk Assessment (Score)"]
+        Risk -- "Low Risk" --> AutoApp["5. Automated Decision & Digital Issuance"]
+        Risk -- "High Risk" --> Insp["6. Digital Field Tasking to Inspector Mobile App"]
+    end
+
+    subgraph Settlement["Layer 4: Digital Credentials"]
+        Insp --> Upload["7. Bio-validated & GPS-tagged Digital Inspection Report"]
+        AutoApp --> Sync["8. X-Road: Real-time Sync with Kentrade/KEPHIS Registry"]
+        Upload --> Sync
+        Sync --> Output["9. Verifiable Digital Permit (QR-coded NPKI signed)"]
+    end
+
+    Output --> EndProcess(("End - Trade/Export Authorized"))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:20px;;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:20px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:20px;;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:20px;;
+    
+    class Start start;
+    class EndProcess endNode;
+    class Portal userTask;
+    class Verify,Payment,Risk,AutoApp,Insp,Upload,Sync,Output serviceTask;
+```
+
+### 4.2 Key Capabilities Introduced
+*   **Automation:** Automated Risk-Based Approval – system ignores low-risk renewals, allowing officers to focus only on high-risk new applicants or flagged traders.
+*   **Integration:** Multi-registry integration between **AFA**, **BRS**, **KRA**, and **Kentrade** via X-Road.
+*   **Real-time Processing:** "Instant Export Clearance" – synchronization with port systems ensures that a permit issued at AFA is visible to KRA Customs in milliseconds.
+*   **Digital Identity Validation:** Identity of traders and inspectors verified via **National Identity (Maisha Namba)** for tamper-proof reports.
+*   **Workflow Orchestration:** Orchestrates the entire agri-trade lifecycle from farmer registration to port clearance.
+
+### 4.3 Transformation Summary
+| Dimension | AS-IS | TO-BE |
+| :--- | :--- | :--- |
+| **Processing** | Manual / Multi-office visits | Digital / Single-window (eCitizen) |
+| **Verification** | ID/Certificate Photocopies | Live X-Road API (BRS/KRA/KIAMIS) |
+| **Records** | Regional/Mail Ledgers | Unified National Crop Registry |
+| **Tracking** | Post-permit physical audits | Real-time Traceability & Heatmaps |
+
+---
+
+# SECTION 5: SYSTEM LANDSCAPE (ALIGN TO GEA)
+
+| Layer | System / Platform | Role |
+| :--- | :--- | :--- |
+| **Identity Layer** | Maisha Namba (Trader ID) | Identity and Bio-login for all formal trade and farm interaction. |
+| **Interoperability** | KeSEL (X-Road) | The "Data Bridge" to KRA, BRS, KEPHIS, and Kentrade. |
+| **shared Services** | KIAMIS | The authoritative registry for all farmer and crop data. |
+| **Workflow / BPM** | AFA Regulatory Engine | Orchestrates risk-scoring, tasking, and permitting. |
+| **Payment Layer** | GPA (Payment Gateway) | Automated Cess and regulatory fee settlement. |
+| **Trust Hub** | NPKI Stamping Service | Cryptographic sealing of all digital export permits. |
+
+---
+
+# SECTION 6: TRANSFORMATION VALUE (CRITICAL ADDITION)
+
+| Value Type | Explanation |
+| :--- | :--- |
+| **Efficiency Gain** | Permit turnaround time reduced from 14 days to <2 hours for 80% of cases. |
+| **Economic Impact** | Reduces the "Cost of Doing Business" for agri-traders; improves export volumes. |
+| **Governance Impact** | Absolute traceability; prevents illegal trade and revenue leakage at the port. |
+| **Citizen Experience** | Farmers gain instant access to subsidies and markets via digital profiling. |
+| **Interoperability Value** | Shared Agri-Registry ensures all agencies have a "Single Version of the Truth." |
+
+---
+
+# SECTION 7: ALIGNMENT TO WHOLE-OF-GOVERNMENT ARCHITECTURE
+- **Shared Platforms:** Uses the GPA for all fee collection and Kentrade for single-window trade facilitation.
+- **Registry Reuse:** Reuses KIAMIS farmer data to prevent redundant data collection by livestock or finance agencies.
+- **Compliance with GEA / GIF:** Standardizing agricultural permit metadata for international interoperability (e.g., ePhyto certificates).
+
+---
+
+# SECTION 8: IMPLEMENTATION READINESS (NEW)
+*   **Data Readiness:** High; KIAMIS contains over 7 million farmer profiles.
+*   **Legal Readiness:** High; AFA and Crops Acts provide a strong regulatory framework for digitization.
+*   **Institutional Readiness:** High; AFA has established digital desks and regional inspection offices.
+*   **Technical Readiness:** High; Kentrade and X-Road nodes are already active for trade facilitation.
+
+---
+
+# SECTION 9: TRACEABILITY MATRIX (NEW)
+
+| BPA Process | Priority Service | Tier | TO-BE Capability | National Impact |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | Applicant | Completes application, attaches paper copies of required documents, submits application, and pays the application fee. | Paper/Bank/Portal | High manual effort. |
-| 2 | AFA Clerk | Receives and logs the application, and reviews documentation for completeness. | Manual Registry | May request more info if incomplete. |
-| 3 | AFA Officer | Verifies business registration and compliance history manually. | Manual | Time-consuming verification process. |
-| 4 | AFA Inspector | Schedules inspection, conducts physical premises inspection, and submits inspection report. | Manual | Major bottleneck in the process. |
-| 5 | AFA Committee | Reviews the officer's recommendation and makes a final approval or rejection decision. | Committee |  |
-| 6 | AFA Admin | Generates license if approved, notifies the applicant of the decision, and updates the manual registry. | AFA IMIS / Manual |  |
+| **Farmer Registry** | Profile Onboard | T1 | Maisha Namba Verified Sync | Inclusive Extension Services |
+| **Risk-Based Appr.** | Permit Issuance | T1 | AI Rules Engine (Auto-approve) | Global Export Competitiveness |
+| **Digital Insp.** | Compliance Track | T1 | GPS-Tagged Bio-validated App | Enhanced Food Safety Standards |
+| **Cess Collection** | Revenue Settlement| T1 | GPA Integrated Payouts | Sustainable County Agriculture |
 
 ---
-
-## Pain Points & Opportunities
-### Pain Points
-- **Manual Verification:** Officers manually verify BRS and KRA documents, leading to fraud risks.
-- **Inspection Delays:** Physical premise inspections cause massive backlogs.
-- **Siloed Registries:** KIAMIS (farmers), AFA IMIS (licenses), and Kentrade (exports) are not fully integrated.
-
-### Opportunities
-- **Automated Validation:** Use KeSEL to validate BRS (ownership) and KRA (tax compliance) instantly.
-- **Risk-Based Inspections:** Auto-approve renewals for low-risk applicants without physical visits.
-- **Integrated Payments:** Shift all cess and license fees to the Government Payment Aggregator (GPA).
-
----
-
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
-
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    %% Events
-    Start((Start))
-    EndApprove(("End - Issued"))
-    EndReject(("End - Rejected"))
-
-    subgraph Applicant [Applicant]
-        direction LR
-        Access["Access eCitizen"] --> SelectType["Select License"]
-        SelectType --> ConfirmData["Confirm Data"]
-        ConfirmData --> MakePayment["Digital Payment"]
-    end
-
-    subgraph IntegrationLayer["System Integration"]
-        direction LR
-        ValBRS["Validate BRS"] --> ValKRA["Validate KRA"]
-        ValKRA --> GetKIAMIS["Get KIAMIS Data"]
-        GetKIAMIS --> AutoPop["Auto-populate"]
-    end
-
-    subgraph WorkflowEngine["Workflow Engine"]
-        direction TB
-        RunRisk["Run Risk Assessment"] --> RiskGateway{"Risk Level?"}
-        OfficerReview["Officer Review"] --> ReviewGateway{Decision?}
-    end
-
-    subgraph InspectionWorkflow [Inspection]
-        direction TB
-        ScheduleInsp["Schedule Insp"] --> UploadReport["Upload Report"]
-        UploadReport --> ReviewInspResult["Review Result"]
-        ReviewInspResult --> InspDecisionGateway{Approved?}
-    end
-
-    subgraph LicenseIssuance [Issuance]
-        direction TB
-        GenDigitalLicense["Gen Digital License"] --> RegDigitalRegistry["Register License"]
-        RegDigitalRegistry --> NotifyApplicantApprove["Notify Applicant"]
-        NotifyApplicantApprove --> SyncKentrade["Sync Kentrade"]
-    end
-
-    %% Flow connections
-    Start --> Access
-    MakePayment --> ValBRS
-    AutoPop --> RunRisk
-    
-    RiskGateway -- "Low" --> GenDigitalLicense
-    RiskGateway -- "Medium" --> OfficerReview
-    RiskGateway -- "High" --> ScheduleInsp
-    
-    %% Officer Review Path
-    ReviewGateway -- "Approved" --> GenDigitalLicense
-    ReviewGateway -- "Needs Insp" --> ScheduleInsp
-    ReviewGateway -- "Rejected" --> NotifyReject["Notify Rejection"]
-    
-    %% Inspection Path
-    InspDecisionGateway -- "Yes" --> GenDigitalLicense
-    InspDecisionGateway -- "No" --> NotifyReject
-    
-    %% License Issuance Path
-    SyncKentrade --> EndApprove
-    
-    %% Rejection Path
-    NotifyReject --> EndReject
-
-    %% Styling
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px,font-size:24px;;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px;;
-    
-    class Start startEvent;
-    class EndApprove,EndReject endEvent;
-    class RiskGateway,ReviewGateway,InspDecisionGateway gateway;
-    class ValBRS,ValKRA,GetKIAMIS,AutoPop,RunRisk,GenDigitalLicense,RegDigitalRegistry,NotifyApplicantApprove,SyncKentrade,NotifyReject serviceTask;
-    class Access,SelectType,ConfirmData,MakePayment,OfficerReview,ScheduleInsp,UploadReport,ReviewInspResult userTask;
-```
-
-## Future State Process (TO-BE)
-### Narrative
-**TO-BE Process: Automated Licensing via Huduma Bridge**
-
-**Design Principles:**
-- **Registry-Centric Architecture:** KIAMIS serves as the primary registry for farmer profiling.
-- **Once-Only Principle:** BRS and KRA data is fetched automatically via APIs; applicants no longer upload paper certificates.
-- **Automated Compliance Verification:** Seamless validation via KeSEL integration eliminates manual documentation checks.
-- **Risk-Based Decision Automation:** The workflow engine applies risk profiles to auto-approve standard low-risk renewals.
-- **Exception-Based Human Review:** Manual processing and physical inspections are reserved strictly for high-risk or flagged applications.
-
-### Optimized Steps (Digital)
-
-| Step | Actor | Action | Tool / System |
-| :--- | :--- | :--- | :--- |
-| 1 | Applicant | Accesses eCitizen, selects the required license type, confirms auto-populated data, and makes digital payment. | eCitizen Portal / GPA |
-| 2 | System Integration Layer | Validates business registration via BRS, checks tax compliance via KRA, retrieves farmer data from KIAMIS, and auto-populates the form. | KeSEL / BRS / KRA / KIAMIS |
-| 3 | Workflow Engine | Runs risk assessment. Low-risk applications are auto-approved. Medium-risk are routed to officer review, and high-risk trigger the inspection workflow. | Workflow Engine |
-| 4 | AFA Inspector / Officer | Handles exception-based reviews or physical inspections (schedules inspection, uploads report, reviews results). | AFA Workbench |
-| 5 | System | Generates a digital license, registers it in the digital registry, notifies the applicant, and synchronizes the approval with Kentrade. | Output Generator / Kentrade |
-
----
-
-## References
-- https://afa.go.ke
-- Agriculture and Food Authority Act
-- Desk Review
-
----
-
-### Validation Survey
-Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
-
+**[End of Standardised Business Process Architecture]**
