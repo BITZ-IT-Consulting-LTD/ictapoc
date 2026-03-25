@@ -92,8 +92,8 @@ Service Delivery
 
 ## Stakeholders
 
-| Stakeholder | Role | Responsibilities |
-|---|---|---|
+| Category | Service Name | Target Population |
+| :--- | :--- | :--- |
 | Sales Department | Process Actor | Performs actions as defined in steps. |
 | Customer | Process Actor | Performs actions as defined in steps. |
 | Stores/Operations | Process Actor | Performs actions as defined in steps. |
@@ -102,13 +102,13 @@ Service Delivery
 
 ## Detailed Process (AS-IS)
 
-| Step | Role | Action | Tool | Notes |
-|---|---|---|---|---|
-| 1 | Customer | Customer submits an order or request for goods/services. | Manual | |
-| 2 | Sales Department | Corporation processes the request and issues a quotation/proforma invoice. | Manual | |
-| 3 | Customer | Customer makes payment via Bank or M-Pesa. | Manual | |
-| 4 | Stores/Operations | Corporation releases the goods or delivers the service. | Manual | |
-| 5 | Customer | Customer signs Delivery Note or Service Acceptance Form. | Manual | |
+| Step | Role | Action | Tool / System | Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | Customer | Customer submits an order or request for goods/services. | Manual |  |
+| 2 | Sales Department | Corporation processes the request and issues a quotation/proforma invoice. | Manual |  |
+| 3 | Customer | Customer makes payment via Bank or M-Pesa. | Manual |  |
+| 4 | Stores/Operations | Corporation releases the goods or delivers the service. | Manual |  |
+| 5 | Customer | Customer signs Delivery Note or Service Acceptance Form. | Manual |  |
 
 ---
 
@@ -174,8 +174,8 @@ The To-Be process leverages the Government Service Bus to integrate with BRS (Bu
 
 ### Optimized Steps (Digital)
 
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | Applicant | Applicant logs in via Single Sign-On (SSO) and selects the service. | Citizen Portal / SSO |
 | 2 | System | Applicant enters Business Registration Number; System auto-populates details from BRS (Business Registry) via the Service Bus. | Service Bus / Registry API |
 | 3 | System | System performs auto-validation of compliance (e.g., KRA Tax Status) via Inter-Agency APIs. | Service Bus / Compliance Engine |

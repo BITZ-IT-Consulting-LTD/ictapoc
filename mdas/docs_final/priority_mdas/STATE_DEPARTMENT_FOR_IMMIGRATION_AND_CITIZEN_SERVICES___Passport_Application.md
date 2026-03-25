@@ -91,7 +91,7 @@ Passport Application and Digital Registry Management
 ## Detailed Process (AS-IS)
 
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
+| :--- | :--- | :--- | :--- | :--- |
 | 1 | Applicant | Submits application and uploads documents online. | eCitizen | First point of digital entry. |
 | 2 | Registry Clerk | Prints the application form and physical photos to create a paper folder. | Physical Printer | Causes immediate duplication and waste. |
 | 3 | Records Officer | Manually indexes the file and places it in a physical "Pending" crate. | Physical Ledger | Hard to track the location of the file in real-time. |
@@ -161,8 +161,8 @@ flowchart TD
 
 ### Optimized Steps (Digital)
 
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | Citizen | Submits application and uploads digital supporting evidence. | eCitizen / Passport Portal |
 | 2 | System | Verifies authenticity of documents against foundational registries. | Huduma Bridge / CRS / IPRS |
 | 3 | **EDRMS** | **Dossier Creation:** Automatically indexes and stores all verified digital files. | **Immigration EDRMS** |

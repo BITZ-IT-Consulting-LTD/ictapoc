@@ -108,10 +108,10 @@ End-to-End Inter-Agency Coordination and Situation Reporting
 ## Detailed Process (AS-IS)
 
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
-| 1 | Coordination Officer | Identifies a coordination need (e.g., Drought Response) and defines the deliverables required from MDAs. | Manual | |
-| 2 | Coordination Officer | Drafts a formal request letter and attaches an Excel template for data collection. | MS Word / Excel | |
-| 3 | Dispatch Clerk | Sends the request to all relevant Principal Secretaries and Regional Commissioners via email/physical dispatch. | Email / Physical | |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | Coordination Officer | Identifies a coordination need (e.g., Drought Response) and defines the deliverables required from MDAs. | Manual |  |
+| 2 | Coordination Officer | Drafts a formal request letter and attaches an Excel template for data collection. | MS Word / Excel |  |
+| 3 | Dispatch Clerk | Sends the request to all relevant Principal Secretaries and Regional Commissioners via email/physical dispatch. | Email / Physical |  |
 | 4 | Coordination Unit | Follows up with MDAs via phone calls and reminders to ensure submissions are made. | Phone/WhatsApp | High friction step. |
 | 5 | Analyst | Manually cleans and merges 20+ different Excel files into a single master sheet for analysis. | Excel | High risk of error. |
 
@@ -183,8 +183,8 @@ graph TD
 
 ### Optimized Steps (Digital)
 
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | Leadership | Defines a new national priority and sets the target KPIs in the Coordination Portal. | Executive Portal |
 | 2 | System | Maps the KPIs to existing data fields in relevant MDA registries (e.g., Health, Agriculture, Lands). | Service Catalogue |
 | 3 | System | Pulls data every 24 hours via X-Road to update the national achievement scorecards. | KeSEL / X-Road |

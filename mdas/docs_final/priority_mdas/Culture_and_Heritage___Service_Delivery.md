@@ -139,13 +139,13 @@ End-to-End Ushanga Kenya Value Chain (Aggregation to Payment)
 ## Detailed Process (AS-IS)
 
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
-| 1 | Artisan / Cooperative Leader | Coordinates the onboarding of the cooperative and aggregation of beadwork from members. Travels to the aggregation center. | Physical | |
-| 2 | Center Officer | Receives products, counts items, and verifies if the cooperative is formally registered with Ushanga Kenya. | Manual Ledger | |
-| 3 | Quality Officer | Examines craftsmanship and materials to assign a Grade (A, B, or Fail) during the quality grading process. | Manual | |
-| 4 | Center Officer | Stores the graded inventory securely and logs items into the local catalog. | Paper Records / Excel | |
-| 5 | Market Officer | Manages market cataloging and placement, displaying products in retail shops, exhibitions, or online portals. | Manual/EDRMS | |
-| 6 | Market Officer | Facilitates product sales and records transaction details. | Receipt Books | |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | Artisan / Cooperative Leader | Coordinates the onboarding of the cooperative and aggregation of beadwork from members. Travels to the aggregation center. | Physical |  |
+| 2 | Center Officer | Receives products, counts items, and verifies if the cooperative is formally registered with Ushanga Kenya. | Manual Ledger |  |
+| 3 | Quality Officer | Examines craftsmanship and materials to assign a Grade (A, B, or Fail) during the quality grading process. | Manual |  |
+| 4 | Center Officer | Stores the graded inventory securely and logs items into the local catalog. | Paper Records / Excel |  |
+| 5 | Market Officer | Manages market cataloging and placement, displaying products in retail shops, exhibitions, or online portals. | Manual/EDRMS |  |
+| 6 | Market Officer | Facilitates product sales and records transaction details. | Receipt Books |  |
 | 7 | Finance Officer | Conducts sales reconciliation, calculates gross earnings, and deducts management fees. | Manual/Excel | Target: Payment within 14 days. |
 | 8 | Finance Officer | Processes payment settlement via batch bank transfers to the respective cooperatives. | Banking Portal | High delay risk. |
 
@@ -257,8 +257,8 @@ The To-Be architecture transforms the manual beadwork value chain into a **digit
 
 ### Optimized Steps (Digital)
 
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | Center Officer | Performs digital product intake using a mobile inventory scanning app, instantly verifying the cooperative's registration. | Ushanga Mobile App |
 | 2 | Quality Officer | Uses an AI-assisted tool to evaluate the product, but provides the final human approval for the quality pass. | Digital QA Portal |
 | 3 | System | Generates a unique QR code serving as the product's digital identity and prints the physical label. | Digital Inventory Registry |

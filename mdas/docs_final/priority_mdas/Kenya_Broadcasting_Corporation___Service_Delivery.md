@@ -95,11 +95,11 @@ End-to-End Archival Retrieval, Digitization, and Content Licensing
 ## Detailed Process (AS-IS)
 
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
-| 1 | Client | Submits a manual request for a specific historical event or footage. | Paper/Email | |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | Client | Submits a manual request for a specific historical event or footage. | Paper/Email |  |
 | 2 | Librarian | Physically searches through thousands of tapes/reels in the KBC vaults. | Index Cards | High risk of missing content. |
-| 3 | Archivist | Verifies the copyright status of the content (KBC-owned vs. shared). | Manual Registry | |
-| 4 | Finance Officer | Manually calculates the digitization and licensing fee. | Excel | |
+| 3 | Archivist | Verifies the copyright status of the content (KBC-owned vs. shared). | Manual Registry |  |
+| 4 | Finance Officer | Manually calculates the digitization and licensing fee. | Excel |  |
 | 5 | Client | Pays via bank deposit and brings the slip to the KBC registry for verification. | Manual | Major delay. |
 
 ---
@@ -168,8 +168,8 @@ graph TD
 
 ### Optimized Steps (Digital)
 
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | Client | Searches for content on the KBC eCitizen Portal using keywords (e.g., "Madaraka Day 1963"). | eCitizen / AI Search |
 | 2 | System | Displays high-resolution previews and automatically calculates the license fee based on the client's profile (Commercial vs. Academic). | Workflow Engine |
 | 3 | Client | Authorizes an M-Pesa payment through the GPA. | GPA |

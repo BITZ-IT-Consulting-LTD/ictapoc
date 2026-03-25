@@ -104,7 +104,7 @@ Sports Federation Registration, Grant Disbursement, and Facility Booking
 ## Detailed Process (AS-IS)
 
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
+| :--- | :--- | :--- | :--- | :--- |
 | **1** | Federation | **Letter to PS:** Submits a formal request for funding (e.g., for international travel). | Manual / Email | Citizen-led trigger. |
 | **2** | Sports Officer | **Confirmation:** Verifies that the federation/athlete meets all statutory SASDF requirements. | Manual / eCitizen | Registration is already on e-Citizen. |
 | **3** | Budgeting Committee | **Verification:** Reviews the requested budget against the available annual allocation. | Committee System | Financial gatekeeping. |
@@ -209,8 +209,8 @@ graph TD
 
 ### Optimized Steps (Digital)
 
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | Athlete | Logs into the Sports Portal using their Maisha Namba for SSO. | Sports Portal |
 | 2 | System | Fetches the athlete's competition history and academic status via X-Road (NEMIS/KNQA). | KeSEL / X-Road |
 | 3 | Athlete | Selects a training facility and pays the discounted "Elite Athlete" fee. | GPA |

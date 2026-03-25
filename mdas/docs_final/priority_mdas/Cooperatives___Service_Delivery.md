@@ -62,8 +62,8 @@ Cooperative Registration and Service Delivery
  
 ## Stakeholders
  
-| Stakeholder | Role | Responsibilities |
-|---|---|---|
+| Category | Service Name | Target Population |
+| :--- | :--- | :--- |
 | Customer / Applicant | Initiator | Submits registration documents, application, or inquiry via courier, by hand, or official portal. Responds to correction requests. |
 | Cash Office | Process Actor | Receives documents and processes payment receipting before handoff to Registry. |
 | Registry | Process Actor | Records submissions in the Receiving Register, allocates duty to Technical Officers, and logs allocations in the Job Allocation Register. |
@@ -77,7 +77,7 @@ Cooperative Registration and Service Delivery
 ## Detailed Process (AS-IS)
  
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
+| :--- | :--- | :--- | :--- | :--- |
 | 1 | Customer / Applicant | Delivers registration documents to the Registry via courier or by hand. | Physical / Courier | No online submission channel. Physical presence or courier required for every application. |
 | 2 | Cash Office | Receives the documents and processes payment receipting. | Cash Register / Manual Receipt | Cash-based payment only. No electronic payment integration. Receipts issued manually. |
 | 3 | Registry | Records the submission in the Receiving Register. | Manual Register | Paper-based register. No digital tracking or SLA monitoring from this point. |
@@ -204,8 +204,8 @@ flowchart TD
  
 ### Optimized Steps (Digital)
  
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | Applicant | Logs in via Single Sign-On (SSO) on eCitizen and selects the service type — registration, renewal, or compliance query. | eCitizen Portal / SSO |
 | 2 | Government Service Bus | Auto-verifies applicant identity via IPRS, cooperative registration details via BRS, and tax compliance status via KRA iTax. Application form auto-populated with verified data. | Service Bus / IPRS / BRS / KRA iTax |
 | 3 | Applicant | Reviews and confirms the auto-populated cooperative details. Pays the applicable fees digitally via GPA. Auto-receipt generated and sent instantly. | eCitizen Portal / Government Payment Aggregator (GPA) |

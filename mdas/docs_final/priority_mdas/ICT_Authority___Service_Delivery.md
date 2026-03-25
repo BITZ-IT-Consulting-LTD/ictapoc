@@ -132,13 +132,13 @@ Government ICT Project Governance and Implementation
 ## Detailed Process (AS-IS)
 
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
-| 1 | MDA | Identifies need for ICT system | Internal | |
-| 2 | MDA | Develops project concept and submits to ICT Authority | Project Proposal | |
-| 3 | ICT Authority | Reviews architecture and compliance with standards | GEA Framework | |
-| 4 | ICT Authority | Approves or rejects project | ICTA Governance | |
-| 5 | MDA / Vendor | Procures vendor and develops system | Vendor Systems | |
-| 6 | MDA | Deploys and operates system | Local Infrastructure | |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | MDA | Identifies need for ICT system | Internal |  |
+| 2 | MDA | Develops project concept and submits to ICT Authority | Project Proposal |  |
+| 3 | ICT Authority | Reviews architecture and compliance with standards | GEA Framework |  |
+| 4 | ICT Authority | Approves or rejects project | ICTA Governance |  |
+| 5 | MDA / Vendor | Procures vendor and develops system | Vendor Systems |  |
+| 6 | MDA | Deploys and operates system | Local Infrastructure |  |
 
 ---
 
@@ -219,8 +219,8 @@ ICT Authority transitions from merely reviewing ICT projects to operating shared
 
 ### Optimized Steps (Digital)
 
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | MDA | Designs digital service aligned with GEA | Architecture Portal |
 | 2 | ICT Authority | Reviews architecture and integration | GEA Compliance System |
 | 3 | System | Integrates with national registries via interoperability layer | KeSEL Bridge |

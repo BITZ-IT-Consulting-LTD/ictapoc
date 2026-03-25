@@ -132,8 +132,8 @@ The Livestock Regulatory and Quality Assurance Service is engineered to operate 
 
 This process tracks milk safety from the farm gate to the laboratory, occurring on a **Monthly Schedule (14th–15th of every month)**.
 
-| Stage | Activity | Data Points | Actor |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | **1. Identification** | **Farmer & Farm Registration:** Linking the milk source to a unique farmer ID and farm location. | Maisha Namba, Farm GPS, NLDR ID | County Extension Officer |
 | **2. Animal Registry** | **Batch Tracking:** Identifying the specific animal/herd from which the sample is drawn. | Animal ID / RFID Tag | Extension Officer |
 | **3. Collection** | **Protocol-Based Sampling:** Collection of milk samples using standardized digital batch codes. | Timestamp, Sample ID, Temp | Lab Assistant |
@@ -156,8 +156,8 @@ The livestock regulatory framework is governed by the following critical instrum
 
 # PART 5: CHANGE LOG
 
-| Area | Original Issue | Change Made | Impact |
-|---|---|---|---|
+| Area | Before (Incorrect/Old) | After (Corrected) | Rationale |
+| :--- | :--- | :--- | :--- |
 | **Licensing** | Missing document upload stage. | Added "Upload Supporting Documents" after service selection. | Improved completeness and documentation audit trail. |
 | **Inspection** | Handwritten/Unstructured reports. | Mandated **Structured Digital Reports** via mobile app. | Standardized compliance scoring and real-time dashboarding. |
 | **Lifecycle** | Focused on one-time issuance. | Included **Renewable License Lifecycle** management. | Continuous oversight of practitioner compliance. |

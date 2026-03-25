@@ -99,12 +99,12 @@ Asset Identification, Tracing, and Forfeiture Lifecycle
 ## Detailed Process (AS-IS)
 
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
+| :--- | :--- | :--- | :--- | :--- |
 | 1 | Investigator | Receives a lead and sends physical requests to NTSA, Lands, and BRS to find assets owned by a suspect. | Physical Letters | Slow and prone to leakage. |
-| 2 | MDA Clerk | Searches their local database and provides certified paper copies of ownership documents. | Manual | |
-| 3 | ARA Legal | Prepares court affidavits manually, attaching the paper evidence collected. | Manual/Word | |
-| 4 | ARA Officer | Tracks the location and status of seized vehicles/properties in a local Excel sheet. | Excel | |
-| 5 | Finance | Remits funds from liquidated assets to the National Treasury via IFMIS. | Manual Entry | |
+| 2 | MDA Clerk | Searches their local database and provides certified paper copies of ownership documents. | Manual |  |
+| 3 | ARA Legal | Prepares court affidavits manually, attaching the paper evidence collected. | Manual/Word |  |
+| 4 | ARA Officer | Tracks the location and status of seized vehicles/properties in a local Excel sheet. | Excel |  |
+| 5 | Finance | Remits funds from liquidated assets to the National Treasury via IFMIS. | Manual Entry |  |
 
 ---
 
@@ -171,8 +171,8 @@ graph TD
 
 ### Optimized Steps (Digital)
 
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | ARA Analyst | Inputs a suspect's Maisha Namba into the ARA Investigation Portal. | ARA Portal |
 | 2 | System | Instantly pings BRS, NTSA, and Ardhisasa via X-Road to list all assets. | KeSEL / X-Road |
 | 3 | System | Compiles a digitally signed evidence packet and routes it to the Judiciary Case Management System. | Huduma Bridge / Judiciary API |

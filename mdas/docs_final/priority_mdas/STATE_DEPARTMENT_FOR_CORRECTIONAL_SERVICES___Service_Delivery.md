@@ -134,16 +134,16 @@ End-to-End Inmate Case Management (Admission to Release)
 ## Detailed Process (AS-IS)
 
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
-| 1 | Police | Escorts the inmate to the correctional facility. | Transport | |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | Police | Escorts the inmate to the correctional facility. | Transport |  |
 | 2 | Reception Officer | Verifies the physical committal warrant from the court. | Physical Paper | High risk of errors or forgery. |
-| 3 | Records Officer | Conducts manual identity verification (checks physical ID if available, takes ink fingerprints) and assigns a unique prison number. | Manual / Ink | |
-| 4 | Records Officer | Creates a physical inmate case folder containing booking details and court orders. | Physical Folder | |
-| 5 | Prison Administration | Performs security classification (maximum/medium/minimum) and assigns a housing block. | Manual | |
-| 6 | Prison Administration | Manages daily custody, including attendance tracking, facility transfers, and logging disciplinary issues. | Manual Ledgers | |
-| 7 | Welfare / Rehabilitation Officer | Tracks rehabilitation, vocational progress, and medical appointments via periodic paper reports. | Manual | |
+| 3 | Records Officer | Conducts manual identity verification (checks physical ID if available, takes ink fingerprints) and assigns a unique prison number. | Manual / Ink |  |
+| 4 | Records Officer | Creates a physical inmate case folder containing booking details and court orders. | Physical Folder |  |
+| 5 | Prison Administration | Performs security classification (maximum/medium/minimum) and assigns a housing block. | Manual |  |
+| 6 | Prison Administration | Manages daily custody, including attendance tracking, facility transfers, and logging disciplinary issues. | Manual Ledgers |  |
+| 7 | Welfare / Rehabilitation Officer | Tracks rehabilitation, vocational progress, and medical appointments via periodic paper reports. | Manual |  |
 | 8 | Discharge Unit | Calculates release dates manually, accounting for sentence length, time served, and remission. | Manual/Calculator | High risk of computational errors. |
-| 9 | Discharge Unit | Verifies release eligibility and executes physical release, parole, or handover to probation services. | Manual | |
+| 9 | Discharge Unit | Verifies release eligibility and executes physical release, parole, or handover to probation services. | Manual |  |
 
 ---
 
@@ -202,7 +202,7 @@ The Inmate Case Management Service is engineered to operate across the four laye
 # PART 3: REFINED TO-BE PROCESS (HUMAN-IN-THE-LOOP MODEL)
 
 | Step | Human Actor (Primary Authority) | Action (System-Assisted) | Tool / System (Support) | DPI Component | Notes |
-|---|---|---|---|---|---|
+| :--- | :--- | :--- | :--- | :--- | :--- |
 | **1** | Judicial Officer | **Warrant Issuance:** Digital signing and pushing of court warrants. | Judiciary CMS | X-Road | Digital warrant acts as the authoritative input for officer review. |
 | **2** | Reception Officer | **Admission & ID Verification:** Reception of inmate and biometric confirmation. | PCMS | Maisha Namba / IPRS | Officer verifies identity before initializing the Registry record. |
 | **3** | Prison Administrator | **Security Classification:** Determining appropriate facility placement. | PCMS / Rules Engine | Decision Support | System proposes classification based on history; **Administrator makes the final decision**. |

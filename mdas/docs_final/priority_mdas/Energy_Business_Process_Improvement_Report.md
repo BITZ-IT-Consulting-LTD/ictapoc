@@ -113,7 +113,7 @@ STAKEHOLDER FEEDBACK highlighted significant bottlenecks in **Energy Licensing**
 
 # PART 8: CHANGE LOG (CRITICAL SECTION)
 
-| Area | Original Issue | Feedback Source | Change Made | Impact |
+| Step | Role | Action | Tool / System | Notes |
 | :--- | :--- | :--- | :--- | :--- |
 | **Reviews** | Serial bottleneck | BIZ Workshop | **Parallel Reviews** | 80% faster internal routing. |
 | **Visibility** | Process opacity | IPP Stakeholders | **Digital Dashboard** | Reduced physical office visits by 50%. |

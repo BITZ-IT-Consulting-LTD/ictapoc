@@ -151,8 +151,8 @@ The TVET Records and Institutional Management Service is engineered to operate a
 
 # PART 5: CHANGE LOG
 
-| Area | Original Issue | Change Made | Impact |
-|---|---|---|---|
+| Area | Before (Incorrect/Old) | After (Corrected) | Rationale |
+| :--- | :--- | :--- | :--- |
 | **Standards** | General reference to law. | Included **National ICT Policy (2019)** and **Electronic Records Standards**. | Alignment with modern government ICT frameworks. |
 | **HR Records** | Not explicitly modeled. | Added **HR Personal Files** with **Personal Number** as unique ID. | Centralized and secure staff records management. |
 | **Workflow** | Focus on receipt only. | Added **Dispatch of Mails to MDAs/Stakeholders**. | Complete end-to-end communication tracking. |

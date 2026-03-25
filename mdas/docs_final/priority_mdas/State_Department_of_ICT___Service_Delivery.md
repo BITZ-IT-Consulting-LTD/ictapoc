@@ -57,8 +57,8 @@ All ICT and Digital Economy processes are mapped to the national architecture:
 
 ## 2. REFINED TO-BE PROCESS FLOW
 
-| Step | Layer | Actor | Action | Component |
-|---|---|---|---|---|
+| Step | Role | Action | Tool / System | Notes |
+| :--- | :--- | :--- | :--- | :--- |
 | **1** | Access | MDA | Submits Digitization Plan / Infrastructure request via eCitizen Workbench. | Officer Workbench |
 | **2** | Core | BPMN Engine | Automatically creates a project instance and assigns to SDICT/ICTA review team. | Workflow Engine |
 | **3** | Registries | SDICT Officer | Validates the request against current **National ICT Standards** archived in EDRMS. | EDRMS |
@@ -90,7 +90,7 @@ The department ensures all MDAs adhere to:
 ## 5. CHANGE LOG
 
 | Area | Original State | Refined (DPI) State | Impact |
-|---|---|---|---|
+| :--- | :--- | :--- | :--- |
 | **Orchestration** | Manual project reviews. | **BPMN-driven** project lifecycle. | Faster approvals and transparent audit trails. |
 | **Integration** | Ad-hoc system connections. | Mandatory **KeSEL (X-Road)** adapters. | 100% interoperability across MDAs. |
 | **Records** | Physical files / Standalone PDFs. | **EDRMS** as the National Records Registry. | Legal archival and instant policy retrieval. |

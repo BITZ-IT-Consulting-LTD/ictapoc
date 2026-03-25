@@ -102,7 +102,7 @@ The planning ecosystem identifies five primary layers of actors:
 # PART 3: REFINED PROCESS FLOW (TO-BE)
 
 | Step | Actor | Action | System / Tool | Output |
-|---|---|---|---|---|
+| :--- | :--- | :--- | :--- | :--- |
 | **1** | SDEP | **Guideline Formulation:** Issuance of strategic focus and data templates. | Planning Portal | Smart Planning Templates |
 | **2** | MDAs/Counties/Cities | **Participatory Planning:** Citizen engagement and sector plan drafting. | Digital Participation Hub | Draft Sector/City Plans |
 | **3** | SDEP / AI Engine | **Alignment & Verification:** Automated check against Vision 2030 and BETA. | Alignment Engine | Verified Drafts |
@@ -172,8 +172,8 @@ The National Planning and M&E Lifecycle is engineered to operate across the four
 
 # PART 8: CHANGE LOG
 
-| Area | Original Issue | Change Made | Impact |
-|---|---|---|---|
+| Area | Before (Incorrect/Old) | After (Corrected) | Rationale |
+| :--- | :--- | :--- | :--- |
 | **Coverage** | Fragmented planning across layers. | Added Cities and Municipalities to the actor model. | Unified urban-to-national planning alignment. |
 | **Performance** | Plan creation without tracking. | Embedded M&E lifecycle and Indicator Handbook. | Transition to outcome-based governance. |
 | **Data Scope** | Manual data entry silos. | Integration with PIMIS, IFMIS, and KNBS. | Real-time project and financial oversight. |

@@ -114,8 +114,8 @@ Parliamentary Correspondence, Petition, and Committee Query Management
  
 ## Stakeholders
  
-| Stakeholder | Role | Responsibilities |
-|---|---|---|
+| Category | Service Name | Target Population |
+| :--- | :--- | :--- |
 | MDA Stakeholders | Initiator | Submits inquiries, complaints, petitions, or policy proposals to the department via email or physical office. |
 | Central Registry | Process Actor | Receives, tags, manually logs, and routes all incoming correspondence. Maintains the physical correspondence register. |
 | Principal Secretary (PS) | Decision Maker | Reviews correspondence, coordinates with OPCs for context, assigns instructions to Action Officers, and signs off final responses. |
@@ -127,7 +127,7 @@ Parliamentary Correspondence, Petition, and Committee Query Management
 ## Detailed Process (AS-IS)
  
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
+| :--- | :--- | :--- | :--- | :--- |
 | 1 | MDA Stakeholders | Submits inquiry, complaint, petition, or policy proposal via email or physical office visit. | Manual / Email / Post | No standardised submission channel. Submissions arrive via multiple informal routes with no acknowledgement issued. |
 | 2 | Central Registry | Receives, tags, and manually logs the correspondence. Assigns a reference number and routes docket to the PS. | Physical Registry / Manual | No digital tracking. Dockets frequently misplaced. No SLA on routing turnaround. Registry update depends on OPCs feedback. |
 | 3 | Principal Secretary (PS) | Reviews correspondence. Coordinates with OPCs for guidance or precedent. Assigns Action Officers with handwritten instructions on the hard copy. | Manual / Email | Instructions given verbally or via handwritten annotations. No audit trail of who handled what and when. |
@@ -266,8 +266,8 @@ flowchart TD
  
 ### Optimized Steps (Digital)
  
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | MDA Stakeholder | Logs in via Single Sign-On (SSO) on eCitizen and selects the service type — inquiry, complaint, petition, or policy proposal. Identity auto-verified and submission reference number generated. | eCitizen Portal / SSO / IPRS |
 | 2 | Government Service Bus | Auto-verifies stakeholder identity via IPRS, organisation details via BRS, and tax compliance via KRA iTax. Correspondence record auto-populated with verified data. | Government Service Bus / IPRS / BRS / KRA iTax |
 | 3 | DPCMS | Auto-classifies the submission by subject matter, assigns to the correct PS queue, triggers SLA countdown, and sends SMS/email acknowledgement to the stakeholder instantly. | Digital Parliamentary Correspondence Management System (DPCMS) |

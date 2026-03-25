@@ -27,7 +27,7 @@ In this refined AS-IS representation, the SRIs mandate is viewed not merely as a
 The following services represent the operational core of SRI/NACOSTI:
 
 | # | Service Name | Description |
-|---|---|---|
+| :--- | :--- | :--- |
 | **1** | **Research Permit Application and Lifecycle Management** | The end-to-end process of vetting, licensing, and supervising research activities. |
 | **2** | **Monitoring & Compliance** | Ongoing oversight of active research projects via reports and field inspections. |
 | **3** | **Research Closure** | The formal process of project completion, final report submission, and archival. |
@@ -41,49 +41,49 @@ The current process is predominantly manual and relies on physical movement of f
 
 ### Phase 1: Submission Phase
 | Step | Action | Actor | Tools / Mode |
-|---|---|---|---|
+| :--- | :--- | :--- | :--- |
 | 1.1 | **Preparation:** Researcher gathers proposal, IRB approvals, and ID documents. | Researcher | Word / PDF / Email |
 | 1.2 | **Intake:** Researcher submits the package via the portal or physical delivery. | Researcher | Web Portal / Paper |
 | 1.3 | **Exception:** If documents are incomplete, the officer flags errors via email/phone. | Intake Officer | Phone / Email |
 
 ### Phase 2: Review Phase
 | Step | Action | Actor | Tools / Mode |
-|---|---|---|---|
+| :--- | :--- | :--- | :--- |
 | 2.1 | **Registry Indexing:** Physical file is opened or mapped to a tracking spreadsheet. | Registry Officer | Paper File / Excel |
 | 2.2 | **Technical Vetting:** Application is routed to a subject matter expert for review. | Examiner / Reviewer | Email / Hardcopy |
 | 2.3 | **Ethical Alignment:** Officer confirms alignment with ethics committee (IRB) letters. | Examiner / Reviewer | Physical Comparison |
 
 ### Phase 3: Decision Phase
 | Step | Action | Actor | Tools / Mode |
-|---|---|---|---|
+| :--- | :--- | :--- | :--- |
 | 3.1 | **Recommendation:** Examiner recommends Approval, Revision, or Rejection. | Examiner / Reviewer | Manual Memo |
 | 3.2 | **Final Audit:** Coordinator reviews the technical recommendation and file history. | Coordinator | Physical File |
 | 3.3 | **Approval:** Director General grants final approval of the research permit. | DG / Approver | Physical Signature |
 
 ### Phase 4: Payment Phase
 | Step | Action | Actor | Tools / Mode |
-|---|---|---|---|
+| :--- | :--- | :--- | :--- |
 | 4.1 | **Invoicing:** System or officer generates a payment demand note. | Finance Officer | Portal / Paper |
 | 4.2 | **Payment:** Researcher pays at a designated bank and obtains a deposit slip. | Researcher | Physical Bank Visit |
 | 4.3 | **Reconciliation:** Finance officer verifies the slip against bank statements. | Finance Officer | Manual Verification |
 
 ### Phase 5: Post-Approval Phase (NEW)
 | Step | Action | Actor | Tools / Mode |
-|---|---|---|---|
+| :--- | :--- | :--- | :--- |
 | 5.1 | **Permit Issuance:** Physical permit is printed, sealed, and issued. | Registry Officer | Physical Seal / Printer |
 | 5.2 | **Agreement Signing:** Researcher signs Research Agreement (Terms of License). | Researcher | Physical Signing |
 | 5.3 | **Dispatch:** Permit collected in person or dispatched via courier. | Registry Officer | Physical Log / Courier |
 
 ### Phase 6: Monitoring & Compliance (NEW)
 | Step | Action | Actor | Tools / Mode |
-|---|---|---|---|
+| :--- | :--- | :--- | :--- |
 | 6.1 | **Progress Reporting:** Researcher submits periodic (e.g., bi-annual) reports. | Researcher | Email / Mail |
 | 6.2 | **Field Inspection:** Random or targeted site visits to verify compliance. | Technical Officer | Field Notes / Car |
 | 6.3 | **Exception:** If non-compliance is found, a warning or suspension letter is issued. | Coordinator | Physical Mail |
 
 ### Phase 7: Closure Phase (NEW)
 | Step | Action | Actor | Tools / Mode |
-|---|---|---|---|
+| :--- | :--- | :--- | :--- |
 | 7.1 | **Completion:** Researcher submits final research findings and abstract. | Researcher | Hardcopy / Flash Disk |
 | 7.2 | **Archival:** Final report is indexed and the physical file is moved to Registry. | Registry Officer | Physical Archive Box |
 
@@ -187,10 +187,10 @@ flowchart TD
 | Area | Before | After | Reason |
 | :--- | :--- | :--- | :--- |
 | **Service Name** | Research Application | **Research Permit Application and Lifecycle Management** | Reflects total regulatory oversight vs. simple intake. |
-| **Lifecycle Scope**| Intake and Issuance only | **Extended to include Pre-Application, Post-Approval, Monitoring, and Closure** | Aligns with statutory regulatory requirements. |
+| **Lifecycle Scope** | Intake and Issuance only | **Extended to include Pre-Application, Post-Approval, Monitoring, and Closure** | Aligns with statutory regulatory requirements. |
 | **Actor Model** | Simplified/Generic | **Researcher, Intake Officer, Examiner, Coordinator, Finance Officer** | Establishes accountability for each step. |
-| **Service Catalogue**| Single Service | **Research Permit, Monitoring & Compliance, Closure, Public Inquiry** | Recognizes distinct operational activities. |
-| **Exception Handling**| Not explicitly modeled | **Added Loops for Incomplete Apps, Rejection Appeals, and Payment Retry** | Captures real-world operational frictions. |
+| **Service Catalogue** | Single Service | **Research Permit, Monitoring & Compliance, Closure, Public Inquiry** | Recognizes distinct operational activities. |
+| **Exception Handling** | Not explicitly modeled | **Added Loops for Incomplete Apps, Rejection Appeals, and Payment Retry** | Captures real-world operational frictions. |
 | **System Reality** | Aspirational/Unclear | **Explicitly manual (Paper, Physical, Bank-visit)** | Establishes a true AS-IS baseline for DPI gap analysis. |
 | **DPI Integration** | Omitted | **Full 4-Layer Huduma Bridge Alignment** | Strategic alignment with national architecture standards. |
 
