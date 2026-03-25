@@ -1,8 +1,8 @@
-# STATE DEPARTMENT FOR BROADCASTING – Business Process Architecture (Updated)
+# STATE DEPARTMENT FOR BROADCASTING AND TELECOMMUNICATIONS – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Information, Communications and the Digital Economy
-- **State Department:** State Department for Broadcasting
+- **State Department:** State Department for Broadcasting and Telecommunications
 - **Primary Authority:** Principal Secretary, Broadcasting
 - **Document Type:** Business Process Architecture (BPA) Standardised
 - **Document Version:** 4.1
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Governance / Media (Information Integrity)
 - **Breakout Room Classification:** Room 3 (Agriculture & Economic Development)
-- **Lead MDA (Standardised Name):** State Department for Broadcasting
+- **Lead MDA (Standardised Name):** State Department for Broadcasting and Telecommunications
 - **Related Cross-Cutting Services:**
     - National Journalist & Media Registry
     - Identity Layer (IPRS / Maisha Namba - Journalist Identity)

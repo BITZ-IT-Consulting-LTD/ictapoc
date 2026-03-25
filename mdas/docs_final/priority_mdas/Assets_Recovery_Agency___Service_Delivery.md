@@ -1,8 +1,8 @@
 # ASSETS RECOVERY AGENCY (ARA) – Business Process Architecture (Updated)
 
 ## Cover Page
-- **Ministry:** Office of the Attorney General & Department of Justice
-- **Agency:** Assets Recovery Agency (ARA)
+- **Ministry:** Office of the Attorney-General and Department of Justice
+- **Agency:** Assets Recovery Agency
 - **Primary Authority:** Director, ARA
 - **Document Type:** Business Process Architecture (BPA) Standardised
 - **Document Version:** 4.1
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Justice / Economy (Financial Crimes)
 - **Breakout Room Classification:** Room 2 (Coordination, Culture & Specialised Services)
-- **Lead MDA (Standardised Name):** Assets Recovery Agency (ARA)
+- **Lead MDA (Standardised Name):** Assets Recovery Agency
 - **Related Cross-Cutting Services:**
     - National Case & Evidence Registry (Custom ARA Hub)
     - Identity Layer (IPRS / Maisha Namba)

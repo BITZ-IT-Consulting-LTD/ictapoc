@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Economy / Information (National Heritage)
 - **Breakout Room Classification:** Room 2 (Coordination, Culture & Specialised Services)
-- **Lead MDA (Standardised Name):** Kenya Broadcasting Corporation (KBC)
+- **Lead MDA (Standardised Name):** Kenya Broadcasting Corporation
 - **Related Cross-Cutting Services:**
     - National Content Lake (Digitized Media Hub)
     - Identity Layer (IPRS / Maisha Namba - Licensee Login)

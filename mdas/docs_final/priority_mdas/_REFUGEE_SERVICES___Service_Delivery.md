@@ -1,8 +1,8 @@
-# DEPARTMENT OF REFUGEE SERVICES (DRS) – Business Process Architecture (Updated)
+# DEPARTMENT OF REFUGEE SERVICES – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Interior and National Administration
-- **State Department:** State Department for Immigration and Citizen Services
+- **State Department:** Department of Refugee Services
 - **Primary Authority:** Commissioner for Refugee Affairs
 - **Document Type:** Business Process Architecture (BPA) Standardised
 - **Document Version:** 4.1
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Identity / Security (Refugee Lifecycle)
 - **Breakout Room Classification:** Room 1 (High Impact & Large Registries)
-- **Lead MDA (Standardised Name):** Department of Refugee Services (DRS)
+- **Lead MDA (Standardised Name):** Department of Refugee Services
 - **Related Cross-Cutting Services:**
     - National Population Register (IPRS Integration)
     - Identity Layer (Maisha Namba Minting)

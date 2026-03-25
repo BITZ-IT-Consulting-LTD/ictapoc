@@ -1,8 +1,8 @@
-# STATE DEPARTMENT FOR SCIENCE, RESEARCH AND INNOVATION (SRI / NACOSTI) – Business Process Architecture (Updated)
+# STATE DEPARTMENT FOR SCIENCE, RESEARCH AND INNOVATION – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Education
-- **State Department:** State Department for Science, Research and Innovation (SRI)
+- **State Department:** National Commission for Science, Technology and Innovation (NACOSTI)
 - **Primary Authority:** National Commission for Science, Technology and Innovation (NACOSTI)
 - **Document Type:** Business Process Architecture (BPA) Standardised
 - **Document Version:** 3.0 (Strategically Aligned)

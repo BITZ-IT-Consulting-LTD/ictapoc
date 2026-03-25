@@ -2,7 +2,7 @@
 
 ## Cover Page
 - **Ministry:** Ministry of Water, Sanitation and Irrigation
-- **Agency:** Athi Water Works Development Agency (AWWDA)
+- **Agency:** Athi Water Works Development Agency
 - **Primary Authority:** Chief Executive Officer, AWWDA
 - **Document Type:** Business Process Architecture (BPA) Standardised
 - **Document Version:** 4.1
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Economy / Infrastructure (Utility Services)
 - **Breakout Room Classification:** Room 3 (Agriculture & Economic Development)
-- **Lead MDA (Standardised Name):** Athi Water Works Development Agency (AWWDA)
+- **Lead MDA (Standardised Name):** Athi Water Works Development Agency
 - **Related Cross-Cutting Services:**
     - Metropolitan Water Hub (Real-time SCADA Integration)
     - Identity Layer (IPRS / Maisha Namba - Contractor/WSP Identity)

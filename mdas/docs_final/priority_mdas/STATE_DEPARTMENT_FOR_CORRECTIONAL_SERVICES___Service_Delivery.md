@@ -1,8 +1,8 @@
-# STATE DEPARTMENT FOR CORRECTIONAL SERVICES – Business Process Architecture (Updated)
+# STATE DEPARTMENT OF CORRECTIONAL SERVICES – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Interior and National Administration
-- **State Department:** State Department for Correctional Services
+- **State Department:** State Department of Correctional Services
 - **Primary Authority:** Kenya Prisons Service (KPS) / Probation & Aftercare (PAS)
 - **Document Type:** Business Process Architecture (BPA) Standardised
 - **Document Version:** 4.1
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 1
 - **Strategic Category:** Justice / Security (Custodial Lifecycle)
 - **Breakout Room Classification:** Room 1 (High Impact & Large Registries)
-- **Lead MDA (Standardised Name):** State Department for Correctional Services
+- **Lead MDA (Standardised Name):** State Department of Correctional Services
 - **Related Cross-Cutting Services:**
     - National Inmate Registry (Unified)
     - Identity Layer (IPRS / Maisha Namba)

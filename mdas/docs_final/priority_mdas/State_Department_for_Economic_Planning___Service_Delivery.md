@@ -1,8 +1,8 @@
-# STATE DEPARTMENT FOR ECONOMIC PLANNING (SDEP) – Business Process Architecture (Updated)
+# STATE DEPARTMENT FOR ECONOMIC PLANNING – Business Process Architecture (Updated)
 
 ## Cover Page
-- **Ministry:** Ministry of National Treasury and Economic Planning
-- **State Department:** State Department for Economic Planning (SDEP)
+- **Ministry:** The National Treasury and Economic Planning
+- **State Department:** State Department for Economic Planning
 - **Primary Authority:** National Planning Office / Monitoring & Evaluation Directorate
 - **Document Type:** Business Process Architecture (BPA) Standardised
 - **Document Version:** 4.1

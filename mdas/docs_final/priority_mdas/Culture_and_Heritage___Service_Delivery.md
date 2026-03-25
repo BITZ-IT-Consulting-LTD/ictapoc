@@ -1,8 +1,8 @@
-# STATE DEPARTMENT FOR CULTURE, ARTS AND HERITAGE – Business Process Architecture (Updated)
+# STATE DEPARTMENT FOR CULTURE AND HERITAGE – Business Process Architecture (Updated)
 
 ## Cover Page
-- **Ministry:** Ministry of Youth Affairs, Creative Economy and Sports
-- **State Department:** State Department for Culture, Arts and Heritage
+- **Ministry:** Ministry of Gender, Culture, the Arts and Heritage
+- **State Department:** State Department for Culture and Heritage
 - **Primary Authority:** Ushanga Kenya / National Museums / Archives
 - **Document Type:** Business Process Architecture (BPA) Standardised
 - **Document Version:** 4.1
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Economy / Culture (Creative Economy)
 - **Breakout Room Classification:** Room 2 (Coordination, Culture & Specialised Services)
-- **Lead MDA (Standardised Name):** State Department for Culture, Arts and Heritage
+- **Lead MDA (Standardised Name):** State Department for Culture and Heritage
 - **Related Cross-Cutting Services:**
     - National Creative Economy Marketplace (Inventory Hub)
     - Identity Layer (IPRS / Maisha Namba - Artisan Registry)

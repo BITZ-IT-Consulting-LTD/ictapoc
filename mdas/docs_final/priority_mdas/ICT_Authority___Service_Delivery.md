@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Governance / Infrastructure (Digital Foundation)
 - **Breakout Room Classification:** Room 3 (Agriculture & Economic Development)
-- **Lead MDA (Standardised Name):** ICT Authority (ICTA)
+- **Lead MDA (Standardised Name):** ICT Authority
 - **Related Cross-Cutting Services:**
     - National Interoperability Hub (KeSEL / X-Road Operator)
     - Identity Layer (IPRS / Maisha Namba - Developer/System Identity)

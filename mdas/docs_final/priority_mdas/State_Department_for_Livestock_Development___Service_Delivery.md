@@ -2,7 +2,7 @@
 
 ## Cover Page
 - **Ministry:** Ministry of Agriculture and Livestock Development
-- **State Department:** State Department for Livestock Development (SDLD)
+- **State Department:** State Department for Livestock Development
 - **Primary Authority:** Kenya Veterinary Board (KVB) / Dairy Board
 - **Document Type:** Business Process Architecture (BPA) Standardised
 - **Document Version:** 4.1
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Economy / Food Security (Livestock Value Chain)
 - **Breakout Room Classification:** Room 3 (Policy, Economy & Foundational Systems)
-- **Lead MDA (Standardised Name):** State Department for Livestock Development (SDLD)
+- **Lead MDA (Standardised Name):** State Department for Livestock Development
 - **Related Cross-Cutting Services:**
     - National Livestock Digital Registry (NLDR)
     - Identity Layer (IPRS / Maisha Namba)
