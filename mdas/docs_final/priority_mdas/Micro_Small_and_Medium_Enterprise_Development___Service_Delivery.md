@@ -1,7 +1,7 @@
-# MICRO, SMALL AND MEDIUM ENTERPRISE DEVELOPMENT – Business Process Architecture (Updated)
+# STATE DEPARTMENT FOR MSME DEVELOPMENT – Business Process Architecture (Updated)
 
 ## Cover Page
-- **Ministry:** Ministry of Co-operatives and Micro, Small and Medium Enterprises (MSMEs) Development
+- **Ministry:** Ministry of Co-operatives and Micro, Small and Medium Enterprises (MSME) Development
 - **State Department:** State Department for MSME Development
 - **Primary Authority:** MSME Registry / MSEA
 - **Document Type:** Business Process Architecture (BPA) Standardised
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Economy / Jobs (KJET Flagship)
 - **Breakout Room Classification:** Room 3 (Policy, Economy & Foundational Systems)
-- **Lead MDA (Standardised Name):** Micro, Small and Medium Enterprise Development
+- **Lead MDA (Standardised Name):** State Department for MSME Development
 - **Related Cross-Cutting Services:**
     - Unified MSME Registry
     - Identity Layer (IPRS / Maisha Namba)

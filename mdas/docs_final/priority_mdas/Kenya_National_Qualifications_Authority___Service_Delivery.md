@@ -2,7 +2,7 @@
 
 ## Cover Page
 - **Ministry:** Ministry of Education
-- **State Department:** State Department for Science, Research and Innovation (SRI)
+- **State Department:** Kenya National Qualifications Authority
 - **Authority:** Kenya National Qualifications Authority (KNQA)
 - **Document Type:** Business Process Architecture (BPA) Standardised
 - **Document Version:** 4.1

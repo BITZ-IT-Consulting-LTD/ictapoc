@@ -1,8 +1,8 @@
-# NATIONAL GOVERNMENT COORDINATION – Business Process Architecture (Updated)
+# STATE DEPARTMENT FOR NATIONAL GOVERNMENT COORDINATION – Business Process Architecture (Updated)
 
 ## Cover Page
-- **Ministry:** Executive Office of the President
-- **Department:** National Government Coordination (Secretariat)
+- **Ministry:** Ministry of Interior and National Administration
+- **Department:** State Department for National Government Coordination
 - **Primary Authority:** National Government Coordination Secretariat (NGCS) / Interior & Coordination
 - **Document Type:** Business Process Architecture (BPA) Standardised
 - **Document Version:** 4.1
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Governance / Coordination (Executive Oversight)
 - **Breakout Room Classification:** Room 2 (Coordination, Culture & Specialised Services)
-- **Lead MDA (Standardised Name):** National Government Coordination
+- **Lead MDA (Standardised Name):** State Department for National Government Coordination
 - **Related Cross-Cutting Services:**
     - National Government Dashboard (NGD - Real-time)
     - Identity Layer (IPRS / Maisha Namba - Officer Tier)

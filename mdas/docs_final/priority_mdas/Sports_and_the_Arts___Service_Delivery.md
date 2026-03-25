@@ -1,8 +1,8 @@
-# STATE DEPARTMENT FOR SPORTS – Business Process Architecture (Updated)
+# STATE DEPARTMENT FOR SPORTS AND THE ARTS – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Youth Affairs, Creative Economy and Sports
-- **State Department:** State Department for Sports
+- **State Department:** State Department for Sports and the Arts
 - **Primary Authority:** Sports Registrar / Sports Kenya
 - **Document Type:** Business Process Architecture (BPA) Standardised
 - **Document Version:** 3.1
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Social / Identity / Economy (Athlete Talent Pipeline)
 - **Breakout Room Classification:** Room 2 (Coordination, Culture & Specialised Services)
-- **Lead MDA (Standardised Name):** State Department for Sports
+- **Lead MDA (Standardised Name):** State Department for Sports and the Arts
 - **Related Cross-Cutting Services:**
     - National Athlete Registry (Unified)
     - Identity Layer (IPRS / Maisha Namba)

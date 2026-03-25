@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR TVET – Business Process Architecture (Updated)
+# STATE DEPARTMENT FOR TECHNICAL AND VOCATIONAL EDUCATION AND TRAINING (TVET) – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Education

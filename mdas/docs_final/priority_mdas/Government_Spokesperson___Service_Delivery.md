@@ -1,7 +1,7 @@
 # OFFICE OF THE GOVERNMENT SPOKESPERSON – Business Process Architecture (Updated)
 
 ## Cover Page
-- **Ministry:** Executive Office of the President
+- **Ministry:** Ministry of Information, Communications and the Digital Economy
 - **Office:** Office of the Government Spokesperson (OGS)
 - **Primary Authority:** Government Spokesperson
 - **Document Type:** Business Process Architecture (BPA) Standardised

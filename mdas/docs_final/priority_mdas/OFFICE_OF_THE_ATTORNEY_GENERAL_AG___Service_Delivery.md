@@ -1,7 +1,7 @@
-# REGISTRAR OF MARRIAGES (OFFICE OF THE ATTORNEY GENERAL) – Business Process Architecture (Updated)
+# STATE LAW OFFICE - OFFICE OF THE ATTORNEY-GENERAL AND DEPARTMENT OF JUSTICE – Business Process Architecture (Updated)
 
 ## Cover Page
-- **Ministry:** Office of the Attorney General & Department of Justice
+- **Ministry:** Office of the Attorney-General and Department of Justice
 - **Department:** Registrar of Marriages
 - **Primary Authority:** Registrar-General
 - **Document Type:** Business Process Architecture (BPA) Standardised
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 1
 - **Strategic Category:** Social / Justice (Marriage & Family)
 - **Breakout Room Classification:** Room 1 (High Impact & Large Registries)
-- **Lead MDA (Standardised Name):** State Law Office - Registrar of Marriages
+- **Lead MDA (Standardised Name):** Registrar of Marriages
 - **Related Cross-Cutting Services:**
     - National Marriages Registry (Unified)
     - Identity Layer (IPRS / Maisha Namba)

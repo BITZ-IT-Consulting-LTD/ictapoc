@@ -1,8 +1,8 @@
-# STATE DEPARTMENT FOR ICT AND DIGITAL ECONOMY – Business Process Architecture (Updated)
+# STATE DEPARTMENT FOR ICT AND THE DIGITAL ECONOMY – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Information, Communications and the Digital Economy
-- **State Department:** State Department for ICT and the Digital Economy (SDICT)
+- **State Department:** State Department for ICT and the Digital Economy
 - **Primary Authority:** Principal Secretary, ICT and Digital Economy
 - **Document Type:** Business Process Architecture (BPA) Standardised
 - **Document Version:** 4.1

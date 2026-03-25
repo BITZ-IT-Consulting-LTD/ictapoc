@@ -18,7 +18,7 @@
 - **Tier Classification:** Tier 1
 - **Strategic Category:** Governance / Ethics (Public Service Integrity)
 - **Breakout Room Classification:** Room 1 (High Impact & Large Registries)
-- **Lead MDA (Standardised Name):** Public Service Commission (PSC)
+- **Lead MDA (Standardised Name):** Public Service Commission
 - **Related Cross-Cutting Services:**
     - National Ethics Hub (DIAL Registry)
     - Identity Layer (IPRS / Maisha Namba)

@@ -2,7 +2,7 @@
 
 ## Cover Page
 - **Ministry:** Executive Office of the President
-- **State Department:** State Department for Cabinet Affairs
+- **State Department:** Cabinet Office
 - **Primary Authority:** Secretary to the Cabinet
 - **Document Type:** Business Process Architecture (BPA) Standardised
 - **Document Version:** 4.1
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Governance / Coordination (Executive Oversight)
 - **Breakout Room Classification:** Room 2 (Coordination, Culture & Specialised Services)
-- **Lead MDA (Standardised Name):** Cabinet Office (Executive Office of the President)
+- **Lead MDA (Standardised Name):** Cabinet Office
 - **Related Cross-Cutting Services:**
     - Executive Portal (Secure CABMEMO Hub)
     - Identity Layer (IPRS / Maisha Namba - Executive Tier)

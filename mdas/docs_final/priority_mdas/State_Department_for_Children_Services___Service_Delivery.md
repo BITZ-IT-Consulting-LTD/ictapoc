@@ -1,7 +1,7 @@
 # STATE DEPARTMENT FOR CHILDREN SERVICES – Business Process Architecture (Updated)
 
 ## Cover Page
-- **Ministry:** Ministry of Gender, Culture and Children Services
+- **Ministry:** Ministry of Labour and Social Protection
 - **State Department:** State Department for Children Services
 - **Primary Authority:** Directorate of Children Services (DCS)
 - **Document Type:** Business Process Architecture (BPA) Standardised

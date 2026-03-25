@@ -1,7 +1,7 @@
 # STATE DEPARTMENT FOR PARLIAMENTARY AFFAIRS – Business Process Architecture (Updated)
 
 ## Cover Page
-- **Ministry:** Executive Office of the President
+- **Ministry:** Office of the Deputy President
 - **State Department:** State Department for Parliamentary Affairs
 - **Primary Authority:** Principal Secretary, Parliamentary Affairs
 - **Document Type:** Business Process Architecture (BPA) Standardised

@@ -1,4 +1,4 @@
-# INTERNAL SECURITY AND NATIONAL ADMINISTRATION – Business Process Architecture (Updated)
+# STATE DEPARTMENT FOR INTERNAL SECURITY AND NATIONAL ADMINISTRATION – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Interior and National Administration

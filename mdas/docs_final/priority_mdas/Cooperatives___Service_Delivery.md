@@ -1,7 +1,7 @@
 # STATE DEPARTMENT FOR CO-OPERATIVES – Business Process Architecture (Updated)
 
 ## Cover Page
-- **Ministry:** Ministry of Co-operatives and Micro, Small and Medium Enterprises (MSMEs) Development
+- **Ministry:** Ministry of Co-operatives and Micro, Small and Medium Enterprises (MSME) Development
 - **State Department:** State Department for Co-operatives
 - **Primary Authority:** Commissioner for Co-operative Development
 - **Document Type:** Business Process Architecture (BPA) Standardised

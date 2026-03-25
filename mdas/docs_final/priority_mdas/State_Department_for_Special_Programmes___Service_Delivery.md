@@ -1,7 +1,7 @@
 # STATE DEPARTMENT FOR SPECIAL PROGRAMMES – Business Process Architecture (Updated)
 
 ## Cover Page
-- **Ministry:** Ministry of Labour and Social Protection
+- **Ministry:** Ministry of East African Community, the ASALs and Regional Development
 - **State Department:** State Department for Special Programmes
 - **Primary Authority:** National Social Protection Secretariat / NDMA
 - **Document Type:** Business Process Architecture (BPA) Standardised

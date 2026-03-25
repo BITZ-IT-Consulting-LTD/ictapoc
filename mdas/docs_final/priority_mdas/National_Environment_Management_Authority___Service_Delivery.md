@@ -18,7 +18,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Economy / Environment (Regulatory Oversight)
 - **Breakout Room Classification:** Room 3 (Policy, Economy & Foundational Systems)
-- **Lead MDA (Standardised Name):** National Environment Management Authority (NEMA)
+- **Lead MDA (Standardised Name):** National Environment Management Authority
 - **Related Cross-Cutting Services:**
     - National Environmental Registry
     - Identity Layer (IPRS / Maisha Namba)
