@@ -118,14 +118,14 @@ The updated BPD prioritizes the citizen/employer experience:
 
 # PART 8: CHANGE LOG (AUDIT READY)
 
-| Functional Area | Original Issue | Feedback Source | Change Made | Impact |
+| Step | Role | Action | Tool / System | Notes |
 | :--- | :--- | :--- | :--- | :--- |
 | **Process Name** | Included RPL | KNQA Workshop | **End-to-End Validation and Alignment** | Mandate clarity & reporting accuracy. |
 | **Mandate** | Focused on RPL | External Audit | **Focus on KNQF implementation** | Improved statutory alignment. |
 | **Terminology** | "Verification" | Technical Lead | **"Validation and Alignment"** | Reflects alignment to the 10 KNQF levels. |
 | **Role Name** | Technical Officer | BPR Review | **QAV Officer** | Professionalizes the workforce. |
-| **Output Type** | Validation Letter | Stakeholder Group | **Validation and Alignment Certificate**| Enhanced trust for international use. |
-| **DPI Flow** | Manual emails | DSAP Framework | **KeSEL/X-Road Integration** | Significant reduction in SLAs (Days to Minutes).|
+| **Output Type** | Validation Letter | Stakeholder Group | **Validation and Alignment Certificate** | Enhanced trust for international use. |
+| **DPI Flow** | Manual emails | DSAP Framework | **KeSEL/X-Road Integration** | Significant reduction in SLAs (Days to Minutes). |
 
 ---
 

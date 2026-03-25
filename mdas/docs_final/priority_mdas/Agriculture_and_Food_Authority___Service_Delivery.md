@@ -113,13 +113,13 @@ End-to-End Farmer Registration, Export Permits, and Trading Licenses
 ## Detailed Process (AS-IS)
 
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
+| :--- | :--- | :--- | :--- | :--- |
 | 1 | Applicant | Completes application, attaches paper copies of required documents, submits application, and pays the application fee. | Paper/Bank/Portal | High manual effort. |
 | 2 | AFA Clerk | Receives and logs the application, and reviews documentation for completeness. | Manual Registry | May request more info if incomplete. |
 | 3 | AFA Officer | Verifies business registration and compliance history manually. | Manual | Time-consuming verification process. |
 | 4 | AFA Inspector | Schedules inspection, conducts physical premises inspection, and submits inspection report. | Manual | Major bottleneck in the process. |
-| 5 | AFA Committee | Reviews the officer's recommendation and makes a final approval or rejection decision. | Committee | |
-| 6 | AFA Admin | Generates license if approved, notifies the applicant of the decision, and updates the manual registry. | AFA IMIS / Manual | |
+| 5 | AFA Committee | Reviews the officer's recommendation and makes a final approval or rejection decision. | Committee |  |
+| 6 | AFA Admin | Generates license if approved, notifies the applicant of the decision, and updates the manual registry. | AFA IMIS / Manual |  |
 
 ---
 
@@ -232,8 +232,8 @@ flowchart TD
 
 ### Optimized Steps (Digital)
 
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | Applicant | Accesses eCitizen, selects the required license type, confirms auto-populated data, and makes digital payment. | eCitizen Portal / GPA |
 | 2 | System Integration Layer | Validates business registration via BRS, checks tax compliance via KRA, retrieves farmer data from KIAMIS, and auto-populates the form. | KeSEL / BRS / KRA / KIAMIS |
 | 3 | Workflow Engine | Runs risk assessment. Low-risk applications are auto-approved. Medium-risk are routed to officer review, and high-risk trigger the inspection workflow. | Workflow Engine |

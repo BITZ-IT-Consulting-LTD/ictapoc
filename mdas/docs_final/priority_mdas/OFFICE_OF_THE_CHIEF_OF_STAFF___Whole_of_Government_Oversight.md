@@ -135,17 +135,17 @@ End-to-End Whole-of-Government Oversight (Tasking to Follow-Up)
 ## Detailed Process (AS-IS)
 
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
+| :--- | :--- | :--- | :--- | :--- |
 | 1 | Head of Public Service | Receives Presidential Directive. | Physical/Memo | Originates from Cabinet or Presidential instruction. |
-| 2 | OHPS Analysis Team | Analyses the directive to identify responsible MDAs and scopes required actions. | Manual/Meetings | |
-| 3 | Senior Coordinators | Translates the directive into formal implementation instructions and KPIs. | Word/Memo | |
-| 4 | OHPS Secretariat | Dispatches instructions via memo/email to the respective Principal Secretaries. | Email/Registry | |
-| 5 | Principal Secretaries | Confirm receipt of instructions and assign internally within their MDAs. | Memo/Email | |
-| 6 | MDAs | Implement the directive tasks based on received instructions. | Internal Systems | |
-| 7 | MDAs (Reporting Teams)| Compile and submit progress reports quarterly or as requested. | Email/Excel | High effort, prone to delays. |
+| 2 | OHPS Analysis Team | Analyses the directive to identify responsible MDAs and scopes required actions. | Manual/Meetings |  |
+| 3 | Senior Coordinators | Translates the directive into formal implementation instructions and KPIs. | Word/Memo |  |
+| 4 | OHPS Secretariat | Dispatches instructions via memo/email to the respective Principal Secretaries. | Email/Registry |  |
+| 5 | Principal Secretaries | Confirm receipt of instructions and assign internally within their MDAs. | Memo/Email |  |
+| 6 | MDAs | Implement the directive tasks based on received instructions. | Internal Systems |  |
+| 7 | MDAs (Reporting Teams) | Compile and submit progress reports quarterly or as requested. | Email/Excel | High effort, prone to delays. |
 | 8 | OHPS Analysis Team | Consolidates received reports manually from multiple MDAs. | Excel | Time-consuming process. |
-| 9 | Senior Coordinators | Performs performance assessment against original directive KPIs. | Manual | |
-| 10 | Head of Public Service | Reviews assessment to decide if implementation is satisfactory. If yes, closes directive. If no, issues corrective instructions or escalates. | Briefings | |
+| 9 | Senior Coordinators | Performs performance assessment against original directive KPIs. | Manual |  |
+| 10 | Head of Public Service | Reviews assessment to decide if implementation is satisfactory. If yes, closes directive. If no, issues corrective instructions or escalates. | Briefings |  |
 
 ---
 

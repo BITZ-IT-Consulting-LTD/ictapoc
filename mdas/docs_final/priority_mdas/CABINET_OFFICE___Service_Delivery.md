@@ -102,12 +102,12 @@ Cabinet Memorandum (CABMEMO) Processing and GDMIS Registration
 ## Detailed Process (AS-IS)
 
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
-| 1 | Ministry | Prepares a Cabinet Memorandum and obtains approval from the Principal Secretary and Cabinet Secretary. | Manual/Word | |
-| 2 | Cabinet Affairs Officer | Receives the memorandum, logs it in the CABMEMO system, and assigns a reference. | CABMEMO / EDRMS | |
-| 3 | Cabinet Affairs Officer | Checks for compliance with guidelines (e.g., formatting, required attachments). | Manual | |
-| 4 | Cabinet Affairs | Routes the memorandum to the AG and Treasury via the system or physical dispatch for mandatory comments. | EDRMS / Physical | |
-| 5 | Cabinet Affairs | Consolidates all feedback and prepares the final agenda for the Cabinet. | Manual | |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | Ministry | Prepares a Cabinet Memorandum and obtains approval from the Principal Secretary and Cabinet Secretary. | Manual/Word |  |
+| 2 | Cabinet Affairs Officer | Receives the memorandum, logs it in the CABMEMO system, and assigns a reference. | CABMEMO / EDRMS |  |
+| 3 | Cabinet Affairs Officer | Checks for compliance with guidelines (e.g., formatting, required attachments). | Manual |  |
+| 4 | Cabinet Affairs | Routes the memorandum to the AG and Treasury via the system or physical dispatch for mandatory comments. | EDRMS / Physical |  |
+| 5 | Cabinet Affairs | Consolidates all feedback and prepares the final agenda for the Cabinet. | Manual |  |
 
 ---
 
@@ -173,8 +173,8 @@ graph TD
 
 ### Optimized Steps (Digital)
 
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | CS / PS | Drafts and reviews the memorandum within the secure Executive Portal. | Executive Portal |
 | 2 | Cabinet Secretary | Digitally signs the final version using their National PKI (NPKI) certificate. | Trust Hub / NPKI |
 | 3 | System | Routes the signed memo via X-Road to the AG and Treasury for concurrent 48-hour review. | Workflow Engine / X-Road |

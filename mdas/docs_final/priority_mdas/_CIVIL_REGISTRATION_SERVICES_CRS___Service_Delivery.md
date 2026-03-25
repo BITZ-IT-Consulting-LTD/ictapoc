@@ -35,15 +35,15 @@ The scope is refactored to include critical but previously omitted services:
 | Category | Service Name | Target Population |
 | :--- | :--- | :--- |
 | **Core Services** | Birth Registration (Current) | Children born in Kenya (0-6 months) |
-| | Death Registration (Current) | Deaths occurring in Kenya (0-6 months) |
-| | Issuance of Certificates | All registered citizens/informants |
+|  | Death Registration (Current) | Deaths occurring in Kenya (0-6 months) |
+|  | Issuance of Certificates | All registered citizens/informants |
 | **Extended Services** | Late Birth Registration | Persons over 6 months of age |
-| | Late Death Registration | Deaths reported after 6 months |
-| | Foreign Event Registration | Kenyan citizens abroad |
-| **Special Case Services**| Re-registration (Adoption) | Children legally adopted |
-| | Re-registration (Legitimization)| Children of parents who marry after birth |
-| | Re-registration (Recognition) | Children where paternity is legally acknowledged |
-| | Assumption of Death | Missing persons (Court ordered) |
+|  | Late Death Registration | Deaths reported after 6 months |
+| :--- | :--- | :--- |
+| **Special Case Services** | Re-registration (Adoption) | Children legally adopted |
+|  | Re-registration (Legitimization) | Children of parents who marry after birth |
+|  | Re-registration (Recognition) | Children where paternity is legally acknowledged |
+|  | Assumption of Death | Missing persons (Court ordered) |
 
 ---
 

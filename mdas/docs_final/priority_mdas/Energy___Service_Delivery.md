@@ -35,7 +35,7 @@ The department’s operations are refactored into three primary digital value ch
 
 | Service Name | Target Population | SLA (Current) | SLA (Target) | DPI Component |
 | :--- | :--- | :--- | :--- | :--- |
-| **New License Application**| Energy Entities / IPPs | 90 Days | 14 Days | KeSEL / BRS / KRA |
+| **New License Application** | Energy Entities / IPPs | 90 Days | 14 Days | KeSEL / BRS / KRA |
 | **License Renewal** | Existing Permitees | 30 Days | 48 Hours | eCitizen / GPA |
 | **Technical Data Request** | Researchers / Investors | 14 Days | Instant | Digital Archive |
 | **Project Document Filing** | Contractors / Agency | 7 Days | 2 Hours | EDRMS |
@@ -83,8 +83,8 @@ flowchart TD
 | :--- | :--- | :--- | :--- | :--- |
 | 1 | Registry Clerk | Receives mail, sorts and date-stamps it. | Physical Stamp | Risk of mail loss; manual sorting delays. |
 | 2 | Records Officer | Classifies document by subject and registers it. | Manual Mail Book | No searchability; entry errors in ledger. |
-| 3 | Action Officer | Prepares response and routes file physically. | Physical File | Sequential bottleneck; Registrar absence delay.|
-| 4 | Dispatch Clerk | Assigns dispatch number and registers outgoing mail.| Manual Ledger | No tracking for the recipient (opaque). |
+| 3 | Action Officer | Prepares response and routes file physically. | Physical File | Sequential bottleneck; Registrar absence delay. |
+| 4 | Dispatch Clerk | Assigns dispatch number and registers outgoing mail. | Manual Ledger | No tracking for the recipient (opaque). |
 | 5 | Archivist | Periodically appraises files for archival. | Manual | High archive congestion; slow retrieval. |
 
 ---
@@ -145,7 +145,7 @@ flowchart TD
 
 ## SECTION 6: IMPLEMENTATION REALITY CHECK
 
-| Identified Constraint | Design Adjustment |
+| :--- | :--- |
 | :--- | :--- |
 | **High skill requirement for EDRMS** | Simplified "One-Dashboard" interface for registry staff. |
 | **Physical Archive Backlog** | Metadata-only indexing of high-priority technical files first. |
@@ -172,10 +172,10 @@ flowchart TD
 
 ## SECTION 9: CHANGE LOG
 
-| Area | Original Issue | Feedback Source | Change Made | Impact |
+| Step | Role | Action | Tool / System | Notes |
 | :--- | :--- | :--- | :--- | :--- |
 | **Workflow** | Sequential routing | MDA Workshop | **Parallel Reviews** | 70% reduction in processing time. |
-| **Tracking** | No visibility | IPP Stakeholders | **Real-time Status Dashboard**| Reduced 40% of physical inquiries. |
+| **Tracking** | No visibility | IPP Stakeholders | **Real-time Status Dashboard** | Reduced 40% of physical inquiries. |
 | **Archival** | Physical storage only | Registry Deep Dive | **AI-Metadata Indexing** | Instant retrieval of tech records. |
 | **Verification** | No NPKI used | Security Audit | **Digital Signatures** | Legal non-repudiation of licenses. |
 

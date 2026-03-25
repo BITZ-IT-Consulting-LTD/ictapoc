@@ -90,7 +90,7 @@ Youth Internship Placement, AGPO Registration, and Film Production Licensing
 ## Detailed Process (AS-IS)
 
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
+| :--- | :--- | :--- | :--- | :--- |
 | **1** | Planning Unit | **Resource Mobilization:** Budgeting and identification of implementation partners. | IFMIS / Manual | Starting point for any initiative. |
 | **2** | Youth Officer | **Intake & Vetting:** Manually reviews the academic documents and IDs to ensure age compliance. | Manual Review | High duplication of effort. |
 | **3** | M&E Officer | **Implementation Monitoring:** Collecting data on youth participation during program rollout. | Field Reports | Ensuring targets are met. |
@@ -197,8 +197,8 @@ graph TD
 
 ### Optimized Steps (Digital)
 
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | Youth Applicant | Logs into eCitizen using Maisha Namba. All personal and education details are already pre-populated. | eCitizen / SSO |
 | 2 | System | For AGPO, the system pings BRS via X-Road to verify the company's "Youth-Owned" status. | KeSEL / X-Road |
 | 3 | System | AI matching engine assigns the intern to a government agency based on the applicant's degree and the agency's needs. | Workflow Engine |

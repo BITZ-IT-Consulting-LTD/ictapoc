@@ -101,12 +101,12 @@ End-to-End Refugee Status Determination and Documentation
 ## Detailed Process (AS-IS)
 
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
+| :--- | :--- | :--- | :--- | :--- |
 | 1 | Registration Officer | Receives asylum seeker, verifies entry documents, and captures photos/fingerprints to issue an Asylum Pass. | Refugee System / UNHCR proGres | Dual entry often required. |
-| 2 | Eligibility Officer | Conducts the RSD interview, records testimony, and reviews evidence. | Manual/Digital | |
-| 3 | RSD Committee | Deliberates on the case applying the 1951 Criteria. | Committee Minutes | |
-| 4 | Processing Unit | If recognized, the refugee applies for an ID Card. Old records are retrieved and prints verified. | Manual/Standalone System | |
-| 5 | Processing Unit | If requested, processes Convention Travel Documents, requiring manual status verification. | Production System | |
+| 2 | Eligibility Officer | Conducts the RSD interview, records testimony, and reviews evidence. | Manual/Digital |  |
+| 3 | RSD Committee | Deliberates on the case applying the 1951 Criteria. | Committee Minutes |  |
+| 4 | Processing Unit | If recognized, the refugee applies for an ID Card. Old records are retrieved and prints verified. | Manual/Standalone System |  |
+| 5 | Processing Unit | If requested, processes Convention Travel Documents, requiring manual status verification. | Production System |  |
 
 ---
 
@@ -182,11 +182,11 @@ graph TD
 
 ### Optimized Steps (Digital)
 
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | Registration Officer | Captures biometrics via integrated kits. System instantly queries IPRS and Immigration databases via X-Road to ensure the individual is not already registered. | eCitizen / X-Road |
 | 2 | System | Auto-generates a Digital Asylum Pass with a QR code verifiable by law enforcement. | Output Generator |
-| 3 | RSD Committee | Reviews the digitized evidence file and records the decision directly in the system. | Workflow Engine  |
+| 3 | RSD Committee | Reviews the digitized evidence file and records the decision directly in the system. | Workflow Engine |
 | 4 | System | Upon approval, the system pushes the data to IPRS to mint a Refugee Maisha Namba. | IPRS / KeSEL |
 | 5 | Production Unit | ID Cards and Travel Documents are queued for printing at the centralized government facility and dispatched via Posta. | Production / Logistics |
 

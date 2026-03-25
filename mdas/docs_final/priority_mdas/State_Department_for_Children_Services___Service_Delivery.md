@@ -130,7 +130,7 @@ Statutory Child Protection Case Management (Hybrid)
 The process for Children Services is a **hybrid model** where CPIMS is partially deployed and currently used alongside manual paper-based systems. Field-based activities such as social inquiries and monitoring remain physical, with digital capture occurring after fieldwork where connectivity and device availability allow.
 
 | Step | Role | Action | Tool / System | Notes (Hybrid Nature) |
-|---|---|---|---|---|
+| :--- | :--- | :--- | :--- | :--- |
 | **1** | Children Officer | **Case Reporting & Registration:** Reception of reports from various sources. | Paper Ledger / CPIMS (Intake Module) | Reports are recorded in physical registers at the station and later synced to CPIMS. |
 | **2** | Children Officer | **Intake and Risk Assessment:** Screening and initial risk evaluation to prioritize child safety. | Manual Forms / CPIMS | Screening is manual; metadata and risk scores are captured in CPIMS where possible. |
 | **3** | Children Officer | **Social Inquiry (Investigation):** Detailed field investigation including home visits and interviews. | Physical Visits / CPIMS (Case Notes) | **Fieldwork is 100% physical.** Investigation summaries are logged into CPIMS case notes. |
@@ -215,8 +215,8 @@ The Statutory Child Protection Service is engineered to operate across the four 
 
 # PART 3: TO-BE PROCESS (DPI-ENHANCED)
 
-| Step | Actor | Action | System | DPI Component | Notes |
-|---|---|---|---|---|---|
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| :--- | :--- | :--- | :--- | :--- | :--- |
 | **1** | Citizen / Officer | **Case Reporting:** Multi-channel reporting (Web, App, eCitizen). | eCitizen / CPIMS | Public Interface | Initial data capture; supports anonymous reporting. |
 | **2** | Children Officer | **Intake and Risk Assessment:** Identity verification and risk triaging. | CPIMS | Maisha Namba / IPRS | Real-time KYC via X-Road; Risk support engine alerts for emergencies. |
 | **3** | Children Officer | **Social Inquiry:** Detailed field investigation and social inquiry. | CPIMS Mobile (Offline) | Digital Registry | Offline-first app; logs home visits/interviews; GPS-stamped evidence. |

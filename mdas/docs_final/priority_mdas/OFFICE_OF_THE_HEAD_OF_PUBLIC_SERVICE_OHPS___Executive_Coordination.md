@@ -91,12 +91,12 @@ Executive Coordination, Directive Tracking, and Performance Monitoring
 ## Detailed Process (AS-IS)
 
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
-| 1 | Head of Public Service | Receives a Presidential Directive and translates it into specific instructions for relevant Ministries. | Memo/Letter | |
-| 2 | Senior Coordinators | Identify the specific MDAs responsible for various deliverables within the directive. | Manual | |
-| 3 | OHPS Admin | Dispatches instructions via official correspondence (letters/memos) to Principal Secretaries. | Physical/Email | |
-| 4 | Principal Secretaries | MDAs submit quarterly reports on the status of implementation. | Word/Excel Reports | |
-| 5 | OHPS Analysis Team | Manually consolidates reports, identifies gaps, and prepares a summary for the Head of Public Service. | Manual | |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | Head of Public Service | Receives a Presidential Directive and translates it into specific instructions for relevant Ministries. | Memo/Letter |  |
+| 2 | Senior Coordinators | Identify the specific MDAs responsible for various deliverables within the directive. | Manual |  |
+| 3 | OHPS Admin | Dispatches instructions via official correspondence (letters/memos) to Principal Secretaries. | Physical/Email |  |
+| 4 | Principal Secretaries | MDAs submit quarterly reports on the status of implementation. | Word/Excel Reports |  |
+| 5 | OHPS Analysis Team | Manually consolidates reports, identifies gaps, and prepares a summary for the Head of Public Service. | Manual |  |
 
 ---
 
@@ -164,8 +164,8 @@ graph TD
 
 ### Optimized Steps (Digital)
 
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | Head of Public Service | Enters a directive into the Executive Coordination Portal, defining the Lead MDA and key milestones. | Executive Portal |
 | 2 | System | Instantly notifies relevant Principal Secretaries and creates a tracking record in the national service bus. | Workflow Engine |
 | 3 | System | Periodically fetches implementation data from authoritative registries via X-Road to validate MDA claims. | KeSEL / X-Road |

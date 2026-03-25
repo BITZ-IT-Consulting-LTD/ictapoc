@@ -36,7 +36,7 @@ A primary strategic priority is the **digitization of millions of previous marri
 ## 1. SERVICE CATALOGUE
 
 | # | Service Name | Target Population |
-|---|---|---|
+| :--- | :--- | :--- |
 | **1** | Registration of Marriage by Notice | Civil, Christian, and Hindu Marriages |
 | **2** | Registration of Marriage by Special Licence | Expedited Marriages (Civil/Christian/Hindu) |
 | **3** | Certified Copy of Marriage Certificate | Citizens requiring replacements/certified copies |
@@ -46,7 +46,7 @@ A primary strategic priority is the **digitization of millions of previous marri
 | **7** | Licensing of Ministers of Faith | Religious leaders authorized to officiate |
 | **8** | Issuance of Marriage Books | Licensed institutions and officers |
 | **9** | Registration of Foreign Marriages | Kenyans who married outside national borders |
-| **10**| Registration of Divorces | Citizens with Decree Absolutes from Courts |
+| **10** | Registration of Divorces | Citizens with Decree Absolutes from Courts |
 
 ---
 

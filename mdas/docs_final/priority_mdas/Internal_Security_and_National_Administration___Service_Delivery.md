@@ -86,8 +86,8 @@ Service Delivery
 
 ## Stakeholders
 
-| Stakeholder | Role | Responsibilities |
-|---|---|---|
+| Category | Service Name | Target Population |
+| :--- | :--- | :--- |
 | Registry | Process Actor | Performs actions as defined in steps. |
 | Technical Officer | Process Actor | Performs actions as defined in steps. |
 | Customer Care | Process Actor | Performs actions as defined in steps. |
@@ -98,13 +98,13 @@ Service Delivery
 
 ## Detailed Process (AS-IS)
 
-| Step | Role | Action | Tool | Notes |
-|---|---|---|---|---|
-| 1 | Customer | Customer/Stakeholder submits request, application, or inquiry via official channels (Email, Letter, or Portal). | Digital | |
-| 2 | Registry | Registry/Front Office receives, records, and classifies the request. | Manual | |
-| 3 | Technical Officer | Relevant Technical Department reviews the request against internal policies and regulations. | Manual | |
-| 4 | Management | Management/Accounting Officer approves the appropriate action or service delivery. | Manual | |
-| 5 | Customer Care | Service is delivered or official response is communicated to the customer. | Manual | |
+| Step | Role | Action | Tool / System | Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | Customer | Customer/Stakeholder submits request, application, or inquiry via official channels (Email, Letter, or Portal). | Digital |  |
+| 2 | Registry | Registry/Front Office receives, records, and classifies the request. | Manual |  |
+| 3 | Technical Officer | Relevant Technical Department reviews the request against internal policies and regulations. | Manual |  |
+| 4 | Management | Management/Accounting Officer approves the appropriate action or service delivery. | Manual |  |
+| 5 | Customer Care | Service is delivered or official response is communicated to the customer. | Manual |  |
 
 ---
 
@@ -170,8 +170,8 @@ The To-Be process leverages the Government Service Bus to integrate with BRS (Bu
 
 ### Optimized Steps (Digital)
 
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | Applicant | Applicant logs in via Single Sign-On (SSO) and selects the service. | Citizen Portal / SSO |
 | 2 | System | Applicant enters Business Registration Number; System auto-populates details from BRS (Business Registry) via the Service Bus. | Service Bus / Registry API |
 | 3 | System | System performs auto-validation of compliance (e.g., KRA Tax Status) via Inter-Agency APIs. | Service Bus / Compliance Engine |

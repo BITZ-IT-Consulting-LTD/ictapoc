@@ -88,7 +88,7 @@ Declaration of Income, Assets and Liabilities (DIAL)
 ## Detailed Process (AS-IS)
 
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
+| :--- | :--- | :--- | :--- | :--- |
 | 1 | Public Officer | Obtains, fills out, and signs the physical paper DIAL form. | Manual / Paper | Often requires manual data entry of extensive financial details. |
 | 2 | MDA HR Officer | Receives the physical form, logs the submission, and checks for physical completeness. | Manual / Physical Ledger | Labor-intensive tracking during peak declaration periods. |
 | 3 | MDA HR Officer | Compiles a physical list of compliant and non-compliant officers and dispatches forms to PSC. | Manual / Dispatch | Risk of document loss or unauthorized access in transit. |
@@ -158,8 +158,8 @@ flowchart TD
 
 ### Optimized Steps (Digital)
 
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | Public Officer | Authenticates securely into the centralized HR/Ethics portal. | eCitizen / Unified Identity |
 | 2 | System | Fetches and pre-populates identity, employment, and known asset/income data. | Huduma Bridge / X-Road (IPRS, KRA, NTSA) |
 | 3 | Public Officer | Reviews pre-populated data, adds any missing liabilities or informal assets, and submits. | Digital DIAL System |

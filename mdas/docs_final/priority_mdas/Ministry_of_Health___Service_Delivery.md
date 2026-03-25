@@ -130,14 +130,14 @@ Health Service Delivery & Identity
 ## Detailed Process (AS-IS)
 
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
-| 1 | Patient | Patient arrives at facility. | Physical | |
-| 2 | Registration Clerk | Registration occurs and a local facility ID is created. | Paper/Local EMR | |
-| 3 | Clinician | Performs triage and consultation, followed by lab tests and prescriptions. | Local EMR | |
-| 4 | Clinician | Records the clinical encounter. | Local EMR | |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | Patient | Patient arrives at facility. | Physical |  |
+| 2 | Registration Clerk | Registration occurs and a local facility ID is created. | Paper/Local EMR |  |
+| 3 | Clinician | Performs triage and consultation, followed by lab tests and prescriptions. | Local EMR |  |
+| 4 | Clinician | Records the clinical encounter. | Local EMR |  |
 | 5 | Facility EMR | Data is stored in the facility EMR. | Local EMR | Data remains siloed. |
-| 6 | Patient | Patient visits another facility for further care. | Physical | |
-| 7 | Registration Clerk | Facility searches local EMR for the patient's record. | Local EMR | |
+| 6 | Patient | Patient visits another facility for further care. | Physical |  |
+| 7 | Registration Clerk | Facility searches local EMR for the patient's record. | Local EMR |  |
 | 8 | Registration Clerk | No record found. A new patient ID is created at the second facility. | Local EMR | Identity becomes fragmented. |
 | 9 | Clinician | Duplicate clinical records created without visibility into previous history. | Local EMR | Results in fragmented medical history and duplicate testing. |
 
@@ -254,8 +254,8 @@ flowchart TD
 
 ### Optimized Steps (Digital)
 
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | Health Worker | Patient identified using Maisha Namba or biometrics. | Facility EMR |
 | 2 | Facility EMR | Facility system queries Master Patient Index (MPI) to locate the patient's unified profile. | KHIE MPI / X-Road |
 | 3 | KHIE Platform | Patient profile retrieved. System retrieves Shared Health Record (SHR) upon authorization. | KHIE SHR / X-Road |

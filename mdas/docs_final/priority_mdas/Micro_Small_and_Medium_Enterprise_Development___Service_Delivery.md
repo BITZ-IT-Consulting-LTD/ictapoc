@@ -211,9 +211,9 @@ The MSME Programme Ecosystem is engineered to operate across the four layers of 
 
 # PART 9: CHANGE LOG
 
-| Area | Original Issue | Change Made | Impact |
+| Area | Before (Incorrect/Old) | After (Corrected) | Rationale |
 | :--- | :--- | :--- | :--- |
-| **Operational Model**| Disbursement-centric (Linear) | **MSME Programme Ecosystem** | Holistic business growth vs simple debt. |
+| **Operational Model** | Disbursement-centric (Linear) | **MSME Programme Ecosystem** | Holistic business growth vs simple debt. |
 | **KJET Integration** | Treated as side-note | **Embedded into Core Flow** | Strategic alignment with national priorities. |
 | **Service Scope** | Just Credit & NYOTA | **BDS, Incubation, Market Entry** | Diversified support for varied MSME needs. |
 | **DPI Use Case** | BRS lookup only | **Single Window + Consent Manager** | Seamless data-driven eligibility desk. |

@@ -96,7 +96,7 @@ Official Correspondence and Mail Management
 ## Detailed Process (AS-IS)
 
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
+| :--- | :--- | :--- | :--- | :--- |
 | 1 | Gate Clerk | Receives mails from ministries and registers them initially at the gate. | Manual Ledger | Initial point of entry and physical security screening. |
 | 2 | Records Officer | Sorts the received mails according to their respective target departments. | Manual Sorting | High volume sorting can lead to delays. |
 | 3 | Records Officer | Opens, stamps, and registers the mail into the official registry ledgers based on the department. | Manual Ledgers / Stamps | Time-consuming data entry and prone to manual errors. |
@@ -161,8 +161,8 @@ flowchart TD
 
 ### Optimized Steps (Digital)
 
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | Ministry/Citizen | Submits correspondence digitally or delivers physical mail which is instantly scanned at entry. | Secure Gov Bridge / Digital Scanner |
 | 2 | System | Automatically registers the document, assigns a tracking ID, and extracts metadata. | EDRMS |
 | 3 | System | Routes the digitized document to the appropriate department based on predefined rules. | EDRMS Workflow Engine |

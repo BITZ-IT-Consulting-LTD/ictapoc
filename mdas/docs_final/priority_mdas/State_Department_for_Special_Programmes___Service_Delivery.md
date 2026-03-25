@@ -145,17 +145,17 @@ End-to-End Special Programmes Delivery (Registration to Assistance)
 ## Detailed Process (AS-IS)
 
 | Step | Role | Action | Tool/System | Notes |
-|---|---|---|---|---|
+| :--- | :--- | :--- | :--- | :--- |
 | 1 | Community Leaders / Chiefs | Identifies vulnerable households within their jurisdiction and conducts outreach drives. | Manual | Prone to inclusion/exclusion errors. |
-| 2 | Registration Officers | Captures household information and verifies supporting documents (e.g., ID cards). | Paper Forms / Basic System | |
-| 3 | Registration Officers | Compiles preliminary beneficiary lists based on collected data. | Manual Ledgers / Excel | |
-| 4 | Community Leaders / Registration Officers | Conducts community validation meetings to review and cross-check the preliminary list. | Public Meetings | |
-| 5 | Registration Officers | Cross-checks eligibility criteria manually and finalizes the beneficiary list. | Manual | |
-| 6 | Programme Management | Reviews the finalized list and formally endorses the approved beneficiaries for assistance. | Manual Approval | |
-| 7 | Programme Management | Forwards the endorsed beneficiary list to the Payment or Logistics Unit. | Physical Dispatch / Email | |
+| 2 | Registration Officers | Captures household information and verifies supporting documents (e.g., ID cards). | Paper Forms / Basic System |  |
+| 3 | Registration Officers | Compiles preliminary beneficiary lists based on collected data. | Manual Ledgers / Excel |  |
+| 4 | Community Leaders / Registration Officers | Conducts community validation meetings to review and cross-check the preliminary list. | Public Meetings |  |
+| 5 | Registration Officers | Cross-checks eligibility criteria manually and finalizes the beneficiary list. | Manual |  |
+| 6 | Programme Management | Reviews the finalized list and formally endorses the approved beneficiaries for assistance. | Manual Approval |  |
+| 7 | Programme Management | Forwards the endorsed beneficiary list to the Payment or Logistics Unit. | Physical Dispatch / Email |  |
 | 8 | Payment / Logistics Unit | Disburses cash payments or distributes in-kind food/supplies to beneficiaries. | Manual Cash/Goods | High risk of leakage. |
-| 9 | Beneficiaries | Acknowledges receipt of the assistance via signature or thumbprint. | Paper Receipts | |
-| 10 | Registration Officers | Records the assistance delivered and handles any grievances or appeals raised by the community. | Manual Registers | |
+| 9 | Beneficiaries | Acknowledges receipt of the assistance via signature or thumbprint. | Paper Receipts |  |
+| 10 | Registration Officers | Records the assistance delivered and handles any grievances or appeals raised by the community. | Manual Registers |  |
 
 ---
 
@@ -262,8 +262,8 @@ The To-Be process envisions a fully integrated **digital social protection platf
 
 ### Optimized Steps (Digital)
 
-| Step | Actor | Action | System |
-|---|---|---|---|
+| Step | Actor | Action | Tool / System |
+| :--- | :--- | :--- | :--- |
 | 1 | Citizen / Beneficiary | Registers for support via the online social protection portal or with the help of a Registration Officer. | eCitizen / Social Portal |
 | 2 | Social Protection System | Instantly verifies the applicant's identity using biometrics against the national identity registry. | IPRS / Maisha Namba |
 | 3 | Social Protection System | Fetches comprehensive household and socioeconomic data from the National Social Registry via X-Road. | National Social Registry |

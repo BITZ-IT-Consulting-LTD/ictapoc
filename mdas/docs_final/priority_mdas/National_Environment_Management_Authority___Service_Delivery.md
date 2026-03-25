@@ -188,7 +188,7 @@ The **Digital Inspection App** replaces paper-based site notes:
 
 NEMA's platform is an integrated hub within the national DPI framework:
 
-| System | Integration Point | Data Flow |
+| Category | Service Name | Target Population |
 | :--- | :--- | :--- |
 | **BRS** | Business Registration | Fetch ownership/directorship details instantly. |
 | **KRA** | Tax Systems | Validate KRA PIN and tax compliance of the proponent. |
@@ -255,9 +255,9 @@ x
 
 # PART 9: CHANGE LOG
 
-| Area | Original Issue | Change Made | Impact |
+| Area | Before (Incorrect/Old) | After (Corrected) | Rationale |
 | :--- | :--- | :--- | :--- |
-| **Digital Stance** | Focus on "Automation" | **Repositioned as "Enhancement"**| Acknowledges NEMA as a mature digital entity. |
+| **Digital Stance** | Focus on "Automation" | **Repositioned as "Enhancement"** | Acknowledges NEMA as a mature digital entity. |
 | **Inspection Logic** | Mentioned manual visits | **Digital Inspection Workflow** | Real-time, geo-tagged field data. |
 | **Integration** | Standalone process | **ArdhiSasa & BRS Linked** | Instant land and business verification. |
 | **Decision Support** | Manual screening | **AI Rules Engine** | Faster, consistent risk categorization. |
