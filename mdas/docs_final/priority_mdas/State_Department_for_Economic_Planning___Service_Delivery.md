@@ -1,19 +1,79 @@
-# PART 1: EXECUTIVE SUMMARY
+# STATE DEPARTMENT FOR ECONOMIC PLANNING (SDEP) – Business Process Architecture
 
-The refined process for the State Department for Economic Planning (SDEP) transforms national planning from a periodic document-creation exercise into a **dynamic, performance-driven lifecycle**. Key improvements include:
-
-- **Institutional Expansion:** Inclusion of **Cities and Municipalities** as distinct reporting and planning actors.
-- **Performance Centricity:** Integration of a mandatory **Indicator Handbook** (KPIs, Targets, Methodology) into the plan dissemination phase.
-- **DPI Interoperability:** Deep integration with **PIMIS (Projects)**, **IFMIS (Finance)**, and **KNBS (Statistics)** to enable evidence-based planning and real-time Monitoring & Evaluation (M&E).
-- **Citizen Accountability:** Utilizing **Huduma Box/eCitizen** for public transparency of strategic outcomes and KPI progress.
-- **Operational Realism:** A phased rollout strategy that transitions from current manual/hybrid states to a fully integrated digital planning ecosystem.
+## Cover Page
+- **Ministry:** Ministry of National Treasury and Economic Planning
+- **State Department:** State Department for Economic Planning (SDEP)
+- **Primary Authority:** National Planning Office / Monitoring & Evaluation Directorate
+- **Document Type:** Business Process Architecture (BPA) Standardised
+- **Document Version:** 4.1
+- **Date:** 2026-03-25
+- **Classification:** Official
+- **Strategic Category:** Priority MDA
+- **Service Model:** G2G / G2C
+- **Reviewer:** Senior Government Enterprise Architect
 
 ---
 
-# PART 2: AS-IS PROCESS (CURRENT REALITY)
+## SECTION 0: SERVICE PRIORITISATION MAPPING
+- **Mapped Priority Service:** National Development Planning and Monitoring & Evaluation (NIMES)
+- **Tier Classification:** Tier 2
+- **Strategic Category:** Economy / Governance (National Performance Registry)
+- **Breakout Room Classification:** Room 3 (Policy, Economy & Foundational Systems)
+- **Lead MDA (Standardised Name):** State Department for Economic Planning
+- **Related Cross-Cutting Services:**
+    - NIMES (National Performance Registry)
+    - Identity Layer (IPRS / Maisha Namba)
+    - PIMIS (Projects) / IFMIS (Finance) Integration
+    - National EDRMS (Policy & Plan Archival)
+    - Huduma Box (Public Progress Dashboard)
 
-The current state of national planning is characterized by periodic document-creation exercises with limited real-time performance tracking.
+---
 
+## SECTION 0.1: PRIORITISATION JUSTIFICATION
+This service is prioritised because the TO-BE design transforms national planning from a periodic, manual document-creation exercise into a dynamic, "Performance-Driven Lifecycle." By integrating the National Integrated Monitoring and Evaluation System (NIMES) with PIMIS (Projects), IFMIS (Finance), and KNBS (Statistics) via X-Road, the design provides the Cabinet with an automated "Executive Performance Dashboard." This ensures that national priorities (Vision 2030/BETA) are tracked in real-time, significantly improving public resource allocation and accountability.
+
+| Criteria | Evidence from TO-BE Design |
+| :--- | :--- |
+| **Demand / Volume** | Continuous reporting from all MDAs, 47 Counties, and 100+ Municipalities. |
+| **National Priority Alignment** | Constitution of Kenya (Planning & Participation); Vision 2030 (Macro Pillar). |
+| **Data Reusability** | National KPIs and planning targets are consumed by Treasury, Parliament, and Investors. |
+| **Interoperability** | Deep data pipelines from IFMIS (Budget) and PIMIS (Physical Projects) via X-Road. |
+| **Revenue / Efficiency Impact** | Reduces development of "Ghost Projects"; optimizes ROI on national investments. |
+| **Governance / Risk Reduction** | Real-time tracking of project milestones prevents funds diversion and delays. |
+| **Inclusivity** | "Interactive Feedback" via Huduma Box allows citizens to flag local project statuses. |
+| **Readiness** | High; Core NIMES framework exists; PIMIS integration is already underway. |
+
+> [!NOTE]
+> “The TO-BE design transforms national planning from a static document-creation exercise to a 'Performance-Driven Lifecycle.' By integrating NIMES with PIMIS (Projects), IFMIS (Finance), and KNBS (Statistics) via X-Road, the design provides the Cabinet with a real-time 'Executive Performance Dashboard,' ensuring every shilling of public investment is tracked against national strategic outcomes.”
+
+---
+
+# SECTION 1: SERVICE DEFINITION (STANDARDISED)
+
+The State Department for Economic Planning (SDEP) is responsible for the formulation and monitoring of national development policies and strategic plans. 
+
+In this refactored BPA, national planning is transformed into a **dynamic, performance-driven lifecycle**. The department is the custodian of the **National Integrated Monitoring and Evaluation System (NIMES)**, which coordinates reporting across National MDAs, County Governments, and the newly integrated Cities & Municipalities layer.
+
+---
+
+# SECTION 2: SERVICE CATALOGUE (NORMALISED)
+
+| Category | Service Name | Description |
+| :--- | :--- | :--- |
+| **Core Services** | **National Strategic Planning** | Formulation and alignment of MTPs and sectoral plans against Vision 2030. |
+| | **Monitoring & Evaluation (M&E)** | Real-time tracking of national KPIs via NIMES and Executive Dashboards. |
+| **Extended Services** | **County/City Plan Alignment** | Vetting of CIDPs and Municipal plans to ensure Whole-of-Government cohesion. |
+| | **Indicator Handbook Management** | Maintenance of the national repository of KPIs, targets, and methodologies. |
+| **Special Case Services**| **Public Performance Reporting** | Dissemination of progress data via Huduma Box and open governance portals. |
+| | **Project Status Flagging** | Handling of bottom-up citizen feedback on local project milestones. |
+
+---
+
+# SECTION 3: AS-IS PROCESS FLOWS (MANUAL/PERIODIC)
+
+The current state is characterized by periodic document-creation exercises (MTPs) with limited real-time performance tracking and manual data submission silos.
+
+### 3.1 AS-IS Visualization
 ```mermaid
 %%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
@@ -35,22 +95,18 @@ flowchart TD
     end
 
     AnnualRev --> End((End))
-
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;;
-    
-    class Start start;
-    class End endNode;
-    class Guidelines,Submit,ManualAlign,Stakeholder,FinalDraft,Distribute,AnnualRev userTask;
 ```
+
+### 3.2 Operational Reality
+- **Actors:** SDEP Planning Officers, MDAs, County Planning Teams, Stakeholders.
+- **Systems:** Manual Word/Excel templates, Paper reports, Email.
+- **Pain Points:** 12-month lag in performance data; manual alignment reviews are error-prone; lack of direct link to financial (IFMIS) or project (PIMIS) data; physical dissemination is costly and slow.
 
 ---
 
-# PART 3: TO-BE PROCESS (DPI-ENABLED)
+# SECTION 4: TO-BE PROCESS INTERPRETATION (NEW LAYER)
 
-The TO-BE process transforms planning into a dynamic, performance-driven lifecycle.
-
+### 4.1 TO-BE Process (Performance-Driven Journey)
 ```mermaid
 %%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
@@ -85,110 +141,71 @@ flowchart TD
     class Verify,Consent,Match,KPI,PIMIS,Dashboard,Archive serviceTask;
 ```
 
+### 4.2 Key Capabilities Introduced
+*   **Automation:** AI-assisted alignment check of sector plans against national BETA/Vision 2030 priorities.
+*   **Integration:** Direct "API Hydration" of performance dashboards from PIMIS (Physical Progress) and IFMIS (Financial Progress).
+*   **Real-time Processing:** Automated generation of the **Indicator Handbook** (KPIs/Targets) upon plan approval.
+*   **Digital Identity Validation:** Planning officers and PSs verified via **Maisha Namba** identity federation.
+*   **Workflow Orchestration:** Coordinated cycle from guideline issuance to annual progress reporting (APR).
+
+### 4.3 Transformation Summary
+| Dimension | AS-IS | TO-BE |
+| :--- | :--- | :--- |
+| **Processing** | Manual / Periodic | Digital / Continuous |
+| **Verification** | Manual Word Reviews | AI Alignment Engine |
+| **Records** | Scattered Word/PDFs | Unified NIMES Registry |
+| **Tracking** | Post-event manual entry | Real-time PIMIS/IFMIS Sync |
+
 ---
 
-# PART 4: UPDATED ACTOR MODEL
+# SECTION 5: SYSTEM LANDSCAPE (ALIGN TO GEA)
 
-The planning ecosystem identifies five primary layers of actors:
-
-- **National Planning (SDEP):** Custodian of the planning framework and the **National Integrated Monitoring and Evaluation System (NIMES)**.
-- **Line MDAs:** Sectoral planning and execution authorities.
-- **County Governments:** Formulation and reporting of County Integrated Development Plans (CIDPs).
-- **Cities & Municipalities:** Localized planning entities required to align with County and National frameworks and submit urban-specific performance data.
-- **Citizenry:** Active participants in the planning phase and consumers of progress data via open governance portals.
+| Layer | System / Platform | Role |
+| :--- | :--- | :--- |
+| **Identity Layer** | Maisha Namba (IPRS) | Identity for all Government planning officers. |
+| **Interoperability** | KeSEL (X-Road) | Data bridge to PIMIS, IFMIS, and KNBS. |
+| **shared Services** | National EDRMS | Legal digital archive for approved strategic plans. |
+| **Workflow / BPM** | Planning Engine | Orchestrates the periodic and annual cycles. |
+| **Payment Layer** | GPA (Finance Aggregator) | Disbursement of funds for participation and research. |
+| **Trust Hub** | Consent Manager | Secure access to cross-sectoral performance data. |
 
 ---
 
-# PART 3: REFINED PROCESS FLOW (TO-BE)
+# SECTION 6: TRANSFORMATION VALUE (CRITICAL ADDITION)
 
-| Step | Actor | Action | System / Tool | Output |
+| Value Type | Explanation |
+| :--- | :--- |
+| **Efficiency Gain** | Plan alignment review time reduced from months to days via AI engine. |
+| **Economic Impact** | Evidence-based budgeting ensures high-impact sectors receive priority funding. |
+| **Governance Impact** | Cabinet-level visibility on project delays ensures accountability at the PS level. |
+| **Citizen Experience** | Public progress cards via Huduma Box show value for tax-money in real-time. |
+| **Interoperability Value** | Unified urban-to-national data pipeline (City -> County -> National). |
+
+---
+
+# SECTION 7: ALIGNMENT TO WHOLE-OF-GOVERNMENT ARCHITECTURE
+- **Shared Platforms:** Uses Huduma Box for public dissemination and eCitizen for official reporting access.
+- **Registry Reuse:** Feeds NIMES data back into the national budget systems for performance-based financing.
+- **Compliance with GEA / GIF:** Standardizing national performance indicators (KPIs) for multi-MDA data reuse.
+
+---
+
+# SECTION 8: IMPLEMENTATION READINESS (NEW)
+*   **Data Readiness:** High; Core indicators are captured in NIMES; legacy project data being migrated to PIMIS.
+*   **Legal Readiness:** High; Constitution and PFM Act mandate participatory and performance-based planning.
+*   **Institutional Readiness:** Medium; Requires mandatory upskilling for executive leadership on dashboard usage.
+*   **Technical Readiness:** High; X-Road nodes are operational across The National Treasury and SDEP.
+
+---
+
+# SECTION 9: TRACEABILITY MATRIX (NEW)
+
+| BPA Process | Priority Service | Tier | TO-BE Capability | National Impact |
 | :--- | :--- | :--- | :--- | :--- |
-| **1** | SDEP | **Guideline Formulation:** Issuance of strategic focus and data templates. | Planning Portal | Smart Planning Templates |
-| **2** | MDAs/Counties/Cities | **Participatory Planning:** Citizen engagement and sector plan drafting. | Digital Participation Hub | Draft Sector/City Plans |
-| **3** | SDEP / AI Engine | **Alignment & Verification:** Automated check against Vision 2030 and BETA. | Alignment Engine | Verified Drafts |
-| **4** | SDEP / Public | **Validation:** Stakeholder review and final technical sign-off. | Planning Portal | Approved National Plan |
-| **5** | SDEP | **Dissemination:** Publication of Plan **WITH Indicator Handbook**. | Huduma Box / GPA | **Indicator Handbook (KPIs/Targets)** |
-| **6** | MDAs / Entities | **Monitoring & Data Submission:** Periodic updates on KPI progress. | NIMES / PIMIS | Progress Reports |
-| **7** | SDEP | **Performance Reporting:** Aggregation of monitoring data for Cabinet. | Executive Dashboard | Annual Progress Report (APR) |
+| **Plan Formulation** | Strategic Planning | T2 | AI Alignment Engine | Policy Consistency & Cohesion |
+| **KPI Tracking** | M&E (NIMES) | T2 | Real-time PIMIS Sync | Project Implementation Speed |
+| **Participation** | Stakeholder Review | T2 | Huduma Box Feedback | Public Trust & Transparency |
+| **Executive Reporting**| Dashboard Mgmt | T2 | Executive Dashboard | Accurate Resource Allocation |
 
 ---
-
-# PART 4: ARCHITECTURE ALIGNMENT (KENYA HUDUMA BRIDGE)
-
-The National Planning and M&E Lifecycle is engineered to operate across the four layers of the **Kenya DSAP Architecture**:
-
-### Layer 1: Access Channels
-- **eCitizen / Planning Portal:** The primary window for MDAs, Counties, and Cities to submit plans and M&E data.
-- **Executive Dashboard:** A specialized interface for the Cabinet and PSs to monitor national KPI progress in real-time.
-- **Huduma Box / Citizen Hub:** For public access to the **Indicator Handbook** and project status updates.
-
-### Layer 2: Core Platform
-- **Workflow Engine (BPMN 2.0):** Orchestrates the planning cycle (Guideline Issuance → Submission → Alignment Check → Validation → Dissemination).
-- **Trust Hub:**
-  - **Consent Manager:** Consulted before aggregating sector-specific data (e.g., from Health or Education registries) for national performance analysis.
-  - **Identity Federation:** Verified access via **Maisha Namba (IPRS)** for all planning officers and executives.
-  - **NPKI:** Digitally signing **National Development Plans** and **Performance Contracts** to ensure authenticity and legal standing.
-- **Shared Services:**
-  - **Document Generator:** Automated creation of the **Indicator Handbook** and annual progress reports.
-  - **Notifications:** SMS/Email alerts for reporting deadlines and performance milestones.
-  - **Intelligent Document Processing (IDP):** Digitizing historical planning documents and physical project reports into the National EDRMS.
-
-### Layer 3: Interoperability (Huduma Bridge)
-- **KeSEL (X-Road):** Secure data exchange between the Planning Portal and **PIMIS (Projects)**, **IFMIS (Financials)**, and **KNBS (Statistics)**.
-- **Central Service Catalogue:** Cataloguing M&E APIs to promote data-driven governance across all MDAs.
-
-### Layer 4: Authoritative Registries & Payments
-- **Registries:**
-  - **NIMES (National Integrated M&E System):** The sector-specific authoritative registry for planning and performance data.
-  - **National EDRMS:** The definitive legal digital archive for all signed strategic plans and policy documents.
-  - **IPRS / Maisha Namba:** Foundational person registry for official accountability.
-- **Payments:** **Government Payment Aggregator (GPA)** for managing research fees, public participation stipends, and performance-based incentive transfers.
-
----
-
-# PART 5: CITIZEN ENGAGEMENT MODEL
-
-- **Open Governance Portal:** Strategic plans, MTPs, and CIDPs are accessible via **eCitizen**.
-- **The Huduma Box Integration:** Citizens can retrieve progress cards for MDAs and Counties, showing performance against targets in the **Indicator Handbook**.
-- **Interactive Feedback:** Ability for citizens to "Flag" project statuses in their localities, providing a bottom-up feedback loop to SDEP monitoring teams.
-
----
-
-# PART 6: IMPLEMENTATION MODEL (PHASED ROLLOUT)
-
-- **Phase 1: Hybrid (12 Months):** Digital submission of Word/Excel templates via the portal; Manual validation of indicators; Focused capacity building in ICT directorates.
-- **Phase 2: Partial Digitization (24 Months):** Integration with IFMIS (Finance) and PIMIS (Projects); Introduction of the Digital Participation Hub; Adoption by prioritized Cities.
-- **Phase 3: Full Integration (36+ Months):** Automated data pipelines from all MDAs, Counties, and Municipalities; AI-driven predictive planning and real-time M&E dashboards for Executive leadership.
-
----
-
-# PART 7: GOVERNANCE & CAPACITY
-
-- **ICT Directorates:** Re-tasked with data integrity and system uptime; Centralization of data quality standards.
-- **Executive Upskilling:** Mandatory data literacy training for PSs and CSs to enable use of the **Executive Approval Dashboards**.
-- **Data Integrity Controls:** Automated audit logs and role-based access to ensure the sanctity of national development data.
-
----
-
-# PART 8: CHANGE LOG
-
-| Area | Before (Incorrect/Old) | After (Corrected) | Rationale |
-| :--- | :--- | :--- | :--- |
-| **Coverage** | Fragmented planning across layers. | Added Cities and Municipalities to the actor model. | Unified urban-to-national planning alignment. |
-| **Performance** | Plan creation without tracking. | Embedded M&E lifecycle and Indicator Handbook. | Transition to outcome-based governance. |
-| **Data Scope** | Manual data entry silos. | Integration with PIMIS, IFMIS, and KNBS. | Real-time project and financial oversight. |
-| **Citizens** | Passive recipients of info. | Huduma Box integration for KPI tracking. | Increased transparency and public accountability. |
-| **Realism** | Assumed full digital readiness. | Introduced 3-Phase hybrid implementation. | Higher adoption rates and lower failure risk. |
-
----
-
-## References
-- Constitution of Kenya (Public Participation)
-- Kenya Vision 2030 / BETA Agenda
-- Public Finance Management (PFM) Act
-- Data Protection Act 2019
-
----
-
-### Validation Survey
-Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+**[End of Standardised Business Process Architecture]**
