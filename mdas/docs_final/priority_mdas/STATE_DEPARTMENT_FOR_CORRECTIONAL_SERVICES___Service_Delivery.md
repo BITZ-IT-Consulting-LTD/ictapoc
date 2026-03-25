@@ -160,127 +160,139 @@ End-to-End Inmate Case Management (Admission to Release)
 
 ---
 
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Kenya DSAP Architecture - Digital Justice Ecosystem).*
+# PART 1: TO-BE EXECUTIVE SUMMARY (HUMAN-CENTRIC JUSTICE)
+
+The TO-BE process for the State Department for Correctional Services is designed as a **digitally-supported justice ecosystem** where human authority is paramount. Every critical legal, custodial, and release decision is anchored on a **National Inmate Registry (Source of Truth)** but remains under the final authorization of designated officers. Technology is deployed strictly for **data capture, alerting, and computational support**, ensuring that the system assists—but never replaces—the professional judgment of Correctional and Judicial officers. This model ensures full compliance with the Prisons Act, preserving a clear audit trail of human accountability for every inmate's journey through the justice system.
+
+---
+
+# PART 2: DPI ARCHITECTURE (DECISION-SUPPORT INFRASTRUCTURE)
+
+The infrastructure follows a **DPI-enabled, officer-validated** framework:
+
+- **Identity Layer (Biometric Verification):** Provides identity certainty via IPRS/Maisha Namba integration, specifically to assist **Records Officers** in the de-duplication and historical identification of offenders.
+- **Registry Layer (National Inmate Registry):** A centralized record used to provide a unified history for **Reception and Welfare Officers**, eliminating the risks associated with missing physical files during facility transfers.
+- **Interoperability Layer (X-Road):** Facilitates the digital transmission of court warrants and probation files to provide **Discharge Units** with accurate data points for their manual review and validation.
+- **Support Systems:**
+    - **PCMS:** A tool for records management and workflow tracking.
+    - **Calculation Engine:** Provides mathematical support for sentence logic, requiring **mandatory human certification** of results.
+    - **Notification Gateway:** Triggers eligibility alerts to prevent oversight, but does not execute releases.
+
+---
+
+# PART 3: REFINED TO-BE PROCESS (HUMAN-IN-THE-LOOP MODEL)
+
+| Step | Human Actor (Primary Authority) | Action (System-Assisted) | Tool / System (Support) | DPI Component | Notes |
+|---|---|---|---|---|---|
+| **1** | Judicial Officer | **Warrant Issuance:** Digital signing and pushing of court warrants. | Judiciary CMS | X-Road | Digital warrant acts as the authoritative input for officer review. |
+| **2** | Reception Officer | **Admission & ID Verification:** Reception of inmate and biometric confirmation. | PCMS | Maisha Namba / IPRS | Officer verifies identity before initializing the Registry record. |
+| **3** | Prison Administrator | **Security Classification:** Determining appropriate facility placement. | PCMS / Rules Engine | Decision Support | System proposes classification based on history; **Administrator makes the final decision**. |
+| **4** | Discharge Unit Officer | **Sentence Validation:** Certification of expiry dates and remission. | PCMS / Calculation Engine | Legal Logic | System calculates dates; **Officer must review and sign off** on the statutory accuracy. |
+| **5** | Welfare Officer | **Rehabilitation Oversight:** Monitoring behavior and skill acquisition. | PCMS / Rehab Tracker | Data Management | Officer logs physical progress; system provides longitudinal tracking support. |
+| **6** | System (Automated) | **Eligibility Alerting:** Sending proactive alerts for upcoming milestones. | PCMS | Automated Alerts | **Alerting only.** Does not trigger any status change or release on its own. |
+| **7** | Authorized Officer-In-Charge | **Release Authorization:** Final legal audit and execution of discharge. | PCMS / Workflow | Audit Trail | **Mandatory human authorization** following dual-validation of release warrants. |
+| **8** | Probation Officer | **Reintegration Handover:** Accepting supervision of the released offender. | Probation System | Data Exchange | Direct handover of the rehabilitation history to ensure continuity of supervision. |
+
+---
+
+# PART 4: BPMN DIAGRAM (CONTROLLED JUSTICE WORKFLOW)
 
 ```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '20px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
     %% Events
     Start((Start))
-    EndProcess(("End - Released"))
+    EndProcess(("End - Handover/Release"))
 
-    subgraph Judiciary["Judiciary System"]
+    subgraph Admission_Stage["1. Admission & ID (Officer Led)"]
         direction TB
-        PushWarrant["Push digital court warrant"]
+        DigWarrant["Receive Digital Warrant (X-Road)"]
+        BioVerify["Officer Biometric Verification (IPRS)"]
+        InitRecord["Initialize Registry Profile"]
     end
 
-    subgraph AdmissionOfficer["Admission Officer"]
+    subgraph Custody_Control["2. Classification & Custody (Human Authority)"]
         direction TB
-        RecWarrant["Receive digital court warrant"]
-        VerifyBio["Verify identity biometrically"]
-        IDGateway{"Identity verified?"}
+        SystemClassify["System Classification Suggestion"]
+        AdminApprove{Admin Approval?}
+        LogDaily["Manual Logging of Daily Metrics"]
     end
 
-    subgraph PrisonSystem["Prison System"]
+    subgraph Sentence_Validation["3. Sentence & Rehab (Audit Layer)"]
         direction TB
-        CreateProfile["Create inmate digital profile"]
-        AutoClassify["Perform automatic classification"]
-        CalcExpiry["Calculate sentence expiry automatically"]
-        SentGateway{"Sentence completed?"}
-        TriggerAlert["Trigger release eligibility alerts"]
-        ExecRelease["Execute digital release"]
+        CalcSent["System Sentence Calculation"]
+        OfficerValidate{Officer Validation?}
+        ProgressLogs["Manual Rehabilitation Logs"]
     end
 
-    subgraph WelfareOfficer["Welfare Officer"]
+    subgraph Release_Authorization["4. Authorized Release (Dual Control)"]
         direction TB
-        TrackRehab["Track rehabilitation progress"]
-    end
-
-    subgraph ProbationService["Probation Service"]
-        direction TB
-        NotifyProb["Notify probation services"]
+        Alert["Eligibility Alert (PCMS)"]
+        FinalAudit["Final Legal Audit (In-Charge)"]
+        AuthRelease{Authorize Release?}
+        GatePass["Issuance of Digital Gate Pass"]
     end
 
     %% Flow connections
-    Start --> PushWarrant
-    PushWarrant --> RecWarrant
-    RecWarrant --> VerifyBio
-    VerifyBio --> IDGateway
+    Start --> DigWarrant
+    DigWarrant --> BioVerify
+    BioVerify --> InitRecord
+    InitRecord --> SystemClassify
+    SystemClassify --> AdminApprove
+    AdminApprove -- "Approved" --> LogDaily
+    AdminApprove -- "Revision Required" --> SystemClassify
     
-    IDGateway -- "No" --> VerifyBio
-    IDGateway -- "Yes" --> CreateProfile
+    LogDaily --> CalcSent
+    CalcSent --> OfficerValidate
+    OfficerValidate -- "Certified Correct" --> ProgressLogs
+    OfficerValidate -- "Error Correction" --> CalcSent
     
-    CreateProfile --> AutoClassify
-    AutoClassify --> TrackRehab
-    AutoClassify --> CalcExpiry
+    ProgressLogs --> Alert
+    Alert --> FinalAudit
+    FinalAudit --> AuthRelease
+    AuthRelease -- "Authorized" --> GatePass
+    AuthRelease -- "Hold/Incomplete" --> ProgressLogs
     
-    TrackRehab --> CalcExpiry
-    
-    CalcExpiry --> SentGateway
-    
-    SentGateway -- "No" --> TrackRehab
-    SentGateway -- "Yes" --> TriggerAlert
-    
-    TriggerAlert --> NotifyProb
-    TriggerAlert --> ExecRelease
-    
-    NotifyProb --> EndProcess
-    ExecRelease --> EndProcess
+    GatePass --> EndProcess
 
     %% Styling
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px,font-size:24px;;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px;;
+    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:20px;;
+    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:20px;;
+    classDef humanTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:20px;;
+    classDef sysSupport fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:20px;;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:20px;;
     
     class Start startEvent;
     class EndProcess endEvent;
-    class IDGateway,SentGateway gateway;
-    class PushWarrant,CreateProfile,AutoClassify,CalcExpiry,TriggerAlert,NotifyProb,ExecRelease serviceTask;
-    class RecWarrant,VerifyBio,TrackRehab userTask;
+    class AdminApprove,OfficerValidate,AuthRelease gateway;
+    class DigWarrant,InitRecord,SystemClassify,CalcSent,Alert,GatePass sysSupport;
+    class BioVerify,LogDaily,ProgressLogs,FinalAudit humanTask;
 ```
 
-## Future State Process (TO-BE)
-### Narrative
-**TO-BE Process: Intelligent Correctional Management**
+---
 
-The To-Be process shifts from a siloed, paper-based operation to a **digital correctional management platform** fully integrated with the national justice ecosystem.
+# PART 5: HYBRID IMPLEMENTATION & CONTROLS
 
-**Core Systems:**
-- **National Inmate Registry:** A unified, biometric-backed database of all offenders.
-- **Prison Case Management System (PCMS):** Manages the entire lifecycle of an inmate from admission to release.
-- **Sentence Calculation Engine:** Automatically computes remission, time served, and exact release dates based on penal codes.
-- **Rehabilitation Tracking System:** Logs vocational training, educational achievements, and behavioural scores.
-- **Release Management System:** Orchestrates parole, probation handover, and formal discharge.
+- **System Role Redefinition:** The National Inmate Registry is positioned as a **support tool**. In the event of system downtime, facilities revert to manual registers (manual fallback), with a requirement for retrospective updates within the shift.
+- **Dual Validation for Release:** Every discharge requires at least two independent digital "keys" (Authorized Discharge Unit Officer + Facility In-Charge) to prevent accidental or wrongful release.
+- **Audit Traceability:** The system maintains a permanent, tamper-proof record of **which human officer** authorized each classification, sentence validation, and release step.
+- **Decision-Support Logs:** Any variance between the system's "suggested" classification or sentence and the officer's final decision must be documented within the system's exception logs.
 
-**Inter-Agency Integration:**
-- **Judiciary Case Management System:** Pushes digital committal warrants directly to the PCMS.
-- **National Identity Registry (IPRS / Maisha Namba):** Provides instant biometric identity verification upon admission.
-- **Police Systems:** Synchronizes arrest and transfer records.
-- **Health Systems (MOH):** Links the inmate to their national Shared Health Record (SHR) for continuity of care.
-- **Vocational Certification Systems (KNQA):** Digitally registers skills acquired during incarceration.
+---
 
-### Optimized Steps (Digital)
+# PART 6: RISKS & CONTROLS
 
-| Step | Actor | Action | System |
-|---|---|---|---|
-| 1 | Judiciary System | Pushes a digitally signed committal warrant via X-Road to the correctional facility. | Judiciary CMS / X-Road |
-| 2 | Admission Officer | Receives the digital warrant and verifies the inmate's identity biometrically against the national registry. | PCMS / IPRS |
-| 3 | Prison System | Creates a comprehensive digital case profile and performs automatic security classification based on the offense and history. | PCMS / Rules Engine |
-| 4 | Welfare Officer | Digitally tracks rehabilitation progress, behavioral scores, and vocational training achievements. | Rehabilitation Tracking System |
-| 5 | Prison System | Automatically calculates sentence expiry dates in real-time, accounting for earned remission. | Sentence Calculation Engine |
-| 6 | Prison System | Triggers automated release eligibility alerts when the sentence completion date approaches. | Notification Gateway |
-| 7 | Probation Service | Receives automated notifications to prepare for the inmate's reintegration. | Release Management System |
-| 8 | Prison System | Executes the formal digital release, updating the National Inmate Registry. | PCMS |
+- **Over-Reliance on Technology:** Mitigated by mandated physical verification of warrants and mandatory officer sign-off for all calculations.
+- **Incorrect System Output:** Addressed through the "Calculated vs. Certified" workflow where calculations are flagged as uncertified until an officer validates them against the physical Penal Record.
+- **System Failure:** Operations continue via paper-based contingency sets; the system is designed to allow "Back-Dating" of logged events following recovery to ensure record continuity.
 
 ---
 
 ## References
-- https://www.correctional.go.ke
-- Prisons Act
-- Desk Review
+- Prisons Act (Cap 90)
+- Kenya Digital Justice Program Roadmap
+- Data Protection Act 2019
+- Sentencing Guidelines (Judiciary)
 
 ---
 

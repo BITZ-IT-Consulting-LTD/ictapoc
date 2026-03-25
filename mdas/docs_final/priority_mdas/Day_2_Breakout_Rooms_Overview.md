@@ -9,12 +9,12 @@ Detailed matrices and notes for each session can be found in their respective do
 *   **Assistant:** Newton
 *   **Category:** National registries, large-scale citizen systems, and critical service databases.
 *   **Participating MDAs:**
-    *   [Department of Civil Registration Services (CRS) <span style="color: green;">(Updated)</span>](./_CIVIL_REGISTRATION_SERVICES_CRS___Service_Delivery.md)
+    *   [Department of Civil Registration Services (CRS)](./_CIVIL_REGISTRATION_SERVICES_CRS___Service_Delivery.md)
     *   [Ministry of Health – National Shared Health Record & Digital Health Ecosystem](./Ministry_of_Health___Service_Delivery.md)
     *   [State Department for Immigration and Citizen Services](./STATE_DEPARTMENT_FOR_IMMIGRATION_AND_CITIZEN_SERVICES___Passport_Application.md)
     *   [Public Service Commission (PSC)](./Public_Service_Commission___Service_Delivery.md)
-    *   [State Department of Correctional Services](./STATE_DEPARTMENT_FOR_CORRECTIONAL_SERVICES___Service_Delivery.md)
-    *   [State Department for Children Services](./State_Department_for_Children_Services___Service_Delivery.md)
+    *   [State Department of Correctional Services <span style="color: green;">(Updated)</span>](./STATE_DEPARTMENT_FOR_CORRECTIONAL_SERVICES___Service_Delivery.md)
+    *   [State Department for Children Services <span style="color: green;">(Updated)</span>](./State_Department_for_Children_Services___Service_Delivery.md)
     *   [Department of Refugee Services](./_REFUGEE_SERVICES___Service_Delivery.md)
     *   [State Department for Internal Security and National Administration](./Internal_Security_and_National_Administration___Service_Delivery.md)
     *   [Office of the Attorney General and Department of Justice](./OFFICE_OF_THE_ATTORNEY_GENERAL_AG___Service_Delivery.md)
@@ -51,13 +51,13 @@ Detailed matrices and notes for each session can be found in their respective do
     *   [State Department for MSME Development <span style="color: green;">(Updated)</span>](./Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md)
     *   [State Department for Science, Research and Innovation (SRI / NACOSTI) <span style="color: green;">(Updated)</span>](./National_Commission_For_Science_Technology_and_Innovation___Service_Delivery.md)
     *   [National Environment Management Authority (NEMA) <span style="color: green;">(Updated)</span>](./National_Environment_Management_Authority___Service_Delivery.md)
-    *   [State Department for ICT and the Digital Economy (Strategic)](./State_Department_of_ICT___Service_Delivery.md)
+    *   [State Department for ICT and the Digital Economy (Strategic) <span style="color: green;">(Updated)</span>](./State_Department_of_ICT___Service_Delivery.md)
     *   [State Department for Broadcasting and Telecommunications (Strategic)](./Broadcasting_and_Telecommunications___Service_Delivery.md)
     *   [Government Press (Strategic Records Infrastructure)](./Government_Press___Service_Delivery.md)
-    *   [State Department for Technical and Vocational Education and Training (TVET)](./Technical_Vocational_Education_and_Training___Service_Delivery.md)
+    *   [State Department for Technical and Vocational Education and Training (TVET) <span style="color: green;">(Updated)</span>](./Technical_Vocational_Education_and_Training___Service_Delivery.md)
     *   [State Department for Co-operatives](./Cooperatives___Service_Delivery.md)
-    *   [State Department for Economic Planning](./State_Department_for_Economic_Planning___Service_Delivery.md)
-    *   [State Department for Livestock Development (SDLD)](./State_Department_for_Livestock_Development___Service_Delivery.md)
+    *   [State Department for Economic Planning <span style="color: green;">(Updated)</span>](./State_Department_for_Economic_Planning___Service_Delivery.md)
+    *   [State Department for Livestock Development (SDLD) <span style="color: green;">(Updated)</span>](./State_Department_for_Livestock_Development___Service_Delivery.md)
 
 
 ---
