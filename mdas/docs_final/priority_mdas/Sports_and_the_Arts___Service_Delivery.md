@@ -105,11 +105,14 @@ Sports Federation Registration, Grant Disbursement, and Facility Booking
 
 | Step | Role | Action | Tool/System | Notes |
 |---|---|---|---|---|
-| 1 | Federation | Submits application for registration along with constitution and list of officials. | Manual/Portal | |
-| 2 | Sports Officer | Verifies the regional representation of the federation as required by the Sports Act. | Manual | |
-| 3 | Athlete | Submits a grant application for international competitions or training. | Manual Forms | |
-| 4 | Facility Manager | Reviews booking requests and checks for conflicts with national team schedules. | Standalone System | |
-| 5 | Finance Officer | Processes facility payments and grant disbursements via bank transfers. | Manual/IFMIS | |
+| **1** | Federation | **Letter to PS:** Submits a formal request for funding (e.g., for international travel). | Manual / Email | Citizen-led trigger. |
+| **2** | Sports Officer | **Confirmation:** Verifies that the federation/athlete meets all statutory SASDF requirements. | Manual / eCitizen | Registration is already on e-Citizen. |
+| **3** | Budgeting Committee | **Verification:** Reviews the requested budget against the available annual allocation. | Committee System | Financial gatekeeping. |
+| **4** | PS Sports | **Clearance:** Issues the formal approval/clearance for the expenditure. | PS Portal / Manual | Statutory authorization. |
+| **5** | Finance / SASDF | **Funding (Payment):** Processes the disbursement via the Government Payment Aggregator. | IFMIS / GPA | Final settlement. |
+
+> [!NOTE]
+> **SASDF Integration:** All funding requests must comply with the **Sports, Arts and Social Development Fund (SASDF)** application criteria. While registration is digitized on e-Citizen, the internal "Funding Travelling" track remains a high-touch governance process.
 
 ---
 
@@ -126,40 +129,73 @@ Sports Federation Registration, Grant Disbursement, and Facility Booking
 
 ---
 
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
+# PART 3: ARCHITECTURE ALIGNMENT (KENYA HUDUMA BRIDGE)
+
+The Integrated Sports and Talent Management Service is engineered to operate across the four layers of the **Kenya DSAP Architecture**:
+
+### Layer 1: Access Channels
+- **eCitizen / Sports Portal:** A unified window for athletes, federations, and citizens to apply for grants, register, and book facilities.
+- **Stadium Mobile App:** A specialized interface for "Zero-Touch" stadium booking and digital ticketing (QR-based).
+- **Officer Workbench:** For Sports Officers and SASDF committees to manage grant evaluations, compliance checks, and facility scheduling.
+
+### Layer 2: Core Platform
+- **Workflow Engine (BPMN 2.0):** Orchestrates the athlete lifecycle (Talent ID → Grant Application → Committee Review → Disbursement) and federation registration.
+- **Trust Hub:**
+  - **Consent Manager:** Mandatory athlete consent before querying academic history or wellness data from NEMIS or MOH via X-Road.
+  - **Identity Federation:** Real-time verification of athlete and official identity via **Maisha Namba (IPRS)**.
+  - **NPKI:** Digitally signing **Registration Certificates**, **Grant Approvals**, and **Official Clearances** to ensure legal non-repudiation.
+- **Shared Services:**
+  - **Intelligent Document Processing (IDP):** Digitizing historical federation files and physical grant applications into the National EDRMS.
+  - **Document Generator:** Automated creation of verifiable "Digital Gate Passes" and performance transcripts with secure QR codes.
+  - **Notifications:** Automated SMS/Email alerts for grant status, facility booking confirmations, and renewal triggers.
+
+### Layer 3: Interoperability (Huduma Bridge)
+- **KeSEL (X-Road):** Secure data exchange between the Sports Portal and **NEMIS (Talent History)**, **KNQA (Qualifications)**, and **PSC (Officer data)**.
+- **Central Service Catalogue:** Cataloguing sports-related APIs (e.g., Athlete Profiles, Facility Schedules) for national and international synchronization.
+
+### Layer 4: Authoritative Registries & Payments
+- **Registries:**
+  - **National Athlete Registry:** The sector-specific authoritative registry for tracking talent from school level to professional ranks.
+  - **National EDRMS:** The definitive legal digital archive for all signed federation records and historical sports policy documents.
+  - **IPRS / Maisha Namba:** Foundational person registry for athlete identification.
+| Payments | **Government Payment Aggregator (GPA)** | Processing stadium fees, federation registration charges, and grant disbursements. |
+
+---
+
+## 2. TO-BE Process Flowchart (DPI-Enabled)
+*Proposed State visualization leveraging the Kenya Huduma Bridge.*
 
 ```mermaid
 %%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 graph TD
-    Start((Start)) --> Portal["Athlete/Federation Accesses Sports Portal"]
+    Start((Start)) --> Portal["Athlete/Federation Accesses Sports Portal (eCitizen SSO)"]
     
-    subgraph Layer2["Identity & Trust"]
-        Portal --> Verify["X-Road: Verify Athlete/Official via IPRS"]
-        Verify --> NEMIS["X-Road: Fetch Talent History from NEMIS"]
+    subgraph Trust_Hub["Layer 2: Identity & Consent"]
+        Portal --> Consent["Consent Manager: Access Academic/Performance Data?"]
+        Consent --> Verify["X-Road: Verify Athlete via IPRS & NEMIS"]
     end
     
-    subgraph Layer3["Operations - Workflow Engine"]
-        NEMIS --> Grant["Auto-score Grant Eligibility (AI)"]
-        NEMIS --> Booking["Check Facility Availability via National Service Bus"]
+    subgraph Operations["Layer 2 & 3: Workflow & Interoperability"]
+        Verify --> Grant["Auto-score Grant Eligibility (AI Rules Engine)"]
+        Verify --> Booking["Check Stadium Availability (National Service Bus)"]
     end
     
-    subgraph Layer4["Settlement & Issuance"]
-        Grant --> GPA_Grant["GPA: Disburse Grant to Digital Wallet"]
-        Booking --> GPA_Fee["GPA: Instant Payment & Secure Ticket Issuance"]
+    subgraph Settlement["Layer 4: Registries & Payments"]
+        Grant --> GPA_Grant["GPA: Disburse Grant to Digital Wallet (NPKI Signed)"]
+        Booking --> GPA_Fee["GPA: Instant Payment & Secure QR Ticket Issuance"]
     end
     
     GPA_Grant --> End((End))
     GPA_Fee --> End
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px,font-size:24px;;
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px;;
     class Start start;
     class End endNode;
     class Portal userTask;
-    class Verify,NEMIS,Grant,Booking,GPA_Grant,GPA_Fee serviceTask;
+    class Consent,Verify,Grant,Booking,GPA_Grant,GPA_Fee serviceTask;
 ```
 
 ## Future State Process (TO-BE)

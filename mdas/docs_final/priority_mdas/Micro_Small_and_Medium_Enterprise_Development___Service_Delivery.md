@@ -64,6 +64,9 @@ flowchart TD
 | **5** | Finance Dept | **Disbursement:** Transfers funds to the MSME. | Bank / M-Pesa | Fragmented disbursement rails. |
 | **6** | Field Officer | **Monitoring:** Manual follow-ups on business performance. | Field Notes / Paper | No real-time data on business impact or jobs. |
 
+> [!IMPORTANT]
+> **Manual Compliance (Uwezo Fund):** Under the **PFMA Act**, certain funds like Uwezo require mandatory physical forms, deposit slips, and manual records validation. The AS-IS reflects this legal requirement for physical signatures and paper-based audit trails.
+
 ---
 
 # PART 3: MSME PROGRAMME ECOSYSTEM MODEL (TO-BE)
@@ -130,12 +133,20 @@ flowchart TD
 
 # PART 5: KJET INTEGRATION (FLAGSHIP PROGRAMME)
 
-The **Kenya Jobs and Economic Transformation (KJET)** programme is embedded as the high-tier "Impact Service" within the department.
+The **Kenya Jobs and Economic Transformation (KJET)** programme (supported by the World Bank) is embedded as the high-tier "Impact Service" within the department.
 
-1.  **Cluster-Based Model:** MSMEs are grouped into production clusters (e.g., Textiles, Leather, Agri-processing).
-2.  **Multi-MDA Coordination:** Shared platform with the Ministry of Trade to ensure MSMEs meet export quality standards.
-3.  **Investor Linkage:** Digital "Investment Readiness" profiles shared with verified private investors via the Investment Authority portal.
-4.  **Outcome Metrics:** Direct tracking of **Direct Jobs Created** per cluster and **Sectoral GVA** contribution.
+**Strategic Alignment (Investor Inputs):**
+KJET offers a coordinated entry point for investors by aligning three key inputs:
+1. **Stronger & Predictable Business Environment:** Streamlined regulatory and policy frameworks.
+2. **Targeted Support to MSME Clusters:** Direct technical and operational assistance to high-potential sectoral groups.
+3. **Green & Sustainable Finance:** Access to innovative financing instruments that reduce risk and improve returns.
+
+**Operational Model:**
+1.  **Cluster-Based Model:** MSMEs are grouped into production clusters (e.g., Textiles, Leather, Agri-processing) to enhance competitiveness and market access.
+2.  **Beyond Disbursement:** The TO-BE model focuses on non-financial outcomes such as **Training, Business Incubation, and Market Linkages** as primary outputs of the KJET project.
+3.  **Multi-MDA Coordination:** Shared platform with the Ministry of Trade to ensure MSMEs meet export quality standards.
+4.  **Investor Linkage:** Digital "Investment Readiness" profiles shared with verified private investors via the Investment Authority portal.
+5.  **Outcome Metrics:** Direct tracking of **Direct Jobs Created** per cluster and **Sectoral GVA** contribution.
 
 ---
 
@@ -151,12 +162,37 @@ To ensure practical execution within the current legal framework:
 
 ---
 
-# PART 7: DIGITAL PUBLIC INFRASTRUCTURE (DPI) ALIGNMENT
+# PART 7: ARCHITECTURE ALIGNMENT (KENYA HUDUMA BRIDGE)
 
-1.  **Unified MSME Registry:** A single source of truth for business metadata, replacing siloed fund-specific databases.
-2.  **Huduma Bridge (X-Road):** Real-time identity verification with IPRS and business compliance checks with BRS/KRA.
-3.  **Government Payment Aggregator (GPA):** Standardized disbursement and automated repayment collection engine.
-4.  **eCitizen Single-Window:** All services—from KJET registration to loan application—occur behind a single eCitizen login.
+The MSME Programme Ecosystem is engineered to operate across the four layers of the **Kenya DSAP Architecture**:
+
+### Layer 1: Access Channels
+- **eCitizen / MSME Portal:** A single-window access for registration, KJET cluster applications, and credit services.
+- **Mobile / USSD:** For micro-credit applications (e.g., Hustler Fund) and field reporting by MSME officers.
+- **Officer Workbench:** For Credit Officers and Business Development advisors to manage profiling, diagnostics, and monitoring visits.
+- **Huduma Centers:** Physical points for document capture (IDP) and manual contract signing for high-value loans (Uwezo/WEF).
+
+### Layer 2: Core Platform
+- **Workflow Engine (BPMN 2.0):** Orchestrates the non-linear MSME journey (Onboarding → Diagnostics → Routing → Service Delivery → Graduation).
+- **Trust Hub:**
+  - **Consent Manager:** Mandatory citizen/business consent before querying BRS or KRA data via X-Road for eligibility checks.
+  - **Identity Federation:** Verified identity linkage via **Maisha Namba (IPRS)** for every business owner.
+  - **NPKI:** Digitally signing **Loan Agreements**, **Impact Certificates**, and **Training Transcripts** to ensure legal non-repudiation.
+- **Shared Services:**
+  - **Intelligent Document Processing (IDP):** Digitizing historical fund records and physical loan applications into the National EDRMS.
+  - **Document Generator:** Automated creation of "Investment Readiness" profiles and digital permits with secure QR codes.
+  - **Notifications:** Automated SMS/Email alerts for repayment schedules, training opportunities, and graduation milestones.
+
+### Layer 3: Interoperability (Huduma Bridge)
+- **KeSEL (X-Road):** Secure data exchange between the MSME Portal and **BRS (Business Registry)**, **KRA (Tax Compliance)**, and **Banks/Financial Institutions**.
+- **Central Service Catalogue:** Cataloguing MSME-related APIs (e.g., Credit Scoring, Cluster Metadata) to promote secondary service growth.
+
+### Layer 4: Authoritative Registries & Payments
+- **Registries:**
+  - **Unified MSME Registry:** The sector-specific authoritative registry for business metadata and development history.
+  - **National EDRMS:** The definitive legal digital archive for all signed loan contracts and historical policy documents.
+  - **IPRS / Maisha Namba:** Foundational person registry for owner identification.
+- **Payments:** **Government Payment Aggregator (GPA)** for processing loan disbursements, automated repayments, and statutory fee collections.
 
 ---
 

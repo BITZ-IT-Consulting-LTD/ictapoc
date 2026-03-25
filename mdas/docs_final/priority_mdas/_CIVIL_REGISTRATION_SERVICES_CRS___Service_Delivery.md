@@ -233,39 +233,115 @@ The CRS technical architecture is NOT "future state" only; it is an active ecosy
 
 ---
 
-## SECTION 7: TO-BE (ALIGNED WITH REALITY)
-
-*The TO-BE state focuses on optimizing existing infrastructure rather than introducing hypothetical third-party apps.*
+## 2. AS-IS Process Flowchart (BPMN 2.0)
+*Current State visualization highlighting the manual bottlenecks in vital event registration.*
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
-    subgraph Source["Facility / Community"]
-        Start_T((" ")) --> L1["Event Captured via CRS Notification App"]
+    Start((Start)) --> Notify["1. Manual Notification (Health/Chief)"]
+    
+    subgraph Intake["Manual Registry"]
+        Notify --> Receipt["2. Receipt of Paper Forms (Registry)"]
+        Receipt --> Ledger["3. Entry in Physical Birth/Death Register"]
     end
 
-    subgraph Backend["CRVSS Core / Huduma Bridge"]
-        L1 --> L2["Verify Identity via IPRS / Maisha"]
-        L2 --> L3["Auto-Mint UPI for Births"]
-        L3 --> L4["Digitally Sign Record (NPKI)"]
+    subgraph Verification["Siloed Review"]
+        Ledger --> Verify["4. Manual Verification of Notifier Detail"]
+        Verify --> Search["5. Search for Parent/Deceased Link (Ledger-based)"]
     end
 
-    subgraph Finance_GPA["GPA Payment"]
-        L4 --> M1["Process Fee & Revenue Split"]
+    subgraph Production["Certificate Generation"]
+        Search --> Type["6. Manual Typing / System Entry"]
+        Type --> Seal["7. Physical Sealing & Signing (Registrar)"]
     end
 
-    subgraph Delivery["Civil Wallet / eCitizen"]
-        M1 --> N1["Issue Verifiable Digital Credential"]
-        N1 --> End_T(((" ")))
-    end
+    Seal --> End((End))
 
-    style Start_T fill:#fff,stroke:#27ae60,stroke-width:2px
-    style End_T fill:#fff,stroke:#e74c3c,stroke-width:4px
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;;
+    
+    class Start start;
+    class End endNode;
+    class Notify,Receipt,Ledger,Verify,Search,Type,Seal userTask;
 ```
 
-*   **Primary Trigger:** Direct API integration between the **CRS Notification App** and hospital EMRs (where applicable).
-*   **Identity Minting:** Automatic assignment of **Maisha Namba (UPI)** at the point of birth registration within CRVSS, linked to the IPRS master index.
-*   **Verifiable Credentials:** Transition from paper certificates to **Digitally Signed Verifiable Credentials** stored in the eCitizen mobile wallet.
-*   **NPKI Integration:** Every certificate issued will be digitally sealed using the **National Public Key Infrastructure (NPKI)** to prevent forgery.
+---
+
+## 3. TO-BE Process Flowchart (DPI-ENABLED)
+*Proposed State visualization leveraging the Kenya Huduma Bridge and CRVSS ecosystem.*
+
+```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+flowchart TD
+    Start((Start)) --> Notify["Auth. Notifier logs Event (CRS Mobile App)"]
+    
+    subgraph Trust_Hub["Layer 2: Identity & Status"]
+        Notify --> Consent["Consent Manager: Access Health/Parental Info?"]
+        Consent --> XRoad["X-Road: Verify Identities via IPRS & MOH Hub"]
+    end
+    
+    subgraph Operations["Layer 2 & 3: Workflow & Minting"]
+        XRoad --> Track{"Event Type?"}
+        Track -- "Birth" --> Mint["UPI / Maisha Namba Minting (Real-time)"]
+        Track -- "Death" --> Deact["Deactivation of ID (X-Road: IPRS Sync)"]
+    end
+    
+    subgraph Settlement["Layer 4: Registries & Issuance"]
+        Mint --> Sign["NPKI Digital Signature & Digital Archival"]
+        Deact --> Sign
+        Sign --> Wallet["Issue Verifiable Digital Certificate (QR Code)"]
+    end
+    
+    Wallet --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px;;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px;;
+    
+    class Start start;
+    class End endNode;
+    class Track gateway;
+    class Notify userTask;
+    class Consent,XRoad,Mint,Deact,Sign,Wallet serviceTask;
+```
+
+---
+
+# SECTION 7: ARCHITECTURE ALIGNMENT (KENYA HUDUMA BRIDGE)
+
+The Civil Registration and Vital Statistics Service is engineered to operate across the four layers of the **Kenya DSAP Architecture**:
+
+### Layer 1: Access Channels
+- **eCitizen / Civil Portal:** The primary window for citizens to apply for birth, death, and marriage certificates.
+- **CRS Notification App:** A specialized mobile/web interface for **Authorized Notifiers** (Nurses, Chiefs, and Clinicians) to log events at source.
+- **Officer Workbench (CRVSS):** The internal interface for Registration Officers and Registrars to manage validation, and approval workflows.
+- **Huduma Centers:** Physical points for the intake and scanning (IDP) of manual notifications and late registration evidence.
+
+### Layer 2: Core Platform
+- **Workflow Engine (BPMN 2.0):** Orchestrates the vital event lifecycle (Notification → Application → IPRS Verification → Approval → Minting → Issuance).
+- **Trust Hub:**
+  - **Consent Manager:** Mandatory citizen consent before querying parental or deceased identity records from IPRS via X-Road.
+  - **Identity Federation:** Real-time identity validation and **Maisha Namba (UPI)** minting via **IPRS**.
+  - **NPKI:** Digitally signing **Birth Certificates**, **Death Certificates**, and **Late Registration Permits** to ensure non-repudiation and global recognition.
+- **Shared Services:**
+  - **Intelligent Document Processing (IDP):** Digitizing the **10 million** historical paper records and manual registers into the National EDRMS.
+  - **Document Generator:** Automated creation of verifiable digital certificates with secure QR codes.
+  - **Notifications:** Automated SMS/Email alerts for application status and certificate readiness.
+
+### Layer 3: Interoperability (Huduma Bridge)
+- **KeSEL (X-Road):** Secure, decentralized data exchange between CRS, **MOH (Health Notifications)**, **NPS (Police Reports)**, and **IPRS (Personal Data)**.
+- **Central Service Catalogue:** Cataloguing vital event APIs (e.g., Birth Verification, Death Notification) for national and international use.
+
+### Layer 4: Authoritative Registries & Payments
+- **Registries:**
+  - **National CRVSS Registry:** The sector-specific authoritative registry for all vital life events (Birth, Death, Marriage).
+  - **National EDRMS:** The definitive legal digital archive for all signed vital certificates and digitized historical registers.
+  - **IPRS / Maisha Namba:** The foundational person registry for individual identity linkage.
+- **Payments:** **Government Payment Aggregator (GPA)** for processing registration fees, cert issuance charges, and search fees.
 
 ---
 

@@ -16,7 +16,7 @@
 
 ## Service Mandate
 
-The Kenya National Qualifications Authority (KNQA) is mandated under the KNQF Act No. 22 of 2014 to manage the Kenya National Qualifications Framework (KNQF). The primary mandate of the Authority is the **implementation of the Kenya National Qualifications Framework (KNQF) to ensure that qualifications awarded in Kenya are of high quality and nationally and internationally recognized.** 
+The Kenya National Qualifications Authority (KNQA) is mandated under the KNQF Act No. 22 of 2014 to manage the Kenya National Qualifications Framework (KNQF). The primary mandate of the Authority is the **implementation of the Kenya National Qualifications Framework (KNQF) to ensure that qualifications awarded in Kenya at all levels are of the highest quality and are nationally and internationally recognized.** 
 
 Key operational functions include:
 
@@ -55,16 +55,16 @@ flowchart TD
         Comp -- "Yes" --> Log["Assign to QAV Officer"]
     end
     
-    subgraph Validation["Validation and Alignment Stage"]
-        Log --> AuthCert["Verify Academic Certificates"]
-        AuthCert --> VerifyQAB["Verify with Qualification Awarding Body (QAB)"]
-        VerifyQAB --> MapKNQF["Validate and Align to KNQF Levels"]
+    subgraph Validation["Validation and Alignment"]
+        Log --> AuthCert["1.1 Verification of Academic Certificates"]
+        AuthCert --> Eval["1.2 Assigned to Evaluator"]
+        Eval --> VerifyQAB["1.3 Verify with Qualification Awarding Body (QAB)"]
+        VerifyQAB --> MapKNQF["1.4 Validation / Alignment to the KNQF"]
     end
     
     subgraph Finalization["Approval and Issuance"]
-        MapKNQF --> QAVApprove["QAV Officer Review and Approval"]
-        QAVApprove --> GenCert["Generate Validation and Alignment Certificate"]
-        GenCert --> Issue["Issue Certificate and Update NQD"]
+        MapKNQF --> QAVApprove["Reviews mapping, approves equivalency, & issues Validation & Alignment Certificate"]
+        QAVApprove --> Issue["Generate Certificate & Update NQD"]
     end
     
     Issue --> End(("End"))
@@ -111,11 +111,10 @@ End-to-End Qualification Validation and Alignment
 | Step | Role | Action | Tool/System | Notes |
 | :--- | :--- | :--- | :--- | :--- |
 | **1** | Applicant | **Application Submission:** Submits copies of certificates, transcripts, and ID documents. | Portal / Manual | Citizen initiates the request. |
-| **2** | KNQA Clerk | **Reception & Intake:** Confirms payment and validates that all required documents are attached. | Manual / Finance | Gateway for processing. |
-| **3** | QAV Officer | **Validation and Alignment Stage:** Authenticates certificates; contacts QABs (e.g., KNEC, Universities) for verification. | Email / Web Portal | **Critical Pain Point:** External verification latency. |
-| **4** | QAV Officer | **Validation and Alignment Stage:** Maps the verified credential against the 10 levels of the KNQF. | KNQF Matrix / Excel | Determines the local equivalency. |
-| **5** | QAV Officer | **Approval:** Reviews the alignment findings and formally approves the equivalency. | Management System | Final technical decision. |
-| **6** | QAV Officer | **Issuance:** Generates the Certificate, applies the seal, and updates the registry. | Standalone Registry | Replaces redundant admin steps. |
+| **2** | QAV Officer | **Reception & Intake:** Confirms payment and validates that all required documents are attached. | Manual / Finance | Gateway for processing. |
+| **3** | QAV Officer | **Validation & Alignment:** Authenticates certificates; contacts QABs (e.g., KNEC, Universities) for verification. | Email / Web Portal | **Critical Pain Point:** External verification latency. |
+| **4** | QAV Officer | **Validation & Alignment:** Maps the verified credential against the 10 levels of the KNQF. | KNQF Matrix / Excel | Determines the local equivalency. |
+| **5** | QAV Officer | **Final Decision:** Reviews the mapping, approves the equivalency and issues a Validation & Alignment Certificate. | Management System | Final technical decision. |
 
 ---
 
@@ -166,12 +165,36 @@ flowchart TD
 
 ---
 
-## 4. Digital Public Infrastructure (DPI) Alignment
+# PART 4: ARCHITECTURE ALIGNMENT (KENYA HUDUMA BRIDGE)
 
-- **National Qualifications Database (NQD):** Strengthened as the definitive national registry that integrates with IPRS for learner identity and QAB portals for credential proof-of-fact.
-- **Interoperability (KeSEL / X-Road):** Implementation of secure data exchange protocols to replace email-based verification, ensuring high-speed and tamper-proof responses from awarding bodies.
-- **Workflow Automation:** Alignment of technical validation rules into a digital engine to allow for "Risk-Based" automated approvals of standard qualifications.
-- **Data Security:** All credential exchanges are encrypted and compliant with the **Data Protection Act**, ensuring citizen privacy is maintained throughout the validation lifecycle.
+The Qualification Validation and Alignment Service is engineered to operate across the four layers of the **Kenya DSAP Architecture**:
+
+### Layer 1: Access Channels
+- **eCitizen / KNQA Portal:** The primary window for citizens and employers to apply for and track validation requests.
+- **Officer Workbench (NQD Interface):** The specialized interface for QAV Officers to manage technical evaluations and alignment mappings.
+- **Huduma Centers:** Physical intake points for the scanning (IDP) of manual academic certificates and foreign credentials.
+
+### Layer 2: Core Platform
+- **Workflow Engine (BPMN 2.0):** Orchestrates the validation journey (Application → NQD Query → QAB Verification → Alignment → Issuance) with risk-based automated approvals.
+- **Trust Hub:**
+  - **Consent Manager:** Mandatory citizen consent before querying individual academic records from Universities or KNEC via X-Road.
+  - **Identity Federation:** Real-time verification of applicant identity via **Maisha Namba (IPRS)**.
+  - **NPKI:** Digitally signing **Validation & Alignment Certificates** to ensure authenticity and international recognition.
+- **Shared Services:**
+  - **Intelligent Document Processing (IDP):** Digitizing historical qualification records and foreign transcripts into the National EDRMS.
+  - **Document Generator:** Automated creation of verifiable certificates with cryptographically secure QR codes.
+  - **Notifications:** SMS/Email alerts for verification milestones and certificate ready notifications.
+
+### Layer 3: Interoperability (Huduma Bridge)
+- **KeSEL (X-Road):** Secure, decentralized data exchange between KNQA and **QABs (KNEC, KASNEB, Universities)** and **MoE (NEMIS)**.
+- **Central Service Catalogue:** Cataloguing qualification-related APIs for national and international verification.
+
+### Layer 4: Authoritative Registries & Payments
+- **Registries:**
+  - **National Qualifications Database (NQD):** The sector-specific authoritative registry for all quality-assured qualifications and learners.
+  - **National EDRMS:** The legal digital archive for all signed validation certificates and qualification mapping benchmarks.
+  - **IPRS / Maisha Namba:** Foundational person registry for learner identification.
+- **Payments:** **Government Payment Aggregator (GPA)** for processing validation fees, equivalency charges, and institutional registry fees.
 
 ---
 

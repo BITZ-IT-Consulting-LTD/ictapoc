@@ -30,9 +30,11 @@ NEMA currently operates a **mature digital licensing portal** that facilitates:
 - **Record Archive:** Digital repository of historical licenses.
 
 **Gaps for Strategic Enhancement:**
-- **Manual Site Logs:** Lack of a standardized, geo-tagged mobile inspection framework.
+- **Service Diversification:** Integrating all regulatory permit types, including **Registration of Environmental Experts, Environmental Audits, Effluent Discharge, Emission, and Waste Transport Licenses**, into a single unified window.
+- **Manual Site Logs:** Transitioning from individual, un-coordinated physical site visits to a **Joint/Multi-Agency Geo-Tagged Mobile Inspection** framework for complex projects.
 - **Inter-Agency Latency:** Lead agency consultations (KFS, WRA) still rely on external email/physical protocols rather than native system-to-system integration.
-- **Passive Compliance:** Monitoring is largely reactive rather than based on real-time data or remote sensing.
+- **Feedback Transparency:** The lack of a formal digital mechanism for proponents to respond to specific technical concerns raised by NEMA during the review process.
+- **Public Participation:** The legal requirement for **publication of projects for public comments** needs to be structured as a digital notice-and-objection workflow.
 
 ---
 
@@ -96,10 +98,11 @@ flowchart TD
     SiteInsp --> LeadCons
     LeadCons --> RevFind
     
-    RevFind --> CommRev
-    CommRev --> DGDecision
-    DGDecision --> DecGateway
-    
+    RevFind --> Public["Public Participation & Lead Agency Comments"]
+    Public --> PropFeed["Proponent Response to Concerns/Queries"]
+    PropFeed --> CommRev["Technical committee review"]
+    CommRev --> DGDecision["Director General decision"]
+    DGDecision --> DecGateway{"Decision outcome?"}
     DecGateway -- "Reject" --> IssueRej
     DecGateway -- "Approve" --> IssueLic
     
@@ -127,8 +130,9 @@ flowchart TD
 | **3** | Env. Officer | **Screening:** Review of the project's impact level and risk category. | Internal Workflow | Determines if full EIA is needed. |
 | **4** | Env. Officer | **Site Visit:** Physical inspection of the project site. | Manual / Field Trip | **Critical Pain Point:** Lack of geo-tagging. |
 | **5** | Lead Agencies | **Inter-Agency Review:** Consultations with KFS, Water Authority, etc. | Portals / Email | **Significant Delay:** (Avg. 30 days). |
-| **6** | Committee | **Technical Review:** Consolidation of all comments and inspection data. | Committee System | Final technical oversight. |
-| **7** | Director General | **Approval:** Sign-off on the license or rejection. | DG Portal | Digital signature exists but non-NPKI. |
+| **6** | Proponent | **Proponent Feedback Loop:** Opportunity to respond to concerns. | NEMA Portal | NEW: Ensures procedural fairness. |
+| **7** | Committee | **Technical Review:** Consolidation of all comments and inspection data. | Committee System | Final technical oversight. |
+| **8** | Director General | **Approval:** Sign-off on the license or rejection. | DG Portal | Digital signature exists but non-NPKI. |
 
 ---
 
@@ -205,11 +209,37 @@ A centralized, blockchain-secured **Environmental Licensing Registry** manages t
 
 ---
 
-# PART 7: DIGITAL PUBLIC INFRASTRUCTURE (DPI) ALIGNMENT
+# PART 7: ARCHITECTURE ALIGNMENT (KENYA HUDUMA BRIDGE)
 
-- **Huduma Bridge (X-Road):** Secure inter-agency data exchange for concurrent lead agency reviews.
-- **Maisha Namba:** Linkage of individual environmental experts and company directors to authorized actions.
-- **Digital Trust:** All licenses are issued with a cryptographically secure **QR code** for field verification by police or county officers.
+The Intelligent Environmental Regulatory Service is engineered to operate across the four layers of the **Kenya DSAP Architecture**:
+
+### Layer 1: Access Channels
+- **eCitizen / NEMA Licensing Portal:** The primary window for environmental experts and proponents to submit reports and track applications.
+- **Mobile GIS Inspection App:** A specialized interface for field officers to conduct geo-tagged, timestamped inspections (offline-first).
+- **Public Participation Portal:** A digital noticeboard for citizens to view project summaries and submit comments/objections.
+- **Compliance Dashboard:** Real-time visibility for the Director General and senior management on licensing and enforcement metrics.
+
+### Layer 2: Core Platform
+- **Workflow Engine (BPMN 2.0):** Orchestrates the regulatory cycle (Submission → Screening → Public Participation → Technical Review → Recommendation → Issuance).
+- **Trust Hub:**
+  - **Consent Manager:** Mandatory proponent consent before querying business or land details from BRS/ArdhiSasa via X-Road.
+  - **Identity Federation:** Real-time verification of environmental expert identity via **Maisha Namba (IPRS)**.
+  - **NPKI:** Digitally signing **EIA Licenses**, **Expert Certifications**, and **Inspection Reports** to ensure legal non-repudiation and technical accountability.
+- **Shared Services:**
+  - **AI Rules Engine:** Automating the preliminary screening and risk categorization of project reports.
+  - **Intelligent Document Processing (IDP):** Digitizing historical EIA reports and physical permits into the National EDRMS.
+  - **Notifications:** Automated SMS/Email alerts for public notice periods, lead agency comments, and license renewal triggers.
+
+### Layer 3: Interoperability (Huduma Bridge)
+- **KeSEL (X-Road):** Secure data exchange between NEMA and **ArdhiSasa (Land)**, **BRS (Business)**, **WRA (Water)**, and **KFS (Forestry)**.
+- **Central Service Catalogue:** Cataloguing environmental compliance APIs to promote sustainable development monitoring.
+
+### Layer 4: Authoritative Registries & Payments
+- **Registries:**
+  - **National Environmental Registry:** The sector-specific authoritative source for all environmental permits, experts, and compliance data.
+  - **National EDRMS:** The definitive legal digital archive for all signed licenses and technical review documents.
+  - **IPRS / Maisha Namba:** Foundational person registry for individual accountability.
+- **Payments:** **Government Payment Aggregator (GPA)** for processing EIA fees, expert registration charges, and statutory environmental levies.
 
 ---
 

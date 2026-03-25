@@ -180,14 +180,36 @@ The TO-BE process for the State Department for Children Services represents a tr
 
 ---
 
-# PART 2: DPI ARCHITECTURE MAPPING
+# PART 2: ARCHITECTURE ALIGNMENT (KENYA HUDUMA BRIDGE)
 
-The future state is built upon the four core pillars of Kenya's Digital Public Infrastructure:
+The Statutory Child Protection Service is engineered to operate across the four layers of the **Kenya DSAP Architecture**:
 
-- **Identity (Maisha Namba / IPRS):** Every child and guardian is uniquely identified via integration with the national identity ecosystem. For children without formal ID, the system generates temporary UPIs linked to a parent/guardian's Maisha Namba, ensuring legal identity from birth/intake.
-- **Registries (System of Record):** CPIMS serves as the **authoritative registry** for child protection cases. It synchronizes with the Birth Registry and the National Health Registry to maintain a 360-degree view of the child’s welfare history.
-- **Interoperability (X-Road / Huduma Bridge):** Secure, standardized data exchange between CPIMS and the Judiciary (for protection orders), the Police (for missing children), and Social Protection (cash transfers).
-- **Data Governance & Security:** Implements role-based access control (RBAC), end-to-end encryption for sensitive case notes, and immutable audit logs to comply with the Data Protection Act 2019 and ODPC guidelines.
+### Layer 1: Access Channels
+- **eCitizen / Mobile App:** For citizen-led case reporting and self-referrals.
+- **Officer Workbench (CPIMS):** The primary interface for Children Officers to manage intake, investigation, and reporting.
+- **Huduma Centers:** Physical intake points for walk-in reporting with document scanning (IDP) capabilities.
+
+### Layer 2: Core Platform
+- **Workflow Engine (BPMN 2.0):** Orchestrates the legal journey from "Risk Assessment" to "Case Closure" to ensure statutory timelines are met.
+- **Trust Hub:**
+  - **Consent Manager:** Consulted before accessing a child's health or academic history from other MDAs via X-Road.
+  - **Identity Federation:** Real-time verification of child/guardian identity via **Maisha Namba (IPRS)**.
+  - **NPKI:** Cryptographically signing **Commitment Orders** and **Case Reports** to ensure non-repudiation.
+- **Shared Services:**
+  - **Intelligent Document Processing (IDP):** Digitizing historical case files and physical evidence into the National EDRMS.
+  - **Document Generator:** Creating verifiable **Care and Protection Orders** with secure QR codes.
+  - **Notifications:** Automated SMS/Email alerts for the Case Review Committee (CRC) and guardians.
+
+### Layer 3: Interoperability (Huduma Bridge)
+- **KeSEL (X-Road):** Secure, decentralized data exchange between CPIMS and the **Judiciary (Case Management System)**, **MOH (Health Registries)**, and **MoE (NEMIS)**.
+- **Central Service Catalogue:** Cataloguing child welfare APIs for intra-government data sharing.
+
+### Layer 4: Authoritative Registries & Payments
+- **Registries:**
+  - **National CPIMS:** The sector-specific authoritative registry for child protection cases.
+  - **National EDRMS:** The legal digital archive for all signed protection orders and historical case files.
+  - **IPRS / Maisha Namba:** The foundational person registry.
+- **Payments:** **Government Payment Aggregator (GPA)** for processing CT-OVC (Cash Transfer) disbursements and verified institutional support fees.
 
 ---
 
