@@ -209,11 +209,37 @@ A centralized, blockchain-secured **Environmental Licensing Registry** manages t
 
 ---
 
-# PART 7: DIGITAL PUBLIC INFRASTRUCTURE (DPI) ALIGNMENT
+# PART 7: ARCHITECTURE ALIGNMENT (KENYA HUDUMA BRIDGE)
 
-- **Huduma Bridge (X-Road):** Secure inter-agency data exchange for concurrent lead agency reviews.
-- **Maisha Namba:** Linkage of individual environmental experts and company directors to authorized actions.
-- **Digital Trust:** All licenses are issued with a cryptographically secure **QR code** for field verification by police or county officers.
+The Intelligent Environmental Regulatory Service is engineered to operate across the four layers of the **Kenya DSAP Architecture**:
+
+### Layer 1: Access Channels
+- **eCitizen / NEMA Licensing Portal:** The primary window for environmental experts and proponents to submit reports and track applications.
+- **Mobile GIS Inspection App:** A specialized interface for field officers to conduct geo-tagged, timestamped inspections (offline-first).
+- **Public Participation Portal:** A digital noticeboard for citizens to view project summaries and submit comments/objections.
+- **Compliance Dashboard:** Real-time visibility for the Director General and senior management on licensing and enforcement metrics.
+
+### Layer 2: Core Platform
+- **Workflow Engine (BPMN 2.0):** Orchestrates the regulatory cycle (Submission → Screening → Public Participation → Technical Review → Recommendation → Issuance).
+- **Trust Hub:**
+  - **Consent Manager:** Mandatory proponent consent before querying business or land details from BRS/ArdhiSasa via X-Road.
+  - **Identity Federation:** Real-time verification of environmental expert identity via **Maisha Namba (IPRS)**.
+  - **NPKI:** Digitally signing **EIA Licenses**, **Expert Certifications**, and **Inspection Reports** to ensure legal non-repudiation and technical accountability.
+- **Shared Services:**
+  - **AI Rules Engine:** Automating the preliminary screening and risk categorization of project reports.
+  - **Intelligent Document Processing (IDP):** Digitizing historical EIA reports and physical permits into the National EDRMS.
+  - **Notifications:** Automated SMS/Email alerts for public notice periods, lead agency comments, and license renewal triggers.
+
+### Layer 3: Interoperability (Huduma Bridge)
+- **KeSEL (X-Road):** Secure data exchange between NEMA and **ArdhiSasa (Land)**, **BRS (Business)**, **WRA (Water)**, and **KFS (Forestry)**.
+- **Central Service Catalogue:** Cataloguing environmental compliance APIs to promote sustainable development monitoring.
+
+### Layer 4: Authoritative Registries & Payments
+- **Registries:**
+  - **National Environmental Registry:** The sector-specific authoritative source for all environmental permits, experts, and compliance data.
+  - **National EDRMS:** The definitive legal digital archive for all signed licenses and technical review documents.
+  - **IPRS / Maisha Namba:** Foundational person registry for individual accountability.
+- **Payments:** **Government Payment Aggregator (GPA)** for processing EIA fees, expert registration charges, and statutory environmental levies.
 
 ---
 

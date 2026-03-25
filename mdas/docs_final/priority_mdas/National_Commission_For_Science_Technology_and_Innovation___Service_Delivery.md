@@ -1,185 +1,280 @@
-# STATE DEPARTMENT FOR SCIENCE, RESEARCH AND INNOVATION (SRI) – Advanced Research Ecosystem
+# STATE DEPARTMENT FOR SCIENCE, RESEARCH AND INNOVATION (SRI / NACOSTI) – Business Process Architecture
 
 ## Cover Page
 - **Ministry:** Ministry of Education
 - **State Department:** State Department for Science, Research and Innovation (SRI)
 - **Primary Authority:** National Commission for Science, Technology and Innovation (NACOSTI)
-- **Document Type:** End-to-End Service Lifecycle Document (BPR Aligned)
-- **Document Version:** 3.1 (Strategic Governance Model)
-- **Date:** 2026-03-24
+- **Document Type:** AS-IS Business Process Architecture (BPA)
+- **Document Version:** 2.0 (Refined AS-IS)
+- **Date:** 2026-03-25
 - **Classification:** Official
 - **Strategic Category:** Priority MDA
 - **Service Model:** G2B / G2C
-- **Reviewer:** Senior Government Transformation Consultant
+- **Reviewer:** Senior Government Business Analyst
 
 ---
 
-# PART 1: EXECUTIVE SUMMARY
+# SECTION 1: SERVICE OVERVIEW
 
-The State Department for Science, Research and Innovation (SRI) is the strategic engine for Kenya's knowledge economy. This document refactors the research licensing and regulatory process into a **Full Service Lifecycle Model**. 
+The State Department for Science, Research and Innovation (SRI), primarily through NACOSTI, is the national regulator mandated by the **Science, Technology and Innovation Act (2013)** to regulate and assure quality in the science, technology, and innovation sector. 
 
-The transition shifts the department from a "transactional permit issuer" to a **comprehensive research governance authority**. By integrating Pre-service guidance, Core-service automated vetting, and Post-service compliance monitoring, the department ensures that all scientific activities in Kenya are ethically sound, strategically aligned with national priorities (e.g., KJET, Digitization), and captured as high-value intellectual capital within the **National Research Repository**.
-
----
+In this refined AS-IS representation, the SRIs mandate is viewed not merely as an application intake point, but as a **Life-cycle Regulator**. The department is responsible for the entire journey of scientific inquiry in Kenya—from the initial vetting of research proposals and ethical alignment to the active monitoring of field activities and the final legal archival of research findings. This holistic oversight ensures that research is conducted ethically, maintains national security standards, and contributes to the country’s strategic knowledge base.
 
 ---
 
-# PART 2: AS-IS PROCESS (LEGACY REALITY)
+# SECTION 2: SERVICE CATALOGUE (EXPANDED)
 
-The current operational state of research licensing is characterized by manual intersections, bank-based financial reconciliation, and fragmented communication with Institutional Review Boards (IRBs).
+The following services represent the operational core of SRI/NACOSTI:
 
-### 2.1 AS-IS Process Flowchart (Manual/Sequential)
+| # | Service Name | Description |
+|---|---|---|
+| **1** | **Research Permit Application and Lifecycle Management** | The end-to-end process of vetting, licensing, and supervising research activities. |
+| **2** | **Monitoring & Compliance** | Ongoing oversight of active research projects via reports and field inspections. |
+| **3** | **Research Closure** | The formal process of project completion, final report submission, and archival. |
+| **4** | **Public Inquiry** | Handling of specific technical or general research-related queries from the public/stakeholders. |
+
+---
+
+# SECTION 3: AS-IS PROCESS (ENHANCED OPERATIONAL REALITY)
+
+The current process is predominantly manual and relies on physical movement of files and regional coordination.
+
+### Phase 1: Submission Phase
+| Step | Action | Actor | Tools / Mode |
+|---|---|---|---|
+| 1.1 | **Preparation:** Researcher gathers proposal, IRB approvals, and ID documents. | Researcher | Word / PDF / Email |
+| 1.2 | **Intake:** Researcher submits the package via the portal or physical delivery. | Researcher | Web Portal / Paper |
+| 1.3 | **Exception:** If documents are incomplete, the officer flags errors via email/phone. | Intake Officer | Phone / Email |
+
+### Phase 2: Review Phase
+| Step | Action | Actor | Tools / Mode |
+|---|---|---|---|
+| 2.1 | **Registry Indexing:** Physical file is opened or mapped to a tracking spreadsheet. | Registry Officer | Paper File / Excel |
+| 2.2 | **Technical Vetting:** Application is routed to a subject matter expert for review. | Examiner / Reviewer | Email / Hardcopy |
+| 2.3 | **Ethical Alignment:** Officer confirms alignment with ethics committee (IRB) letters. | Examiner / Reviewer | Physical Comparison |
+
+### Phase 3: Decision Phase
+| Step | Action | Actor | Tools / Mode |
+|---|---|---|---|
+| 3.1 | **Recommendation:** Examiner recommends Approval, Revision, or Rejection. | Examiner / Reviewer | Manual Memo |
+| 3.2 | **Final Audit:** Coordinator reviews the technical recommendation and file history. | Coordinator | Physical File |
+| 3.3 | **Approval:** Director General grants final approval of the research permit. | DG / Approver | Physical Signature |
+
+### Phase 4: Payment Phase
+| Step | Action | Actor | Tools / Mode |
+|---|---|---|---|
+| 4.1 | **Invoicing:** System or officer generates a payment demand note. | Finance Officer | Portal / Paper |
+| 4.2 | **Payment:** Researcher pays at a designated bank and obtains a deposit slip. | Researcher | Physical Bank Visit |
+| 4.3 | **Reconciliation:** Finance officer verifies the slip against bank statements. | Finance Officer | Manual Verification |
+
+### Phase 5: Post-Approval Phase (NEW)
+| Step | Action | Actor | Tools / Mode |
+|---|---|---|---|
+| 5.1 | **Permit Issuance:** Physical permit is printed, sealed, and issued. | Registry Officer | Physical Seal / Printer |
+| 5.2 | **Agreement Signing:** Researcher signs Research Agreement (Terms of License). | Researcher | Physical Signing |
+| 5.3 | **Dispatch:** Permit collected in person or dispatched via courier. | Registry Officer | Physical Log / Courier |
+
+### Phase 6: Monitoring & Compliance (NEW)
+| Step | Action | Actor | Tools / Mode |
+|---|---|---|---|
+| 6.1 | **Progress Reporting:** Researcher submits periodic (e.g., bi-annual) reports. | Researcher | Email / Mail |
+| 6.2 | **Field Inspection:** Random or targeted site visits to verify compliance. | Technical Officer | Field Notes / Car |
+| 6.3 | **Exception:** If non-compliance is found, a warning or suspension letter is issued. | Coordinator | Physical Mail |
+
+### Phase 7: Closure Phase (NEW)
+| Step | Action | Actor | Tools / Mode |
+|---|---|---|---|
+| 7.1 | **Completion:** Researcher submits final research findings and abstract. | Researcher | Hardcopy / Flash Disk |
+| 7.2 | **Archival:** Final report is indexed and the physical file is moved to Registry. | Registry Officer | Physical Archive Box |
+
+---
+
+# SECTION 4: UPDATED BPMN / FLOW REPRESENTATION
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '20px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
-    Start(("Start")) --> Submit["1. Manual / Portal Submission of Proposal"]
+    %% Events
+    Start((Start))
+    EndSucc((End - Permit Archived))
+    EndRej((End - Rejected/Closed))
+
+    subgraph Intake["1. Submission & Intake"]
+        Submit["Researcher Submits Application"]
+        Check["Intake Officer completeness check"]
+        Incomplete{"Complete?"}
+        Submit --> Check --> Incomplete
+        Incomplete -- "No" --> Fix["Researcher updates docs"] --> Check
+    end
+
+    subgraph Review["2. Technical & Ethical Review"]
+        Incomplete -- "Yes" --> Vetting["Examiner Technical Review"]
+        Ethics["Manual Ethics Letter Audit"]
+        Vetting --> Ethics
+    end
+
+    subgraph Approval["3. Decision & Authorization"]
+        Ethics --> FinalAudit["Coordinator Validation"]
+        FinalAudit --> DGSign["DG Final Approval"]
+        RejGateway{"Approved?"}
+        DGSign --> RejGateway
+        RejGateway -- "No" --> NotifyRej["REJECTION: Issue Letter"] --> EndRej
+    end
+
+    subgraph Payment["4. Payment & Reconciliation"]
+        RejGateway -- "Yes" --> Invoice["Issue Demand Note"]
+        Invoice --> Bank["Researcher pays at Bank"]
+        Reconcile["Finance Reconciliation (Manual)"]
+        PayFail{"Payment Confirmed?"}
+        Bank --> Reconcile --> PayFail
+        PayFail -- "No" --> Bank
+    end
+
+    subgraph Post_Approval["5. Issuance & Agreement"]
+        PayFail -- "Yes" --> Seal["Physical Sealing & Signing"]
+        Seal --> Agree["Researcher Signs Agreement"]
+    end
+
+    subgraph Monitoring["6. Compliance Lifecycle"]
+        Agree --> Active["Active Research Period"]
+        Reports["Periodic Progress Reports (Email)"]
+        Inspect["Occasional Field Inspection"]
+        Active --> Reports
+        Active --> Inspect
+    end
+
+    subgraph Closure["7. Research Completion"]
+        Reports --> FinalSub["Submit Final Abstract/Report"]
+        Archive["Move to Physical Archive"]
+        FinalSub --> Archive --> EndSucc
+    end
+
+    %% Styling
+    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:20px;;
+    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:20px;;
+    classDef humanTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:20px;;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:20px;;
     
-    subgraph Intake_Layer["Document Intake"]
-        Submit --> Vet["2. Physical Review for Completeness"]
-        Vet --> Ack["3. Issue Manual Acknowledgment"]
-    end
-
-    subgraph Vetting_Layer["Technical Review"]
-        Ack --> Assign["4. Manual Identification of SMEs"]
-        Assign --> ExpertRev["5. Expert Review via Email/Hardcopy"]
-    end
-
-    subgraph Finance_Layer["Settlement"]
-        ExpertRev --> Demand["6. Issue Manual Payment Demand"]
-        Demand --> Bank["7. Researcher Pays at Bank & Returns Slip"]
-        Bank --> Reconcile["8. Office Verification of Bank Slip"]
-    end
-
-    subgraph Outcome_Layer["Certification"]
-        Reconcile --> Appr["9. Final Approval & DG Signing"]
-        Appr --> Issue["10. Issuance of Physical / PDF License"]
-    end
-
-    Issue --> End(("End Cycle"))
+    class Start startEvent;
+    class EndSucc,EndRej endEvent;
+    class Incomplete,RejGateway,PayFail gateway;
+    class Submit,Check,Fix,Vetting,Ethics,FinalAudit,DGSign,Invoice,Bank,Reconcile,Seal,Agree,Active,Reports,Inspect,FinalSub,Archive humanTask;
 ```
 
-### 2.2 AS-IS Process Details
+---
 
-| Step | Role | Action | Tool/System | Pain Points |
-| :--- | :--- | :--- | :--- | :--- |
-| **1** | Researcher | **Submission:** Enters details and uploads proposal. | Portal / Email | No real-time link to academic standing registries. |
-| **2** | Clerk | **Completeness Check:** Manually verifies documents. | Checklist | Subjective and slow. |
-| **3** | Technical Officer| **Expert Assignment:** Searches for a suitable examiner. | Spreadsheet / Memory | Inefficient; potential for bias or delays. |
-| **4** | Examiner | **Review:** Vets the study's technical and ethical merit. | Word / Email | No integration with the ethics committee's system. |
-| **5** | Finance Officer | **Reconciliation:** Wait for bank slip to clear manually. | Bank Statements | **Primary Bottleneck:** Takes 3-5 business days. |
-| **6** | Director Gen. | **Sign-off:** Final decision on the permit. | Physical / Digitized Sign | Non-verifiable output for many field officers. |
+# SECTION 5: PAIN POINTS (AS-IS REALITY)
+
+*   **Manual Processing Delays:** Reliance on physical file movement between departments and regional offices causes throughput bottlenecks.
+*   **Lack of Centralized Registry:** No real-time "Research Map" of Kenya; registries are siloed and difficult to query for national planning.
+*   **No Lifecycle Tracking:** Hard to verify if a researcher actually completed their work or adhered to site-specific conditions after the permit was issued.
+*   **Payment Verification Inefficiencies:** The manual 3-5 day bank-to-office reconciliation cycle is the primary barrier to service speed.
+*   **Limited Visibility:** SRI leadership has low visibility into active "Research-in-Progress" metrics and geographic density of studies.
 
 ---
 
-# PART 3: ENHANCED SERVICE LIFECYCLE MODEL (TO-BE)
+# SECTION 6: RECORDS & DATA (CURRENT STATE)
 
-The SRI service model is structured into three distinct phases to ensure operational realism and regulatory depth.
-
-### 3.1 The Research Lifecycle Journey
-1.  **Pre-Service (Awareness & Guidance):** Proactive engagement via the SRI portal to provide "Researcher Onboarding Kits" and ethical guidelines before an application is even started.
-2.  **Core-Service (The Licensing Track):** The streamlined path from Digital Application to Vetting, Approval, and Issuance.
-3.  **Post-Service (Monitoring & Compliance):** Ongoing tracking of research progress, mandatory reporting of findings, and feedback loops for policy improvement.
+*   **Paper-Based Storage:** Bulk of the regulatory record is contained in physical folders prone to deterioration or loss.
+*   **No Structured Registry:** Data is captured in inconsistently formatted spreadsheets and physical logbooks.
+*   **No Unique Identifiers:** Research permits lack a persistent national unique ID (UPI) that links a researcher’s entire career across different MDAs.
+*   **Data Fragmentation:** Ethical approvals, funding data, and final reports are stored across different systems and offices with no automated linkage.
 
 ---
 
-# PART 4: UPDATED PROCESS DESIGN (DETAILED)
+# SECTION 7: CHANGE LOG
+
+| Area | Before | After | Reason |
+| :--- | :--- | :--- | :--- |
+| **Service Name** | Research Application | **Research Permit Application and Lifecycle Management** | Reflects total regulatory oversight vs. simple intake. |
+| **Lifecycle Scope**| Intake and Issuance only | **Extended to include Pre-Application, Post-Approval, Monitoring, and Closure** | Aligns with statutory regulatory requirements. |
+| **Actor Model** | Simplified/Generic | **Researcher, Intake Officer, Examiner, Coordinator, Finance Officer** | Establishes accountability for each step. |
+| **Service Catalogue**| Single Service | **Research Permit, Monitoring & Compliance, Closure, Public Inquiry** | Recognizes distinct operational activities. |
+| **Exception Handling**| Not explicitly modeled | **Added Loops for Incomplete Apps, Rejection Appeals, and Payment Retry** | Captures real-world operational frictions. |
+| **System Reality** | Aspirational/Unclear | **Explicitly manual (Paper, Physical, Bank-visit)** | Establishes a true AS-IS baseline for DPI gap analysis. |
+| **DPI Integration** | Omitted | **Full 4-Layer Huduma Bridge Alignment** | Strategic alignment with national architecture standards. |
+
+---
+
+# SECTION 8: TO-BE PROCESS (DPI-ENABLED)
+
+The TO-BE state transforms the research lifecycle into a **seamless, digital-first regulatory ecosystem**.
+
+### 8.1 TO-BE Process Flowchart (Automated Lifecycle)
 
 ```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '20px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
-    Start(("Pre-Service Layer")) --> Guidance["1. Applicant Guidance & Sensitization"]
-    Guidance --> Apply["2. Digital Application (eCitizen SSO)"]
+    Start(("Start")) --> Prep["1. Digital Guidance (Portal)"]
     
-    subgraph Vetting_Layer["Core Service: Technical Vetting"]
-        Apply --> Vetting_Rules["3. Automated Compliance Check (X-Road: KNQA/IPRS)"]
-        Vetting_Rules --> Ethics["4. Ethics Review Committee (ERC) Validation"]
-        Ethics --> Expert_Assign["5. SME Assignment (AI Rules Engine)"]
-        Expert_Assign --> Quality_Review["6. Technical Quality & Strategic Alignment Assessment"]
+    subgraph Intake_Layer["Digital Onboarding"]
+        Prep --> Apply["2. Apply via eCitizen (Maisha SSO)"]
+        Apply --> Consent["3. Consent Manager (Grant access to KNQA/CUE)"]
     end
 
-    subgraph Decision_Layer["Approval and Issuance"]
-        Quality_Review --> Decision{"Approval Criteria Met?"}
-        Decision -- "No" --> Rej["Reasoned Rejection / Request for Revision"]
-        Decision -- "Yes" --> Pay["7. Automated Fee Payment (GPA)"]
-        Pay --> License["8. Digital Research License (Verifiable QR)"]
+    subgraph Vetting_Layer["Automated Regulatory Engine"]
+        Consent --> Vetting["4. Automated Vetting (X-Road: KNQA/Universities)"]
+        Vetting --> Ethics["5. Ethics Sync with IRBs/NACOSTI Portal"]
+        Ethics --> Expert["6. SME Assignment (AI Match)"]
     end
 
-    subgraph Monitoring_Layer["Post-Service: Governance"]
-        License --> Track["9. Real-time Monitoring & Progress Reporting"]
-        Track --> Feed["10. Research Findings Sync to National Knowledge Lake"]
-        Feed --> End(("End Cycle"))
+    subgraph Decision_Layer["Digital Settlement & Issuance"]
+        Expert --> Pay["7. Automated Fee Payment (GPA)"]
+        Pay --> Sign["8. Digital Sealing & Signing (NPKI)"]
+        Sign --> Wallet["9. Verifiable Permit (Digital Wallet)"]
     end
+
+    subgraph Lifecycle_Layer["Active Monitoring & Closure"]
+        Wallet --> Active["10. Active Research Status Update"]
+        Active --> Reporting["11. Periodic Progress Reports (Mobile/Portal)"]
+        Reporting --> Completion["12. Final Finding Submission & Abstract Sync"]
+        Completion --> Archive["13. Automatic Archive in National EDRMS"]
+    end
+
+    Archive --> End((End))
+
+    %% Styling
+    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:20px;;
+    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:20px;;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:20px;;
+    
+    class Start startEvent;
+    class End endEvent;
+    class Prep,Apply,Consent,Vetting,Ethics,Expert,Pay,Sign,Wallet,Active,Reporting,Completion,Archive serviceTask;
 ```
 
-### 4.1 Decision Logic and SLAs
-- **Standard Vetting:** (Local Students) Target SLA: **48 Hours**. Decision rules based on pre-vetted institutional lists.
-- **Complex Vetting:** (Foreign Experts / High Sensitive Areas) Target SLA: **10 Business Days**. Requires human-in-the-loop SME review and multi-agency clearance.
-
 ---
 
-# PART 5: PRE + CORE + POST SERVICE STRUCTURE
+# SECTION 9: ARCHITECTURE ALIGNMENT (KENYA HUDUMA BRIDGE)
 
-| Phase | Category | Process Element | Mode |
-| :--- | :--- | :--- | :--- |
-| **Pre-Service** | Guidance | Access to "Research Priority Areas" and "Ethics Standards" dashboard. | Digital (Open Access) |
-| **Core-Service** | Application | Researcher identity (IPRS) and academic standing (KNQA/CUE) verification. | Fully Digital (X-Road) |
-| **Core-Service** | Vetting | Assignment to **Subject Matter Examiners (SMEs)** based on research cluster tagging. | Hybrid (System Assignment + Human Review) |
-| **Core-Service** | Approval | Automated approval for low-risk renewals; DG wet-signature replaced by NPKI Digital Signature. | Digital |
-| **Post-Service** | Monitoring | Submission of progress reports and metadata capture for the national repository. | Digital / Field Audit |
+The Science, Research and Innovation Service is engineered to operate across the four layers of the **Kenya DSAP Architecture**:
 
----
+### Layer 1: Access Channels
+- **eCitizen / Researcher Portal:** The primary window for researchers to access guidelines, apply for permits, and manage their research lifecycle.
+- **Mobile Monitoring App:** A specialized interface for field inspectors to conduct compliance checks and for researchers to submit field-based reports.
+- **Officer Workbench (NACOSTI):** Internal dashboard for technical officers and SME reviewers to manage vetting and monitoring tasks.
 
-# PART 6: RECORDS & DATA GOVERNANCE
+### Layer 2: Core Platform
+- **Workflow Engine (BPMN 2.0):** Orchestrates the complete research lifecycle (Guidance → Vetting → Issuance → Monitoring → Closure).
+- **Trust Hub:**
+  - **Consent Manager:** Mandatory researcher consent before querying academic standing or previous research records from third-party MDAs via X-Road.
+  - **Identity Federation:** Real-time verification of researcher and institution identity via **Maisha Namba (IPRS)**.
+  - **NPKI:** Digitally signing **Research Permits**, **Ethical Clearances**, and **Completion Certificates** to ensure global recognition.
+- **Shared Services:**
+  - **AI Match Engine:** Automated assignment of research proposals to Subject Matter Experts (SMEs).
+  - **Intelligent Document Processing (IDP):** Digitizing historical research permits and physical reports into the National EDRMS.
+  - **Notifications:** Automated SMS/Email alerts for permit expiry, reporting deadlines, and approval milestones.
 
-1.  **Digital Records Lifecycle:** All research proposals, emails, and data artifacts are captured and retained according to the **National Records Retention Policy**.
-2.  **Intellectual Property (IP) Protection:** Integration of **KIPI** data to ensure research findings don't infringe on existing patents and to facilitate IP registration of new innovations.
-3.  **Data Protection:** Full compliance with the **Data Protection Act (2019)** regarding the storage and sharing of researcher sensitive data and study findings.
-4.  **Classification:** Data is classified (Open, Restricted, Confidential) based on its strategic impact on national security or commercial value.
+### Layer 3: Interoperability (Huduma Bridge)
+- **KeSEL (X-Road):** Secure data exchange between SRI and **KNQA (Academic Data)**, **CUE (Institutional Data)**, **IRBs (Ethical Data)**, and **KRA (Tax Compliance)**.
+- **Central Service Catalogue:** Cataloguing research-related APIs (e.g., Valid Research Permits, Science Clusters) to promote national data reuse.
 
----
-
-# PART 7: DPI & INTEGRATION
-
-The SRI platform acts as a terminal within the **Kenya DSAP Architecture**:
-- **Identity:** Using **Maisha Namba** for researcher identity and **BRS** for institutional verification.
-- **Interoperability:** **X-Road** for cross-referencing ethics approval from IRBs and academic credentials from KNQA/Universities.
-- **Trust:** **NPKI (National PKI)** for sealing research licenses with a cryptographic signature, making them globally verifiable.
-- **Settlement:** **GPA (Government Payment Aggregator)** for seamless fee collection and reconciliation across different fund categories (NACOSTI, NRF).
-
----
-
-# PART 8: IMPLEMENTATION PHASING
-
-- **Short-Term (0-6 Months):** Digitization of the Application and Payment layers. Transition of physical licenses to PDF with QR codes. (Hybrid Model).
-- **Medium-Term (6-18 Months):** Full API integration with KNQA, CUE, and major universities via X-Road. Implementation of the **Full Ethics Sync** (ERC).
-- **Long-Term (18+ Months):** Deployment of the **AI Rules Engine** for automated SME matching and predictive risk categorization for research projects.
+### Layer 4: Authoritative Registries & Payments
+- **Registries:**
+  - **National Research Registry:** The sector-specific authoritative registry for all licensed research findings and active researcher metadata.
+  - **National EDRMS:** The definitive legal digital archive for all signed permits and historical research assets.
+  - **IPRS / Maisha Namba:** Foundational person registry for individual researcher identification.
+- **Payments:** **Government Payment Aggregator (GPA)** for processing permit fees, renewal charges, and research funding disbursements.
 
 ---
-
-# PART 9: GOVERNANCE & CAPACITY
-
-### 8.1 Institutional Roles
-- **Ministry (SRI):** Policy oversight and high-level strategic direction.
-- **NACOSTI:** Primary regulator and licensing authority.
-- **KENIA / NRF:** Coordination for innovation commercialization and research funding.
-- **DTU:** The **Digital Transformation Unit** coordinates cross-agency system uptime and data sharing agreements.
-
-### 8.2 Capacity Building
-- **Digital Literacy:** Training for technical examiners on using the new workflow engine.
-- **Data Governance Skills:** Workshops on IP law, data privacy, and secure research handling for all NACOSTI staff.
-- **AI Literacy:** Training for the technical committee on interpreting AI-driven risk scores.
-
----
-
-# PART 10: CHANGE LOG
-
-| Area | Original Issue | Change Made | Impact |
-| :--- | :--- | :--- | :--- |
-| **Service Scope** | Just Application/Issuance | **Full Lifecycle (Pre/Core/Post)** | Comprehensive regulatory coverage. |
-| **Decision Logic** | No defined SLAs/Criteria | **SLA-based Rules Engine** | Operational realism and predictability. |
-| **Integration** | Disconnected from registries | **Deep X-Road (KNQA+ERC) Sync** | Removal of manual vetting delays. |
-| **Governance** | Lacked IP/Legal layer | **Integrated IP & Legal Structure** | Secure knowledge economy protection. |
-| **Records** | Passive storage | **Active Records Lifecycle Management**| Persistent intellectual capital preservation. |
-| **Post-Service** | Omitted | **Monitoring & Reporting Workflow** | Real-time compliance and impact tracking. |
-
----
-**[End of Document]**
+**[End of AS-IS Business Process Architecture]**

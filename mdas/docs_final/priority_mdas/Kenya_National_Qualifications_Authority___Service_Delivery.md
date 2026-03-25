@@ -165,12 +165,36 @@ flowchart TD
 
 ---
 
-## 4. Digital Public Infrastructure (DPI) Alignment
+# PART 4: ARCHITECTURE ALIGNMENT (KENYA HUDUMA BRIDGE)
 
-- **National Qualifications Database (NQD):** Strengthened as the definitive national registry that integrates with IPRS for learner identity and QAB portals for credential proof-of-fact.
-- **Interoperability (KeSEL / X-Road):** Implementation of secure data exchange protocols to replace email-based verification, ensuring high-speed and tamper-proof responses from awarding bodies.
-- **Workflow Automation:** Alignment of technical validation rules into a digital engine to allow for "Risk-Based" automated approvals of standard qualifications.
-- **Data Security:** All credential exchanges are encrypted and compliant with the **Data Protection Act**, ensuring citizen privacy is maintained throughout the validation lifecycle.
+The Qualification Validation and Alignment Service is engineered to operate across the four layers of the **Kenya DSAP Architecture**:
+
+### Layer 1: Access Channels
+- **eCitizen / KNQA Portal:** The primary window for citizens and employers to apply for and track validation requests.
+- **Officer Workbench (NQD Interface):** The specialized interface for QAV Officers to manage technical evaluations and alignment mappings.
+- **Huduma Centers:** Physical intake points for the scanning (IDP) of manual academic certificates and foreign credentials.
+
+### Layer 2: Core Platform
+- **Workflow Engine (BPMN 2.0):** Orchestrates the validation journey (Application → NQD Query → QAB Verification → Alignment → Issuance) with risk-based automated approvals.
+- **Trust Hub:**
+  - **Consent Manager:** Mandatory citizen consent before querying individual academic records from Universities or KNEC via X-Road.
+  - **Identity Federation:** Real-time verification of applicant identity via **Maisha Namba (IPRS)**.
+  - **NPKI:** Digitally signing **Validation & Alignment Certificates** to ensure authenticity and international recognition.
+- **Shared Services:**
+  - **Intelligent Document Processing (IDP):** Digitizing historical qualification records and foreign transcripts into the National EDRMS.
+  - **Document Generator:** Automated creation of verifiable certificates with cryptographically secure QR codes.
+  - **Notifications:** SMS/Email alerts for verification milestones and certificate ready notifications.
+
+### Layer 3: Interoperability (Huduma Bridge)
+- **KeSEL (X-Road):** Secure, decentralized data exchange between KNQA and **QABs (KNEC, KASNEB, Universities)** and **MoE (NEMIS)**.
+- **Central Service Catalogue:** Cataloguing qualification-related APIs for national and international verification.
+
+### Layer 4: Authoritative Registries & Payments
+- **Registries:**
+  - **National Qualifications Database (NQD):** The sector-specific authoritative registry for all quality-assured qualifications and learners.
+  - **National EDRMS:** The legal digital archive for all signed validation certificates and qualification mapping benchmarks.
+  - **IPRS / Maisha Namba:** Foundational person registry for learner identification.
+- **Payments:** **Government Payment Aggregator (GPA)** for processing validation fees, equivalency charges, and institutional registry fees.
 
 ---
 

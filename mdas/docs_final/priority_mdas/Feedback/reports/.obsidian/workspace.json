@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Feedback_Verbatim_Youth_Affairs.md",
+                "file": "Feedback_Verbatim_Kenya_National_Qualifications_Authority.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Feedback_Verbatim_Youth_Affairs"
+              "title": "Feedback_Verbatim_Kenya_National_Qualifications_Authority"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Feedback_Verbatim_Youth_Affairs.md",
+                "file": "Feedback_Verbatim_Kenya_National_Qualifications_Authority.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Feedback_Verbatim_Youth_Affairs"
+              "title": "Backlinks for Feedback_Verbatim_Kenya_National_Qualifications_Authority"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Feedback_Verbatim_Youth_Affairs.md",
+                "file": "Feedback_Verbatim_Kenya_National_Qualifications_Authority.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from Feedback_Verbatim_Youth_Affairs"
+              "title": "Outgoing links from Feedback_Verbatim_Kenya_National_Qualifications_Authority"
             }
           },
           {
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Feedback_Verbatim_Youth_Affairs.md",
+                "file": "Feedback_Verbatim_Kenya_National_Qualifications_Authority.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Feedback_Verbatim_Youth_Affairs"
+              "title": "Outline of Feedback_Verbatim_Kenya_National_Qualifications_Authority"
             }
           }
         ]
@@ -185,6 +185,8 @@
   },
   "active": "1336f1f0eef2d19d",
   "lastOpenFiles": [
+    "Feedback_Verbatim_Energy.md",
+    "Feedback_Verbatim_Youth_Affairs.md",
     "Feedback_Verbatim_Civil_Registration_Services.md"
   ]
 }

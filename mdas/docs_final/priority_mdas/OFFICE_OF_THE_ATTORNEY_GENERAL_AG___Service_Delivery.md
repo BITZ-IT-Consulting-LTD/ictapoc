@@ -50,9 +50,44 @@ A primary strategic priority is the **digitization of millions of previous marri
 
 ---
 
+---
+
 ## 2. AS-IS WORKFLOW (CIVIL MARRIAGE BY NOTICE)
 
 The current workflow leverages eCitizen for the intake but maintains manual "ceremony" and interview stages.
+
+```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+flowchart TD
+    Start((Start)) --> Apply["1. Digital Submission (eCitizen)"]
+    
+    subgraph Intake["Review & Publication"]
+        Apply --> Review["2. Clerk Review (Manual Queue)"]
+        Review --> Notice["3. Digital Public Notice (21 Days)"]
+    end
+
+    subgraph Verification["Interview & Approval"]
+        Notice --> Book["4. Appointment Booking"]
+        Book --> Interview["5. Physical Interview (Registrar)"]
+        Interview --> Affid["6. Commissioning of Affidavits"]
+    end
+
+    subgraph Celebration["Solemnization & Issuance"]
+        Affid --> Pay["7. Final Payment (GP)"]
+        Pay --> Ceremony["8. Physical Marriage Celebration"]
+        Ceremony --> Issue["9. Manual/System Certificate Issuance"]
+    end
+
+    Issue --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;;
+    
+    class Start start;
+    class End endNode;
+    class Apply,Review,Notice,Book,Interview,Affid,Pay,Ceremony,Issue userTask;
+```
 
 ### Stage 1: Application Submission and Review
 1. **Submission:** Client submits marriage application via eCitizen portal.
@@ -85,18 +120,80 @@ The current workflow leverages eCitizen for the intake but maintains manual "cer
 
 ---
 
-## 4. TO-BE PROCESS (DPI ALIGNED)
+---
 
-### 4.1 Digital Architecture Mapping
-- **Access Layer:** Marriage applications and interview bookings via **eCitizen / Officer Workbench**.
-- **Core Platform:** **BPMN Workflow Engine** manages the 21-day countdown and objection tracking. **NPKI (Trust Hub)** seals the digital certificate copies.
-- **Interoperability (KeSEL):** Automatic marital status check against **NRB/IPRS** to detect bigamy. Automatic receipt of Decree Absolutes from the **Judiciary Case Management System**.
-- **Registries:** **National Marriages Registry** (Sectoral) and **EDRMS** (National Records Registry for legal archival).
+# PART 3: TO-BE PROCESS (DPI-ENABLED)
 
-### 4.2 Future-State Principles
-- **Digital Noticeboard:** Moving from physical notice boards to a national searchable e-Gazette/Portal.
-- **Biometric Consent:** Using Maisha Namba biometrics to ensure the consent of both parties during application.
-- **Integrated Legal Chain:** Seamless data transfer from Marriage (AG) -> Divorce (Judiciary) -> New Status (AG).
+The TO-BE state transforms the marriage lifecycle into an identity-integrated, verifiable workflow.
+
+```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+flowchart TD
+    Start((Start)) --> Portal["Citizen Applies via Marriage Portal (Maisha SSO)"]
+    
+    subgraph Trust_Hub["Layer 2: Identity & Status"]
+        Portal --> Verify["X-Road: Verify Capacity (IPRS/Marriages)"]
+        Verify --> Consent["Consent Manager: Access Marital History?"]
+    end
+    
+    subgraph Operations["Layer 2 & 3: Workflow & Notice"]
+        Consent --> AutoNotice["Automated 21-Day Digital Public Notice"]
+        AutoNotice --> ObjCheck["Auto-check for Objections (AI Screening)"]
+        ObjCheck --> SmartBook["Digital Interview Booking / Virtual Interview"]
+    end
+    
+    subgraph Settlement["Layer 4: Registries & Issuance"]
+        SmartBook --> GPA["Final Fee Settlement (GPA)"]
+        GPA --> Sign["NPKI Digital Signature & Seal"]
+        Sign --> Wallet["Issue Verifiable Digital Certificate (QR)"]
+        Wallet --> DivorceSync["X-Road: Sync Divorce Decrees (Judiciary)"]
+    end
+    
+    DivorceSync --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px;;
+    
+    class Start start;
+    class End endNode;
+    class Portal userTask;
+    class Verify,Consent,AutoNotice,ObjCheck,SmartBook,GPA,Sign,Wallet,DivorceSync serviceTask;
+```
+
+---
+
+# PART 4: ARCHITECTURE ALIGNMENT (KENYA HUDUMA BRIDGE)
+
+The Marriage Registration and Divorce Tracking Service is engineered to operate across the four layers of the **Kenya DSAP Architecture**:
+
+### Layer 1: Access Channels
+- **eCitizen / Marriage Portal:** The primary window for citizens to submit marriage notices, book interviews, and pay fees.
+- **Officer Workbench:** The specialized interface for Marriage Clerks and Registrars to manage applications, objections, and solemnization schedules.
+- **DCC Offices / Huduma Centers:** Distributed intake points for the scanning (IDP) of manual certificates and historical records from regional offices.
+
+### Layer 2: Core Platform
+- **Workflow Engine (BPMN 2.0):** Orchestrates the marriage lifecycle (Notice Submission → 21-Day Publication → Objection Check → Interview → Solemnization → Issuance).
+- **Trust Hub:**
+  - **Consent Manager:** Mandatory consent from both parties before querying their marital history or IPRS data via X-Road.
+  - **Identity Federation:** Real-time verification of applicant and witness identity via **Maisha Namba (IPRS)**.
+  - **NPKI:** Digitally signing **Marriage Certificates**, **Special Licenses**, and **Divorce Entries** to ensure legal non-repudiation.
+- **Shared Services:**
+  - **Intelligent Document Processing (IDP):** Digitizing millions of historical marriage records from DCC offices and religious institutions into the National EDRMS.
+  - **Document Generator:** Automated creation of verifiable certificates and "Certificate of No Impediment" with secure QR codes.
+  - **Notifications:** Automated SMS/Email alerts for notice expiry, interview reminders, and status updates.
+
+### Layer 3: Interoperability (Huduma Bridge)
+- **KeSEL (X-Road):** Secure data exchange between the AG's office, the **Judiciary (Divorce Decrees)**, and **IPRS (Marital Status and Death data)**.
+- **Central Service Catalogue:** Cataloguing marriage-related APIs for national and international verification.
+
+### Layer 4: Authoritative Registries & Payments
+- **Registries:**
+  - **National Marriages Registry:** The sector-specific authoritative registry for all civil, customary, and religious unions.
+  - **National EDRMS:** The definitive legal digital archive for all signed marriage/divorce records and historical artifacts.
+  - **IPRS / Maisha Namba:** Foundational person registry for individual identity and marital status linkage.
+- **Payments:** **Government Payment Aggregator (GPA)** for processing notice fees, solemnization charges, and certified copy fees.
 
 ---
 

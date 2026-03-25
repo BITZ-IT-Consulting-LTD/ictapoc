@@ -10,7 +10,84 @@ The refined process for the State Department for Economic Planning (SDEP) transf
 
 ---
 
-# PART 2: UPDATED ACTOR MODEL
+# PART 2: AS-IS PROCESS (CURRENT REALITY)
+
+The current state of national planning is characterized by periodic document-creation exercises with limited real-time performance tracking.
+
+```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+flowchart TD
+    Start((Start)) --> Guidelines["1. Issuance of Manual Planning Guidelines"]
+    
+    subgraph Planning_Cycle["Periodic Formulation"]
+        Guidelines --> Submit["2. MDAs/Counties Submit Draft Plans (Word/Excel)"]
+        Submit --> ManualAlign["3. Manual Alignment Review against Vision 2030"]
+    end
+
+    subgraph Validation["Technocratic Review"]
+        ManualAlign --> Stakeholder["4. Physical Stakeholder Validation Meetings"]
+        Stakeholder --> FinalDraft["5. Compilation of Final National Plan"]
+    end
+
+    subgraph Reporting["Passive M&E"]
+        FinalDraft --> Distribute["6. Physical Dissemination of Printed Plans"]
+        Distribute --> AnnualRev["7. Annual Performance Review (Manual Reports)"]
+    end
+
+    AnnualRev --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;;
+    
+    class Start start;
+    class End endNode;
+    class Guidelines,Submit,ManualAlign,Stakeholder,FinalDraft,Distribute,AnnualRev userTask;
+```
+
+---
+
+# PART 3: TO-BE PROCESS (DPI-ENABLED)
+
+The TO-BE process transforms planning into a dynamic, performance-driven lifecycle.
+
+```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+flowchart TD
+    Start((Start)) --> Portal["MDAs/Counties Access Planning Portal (Maisha SSO)"]
+    
+    subgraph Trust_Hub["Layer 2: Identity & Trust"]
+        Portal --> Verify["X-Road: Verify Planning Officer via IPRS"]
+        Verify --> Consent["Consent Manager: Access Sectoral Performance Data?"]
+    end
+    
+    subgraph Intelligence["Layer 2 & 3: Analysis & Alignment"]
+        Consent --> Match["AI Engine: Auto-Align against BETA/Vision 2030"]
+        Match --> KPI["Automated Indicator Handbook Generation"]
+    end
+    
+    subgraph Monitoring["Layer 4: Registries & Execution"]
+        KPI --> PIMIS["Live Data Feed From PIMIS / IFMIS / KNBS"]
+        PIMIS --> Dashboard["Real-Time Executive Performance Dashboard"]
+        Dashboard --> Archive["Secure Archival of MDD in National EDRMS"]
+    end
+    
+    Archive --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px;;
+    
+    class Start start;
+    class End endNode;
+    class Portal userTask;
+    class Verify,Consent,Match,KPI,PIMIS,Dashboard,Archive serviceTask;
+```
+
+---
+
+# PART 4: UPDATED ACTOR MODEL
 
 The planning ecosystem identifies five primary layers of actors:
 
@@ -36,15 +113,36 @@ The planning ecosystem identifies five primary layers of actors:
 
 ---
 
-# PART 4: DATA & DPI ARCHITECTURE
+# PART 4: ARCHITECTURE ALIGNMENT (KENYA HUDUMA BRIDGE)
 
-The **Unified National Planning & M&E Portal** serves as a **Data Aggregation Platform** drawing from:
+The National Planning and M&E Lifecycle is engineered to operate across the four layers of the **Kenya DSAP Architecture**:
 
-- **PIMIS (Project Data):** Real-time status of physical infrastructure projects.
-- **IFMIS (Financial Data):** Automated fetching of budget utilization versus planned activities.
-- **KNBS (Statistical Data):** National data for baseline setting and demographic insights.
-- **Population Registry:** For data-driven targeting of social and economic interventions.
-- **Huduma Bridge (X-Road):** Secure interoperability layer facilitating these cross-agency data flows.
+### Layer 1: Access Channels
+- **eCitizen / Planning Portal:** The primary window for MDAs, Counties, and Cities to submit plans and M&E data.
+- **Executive Dashboard:** A specialized interface for the Cabinet and PSs to monitor national KPI progress in real-time.
+- **Huduma Box / Citizen Hub:** For public access to the **Indicator Handbook** and project status updates.
+
+### Layer 2: Core Platform
+- **Workflow Engine (BPMN 2.0):** Orchestrates the planning cycle (Guideline Issuance → Submission → Alignment Check → Validation → Dissemination).
+- **Trust Hub:**
+  - **Consent Manager:** Consulted before aggregating sector-specific data (e.g., from Health or Education registries) for national performance analysis.
+  - **Identity Federation:** Verified access via **Maisha Namba (IPRS)** for all planning officers and executives.
+  - **NPKI:** Digitally signing **National Development Plans** and **Performance Contracts** to ensure authenticity and legal standing.
+- **Shared Services:**
+  - **Document Generator:** Automated creation of the **Indicator Handbook** and annual progress reports.
+  - **Notifications:** SMS/Email alerts for reporting deadlines and performance milestones.
+  - **Intelligent Document Processing (IDP):** Digitizing historical planning documents and physical project reports into the National EDRMS.
+
+### Layer 3: Interoperability (Huduma Bridge)
+- **KeSEL (X-Road):** Secure data exchange between the Planning Portal and **PIMIS (Projects)**, **IFMIS (Financials)**, and **KNBS (Statistics)**.
+- **Central Service Catalogue:** Cataloguing M&E APIs to promote data-driven governance across all MDAs.
+
+### Layer 4: Authoritative Registries & Payments
+- **Registries:**
+  - **NIMES (National Integrated M&E System):** The sector-specific authoritative registry for planning and performance data.
+  - **National EDRMS:** The definitive legal digital archive for all signed strategic plans and policy documents.
+  - **IPRS / Maisha Namba:** Foundational person registry for official accountability.
+- **Payments:** **Government Payment Aggregator (GPA)** for managing research fees, public participation stipends, and performance-based incentive transfers.
 
 ---
 

@@ -166,17 +166,36 @@ The TO-BE process for the State Department for Correctional Services is designed
 
 ---
 
-# PART 2: DPI ARCHITECTURE (DECISION-SUPPORT INFRASTRUCTURE)
+# PART 2: ARCHITECTURE ALIGNMENT (KENYA HUDUMA BRIDGE)
 
-The infrastructure follows a **DPI-enabled, officer-validated** framework:
+The Inmate Case Management Service is engineered to operate across the four layers of the **Kenya DSAP Architecture**:
 
-- **Identity Layer (Biometric Verification):** Provides identity certainty via IPRS/Maisha Namba integration, specifically to assist **Records Officers** in the de-duplication and historical identification of offenders.
-- **Registry Layer (National Inmate Registry):** A centralized record used to provide a unified history for **Reception and Welfare Officers**, eliminating the risks associated with missing physical files during facility transfers.
-- **Interoperability Layer (X-Road):** Facilitates the digital transmission of court warrants and probation files to provide **Discharge Units** with accurate data points for their manual review and validation.
-- **Support Systems:**
-    - **PCMS:** A tool for records management and workflow tracking.
-    - **Calculation Engine:** Provides mathematical support for sentence logic, requiring **mandatory human certification** of results.
-    - **Notification Gateway:** Triggers eligibility alerts to prevent oversight, but does not execute releases.
+### Layer 1: Access Channels
+- **Officer Workbench (PCMS):** The primary interface for Prison Records Officers, Welfare Officers, and In-Charge authorizing officers.
+- **Police / Judiciary Workbenches:** Interfacing points for the intake of committal warrants and police escort data.
+- **Shared Mobile App:** For field-based probation monitoring and reintegration tracking.
+
+### Layer 2: Core Platform
+- **Workflow Engine (BPMN 2.0):** Orchestrates the custodial journey (Admission → Classification → Sentence Tracking → Release) with mandatory human-in-the-loop checkpoints.
+- **Trust Hub:**
+  - **Consent Manager:** Consulted before sharing inmate health or behavioral data with other MDAs (e.g., MOH or Probation) via X-Road.
+  - **Identity Federation:** Biometric de-duplication and identity certainty via **Maisha Namba (IPRS)**.
+  - **NPKI:** Digitally signing **Release Warrants**, **Committal Validations**, and **Sentence Calculations** to ensure non-repudiation and human accountability.
+- **Shared Services:**
+  - **Intelligent Document Processing (IDP):** Digitizing historical penal records and physical court warrants into the National EDRMS.
+  - **Document Generator:** Issuing verifiable **Gate Passes** and **Discharge Certificates** with secure QR codes.
+  - **Notifications:** Automated alerts for release eligibility and parole milestones.
+
+### Layer 3: Interoperability (Huduma Bridge)
+- **KeSEL (X-Road):** Secure data exchange between KPS, the **Judiciary (Committal Warrants)**, and **NPS (Arrest/Escort data)**.
+- **Central Service Catalogue:** Providing discoverable APIs for "Sentencing Verification" and "Custodial Status" queries.
+
+### Layer 4: Authoritative Registries & Payments
+- **Registries:**
+  - **National Inmate Registry:** The sector-specific authoritative source for custodial and rehabilitation data.
+  - **National EDRMS:** The legal digital archive for sensitive penal records and signed legal warrants.
+  - **IPRS / Maisha Namba:** The foundational person registry for biometric identity.
+- **Payments:** **Government Payment Aggregator (GPA)** for processing inmate canteen funds, fine payments (C2G), and statutory rehabilitation fund transfers.
 
 ---
 

@@ -114,39 +114,71 @@ Youth Internship Placement, AGPO Registration, and Film Production Licensing
 
 ---
 
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
+# PART 3: ARCHITECTURE ALIGNMENT (KENYA HUDUMA BRIDGE)
+
+The Youth Empowerment and AGPO Registration Service is engineered to operate across the four layers of the **Kenya DSAP Architecture**:
+
+### Layer 1: Access Channels
+- **eCitizen / Youth Portal:** A single-window access for youth to apply for internships, AGPO certification, and skill programs.
+- **Mobile App:** For field reports on program impact and real-time youth engagement.
+- **Officer Workbench (PSIP Interface):** For Youth Officers and PSC to manage internship matching and AGPO vetting.
+
+### Layer 2: Core Platform
+- **Workflow Engine (BPMN 2.0):** Orchestrates the empowerment lifecycle (Mobilization → Application → AI-Matching/Vetting → Issuance → Monitoring).
+- **Trust Hub:**
+  - **Consent Manager:** Mandatory youth consent before querying academic records or business ownership data via X-Road.
+  - **Identity Federation:** Real-time verification of youth identity and age via **Maisha Namba (IPRS)**.
+  - **NPKI:** Digitally signing **Internship Placement Letters**, **AGPO Certificates**, and **Film Licenses** to ensure legal non-repudiation.
+- **Shared Services:**
+  - **AI Matching Engine:** Automated skill and location-based matching for internship placements.
+  - **Intelligent Document Processing (IDP):** Digitizing historical participant records and physical AGPO files into the National EDRMS.
+  - **Document Generator:** Automated creation of verifiable certificates and letters with secure QR codes.
+  - **Notifications:** Automated SMS/Email alerts for application status, placement notifications, and AGPO renewal triggers.
+
+### Layer 3: Interoperability (Huduma Bridge)
+- **KeSEL (X-Road):** Secure data exchange between the Youth Portal and **BRS (Business)**, **KNQA (Qualifications)**, **PSC (Policy)**, and **NRB/IPRS (Identity)**.
+- **Central Service Catalogue:** Cataloguing youth-related APIs (e.g., Youth Persona, Skill Profiles) to promote inter-MDA program alignment.
+
+### Layer 4: Authoritative Registries & Payments
+- **Registries:**
+  - **National Youth Participant Registry:** The sector-specific authoritative registry for tracking youth involvement in all government programs.
+  - **National EDRMS:** The definitive legal digital archive for all signed empowerment records and historical policy documents.
+  - **IPRS / Maisha Namba:** Foundational person registry for youth identification.
+- **Payments:** **Government Payment Aggregator (GPA)** for processing internship stipends, film licensing fees, and AGPO-related financial transactions.
+
+## 2. TO-BE Process Flowchart (DPI-Enabled)
+*Proposed State visualization leveraging the Kenya Huduma Bridge.*
 
 ```mermaid
 %%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 graph TD
-    Start((Start)) --> Portal["Youth Applicant Logs in via Maisha Namba"]
+    Start((Start)) --> Portal["Youth Applicant Logs in via Maisha Namba (eCitizen SSO)"]
     
-    subgraph Layer2["Identity & Trust Hub"]
-        Portal --> Consent["Consent Manager: Access ID, Education & BRS data?"]
-        Consent --> XRoad["X-Road: Auto-fetch profile from IPRS, KNQA, BRS"]
+    subgraph Trust_Hub["Layer 2: Identity & Consent"]
+        Portal --> Consent["Consent Manager: Access Academic & BRS Records?"]
+        Consent --> XRoad["X-Road: Auto-fetch from IPRS, KNQA, BRS"]
     end
     
-    subgraph Layer3["Operations - Workflow Engine"]
+    subgraph Operations["Layer 2 & 3: Workflow & Intelligence"]
         XRoad --> Type{"Service Type?"}
-        
         Type -- "Internship" --> Match["AI Engine: Instant Skill & Location Match"]
         Type -- "AGPO" --> Vetting["Automated Ownership & Age Validation"]
     end
     
-    subgraph Layer4["Issuance & Settlement"]
-        Match --> Letter["Generate Digital Placement Letter (QR)"]
-        Vetting --> Cert["Generate Verifiable AGPO Certificate"]
+    subgraph Settlement["Layer 4: Registries & Issuance"]
+        Match --> Letter["Generate Digital Placement Letter (NPKI Signed QR)"]
+        Vetting --> Cert["Generate Verifiable AGPO Certificate (NPKI Signed QR)"]
     end
     
     Letter --> End((End))
     Cert --> End
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px,font-size:24px;;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px;;
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px;;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px;;
+    
     class Start start;
     class End endNode;
     class Type gateway;
