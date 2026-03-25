@@ -1,4 +1,4 @@
-# OFFICE OF THE HEAD OF PUBLIC SERVICE (OHPS) – Business Process Architecture
+# OFFICE OF THE HEAD OF PUBLIC SERVICE (OHPS) – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Executive Office of the President

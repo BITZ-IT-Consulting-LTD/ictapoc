@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR BROADCASTING – Business Process Architecture
+# STATE DEPARTMENT FOR BROADCASTING – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Information, Communications and the Digital Economy

@@ -1,4 +1,4 @@
-# ASSETS RECOVERY AGENCY (ARA) – Business Process Architecture
+# ASSETS RECOVERY AGENCY (ARA) – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Office of the Attorney General & Department of Justice

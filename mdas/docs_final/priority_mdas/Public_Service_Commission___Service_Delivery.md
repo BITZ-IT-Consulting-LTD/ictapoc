@@ -1,4 +1,4 @@
-# PUBLIC SERVICE COMMISSION (PSC) – Business Process Architecture
+# PUBLIC SERVICE COMMISSION (PSC) – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry/Body:** Public Service Commission (PSC)

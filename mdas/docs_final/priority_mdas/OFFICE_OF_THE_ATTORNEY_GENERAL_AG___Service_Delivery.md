@@ -1,4 +1,4 @@
-# REGISTRAR OF MARRIAGES (OFFICE OF THE ATTORNEY GENERAL) – Business Process Architecture
+# REGISTRAR OF MARRIAGES (OFFICE OF THE ATTORNEY GENERAL) – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Office of the Attorney General & Department of Justice

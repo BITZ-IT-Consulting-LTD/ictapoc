@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR ENERGY – Business Process Architecture
+# STATE DEPARTMENT FOR ENERGY – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Energy and Petroleum

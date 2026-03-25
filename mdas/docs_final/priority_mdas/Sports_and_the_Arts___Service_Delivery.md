@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR SPORTS – Business Process Architecture
+# STATE DEPARTMENT FOR SPORTS – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Youth Affairs, Creative Economy and Sports
