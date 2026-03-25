@@ -1,186 +1,94 @@
-# STATE DEPARTMENT FOR ECONOMIC PLANNING – Service Delivery
+# PART 1: EXECUTIVE SUMMARY
 
-## Cover Page
-- **Ministry/Department/Agency (MDA):** The National Treasury and Economic Planning
-- **Department:** State Department for Economic Planning (SDEP)
-- **Process Name:** National Development Planning Coordination
-- **Document Version:** 1.2
-- **Date:** 2026-03-18
-- **Classification:** Official
-- **Strategic Category:** Priority MDA
-- **Life-Cycle Group:** Policy, Economy & Foundational Systems
-- **Breakout Room:** Room 3 (Policy, Economy & Foundational)
-- **Facilitator:** Abel
-- **Assistant:** Brenda
+The refined process for the State Department for Economic Planning (SDEP) transforms national planning from a periodic document-creation exercise into a **dynamic, performance-driven lifecycle**. Key improvements include:
+
+- **Institutional Expansion:** Inclusion of **Cities and Municipalities** as distinct reporting and planning actors.
+- **Performance Centricity:** Integration of a mandatory **Indicator Handbook** (KPIs, Targets, Methodology) into the plan dissemination phase.
+- **DPI Interoperability:** Deep integration with **PIMIS (Projects)**, **IFMIS (Finance)**, and **KNBS (Statistics)** to enable evidence-based planning and real-time Monitoring & Evaluation (M&E).
+- **Citizen Accountability:** Utilizing **Huduma Box/eCitizen** for public transparency of strategic outcomes and KPI progress.
+- **Operational Realism:** A phased rollout strategy that transitions from current manual/hybrid states to a fully integrated digital planning ecosystem.
 
 ---
 
-## Service Mandate
-The State Department for Economic Planning is mandated to coordinate national and sectoral development planning in Kenya. Its functions include managing national statistics (KNBS), population policy management, monitoring and evaluation of economic trends through the National Integrated Monitoring and Evaluation System (NIMES), facilitating the implementation of Sustainable Development Goals (SDGs), and integrating county development planning with national frameworks.
+# PART 2: UPDATED ACTOR MODEL
+
+The planning ecosystem identifies five primary layers of actors:
+
+- **National Planning (SDEP):** Custodian of the planning framework and the **National Integrated Monitoring and Evaluation System (NIMES)**.
+- **Line MDAs:** Sectoral planning and execution authorities.
+- **County Governments:** Formulation and reporting of County Integrated Development Plans (CIDPs).
+- **Cities & Municipalities:** Localized planning entities required to align with County and National frameworks and submit urban-specific performance data.
+- **Citizenry:** Active participants in the planning phase and consumers of progress data via open governance portals.
 
 ---
 
-## Executive Summary
-The State Department for Economic Planning (SDEP) is the central agency responsible for national development planning and policy coordination in Kenya. It ensures that all government actions, at both national and county levels, are evidence-based and aligned with long-term strategic goals like Kenya Vision 2030 and the Bottom-up Economic Transformation Agenda (BETA). Currently, the National Development Planning process is hindered by manual document submissions, fragmented data in silos, and slow physical validation cycles. The proposed digital transformation aims to establish a **Unified National Planning & M&E Portal**, integrating with MDAs and Counties via the **Huduma Bridge** to automate alignment checks, streamline public participation, and enable real-time tracking of development outcomes.
+# PART 3: REFINED PROCESS FLOW (TO-BE)
 
----
-
-### 1.1 AS-IS Process Flow (BPMN 2.0)
-```mermaid
-flowchart TD
-    subgraph SDEP["State Department for Economic Planning"]
-        Start(( )) --> A1[Formulate Planning Guidelines]
-        A1 --> A2[Physical Dispatch to MDAs & Counties]
-        E1[Receive Physical/Email Drafts] --> E2[Manual Review for Alignment]
-        E2 --> E3{Alignment OK?}
-        E3 -- No --> E4[Return for Revision]
-        E3 -- Yes --> E5[Manual Consolidation into MTP]
-        E5 --> F1[Organize Physical Stakeholder Forums]
-    end
-
-    subgraph Entities["MDAs & County Governments"]
-        A2 --> B1[Review Guidelines]
-        B1 --> B2[Draft Sector Plans / CIDPs]
-        B2 --> E1
-        E4 --> B2
-    end
-
-    subgraph Public["Stakeholders / Citizens"]
-        F1 --> G1[Provide Feedback in Meetings]
-        G1 --> G2[Submit Written Memoranda]
-    end
-
-    subgraph Approval["Cabinet & Publication"]
-        G2 --> H1[Incorporate Feedback]
-        H1 --> H2[Submit to Cabinet for Approval]
-        H2 --> H3[Publish & Disseminate Plan]
-        H3 --> End((( )))
-    end
-
-    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
-    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
-```
-
----
-
-## Process Overview
-### Process Name
-National Development Planning Coordination
-
-### Service Category
-- G2G (Government to Government)
-- G2C (Government to Citizen)
-
-### Scope
-- **In Scope:** Formulation of planning guidelines (Vision 2030, BETA); review and alignment of Sector Plans and CIDPs; consolidation of Medium-Term Plans (MTPs); public participation and stakeholder validation.
-- **Out of Scope:** Detailed project-level budgeting (handled by National Treasury); specific sector implementation.
-
-### Triggers
-- **Time-based:** Initiation of a new 5-year planning cycle (MTP) or annual review cycle.
-- **Policy-based:** Changes in national strategic direction (e.g., transition to BETA).
-
-### End States
-- **Successful:** National Development Plan (MTP) approved by Cabinet, published, and disseminated; all sector/county plans aligned.
-- **Exception:** Misalignment leads to rejected plans requiring revision.
-
-### Policy Context
-- Constitution of Kenya (Public Participation mandates); Kenya Vision 2030; Public Finance Management Act.
-
----
-
-## Detailed Process (AS-IS)
-
-| Step | Role | Action | Tool/System | Notes |
+| Step | Actor | Action | System / Tool | Output |
 |---|---|---|---|---|
-| 1 | Planning Officer | Develops strategic focus guidelines and planning templates. | Word / PDF | Manual creation of complex guidelines. |
-| 2 | SDEP Registry | Dispatches physical copies or emails guidelines to 47 Counties and all MDAs. | Physical Dispatch / Email | Tracking receipt and versions is difficult. |
-| 3 | MDA / County | Drafts Sector Plans or CIDPs based on the guidelines. | MS Word / Excel | Lack of a standardized data entry environment. |
-| 4 | Review Committee | Manually reviews submitted drafts for alignment with Vision 2030/BETA. | Physical Review | Highly subjective and time-consuming. |
-| 5 | Consolidation Team | Manually aggregates hundreds of reports into a single MTP document. | Manual Copy-Paste | High risk of data entry errors and inconsistencies. |
-| 6 | SDEP Secretariat | Organizes physical public participation forums across the country. | Physical Meetings | Expensive, slow, and hard to consolidate feedback. |
+| **1** | SDEP | **Guideline Formulation:** Issuance of strategic focus and data templates. | Planning Portal | Smart Planning Templates |
+| **2** | MDAs/Counties/Cities | **Participatory Planning:** Citizen engagement and sector plan drafting. | Digital Participation Hub | Draft Sector/City Plans |
+| **3** | SDEP / AI Engine | **Alignment & Verification:** Automated check against Vision 2030 and BETA. | Alignment Engine | Verified Drafts |
+| **4** | SDEP / Public | **Validation:** Stakeholder review and final technical sign-off. | Planning Portal | Approved National Plan |
+| **5** | SDEP | **Dissemination:** Publication of Plan **WITH Indicator Handbook**. | Huduma Box / GPA | **Indicator Handbook (KPIs/Targets)** |
+| **6** | MDAs / Entities | **Monitoring & Data Submission:** Periodic updates on KPI progress. | NIMES / PIMIS | Progress Reports |
+| **7** | SDEP | **Performance Reporting:** Aggregation of monitoring data for Cabinet. | Executive Dashboard | Annual Progress Report (APR) |
 
 ---
 
-## Pain Points & Opportunities
-### Pain Points
-- **Siloed Planning:** MDAs and Counties work in isolation, leading to disjointed plans that are difficult to consolidate.
-- **Alignment Bottlenecks:** Manual review of CIDPs against national goals is slow, often taking months to identify misalignments.
-- **Data Inconsistencies:** Use of different templates and fragmented spreadsheets makes data aggregation for the MTP error-prone.
-- **Ineffective Participation:** Physical-only forums limit citizen reach and make it difficult to scientifically analyze stakeholder feedback.
+# PART 4: DATA & DPI ARCHITECTURE
 
-### Opportunities
-- **Unified Planning Portal:** A centralized platform for MDAs and Counties to submit plans directly in a structured format.
-- **Automated Alignment Engine:** AI-assisted tools to instantly flag plan sections that deviate from national strategic guidelines (BETA/Vision 2030).
-- **Integrated MTP Dashboard:** Real-time consolidation of sector data into a live "National Plan" dashboard for executive oversight.
-- **Digital Participation Hub:** An online platform for citizens to review plans and submit structured feedback, with automated sentiment analysis.
+The **Unified National Planning & M&E Portal** serves as a **Data Aggregation Platform** drawing from:
+
+- **PIMIS (Project Data):** Real-time status of physical infrastructure projects.
+- **IFMIS (Financial Data):** Automated fetching of budget utilization versus planned activities.
+- **KNBS (Statistical Data):** National data for baseline setting and demographic insights.
+- **Population Registry:** For data-driven targeting of social and economic interventions.
+- **Huduma Bridge (X-Road):** Secure interoperability layer facilitating these cross-agency data flows.
 
 ---
 
-### 1.2 TO-BE Process (BPMN 2.0 - Unified Digital Architecture)
-```mermaid
-flowchart TD
-    subgraph Portal["National Planning & M&E Portal"]
-        Start(( )) --> T1[Release Digital Guidelines & Smart Templates]
-        T1 --> T2[MDAs & Counties Input Plans Digitally]
-        T2 --> T3[Automated Alignment & Verification Engine]
-        T3 --> |Auto-Review| T4{Alignment Verified?}
-        T4 -- No --> T5[Real-time Feedback & Digital Revision]
-        T5 --> T2
-        T4 -- Yes --> T6[Auto-Consolidation into Digital MTP]
-    end
+# PART 5: CITIZEN ENGAGEMENT MODEL
 
-    subgraph Bridge["Huduma Bridge / X-Road"]
-        T3 --> T3X[Fetch Budget Data from Treasury IFMIS]
-        T3 --> T3Y[Fetch Project Data from MDA Systems]
-    end
+- **Open Governance Portal:** Strategic plans, MTPs, and CIDPs are accessible via **eCitizen**.
+- **The Huduma Box Integration:** Citizens can retrieve progress cards for MDAs and Counties, showing performance against targets in the **Indicator Handbook**.
+- **Interactive Feedback:** Ability for citizens to "Flag" project statuses in their localities, providing a bottom-up feedback loop to SDEP monitoring teams.
 
-    subgraph Participation["Digital Participation Hub"]
-        T6 --> P1[Public Access via eCitizen / GPA]
-        P1 --> P2[Structured Digital Feedback & Voting]
-        P2 --> P3[AI-Assisted Feedback Analytics]
-    end
+---
 
-    subgraph Approval["Executive & Issuance"]
-        P3 --> A0[PS Technical Sign-off]
-        A0 --> A1[CS Policy Approval]
-        A1 --> A2[Presidential/Cabinet E-Approval]
-        A2 --> A3[Digital Publication & NIMES Integration]
-        A3 --> End((( )))
-    end
+# PART 6: IMPLEMENTATION MODEL (PHASED ROLLOUT)
 
-    style Start fill:#fff,stroke:#27ae60,stroke-width:2px
-    style End fill:#fff,stroke:#e74c3c,stroke-width:4px
-```
+- **Phase 1: Hybrid (12 Months):** Digital submission of Word/Excel templates via the portal; Manual validation of indicators; Focused capacity building in ICT directorates.
+- **Phase 2: Partial Digitization (24 Months):** Integration with IFMIS (Finance) and PIMIS (Projects); Introduction of the Digital Participation Hub; Adoption by prioritized Cities.
+- **Phase 3: Full Integration (36+ Months):** Automated data pipelines from all MDAs, Counties, and Municipalities; AI-driven predictive planning and real-time M&E dashboards for Executive leadership.
 
-## Future State Process (TO-BE)
-### Narrative
-**TO-BE Process: Integrated & Evidence-Based National Planning**
+---
 
-**Design Principles:**
-- **Smart Planning Guidelines:** Guidelines are no longer just static PDFs. They are issued as **Smart Templates** within the Planning Portal, where data validation rules ensure that any entry made by a County or MDA is checked for consistency and strategic alignment at the point of entry.
-- **Multi-Level Digital Approval:** The system incorporates secure electronic approval gates. The **Principal Secretary (PS)** provides technical sign-off on the consolidated data, followed by the **Cabinet Secretary (CS)** who provides policy-level approval via a secure **Executive Dashboard** before the plan is submitted to the Cabinet.
-- **Automated Interoperability:** Through the **Huduma Bridge**, the planning portal integrates with **IFMIS** (Treasury) to ensure that development plans are linked to actual budget allocations. It also pulls real-time project implementation data to feed into the **National Integrated Monitoring and Evaluation System (NIMES)**.
-- **Inclusive Digital Democracy:** Public participation is transformed through a **Digital Participation Hub**. Citizens can interact with plan summaries on their mobile devices, provide structured feedback, and see how their input is incorporated, with AI helping the SDEP summarize thousands of submissions in hours rather than weeks.
+# PART 7: GOVERNANCE & CAPACITY
 
-### Optimized Steps (Digital)
+- **ICT Directorates:** Re-tasked with data integrity and system uptime; Centralization of data quality standards.
+- **Executive Upskilling:** Mandatory data literacy training for PSs and CSs to enable use of the **Executive Approval Dashboards**.
+- **Data Integrity Controls:** Automated audit logs and role-based access to ensure the sanctity of national development data.
 
-| Step | Actor | Action | System |
+---
+
+# PART 8: CHANGE LOG
+
+| Area | Original Issue | Change Made | Impact |
 |---|---|---|---|
-| 1 | SDEP Planning | Issues digital guidelines and data-driven templates. | National Planning Portal |
-| 2 | MDA / County | Submits sector plans/CIDPs via structured digital forms. | National Planning Portal |
-| 3 | Rules Engine | Automatically reviews submissions for alignment with BETA/Vision 2030. | AI-Assisted Alignment Engine |
-| 4 | **Principal Secretary (PS)** | **Technical Sign-off:** Reviews consolidated data and budget alignment. | Executive Approval Dashboard |
-| 5 | **Cabinet Secretary (CS)** | **Policy Approval:** Digitally signs off on the plan for strategic alignment. | Executive Approval Dashboard |
-| 6 | Public | Reviews and provides structured feedback on the draft plan. | Digital Participation Hub |
-| 7 | Cabinet | Reviews the final consolidated plan and provides digital approval. | Presidential E-Cabinet System |
+| **Coverage** | Fragmented planning across layers. | Added Cities and Municipalities to the actor model. | Unified urban-to-national planning alignment. |
+| **Performance** | Plan creation without tracking. | Embedded M&E lifecycle and Indicator Handbook. | Transition to outcome-based governance. |
+| **Data Scope** | Manual data entry silos. | Integration with PIMIS, IFMIS, and KNBS. | Real-time project and financial oversight. |
+| **Citizens** | Passive recipients of info. | Huduma Box integration for KPI tracking. | Increased transparency and public accountability. |
+| **Realism** | Assumed full digital readiness. | Introduced 3-Phase hybrid implementation. | Higher adoption rates and lower failure risk. |
 
 ---
 
 ## References
 - Constitution of Kenya (Public Participation)
-- Kenya Vision 2030
+- Kenya Vision 2030 / BETA Agenda
 - Public Finance Management (PFM) Act
-- Public Service Act
+- Data Protection Act 2019
 
 ---
 

@@ -214,7 +214,7 @@ A centralized, blockchain-secured **Environmental Licensing Registry** manages t
 ---
 
 # PART 8: GOVERNANCE & CAPACITY
-
+x
 - **Digital Transformation Unit (DTU):** A specialized unit mandated to oversee the Intelligent Regulatory Platform's uptime and API security.
 - **Board-Level Oversight:** The NEMA Board provides strategic direction for the digital roadmap and data privacy policies.
 - **Capacity Building:**

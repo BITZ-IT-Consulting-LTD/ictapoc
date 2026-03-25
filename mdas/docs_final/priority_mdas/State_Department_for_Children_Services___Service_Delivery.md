@@ -33,7 +33,7 @@ The State Department for Children Services, under the Ministry of Gender, Cultur
 ---
 
 ## 1. AS-IS Process Flowchart (BPMN 2.0)
-*Current State visualization (End-to-End Child Protection based on Deep Dive).*
+*Current State visualization representing the Official Hybrid Case Management sequence.*
 
 ```mermaid
 %%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
@@ -42,118 +42,122 @@ flowchart TD
     Start((Start))
     EndProcess(("End - Case Closed"))
 
-    subgraph CaseIntake["Intake & Assessment"]
+    subgraph Intake_Layer["Intake & Registration"]
         direction TB
-        Report["Case reporting"]
-        Reg["Case registration"]
-        AssignID["Case ID assignment"]
-        IntakeAss["Intake assessment"]
-        RiskAss["Risk assessment"]
+        Report["1. Case Reporting & Registration"]
+        IntakeAss["2. Intake and Risk Assessment"]
         RiskGateway{"Immediate danger?"}
     end
 
-    subgraph Investigation["Investigation Phase"]
+    subgraph Investigation_Layer["Social Inquiry"]
         direction TB
-        Investigate[Investigation]
-        EmergRem["Emergency removal/placement"]
+        EmergResc["Emergency Rescue and Placement"]
+        Investigate["3. Social Inquiry (Investigation)"]
     end
 
-    subgraph CasePlanning["Case Planning"]
+    subgraph Decision_Layer["Case Conferencing"]
         direction TB
-        RevMeet["Case review meeting"]
-        CarePlan["Care plan development"]
-        CourtGateway{"Court intervention required?"}
-        CourtRef["Refer to Court"]
+        CRC["4. Case Conferencing (CRC)"]
     end
 
-    subgraph Implementation["Intervention & Monitoring"]
+    subgraph Intervention_Layer["Implementation & Placement"]
         direction TB
-        Intervene["Intervention execution"]
-        Monitor["Monitoring visits"]
-        MetGateway{"Objectives achieved?"}
+        CourtProc["5. Care Plan Implementation + Court Processes"]
+        Placement["6. Alternative Care Placement"]
+        Monitor["7. Monitoring and Follow-up"]
     end
 
-    subgraph Closure["Case Closure"]
+    subgraph Closure_Layer["Case Closure"]
         direction TB
-        CloseProc["Case closure procedures"]
+        CloseProc["8. Case Closure"]
     end
 
     %% Flow connections
     Start --> Report
-    Report --> Reg
-    Reg --> AssignID
-    AssignID --> IntakeAss
-    IntakeAss --> RiskAss
-    RiskAss --> RiskGateway
+    Report --> IntakeAss
+    IntakeAss --> RiskGateway
     
-    RiskGateway -- "Yes" --> EmergRem
-    EmergRem --> Investigate
+    RiskGateway -- "Yes" --> EmergResc
+    EmergResc --> Investigate
     RiskGateway -- "No" --> Investigate
     
-    Investigate --> RevMeet
-    RevMeet --> CarePlan
-    CarePlan --> CourtGateway
+    Investigate --> CRC
+    CRC --> CourtProc
+    CourtProc --> Placement
     
-    CourtGateway -- "Yes" --> CourtRef
-    CourtRef --> Intervene
-    CourtGateway -- "No" --> Intervene
-    
-    Intervene --> Monitor
-    Monitor --> MetGateway
-    
-    MetGateway -- "No" --> CarePlan
-    MetGateway -- "Yes" --> CloseProc
-    
+    Placement --> Monitor
+    Monitor --> CloseProc
     CloseProc --> EndProcess
 
     %% Styling
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px;;
+    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;;
+    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px;;
     
     class Start startEvent;
     class EndProcess endEvent;
-    class RiskGateway,CourtGateway,MetGateway gateway;
-    class Report,Reg,AssignID,IntakeAss,RiskAss,Investigate,EmergRem,RevMeet,CarePlan,CourtRef,Intervene,Monitor,CloseProc userTask;
+    class RiskGateway gateway;
+    class Report,IntakeAss,EmergResc,Investigate,CRC,CourtProc,Placement,Monitor,CloseProc userTask;
 ```
 
 ---
 
 ## Process Overview
 ### Process Name
-End-to-End Child Protection Case Management (Reporting to Closure)
+Statutory Child Protection Case Management (Hybrid)
 
 ### Service Category
 - G2C (Government to Citizen)
 
 ### Scope
-- **In Scope:** Case intake, emergency interventions, social investigations, care planning, and court referrals.
-- **Out of Scope:** Long-term foster care administration (beyond initial placement).
+- **In Scope:** Case reporting, hybrid intake, social inquiries, CRC decision-making, alternative care, and statutory monitoring.
+- **Out of Scope:** Non-statutory family mediation, long-term foster care payments.
 
 ### Triggers
-- A report of a child in need of care and protection (abuse, neglect, abandonment).
+- A report of a child in need of care and protection received at a sub-county office or via the helpline.
 
 ### End States
-- **Successful:** Child's safety ensured; Case successfully closed or transitioned to long-term care.
+- **Successful:** Child is safe, care plan completed, and case formally closed in both manual and digital systems.
 
 ### Policy Context
 - The Children Act 2022; The Constitution of Kenya 2010; Data Protection Act 2019.
 
 ---
 
-## Detailed Process (AS-IS)
+## Detailed Process (AS-IS) – Official Hybrid Model
 
-| Step | Role | Action | Tool/System | Notes |
+The process for Children Services is a **hybrid model** where CPIMS is partially deployed and currently used alongside manual paper-based systems. Field-based activities such as social inquiries and monitoring remain physical, with digital capture occurring after fieldwork where connectivity and device availability allow.
+
+| Step | Role | Action | Tool / System | Notes (Hybrid Nature) |
 |---|---|---|---|---|
-| 1 | Reporter / Children Officer | A report is made regarding a child at risk. The Children Officer performs manual case registration and assigns a reference ID. | Paper Ledger | |
-| 2 | Children Officer | Conducts an intake and initial risk assessment to determine the immediate danger level to the child. | Manual Forms | |
-| 3 | Children Officer | Carries out a detailed investigation, including home visits, witness interviews, and evidence gathering. | Physical Visits | |
-| 4 | Case Review Committee | Holds case review meetings to assess the investigation findings and develop a formal care plan. | Physical Meetings | |
-| 5 | Children Officer / Court | Executes the care plan. If necessary, processes court referrals for formal protection orders. | Manual / Judicial | |
-| 6 | Children Officer / Care Institutions | Places the child in an appropriate care institution or with family, executing the planned interventions. | Care Homes | |
-| 7 | Children Officer | Conducts periodic monitoring visits to ensure the child's safety and well-being are maintained. | Physical Visits | |
-| 8 | Children Officer | Initiates case closure procedures once the care plan objectives have been met and the child is deemed safe. | Manual Forms | |
+| **1** | Children Officer | **Case Reporting & Registration:** Reception of reports from various sources. | Paper Ledger / CPIMS (Intake Module) | Reports are recorded in physical registers at the station and later synced to CPIMS. |
+| **2** | Children Officer | **Intake and Risk Assessment:** Screening and initial risk evaluation to prioritize child safety. | Manual Forms / CPIMS | Screening is manual; metadata and risk scores are captured in CPIMS where possible. |
+| **3** | Children Officer | **Social Inquiry (Investigation):** Detailed field investigation including home visits and interviews. | Physical Visits / CPIMS (Case Notes) | **Fieldwork is 100% physical.** Investigation summaries are logged into CPIMS case notes. |
+| **4** | Case Review Committee (CRC) | **Case Conferencing (CRC):** Decision-making body reviews inquiry findings and approves the Case Plan. | Physical Meetings / CPIMS (Case Planning) | Formal meetings are physical; approved plans are digitized into the CPIMS Case Planning module. |
+| **5** | Children Officer / Court | **Care Plan Implementation + Court Processes:** Execution of approved interventions and statutory court filings. | Manual Filings / Judiciary Link / CPIMS | Processing of court orders involves manual filing; status is updated in CPIMS. |
+| **6** | Children Officer / Care Institutions | **Alternative Care Placement:** Placement of children in CCIs, foster care, or kinship care. | Care Home Manual Records / CPIMS (Placement) | Placement is a physical event; location and admission data is updated in the CPIMS Placement module. |
+| **7** | Children Officer | **Monitoring and Follow-up:** Periodic visits ensure the care plan objectives are being met. | Physical Visits / CPIMS (Follow-up) | Site visits are manual; periodic progress updates are entered into CPIMS Follow-up module. |
+| **8** | Children Officer | **Case Closure:** Formal exit from the protection system after objectives are achieved. | Manual Closure Forms / CPIMS (Closure) | Case is physically archived and formally closed in the CPIMS Closure module. |
+
+---
+
+## CPIMS Deployment & Positioning
+
+The **Child Protection Information Management System (CPIMS)** is the primary digital tool for statutory case management. Its current implementation is characterized by:
+
+- **Active CPIMS Modules:**
+  - **Intake:** Registration and initial screening data.
+  - **Case Notes:** Digital logging of inquiry summaries.
+  - **Case Planning:** Digitization of Case Review Committee approvals.
+  - **Placement:** Tracking of children in CCIs and Alternative Care.
+  - **Follow-up:** Logging of periodic monitoring outcomes.
+  - **Closure:** Formal digital case termination.
+
+- **Current Operational Limitations:**
+  - **Partial Rollout:** Not all sub-county offices have stable connectivity or sufficient devices.
+  - **Parallel Paper Systems:** Manual registers remain the legal source of truth in some jurisdictions due to statutory requirements.
+  - **Connectivity Gaps:** Syncing often happens post-facto when officers return from field visits.
 
 ---
 
@@ -170,119 +174,120 @@ End-to-End Child Protection Case Management (Reporting to Closure)
 
 ---
 
-## 2. TO-BE Process Flowchart (BPMN 2.0)
-*Future State visualization (Kenya DSAP Architecture - Digital CPIMS).*
+# PART 1: TO-BE EXECUTIVE SUMMARY
+
+The TO-BE process for the State Department for Children Services represents a transition to a **DPI-aligned, hybrid-aware case management ecosystem**. Anchored by an enhanced **National CPIMS**, the system shifts from siloed paper records to a secure, interoperable platform. By integrating with national digital identity (Maisha Namba) and cross-sectoral registries (Judiciary, Health, Education), the system ensures a **continuity of care** for vulnerable children. This transformation prioritizes the "best interest of the child" through smart decision support, while maintaining human oversight and supporting offline field realities in resource-constrained environments.
+
+---
+
+# PART 2: DPI ARCHITECTURE MAPPING
+
+The future state is built upon the four core pillars of Kenya's Digital Public Infrastructure:
+
+- **Identity (Maisha Namba / IPRS):** Every child and guardian is uniquely identified via integration with the national identity ecosystem. For children without formal ID, the system generates temporary UPIs linked to a parent/guardian's Maisha Namba, ensuring legal identity from birth/intake.
+- **Registries (System of Record):** CPIMS serves as the **authoritative registry** for child protection cases. It synchronizes with the Birth Registry and the National Health Registry to maintain a 360-degree view of the child’s welfare history.
+- **Interoperability (X-Road / Huduma Bridge):** Secure, standardized data exchange between CPIMS and the Judiciary (for protection orders), the Police (for missing children), and Social Protection (cash transfers).
+- **Data Governance & Security:** Implements role-based access control (RBAC), end-to-end encryption for sensitive case notes, and immutable audit logs to comply with the Data Protection Act 2019 and ODPC guidelines.
+
+---
+
+# PART 3: TO-BE PROCESS (DPI-ENHANCED)
+
+| Step | Actor | Action | System | DPI Component | Notes |
+|---|---|---|---|---|---|
+| **1** | Citizen / Officer | **Case Reporting:** Multi-channel reporting (Web, App, eCitizen). | eCitizen / CPIMS | Public Interface | Initial data capture; supports anonymous reporting. |
+| **2** | Children Officer | **Intake and Risk Assessment:** Identity verification and risk triaging. | CPIMS | Maisha Namba / IPRS | Real-time KYC via X-Road; Risk support engine alerts for emergencies. |
+| **3** | Children Officer | **Social Inquiry:** Detailed field investigation and social inquiry. | CPIMS Mobile (Offline) | Digital Registry | Offline-first app; logs home visits/interviews; GPS-stamped evidence. |
+| **4** | CRC Committee | **Case Conferencing (CRC):** Collaborative review of digitized inquiry findings. | CPIMS Dashboard | Data Exchange | CRC views comprehensive digital file including health/school records via X-Road. |
+| **5** | Officer / Court | **Care Plan + Court Processes:** Filing for statutory protection orders. | CPIMS / Judiciary API | Interoperability Layer | Automated filing of "Commitment Orders" directly to the Judiciary CMS. |
+| **6** | Officer / Institution | **Alternative Care Placement:** Matching and placement into Foster/Kinship care. | CPIMS Placement | Registry Search | Intelligent matching against a verified registry of Foster Parents/CCIs. |
+| **7** | Children Officer | **Monitoring & Follow-up:** Statutory monitoring of the child's well-being. | CPIMS Follow-up | Automated Alerts | System triggers alerts if a monitoring visit is overdue; logs progress. |
+| **8** | Children Officer | **Case Closure:** Final intervention review and secure archiving. | CPIMS Closure | Secure Archiving | Digital signing of closure reports; record preserved in secure national archive. |
+
+---
+
+# PART 4: BPMN DIAGRAM (DPI-ALIGNED HYBRID)
 
 ```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '20px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
     %% Events
     Start((Start))
-    EndProcess(("End - Case Closed"))
+    EndProcess(("End - Secure Archive"))
 
-    subgraph Citizen["Citizen Reporter"]
+    subgraph Intake_Interoperability["1. Reporting & Intake (DPI)"]
         direction TB
-        DigIntake["Digital case intake"]
+        Report["Digital Reporting (eCitizen)"]
+        IDVerify["Maisha Namba Verification (X-Road)"]
+        RiskScore["Human-in-loop Risk Support"]
     end
 
-    subgraph CPIMS["System (National CPIMS)"]
+    subgraph Field_Hybrid["2. Social Inquiry (Hybrid)"]
         direction TB
-        IdVerify["Identity verification integration"]
-        RiskScore["AI risk scoring support"]
-        CourtFile["Court filing automation"]
-        SecureDB["Store in secure case database"]
-        EmergGateway{"Emergency response required?"}
+        Investigate["Social Inquiry (Offline Mobile)"]
+        Sync["Data Sync to Registry"]
     end
 
-    subgraph ChildOfficer["Children Officer"]
+    subgraph Decison_DPI["3. Statutory Decisions (Registry)"]
         direction TB
-        LogInvest["Investigation logging"]
-        DecideAction["Human caseworker decision"]
-        CourtGateway{"Court order required?"}
-        MonVisits["Monitoring visits"]
-        CaseClose["Case closure"]
+        CRC["CRC Case Conferencing"]
+        CourtFile["Digital Court Filing (Judiciary CMS)"]
     end
 
-    subgraph Judicial [Court]
+    subgraph Intervention_Registry["4. Intervention & Follow-up"]
         direction TB
-        ProcOrder["Process protection order"]
-    end
-
-    subgraph CareInst["Care Institution"]
-        direction TB
-        ProvideCare["Provide intervention care"]
+        Placement["Alternative Care Placement"]
+        Monitoring["Statutory Monitoring (Alert Driven)"]
     end
 
     %% Flow connections
-    Start --> DigIntake
-    DigIntake --> IdVerify
-    IdVerify --> RiskScore
-    RiskScore --> EmergGateway
-    
-    EmergGateway -- "Yes" --> LogInvest
-    EmergGateway -- "No" --> LogInvest
-    
-    LogInvest --> DecideAction
-    DecideAction --> CourtGateway
-    
-    CourtGateway -- "Yes" --> CourtFile
-    CourtFile --> ProcOrder
-    ProcOrder --> ProvideCare
-    
-    CourtGateway -- "No" --> ProvideCare
-    
-    ProvideCare --> MonVisits
-    MonVisits --> SecureDB
-    SecureDB --> CaseClose
-    CaseClose --> EndProcess
+    Start --> Report
+    Report --> IDVerify
+    IDVerify --> RiskScore
+    RiskScore --> Investigate
+    Investigate --> Sync
+    Sync --> CRC
+    CRC --> CourtFile
+    CourtFile --> Placement
+    Placement --> Monitoring
+    Monitoring -- "Satisfactory Outcome" --> EndProcess
+    Monitoring -- "Relapse / Need update" --> Investigate
 
     %% Styling
-    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
-    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px,font-size:24px;;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px;;
+    classDef startEvent fill:#27ae60,stroke:#27ae60,color:#fff,font-size:20px;;
+    classDef endEvent fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:20px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:20px;;
+    classDef dpiTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:20px;;
     
     class Start startEvent;
     class EndProcess endEvent;
-    class EmergGateway,CourtGateway gateway;
-    class IdVerify,RiskScore,CourtFile,SecureDB serviceTask;
-    class DigIntake,LogInvest,DecideAction,MonVisits,CaseClose,ProcOrder,ProvideCare userTask;
+    class Report,Investigate,CRC,Placement,Monitoring userTask;
+    class IDVerify,RiskScore,Sync,CourtFile dpiTask;
 ```
 
-## Future State Process (TO-BE)
-### Narrative
-**TO-BE Process: Data-Driven Child Protection**
+---
 
-The To-Be process envisions a fully integrated **National Child Protection Information Management System (CPIMS)** that leverages digital ecosystems to ensure rapid, secure, and coordinated responses to child welfare cases.
+# PART 5: HYBRID IMPLEMENTATION MODEL
 
-**Core Components:**
-- **National CPIMS Platform:** The central digital hub replacing physical ledgers, accessible nationwide by authorized officers.
-- **Secure Case Databases:** Replaces physical files with encrypted digital records, utilizing role-based access controls and comprehensive audit logs.
-- **AI Risk Scoring:** Analyzes intake data to provide a risk score, supporting—but never replacing—the human caseworker's decision-making process.
-- **Identity Verification Integration:** Connects with the national identity registry (IPRS/Maisha Namba) to accurately identify children and guardians.
-- **Judiciary Integration:** Seamlessly interfaces with the Judiciary Case Management System for rapid, digital filing of protection orders.
-- **Health System Integration:** Links to national health registries (e.g., SHA) to verify medical histories and coverage for the child.
+- **Digital (Primary):** Case intake, ID verification, court filing, and central registry management.
+- **Hybrid (Transition):** Field investigation and monitoring visits (Offline Mobile → Online Sync).
+- **Manual (Fallback):** Deep field locations without connectivity use paper forms with mandatory digitization at the sub-county level within 48 hours.
 
-### Optimized Steps (Digital)
+---
 
-| Step | Actor | Action | System |
-|---|---|---|---|
-| 1 | Citizen Reporter | Reports a case via a digital portal or mobile app, initiating the digital case intake process. | CPIMS Portal |
-| 2 | System (CPIMS) | Performs automatic identity verification of the child and parents against national identity databases. | CPIMS / X-Road (IPRS) |
-| 3 | System (CPIMS) | Runs an AI risk scoring algorithm to highlight potential emergency scenarios for the caseworker. | CPIMS Risk Engine |
-| 4 | Children Officer | Uses the risk score to make an informed human decision, conducting and logging the investigation digitally. | CPIMS App |
-| 5 | Children Officer / System | If a court order is required, the system automates court filing directly to the judicial platform. | CPIMS / Judiciary API |
-| 6 | Care Institution | Receives the digital care plan and provides necessary interventions, updating the system. | CPIMS Portal |
-| 7 | Children Officer | Logs continuous monitoring visits into the secure digital case file. | CPIMS App |
-| 8 | Children Officer | Finalizes the intervention and executes digital case closure, archiving the record securely. | CPIMS |
+# PART 6: RISKS & CONSTRAINTS
+
+- **Digital Divide:** Ensuring the system remains accessible in remote areas with low connectivity (solved via offline-first architecture).
+- **Identity Gaps:** Managing cases for children without birth certificates (addressed via temporary UPI linkage).
+- **Inter-Agency Data Sharing:** Legal MoUs required to operationalize X-Road integration with MoH and Judiciary.
+- **Change Management:** Significant training required for Children Officers to transition from physical files to the CPIMS tablet interface.
 
 ---
 
 ## References
-- https://www.childrenservices.go.ke
 - Children Act 2022
-- Desk Review
+- Kenya Digital Social Accountability Program (DSAP) Architecture
+- Data Protection Act 2019
 
 ---
 
