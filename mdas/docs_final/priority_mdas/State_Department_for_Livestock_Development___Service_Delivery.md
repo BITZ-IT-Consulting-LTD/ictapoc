@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR LIVESTOCK DEVELOPMENT (SDLD) – Business Process Architecture (Updated)
+# State Department for Livestock Development (SDLD) – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Agriculture and Livestock Development
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Economy / Food Security (Livestock Value Chain)
 - **Breakout Room Classification:** Room 3 (Policy, Economy & Foundational Systems)
-- **Lead MDA (Standardised Name):** State Department for Livestock Development
+- **Lead MDA (Standardised Name):** State Department for Livestock Development (SDLD)
 - **Related Cross-Cutting Services:**
     - National Livestock Digital Registry (NLDR)
     - Identity Layer (IPRS / Maisha Namba)

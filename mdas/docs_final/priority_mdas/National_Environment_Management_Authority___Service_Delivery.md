@@ -1,4 +1,4 @@
-# NATIONAL ENVIRONMENT MANAGEMENT AUTHORITY (NEMA) – Business Process Architecture (Updated)
+# National Environment Management Authority (NEMA) – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Environment, Climate Change and Forestry
@@ -18,7 +18,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Economy / Environment (Regulatory Oversight)
 - **Breakout Room Classification:** Room 3 (Policy, Economy & Foundational Systems)
-- **Lead MDA (Standardised Name):** National Environment Management Authority
+- **Lead MDA (Standardised Name):** National Environment Management Authority (NEMA)
 - **Related Cross-Cutting Services:**
     - National Environmental Registry
     - Identity Layer (IPRS / Maisha Namba)

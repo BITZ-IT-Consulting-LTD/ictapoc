@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR IMMIGRATION AND CITIZEN SERVICES – Business Process Architecture (Updated)
+# State Department for Immigration & Citizen Services – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Interior and National Administration
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 1
 - **Strategic Category:** Identity / Travel (National Security)
 - **Breakout Room Classification:** Room 1 (High Impact & Large Registries)
-- **Lead MDA (Standardised Name):** State Department for Immigration and Citizen Services
+- **Lead MDA (Standardised Name):** State Department for Immigration & Citizen Services
 - **Related Cross-Cutting Services:**
     - National Population Register (IPRS / Maisha Namba)
     - Civil Registration (CRS Birth/Death Integration)

@@ -1,4 +1,4 @@
-# STATE DEPARTMENT OF CORRECTIONAL SERVICES – Business Process Architecture (Updated)
+# State Department of Correctional Services – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Interior and National Administration

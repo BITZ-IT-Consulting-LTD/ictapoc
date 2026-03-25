@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR CULTURE AND HERITAGE – Business Process Architecture (Updated)
+# Culture and Heritage – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Gender, Culture, the Arts and Heritage
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Economy / Culture (Creative Economy)
 - **Breakout Room Classification:** Room 2 (Coordination, Culture & Specialised Services)
-- **Lead MDA (Standardised Name):** State Department for Culture and Heritage
+- **Lead MDA (Standardised Name):** Culture and Heritage
 - **Related Cross-Cutting Services:**
     - National Creative Economy Marketplace (Inventory Hub)
     - Identity Layer (IPRS / Maisha Namba - Artisan Registry)

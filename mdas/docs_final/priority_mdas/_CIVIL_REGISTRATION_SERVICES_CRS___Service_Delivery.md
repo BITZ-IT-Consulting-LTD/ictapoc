@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR CIVIL REGISTRATION SERVICES – Business Process Architecture (Updated)
+# Civil Registration Services (CRS) – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Interior and National Administration
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 1
 - **Strategic Category:** Identity / Governance (National Vital Statistics)
 - **Breakout Room Classification:** Room 1 (High Impact & Large Registries)
-- **Lead MDA (Standardised Name):** Department of Civil Registration Services (CRS)
+- **Lead MDA (Standardised Name):** Civil Registration Services (CRS)
 - **Related Cross-Cutting Services:**
     - National CRVSS Registry
     - Identity Layer (IPRS / Maisha Namba Minting)

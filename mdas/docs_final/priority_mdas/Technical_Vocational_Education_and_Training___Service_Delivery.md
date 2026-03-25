@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR TECHNICAL AND VOCATIONAL EDUCATION AND TRAINING (TVET) – Business Process Architecture (Updated)
+# TVET – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Education
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Education / Jobs (Skills Development)
 - **Breakout Room Classification:** Room 3 (Agriculture & Economic Development)
-- **Lead MDA (Standardised Name):** State Department for TVET
+- **Lead MDA (Standardised Name):** TVET
 - **Related Cross-Cutting Services:**
     - TVET Institutional Registry (Accredited Providers)
     - Identity Layer (IPRS / Maisha Namba - Student/Staff Identity)

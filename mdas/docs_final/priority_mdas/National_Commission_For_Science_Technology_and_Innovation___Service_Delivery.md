@@ -1,8 +1,8 @@
 # STATE DEPARTMENT FOR SCIENCE, RESEARCH AND INNOVATION – Business Process Architecture (Updated)
 
 ## Cover Page
-- **Ministry:** Ministry of Education
-- **State Department:** National Commission for Science, Technology and Innovation (NACOSTI)
+- **Ministry:** Office of the Prime Cabinet Secretary and Ministry of Foreign and Diaspora Affairs
+- **State Department:** State Department for Science, Research and Innovation
 - **Primary Authority:** National Commission for Science, Technology and Innovation (NACOSTI)
 - **Document Type:** Business Process Architecture (BPA) Standardised
 - **Document Version:** 3.0 (Strategically Aligned)
@@ -18,8 +18,8 @@
 - **Mapped Priority Service:** Research Permit Application and Lifecycle Management
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Economy / Governance (Knowledge Economy)
-- **Breakout Room Classification:** Room 3 (Policy, Economy & Foundational Systems)
-- **Lead MDA (Standardised Name):** National Commission for Science, Technology and Innovation (NACOSTI)
+- **Breakout Room Classification:** Room 2 (Coordination, Culture & Specialised Services)
+- **Lead MDA (Standardised Name):** National Commission For Science Technology and Innovation
 - **Related Cross-Cutting Services:**
     - Case Management Platform
     - National EDRMS

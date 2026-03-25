@@ -1,4 +1,4 @@
-# DEPARTMENT OF REFUGEE SERVICES – Business Process Architecture (Updated)
+# Department of Refugee Services – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Interior and National Administration

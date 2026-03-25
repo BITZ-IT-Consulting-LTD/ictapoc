@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR YOUTH AFFAIRS – Business Process Architecture (Updated)
+# Youth Affairs – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Youth Affairs, Creative Economy and Sports
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Social / Economy (Youth Empowerment)
 - **Breakout Room Classification:** Room 2 (Coordination, Culture & Specialised Services)
-- **Lead MDA (Standardised Name):** State Department for Youth Affairs
+- **Lead MDA (Standardised Name):** Youth Affairs
 - **Related Cross-Cutting Services:**
     - National Youth Participant Registry (Unified)
     - Identity Layer (IPRS / Maisha Namba)

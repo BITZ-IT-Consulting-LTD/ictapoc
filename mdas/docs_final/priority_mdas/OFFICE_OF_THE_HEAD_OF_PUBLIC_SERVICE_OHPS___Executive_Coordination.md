@@ -1,4 +1,4 @@
-# EXECUTIVE OFFICE OF THE PRESIDENT - OFFICE OF THE HEAD OF THE PUBLIC SERVICE (OHPS) – Business Process Architecture (Updated)
+# Office of the Head of Public Service (OHPS) – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Executive Office of the President
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 2
 - **Strategic Category:** Governance / Coordination (Executive Oversight)
 - **Breakout Room Classification:** Room 2 (Coordination, Culture & Specialised Services)
-- **Lead MDA (Standardised Name):** Office of the Head of the Public Service
+- **Lead MDA (Standardised Name):** Office of the Head of Public Service (OHPS)
 - **Related Cross-Cutting Services:**
     - Executive Coordination Portal (Tasking Engine)
     - Identity Layer (IPRS / Maisha Namba - Officer Tier)

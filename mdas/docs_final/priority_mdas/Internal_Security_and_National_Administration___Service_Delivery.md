@@ -1,4 +1,4 @@
-# STATE DEPARTMENT FOR INTERNAL SECURITY AND NATIONAL ADMINISTRATION – Business Process Architecture (Updated)
+# Internal Security and National Administration – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Interior and National Administration
@@ -19,7 +19,7 @@
 - **Tier Classification:** Tier 1
 - **Strategic Category:** Governance / Security (Law & Order)
 - **Breakout Room Classification:** Room 1 (High Impact & Large Registries)
-- **Lead MDA (Standardised Name):** State Department for Internal Security and National Administration
+- **Lead MDA (Standardised Name):** Internal Security and National Administration
 - **Related Cross-Cutting Services:**
     - National Incident Registry (Unified)
     - Identity Layer (IPRS / Maisha Namba)

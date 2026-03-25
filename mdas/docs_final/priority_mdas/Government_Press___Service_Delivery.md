@@ -1,4 +1,4 @@
-# GOVERNMENT PRESS (STRATEGIC RECORDS INFRASTRUCTURE) – Business Process Architecture (Updated)
+# Government Press – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Executive Office of the President

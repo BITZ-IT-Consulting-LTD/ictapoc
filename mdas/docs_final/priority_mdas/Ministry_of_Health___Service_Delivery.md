@@ -1,4 +1,4 @@
-# MINISTRY OF HEALTH – Business Process Architecture (Updated)
+# Ministry of Health (MoH) – Business Process Architecture (Updated)
 
 ## Cover Page
 - **Ministry:** Ministry of Health
@@ -18,7 +18,7 @@
 - **Tier Classification:** Tier 1
 - **Strategic Category:** Social / Health (Universal Health Coverage)
 - **Breakout Room Classification:** Room 1 (High Impact & Large Registries)
-- **Lead MDA (Standardised Name):** National Shared Health Record & Digital Health Ecosystem
+- **Lead MDA (Standardised Name):** Ministry of Health (MoH)
 - **Related Cross-Cutting Services:**
     - Kenya Health Information Exchange (KHIE)
     - Identity Layer (IPRS / Maisha Namba)
