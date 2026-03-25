@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "mdas/docs_final/priority_mdas/Kenya_National_Qualifications_Authority___Service_Delivery.md",
+                "file": "mdas/docs_final/priority_mdas/State_Department_for_Children_Services___Service_Delivery.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Kenya_National_Qualifications_Authority___Service_Delivery"
+              "title": "State_Department_for_Children_Services___Service_Delivery"
             }
           }
         ]
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 794.5
+    "width": 458.5
   },
   "right": {
     "id": "8a18ffc997ca36ca",
@@ -185,6 +185,10 @@
   },
   "active": "d6da66a7c74293a3",
   "lastOpenFiles": [
+    "mdas/docs_final/priority_mdas/STATE_DEPARTMENT_FOR_CORRECTIONAL_SERVICES___Service_Delivery.md",
+    "mdas/docs_final/priority_mdas/State_Department_for_Cabinet_Affairs___Service_Delivery.md",
+    "mdas/docs_final/priority_mdas/State_Department_for_Children_Services___Service_Delivery.md",
+    "mdas/docs_final/priority_mdas/Kenya_National_Qualifications_Authority___Service_Delivery.md",
     "mdas/docs_final/priority_mdas/KNQA_Validation_Report.md",
     "mdas/docs_final/priority_mdas/Kenya_National_Qualifications_Authority___Service_Delivery_files/libs/quarto-html/tabsets/tabsets.js",
     "mdas/docs_final/priority_mdas/Kenya_National_Qualifications_Authority___Service_Delivery_files/libs/quarto-html/axe/axe-check.js",
@@ -197,7 +201,6 @@
     "mdas/docs_final/priority_mdas/Kenya_National_Qualifications_Authority___Service_Delivery_files/libs/quarto-html/axe",
     "mdas/docs_final/priority_mdas/Kenya_National_Qualifications_Authority___Service_Delivery_files/libs/quarto-html/anchor.min.js",
     "mdas/docs_final/priority_mdas/Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md",
-    "mdas/docs_final/priority_mdas/Kenya_National_Qualifications_Authority___Service_Delivery.md",
     "mdas/docs_final/priority_mdas/Energy___Service_Delivery.md",
     "mdas/docs_final/priority_mdas/Day_2_Breakout_Rooms_Overview.md",
     "frontend/dist/docs/architecture/BPMN_WORKFLOW_ENHANCEMENT.md",
