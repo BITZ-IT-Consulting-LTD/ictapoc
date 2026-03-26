@@ -49,7 +49,6 @@ Detailed matrices and notes for each session can be found in their respective do
     *   [Information and Communication Technology Authority (ICTA) (Authority)](./ICT_Authority___Service_Delivery.md)
     *   [Kenya National Qualifications Authority (KNQA) (Authority)](./Kenya_National_Qualifications_Authority___Service_Delivery.md)
     *   [State Department for Micro, Small and Medium Enterprises (MSME) Development (State Department)](./Micro_Small_and_Medium_Enterprise_Development___Service_Delivery.md)
-    *   [National Commission for Science, Technology and Innovation (NACOSTI) (Commission)](./National_Commission_For_Science_Technology_and_Innovation___Service_Delivery.md)
     *   [National Environment Management Authority (NEMA) (Authority)](./National_Environment_Management_Authority___Service_Delivery.md)
     *   [State Department for ICT and the Digital Economy (State Department)](./State_Department_of_ICT___Service_Delivery.md)
     *   [State Department for Broadcasting and Telecommunications (State Department)](./Broadcasting_and_Telecommunications___Service_Delivery.md)
