@@ -1,215 +1,153 @@
-# State Department for Co-operatives – Business Process Architecture (Updated)
+# State Department for Co-operatives – Business Process Architecture (Standardised)
 
 ## Cover Page
 - **Ministry:** Ministry of Co-operatives and Micro, Small and Medium Enterprises (MSME) Development
 - **State Department:** State Department for Co-operatives
-- **Primary Authority:** Commissioner for Co-operative Development
-- **Document Type:** Business Process Architecture (BPA) Standardised
-- **Document Version:** 4.1
-- **Date:** 2026-03-25
+- **Primary Authority:** Commissioner for Co-operative Development (CCD)
+- **Review Level:** SDCCD (Senior Deputy Commissioner) & R&R (Registration and Receivership)
+- **Document Type:** Business Process Architecture (BPA) - Senior Architect Refactored
+- **Document Version:** 5.0 (GEA/DPI Aligned)
+- **Date:** 2026-03-26
 - **Classification:** Official
-- **Strategic Category:** Priority MDA
 - **Service Model:** G2B / G2C
 - **Reviewer:** Senior Government Enterprise Architect
 
 ---
 
 ## SECTION 0: SERVICE PRIORITISATION MAPPING
-- **Mapped Priority Service:** Co-operative Registration & Compliance Monitoring
+- **Mapped Priority Service:** Co-operative Society Registration & Compliance Lifecycle
 - **Tier Classification:** Tier 2
-- **Strategic Category:** Economy / Jobs (Sectoral Growth)
-- **Breakout Room Classification:** Room 3 (Agriculture & Economic Development)
+- **Strategic Category:** Economic Formalisation & Financial Inclusion (Co-operative Sector)
 - **Lead MDA (Standardised Name):** State Department for Co-operatives
-- **Related Cross-Cutting Services:**
-    - National Co-operative Registry
-    - Identity Layer (IPRS / Maisha Namba - Member/Officer Identity)
-    - X-Road (BRS / KRA / SASRA Interop)
-    - Government Payment Aggregator (GPA / Registration Fees)
-    - National EDRMS (Co-operative Audit & Legal Records)
+- **Breakout Room Classification:** Room 3 (Policy, Economy & Foundational Systems)
 
 ---
 
 ## SECTION 0.1: PRIORITISATION JUSTIFICATION
-This service is prioritised because the TO-BE design transforms the co-operative sector from a manual, paper-based "Registry" into a "Digital Finance & Governance Hub." By implementing a "National Co-operative Registry" that integrates with BRS (Business), IPRS (Identity), and KRA iTax (Compliance) via X-Road (Huduma Bridge), the design eliminates the chronic 2-6 week manual verification backlog for new registrations and annual license renewals. This transformation enables the automated issuance of NPKI-signed, cryptographically verifiable digital certificates, reduces the risk of certificate and identity fraud in the SACCO sector by an estimated 80%, and provides real-time compliance monitoring for over 14 million co-operative members, directly securing the financial inclusion and wealth creation goals of the national Bottom-Up Economic Transformation Agenda (BETA).
-
-| Criteria | Evidence from TO-BE Design |
-| :--- | :--- |
-| **Demand / Volume** | Over 22,000 registered co-operatives; millions of individual members and MSME partners. |
-| **National Priority Alignment** | Co-operative Societies Act; Vision 2030 (Social & Economic Pillars); BETA Agenda. |
-| **Data Reusability** | Co-operative certificate data shared with Banks and Trade agencies for credit scoring. |
-| **Interoperability** | Real-time bi-directional link with BRS and KRA via the Huduma Bridge. |
-| **Revenue / Efficiency Impact** | Reduces registration turnaround from 45 days to <5 days; automated fee collection. |
-| **Governance / Risk Reduction** | NPKI-signed digital signatures prevent fraudulent "Shell Co-operatives." |
-| **Inclusivity** | Mobile-first registration allows rural farmers and micro-SMEs to formalize easily. |
-| **Readiness** | High; Base registry exists; Digitization of society files is currently 70% complete. |
-
-> [!NOTE]
-> “The TO-BE design transforms the co-operative sector from a manual, paper-based ‘Registry’ into a ‘Digital Finance & Governance Hub.’ By implementing a ‘National Co-operative Registry’ that integrates with BRS, IPRS, and KRA via X-Road, the design eliminates the 2-6 week manual verification backlog. This transformation enables the automated issuance of NPKI-signed, verifiable digital certificates, reduces fraud risk in the SACCO sector by 80%, and provides real-time compliance monitoring for millions of members.”
+This service is a national priority as the co-operative movement in Kenya manages over KES 1.5 trillion in assets. The current manual lifecycle (handled across R&R and multiple approval layers like SDCCD) creates a 2-6 week bottleneck that delays the formalisation of agricultural and MSME groups. By digitising this lifecycle and linking it to BRS and IPRS via X-Road, the government secures the "Bottom-Up" economic agenda by providing millions of citizens with a trusted, verifiable, and digitally compliant vehicle for wealth creation.
 
 ---
 
-# SECTION 1: SERVICE DEFINITION (STANDARDISED)
+# SECTION 1: ENHANCED AS-IS PROCESS (MDA GROUND TRUTH)
 
-The State Department for Co-operatives is mandated to formulate and implement policies for the development and regulation of co-operatives in Kenya, as per the **Co-operative Societies Act (Cap. 490)**.
+The current operational reality for Co-operative Registration and Compliance involves a heavy reliance on physical document handling and manual record-keeping across the **Registration and Receivership (R&R)** unit and the technical approval hierarchy (SDCCD/CCD).
 
-In this refactored BPA, the primary service is the **End-to-End Co-operative Society Lifecycle**. The objective is to move from manual physical "Red-Folders" and handwritten ledger entries to a **Digital Co-operative Ecosystem** where society records are managed as **Verified Digital Entities** within the **National Co-operative Registry**.
+### 1.1 AS-IS Process Description
+1.  **Submission (Intake):** The applicant submits a physical application ("Red Folder") at the **R&R (Registration & Receivership)** desk.
+2.  **Initial Vetting:** R&R Clerk manually checks and verifies the proposed name and bylaws against physical ledger books.
+3.  **Payment:** Applicant is directed to the **Cash Office** to pay the registration fee; a physical receipt is issued and photocopied for the file.
+4.  **Logging & Allocation:** R&R Clerk enters the details in the **Manual Receiving Register** and the **Job Allocation Register**.
+5.  **Technical Processing:** The file is physically moved to a **Co-operative Officer** who conducts a manual review of the society's objectives and proposed membership.
+6.  **Senior Review (SDCCD):** The file is moved to the **Senior Deputy Commissioner for Co-operatives Development (SDCCD)** for detailed vetting and recommendation for approval.
+7.  **Final Approval (CCD):** The file reaches the **Commissioner (CCD)** for manual ink signature and the application of the official seal.
+8.  **Dispatch:** The approved file is returned to **R&R** where it is entered into the **Dispatch Register**.
+9.  **Collection:** The applicant collects the physical certificate in person.
 
----
-
-# SECTION 2: SERVICE CATALOGUE (NORMALISED)
-
-| Category | Service Name | Description |
-| :--- | :--- | :--- |
-| **Core Services** | **Co-operative Registration**| Digital onboarding of new societies into the National Registry. |
-| | **License Renewal** | Annual automated compliance check and digital re-certification. |
-| **Extended Services** | **Compliance Audit** | Remote submission and automated vetting of annual audit returns. |
-| | **Officer/Member ID** | Issuance of verifiable identities for co-operative delegates. |
-| **Special Case Services**| **Liquidation Management** | Digital workflow for society dissolution and asset settlement. |
-| | **Dispute Resolution** | Formal digital intake and tracking of co-operative tribunal cases. |
-
----
-
-# SECTION 3: AS-IS PROCESS FLOWS (PAPER-CENTRIC)
-
-Currently, the registration of a co-operative is a manual, sequential process requiring physical presence and physical file movement across multiple desks.
-
-### 3.1 AS-IS Visualization
+### 1.2 AS-IS Process Visualization
 ```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '16px', 'fontFamily': 'Inter, system-ui', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
-    Start((Start)) --> Receipt["1. Receive Physical Registration Papers (Office Walk-in)"]
+    Start((Start)) --> R_R_Intake["1. R&R: Receive Physical 'Red Folder'"]
     
-    subgraph Registry_Silo["Manual Intake"]
-        Receipt --> CashOffice["2. Physical Payment at Cash Office (Wait for Receipt)"]
-        CashOffice --> Log["3. Entry in Manual Receiving Book & Job Allocation"]
+    subgraph Registry_Unit["R&R (Registration & Receivership)"]
+        R_R_Intake --> ManualVetting["2. Manual Name/Bylaw Search (Physical Ledger)"]
+        ManualVetting --> Cashier["3. Cash Office: Physical Payment & Receipting"]
+        Cashier --> IntakeLog["4. Manual Entry: Receiving & Allocation Registers"]
     end
 
-    subgraph Operation_Silo["Technical Review"]
-        Log --> Review["4. Technical Officer: Manual File Review & Constitution Check"]
-        Review --> Query{"Corrections?"}
-        Query -- "Yes" --> Fix["Return Physical File to Applicant"]
-        Fix --> Receipt
+    subgraph Technical_Hierarchy["Technical Approval Flow"]
+        IntakeLog --> TechOfficer["5. Co-op Officer: Manual File Review"]
+        TechOfficer --> SDCCD_Review["6. SDCCD: Senior Deputy Commissioner Review"]
+        SDCCD_Review --> CCD_Approve["7. Commissioner (CCD): Final Ink Sign & Seal"]
     end
 
-    subgraph Settlement_Layer["Manual Finalization"]
-        Query -- "No" --> Verify["5. Verifying Officer: Manual Quality Check"]
-        Verify --> CommSign["6. Commissioner: Manual Ink Signature & Seal"]
-        CommSign --> Dispatch["7. Physical Collection of Certificate (In Person)"]
+    subgraph Finalization["Dispatch & Output"]
+        CCD_Approve --> RR_Dispatch["8. R&R: Entry in Dispatch register"]
+        RR_Dispatch --> Collection["9. Applicant: Physical Certificate Collection"]
     end
 
-    Dispatch --> EndProcess(("End - Society Registered (Paper)"))
+    Collection --> End((End - Registered))
 ```
 
-### 3.2 Operational Reality
-- **Actors:** Applicant, Cashier, Registry Clerk, Technical Officer, Commissioner.
-- **Systems:** Manual Registers, Physical Receipt Books, Manual Printing.
-- **Pain Points:** 4-6 week delay for standard results; high transport costs for rural societies; risk of "Fake Certificates" being used to defraud banks; no real-time way for the public to check if a co-operative is currently licensed or in liquidation.
+---
+
+# SECTION 2: PAIN POINTS (EVIDENCE-BASED)
+
+| AS-IS Step | Pain Point | Root Cause |
+| :--- | :--- | :--- |
+| **All Steps** | Extreme latency (21-45 days) | Physical movement of tiles between R&R, SDCCD, and CCD floors/offices. |
+| **Manual Vetting** | Risk of name duplication | Reliance on manual names search in handwritten ledger books. |
+| **Intake Log** | Data fragmentation | Registry clerks and technical officers maintain separate parallel registers. |
+| **SDCCD Review** | High personnel bottleneck | All T2 applications must wait for senior-level physical file availability. |
+| **Collection** | High transport cost for citizens | Requirement for physical presence at the central/regional R&R desk. |
 
 ---
 
-# SECTION 4: TO-BE PROCESS INTERPRETATION (NEW LAYER)
+# SECTION 3: TO-BE PROCESS (GEA & DPI ALIGNED)
 
-### 4.1 TO-BE Process (Digital Finance & Governance Hub)
+The TO-BE design transforms the State Department into a **Digital Co-operative Registry** where the roles of R&R and SDCCD are supported by automated workflows and real-time API integrations.
+
+### 3.1 TO-BE Process Flow
 ```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '20px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '16px', 'fontFamily': 'Inter', 'mainBkg': '#ffffff' } } }%%
 flowchart TD
-    Start((Start)) --> Portal["1. Society SSO Login & Digital Submission (eCitizen)"]
+    Start((Start)) --> eCitizen["1. Digital Entry: eCitizen Portal (SSO)"]
     
-    subgraph Trust_Hub["Layer 2: Real-time Governance Vetting"]
-        Portal --> Verify["2. X-Road: Auto-verify Member Identity (IPRS) & Entity (BRS)"]
-        Verify --> Tax["3. X-Road: Auto-validate KRA Tax Status & Compliance"]
-        Tax --> Payment["4. GPA: Instant Automated Multi-channel Fee Collection"]
+    subgraph Trust_DPI["Identity & Interop (Layer 2 & 3)"]
+        eCitizen --> IPRS_BRS["2. API Check: Maisha Namba (ID) & BRS (Entity)"]
+        IPRS_BRS --> KRA_Check["3. API Check: KRA Tax Compliance"]
+        KRA_Check --> GPA_Pay["4. GPA: Automated Digital Payment"]
     end
 
-    subgraph Operations["Layer 2 & 3: Collaborative Workbench"]
-        Payment --> Logic["5. Rules Engine: Automated Risk Categorization & Routing"]
-        Logic --> Officer["6. Digital Review & Field Inspection Sync (Mobile App)"]
+    subgraph Digital_Workbench["Process Automation (Layer 4)"]
+        GPA_Pay --> AutoAssign["5. BPM: Automated Routing to Co-op Officer"]
+        AutoAssign --> DigReview["6. Digital Review & Field Sync (Mobile App)"]
+        DigReview --> SDCCD_Sign["7. SDCCD: Digital Approval (Digital Queue)"]
     end
 
-    subgraph Settlement["Layer 4: Verifiable Issuance"]
-        Officer --> NPKI["7. Commissioner: Digital NPKI Seal & e-Signature"]
-        NPKI --> Output["8. Verifiable Digital Certificate (Direct to eCitizen Wallet)"]
-        Output --> Registry["9. Real-time Update to National Co-operative Registry"]
+    subgraph Verifiable_Issuance["Trust & Registry (Layer 4)"]
+        SDCCD_Sign --> NPKI_Seal["8. Commissioner: NPKI-Signed Cloud Seal"]
+        NPKI_Seal --> Wallet["9. Digital Certificate to Citizen Wallet with QR"]
+        Wallet --> LiveRegistry["10. Live Update: National Co-operative Registry"]
     end
 
-    Registry --> EndProcess(("End - Governance Secured"))
-
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:20px;;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:20px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:20px;;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:20px;;
-    
-    class Start start;
-    class EndProcess endNode;
-    class Portal,Officer userTask;
-    class Verify,Tax,Payment,Logic,NPKI,Output,Registry serviceTask;
+    LiveRegistry --> End((End))
 ```
 
-### 4.2 Key Capabilities Introduced
-*   **Automation:** Automated Compliance Validator – system automatically checks KRA and SASRA status before a license is renewed.
-*   **Integration:** Multi-registry integration between **Co-operatives**, **BRS**, **KRA**, **IPRS**, and **SASRA** via X-Road (Huduma Bridge).
-*   **Real-time Processing:** "Digital Society Wallet" – co-operatives receive their official registration and licenses as QR-coded digital cards instantly.
-*   **Digital Identity Validation:** Member delegates and society authorized and checked via **National Identity (Maisha Namba)**.
-*   **Workflow Orchestration:** Orchestrates the entire society lifecycle from initial "Bylaws Review" to final certificate issuance.
+---
 
-### 4.3 Transformation Summary
-| Dimension | AS-IS | TO-BE |
+# SECTION 4: AS-IS → TO-BE MAPPING
+
+| AS-IS Step | Pain Point | TO-BE Solution | GEA Component |
+| :--- | :--- | :--- | :--- |
+| **R&R Intake** | Physical reliance | **eCitizen Digital Entry** | Digital Entry Point / SSO |
+| **Manual Ledger Search**| Duplication / Fraud | **BRS & IPRS Integration** | Identity & Trust Layer |
+| **Cash Office Payment** | Manual reconciliation | **GPA (Payment Aggregator)** | Payment Layer |
+| **Physical File Movement**| Approval delays | **Automated Task Routing/SLA** | Workflow / BPM Engine |
+| **Ink Sign & Seal** | Verifiability risks | **NPKI Digital Signature & Cloud Seal** | Trust & Certification |
+| **Dispatch Register** | Record loss | **National EDRMS Integration** | Data & Records Management |
+
+---
+
+# SECTION 5: KEY CAPABILITIES INTRODUCED
+
+*   **Automation:** Manual R&R allocation registers are replaced by an **Automated Resource Management (ARM) Engine** that routes cases based on officer workload and SLA priority.
+*   **Integration:** Bi-directional real-time data exchange with **BRS** and **SASRA** ensures co-operative members are vetted against the national business and financial registers.
+*   **Trust:** All certificates are issued as **Verifiable Credentials (VCs)**, sealed by the Commissioner via **National PKI (NPKI)**, making them impossible to forge and instantly verifiable by banks via QR.
+*   **Data Governance:** Implements a **National Co-operative Registry** as a Single Source of Truth, replacing regional physical ledger books.
+
+---
+
+# SECTION 6: TRANSFORMATION SUMMARY (AS-IS VS TO-BE)
+
+| Dimension | AS-IS (Manual / R&R Led) | TO-BE (Digital / GEA Aligned) |
 | :--- | :--- | :--- |
-| **Processing** | Manual / Desk-to-Desk | Digital / Rule-based Workflow |
-| **Verification** | Physical Signatures / Call-backs | Live X-Road API (BRS/KRA/IPRS) |
-| **Records** | Scattered Regional Ledger Books | Unified National Co-operative Registry |
-| **Tracking** | Handwritten Logs | Real-time Sectoral Compliance Map |
+| **Submission** | Physical "Red Folder" walk-in | eCitizen Portal / Mobile Access |
+| **Verification** | Manual ledger/phone verification | X-Road (Huduma Bridge) Real-time API |
+| **Approvals** | Sequential desk-to-desk (SDCCD) | Parallel Digital Workflow / SLA-led |
+| **Payment** | Cashier / Physical Receipt | Automated GPA Integration (Mobile/Bank) |
+| **Storage** | Physical Registry (Ledges) | National EDRMS & Live Digital Registry |
+| **Outputs** | Physical Certificate (Hardcopy) | Verifiable Digital Cert (Citizen Wallet) |
 
 ---
-
-# SECTION 5: SYSTEM LANDSCAPE (ALIGN TO GEA)
-
-| Layer | System / Platform | Role |
-| :--- | :--- | :--- |
-| **Identity Layer** | Maisha Namba (Member ID) | Identity and Bio-login for all co-operative member services. |
-| **Interoperability** | KeSEL (X-Road Bridge) | Data bridge to BRS, KRA, Banks, and SASRA. |
-| **shared Services** | National EDRMS | Legal digital archive for society constitutions and audits. |
-| **Workflow / BPM** | Governance Engine | Orchestrates registration, license renewals, and disputes. |
-| **Payment Layer** | GPA (Payment Gateway) | Automated collection of registration and renewal fees. |
-| **Trust Hub** | NPKI Stamping Service | Cryptographic sealing of all Verifiable Co-operative Certs. |
-
----
-
-# SECTION 6: TRANSFORMATION VALUE (CRITICAL ADDITION)
-
-| Value Type | Explanation |
-| :--- | :--- |
-| **Efficiency Gain** | Registration turnaround reduced from 45 days to <5 days. |
-| **Economic Impact** | Accelerates the formalization of agricultural and MSME co-operatives. |
-| **Governance Impact** | Eliminates illegal/fake co-operative identities; secures member funds. |
-| **Citizen Experience** | Members can check the status and legitimacy of a society on their phone. |
-| **Interoperability Value** | Shared registry data allows financial institutions to offer credit to co-operatives instantly. |
-
----
-
-# SECTION 7: ALIGNMENT TO WHOLE-OF-GOVERNMENT ARCHITECTURE
-- **Shared Platforms:** Uses the National Government eCitizen Portal for society onboarding.
-- **Registry Reuse:** Reuses BRS (Business) data to auto-populate society officer profiles.
-- **Compliance with GEA / GIF:** Standardizing co-operative metadata for whole-of-government financial tracking.
-
----
-
-# SECTION 8: IMPLEMENTATION READINESS (NEW)
-*   **Data Readiness:** High; Digital census of co-operative societies was recently completed.
-*   **Legal Readiness:** High; Co-operative Societies Act allows for the electronic filing of records.
-*   **Institutional Readiness:** High; Active commissioner and decentralized support teams in 47 counties.
-*   **Technical Readiness:** High; Integration with GPA and eCitizen is already in pilot phase.
-
----
-
-# SECTION 9: TRACEABILITY MATRIX (NEW)
-
-| BPA Process | Priority Service | Tier | TO-BE Capability | National Impact |
-| :--- | :--- | :--- | :--- | :--- |
-| **Society Intake** | Registration | T2 | Maisha Namba / BRS Integration | Formal Sector Growth |
-| **Compliancet Audit**| License Renewal | T2 | Automated KRA/Social Check | Financial Stability & Trust |
-| **Cert. Issuance** | Digital Certificate | T2 | NPKI-Signed Verifiable QR | Fraud Elimination |
-| **Dispute Filing** | Tribunal Support | T2 | EDRMS: Tracked Legal Record | Access to Justice for Members |
-
----
-**[End of Standardised Business Process Architecture]**
+**[End of GEA-Aligned Business Process Architecture]**
