@@ -1,213 +1,191 @@
-# Kenya Broadcasting Corporation – Business Process Architecture (Updated)
+# KENYA BROADCASTING CORPORATION (KBC) – Service Delivery
 
 ## Cover Page
-- **Ministry:** Ministry of Information, Communications and the Digital Economy
-- **Corporation:** Kenya Broadcasting Corporation (KBC)
-- **Primary Authority:** Managing Director, KBC
-- **Document Type:** Business Process Architecture (BPA) Standardised
-- **Document Version:** 4.1
-- **Date:** 2026-03-25
+- **Ministry/Department/Agency (MDA):** Ministry of Information, Communications and the Digital Economy
+- **Authority:** Kenya Broadcasting Corporation (KBC)
+- **Process Name:** Archival Access and Content Licensing
+- **Document Version:** 2.1
+- **Date:** 2026-02-24
 - **Classification:** Official
 - **Strategic Category:** Priority MDA
-- **Service Model:** G2C / G2B
-- **Reviewer:** Senior Government Enterprise Architect
+- **Service Model:** G2C
+- **Life-Cycle Group:** Cradle to Death (4. Employment & Business)
+
+## Service Mandate
+According to the KBC Act (CAP 221) of the Laws of Kenya, the Kenya Broadcasting Corporation (KBC) is a state-owned public broadcaster with the following primary mandate:
+* **Core Purpose:** To provide independent and impartial broadcasting services of information, education, and entertainment.
+* **Language:** Services are provided in English, Kiswahili, and over 23 other indigenous languages.
+* **Public Service:** To contribute to the economic, educational, cultural, and social well-being of Kenyans through high-quality broadcasts.
+* **National Development:** To increase public understanding of government development policies and strategies and promote the use of radio and television as tools for national development.
+* **Universal Coverage:** To maintain universal coverage to ensure even the most remote areas of Kenya have access to information.
 
 ---
 
-## SECTION 0: SERVICE PRIORITISATION MAPPING
-- **Mapped Priority Service:** National Archival Access & Content Licensing
-- **Tier Classification:** Tier 2
-- **Strategic Category:** Economy / Information (National Heritage)
-- **Breakout Room Classification:** Room 2 (Coordination, Culture & Specialised Services)
-- **Lead MDA (Standardised Name):** Kenya Broadcasting Corporation
-- **Related Cross-Cutting Services:**
-    - National Content Lake (Digitized Media Hub)
-    - Identity Layer (IPRS / Maisha Namba - Licensee Login)
-    - X-Road (eCitizen / National Archives / Treasury Interop)
-    - National EDRMS (Metadata & Rights Registry)
-    - Government Payment Aggregator (GPA / Licensing Royalties)
+## Executive Summary
+The Kenya Broadcasting Corporation (KBC) is the state broadcaster, holding over 33 million archival records (audio, video, and print) dating back to the colonial era. These archives are a national treasure but are currently largely physical or stored on deteriorating analog formats. The transition to the Kenya DSAP Architecture aims to digitize these archives and establish a digital "Content Licensing Portal" integrated with the government payment aggregator for public and commercial access.
 
 ---
 
-## SECTION 0.1: PRIORITISATION JUSTIFICATION
-This service is prioritised because the TO-BE design transforms KBC from a failing physical tape-vault into a "National Digital Content Lake." By digitizing over 33 million archival records (audio, video, and print) and implementing an AI-powered eCitizen "Content Licensing Portal," the design enables both citizens and global researchers to access and monetize Kenya's historical heritage. This transformation eliminates the 14-day manual "physical search" lag, preserves deteriorating analog history from permanent loss, and automates high-velocity licensing payments via the GPA, turning a passive national archive into a scalable, revenue-generating cultural asset.
+## 1. AS-IS Process Flowchart (BPMN 2.0)
+*Current State visualization (Archival Retrieval and Licensing).*
 
-| Criteria | Evidence from TO-BE Design |
-| :--- | :--- |
-| **Demand / Volume** | Over 33 million archival assets; high demand from media, academia, and tourism. |
-| **National Priority Alignment** | KBC Act (Cap 221); National Heritage Policy; Digital Economy Blueprint. |
-| **Data Reusability** | Archives are vital for education (KIE), tourism branding, and national day documentaries. |
-| **Interoperability** | Continuous API synchronization between the Content Lake and global media platforms via X-Road. |
-| **Revenue / Efficiency Impact** | Instant licensing fee collection via GPA; removes physical retrieval overhead. |
-| **Governance / Risk Reduction** | Digital watermarking and QR-based licenses prevent unauthorized content piracy. |
-| **Inclusivity** | Multi-lingual AI transcription (23+ languages) makes heritage accessible to all Kenyans. |
-| **Readiness** | High; Digitization pilots are underway; basic eCitizen integration is active. |
-
-> [!NOTE]
-> “The TO-BE design transforms KBC from a physical tape-vault into a 'National Digital Content Lake.' By digitizing 33 million archives (audio/video) and implementing an eCitizen-based 'Content Licensing Portal,' the design enables global access to Kenya's historical heritage. This transformation eliminates the 'physical search' lag, automates licensing payments via the GPA, and ensures that deteriorating analog history is preserved as a permanent, searchable, and monetizable national asset.”
-
----
-
-# SECTION 1: SERVICE DEFINITION (STANDARDISED)
-
-According to the **KBC Act (CAP 221)**, the corporation is mandated to provide independent broadcasting services and maintain the national audio-visual heritage. 
-
-In this refactored BPA, the primary service is the **National Archival Retrieval & Digital Licensing** lifecycle. The objective is to move from manual search through physical "Tape Reals" to an **AI-Indexed Content Portal** where footage is previewed, licensed, and downloaded via the **Huduma Bridge**.
-
----
-
-# SECTION 2: SERVICE CATALOGUE (NORMALISED)
-
-| Category | Service Name | Description |
-| :--- | :--- | :--- |
-| **Core Services** | **Archival Content Discovery** | AI-powered search for historical footage and audio clips. |
-| | **Digital Content Licensing** | End-to-end processing of commercial and academic use-licenses. |
-| **Extended Services** | **Royalty Distribution** | Automated split-payment of licensing revenue to rights holders. |
-| | **Verifiable License QR** | Issuance of digital certificates for legal content use. |
-| **Special Case Services**| **Film/Audio Restoration** | Specialized high-res digitization of deteriorating analog masters. |
-| | **Heritage Syndication** | API-based content delivery to global news/educational agencies. |
-
----
-
-# SECTION 3: AS-IS PROCESS FLOWS (MANUAL/DEGRADING)
-
-The current process is manual and relies on deteriorating analog formats, making access slow and risking permanent loss of national history.
-
-### 3.1 AS-IS Visualization
 ```mermaid
 %%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start)) --> Request["1. Manual Archival Request (Email/Paper)"]
+graph TD
+    Start((Start)) --> Request["Citizen/Client submits Archival Retrieval Request"]
     
-    subgraph Library_Silo["Physical Search"]
-        Request --> Verify["2. Verify Rights (Physical Registry)"]
-        Verify --> Search["3. Archivist Searches Tape Vaults (Manual Index)"]
-        Search --> Condition["4. Check Analog Tape Condition (Head-cleaning)"]
+    subgraph Search["Manual Archive Search"]
+        Request --> Verify["Verify Request Details & Content Rights"]
+        Verify --> PhysicalSearch["Archivist Searches Physical Library/Vault"]
+        PhysicalSearch --> Found{"Content Found?"}
+        
+        Found -- "No" --> Notify["Notify Client('Not Found')"]
+        Found -- "Yes" --> Review["Review Analog Format (Tape/Film)"]
     end
-
-    subgraph Processing_Silo["Digitization"]
-        Condition --> Prepare["5. Prepare Temporary Digitization Run"]
-        Prepare --> Bill["6. Manually Calculate Fee in Excel"]
-    end
-
-    subgraph Delivery_Silo["Fulfillment"]
-        Bill --> Payment["7. Client Pays at KBC / Bank Branch (Deposit Slip)"]
-        Payment --> Copy["8. Physical Copy to External Drive / DVD"]
-    end
-
-    Copy --> EndProcess(("End - Content Delivered"))
-```
-
-### 3.2 Operational Reality
-- **Actors:** Librarian, Archivist, Content Producer, Finance Officer, Client.
-- **Systems:** Physical Index Cards, Analog Tape Players, Standalone Excel Sheets, Paper Receipts.
-- **Pain Points:** 14-day turnaround for a simple video clip; high risk of "Tape-Eat" during physical playback; analog formats (Betacam/U-matic) are reaching end-of-life; citizens must travel to Nairobi to preview content.
-
----
-
-# SECTION 4: TO-BE PROCESS INTERPRETATION (NEW LAYER)
-
-### 4.1 TO-BE Process (Digital Content Lake Access)
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '20px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start)) --> Portal["1. Client Accesses Digital Archive (eCitizen / OGS Hub)"]
     
-    subgraph Discovery_Hub["Layer 2: AI Search"]
-        Portal --> Search["AI-Powered Metadata & Transcript Search"]
-        Search --> Preview["View Low-Res Watermarked Watermarked Previews"]
+    subgraph Processing["Digitization & Billing"]
+        Review --> Prep["Prepare Content for Temporary Digitization"]
+        Prep --> Bill["Calculate Licensing & Retrieval Fees"]
+        Bill --> Payment["Client Pays via Bank / Cash at KBC"]
     end
-
-    subgraph Trust_Hub["Layer 2 & 3: Rights Workflow"]
-        Preview --> Cart["2. Add to Virtual Licensing Cart"]
-        Cart --> Rules["3. Workflow Engine: Auto-Verify License Type & Fees"]
-    end
-
-    subgraph Settlement["Layer 4: Registries & Delivery"]
-        Rules --> GPA["4. Pay License Fee via GPA (Real-time Settlement)"]
-        GPA --> Token["5. System Generates NPKI-Signed Secure Download Token"]
-        Token --> Cloud["6. Auto-Fetch High-Res Master from Secure Cloud Storage"]
-        Cloud --> Download["7. Instant Secure Digital Download with Verifiable License"]
-    end
-
-    Download --> EndProcess(("End - Heritage Shared"))
-
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:20px;;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:20px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:20px;;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:20px;;
     
+    subgraph Issuance [Delivery]
+        Payment --> Confirm["Finance Confirms Payment"]
+        Confirm --> Copy["Copy Content to External Drive / DVD"]
+        Copy --> Collect["Client Collects Content Physically"]
+    end
+    
+    Collect --> End((End))
+    Notify --> End
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px;;
     class Start start;
-    class EndProcess endNode;
-    class Portal,Search,Preview,Cart userTask;
-    class Rules,GPA,Token,Cloud,Download serviceTask;
+    class End endNode;
+    class Found gateway;
+    class Request,Verify,PhysicalSearch,Review,Prep,Bill,Payment,Confirm,Copy,Collect,Notify userTask;
 ```
 
-### 4.2 Key Capabilities Introduced
-*   **Automation:** Automated Licensing Engine – fees are auto-calculated based on content length and use-type (commercial vs. academic).
-*   **Integration:** Real-time bi-directional integration with the **National Treasury (GPA)** for revenue split and **eCitizen** for discovery.
-*   **Real-time Processing:** Instant "Master Fetch" – high-resolution assets are moved from cold to hot storage for immediate user download.
-*   **Digital Identity Validation:** Licensee identity and organization status verified via **Maisha Namba** and **BRS** identity federation.
-*   **Workflow Orchestration:** Orchestrates the lifecycle from AI-indexed search to watermark-generation and secure digital delivery.
+---
 
-### 4.3 Transformation Summary
-| Dimension | AS-IS | TO-BE |
-| :--- | :--- | :--- |
-| **Processing** | Manual / Analog Playback | Digital / Cloud Retrieval |
-| **Verification** | Physical Rights Review | Automated Rights Metadata Check |
-| **Records** | Regional Tape Vaults | National Unified Media Registry |
-| **Tracking** | Manual Usage Monitoring | Real-time Asset Licensing Dashboard |
+## Process Overview
+### Process Name
+End-to-End Archival Retrieval, Digitization, and Content Licensing
+
+### Service Category
+- G2C (Citizens) / G2B (Media Houses/Researchers)
+
+### Scope
+- **In Scope:** Search requests for historical footage/audio, copyright verification, fee assessment, and delivery of digital copies.
+- **Out of Scope:** Live broadcasting operations.
+
+### Triggers
+- A request from a media house, researcher, or citizen for specific historical content.
+
+### End States
+- **Successful:** Digital content delivered; Licensing fee collected; Copyright terms accepted.
+
+### Policy Context
+- KBC Act; Public Archives and Documentation Service Act; Copyright Act.
 
 ---
 
-# SECTION 5: SYSTEM LANDSCAPE (ALIGN TO GEA)
+## Detailed Process (AS-IS)
 
-| Layer | System / Platform | Role |
-| :--- | :--- | :--- |
-| **Identity Layer** | Maisha Namba (Licensee) | Identity and bio-login for professional content buyers. |
-| **Interoperability** | KeSEL (X-Road) | Data bridge to eCitizen for public discovery. |
-| **shared Services** | National Media Cloud | Secure, elastic storage for massive video/audio masters. |
-| **Workflow / BPM** | Content Licensing Hub | Orchestrates previews, rights-check, and tokens. |
-| **Payment Layer** | GPA (Finance Aggregator) | Real-time payment collection and royalty split. |
-| **Trust Hub** | Digital Watermarking | Ensures traceability and provenance of all sold clips. |
-
----
-
-# SECTION 6: TRANSFORMATION VALUE (CRITICAL ADDITION)
-
-| Value Type | Explanation |
-| :--- | :--- |
-| **Efficiency Gain** | Archival retrieval time reduced from 14 days to zero (instant download). |
-| **Economic Impact** | Unlocks new commercial revenue streams from international media agencies. |
-| **Governance Impact** | Full accountability for government-owned intellectual property assets. |
-| **Citizen Experience** | Every Kenyan can explore their history via a simple eCitizen search. |
-| **Interoperability Value** | Shared historical assets for Schools (Competency Based Curriculum) via X-Road. |
+| Step | Role | Action | Tool/System | Notes |
+|---|---|---|---|---|
+| 1 | Client | Submits a manual request for a specific historical event or footage. | Paper/Email | |
+| 2 | Librarian | Physically searches through thousands of tapes/reels in the KBC vaults. | Index Cards | High risk of missing content. |
+| 3 | Archivist | Verifies the copyright status of the content (KBC-owned vs. shared). | Manual Registry | |
+| 4 | Finance Officer | Manually calculates the digitization and licensing fee. | Excel | |
+| 5 | Client | Pays via bank deposit and brings the slip to the KBC registry for verification. | Manual | Major delay. |
 
 ---
 
-# SECTION 7: ALIGNMENT TO WHOLE-OF-GOVERNMENT ARCHITECTURE
-- **Shared Platforms:** Uses G-Cloud for media storage and GPA for all official monetization.
-- **Registry Reuse:** Reuses National Archives (KNA) IDs for cross-sector metadata consistency.
-- **Compliance with GEA / GIF:** Standardizing media metadata schemas for national and international searchability.
+## Pain Points & Opportunities
+### Pain Points
+- **Format Deterioration:** Analog tapes (U-matic, Betacam) are degrading, leading to permanent loss of history.
+- **Access Barriers:** Citizens must physically travel to KBC Nairobi to search or collect content.
+- **Payment Friction:** Lack of mobile payment options for small archival requests (e.g., student researchers).
+
+### Opportunities
+- **National Content Lake:** Digitizing all 33M archives and storing them in a secure government cloud.
+- **Public Content Portal:** Allowing citizens to browse low-resolution previews on eCitizen and pay for high-resolution downloads.
+- **GPA Integration:** Enabling instant M-Pesa payments for "Clip Licensing" via the **Government Payment Aggregator**.
 
 ---
 
-# SECTION 8: IMPLEMENTATION READINESS (NEW)
-*   **Data Readiness:** Medium-High; Significant "Digitization Factory" required to clear analog backlog.
-*   **Legal Readiness:** High; KBC Act and Copyright Act provide a framework for content sales.
-*   **Institutional Readiness:** High; KBC has a specialized Library and Archival department.
-*   **Technical Readiness:** High; High-speed networks and cloud storage are available via ICTA.
+## 2. TO-BE Process Flowchart (BPMN 2.0)
+*Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
+
+```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+graph TD
+    Start((Start)) --> Portal["Client Accesses KBC Digital Archive (eCitizen)"]
+    
+    subgraph Layer1["Access & Discovery"]
+        Portal --> Search["AI-Powered Metadata Search"]
+        Search --> Preview["View Low-Res Watermarked Previews"]
+    end
+    
+    subgraph Layer2["Licensing & Workflow"]
+        Preview --> Cart["Add to Licensing Cart"]
+        Cart --> Rules["Workflow Engine: Auto-verify Copyright & Fees"]
+    end
+    
+    subgraph Layer4["Settlement & Issuance"]
+        Rules --> Pay["Pay Licensing Fee via GPA('Real-time')"]
+        Pay --> Token["System Generates Secure Download Token"]
+        Token --> Cloud["Fetch High-Res Master from Secure Cloud Storage"]
+    end
+    
+    subgraph Delivery["Digital Fulfillment"]
+        Cloud --> Delivery_App["Instant Digital Download / Stream"]
+    end
+    
+    Delivery_App --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px,font-size:24px;;
+    class Start start;
+    class End endNode;
+    class Portal,Search,Preview,Cart userTask;
+    class Rules,Pay,Token,Cloud,Delivery_App serviceTask;
+```
+
+## Future State Process (TO-BE)
+### Narrative
+**TO-BE Process: Kenya Digital Heritage Portal**
+
+**Design Principles:**
+- **Democratized Access:** The entire archive is indexed using **AI-based tagging**, allowing any citizen to find historical clips from their home via eCitizen.
+- **Monetization of Assets:** The **Government Payment Aggregator (GPA)** enables KBC to monetize its vast content library seamlessly, with automatic revenue splitting for royalty holders.
+- **Security & Provenance:** Every digital download is watermarked and issued with a **Digital Verifiable License (QR)** to ensure legal use and non-repudiation.
+
+### Optimized Steps (Digital)
+
+| Step | Actor | Action | System |
+|---|---|---|---|
+| 1 | Client | Searches for content on the KBC eCitizen Portal using keywords (e.g., "Madaraka Day 1963"). | eCitizen / AI Search |
+| 2 | System | Displays high-resolution previews and automatically calculates the license fee based on the client's profile (Commercial vs. Academic). | Workflow Engine |
+| 3 | Client | Authorizes an M-Pesa payment through the GPA. | GPA |
+| 4 | System | Upon payment confirmation, the system triggers an "Asset Fetch" from the secure government content lake. | Cloud Storage |
+| 5 | System | Generates a time-bound download link and a verifiable digital license for the content. | Output Generator |
 
 ---
 
-# SECTION 9: TRACEABILITY MATRIX (NEW)
+## References
+- https://www.kbc.co.ke
+- Kenya Broadcasting Corporation Act
+- Desk Review
 
-| BPA Process | Priority Service | Tier | TO-BE Capability | National Impact |
-| :--- | :--- | :--- | :--- | :--- |
-| **Content Discovery**| Archival Search | T2 | AI-Powered Metadata Hub | Cultural Heritage Access |
-| **Rights Review** | Licensing Mgmt | T2 | Automated Rules Engine | IP Monetization & Growth |
-| **Payment Hub** | Revenue Split | T2 | GPA Instant Settlement | Non-Tax Revenue increase |
-| **Asset Delivery** | Cloud Issuance | T2 | NPKI-Signed Secure Tokens | Secure Digital Content Economy |
 
 ---
-**[End of Standardised Business Process Architecture]**
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

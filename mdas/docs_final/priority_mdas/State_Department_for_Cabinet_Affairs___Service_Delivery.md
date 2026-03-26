@@ -1,4 +1,4 @@
-# State Department for Cabinet Affairs - Service Delivery (Updated)
+# State Department for Cabinet Affairs - Service Delivery
 
 ## Service Mandate
 The State Department for Cabinet Affairs is responsible for facilitating the operations and coordination of the Cabinet. Its mandate includes organizing Cabinet activities, providing policy advisory support to the Cabinet, serving as the secretariat to the Cabinet, and coordinating the implementation of Cabinet decisions and government business across all ministries and state departments.

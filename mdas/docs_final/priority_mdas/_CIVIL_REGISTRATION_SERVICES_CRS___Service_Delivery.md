@@ -1,222 +1,294 @@
-# Civil Registration Services (CRS) – Business Process Architecture (Updated)
+# CIVIL REGISTRATION SERVICES (CRS) – Service Delivery Refactored
 
 ## Cover Page
 - **Ministry:** Ministry of Interior and National Administration
-- **State Department:** Department of Civil Registration Services (CRS)
+- **State Department:** State Department for Immigration and Citizen Services
 - **Department:** Department of Civil Registration Services (CRS)
-- **Document Type:** Business Process Architecture (BPA) Standardised
-- **Document Version:** 4.1
-- **Date:** 2026-03-25
+- **Document Type:** Business Process Document (Refactored)
+- **Document Version:** 3.0 (Government Ready)
+- **Date:** 2026-03-24
 - **Classification:** Official / Sensitive
-- **Strategic Category:** Priority MDA - National Registry (Tier 1)
-- **Service Model:** G2C
-- **Reviewer:** Senior Government Enterprise Architect
+- **Strategic Category:** Priority MDA - National Registry
+- **Life-Cycle Group:** Cradle to Grave
+- **Reviewer:** Lead Government Business Analyst
 
 ---
 
-## SECTION 0: SERVICE PRIORITISATION MAPPING
-- **Mapped Priority Service:** Birth and Death Registration (Civil Registration & Vital Statistics)
-- **Tier Classification:** Tier 1
-- **Strategic Category:** Identity / Governance (National Vital Statistics)
-- **Breakout Room Classification:** Room 1 (High Impact & Large Registries)
-- **Lead MDA (Standardised Name):** Civil Registration Services (CRS)
-- **Related Cross-Cutting Services:**
-    - National CRVSS Registry
-    - Identity Layer (IPRS / Maisha Namba Minting)
-    - Payment Gateway (GPA)
-    - National EDRMS (10M Record Backlog)
-    - X-Road (Health/MOH & Police/NPS Interop)
-
----
-
-## SECTION 0.1: PRIORITISATION JUSTIFICATION
-This service is prioritised because the TO-BE design establishes the "Civil Registration and Vital Statistics System (CRVSS)" as the foundational identity engine for the Republic of Kenya. By integrating real-time digital notifications from 5,000+ health facilities and 10,000+ chiefs directly into the CRVSS, the design enables instant "Maisha Namba" (UPI) minting at birth. This ensures 100% registration coverage, eliminates identity fraud at the source, and provides real-time vital statistics for national planning.
-
-| Criteria | Evidence from TO-BE Design |
-| :--- | :--- |
-| **Demand / Volume** | Over 1.5 million births and 500k deaths annually; 10M+ historical records. |
-| **National Priority Alignment** | Births and Deaths Registration Act (Cap. 149); Maisha Namba/UPI Initiative. |
-| **Data Reusability** | Foundational data for Education (NEMIS), Health (MOH), and Elections (IEBC). |
-| **Interoperability** | Continuous sync with IPRS for identity and MOH for medical cause-of-death via X-Road. |
-| **Revenue / Efficiency Impact** | Automated fee collection via GPA on eCitizen; 90% reduction in travel costs for citizens. |
-| **Governance / Risk Reduction** | Biometric-linked identity prevents duplicate registrations and insurance fraud. |
-| **Inclusivity** | CRS Mobile App enables registration in remote areas via authorized Notifiers (Chiefs). |
-| **Readiness** | High; CRVSS cloud infrastructure is active; massive digitization of 10M records is underway. |
-
-> [!NOTE]
-> “This service is prioritised because the TO-BE design establishes the 'Civil Registration and Vital Statistics System (CRVSS)' as the foundational identity engine of Kenya. By integrating real-time notifications from health facilities and chiefs, it enables instant 'Maisha Namba' minting and ensures 100% registration coverage, directly feeding the national identity ecosystem.”
-
----
-
-# SECTION 1: SERVICE DEFINITION (STANDARDISED)
+## SECTION 1: CORRECTED SERVICE DEFINITION
 
 The Department of Civil Registration Services (CRS) is mandated by the **Births and Deaths Registration Act (Cap. 149)** and the **Legitimacy Act (Cap. 145)** to provide compulsory and immediate registration of vital life events.
 
-In this standardized BPA, the CRS mandate is positioned as the **Foundational Registry** for Kenya's Digital Public Infrastructure. The separation of workflows for Birth and Death registration ensures distinct legal compliance and technical accuracy within the **Civil Registration and Vital Statistics System (CRVSS)**.
+This document formally separates the workflows for Birth and Death registration to reflect distinct legal requirements, evidentiary standards, and system modules within the **Civil Registration and Vital Statistics System (CRVSS)**.
+
+### Expanded Scope of Services
+The scope is refactored to include critical but previously omitted services:
+1.  **Birth Registration:** Current (under 6 months) and Late (after 6 months).
+2.  **Death Registration:** Current (under 6 months) and Late (after 6 months).
+3.  **Re-registration:** Legal amendments via Adoption, Recognition, and Legitimacy-bound amendments.
+4.  **Foreign Event Registration:** Births and Deaths of Kenyans occurring outside national borders.
+5.  **Assumption of Death:** Registration of deaths based on High Court orders for missing persons.
 
 ---
 
-# SECTION 2: SERVICE CATALOGUE (NORMALISED)
+## SECTION 2: SERVICE CATALOGUE (COMPLETE)
 
-| Category | Service Name | Description |
+| Category | Service Name | Target Population |
 | :--- | :--- | :--- |
-| **Core Services** | **Birth Registration (Current)** | Registration of children born in Kenya (0-6 months). |
-| | **Death Registration (Current)** | Registration of deaths occurring in Kenya (0-6 months). |
-| **Extended Services** | **Late Event Registration** | Processing of births/deaths reported after the 6-month statutory limit. |
-| | **Foreign Event Registration** | Births and deaths of Kenyans occurring outside national borders. |
-| **Special Case Services**| **Re-registration (Adoption/Legitimacy)**| Amending records based on legal status changes (Adoption/Recognition). |
-| | **Assumption of Death** | Registration based on High Court orders for missing persons. |
+| **Core Services** | Birth Registration (Current) | Children born in Kenya (0-6 months) |
+| | Death Registration (Current) | Deaths occurring in Kenya (0-6 months) |
+| | Issuance of Certificates | All registered citizens/informants |
+| **Extended Services** | Late Birth Registration | Persons over 6 months of age |
+| | Late Death Registration | Deaths reported after 6 months |
+| | Foreign Event Registration | Kenyan citizens abroad |
+| **Special Case Services**| Re-registration (Adoption) | Children legally adopted |
+| | Re-registration (Legitimization)| Children of parents who marry after birth |
+| | Re-registration (Recognition) | Children where paternity is legally acknowledged |
+| | Assumption of Death | Missing persons (Court ordered) |
 
 ---
 
-# SECTION 3: AS-IS PROCESS FLOWS (CURRENT HYBRID TRACK)
+## SECTION 3: AS-IS PROCESS FLOWS (CORRECTED)
 
-The current state is a transition from manual, ledger-based "Register A" books to the CRVSS digital track.
+Unlike previous versions, these flows distinguish between the manual "Legacy" track and the "CRVSS-enabled" digital track currently in operation.
 
-### 3.1 AS-IS Visualization (Manual Legacies)
+### 1. Birth Registration – Manual (Paper-Based)
+*Used in remote areas or where network/system downtime occurs.*
+
 ```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
-    Start((Start)) --> Notify["1. Manual Notification (Health/Chief)"]
-    
-    subgraph Intake["Manual Registry"]
-        Notify --> Receipt["2. Receipt of Paper Forms (Registry)"]
-        Receipt --> Ledger["3. Entry in Physical Birth/Death Register"]
+    subgraph Facility_Chief["Health Facility / Chief"]
+        Start1((" ")) --> A1["Issue Physical Notification"]
     end
 
-    subgraph Verification["Siloed Review"]
-        Ledger --> Verify["4. Manual Verification of Notifier Detail"]
-        Verify --> Search["5. Search for Parent/Deceased Link (Ledger-based)"]
+    subgraph Informant["Parent / Informant"]
+        A1 --> B1["Collect Notification & Documents"]
+        B1 --> B2["Visit CRS District Office"]
+        B2 --> B3["Submit Physical Forms & ID copies"]
+        B7["Pay via eCitizen / Finance"] --> B8["Collect Handwritten Cert"]
+        B8 --> End1(((" ")))
     end
 
-    subgraph Production["Certificate Generation"]
-        Search --> Type["6. Manual Typing / System Entry"]
-        Type --> Seal["7. Physical Sealing & Signing (Registrar)"]
+    subgraph CRS["CRS District Registry"]
+        B3 --> C1["Officer Verifies Paperwork"]
+        C1 --> C2["Register in Physical Book A"]
+        C2 --> C3["Registrar Signs Register"]
+        C3 --> B7
     end
-
-    Seal --> End((End))
-
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;;
-    
-    class Start start;
-    class End endNode;
-    class Notify,Receipt,Ledger,Verify,Search,Type,Seal userTask;
 ```
 
-### 3.2 Operational Reality
-- **Actors:** Parent/Informant, Health Worker/Chief, Registration Officer, Registrar.
-- **Systems:** Physical Registers (Books), eCitizen (Partial for fee collection).
-- **Pain Points:** 10 million record backlog in paper vaults; high travel costs for citizens; risk of identity theft/fraud in manual registers; storage/security risks for physical books (fire/theft).
+**Step-by-Step Structure:**
+1. **Notification:** Informant receives a physical notification from the health facility or chief.
+2. **Submission:** Informant physically travels to the CRS District Office with original notification and parents' IDs.
+3. **Verification:** Registration Officer manually checks ID validity and cross-references physical records.
+4. **Registration:** Details are handwritten into the Physical Birth Register (Register A) and assigned an Entry Number.
+5. **Approval:** The Registrar reviews and manually signs the register entry.
+6. **Payment:** Revenue is collected via manual receipting or semi-automated finance modules.
+7. **Issuance:** A handwritten or typed physical certificate is produced and issued.
 
----
+*   **Actors:** Informant/Parent, Health Worker/Chief, Registration Officer, Registrar.
+*   **Systems:** Manual Registers, Finance Module (Partial).
+*   **Pain Points:** High travel costs for citizens, risk of data entry errors, slow retrieval for verification, and storage/security risks for physical books.
 
-# SECTION 4: TO-BE PROCESS INTERPRETATION (NEW LAYER)
+### 2. Birth Registration – CRVSS-Enabled (Digital Track)
+*The primary digital workflow integrated with eCitizen.*
 
-### 4.1 TO-BE Process (DPI-Enabled)
 ```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
 flowchart TD
-    Start((Start)) --> Notify["Auth. Notifier logs Event (CRS Mobile App)"]
-    
-    subgraph Trust_Hub["Layer 2: Identity & Status"]
-        Notify --> Consent["Consent Manager: Access Health/Parental Info?"]
-        Consent --> XRoad["X-Road: Verify Identities via IPRS & MOH Hub"]
+    subgraph Facility["Health Facility"]
+        Start2((" ")) --> D1["Log Birth in CRS Notification App"]
     end
-    
-    subgraph Operations["Layer 2 & 3: Workflow & Minting"]
-        XRoad --> Track{"Event Type?"}
-        Track -- "Birth" --> Mint["UPI / Maisha Namba Minting (Real-time)"]
-        Track -- "Death" --> Deact["Deactivation of ID (X-Road: IPRS Sync)"]
-    end
-    
-    subgraph Settlement["Layer 4: Registries & Issuance"]
-        Mint --> Sign["NPKI Digital Signature & Digital Archival"]
-        Deact --> Sign
-        Sign --> Wallet["Issue Verifiable Digital Certificate (QR Code)"]
-    end
-    
-    Wallet --> End((End))
 
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px;;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px;;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px;;
-    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px;;
-    
-    class Start start;
-    class End endNode;
-    class Track gateway;
-    class Notify userTask;
-    class Consent,XRoad,Mint,Deact,Sign,Wallet serviceTask;
+    subgraph CRVSS_System["CRVSS Cloud"]
+        D1 --> D2["Sync Notification Metadata"]
+        D3["Verify Parent ID via IPRS"] --> D4["Create Digital Entry"]
+    end
+
+    subgraph Citizen["Parent / Informant"]
+        D2 --> E1["Apply via eCitizen Portal"]
+        E1 --> D3
+        D4 --> E2["Process Digital GPA Payment"]
+        E2 --> E3["Download / Collect Cert"]
+        E3 --> End2(((" ")))
+    end
 ```
 
-### 4.2 Key Capabilities Introduced
-*   **Automation:** Instant "UPI / Maisha Namba" minting upon verified birth notification.
-*   **Integration:** Hub-and-spoke integration with the Ministry of Health (Civil Registration Notification App) and the Police (Accident Reports) via X-Road.
-*   **Real-time Processing:** Automated deactivation of deceased IDs in IPRS upon verified death notification.
-*   **Digital Identity Validation:** Parental and informant identities verified via **Maisha Namba** identity federation.
-*   **Workflow Orchestration:** Orchestrates the total lifecycle from notification at source (Clinic/Chief) to digital certificate issuance.
+**Step-by-Step Structure:**
+1. **Digital Notification:** Authorized notifier logs the event via the **CRS Notification App** at source.
+2. **Synchronization:** Data flows to the central CRVSS database instantly.
+3. **Application:** Parent logs into the **eCitizen** portal to submit a certificate request.
+4. **Verification:** CRVSS automatically pings **IPRS** to validate the parental identities and Maisha Namba.
+5. **Approval:** The Registrar approves the record digitally within the CRVSS workflow engine.
+6. **Payment:** Fees are settled via the **Government Payment Aggregator (GPA)** on eCitizen.
+7. **Certification:** A digital certificate record is created, available for download or high-security printing.
 
-### 4.3 Transformation Summary
-| Dimension | AS-IS | TO-BE |
-| :--- | :--- | :--- |
-| **Processing** | Manual / Multi-touch | Automated / Zero-touch (Current events) |
-| **Verification** | Physical ID / Paper letters | X-Road API (IPRS/MOH) |
-| **Records** | 10M Paper Backlog | Unified CRVSS Cloud Registry |
-| **Tracking** | Post-event ledger entry | Real-time Vital Statistics Sync |
+*   **Actors:** Health Worker, Parent, CRS Registrar, System Interface.
+*   **Systems:** CRVSS, CRS Notification App, eCitizen, IPRS, GPA.
+*   **Pain Points:** Dependent on internet connectivity in facilities, requires citizen digital literacy, and potential IPRS downtime delays.
+
+### 3. Death Registration – Manual
+```mermaid
+flowchart TD
+    subgraph Authority["Hospital / Police / Chief"]
+        Start3((" ")) --> F1["Issue Burial Permit / Notification"]
+    end
+
+    subgraph Informant_D["Relative / Informant"]
+        F1 --> G1["Collect Original Documents"]
+        G1 --> G2["Visit CRS Office"]
+        G2 --> G3["Fill Death Registration Forms"]
+        G6["Pay Fees"] --> G7["Collect Manual Cert"]
+        G7 --> End3(((" ")))
+    end
+
+    subgraph CRS_D["CRS Registry"]
+        G3 --> H1["Verify Cause of Death Proof"]
+        H1 --> H2["Record in Death Register"]
+        H2 --> G6
+    end
+```
+
+**Step-by-Step Structure:**
+1. **Notification:** Family obtains a burial permit/manual notification from a hospital or chief.
+2. **Registry Visit:** Family presents physical IDs and proof of death at the CRS Registry.
+3. **Manual Entry:** Officer records details in the physical Death Register.
+4. **Approval:** Registrar validates and signs the entry manually.
+5. **Certification:** Manual death certificate is issued.
+
+*   **Actors:** Family Informant, Hospital Staff/Chief, Registration Officer, Registrar.
+*   **Systems:** Manual Registers.
+*   **Pain Points:** High risk of identity theft/fraud where IPRS verification is missing, physical record deterioration, and delayed vital statistics reporting.
+
+### 4. Death Registration – CRVSS-Enabled
+```mermaid
+flowchart TD
+    subgraph Hospital["Medical Facility"]
+        Start4((" ")) --> I1["Digital Death Notification"]
+    end
+
+    subgraph Citizen_D["Informant"]
+        I1 --> J1["Apply for Death Cert on eCitizen"]
+        J1 --> K1["Verify Deceased ID in IPRS"]
+        K2["Approval in CRVSS"] --> J2["Pay via GPA"]
+        J2 --> J3["Digital Certificate Issued"]
+        J3 --> End4(((" ")))
+    end
+
+    subgraph CRVSS_D["CRVSS System"]
+        K1 --> K2
+    end
+```
+
+**Step-by-Step Structure:**
+1. **Digital Notification:** Death is logged by an authorized clinical officer or pathologist via the **CRS Notification App**.
+2. **Application:** Relatives apply for the certificate via the **eCitizen** death registry module.
+3. **Verification:** System automatically executes a deceased ID lookup against **IPRS** to lock the identity.
+4. **Approval:** Workflow is routed to the Registrar in **CRVSS** for digital approval.
+5. **Certificate:** Secure certificate with verified entry number is issued digitally.
+
+*   **Actors:** Hospital Pathologist, Family Informant, CRS Registrar.
+*   **Systems:** CRVSS, CRS Notification App, eCitizen, IPRS, GPA.
+*   **Pain Points:** Complexity in verifying community-based deaths digitally without immediate Chief intervention.
 
 ---
 
-# SECTION 5: SYSTEM LANDSCAPE (ALIGN TO GEA)
+## SECTION 4: MISSING PROCESS FLOWS (NEW)
 
-| Layer | System / Platform | Role |
-| :--- | :--- | :--- |
-| **Identity Layer** | Maisha Namba (IPRS) | Foundational identity and UPI minting engine. |
-| **Interoperability** | KeSEL (X-Road) | Data link to Health Facilities (MOH) and Chiefs. |
-| **shared Services** | National EDRMS | Legal digital archive for 10M+ birth/death entries. |
-| **Workflow / BPM** | CRVSS Core | Orchestrates the vital events lifecycle. |
-| **Payment Layer** | GPA (Payment Gateway) | Automated fee collection for certificates. |
-| **Trust Hub** | Consent Manager | Citizen control over personal vital data sharing. |
+### Late Registration (Birth/Death)
+*   **Trigger:** Application made after 6 months of event occurrence.
+*   **Process:** Requires interview of the applicant by the District Coordinator, submission of secondary evidence (Clinic card, School records, Baptismal certificate), and vetting of witnesses.
+*   **Approval:** Requires higher-level approval in CRVSS by the District Registrar or County Coordinator.
 
----
+### Re-registration (Adoption/Legitimization/Recognition)
+*   **Trigger:** Court Order (Adoption) or Statutory Declaration (Legitimization).
+*   **Process:** The original entry in CRVSS is marked as "Cancelled - Re-registered." A new Entry Number is assigned in the special register.
+*   **Output:** A new certificate is issued reflecting the updated parental/legal status while maintaining the original UPI link.
 
-# SECTION 6: TRANSFORMATION VALUE (CRITICAL ADDITION)
+### Foreign Registrations
+*   **Process:** Informant presents certified copies of foreign birth/death certificates and proof of Kenyan citizenship to CRS Headquarters. Events are registered in the **Foreign Registry module** of CRVSS.
 
-| Value Type | Explanation |
-| :--- | :--- |
-| **Efficiency Gain** | Cert issuance time reduced from weeks to generic "On-Demand" status; 100% notification coverage. |
-| **Economic Impact** | Precise vital statistics enable accurate budgeting for education, health, and social dev. |
-| **Governance Impact** | Instant ID deactivation prevents "Zombie Voters" and fraudulent pension payments. |
-| **Citizen Experience** | Parents receive birth notifications and UPIs instantly via SMS/Mobile. |
-| **Interoperability Value** | Foundation for all other government services (Education, Voting, Taxation). |
+### Assumption of Death
+*   **Requirement:** Declaratory judgment from the High Court (typically after 7 years of disappearance).
+*   **Process:** CRS registers the entry based on the court decree as a "Special Entry" to allow the estate to be processed.
 
 ---
 
-# SECTION 7: ALIGNMENT TO WHOLE-OF-GOVERNMENT ARCHITECTURE
-- **Shared Platforms:** Integration with eCitizen for all citizen-facing applications and GPA for revenue collection.
-- **Registry Reuse:** CRS feeds foundational identity data to ALL other government registries (NEMIS, KRA, NSSF).
-- **Compliance with GEA / GIF:** Adherence to "Identity-at-Birth" principle of the national DPI roadmap.
+## SECTION 5: SYSTEM LANDSCAPE (AS-IS REALITY)
+
+The CRS technical architecture is NOT "future state" only; it is an active ecosystem managed by the department:
+
+1.  **CRVSS (Core System):** The central database for all vital events. It manages the lifecycle from notification to certification.
+2.  **CRS Notification App:** A mobile/web interface used by **Authorized Notifiers** (Nurses, Clinical Officers, and Chiefs) to capture events at source.
+3.  **eCitizen Front-end:** The citizen-facing portal for applications, status tracking, and payments.
+4.  **IPRS Integration:** Mandatory real-time link used by CRVSS to verify identities of informants and the deceased/parents.
+5.  **GPA (Government Payment Aggregator):** The unified engine for all revenue collection.
 
 ---
 
-# SECTION 8: IMPLEMENTATION READINESS (NEW)
-*   **Data Readiness:** Medium; Massive project to digitize 10 million historical records is in progress (Phase 1).
-*   **Legal Readiness:** High; Births and Deaths Registration Act (Cap 149) supports digital signatures and notifications.
-*   **Institutional Readiness:** High; CRS has trained staff on the CRVSS transition across all counties.
-*   **Technical Readiness:** High; CRVSS cloud and CRS Notification App are already operational.
+## SECTION 6: CORRECTED PAIN POINTS
+
+1.  **Historical Backlog:** Approximately **10 million** birth and death records exist only in physical paper registers across the country, invisible to real-time verification.
+2.  **Registry Congestion:** Centralized registries (Kabarnet Gardens) and regional vaults are at maximum physical capacity, increasing the risk of record deterioration.
+3.  **Double Entry Risks:** Where manual notifications are used, there is a delay between the physical paper and the system entry, leading to potential data inconsistency.
+4.  **Identity Vulnerabilities:** Fraudulent registration of deaths to claim insurance is a risk where IPRS verification is bypassed in manual workflows.
 
 ---
 
-# SECTION 9: TRACEABILITY MATRIX (NEW)
+## SECTION 7: TO-BE (ALIGNED WITH REALITY)
 
-| BPA Process | Priority Service | Tier | TO-BE Capability | National Impact |
-| :--- | :--- | :--- | :--- | :--- |
-| **Birth Notif** | Registration | T1 | CRS Mobile App / IPRS Link | Universal Identity Coverage |
-| **ID Minting** | Maisha Namba | T1 | Real-time UPI Generation | Foundational Citizen Registry |
-| **Death Notif** | Registration | T1 | IPRS ID Deactivation | Fraud & Ghost Prevention |
-| **Cert Issuance** | Certification | T1 | NPKI Digital Signing | Verifiable Proof of Status |
+*The TO-BE state focuses on optimizing existing infrastructure rather than introducing hypothetical third-party apps.*
+
+```mermaid
+flowchart TD
+    subgraph Source["Facility / Community"]
+        Start_T((" ")) --> L1["Event Captured via CRS Notification App"]
+    end
+
+    subgraph Backend["CRVSS Core / Huduma Bridge"]
+        L1 --> L2["Verify Identity via IPRS / Maisha"]
+        L2 --> L3["Auto-Mint UPI for Births"]
+        L3 --> L4["Digitally Sign Record (NPKI)"]
+    end
+
+    subgraph Finance_GPA["GPA Payment"]
+        L4 --> M1["Process Fee & Revenue Split"]
+    end
+
+    subgraph Delivery["Civil Wallet / eCitizen"]
+        M1 --> N1["Issue Verifiable Digital Credential"]
+        N1 --> End_T(((" ")))
+    end
+
+    style Start_T fill:#fff,stroke:#27ae60,stroke-width:2px
+    style End_T fill:#fff,stroke:#e74c3c,stroke-width:4px
+```
+
+*   **Primary Trigger:** Direct API integration between the **CRS Notification App** and hospital EMRs (where applicable).
+*   **Identity Minting:** Automatic assignment of **Maisha Namba (UPI)** at the point of birth registration within CRVSS, linked to the IPRS master index.
+*   **Verifiable Credentials:** Transition from paper certificates to **Digitally Signed Verifiable Credentials** stored in the eCitizen mobile wallet.
+*   **NPKI Integration:** Every certificate issued will be digitally sealed using the **National Public Key Infrastructure (NPKI)** to prevent forgery.
 
 ---
-**[End of Standardised Business Process Architecture]**
+
+## SECTION 8: DIGITIZATION STRATEGY (10M RECORDS)
+
+To address the 10 million record backlog, a phased approach is mandated:
+1.  **Phase 1: Metadata Indexing:** Scanning registers and capturing key indices (Name, Year, Entry No) to allow for digital searching.
+2.  **Phase 2: On-Demand Full Digitization:** Full transcription of records when a citizen applies for a digital copy of a legacy manual certificate.
+3.  **Phase 3: Back-File Conversion:** Systematic high-speed scanning and OCR processing of all remaining registers, starting from the most recent (last 10 years).
+4.  **Cut-off Strategy:** As of a designated date, all manual registers are retired, and only CRVSS-generated entries are recognized as legal proof of status.
+
+---
+
+## SECTION 9: CHANGE LOG
+
+| Area | Before (Incorrect/Old) | After (Corrected) | Reason |
+| :--- | :--- | :--- | :--- |
+| **Process Structure** | Merged Birth & Death | **Separated into two distinct tracks** | Legal and operational distinctness (Cap 149). |
+| **System Trigger** | Afya App (MOH) | **CRS Notification App** | Ensures CRS maintains ownership and data integrity. |
+| **Service Scope** | Basic Registration only | **Added Late, Foreign, Re-reg, Assumption** | Reflects the full statutory mandate of CRS. |
+| **Flow Modeling** | Single mixed flow | **Dual (Manual vs CRVSS-enabled)** | Accurately describes the current hybrid reality. |
+| **Identity Flow** | Generic Maisha Namba | **UPI/Maisha Namba via IPRS Link** | Technical accuracy of identity minting. |
+| **Pain Points** | Generic "Slow services" | **10M Record Backlog & Registry Capacity** | Specific, measurable institutional challenges. |
+
+---
+**[End of Document]**

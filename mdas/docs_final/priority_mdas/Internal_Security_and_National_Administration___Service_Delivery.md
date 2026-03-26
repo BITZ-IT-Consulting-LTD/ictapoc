@@ -1,212 +1,193 @@
-# Internal Security and National Administration – Business Process Architecture (Updated)
+# Internal Security and National Administration – Service Delivery
 
 ## Cover Page
-- **Ministry:** Ministry of Interior and National Administration
-- **State Department:** State Department for Internal Security and National Administration
-- **Primary Authority:** National Government Administration Officers (NGAO) / Security Directorate
-- **Document Type:** Business Process Architecture (BPA) Standardised
-- **Document Version:** 4.1
-- **Date:** 2026-03-25
-- **Classification:** Official / Restricted
-- **Strategic Category:** Priority MDA - National Registry (Tier 1)
-- **Service Model:** G2C / G2G
-- **Reviewer:** Senior Government Enterprise Architect
+- **Ministry/Department/Agency (MDA):** Internal Security and National Administration
+- **Process Name:** Service Delivery
+- **Document Version:** 1.0
+- **Date:** 2026-02-14
+- **Classification:** Official
 
 ---
 
-## SECTION 0: SERVICE PRIORITISATION MAPPING
-- **Mapped Priority Service:** National Government Coordination and Public Security Registries
-- **Tier Classification:** Tier 1
-- **Strategic Category:** Governance / Security (Law & Order)
-- **Breakout Room Classification:** Room 1 (High Impact & Large Registries)
-- **Lead MDA (Standardised Name):** Internal Security and National Administration
-- **Related Cross-Cutting Services:**
-    - National Incident Registry (Unified)
-    - Identity Layer (IPRS / Maisha Namba)
-    - X-Road (NPS / NIS / NDOC Interop)
-    - National EDRMS (Security & Intelligence Files)
-    - Government Payment Aggregator (GPA / Licensing Fees)
+## Service Mandate
+The State Department for Internal Security and National Administration is mandated to provide internal security oversight and coordinate National Government functions at the county level. Its responsibilities include national government administration, border management, national cohesion and integration policy, disaster and emergency response coordination, registration of persons (IPRS), management of the National Integrated Identity Management System (NIIMS), and oversight of betting, lotteries, and gaming.
 
 ---
 
-## SECTION 0.1: PRIORITISATION JUSTIFICATION
-This service is prioritised because the TO-BE design transforms the State Department from a manual paper-coordinator into a "Digital Hub for National Administration." By integrating with IPRS (Identity) and the National Police Service (Incident Reporting) via X-Road, the design enables real-time field coordination across all 47 counties and 300+ sub-counties. This transformation eliminates the critical "information lag" during national emergencies, automates the issuance of public permits (Baraza, Protest, and Private Security licenses), and provides the Executive with a real-time, data-driven "National Security & Administration Dashboard."
-
-| Criteria | Evidence from TO-BE Design |
-| :--- | :--- |
-| **Demand / Volume** | Continuous coordination for 30M+ citizens; thousands of weekly administrative reports. |
-| **National Priority Alignment** | Constitution Articles 189/238; National Security Strategy; Ease of Doing Business. |
-| **Data Reusability** | National coordination data is the primary input for Disaster Response (NDMA/Red Cross). |
-| **Interoperability** | Secure data pipelines with IPRS, BRS (Private Security), and NPS via Huduma Bridge. |
-| **Revenue / Efficiency Impact** | Automated licensing for Gaming, Private Security, and Public Events via GPA. |
-| **Governance / Risk Reduction** | Real-time tracking of administrative field-officer (NGAO) actions ensures accountability. |
-| **Inclusivity** | Mobile-first reporting tools for Village Elders and Chiefs to feed into the National Registry. |
-| **Readiness** | High; Basic coordination structures exist; G-Cloud infrastructure is available for scaling. |
-
-> [!NOTE]
-> “The TO-BE design transforms the State Department from a manual paper-coordinator into a 'Digital Hub for National Administration.' By integrating with IPRS (Identity) and the National Police Service (Incident Reporting) via X-Road, the design enables real-time field coordination for all 47 counties. This eliminates the 'information lag' during national emergencies, automates the issuance of public permits (Baraza/Event permits), and creates a unified national security dashboard for the executive.”
+## Executive Summary
+Represents 'Governance Justice Law and Order' cluster for balanced coverage; entity type: Department. Included as Tier 3 for light‑touch desk review/survey.
 
 ---
 
-# SECTION 1: SERVICE DEFINITION (STANDARDISED)
+## 1. AS-IS Process Flowchart (BPMN 2.0)
+*Current State visualization.*
 
-The State Department for Internal Security and National Administration is mandated to provide internal security oversight and coordinate National Government functions. 
-
-In this refactored BPA, the primary service is the **National Administration Coordination & Regulatory Licensing** lifecycle. The focus shifts from ad-hoc email/letter coordination to a **Unified Administration Engine** where all security incidents, public permits, and field reports are captured in real-time via the **Huduma Bridge**.
-
----
-
-# SECTION 2: SERVICE CATALOGUE (NORMALISED)
-
-| Category | Service Name | Description |
-| :--- | :--- | :--- |
-| **Core Services** | **Public Event/Baraza Permitting** | Digital application and issuance of permits for public gatherings. |
-| | **National Incident Reporting** | Real-time field-to-headquarters security incident logging (NGAO). |
-| **Extended Services** | **Private Security Licensing** | Regulatory oversight and licensing of private security firms and guards. |
-| | **Gaming & Lotteries Permits** | End-to-end licensing and compliance tracking for gaming operators. |
-| **Special Case Services**| **Disaster Response Coordination**| Coordinated dispatch and tracking of emergency assets (G2G). |
-| | **Border Management Alerts** | Real-time coordination of border post status and incident tracking. |
-
----
-
-# SECTION 3: AS-IS PROCESS FLOWS (MANUAL/UNCOORDINATED)
-
-The current state is characterized by manual document verification and physical registries, leading to high turnaround times and risks of fraudulent permits.
-
-### 3.1 AS-IS Visualization
 ```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start)) --> S1[Submit Application/Request via Email/Letter]
-    
-    subgraph Registry_Silo["Front Office"]
-        S1 --> S2[Registry receives & manually classifies]
-        S2 --> S3[Physical File Creation]
+graph TD
+    Start((Start)) --> S1
+
+    subgraph Customer [Customer]
+        S1["Customer/Stakeholder submits request, application, or inq..."]
     end
 
-    subgraph Review_Layer["Technical Review"]
-        S3 --> S4[Officer reviews against Manual Policy docs]
-        S4 --> S5[Physical Inspection (if required)]
+    subgraph Registry [Registry]
+        S2["Registry/Front Office receives, records, and classifies t..."]
     end
 
-    subgraph Approval_Layer["Management"]
-        S5 --> S6[Accounting Officer signs Physical Permit/Approval]
-        S6 --> S7[Manual Notification to Customer]
+    subgraph Technical_Officer [Technical Officer]
+        S3["Relevant Technical Department reviews the request against..."]
     end
 
-    S7 --> End((End))
-```
-
-### 3.2 Operational Reality
-- **Actors:** Registry Clerk, Technical Officer, Management, Customer.
-- **Systems:** Manual Registers, Physical Files, Standalone Email.
-- **Pain Points:** 14-day delay for simple permits; high risk of counterfeit physical licenses; lack of real-time visibility on field officer activity; inconsistent data capture across different sub-counties.
-
----
-
-# SECTION 4: TO-BE PROCESS INTERPRETATION (NEW LAYER)
-
-### 4.1 TO-BE Process (Digital Administration Engine)
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '20px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start)) --> S1[Login via Maisha Namba (SSO)]
-    
-    subgraph Trust_Hub["Layer 2: X-Road Interop"]
-        S1 --> S2[Auto-fetch Identity & BRS details via X-Road]
-        S2 --> S3[Auto-validation of Compliance (KRA/NPS)]
+    subgraph Management [Management]
+        S4["Management/Accounting Officer approves the appropriate ac..."]
     end
 
-    subgraph Intelligence["Layer 2 & 3: Smart Vetting"]
-        S3 --> S4[Rules Engine: Risk-based Application Sorting]
-        S4 -- "Low Risk" --> S5[Automated Permit Generation (NPKI)]
-        S4 -- "High Risk" --> S6[Digital Officer Review Workbench]
+    subgraph Customer_Care [Customer Care]
+        S5["Service is delivered or official response is communicated..."]
     end
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+    S4 --> S5
+    S5 --> End((End))
 
-    subgraph Settlement["Layer 4: Registries & Issuance"]
-        S6 --> S5
-        S5 --> S7[Verifiable Digital Permit with Secure QR Code]
-        S7 --> S8[Automated Sync to National Incident Registry]
-    end
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
 
-    S8 --> End((End))
-
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:20px;;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:20px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:20px;;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:20px;;
-    
     class Start start;
     class End endNode;
-    class S1,S6 userTask;
-    class S2,S3,S4,S5,S7,S8 serviceTask;
+    class S1,S2,S3,S4,S5 userTask;
 ```
 
-### 4.2 Key Capabilities Introduced
-*   **Automation:** Automated rules engine for low-risk permit approvals (e.g., standard event permits).
-*   **Integration:** Real-time compliance checks against BRS (Business), KRA (Tax), and NPS (Security Clearance) via X-Road.
-*   **Real-time Processing:** Instant generation of verifiable digital certificates with NPKI-secured QR codes.
-*   **Digital Identity Validation:** Applicant identity and business status verified via **Maisha Namba** identity federation.
-*   **Workflow Orchestration:** Orchestrates the complex coordination between field officers (NGAO) and central management.
+---
 
-### 4.3 Transformation Summary
-| Dimension | AS-IS | TO-BE |
-| :--- | :--- | :--- |
-| **Processing** | Manual / Scattered | Digital / Unified Engine |
-| **Verification** | Physical Cross-checks | API-based (BRS/IPRS/NPS) |
-| **Records** | Regional Paper Files | National Coordination Registry |
-| **Tracking** | Post-event status updates | Real-time Incident/License Dashboard |
+## Process Overview
+### Process Name
+Service Delivery
+
+### Service Category
+- G2C/G2B
+
+### Scope
+- **In Scope:** End-to-end processing within Internal Security and National Administration.
+
+### Triggers
+- Submission of application/request by Customer.
+
+### End States
+- **Successful:** License / Permit / Certificate, Compliance Inspection Report, Official Receipt, Gazette Notice
+
+### Policy Context
+- The Internal Security and National Administration Act; The Constitution of Kenya 2010; Data Protection Act 2019.
 
 ---
 
-# SECTION 5: SYSTEM LANDSCAPE (ALIGN TO GEA)
+## Stakeholders
 
-| Layer | System / Platform | Role |
-| :--- | :--- | :--- |
-| **Identity Layer** | Maisha Namba (IPRS) | Identity and bio-login for all field officers and applicants. |
-| **Interoperability** | KeSEL (X-Road) | Data link to NPS, BRS, and KRA. |
-| **shared Services** | National EDRMS | Secure digital archive for regulatory and security files. |
-| **Workflow / BPM** | Administration Workflow Engine | Orchestrates permitting and coordination flows. |
-| **Payment Layer** | GPA (Finance Aggregator) | Automated fee reconciliation for licenses and permits. |
-| **Trust Hub** | Consent Manager | Citizen control over shared security-clearance data. |
-
----
-
-# SECTION 6: TRANSFORMATION VALUE (CRITICAL ADDITION)
-
-| Value Type | Explanation |
-| :--- | :--- |
-| **Efficiency Gain** | Permit turnaround reduced from 14 days to instant (for low-risk) or 24h. |
-| **Economic Impact** | Accelerates the licensed events and private security hospitality sectors. |
-| **Governance Impact** | Full traceability of field coordinates ensures national government presence everywhere. |
-| **Citizen Experience** | Transparent, predictable application process via eCitizen Mobile. |
-| **Interoperability Value** | Unified dashboard for "National Security Posture" available to the Cabinet. |
+| Stakeholder | Role | Responsibilities |
+|---|---|---|
+| Registry | Process Actor | Performs actions as defined in steps. |
+| Technical Officer | Process Actor | Performs actions as defined in steps. |
+| Customer Care | Process Actor | Performs actions as defined in steps. |
+| Management | Process Actor | Performs actions as defined in steps. |
+| Customer | Process Actor | Performs actions as defined in steps. |
 
 ---
 
-# SECTION 7: ALIGNMENT TO WHOLE-OF-GOVERNMENT ARCHITECTURE
-- **Shared Platforms:** Uses eCitizen for portal access and NPKI for all official permits.
-- **Registry Reuse:** Reuses BRS (Business) and IPRS (Identity) data to avoid redundant data capture.
-- **Compliance with GEA / GIF:** Standardizing incident metadata schemas for whole-of-government disaster response.
+## Detailed Process (AS-IS)
+
+| Step | Role | Action | Tool | Notes |
+|---|---|---|---|---|
+| 1 | Customer | Customer/Stakeholder submits request, application, or inquiry via official channels (Email, Letter, or Portal). | Digital | |
+| 2 | Registry | Registry/Front Office receives, records, and classifies the request. | Manual | |
+| 3 | Technical Officer | Relevant Technical Department reviews the request against internal policies and regulations. | Manual | |
+| 4 | Management | Management/Accounting Officer approves the appropriate action or service delivery. | Manual | |
+| 5 | Customer Care | Service is delivered or official response is communicated to the customer. | Manual | |
 
 ---
 
-# SECTION 8: IMPLEMENTATION READINESS (NEW)
-*   **Data Readiness:** High; Application data for Gaming and Security is already collected.
-*   **Legal Readiness:** High; Internal Security Act and Gaming Act support digital transformation.
-*   **Institutional Readiness:** High; NGAO network (Chiefs to Regional Commissioners) is ready for tablets.
-*   **Technical Readiness:** High; G-Cloud infrastructure is available for the central coordinación hub.
+## Pain Points & Opportunities
+### Pain Points
+- Manual document verification takes time.
+- High cost and time for physical inspections.
+- Risk of counterfeit licenses/certificates.
+- Lack of real-time monitoring of licensees.
+
+### Opportunities
+- Integration with IPRS/BRS via Service Bus.
+- Adoption of Government Payment Gateway.
+- Implementation of Automated Rules Engine.
+- Issuance of Digital Verifiable Credentials.
 
 ---
 
-# SECTION 9: TRACEABILITY MATRIX (NEW)
+## 2. TO-BE Process Flowchart (BPMN 2.0)
+*Future State visualization (Optimized).*
 
-| BPA Process | Priority Service | Tier | TO-BE Capability | National Impact |
-| :--- | :--- | :--- | :--- | :--- |
-| **Permit Issuance** | Licensing | T1 | Rules-based Auto-Approve | Ease of Doing Business |
-| **Incident Log** | Coordination | T1 | Real-time X-Road Sync | National Security Response |
-| **Officer Track** | Field Mgt | T1 | GPS-stamped Reporting | Administrative Accountability |
-| **Verification** | Compliance | T1 | QR-verifiable Permits | Fraud & Impersonation Prevention|
+```mermaid
+graph TD
+    Start((Start)) --> S1
+
+    subgraph Applicant [Applicant]
+        S1["Applicant logs in via Single Sign-On (SSO) and selects th..."]
+        S4["Applicant pays fees via the Government Payment Gateway; S..."]
+    end
+
+    subgraph System [System]
+        S2["Applicant enters Business Registration Number; System aut..."]
+        S3["System performs auto-validation of compliance (e.g., KRA ..."]
+        S5["Application is processed by the Rules Engine. (Low-risk c..."]
+        S7["System generates a Verifiable Digital Certificate (QR Cod..."]
+    end
+
+    subgraph Officer [Officer]
+        S6["Complex cases are routed to the Officer Workbench for dig..."]
+    end
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+    S4 --> S5
+    S5 --> S6
+    S6 --> S7
+    S7 --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff;
+
+    class Start start;
+    class End endNode;
+    class S1,S4,S6 userTask;
+    class S2,S3,S5,S7 serviceTask;
+```
+
+## Future State Process (TO-BE)
+### Narrative
+The To-Be process leverages the Government Service Bus to integrate with BRS (Business Registry) and the Payment Gateway. Manual data entry and document uploads are replaced by real-time API validations, enabling a paperless, cashless, and presence-less service experience.
+
+### Optimized Steps (Digital)
+
+| Step | Actor | Action | System |
+|---|---|---|---|
+| 1 | Applicant | Applicant logs in via Single Sign-On (SSO) and selects the service. | Citizen Portal / SSO |
+| 2 | System | Applicant enters Business Registration Number; System auto-populates details from BRS (Business Registry) via the Service Bus. | Service Bus / Registry API |
+| 3 | System | System performs auto-validation of compliance (e.g., KRA Tax Status) via Inter-Agency APIs. | Service Bus / Compliance Engine |
+| 4 | Applicant | Applicant pays fees via the Government Payment Gateway; System auto-receipts. | Payment Gateway |
+| 5 | System | Application is processed by the Rules Engine. (Low-risk cases are Auto-Approved). | Workflow Engine |
+| 6 | Officer | Complex cases are routed to the Officer Workbench for digital review and approval. | Officer Workbench |
+| 7 | System | System generates a Verifiable Digital Certificate (QR Code) and notifies the applicant. | Output Generator |
 
 ---
-**[End of Standardised Business Process Architecture]**
+
+## References
+Derived from official mandates.
+
+
+---
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

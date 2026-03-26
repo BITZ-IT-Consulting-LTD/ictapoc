@@ -93,8 +93,8 @@ Cabinet Memo Processing
 
 ## Stakeholders
 
-| Category | Service Name | Target Population |
-| :--- | :--- | :--- |
+| Stakeholder | Role | Responsibilities |
+|---|---|---|
 | The Cabinet | Process Actor | Performs actions as defined in steps. |
 | Secretariat | Process Actor | Performs actions as defined in steps. |
 | Secretary to Cabinet | Process Actor | Performs actions as defined in steps. |
@@ -106,14 +106,14 @@ Cabinet Memo Processing
 
 ## Detailed Process (AS-IS)
 
-| Step | Role | Action | Tool / System | Notes |
-| :--- | :--- | :--- | :--- | :--- |
-| 1 | Ministry PS | Ministry/State Department submits a Draft Cabinet Memo to the Head of Public Service. | Manual |  |
-| 2 | Cabinet Secretariat | Cabinet Office Secretariat reviews the Memo for policy alignment and formatting compliance. | Manual |  |
-| 3 | Secretary to Cabinet | Approved Memo is allocated a Cabinet Paper Number and scheduled for an upcoming Cabinet Meeting. | Manual |  |
-| 4 | The Cabinet | Cabinet deliberates on the Memo during the scheduled meeting. | Manual |  |
-| 5 | Secretariat | Cabinet Office records the decision as a Cabinet Minute (Resolution). | Manual |  |
-| 6 | Head of Public Service | Cabinet Office issues a 'Notification of Cabinet Decision' to the originating Ministry. | Manual |  |
+| Step | Role | Action | Tool | Notes |
+|---|---|---|---|---|
+| 1 | Ministry PS | Ministry/State Department submits a Draft Cabinet Memo to the Head of Public Service. | Manual | |
+| 2 | Cabinet Secretariat | Cabinet Office Secretariat reviews the Memo for policy alignment and formatting compliance. | Manual | |
+| 3 | Secretary to Cabinet | Approved Memo is allocated a Cabinet Paper Number and scheduled for an upcoming Cabinet Meeting. | Manual | |
+| 4 | The Cabinet | Cabinet deliberates on the Memo during the scheduled meeting. | Manual | |
+| 5 | Secretariat | Cabinet Office records the decision as a Cabinet Minute (Resolution). | Manual | |
+| 6 | Head of Public Service | Cabinet Office issues a 'Notification of Cabinet Decision' to the originating Ministry. | Manual | |
 
 ---
 
@@ -175,8 +175,8 @@ The To-Be process utilizes a secure e-Cabinet System where Ministers access pape
 
 ### Optimized Steps (Digital)
 
-| Step | Actor | Action | Tool / System |
-| :--- | :--- | :--- | :--- |
+| Step | Actor | Action | System |
+|---|---|---|---|
 | 1 | PS | Ministry uploads Memo to secure e-Cabinet Portal. | e-Cabinet |
 | 2 | System | System validates attachments (AG/Treasury) and routes for Secretariat review. | e-Cabinet |
 | 3 | Secretariat | Secretariat schedules the item digitally; Agenda is pushed to Cabinet tablets. | e-Cabinet |
