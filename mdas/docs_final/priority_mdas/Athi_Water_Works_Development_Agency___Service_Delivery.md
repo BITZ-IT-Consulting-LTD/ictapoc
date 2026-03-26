@@ -1,53 +1,16 @@
-# Athi Water Works Development Agency – Business Process Architecture (Updated)
-
+# Athi Water Works Development Agency (AWWDA)
+ 
 ## Cover Page
-- **Ministry:** Ministry of Water, Sanitation and Irrigation
-- **Agency:** Athi Water Works Development Agency
-- **Primary Authority:** Chief Executive Officer, AWWDA
-- **Document Type:** Business Process Architecture (BPA) Standardised
-- **Document Version:** 4.1
-- **Date:** 2026-03-25
+- **Ministry/Department/Agency (MDA):** Athi Water Works Development Agency (AWWDA) — Ministry of Water, Sanitation and Irrigation
+- **Process Name:** Water Infrastructure & Operations Digitization
+- **Document Version:** 1.0
+- **Date:** 2026-03-18
 - **Classification:** Official
 - **Strategic Category:** Priority MDA
 - **Service Model:** G2B / G2C
-- **Reviewer:** Senior Government Enterprise Architect
-
+- **Life-Cycle Group:** Cradle to Death (3. Living & Working)
+ 
 ---
-
-## SECTION 0: SERVICE PRIORITISATION MAPPING
-- **Mapped Priority Service:** Water Infrastructure Digitization & Bulk Billing (Metropolitan Water Registry)
-- **Tier Classification:** Tier 2
-- **Strategic Category:** Economy / Infrastructure (Utility Services)
-- **Breakout Room Classification:** Room 3 (Agriculture & Economic Development)
-- **Lead MDA (Standardised Name):** Athi Water Works Development Agency
-- **Related Cross-Cutting Services:**
-    - Metropolitan Water Hub (Real-time SCADA Integration)
-    - Identity Layer (IPRS / Maisha Namba - Contractor/WSP Identity)
-    - X-Road (NEMA / WRA / KRA / National Treasury Interop)
-    - Government Payment Aggregator (GPA / Bulk Water Billing)
-    - PIMIS (Project Infrastructure Management Information System)
-
----
-
-## SECTION 0.1: PRIORITISATION JUSTIFICATION
-This service is prioritised because the TO-BE design transforms water infrastructure management from manual "meter-checks" into an "Intelligent Water Network." By implementing a "SCADA-Driven Automated Billing" system that integrates with the Government Payment Aggregator (GPA) via X-Road (Huduma Bridge), the design eliminates the chronic 30-day billing dispute cycle between AWWDA and Water Service Providers (WSPs). This transformation enables real-time leakage detection via GIS-linked sensors, automates environmental infrastructure permits with NEMA and WRMA, and ensures that bulk water revenue (KES millions monthly) is collected and reconciled instantly, securing the financial sustainability of the multi-billion shilling national water infrastructure investment.
-
-| Criteria | Evidence from TO-BE Design |
-| :--- | :--- |
-| **Demand / Volume** | Serving millions of citizens in Nairobi/Kiambu/Murang'a; thousands of bulk meter points. |
-| **National Priority Alignment** | Water Act 2016; BETA Agenda - Infrastructure & Sanitation Pillar. |
-| **Data Reusability** | Bulk water flow data is the primary input for National Water Balance and Climate Adaptation planning. |
-| **Interoperability** | Automated multi-agency permit pipeline with NEMA and WRA via X-Road. |
-| **Revenue / Efficiency Impact** | Eliminates 30-day billing disputes; real-time revenue collection via GPA/KRA. |
-| **Governance / Risk Reduction** | GPS-tagged site supervision and NPKI-signed IPCs prevent project "ghosting." |
-| **Inclusivity** | Proactive "Gap Alerts" ensure that underserved grassroots communities are identified for expansion. |
-| **Readiness** | High; SCADA systems are partially active; WSP registries are established. |
-
-> [!NOTE]
-> “The TO-BE design transforms water infrastructure management from manual 'meter-checks' into an 'Intelligent Water Network.' By implementing a 'SCADA-Driven Automated Billing' system that integrates with the Government Payment Aggregator (GPA) via X-Road, the design eliminates the chronic 30-day billing dispute cycle between AWWDA and Water Service Providers (WSPs). This transformation enables real-time leakage detection via GIS-linked sensors, automates infrastructure permits with NEMA and WRMA, and ensures that bulk water revenue is collected and reconciled instantly, securing the financial sustainability of the Sh800 billion national water investment.”
-
----
-
 
 ## Service Mandate
 The Athi Water Works Development Agency (AWWDA) is mandated under the Water Act 2016 to develop, maintain, and manage national public water works in Nairobi, Kiambu, and Murang'a counties. Its responsibilities include operating water works, providing bulk water services, developing water and sewerage infrastructure, and providing technical services and capacity building to county governments and other water service providers.
@@ -79,7 +42,7 @@ The transition to the Kenya DSAP Architecture aims to digitize all core processe
 #### Detailed Process (AS-IS)
  
 | Step | Role | Action | Tool/System | Notes |
-| :--- | :--- | :--- | :--- | :--- |
+|---|---|---|---|---|
 | 1 | Planning Officer | Identifies service gaps and infrastructure needs across the service area. | Manual Surveys / Spreadsheets | No centralised demand data platform. Gap identification is periodic and reactive. |
 | 2 | Planning Officer | Collects and analyses planning and demand data to inform investment priorities. | Excel / Internal Reports | Data siloed across county and regional offices. No real-time analytics. |
 | 3 | Planning Team | Develops concept notes and investment proposals for identified projects. | MS Word / Manual | Version control issues; no collaborative drafting tool. |
@@ -170,8 +133,8 @@ flowchart TD
  
 ##### Optimized Steps (Digital)
  
-| Step | Actor | Action | Tool / System |
-| :--- | :--- | :--- | :--- |
+| Step | Actor | Action | System |
+|---|---|---|---|
 | 1 | System | Live SCADA, customer complaint, and WSP data feeds trigger automated gap alerts when thresholds are breached. | AWWDA Analytics Platform / SCADA |
 | 2 | Planning Officer | Drafts concept note in the collaborative digital planning portal; data auto-populated from demand analytics. | AWWDA Planning Portal / PIMIS API |
 | 3 | CEO | Receives digital approval request with SLA countdown. Approves or returns with comments — decision timestamped. | Digital Approval Workflow Engine |
@@ -195,7 +158,7 @@ flowchart TD
 #### Detailed Process (AS-IS)
  
 | Step | Role | Action | Tool/System | Notes |
-| :--- | :--- | :--- | :--- | :--- |
+|---|---|---|---|---|
 | 1 | Design Engineer | Confirms approved design inputs: FS, Master Plan, Preliminary Design, Surveys, and Safeguards. | Manual / File System | Design inputs assembled from multiple disconnected sources and file locations. |
 | 2 | Design Engineer | Prepares draft engineering designs. | AutoCAD / Manual | No design management system; files emailed between team members. |
 | 3 | Chief Engineer | Conducts internal design review and verification. If not approved, designs are revised. | Printed Drawings / Manual Markup | Review comments on printed drawings; no digital redlining. |
@@ -294,7 +257,7 @@ flowchart TD
 #### Detailed Process (AS-IS)
  
 | Step | Role | Action | Tool/System | Notes |
-| :--- | :--- | :--- | :--- | :--- |
+|---|---|---|---|---|
 | 1 | Contractor / AWWDA | Commences services or works following site handover. | Site Register / Manual | Handover records paper-based; no digital site handover certificate. |
 | 2 | Contractor / Supervisor | Executes works with supervision and quality control checks. | Physical Inspections / Manual Logs | Supervision reports handwritten; quality non-conformances not tracked digitally. |
 | 3 | Engineer | Valuates and measures completed works for payment certification. | Manual Measurement / Spreadsheets | Measurement disputes common due to no digital evidence trail. |
@@ -766,7 +729,7 @@ flowchart TD
 #### Detailed Process (AS-IS)
  
 | Step | Role | Action | Tool/System | Notes |
-| :--- | :--- | :--- | :--- | :--- |
+|---|---|---|---|---|
 | 1 | AWWDA / WSP | Conducts joint meter readings at bulk water offtake points with the relevant Water Service Providers. | Physical Meter Reading | Readings scheduled monthly; no digital record at point of reading. Disputes are common. |
 | 2 | AWWDA / WSP | If parties do not agree, verifies readings using a clamp-on meter. | Clamp-on Meter | Secondary verification adds 3–7 days to billing cycle. |
 | 3 | AWWDA / WSP | If parties still do not agree, escalates to formal dispute resolution. | Manual / Legal | Dispute process is lengthy and untracked; some cases unresolved for months. |
@@ -955,18 +918,6 @@ flowchart TD
 - Desk Review
  
 ---
-
-# SECTION 9: TRACEABILITY MATRIX (NEW)
-
-| BPA Process | Priority Service | Tier | TO-BE Capability | National Impact |
-| :--- | :--- | :--- | :--- | :--- |
-| **Digital Planning** | Infra Development | T2 | Real-time Gap Alerts (Analytics) | Evidence-Based Investment |
-| **Auto-Billing** | Revenue Cycle | T2 | SCADA-to-GPA Automated Billing | Financial Utility Sustainability|
-| **Mobile Superv.** | Construction Mgmt| T2 | GPS-Tagged Field Inspection App | Quality Infrastructure Asset |
-| **Permit Pipeline** | Compliance | T2 | X-Road: NEMA/WRA API Link | Environmental Accountability |
-
----
-
+ 
 ### Validation Survey
 Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
-

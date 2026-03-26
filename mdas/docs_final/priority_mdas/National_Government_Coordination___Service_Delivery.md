@@ -1,212 +1,206 @@
-# National Government Coordination – Business Process Architecture (Updated)
+# NATIONAL GOVERNMENT COORDINATION – Service Delivery
 
 ## Cover Page
-- **Ministry:** Ministry of Interior and National Administration
-- **Department:** State Department for National Government Coordination
-- **Primary Authority:** National Government Coordination Secretariat (NGCS) / Interior & Coordination
-- **Document Type:** Business Process Architecture (BPA) Standardised
-- **Document Version:** 4.1
-- **Date:** 2026-03-25
-- **Classification:** Official / Restricted
+- **Ministry/Department/Agency (MDA):** Executive Office of the President
+- **Department:** National Government Coordination
+- **Process Name:** Inter-Agency Coordination and Information Tasking
+- **Document Version:** 2.1
+- **Date:** 2026-02-24
+- **Classification:** Official
 - **Strategic Category:** Priority MDA
-- **Service Model:** G2G (Inter-Ministerial Coordination)
-- **Reviewer:** Senior Government Enterprise Architect
+- **Service Model:** G2G
+- **Life-Cycle Group:** Cradle to Death (5. Social Protection & Justice)
 
 ---
 
-## SECTION 0: SERVICE PRIORITISATION MAPPING
-- **Mapped Priority Service:** Inter-Agency Coordination and Information Tasking
-- **Tier Classification:** Tier 2
-- **Strategic Category:** Governance / Coordination (Executive Oversight)
-- **Breakout Room Classification:** Room 2 (Coordination, Culture & Specialised Services)
-- **Lead MDA (Standardised Name):** National Government Coordination
-- **Related Cross-Cutting Services:**
-    - National Government Dashboard (NGD - Real-time)
-    - Identity Layer (IPRS / Maisha Namba - Officer Tier)
-    - X-Road (MDA-wide Data Pulls & Interop)
-    - National EDRMS (Situation Report & Archive Repository)
-    - Government Delivery Hub (GDMIS / BETA Tracking)
+## Service Mandate
+National Government Coordination is primarily managed through the Ministry of Interior and National Administration and the National Government Coordination Secretariat (NGCS). Its mandate, derived from the National Government Co-ordination Act 2013, is to establish an administrative framework for coordinating national government functions at both national and county levels, ensuring that services are accessible in all parts of the Republic.
+
+**Official Website:** [https://www.interior.go.ke](https://www.interior.go.ke) / [https://www.opcs.go.ke](https://www.opcs.go.ke)
+
+**Key Functions:**
+- **Service Delivery Coordination:** Overseeing the implementation of national government programs and projects across all ministries and state departments.
+- **Internal Security:** Maintaining law and order through the coordination of security agencies and the National Government Administrative Officers (NGAO) structure.
+- **National Government Administration:** Managing the hierarchy of administrative officers from the Regional level down to the Sub-location level.
+- **Policy Implementation:** Ensuring that national policies (such as the Bottom-Up Economic Transformation Agenda - BETA) are executed effectively at the grassroots.
+- **Monitoring and Evaluation:** Using tools like the National Government Dashboard (NGD) to track project delivery and performance indicators of various MDAs.
+- **Disaster Management:** Coordinating responses to national emergencies and disasters.
+- **Citizen Engagement:** Acting as the primary link between the national government and the public for feedback and participation.
 
 ---
 
-## SECTION 0.1: PRIORITISATION JUSTIFICATION
-This service is prioritised because the TO-BE design transforms national government coordination from manual "Excel-template-tagging" into a "Real-time Executive Data Hub." By shifting from asking for "Weekly Reports" to "Direct API Data Access" via X-Road (Huduma Bridge), the design allows the Presidency to pull live KPIs directly from authoritative MDA registries (Health, Agriculture, Lands). This transformation eliminates the historical 7-day "reporting lag" that hides implementation failures, automates the merging of complex multi-MDA datasets, and enables AI-driven proactive alerts for "at-risk" national priorities (e.g., Fertilizer distribution or Health clinic stockouts) before they become national crises.
-
-| Criteria | Evidence from TO-BE Design |
-| :--- | :--- |
-| **Demand / Volume** | Continuous tasking for 20+ Ministries and 47 Counties; daily Situation Reports (SitReps). |
-| **National Priority Alignment** | National Government Co-ordination Act 2013; Executive Order No. 1 of 2023. |
-| **Data Reusability** | Consolidated coordination data is the primary input for the Cabinet's "State of the Nation" briefs. |
-| **Interoperability** | One-to-Many API pipelines pulling data from dozens of disconnected MDA platforms via X-Road. |
-| **Revenue / Efficiency Impact** | Reduces the cost of manual "Fact-Finding missions" by 60%; accelerates directive execution. |
-| **Governance / Risk Reduction** | Real-time "Truth-check" of MDA progress vs. actual transactional data in registries. |
-| **Inclusivity** | NGAO hierarchy integration ensures grassroots data (Sub-location) is visible at the Presidency. |
-| **Readiness** | High; The National Government Dashboard (NGD) exists; X-Road nodes are active in key MDAs. |
-
-> [!NOTE]
-> “The TO-BE design transforms national coordination from manual 'Excel-template-tag' into a 'Real-time Executive Data Hub.' By shifting from asking for 'Weekly Reports' to 'API Data Access' via X-Road, the design allows the Presidency to pull live KPIs directly from MDA registries (Health, Agriculture, Lands). This transformation eliminates the 7-day 'reporting lag,' automates the merging of multi-MDA datasets, and enables AI-driven proactive alerts for 'at-risk' national priorities before they become crises.”
+## Executive Summary
+National Government Coordination is responsible for the seamless alignment of government activities across all MDAs and regions. Its primary function is to manage information tasking, data collection for national priorities, and the escalation of critical issues to the Presidency. Currently, this coordination is highly transactional and relies on manual requests, templates, and follow-ups. The transition to the Kenya DSAP Architecture aims to establish an automated coordination hub that leverages the national service bus for real-time status tracking.
 
 ---
 
-# SECTION 1: SERVICE DEFINITION (STANDARDISED)
+## 1. AS-IS Process Flowchart (BPMN 2.0)
+*Current State visualization (End-to-End Coordination based on Deep Dive).*
 
-National Government Coordination is mandated under the **National Government Co-ordination Act 2013** to coordinate national government functions across all levels. 
-
-In this refactored BPA, the primary service is the **End-to-End Inter-Agency Tasking and Situation Reporting** lifecycle. The objective is to move from manual physical dispatch of "Excel Templates" to an **Automated Tasking Engine** where data is pulled in real-time from MDA authoritative registries via the **Huduma Bridge**.
-
----
-
-# SECTION 2: SERVICE CATALOGUE (NORMALISED)
-
-| Category | Service Name | Description |
-| :--- | :--- | :--- |
-| **Core Services** | **National Priority Tasking**| Automated dispatch and status tracking of presidential directives. |
-| | **Real-time Situation Reporting**| Live, data-driven "Executive Heatmaps" of national projects. |
-| **Extended Services** | **MDA Data Synchronization** | Automated "Pull" of KPIs from disconnected MDA registries. |
-| | **NGAO Field Reporting** | Mobile-first status updates from Chiefs and Regional Commissioners. |
-| **Special Case Services**| **Disaster Response Coord.** | Real-time mobilization dashboard for emergency assets across MDAs. |
-| | **Escalation Management** | Automated alerting of the Head of Public Service for delayed tasks. |
-
----
-
-# SECTION 3: AS-IS PROCESS FLOWS (MANUAL/DATA-LAGGED)
-
-Currently, coordination is highly transactional and relies on manual requests, Excel templates, and follow-up phone calls.
-
-### 3.1 AS-IS Visualization
 ```mermaid
 %%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start)) --> Trigger["1. National Priority/Emergency Trigger"]
+graph TD
+    Start((Start)) --> Trigger["Coordination Trigger (National Priority/Security/Reporting)"]
     
-    subgraph Tasking_Silo["Coordination Office"]
-        Trigger --> Template["2. Draft Request & Excel Template (Manual)"]
-        Template --> Dispatch["3. Dispatch to PSs & Regional Commissioners (Email)"]
+    subgraph Tasking["Information Tasking"]
+        Trigger --> Scope["Define Scope & Identify Stakeholders"]
+        Scope --> Objectives["Set Objectives & Define Deliverables"]
+        Objectives --> Draft["Draft Request & Define Template (Word/Excel)"]
+        Draft --> Dispatch["Dispatch to All MDAs & Copy Regions"]
     end
-
-    subgraph Collection_Layer["Data Follow-up"]
-        Dispatch --> Reminder["4. Phone/WhatsApp Reminders to MDAs (High Friction)"]
-        Reminder --> Recieve["5. Receive Multiple Non-standard Excel Files"]
-    end
-
-    subgraph Analysis_Silo["Report Processing"]
-        Recieve --> Extract["6. Manual Cleaning & Merging of Data (Excel)"]
-        Extract --> SitRep["7. Produce Static Weekly Situation Report (PDF)"]
-    end
-
-    SitRep --> EndProcess(("End - Report Filed"))
-```
-
-### 3.2 Operational Reality
-- **Actors:** Coordination Officer, Principal Secretaries, Regional Commissioners, Analysts.
-- **Systems:** MS Word / Excel, Standalone Email, Phone/WhatsApp, Physical Files.
-- **Pain Points:** 7-day delay in producing Situation Reports; MDAs modify templates making automated merging impossible; "Static" SitReps are often outdated by the time they reach leadership; massive "Reporting Fatigue" for MDAs being asked for the same data by multiple offices.
-
----
-
-# SECTION 4: TO-BE PROCESS INTERPRETATION (NEW LAYER)
-
-### 4.1 TO-BE Process (Executive Intelligence Engine)
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '20px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start)) --> Command["1. Leadership Defines National Priority KPI (Portal)"]
     
-    subgraph Trust_Hub["Layer 2: Registry Mapping"]
-        Command --> Task["2. Workflow Engine: Auto-Dispatch Task to MDAs (X-Road)"]
-        Task --> Pull["3. X-Road: Real-time Data Pull from Relevant MDA Registries"]
+    subgraph Data_Collection["Data Collection"]
+        Dispatch --> Monitor["Monitor Acknowledgments & Send Reminders"]
+        Monitor --> AllAck{"All Acknowledged?"}
+        
+        AllAck -- "No" --> Monitor
+        AllAck -- "Yes" --> Receive["Receive MDA & Regional Submissions"]
     end
-
-    subgraph Operations["Layer 2 & 3: Smart Monitoring"]
-        Pull --> Validate["X-Road: Cross-Agency Auto-Validation (KRA/IFMIS/IPRS)"]
-        Validate --> Merge["System: Real-time Automated Data Consolidation"]
-    end
-
-    subgraph Settlement["Layer 4: Dashboards & Alerts"]
-        Merge --> Dash["4. Live Executive 'Heatmap' & Coordination Dashboard"]
-        Dash --> Predict{"Trend Negative?"}
-        Predict -- "Yes" --> Trigger_Esc["5. Auto-Trigger Escalation to HPS/Cabinet Office"]
-        Predict -- "No" --> Routine["6. Move to Ongoing Routine Monitoring Registry"]
-    end
-
-    Trigger_Esc --> EndProcess(("End - Corrective Action Active"))
-
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:20px;;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:20px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:20px;;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:20px;;
     
+    subgraph Escalation["Review & Escalation"]
+        Receive --> Extract["Extract Data & Merge Submissions"]
+        Extract --> Standardize["Standardize Formats & Create Master Dataset"]
+        Standardize --> Analyze["Analyse Data & Identify Patterns/Gaps"]
+        Analyze --> Critical{"Is it Critical?"}
+        
+        Critical -- "Yes" --> Escalate["Escalate to Leadership / HPS"]
+        Critical -- "No" --> Routine["Routine Processing & Dashboard"]
+    end
+    
+    Routine --> Report["Produce Situation Report & Archive"]
+    Escalate --> Report
+    Report --> End((End))
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px;;
     class Start start;
-    class EndProcess endNode;
-    class Command userTask;
-    class Task,Pull,Validate,Merge,Dash,Trigger_Esc,Routine serviceTask;
+    class End endNode;
+    class AllAck,Critical gateway;
+    class Trigger,Scope,Objectives,Draft,Dispatch,Monitor,Receive,Extract,Standardize,Analyze,Escalate,Routine,Report userTask;
 ```
 
-### 4.2 Key Capabilities Introduced
-*   **Automation:** Zero-Friction Data Pull – system fetches live transactional data directly from MDAs without requiring them to fill manual forms.
-*   **Integration:** Full interoperability with **IFMIS** (Money spent), **KRA** (Taxes collected), and **MDA registries** (Fertilizer sacks delivered / People seen).
-*   **Real-time Processing:** Live "Executive Scorecard" updated every 24 hours via secure X-Road endpoints.
-*   **Digital Identity Validation:** Coordination officers and PS actions verified via **National Identity (Maisha SSO)**.
-*   **Workflow Orchestration:** Orchestrates the complex coordination lifecycles from emergency trigger to final verified dashboard reporting.
+---
 
-### 4.3 Transformation Summary
-| Dimension | AS-IS | TO-BE |
-| :--- | :--- | :--- |
-| **Processing** | Manual / Template-based | Digital / API-driven Pull |
-| **Verification** | Self-reported (MDA claims) | Registry-verified (Actual data) |
-| **Records** | Regional Excel Files | National Coordination Dashboard |
-| **Tracking** | Static Weekly Snapshots | Real-time Proactive Alerting |
+## Process Overview
+### Process Name
+End-to-End Inter-Agency Coordination and Situation Reporting
+
+### Service Category
+- G2G (Government to Government)
+
+### Scope
+- **In Scope:** Drafting coordination requests, monitoring submissions from MDAs and Regional Commissioners, and preparing consolidated Situation Reports (SitReps).
+- **Out of Scope:** The actual operational implementation of projects by the MDAs.
+
+### Triggers
+- A Presidential directive, a national emergency, or a periodic reporting cycle (e.g., Budget/MTEF).
+
+### End States
+- **Successful:** Situation Report produced; Critical bottlenecks escalated and resolved.
+
+### Policy Context
+- Executive Order No. 1 of 2023; The Constitution of Kenya; Public Service Regulations.
 
 ---
 
-# SECTION 5: SYSTEM LANDSCAPE (ALIGN TO GEA)
+## Detailed Process (AS-IS)
 
-| Layer | System / Platform | Role |
-| :--- | :--- | :--- |
-| **Identity Layer** | Maisha Namba (Officer) | Identity and Bio-login for all task-responsible officers. |
-| **Interoperability** | KeSEL (X-Road) | The "Pulley" system for cross-MDA data extraction. |
-| **shared Services** | National EDRMS | Restricted digital archive for Sensitive Situation Reports. |
-| **Workflow / BPM** | Coordination Tasking Hub | Orchestrates task dispatch and deadline reminders. |
-| **Reporting / Analytics**| Executive Radar Dashboard | Real-time geospatial view of project delivery status. |
-| **Trust Hub** | Outcome Verification | Independent rules-engine to verify if data matches targets. |
-
----
-
-# SECTION 6: TRANSFORMATION VALUE (CRITICAL ADDITION)
-
-| Value Type | Explanation |
-| :--- | :--- |
-| **Efficiency Gain** | Report preparation time reduced from 40 man-hours/week to <5 minutes. |
-| **Economic Impact** | Prevents resource wastage by identifying "Ghost Projects" via registry audits. |
-| **Governance Impact** | Full accountability for Principal Secretaries; zero-hiding of implementation lags. |
-| **Citizen Experience** | Accelerates the delivery of essential services (Drought aid, Education funds). |
-| **Interoperability Value** | Shared coordination hub prevents "Information Tasking Fatigue" across Govt. |
+| Step | Role | Action | Tool/System | Notes |
+|---|---|---|---|---|
+| 1 | Coordination Officer | Identifies a coordination need (e.g., Drought Response) and defines the deliverables required from MDAs. | Manual | |
+| 2 | Coordination Officer | Drafts a formal request letter and attaches an Excel template for data collection. | MS Word / Excel | |
+| 3 | Dispatch Clerk | Sends the request to all relevant Principal Secretaries and Regional Commissioners via email/physical dispatch. | Email / Physical | |
+| 4 | Coordination Unit | Follows up with MDAs via phone calls and reminders to ensure submissions are made. | Phone/WhatsApp | High friction step. |
+| 5 | Analyst | Manually cleans and merges 20+ different Excel files into a single master sheet for analysis. | Excel | High risk of error. |
 
 ---
 
-# SECTION 7: ALIGNMENT TO WHOLE-OF-GOVERNMENT ARCHITECTURE
-- **Shared Platforms:** Uses the Government Service Bus (KeSEL) for all data pulls from the 47 county nodes.
-- **Registry Reuse:** Reuses project-ID data from MDAs to ensure a single thread of project traceability.
-- **Compliance with GEA / GIF:** Standardizing Situation Report (SitRep) data schemas for Cabinet review.
+## Pain Points & Opportunities
+### Pain Points
+- **Template Non-Compliance:** MDAs often modify Excel templates, making automated merging impossible.
+- **Reporting Fatigue:** MDAs are constantly asked for similar data by different coordination offices (Coordination, Cabinet, HPS).
+- **Static SitReps:** Reports are "snapshots" in time and are often outdated by the time they reach leadership.
+
+### Opportunities
+- **Automated Data Pull:** Instead of asking MDAs for data, the coordination hub "pulls" the required fields directly from MDA databases via **X-Road**.
+- **Real-Time Dashboards:** Replacing weekly SitReps with a live dashboard that MDAs update as part of their daily operations.
+- **Unified Tasking:** A single "National Tasks" engine that ensures Principal Secretaries see all directives in one place.
 
 ---
 
-# SECTION 8: IMPLEMENTATION READINESS (NEW)
-*   **Data Readiness:** Medium; Requires MDAs to expose "View-Only" KPI endpoints on X-Road.
-*   **Legal Readiness:** High; Coordination Act 2013 and Executive Orders provide a strong mandate.
-*   **Institutional Readiness:** High; The National Government Coordination Secretariat is fully staffed.
-*   **Technical Readiness:** High; HUDUMA Bridge is ready to host the central coordination dashboard.
+## 2. TO-BE Process Flowchart (BPMN 2.0)
+*Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
+
+```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+graph TD
+    Start((Start)) --> Command["Leadership Initiates National Priority Task"]
+    
+    subgraph Layer2["Workflow Engine & Tasking"]
+        Command --> Task["Workflow Engine: Auto-dispatch Tasks to MDAs"]
+        Task --> Reminder["AI-based Nudge System for Deadlines"]
+    end
+    
+    subgraph Layer3["Huduma Bridge / X-Road"]
+        Task --> Pull["X-Road: Real-time Data Pull from MDA Registries"]
+        Pull --> Validate["X-Road: Auto-verify against IFMIS/BRS/IPRS"]
+    end
+    
+    subgraph Layer4["Executive Intelligence"]
+        Validate --> Merge["System: Real-time Data Consolidation"]
+        Merge --> Dash["Live Executive Heatmap & Dashboard"]
+        Dash --> Predict{"Trend Negative?"}
+        
+        Predict -- "Yes" --> Trigger_Esc["Auto-Trigger Escalation to HPS/CS"]
+        Predict -- "No" --> Routine["Routine Dashboard Monitoring"]
+    end
+    
+    Trigger_Esc --> End((End))
+    Routine --> End
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px,font-size:24px;;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px;;
+    class Start start;
+    class End endNode;
+    class Predict gateway;
+    class Command userTask;
+    class Task,Reminder,Pull,Validate,Merge,Dash,Trigger_Esc,Routine serviceTask;
+```
+
+## Future State Process (TO-BE)
+### Narrative
+**TO-BE Process: Zero-Friction Government Coordination**
+
+**Design Principles:**
+- **Data over Documents:** The coordination office shifts from asking for "Reports" to asking for "Data Access." Access is granted via **KeSEL (X-Road)** endpoints.
+- **Continuous Monitoring:** Leadership can view the status of a national directive (e.g., Fertilizer distribution) in real-time, as every transaction at the MDA level is broadcast across the government event bus.
+- **Proactive Management:** Instead of waiting for a crisis to be reported, the system uses AI to detect "Negative Trends" (e.g., slow absorption of funds in a region) and alerts the coordinators automatically.
+
+### Optimized Steps (Digital)
+
+| Step | Actor | Action | System |
+|---|---|---|---|
+| 1 | Leadership | Defines a new national priority and sets the target KPIs in the Coordination Portal. | Executive Portal |
+| 2 | System | Maps the KPIs to existing data fields in relevant MDA registries (e.g., Health, Agriculture, Lands). | Service Catalogue |
+| 3 | System | Pulls data every 24 hours via X-Road to update the national achievement scorecards. | KeSEL / X-Road |
+| 4 | System | Automatically notifies Principal Secretaries of any "at-risk" deliverables based on real data, not claims. | Workflow Engine |
+| 5 | Coordinator | Focuses on resolving the "at-risk" blocks rather than manually cleaning data. | Executive Dashboard |
 
 ---
 
-# SECTION 9: TRACEABILITY MATRIX (NEW)
+## References
+- https://www.interior.go.ke
+- Executive Order No. 1 of 2023
+- Desk Review
 
-| BPA Process | Priority Service | Tier | TO-BE Capability | National Impact |
-| :--- | :--- | :--- | :--- | :--- |
-| **Priority Tasking** | Task Dispatch | T2 | Automated Dispatch Engine | Faster Policy Execution |
-| **Data Extraction** | KPI Monitoring | T2 | X-Road: Auto-Data Pull | Accurate Service Delivery Tracking|
-| **Report Consolidation**| Dashboarding | T2 | AI-Assisted Data Merging | Executive Visibility & Speed |
-| **Escalation Mgt** | Remediation | T2 | Proactive Alerting Engine | Crisis Prevention & Security |
 
 ---
-**[End of Standardised Business Process Architecture]**
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

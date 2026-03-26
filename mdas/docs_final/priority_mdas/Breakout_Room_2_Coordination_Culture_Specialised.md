@@ -1,4 +1,4 @@
-# Room 2: Coordination, Culture & Specialised Services (Updated)
+# Room 2: Coordination, Culture & Specialised Services
 
 **Description:** These include MDAs responsible for coordination functions, cultural institutions, specialized services, or cross-sector support roles.
 

@@ -1,212 +1,143 @@
-# State Law Office - Registrar of Marriages – Business Process Architecture (Updated)
+# OFFICE OF THE ATTORNEY GENERAL (AG) – Marriages & Divorces
 
 ## Cover Page
-- **Ministry:** Office of the Attorney-General and Department of Justice
-- **Department:** Registrar of Marriages
-- **Primary Authority:** Registrar-General
-- **Document Type:** Business Process Architecture (BPA) Standardised
-- **Document Version:** 4.1
-- **Date:** 2026-03-25
-- **Classification:** Official / Sensitive
-- **Strategic Category:** Priority MDA - National Registry (Tier 1)
-- **Service Model:** G2C / G2B
-- **Reviewer:** Senior Government Enterprise Architect
+- **Ministry/Department/Agency (MDA):** OFFICE OF THE ATTORNEY GENERAL (AG) - REGISTRAR OF MARRIAGES
+- **Process Name:** Civil Marriages & Divorces Registry
+- **Document Version:** 2.0
+- **Date:** 2026-03-17
+- **Classification:** Official
 
 ---
 
-## SECTION 0: SERVICE PRIORITISATION MAPPING
-- **Mapped Priority Service:** Civil, Customary, and Professional Marriage Registration
-- **Tier Classification:** Tier 1
-- **Strategic Category:** Social / Justice (Marriage & Family)
-- **Breakout Room Classification:** Room 1 (High Impact & Large Registries)
-- **Lead MDA (Standardised Name):** State Law Office - Registrar of Marriages
-- **Related Cross-Cutting Services:**
-    - National Marriages Registry (Unified)
-    - Identity Layer (IPRS / Maisha Namba)
-    - X-Road (Judiciary Divorce Decrees / DRS Interop)
-    - National EDRMS (Historical Marriage Records)
-    - Government Payment Aggregator (GPA / Fees)
+## Service Mandate
+The Office of the Attorney General is established under Article 156 of the Constitution of Kenya to serve as the principal legal adviser to the National Government. Its mandate includes promoting, protecting, and upholding the rule of law, defending the public interest, advising government ministries and departments on legal matters, negotiating and drafting local and international agreements, and representing the National Government in court in all civil and constitutional matters.
 
 ---
 
-## SECTION 0.1: PRIORITISATION JUSTIFICATION
-This service is prioritised because the TO-BE design transforms marriage registration from a fragmented, regional paper-and-courier system into a "National Vital Life-Event Registry." By integrating with IPRS (Identity) and the Judiciary (Divorce Decrees) via X-Road, the design ensures that a citizen's marital status is instantly verifiable, legally certain, and tamper-proof. This transformation eliminates the deadly "courier lag" for divorce registration, automates the statutory 21-day public notice period, and digitizes millions of historical marriage records scattered across sub-counties and religious institutions, creating a secure digital vault for the nation's foundational family records.
-
-| Criteria | Evidence from TO-BE Design |
-| :--- | :--- |
-| **Demand / Volume** | Over 500,000 marriage notices and thousands of divorce registrations annually. |
-| **National Priority Alignment** | Marriage Act (Cap 150); Civil Registration and Vital Statistics (CRVS) Framework. |
-| **Data Reusability** | Marital status is a critical input for Immigration (Spouse permits) and Banking (Lending). |
-| **Interoperability** | Real-time intake of Divorce Decree Absolutes from Judiciary CMS via X-Road (Huduma Bridge). |
-| **Revenue / Efficiency Impact** | Automated fee collection via GPA; removes physical certificate backlog. |
-| **Governance / Risk Reduction** | NPKI digital sealing of certificates prevents "Bigamy" and marriage-record forgery. |
-| **Inclusivity** | "Virtual Solemnization" and digital noticeboards ensure access for diaspora and remote citizens. |
-| **Readiness** | High; eCitizen portal is established; OAG has a specialized Registrar team. |
-
-> [!NOTE]
-> “The TO-BE design transforms marriage registration from a fragmented, regional paper-and-courier system into a 'National Vital Life-Event Registry.' By integrating with IPRS (Identity) and the Judiciary (Divorce Decrees) via X-Road, the design ensures that a citizen's marital status is instantly verifiable and tamper-proof. This eliminates the 'courier lag' for divorce registration, automates the 21-day public notice period, and creates a secure digital vault for millions of historical marriage records.”
+## Executive Summary
+The Office of the Attorney General (through the Registrar of Marriages) is mandated to register, solemnize, and maintain records of statutory marriages in Kenya. This includes processing notices of marriage, issuing certificates, conducting civil weddings, and updating the registry following court-ordered divorce decrees. The department plays a critical role in providing secure vital life-event records and family status documentation for citizens.
 
 ---
 
-# SECTION 1: SERVICE DEFINITION (STANDARDISED)
+## 1. AS-IS Process Flowchart (BPMN 2.0)
+*Current State visualization (Manual/Semi-Automated Marriage & Divorce Processing).*
 
-The Office of the Attorney General (through the Registrar of Marriages) is mandated under the **Marriage Act, Cap 150** to register all statutory, customary, and religious marriages. 
-
-In this refactored BPA, the primary focus is the **Unified Marriage & Divorce Lifecycle**. The objective is to move from manual "Marriage Book" entries and email-based notices to a **National Marriages Registry** where marital capacity is checked instantly via the **Huduma Bridge** and certificates are issued as **Verifiable Digital Credentials**.
-
----
-
-# SECTION 2: SERVICE CATALOGUE (NORMALISED)
-
-| Category | Service Name | Description |
-| :--- | :--- | :--- |
-| **Core Services** | **Civil Marriage Registration** | Registration of statutory marriages by notice or special license. |
-| | **Customary Marriage Reg.** | Formalization and registration of tribal/customary unions. |
-| **Extended Services** | **Divorce Registration** | Digital recording of Decree Absolutes (Judiciary Link). |
-| | **Marital Status Verification** | Issuance of "Certificates of No Impediment" for international use. |
-| **Special Case Services**| **Religious Leader Licensing** | Digital permitting and tracking of Ministers of Faith authorized to marry. |
-| | **Foreign Marriage Registry** | Recording of marriages conducted by Kenyans outside national borders. |
-
----
-
-# SECTION 3: AS-IS PROCESS FLOWS (HYBRID/COURIER-BASED)
-
-The current workflow leverages eCitizen for the intake but maintains manual ceremony, physical interview stages, and courier-based divorce reporting.
-
-### 3.1 AS-IS Visualization
 ```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start)) --> Apply["1. Digital Submission (eCitizen)"]
+graph TD
+    Start((Start)) --> S1
+
+    subgraph Citizen [Citizen]
+        S1["Citizen creates eCitizen account & selects Marriage Service"] --> S2
+        S2["Applicant fills online Notice of Marriage form & uploads documents (IDs, Photos)"] --> S3
+        S3["Applicant pays statutory fee via eCitizen (e.g., KES 600)"] --> S4
+        S4["Applicant prints system-generated Notice and books appointment"] --> S5
+        S5["Citizen visits Sheria House / Registrar physically for document verification"] --> S14
+        
+        S20["Citizen receives Divorce Decree Absolute from High Court"] --> S21
+        S21["Citizen physically submits Decree to Registrar to update marital status"] --> S22
+    end
+
+    subgraph Registrar_of_Marriages [Registrar of Marriages / AG]
+        S6["Registrar verifies physical IDs and uploaded documents"] --> S7
+        S7["Notice is pinned on the physical Notice Board for 21 days"] --> S8
+        S8{"Any Objections raised during 21 days?"}
+        
+        S8 -- Yes --> S9["Hearing scheduled to resolve objection"]
+        S9 --> S10{"Objection Valid?"}
+        S10 -- Yes --> S11["Application Rejected / Terminated"]
+        S10 -- No --> S12["Proceed to next step"]
+        
+        S8 -- No --> S12
+        
+        S12["Registrar issues Registrar's Certificate"] --> S13
+        S13["Couple books date for solemnization/wedding at Sheria House"] --> S14
+        
+        S14["Ceremony conducted by Registrar"] --> S15
+        S15["Physical Marriage Register signed by couple & witnesses"] --> S16
+        S16["Registrar prints and issues physical Marriage Certificate"]
+        
+        S22["Registrar manually updates physical registry to reflect divorce"] --> S23
+        S23["Registrar issues certified copy of search/update if requested"]
+    end
     
-    subgraph Intake_Silo["Review & Publication"]
-        Apply --> Review["2. Clerk Review (Manual Queue)"]
-        Review --> Notice["3. Manual Public Notice Post (Physical/Web)"]
-    end
-
-    subgraph Verification_Layer["Manual Interview"]
-        Notice --> Book["4. Physical Appointment Booking"]
-        Book --> Interview["5. Physical Interview with Registrar"]
-        Interview --> Affid["6. Commissioning of Physical Affidavits"]
-    end
-
-    subgraph Celebration_Silo["Solemnization"]
-        Affid --> Ceremony["7. Physical Marriage Solemnization"]
-        Ceremony --> Issue["8. Manual Certificate Issuance & Scan"]
-    end
-
-    Issue --> EndProcess(("End - Registration"))
+    S11 --> End((End))
+    S16 --> End
+    S23 --> End
 ```
 
-### 3.2 Operational Reality
-- **Actors:** Marriage Clerk, Registrar, Couple, Witnesses, Licensed Minister.
-- **Systems:** eCitizen (Basic), Manual Marriage Books, Physical Files, Email.
-- **Pain Points:** 21-day notice period is manually tracked; physical interviews cause citizen travel burden; divorce decrees are sent via post, leading to 6-month registry lags; millions of regional records remain in un-digitized "Registers" at sub-county offices.
+---
+
+## 2. Weaknesses & Pain Points (The "Why")
+- **Manual Physical Presence Required:** Even though eCitizen handles the payment and initial application, couples must physically visit the registry for document verification and the ceremony, creating long queues.
+- **Physical Notice Boards:** Relying on physical pin-boards for the 21-day statutory notice is outdated and fails to provide national visibility for objections.
+- **Disconnected Divorce Updates:** The Judiciary handles divorces, but there is no automated API linking the High Court's Case Management System to the AG's Marriage Registry. Divorced individuals must manually carry court decrees to update their status.
+- **Paper Registers:** The final legal artifact is still a physical signature in a large paper register book, making historical searches and certificate replacements very slow.
 
 ---
 
-# SECTION 4: TO-BE PROCESS INTERPRETATION (NEW LAYER)
+## 3. TO-BE Process Flowchart (BPMN 2.0)
+*Future State visualization (Fully Digitized with Identity Federation).*
 
-### 4.1 TO-BE Process (vI-Event Life Cycle)
 ```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '20px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start)) --> Portal["1. Citizen Applies via Marriage Portal (Maisha SSO)"]
+graph TD
+    Start((Start)) --> S1
+
+    subgraph Citizen [Citizen]
+        S1["Citizen logs in via Maisha Namba / eCitizen"] --> S2
+        S2["Initiates Marriage Notice (System auto-pulls both partners' details from NRB)"] --> S3
+        S3["Completes biometric/facial liveness check for consent"] --> S4
+        S4["Pays consolidated fee digitally"]
+        
+        S12["Couple attends Virtual or Physical Solemnization"] --> S13
+        S13["Couple signs digitally via secure portal/biometrics"]
+    end
+
+    subgraph Platform_Services [Shared Platform / Integrations]
+        S4 --> S5["Payment Gateway processes and splits funds"]
+        S5 --> S6["Integration Engine checks marital status in Registry (Prevents Bigamy)"]
+        S6 --> S7["Digital Notice published on National e-Gazette/Portal for 21 days"]
+        
+        S14["Digital e-Certificate generated with QR Code"] --> S15
+        S15["National Marriages Registry Database Updated"]
+        
+        S20["Judiciary API automatically sends Divorce Decree to Registry"] --> S21
+        S21["Marital status automatically updated to 'Divorced' in Registry"]
+    end
+
+    subgraph Registrar_of_Marriages [Registrar of Marriages / AG]
+        S7 --> S8{"Digital Objections raised?"}
+        S8 -- Yes --> S9["Online Tribunal/Hearing scheduled"]
+        S9 --> S10{"Objection Valid?"}
+        S10 -- Yes --> S11["Application Terminated"]
+        S10 -- No --> S12
+        
+        S8 -- No --> S12
+    end
     
-    subgraph Trust_Hub["Layer 2: Identity & Capacity Vetting"]
-        Portal --> Verify["X-Road: Verify Marriage Capacity (IPRS/Marriages Registry)"]
-        Verify --> Consent["Consent Manager: Access Couple's Data?"]
-    end
-
-    subgraph Operations["Layer 2 & 3: Smart Workflow"]
-        Consent --> AutoNotice["Automated 21-Day Digital Public Notice (Zero-human)"]
-        AutoNotice --> SmartBook["Digital Virtual Interview Booking (Rules Engine)"]
-    end
-
-    subgraph Settlement["Layer 4: Registries & Issuance"]
-        SmartBook --> Sign["NPKI Digital Signature & Seal of Solemnization"]
-        Sign --> Wallet["Issue Verifiable Digital Marriage Cert (QR)"]
-        Wallet --> DivorceSync["X-Road: Real-time Divorce Sync (Judiciary CMS)"]
-    end
-
-    DivorceSync --> EndProcess(("End - Lifetime Vital Record"))
-
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:20px;;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:20px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:20px;;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:20px;;
-    
-    class Start start;
-    class EndProcess endNode;
-    class Portal userTask;
-    class Verify,Consent,AutoNotice,SmartBook,Sign,Wallet,DivorceSync serviceTask;
+    S11 --> End((End))
+    S15 --> End
+    S21 --> End
 ```
 
-### 4.2 Key Capabilities Introduced
-*   **Automation:** Automated 21-day statutory notice period – system releases notice at exactly T+21 days if no objections are logged.
-*   **Integration:** Real-time bi-directional integration with the **Judiciary CMS** for divorce decrees and **IPRS** for marital capacity status.
-*   **Real-time Processing:** Instant generation of verifiable digital certificates with NPKI-secured QR codes.
-*   **Digital Identity Validation:** Identity and marital capacity of both parties and witnesses verified via **Maisha Namba** identity federation.
-*   **Workflow Orchestration:** Orchestrates the complex lifecycle from notice to solemnization and divorce-status synchronization.
+---
 
-### 4.3 Transformation Summary
-| Dimension | AS-IS | TO-BE |
-| :--- | :--- | :--- |
-| **Processing** | Manual / Hybrid-wait | Digital / Event-driven |
-| **Verification** | Physical Original Documents | API-based (IPRS/Judiciary) |
-| **Records** | Regional Marriage Books | National Marriages Registry |
-| **Tracking** | Manual Ledger Queries | Real-time Vital-Event Dashboard |
+## 4. Automation & Digitization Opportunities (The "How")
+- **National Population Register (NRB) Integration:** Auto-populate partner details to prevent identity fraud and automatically flag if a partner is already legally married in the system (preventing bigamy).
+- **Digital Notice Board (e-Gazette):** Replace physical pin-boards with a centralized, searchable online portal where citizens can view notices and lodge objections digitally.
+- **Judiciary API (Divorce decrees):** Establish a system-to-system integration with the Judiciary so that when a divorce is finalized in court, the AG's marriage registry is instantly updated without the citizen needing to act as a courier.
+- **E-Certificates:** Issue digitally signed, QR-coded marriage certificates that can be instantly verified by embassies, banks, and other MDAs.
 
 ---
 
-# SECTION 5: SYSTEM LANDSCAPE (ALIGN TO GEA)
+## 5. Required Integrations
+- **NRB / IPRS:** For citizen identity verification and liveness checks.
+- **Judiciary Case Management System (CMS):** To automatically receive and process absolute divorce decrees.
+- **eCitizen / PayPay:** For payment processing.
+- **Government e-Gazette:** For publishing 21-day marriage notices electronically.
 
-| Layer | System / Platform | Role |
-| :--- | :--- | :--- |
-| **Identity Layer** | Maisha Namba (IPRS) | Identity and capacity (Singleness) verification. |
-| **Interoperability** | KeSEL (X-Road) | Data bridge to Judiciary (Divorce) and eCitizen. |
-| **shared Services** | National EDRMS | Legal digital archive for historical marriage books. |
-| **Workflow / BPM** | Marriage LifeCycle Hub | Orchestrates notices, interviews, and solemnization. |
-| **Payment Layer** | GPA (Finance Aggregator) | Automated fee reconciliation and revenue tracking. |
-| **Trust Hub** | Consent Manager | Couple control over shared marital history data. |
 
 ---
 
-# SECTION 6: TRANSFORMATION VALUE (CRITICAL ADDITION)
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
 
-| Value Type | Explanation |
-| :--- | :--- |
-| **Efficiency Gain** | Divorce registration lag reduced from 180 days to milliseconds via X-Road sync. |
-| **Economic Impact** | Accelerates legal family-status resolution for banking, insurance, and travel. |
-| **Governance Impact** | Full NPKI audit trail of who solemnized each marriage; prevents fraudulent unions. |
-| **Citizen Experience** | Eliminates multiple trips for interviews via Virtual Solemnization support. |
-| **Interoperability Value** | Shared data with Immigration and CRVS ensures 100% vital event consistency. |
-
----
-
-# SECTION 7: ALIGNMENT TO WHOLE-OF-GOVERNMENT ARCHITECTURE
-- **Shared Platforms:** Uses eCitizen for portal access and NPKI for all official Vital Event certificates.
-- **Registry Reuse:** Feeds "Marital Status" back to IPRS to ensure a single national source of truth.
-- **Compliance with GEA / GIF:** Standardizing marriage certificate schemas for global ICAO / CRVS compliance.
-
----
-
-# SECTION 8: IMPLEMENTATION READINESS (NEW)
-*   **Data Readiness:** Medium; Requires heavy digitisation (IDP) of millions of physical registry books.
-*   **Legal Readiness:** High; Legal recognition of digital certificates is active; virtual solemnization needs rules update.
-*   **Institutional Readiness:** High; OAG has specialized Marriage Registrars and Clerks across regions.
-*   **Technical Readiness:** High; Judiciary-AG X-Road connection is high-priority and POC-ready.
-
----
-
-# SECTION 9: TRACEABILITY MATRIX (NEW)
-
-| BPA Process | Priority Service | Tier | TO-BE Capability | National Impact |
-| :--- | :--- | :--- | :--- | :--- |
-| **Intake Mgmt** | Marriage Filing | T1 | X-Road: IPRS Link | Marital Status Integrity |
-| **Public Notice** | Statutory Posting | T1 | Automated 21-Day Release | Legal Transparency & Rules |
-| **Solemnization** | Certification | T1 | NPKI Digital Seals | Fraud & Bigamy Prevention |
-| **Status Update** | Divorce Registry | T1 | Real-time Judiciary Sync | Vital-event Record Accuracy |
-
----
-**[End of Standardised Business Process Architecture]**

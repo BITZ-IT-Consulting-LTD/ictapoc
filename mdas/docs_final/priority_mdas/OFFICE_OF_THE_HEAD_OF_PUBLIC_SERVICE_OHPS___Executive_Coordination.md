@@ -1,213 +1,187 @@
-# Office of the Head of Public Service (OHPS) – Business Process Architecture (Updated)
+# OFFICE OF THE HEAD OF PUBLIC SERVICE (OHPS) – Executive Coordination
 
 ## Cover Page
-- **Ministry:** Executive Office of the President
-- **Office:** Office of the Head of Public Service (OHPS)
-- **Primary Authority:** Head of the Public Service
-- **Document Type:** Business Process Architecture (BPA) Standardised
-- **Document Version:** 4.1
-- **Date:** 2026-03-25
-- **Classification:** Official / Restricted
+- **Ministry/Department/Agency (MDA):** Executive Office of the President
+- **Department:** Office of the Head of Public Service (OHPS)
+- **Process Name:** Executive Coordination and Presidential Directives Management
+- **Document Version:** 2.1
+- **Date:** 2026-02-24
+- **Classification:** Official
 - **Strategic Category:** Priority MDA
-- **Service Model:** G2G (Executive Coordination)
-- **Reviewer:** Senior Government Enterprise Architect
+- **Service Model:** G2G
+- **Life-Cycle Group:** Cradle to Death (4. Employment & Business)
 
 ---
 
-## SECTION 0: SERVICE PRIORITISATION MAPPING
-- **Mapped Priority Service:** Executive Coordination and Presidential Directives Management
-- **Tier Classification:** Tier 2
-- **Strategic Category:** Governance / Coordination (Executive Oversight)
-- **Breakout Room Classification:** Room 2 (Coordination, Culture & Specialised Services)
-- **Lead MDA (Standardised Name):** Office of the Head of Public Service (OHPS)
-- **Related Cross-Cutting Services:**
-    - Executive Coordination Portal (Tasking Engine)
-    - Identity Layer (IPRS / Maisha Namba - Officer Tier)
-    - X-Road (Service Bus for Implementation Evidence)
-    - GDMIS (Government Delivery Management System)
-    - National EDRMS (Policy & Directive Repository)
+## Service Mandate
+The Office of the Head of Public Service is responsible for managing the operations of the public service, coordinating policies across ministries, and supervising the implementation of government programs. Under Executive Order No. 2 of 2023, it oversees the administration of all State Corporations and public entities, facilitates communication between the Presidency and MDAs, and ensures the general efficiency and effectiveness of the civil service.
 
 ---
 
-## SECTION 0.1: PRIORITISATION JUSTIFICATION
-This service is prioritised because the TO-BE design transforms the Office of the Head of Public Service from a "memo-driven" secretariat into a "Digital Compliance & Performance Engine." By shifting from manual quarterly progress reports to "Real-time Task Tracking" via the Executive Portal and X-Road (Huduma Bridge), the design provides the HPS with an instant "Governance Heatmap" for all cross-cutting Presidential Directives. This transformation eliminates the historical 90-day reporting lag, automates the verification of MDA implementation claims via direct registry pings (e.g., verifying if a road was paved or a clinic was built via field data), and enables proactive "Nudge Alerts" to Principal Secretaries for delayed national deliverables before they impact the citizen.
-
-| Criteria | Evidence from TO-BE Design |
-| :--- | :--- |
-| **Demand / Volume** | Oversight of thousands of national directives; hundreds of PS-level interactions daily. |
-| **National Priority Alignment** | Constitution Articles 132/154; Public Service Values; Executive Order No. 2. |
-| **Data Reusability** | Verified implementation data is the source-of-truth for the President’s Annual State of the Nation Report. |
-| **Interoperability** | Continuous API synchronization between the HPS Coordination Portal and the 100+ MDA workflow systems via X-Road. |
-| **Revenue / Efficiency Impact** | Reduces administrative overhead for 20+ Ministries; prevents "Information Silo" delays. |
-| **Governance / Risk Reduction** | Immutable audit trail of ministerial accountability for national policy failures. |
-| **Inclusivity** | Coordination of multi-agency services (e.g., identity, health, and transport) for all citizens. |
-| **Readiness** | High; Core HPS coordination units exist; basic digital communication tools are in place. |
-
-> [!NOTE]
-> “The TO-BE design transforms the Office of the Head of Public Service from a 'memo-driven' secretariat into a 'Digital Compliance & Performance Engine.' By shifting from manual quarterly progress reports to 'Real-time Task Tracking' via the Executive Portal and X-Road, the design provides the HPS with an instant 'Governance Heatmap' of all Presidential Directives. This transformation eliminates the 90-day reporting lag, automates the verification of MDA implementation claims via direct registry pings, and enables proactive 'Nudge Alerts' to Principal Secretaries for delayed national deliverables.”
+## Executive Summary
+The Office of the Head of Public Service (OHPS) is the apex office for coordinating government-wide policy implementation and tracking the execution of Presidential Directives across all MDAs. The current process is heavily reliant on manual tracking, memo-based communication, and periodic quarterly reports from Principal Secretaries. The transition to the Kenya DSAP Architecture aims to create a real-time, digital "Executive Dashboard" that tracks compliance and performance via the national service bus.
 
 ---
 
-# SECTION 1: SERVICE DEFINITION (STANDARDISED)
+## 1. AS-IS Process Flowchart (BPMN 2.0)
+*Current State visualization (End-to-End Executive Coordination based on Deep Dive).*
 
-The Office of the Head of Public Service (OHPS) is responsible for coordinating government policies and supervising the implementation of government programs, as mandated by **Executive Order No. 1 of 2023**. 
-
-In this refactored BPA, the primary service is the **End-to-End Presidential Directive Lifecyle**. The objective is to move from manual physical "Memos" and quarterly summaries to an **Executive Workflow Engine** where tasks are dispatched digitally and progress is verified via **X-Road Data Pulling** from authoritative registries.
-
----
-
-# SECTION 2: SERVICE CATALOGUE (NORMALISED)
-
-| Category | Service Name | Description |
-| :--- | :--- | :--- |
-| **Core Services** | **Digital Directive Tasking**| Automated issuance and accountability tracking for official instructions. |
-| | **Real-time Compliance Mon.**| Live "RAG" (Red/Amber/Green) dashboard for all national priorities. |
-| **Extended Services** | **Inter-Ministerial Resol.** | Digital mediation of policy conflicts between different MDAs. |
-| | **Executive Briefing Archive**| Secure, NPKI-signed vault for all situational awareness reports. |
-| **Special Case Services**| **Implementation "Nudge"** | Automated AI reminders to Principal Secretaries for target slippage. |
-| | **Registry Evidence Pull** | Fetching live KPI data directly from MDA nodes (Health/Infra/Finance). |
-
----
-
-# SECTION 3: AS-IS PROCESS FLOWS (MANUAL/PAPER-LED)
-
-The current process is heavily reliant on manual tracking, physical memo-based communication, and periodic quarterly reports from Principal Secretaries.
-
-### 3.1 AS-IS Visualization
 ```mermaid
 %%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start)) --> Directive["1. Receive Directive / Identifying Policy Ambiguity"]
+graph TD
+    Start((Start)) --> Directive["Directive Received / Policy Ambiguity Identified"]
     
-    subgraph Analysis_Silo["OHPS Analysis"]
-        Directive --> Analyze["2. Analyse Requirements & Identify Responsible MDAs"]
-        Analyze --> Translate["3. Translate to Physical Instruction Letters (Memos)"]
+    subgraph Analysis["Coordination & Analysis"]
+        Directive --> Analyze["Analyse Requirements & Identify MDAs"]
+        Analyze --> Translate["Translate to Instructions / Request Letter"]
     end
-
-    subgraph Dissemination_Layer["Manual Dispatch"]
-        Translate --> Dispatch["4. Physical Dispatch to Principal Secretaries"]
-        Dispatch --> Receipt["5. Confirm Receipt by Junior Officers (Memo/Registry)"]
-    end
-
-    subgraph Monitoring_Silo["The Reporting Lag"]
-        Receipt --> Wait["Wait for Quarterly Implementation Cycle (90 Days)"]
-        Wait --> SubProg["6. MDAs Submit Progress Reports (Excel/Word/Email)"]
-        SubProg --> Consolidate["7. Manual Consolidation of 20+ Reports (High Error)"]
-    end
-
-    Consolidate --> EndProcess(("End - Briefing Prepared"))
-```
-
-### 3.2 Operational Reality
-- **Actors:** Head of Public Service, Senior Coordinators, Admin Secretariat, PSs.
-- **Systems:** Word/Excel, Physical Letters, Standalone Email, Registry Books.
-- **Pain Points:** 90-day reporting lag hides implementation bottlenecks; manual consolidation of unstructured reports is error-prone; zero visibility into real-time health of national directives; massive "Coordination overhead" for simple follow-ups.
-
----
-
-# SECTION 4: TO-BE PROCESS INTERPRETATION (NEW LAYER)
-
-### 4.1 TO-BE Process (Data-Driven Oversight Hub)
-```mermaid
-%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '20px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
-flowchart TD
-    Start((Start)) --> Portal["1. HPS Enters Directive to Executive Hub"]
     
-    subgraph Trust_Hub["Layer 2: Real-time Tasking"]
-        Portal --> Tasking["2. Workflow Engine: Auto-dispatch to PS Workbenches"]
-        Tasking --> Tracker["Assign National Reference ID for Real-time Tracking"]
+    subgraph Dissemination [Dispatch]
+        Translate --> Dispatch["Dispatch to Principal Secretaries / MDAs"]
+        Dispatch --> Receipt["Confirm Receipt (Manual/Memo)"]
     end
-
-    subgraph Operations["Layer 2 & 3: Performance Pull (X-Road)"]
-        Tracker --> Fetch["3. X-Road: Auto-fetch progress evidence from MDA Registries"]
-        Fetch --> CrossCheck["Automatic Verification against Expenditure & Field Logs"]
-    end
-
-    subgraph Settlement["Layer 4: Executive Radar Dashboard"]
-        CrossCheck --> Dashboard["4. Real-time Government Performance Heatmap"]
-        Dashboard --> Alert{"Breach Found?"}
-        Alert -- "Yes" --> Nudge["5. System Triggers Proactive Auto-Reminders (Nudges)"]
-        Alert -- "No" --> SitRep["6. Auto-Generate HPS Weekly Situation Report"]
-    end
-
-    SitRep --> EndProcess(("End - Executive Oversight Secure"))
-
-    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:20px;;
-    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:20px;;
-    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:20px;;
-    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:20px;;
     
+    subgraph Monitoring["Monitoring & Feedback"]
+        Receipt --> Track["Track Implementation / Monitor Submissions"]
+        Track --> Consolidate["Consolidate Updates / Compile Submissions"]
+        Consolidate --> Assess["Analyse Performance / Identify Gaps"]
+        Assess --> Perf{"Performance?"}
+        
+        Perf -- "Good" --> Commend["Commend / Feedback"]
+        Perf -- "Poor" --> Corrective["Issue Corrective Directives"]
+    end
+    
+    Corrective --> End((End))
+    Commend --> End
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px;;
     class Start start;
-    class EndProcess endNode;
-    class Portal,SitRep userTask;
-    class Tasking,Tracker,Fetch,CrossCheck,Dashboard,Nudge serviceTask;
+    class End endNode;
+    class Perf gateway;
+    class Directive,Analyze,Translate,Dispatch,Receipt,Track,Consolidate,Assess,Commend,Corrective userTask;
 ```
 
-### 4.2 Key Capabilities Introduced
-*   **Automation:** Automated Compliance Workflow – system allows HPS to set hard deadlines that trigger escalations automatically without human follow-ups.
-*   **Integration:** Real-time bi-directional integration with the **National Treasury (IFMIS)** and **Government Delivery (GDMIS)** via X-Road.
-*   **Real-time Processing:** Live "Implementation Pulse" – continuous data fetch from 100+ MDA nodes replaces the quarterly manual report.
-*   **Digital Identity Validation:** Official task-actions and responses verified via **National Identity (Maisha Namba)** for non-repudiation.
-*   **Workflow Orchestration:** Orchestrates the total lifecycle from Presidential instruction to verified grassroots project outcome.
+---
 
-### 4.3 Transformation Summary
-| Dimension | AS-IS | TO-BE |
-| :--- | :--- | :--- |
-| **Processing** | Manual / Multi-Interview | Digital / Workflow-driven |
-| **Verification** | Self-Reported Claims | Registry-Verified Evidence (X-Road) |
-| **Records** | Regional/Mail Excel Files | Unified National Performance Registry |
-| **Tracking** | Quarterly Snapshots | Real-time "Heatmap" dashboard |
+## Process Overview
+### Process Name
+Executive Coordination, Directive Tracking, and Performance Monitoring
+
+### Service Category
+- G2G (Government to Government)
+
+### Scope
+- **In Scope:** Issuance of instructions to Principal Secretaries, tracking compliance with Presidential Directives, and monitoring government-wide performance.
+- **Out of Scope:** Individual MDA internal HR/Admin processes.
+
+### Triggers
+- Issuance of a Presidential Directive or identification of a cross-cutting policy ambiguity.
+
+### End States
+- **Successful:** Directive implemented across MDAs; Performance targets met; Policy clarified.
+
+### Policy Context
+- The Constitution of Kenya; Executive Order No. 1 of 2023; Public Service Commission Act.
 
 ---
 
-# SECTION 5: SYSTEM LANDSCAPE (ALIGN TO GEA)
+## Detailed Process (AS-IS)
 
-| Layer | System / Platform | Role |
-| :--- | :--- | :--- |
-| **Identity Layer** | Maisha Namba (Exec Tier) | Identity and Bio-login for the high-assurance coordination team. |
-| **Interoperability** | KeSEL (X-Road) | The central "Service Bus" for cross-govt tasking & evidence. |
-| **shared Services** | National EDRMS | Legal digital archive for all Presidential Directives. |
-| **Workflow / BPM** | Executive Coordination Hub | Orchestrates the drafting and dispatch of instructions. |
-| **Reporting / Analytics**| Outcome Visualizer Dashboard| Real-time performance tracking for all national mandates. |
-| **Trust Hub** | NPKI Stamping Service | Cryptographic sealing of approved directives. |
-
----
-
-# SECTION 6: TRANSFORMATION VALUE (CRITICAL ADDITION)
-
-| Value Type | Explanation |
-| :--- | :--- |
-| **Efficiency Gain** | Elimination of the 90-day reporting lag; instant situational awareness. |
-| **Economic Impact** | Accelerates multi-sector project delivery and fiscal absorption rates. |
-| **Governance Impact** | Absolute accountability for ministerial results; zero-hiding of failures. |
-| **Citizen Experience** | Dramatically improves the perception of government as a "Delivery Machine." |
-| **Interoperability Value** | Shared coordination tools ensure all ministries work on a unified plan. |
+| Step | Role | Action | Tool/System | Notes |
+|---|---|---|---|---|
+| 1 | Head of Public Service | Receives a Presidential Directive and translates it into specific instructions for relevant Ministries. | Memo/Letter | |
+| 2 | Senior Coordinators | Identify the specific MDAs responsible for various deliverables within the directive. | Manual | |
+| 3 | OHPS Admin | Dispatches instructions via official correspondence (letters/memos) to Principal Secretaries. | Physical/Email | |
+| 4 | Principal Secretaries | MDAs submit quarterly reports on the status of implementation. | Word/Excel Reports | |
+| 5 | OHPS Analysis Team | Manually consolidates reports, identifies gaps, and prepares a summary for the Head of Public Service. | Manual | |
 
 ---
 
-# SECTION 7: ALIGNMENT TO WHOLE-OF-GOVERNMENT ARCHITECTURE
-- **Shared Platforms:** Uses the Government Portal for the central executive coordination workbench.
-- **Registry Reuse:** Reuses project identities from the Department of Projects to ensure data consistency.
-- **Compliance with GEA / GIF:** Standardizing performance reporting data schemas for inter-ministerial use.
+## Pain Points & Opportunities
+### Pain Points
+- **Delayed Feedback:** Relying on quarterly paper-based reports means gaps are identified months too late.
+- **Manual Consolidation:** High risk of errors and data manipulation when merging reports from 20+ Ministries.
+- **Lack of Real-Time Tracking:** No central dashboard to see the current status of "National Priority" projects instantly.
+
+### Opportunities
+- **Automated Performance Pull:** Instead of waiting for reports, the OHPS system can "pull" completion data from MDA systems via **X-Road**.
+- **Unified Executive Dashboard:** A real-time visualization of all Presidential Directives and their current "RAG" (Red/Amber/Green) status.
+- **Digital Directives:** Issuing and tracking instructions through a secure, non-repudiable workflow engine.
 
 ---
 
-# SECTION 8: IMPLEMENTATION READINESS (NEW)
-*   **Data Readiness:** High; Quarterly reports already identify the core KPIs to be digitized.
-*   **Legal Readiness:** High; Executive Order No. 1 and 2 of 2023 provide strong oversight mandates.
-*   **Institutional Readiness:** High; OHPS has established coordination secretariats across govt levels.
-*   **Technical Readiness:** High; HUDUMA Bridge is ready to host the HPS Executive Coordination dashboard.
+## 2. TO-BE Process Flowchart (BPMN 2.0)
+*Future State visualization (Kenya DSAP Architecture - Huduma Bridge).*
+
+```mermaid
+%%{init: { 'theme': 'base', 'themeVariables': { 'fontSize': '24px', 'fontFamily': 'Inter, system-ui, sans-serif', 'primaryColor': '#ffffff', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f3f3f3', 'mainBkg': '#ffffff', 'nodeBorder': '#333333' } } }%%
+graph TD
+    Start((Start)) --> Portal["HPS Enters Directive into Executive Portal"]
+    
+    subgraph CorePlatform["Workflow Engine "]
+        Portal --> Tasking["Workflow Engine Auto-tasks Principal Secretaries"]
+        Tasking --> Tracker["Real-time Compliance Tracker('KeSEL Integration')"]
+    end
+    
+    subgraph Interoperability["Huduma Bridge / X-Road"]
+        Tracker --> Fetch["X-Road: Auto-fetch progress from IFMIS/MDAs"]
+    end
+    
+    subgraph Analysis["Executive Dashboard"]
+        Fetch --> Dashboard["Real-time Performance Dashboard"]
+        Dashboard --> Alert{"Breach / Gap?"}
+        
+        Alert -- "Yes" --> Nudge["System Triggers Auto-Reminder / Escalation"]
+        Alert -- "No" --> Report["Generate Leadership Situation Report"]
+    end
+    
+    Nudge --> End((End))
+    Report --> End
+
+    classDef start fill:#27ae60,stroke:#27ae60,color:#fff,font-size:24px,font-size:24px;;
+    classDef endNode fill:#e74c3c,stroke:#e74c3c,color:#fff,font-size:24px,font-size:24px;;
+    classDef userTask fill:#3498db,stroke:#2980b9,color:#fff,font-size:24px,font-size:24px;;
+    classDef serviceTask fill:#9b59b6,stroke:#8e44ad,color:#fff,font-size:24px,font-size:24px;;
+    classDef gateway fill:#f1c40f,stroke:#f39c12,color:#333,font-size:24px,font-size:24px;;
+    class Start start;
+    class End endNode;
+    class Alert gateway;
+    class Portal,Report userTask;
+    class Tasking,Tracker,Fetch,Dashboard,Nudge serviceTask;
+```
+
+## Future State Process (TO-BE)
+### Narrative
+**TO-BE Process: Data-Driven Executive Coordination**
+
+**Design Principles:**
+- **Automated Compliance:** The **Workflow Engine** replaces memos. Instructions are tracked as "Tasks" with hard deadlines.
+- **Evidence-Based Monitoring:** OHPS no longer waits for manual reports. The system pings MDA-specific registries (e.g., IFMIS for spending, KIAMIS for farmer outreach) via **X-Road** to verify progress independently.
+- **Proactive Escalation:** The **API Gateway** monitors response times, automatically flagging delays to the Head of Public Service before they become national bottlenecks.
+
+### Optimized Steps (Digital)
+
+| Step | Actor | Action | System |
+|---|---|---|---|
+| 1 | Head of Public Service | Enters a directive into the Executive Coordination Portal, defining the Lead MDA and key milestones. | Executive Portal |
+| 2 | System | Instantly notifies relevant Principal Secretaries and creates a tracking record in the national service bus. | Workflow Engine |
+| 3 | System | Periodically fetches implementation data from authoritative registries via X-Road to validate MDA claims. | KeSEL / X-Road |
+| 4 | Senior Coordinators | Monitor the "Executive Heatmap" dashboard to identify underperforming sectors. | Executive Dashboard |
+| 5 | System | Generates a weekly "Situation Report" for the President, highlighting critical paths and compliance scores. | Analytics Engine |
 
 ---
 
-# SECTION 9: TRACEABILITY MATRIX (NEW)
+## References
+- https://www.headofpublicservice.go.ke
+- Executive Order No. 1 of 2023
+- Desk Review
 
-| BPA Process | Priority Service | Tier | TO-BE Capability | National Impact |
-| :--- | :--- | :--- | :--- | :--- |
-| **Directive Tasking** | Task Dispatch | T2 | NPKI-Signed Executive Portal | Secure Policy Implementation |
-| **Evidence Pull** | Performance Mon. | T2 | X-Road: Auto-Sync with MDA Data | Facts-over-Reporting Culture |
-| **Executive Heatmap** | Analytics | T2 | Live Performance Visualizer Dashboard | Data-Driven Governance |
-| **Implementation Nudge**| Corrective Action | T2 | Proactive AI "Nudge" Alerts | Rapid Service Remediation |
 
 ---
-**[End of Standardised Business Process Architecture]**
+
+### Validation Survey
+Please provide your feedback here: [https://ee.kobotoolbox.org/x/4Ls7SlCG](https://ee.kobotoolbox.org/x/4Ls7SlCG)
+

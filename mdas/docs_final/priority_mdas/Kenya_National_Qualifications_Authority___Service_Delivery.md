@@ -1,79 +1,46 @@
-# Kenya National Qualifications Authority – Business Process Architecture (Updated)
+# KENYA NATIONAL QUALIFICATIONS AUTHORITY (KNQA) – Service Delivery
 
 ## Cover Page
 - **Ministry:** Ministry of Education
-- **State Department:** Kenya National Qualifications Authority
+- **State Department:** State Department for Science, Research and Innovation (SRI)
 - **Authority:** Kenya National Qualifications Authority (KNQA)
-- **Document Type:** Business Process Architecture (BPA) Standardised
-- **Document Version:** 4.1
-- **Date:** 2026-03-25
+- **Process Name:** End-to-End Qualification Validation and Alignment
+- **Document Version:** 3.0 (Government Process Re-engineered)
+- **Date:** 2026-03-24
 - **Classification:** Official
 - **Strategic Category:** Priority MDA
 - **Service Model:** G2C / G2B
-- **Reviewer:** Senior Government Enterprise Architect
+- **Life-Cycle Group:** Cradle to Death (2. Childhood & Education)
 
 ---
 
-## SECTION 0: SERVICE PRIORITISATION MAPPING
-- **Mapped Priority Service:** End-to-End Qualification Validation and Alignment
-- **Tier Classification:** Tier 2
-- **Strategic Category:** Education / Identity / Jobs (Academic Integrity)
-- **Breakout Room Classification:** Room 3 (Policy, Economy & Foundational Systems)
-- **Lead MDA (Standardised Name):** Kenya National Qualifications Authority
-- **Related Cross-Cutting Services:**
-    - National Qualifications Database (NQD)
-    - Identity Layer (IPRS / Maisha Namba)
-    - Payment Gateway (GPA)
-    - National EDRMS
-    - X-Road (KNEC / University Interop)
+## Service Mandate
 
----
+The Kenya National Qualifications Authority (KNQA) is mandated under the KNQF Act No. 22 of 2014 to manage the Kenya National Qualifications Framework (KNQF). The primary mandate of the Authority is the **implementation of the Kenya National Qualifications Framework (KNQF) to ensure that qualifications awarded in Kenya are of high quality and nationally and internationally recognized.** 
 
-## SECTION 0.1: PRIORITISATION JUSTIFICATION
-This service is prioritised because the TO-BE design establishes the "National Qualifications Database (NQD)" as the definitive national registry for academic and professional credentials. By transitioning from manual, email-based verification to a real-time "Automated Validation Engine" linked to Awarding Bodies via X-Road, the design eliminates the 14-day verification bottleneck. This directly supports national security (fraud reduction) and economic productivity (faster workforce placement).
+Key operational functions include:
 
-| Criteria | Evidence from TO-BE Design |
-| :--- | :--- |
-| **Demand / Volume** | Thousands of applications monthly for employment and further study; high record sensitivity. |
-| **National Priority Alignment** | KNQF Act (2014); World-class workforce development; Vision 2030 Education Pillar. |
-| **Data Reusability** | Validated qualifications are consumed by Public Service Commission and private sector HR portals. |
-| **Interoperability** | Secure API links to KNEC, KASNEB, and all accredited Universities via Huduma Bridge. |
-| **Revenue / Efficiency Impact** | Automated fee reconciliation via GPA; reduction in staff-hours spent on manual follow-ups. |
-| **Governance / Risk Reduction** | Cryptographically secure QR codes and NPKI signatures eliminate certificate forgery. |
-| **Inclusivity** | "Single Window" portal simplifies the complex foreign equivalency process for returning citizens. |
-| **Readiness** | High; NQD structure is defined; X-Road nodes are operational in major awarding bodies. |
+1. **Validation and Alignment:** Evaluating and aligning national and foreign qualifications to the corresponding levels of the KNQF.
+2. **Quality Assurance Coordination:** Harmonizing education and training standards across the Basic, TVET, and University sub-sectors.
+3. **Database Management:** Maintaining the **National Qualifications Database (NQD)** as the single national source of truth for all record-keeping of quality-assured qualifications and learners.
+4. **Equation of Qualifications:** Determining the equivalence of foreign certificates to the Kenyan education system.
+5. **Credit Accumulation and Transfer (CATs):** Facilitating learner mobility through standardized credit recognition.
 
 > [!NOTE]
-> “This service is prioritised because the TO-BE design establishes the 'National Qualifications Database (NQD)' as the single source of truth for academic credentials in Kenya. By integrating with Universities and KNEC via X-Road, it eliminates the 2-week verification lag, enabling instant, verifiable digital credentials for employment and global mobility.”
+> Recognition of Prior Learning (RPL) is managed as a separate institutional service and is outside the scope of this specific validation and alignment process.
 
 ---
 
-# SECTION 1: SERVICE DEFINITION (STANDARDISED)
+## Executive Summary
 
-The Kenya National Qualifications Authority (KNQA) is mandated under the **KNQF Act No. 22 of 2014** to manage the Kenya National Qualifications Framework. 
-
-In this standardized BPA, the primary focus is the **End-to-End Qualification Validation and Alignment** of national and foreign qualifications. The goal is to ensure that qualifications awarded in Kenya at all levels are of the highest quality and are nationally and internationally recognized. 
+The Kenya National Qualifications Authority (KNQA) is responsible for the implementation of the Kenya National Qualifications Framework (KNQF). A critical function of the Authority is the **End-to-End Qualification Validation and Alignment** of national and foreign qualifications. The current "As-Is" environment is characterized by manual, email-based verification with various Qualification Awarding Bodies (QABs), leading to throughput bottlenecks. This document outlines the transition toward a Digital Public Infrastructure (DPI) model where the **National Qualifications Database (NQD)** serves as a real-time validation engine, significantly reducing the turnaround time for the issuance of **Validation & Alignment Certificates**.
 
 ---
 
-# SECTION 2: SERVICE CATALOGUE (NORMALISED)
+## 1. AS-IS Process Flowchart (BPMN 2.0)
 
-| Category | Service Name | Description |
-| :--- | :--- | :--- |
-| **Core Services** | **National Qualification Validation** | Authentication and alignment of Kenyan academic/professional credentials. |
-| | **Foreign Qualification Equation** | Determining the equivalence of foreign certificates to the Kenyan system. |
-| **Extended Services** | **NQD Indexing & Search** | Management of the National Qualifications Database (NQD) as a source of truth. |
-| | **Credit Accumulation & Transfer (CATs)** | Facilitating learner mobility through standardized credit recognition. |
-| **Special Case Services**| **Alignment Appeals** | Administrative review of qualification leveling decisions. |
-| | **Verification Service for Employers** | API-based instant verification of job applicant credentials. |
+*Current State visualization representing the standardized Validation and Alignment sequence.*
 
----
-
-# SECTION 3: AS-IS PROCESS FLOWS (MANUAL/FRAGMENTED)
-
-The current state is characterized by manual, email-based verification with various Qualification Awarding Bodies (QABs), leading to throughput bottlenecks.
-
-### 3.1 AS-IS Visualization
 ```mermaid
 flowchart TD
     Start(("Start")) --> Submit["1. Application Submission"]
@@ -88,16 +55,16 @@ flowchart TD
         Comp -- "Yes" --> Log["Assign to QAV Officer"]
     end
     
-    subgraph Validation["Validation and Alignment"]
-        Log --> AuthCert["1.1 Verification of Academic Certificates"]
-        AuthCert --> Eval["1.2 Assigned to Evaluator"]
-        Eval --> VerifyQAB["1.3 Verify with Qualification Awarding Body (QAB)"]
-        VerifyQAB --> MapKNQF["1.4 Validation / Alignment to the KNQF"]
+    subgraph Validation["Validation and Alignment Stage"]
+        Log --> AuthCert["Verify Academic Certificates"]
+        AuthCert --> VerifyQAB["Verify with Qualification Awarding Body (QAB)"]
+        VerifyQAB --> MapKNQF["Validate and Align to KNQF Levels"]
     end
     
     subgraph Finalization["Approval and Issuance"]
-        MapKNQF --> QAVApprove["Reviews mapping, approves equivalency, & issues Validation & Alignment Certificate"]
-        QAVApprove --> Issue["Generate Certificate & Update NQD"]
+        MapKNQF --> QAVApprove["QAV Officer Review and Approval"]
+        QAVApprove --> GenCert["Generate Validation and Alignment Certificate"]
+        GenCert --> Issue["Issue Certificate and Update NQD"]
     end
     
     Issue --> End(("End"))
@@ -112,16 +79,67 @@ flowchart TD
     class Submit,PayFee,Return,Log,AuthCert,VerifyQAB,MapKNQF,QAVApprove,GenCert,Issue userTask;
 ```
 
-### 3.2 Operational Reality
-- **Actors:** Applicant, QAV Officer, Evaluator, QAB Representative (KNEC/University).
-- **Systems:** Manual Finance Modules, Email, Excel spreadsheets for KNQF mapping.
-- **Pain Points:** System fragmentation; external verification takes 14-21 days; high risk of credential forgery; manual transcript mapping is prone to human error.
+---
+
+## Process Overview
+
+### Process Name
+End-to-End Qualification Validation and Alignment
+
+### Service Category
+- G2C (Government to Citizen)
+- G2B (Employers / Professional Bodies)
+
+### Scope
+
+- **In Scope:** Validation of national and foreign academic/professional credentials; Alignment of certificates to the Kenya National Qualifications Framework (KNQF); Maintenance of the National Qualifications Database (NQD).
+- **Out of Scope:** Accreditation of institutions (Separate Process); Recognition of Prior Learning (RPL - Separate Process); Issuance of original degree/diploma certificates by Awarding Bodies.
+
+### Triggers
+- Citizen or employer request for qualification validation or equivalency determination.
+
+### End States
+- **Successful:** Verifiable **Validation and Alignment Certificate** issued; Record successfully indexed in the National Qualifications Database (NQD).
+
+### Policy Context
+- Kenya National Qualifications Framework (KNQF) Act; Data Protection Act 2019; KNQF Regulations.
 
 ---
 
-# SECTION 4: TO-BE PROCESS INTERPRETATION (NEW LAYER)
+## 2. Detailed Process (AS-IS)
 
-### 4.1 TO-BE Process (Automated Validation Engine)
+| Step | Role | Action | Tool/System | Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| **1** | Applicant | **Application Submission:** Submits copies of certificates, transcripts, and ID documents. | Portal / Manual | Citizen initiates the request. |
+| **2** | KNQA Clerk | **Reception & Intake:** Confirms payment and validates that all required documents are attached. | Manual / Finance | Gateway for processing. |
+| **3** | QAV Officer | **Validation and Alignment Stage:** Authenticates certificates; contacts QABs (e.g., KNEC, Universities) for verification. | Email / Web Portal | **Critical Pain Point:** External verification latency. |
+| **4** | QAV Officer | **Validation and Alignment Stage:** Maps the verified credential against the 10 levels of the KNQF. | KNQF Matrix / Excel | Determines the local equivalency. |
+| **5** | QAV Officer | **Approval:** Reviews the alignment findings and formally approves the equivalency. | Management System | Final technical decision. |
+| **6** | QAV Officer | **Issuance:** Generates the Certificate, applies the seal, and updates the registry. | Standalone Registry | Replaces redundant admin steps. |
+
+---
+
+## Pain Points and Opportunities
+
+### Pain Points
+
+- **System Fragmentation:** Lack of real-time digital links to major QABs (KNEC, KASNEB, Universities) necessitates manual email follow-ups.
+- **Data Latency:** Verification from international awarding bodies can take weeks, delaying employment or study opportunities.
+- **Verification Risk:** Manual paper-based outputs are susceptible to sophisticated forgery without a real-time verification portal.
+- **Data Sensitivity:** Handling of academic records requires strict adherence to the **Data Protection Act (2019)** to prevent unauthorized data exposure.
+
+### Opportunities
+
+- **DPI Integration:** Utilization of **KeSEL (X-Road)** for secure, instantaneous data exchange between KNQA and accredited awarding bodies.
+- **NQD as Single Source of Truth:** Establishing the **National Qualifications Database (NQD)** as the authoritative registry accessible to employers for instant verification.
+- **Verifiable Digital Credentials:** Transitioning to **Validation and Alignment Certificates** equipped with cryptographically secure QR codes.
+
+---
+
+## 3. TO-BE Process (DPI-Enabled)
+
+*Future State leveraging Automated Validation and Alignment.*
+
 ```mermaid
 flowchart TD
     Start(("Start")) --> Submit["1. Digital Application (eCitizen)"]
@@ -146,71 +164,27 @@ flowchart TD
     end
 ```
 
-### 4.2 Key Capabilities Introduced
-*   **Automation:** Automated alignment engine that maps verified credits to KNQF levels instantly for low-risk applications.
-*   **Integration:** Hub-and-spoke integration with the Ministry of Education (NEMIS) and all QABs via X-Road.
-*   **Real-time Processing:** Instant NQD lookup for locally awarded quality-assured certificates.
-*   **Digital Identity Validation:** Student and alumnus identity verification via **Maisha Namba** identity federation.
-*   **Workflow Orchestration:** Coordinated movement from application intake to global registry synchronization.
+---
 
-### 4.3 Transformation Summary
-| Dimension | AS-IS | TO-BE |
-| :--- | :--- | :--- |
-| **Processing** | Manual / Multi-touch | Automated / Zero-touch (Low Risk) |
-| **Verification** | Email / Letter | API-based (X-Road/NQD) |
-| **Records** | Siloed Portals | Unified National Qualifications Database |
-| **Tracking** | Manual Case Log | Real-time Status Dashboard |
+## 4. Digital Public Infrastructure (DPI) Alignment
+
+- **National Qualifications Database (NQD):** Strengthened as the definitive national registry that integrates with IPRS for learner identity and QAB portals for credential proof-of-fact.
+- **Interoperability (KeSEL / X-Road):** Implementation of secure data exchange protocols to replace email-based verification, ensuring high-speed and tamper-proof responses from awarding bodies.
+- **Workflow Automation:** Alignment of technical validation rules into a digital engine to allow for "Risk-Based" automated approvals of standard qualifications.
+- **Data Security:** All credential exchanges are encrypted and compliant with the **Data Protection Act**, ensuring citizen privacy is maintained throughout the validation lifecycle.
 
 ---
 
-# SECTION 5: SYSTEM LANDSCAPE (ALIGN TO GEA)
+## 5. Change Summary
 
-| Layer | System / Platform | Role |
-| :--- | :--- | :--- |
-| **Identity Layer** | Maisha Namba (IPRS) | Verified identity for students and applicants. |
-| **Interoperability** | KeSEL (X-Road) | Data link to KNEC, Universities, and KASNEB. |
-| **shared Services** | National EDRMS | Legal digital archive for alignment certificates. |
-| **Workflow / BPM** | QAV Workflow Engine | Orchestrates the validation and risk-gate reviews. |
-| **Payment Layer** | GPA (Payment Gateway) | Automated fee collection and equivalency billing. |
-| **Trust Hub** | Consent Manager | Secure access to student academic transcripts. |
-
----
-
-# SECTION 6: TRANSFORMATION VALUE (CRITICAL ADDITION)
-
-| Value Type | Explanation |
-| :--- | :--- |
-| **Efficiency Gain** | Turnaround time for validation reduced from 2 weeks to 48 hours. |
-| **Economic Impact** | Accelerates the technical workforce deployment and professional licensing. |
-| **Governance Impact** | National Qualifications Database (NQD) eliminates academic fraud and certificate cartels. |
-| **Citizen Experience** | Effortless application for foreign equivalency via eCitizen mobile. |
-| **Interoperability Value** | Shared API for employers to verify qualifications directly at the source. |
+| Functional Area | Before | After (Corrected) | Rationale |
+| :--- | :--- | :--- | :--- |
+| **Process Name** | Qualification Validation and RPL | **End-to-End Qualification Validation and Alignment** | Precise alignment with KNQA operational mandate. |
+| **Service Scope** | Included RPL assessments | **Validation and Alignment only** | RPL is a distinct institutional function. |
+| **Role Nomenclature** | Technical Officer | **QAV Officer** | Reflects the specialized focus on Alignment and Validation. |
+| **Process Logic** | Redundant Admin step (Step 6) | **Streamlined QAV Officer Ownership** | Improves accountability and speed. |
+| **Key Output** | Validation Letter | **Validation and Alignment Certificate** | Formalizes the legal and academic standing of the output. |
+| **Terminology** | Verification & Assessment | **Validation and Alignment** | Consistent with KNQF statutory language. |
 
 ---
-
-# SECTION 7: ALIGNMENT TO WHOLE-OF-GOVERNMENT ARCHITECTURE
-- **Shared Platforms:** Uses eCitizen for secure login and GPA for validation fee processing.
-- **Registry Reuse:** Reuses NEMIS records to populate student educational history automatically.
-- **Compliance with GEA / GIF:** Standardizing all academic data interchange protocols for national scaling.
-
----
-
-# SECTION 8: IMPLEMENTATION READINESS (NEW)
-*   **Data Readiness:** High; National Qualifications Database (NQD) is already structured.
-*   **Legal Readiness:** High; KNQF Act (2014) provides strong legal grounding for the registry.
-*   **Institutional Readiness:** High; KNQA has established technical teams for QAV workflows.
-*   **Technical Readiness:** High; X-Road nodes are active in major Awarding Bodies (KNEC/UON).
-
----
-
-# SECTION 9: TRACEABILITY MATRIX (NEW)
-
-| BPA Process | Priority Service | Tier | TO-BE Capability | National Impact |
-| :--- | :--- | :--- | :--- | :--- |
-| **Authentication** | Qualification Validation| T2 | X-Road: QAB Interop | Fraud Elimination & Trust |
-| **Mapping** | Level Alignment | T2 | Automated Alignment | Academic Mobility & Standardisation|
-| **Registry Update** | NQD Management | T2 | Real-time NQD Sync | Authoritative National Records |
-| **Issuance** | Certificate Generation| T2 | NPKI Digital Signing | International Credential Portability|
-
----
-**[End of Standardised Business Process Architecture]**
+**[End of Corrected Document]**
