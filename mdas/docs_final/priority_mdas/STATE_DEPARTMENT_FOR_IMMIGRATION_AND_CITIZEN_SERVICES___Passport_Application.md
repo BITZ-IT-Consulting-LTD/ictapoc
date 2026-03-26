@@ -135,15 +135,15 @@ flowchart TD
     end
 
     subgraph Review["Digital Review Workspace"]
-        T6 --> R1[Officer Review via Digital Dashboard]
-        R1 --> R2[Senior Officer Digital Sign-off (NPKI)]
+        T6 --> R1["Officer Review via Digital Dashboard"]
+        R1 --> R2["Senior Officer Digital Sign-off (NPKI)"]
     end
 
     subgraph Issuance["Production & Secure Vault"]
-        R2 --> P1[Automated Production Queue]
-        P1 --> P2[Mint Verifiable Record]
-        P2 --> P3[Auto-Archive in Secure Digital Vault]
-        P3 --> End((( )))
+        R2 --> P1["Automated Production Queue"]
+        P1 --> P2["Mint Verifiable Record"]
+        P2 --> P3["Auto-Archive in Secure Digital Vault"]
+        P3 --> End(("End"))
     end
 
     style Start fill:#fff,stroke:#27ae60,stroke-width:2px
