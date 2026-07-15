@@ -8,7 +8,7 @@
         <!-- Hierarchical Navigation Breadcrumb -->
         <div class="card overflow-hidden border-0 shadow-lg rounded-3xl u-bg-white p-4 mb-6 flex items-center gap-3 text-xs text-slate-500 overflow-x-auto whitespace-nowrap">
            <router-link to="/public-repository" class="hover:text-primary flex items-center gap-2 font-bold transition-colors">
-              <i class="bi bi-house"></i> EDRMS Index
+              <i class="bi bi-house"></i> Documents Home
            </router-link>
            <i class="bi bi-chevron-right text-[10px] opacity-50"></i>
            <span class="flex items-center gap-2 font-bold text-slate-700">🏢 {{ artifact.node?.registry?.name || 'GOK Registry' }}</span>

@@ -111,7 +111,7 @@
 
                     <button v-if="log.action === 'EDRMS_ARCHIVED'" @click="viewArchivedRecord"
                       class="button button--ghost button--small text-primary mt-2 pl-0 hover:bg-transparent hover:underline">
-                      <i class="bi bi-file-earmark-lock me-1"></i> View EDRMS Record
+                      <i class="bi bi-file-earmark-lock me-1"></i> View Document Record
                     </button>
                   </div>
                 </div>
@@ -473,7 +473,7 @@
 
   const viewArchivedRecord = () => {
     const log = request.value?.audit_logs?.find(l => l.action === 'EDRMS_ARCHIVED');
-    alert("Opening EDRMS Viewer for Record: " + (log?.details || 'Unknown'));
+    alert("Opening Document Viewer for Record: " + (log?.details || 'Unknown'));
   };
 
   const sortedLogs = computed(() => {

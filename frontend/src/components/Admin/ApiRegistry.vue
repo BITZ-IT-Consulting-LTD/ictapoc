@@ -332,7 +332,7 @@ const registry = ref([
     name: 'Government Document Archive',
     status: 'online',
     description: 'Stores digitally signed government records and returns a durable archival reference.',
-    url: 'KESEL_BRIDGE/EDRMS/archive',
+    url: 'KESEL_BRIDGE/documents/archive',
     details: { Protocol: 'REST / HTTPS', Auth: 'System-to-system', Latency: '~120ms' },
     payload: { document_type: 'CERTIFICATE', metadata: { request_id: 'STRING', issued_by: 'MDA_CODE' }, content_base64: 'BASE64' }
   },

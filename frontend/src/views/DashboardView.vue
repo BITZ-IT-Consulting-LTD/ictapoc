@@ -75,7 +75,7 @@
                     <i class="bi bi-bank2"></i>
                   </div>
                   <div class="flex-1 text-left">
-                    <div class="text-xs font-black uppercase tracking-widest text-slate-500">EDRMS</div>
+                    <div class="text-xs font-black uppercase tracking-widest text-slate-500">Documents</div>
                     <div class="text-[10px] text-slate-400 font-bold">Electronic Records</div>
                   </div>
                 </router-link>
@@ -286,7 +286,7 @@
                     <i class="bi bi-bank2"></i>
                   </div>
                   <div class="flex-1 text-left">
-                    <div class="text-xs font-black uppercase tracking-widest text-slate-500">EDRMS</div>
+                    <div class="text-xs font-black uppercase tracking-widest text-slate-500">Documents</div>
                     <div class="text-[10px] text-slate-400 font-bold">Electronic Records</div>
                   </div>
                 </router-link>
@@ -857,7 +857,7 @@
                   <div class="architecture-nav__foundation-links">
                     <router-link to="/repository/artifacts" class="sidebar-nav__item">
                       <i class="bi bi-bank2 sidebar-nav__capability-icon"></i>
-                      <span class="sidebar-nav__text">EDRMS</span>
+                      <span class="sidebar-nav__text">Documents</span>
                       <i class="bi bi-box-arrow-up-right sidebar-nav__arrow opacity-50 text-[10px]"></i>
                     </router-link>
                     <button @click="currentTab = 'Technical Specs'" class="sidebar-nav__item"

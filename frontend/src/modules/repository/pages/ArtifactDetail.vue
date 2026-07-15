@@ -69,7 +69,7 @@
                  <h3 class="u-text-xs u-font-black u-text-main u-uppercase u-tracking-widest mb-1 flex items-center gap-2">
                    <i class="bi bi-eye text-primary"></i> Public Visibility
                  </h3>
-                 <p class="u-text-[10px] u-text-muted leading-tight">Controls whether this artifact appears on the public EDRMS portal.</p>
+                 <p class="u-text-[10px] u-text-muted leading-tight">Controls whether this artifact appears on the public documents portal.</p>
                </div>
                <label class="relative inline-flex items-center cursor-pointer shrink-0">
                  <input type="checkbox" :checked="isPublic" @change="toggleVisibility" class="sr-only peer">
