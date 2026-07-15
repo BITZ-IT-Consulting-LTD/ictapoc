@@ -124,7 +124,7 @@
              </div>
           </div>
           <div class="stats-card__text-content">
-            <p class="stats-card__label">EDRMS Archive</p>
+            <p class="stats-card__label">Document Archive</p>
             <div class="stats-card__value-wrapper">
               <span class="stats-card__value">99.9</span>
               <span class="stats-card__unit">%</span>
@@ -234,7 +234,7 @@ const events = ref([
   { id: 2, time: '05:40:08', type: 'AUTH', msg: 'OIDC Auth Token Issued: citizen_john_doe' },
   { id: 3, time: '05:40:02', type: 'HUDUMA', msg: 'G-Notify SMS queued for REQ-2026-004' },
   { id: 4, time: '05:39:55', type: 'PROC', msg: 'Workflow Step triggered for REQ-2026-004' },
-  { id: 5, time: '05:39:42', type: 'REST', msg: 'API Call to EDRMS Archive: 201 Created' },
+  { id: 5, time: '05:39:42', type: 'REST', msg: 'API Call to Document Archive: 201 Created' },
   { id: 6, time: '05:39:35', type: 'FILE', msg: 'Document ID-SCAN-99.pdf successfully archived' }
 ]);
 

@@ -8,9 +8,14 @@
           </router-link>
         </div>
         <div class="navbar__menu">
-          <router-link to="/public-repository" class="navbar__link" active-class="navbar__link--active">
-            <i class="bi bi-bank2"></i> EDRMS
-          </router-link>
+          <a
+            href="https://github.com/BITZ-IT-Consulting-LTD/ictapoc"
+            class="navbar__link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i class="bi bi-github"></i> Git Repository
+          </a>
           <router-link to="/login" class="navbar__link" active-class="navbar__link--active">
             <i class="bi bi-shield-lock-fill"></i> Portal Access
           </router-link>

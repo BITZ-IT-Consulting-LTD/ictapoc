@@ -14,7 +14,7 @@
           {{ document.title }}
         </h3>
         <p class="modal__subtitle u-font-mono u-uppercase u-text-slate-300 u-truncate" style="letter-spacing: 0.1em">
-          Public EDRMS Preview • v{{ document.current_version_number || 1 }}
+          Public Document Preview • v{{ document.current_version_number || 1 }}
         </p>
       </div>
       <div class="u-flex u-items-center u-gap-3 u-ml-4">

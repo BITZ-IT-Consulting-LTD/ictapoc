@@ -4,14 +4,14 @@
       <div class="page__title-group">
         <h1 class="page__title text-premium flex items-center gap-3">
           <i class="bi bi-gear-fill u-text-primary"></i>
-          EDRMS Configuration
+          Document Configuration
         </h1>
-        <p class="page__subtitle u-mt-2">Authoritative control centre for EDRMS schemas, hierarchy, and project context.</p>
+        <p class="page__subtitle u-mt-2">Authoritative control centre for document categories, hierarchy, and project context.</p>
       </div>
       
       <div class="page__actions">
         <router-link to="/repository/artifacts" class="button button--secondary button--tiny button--pill u-px-4">
-           <i class="bi bi-arrow-left u-mr-2"></i> Back to EDRMS
+           <i class="bi bi-arrow-left u-mr-2"></i> Back to Documents
         </router-link>
       </div>
     </header>
