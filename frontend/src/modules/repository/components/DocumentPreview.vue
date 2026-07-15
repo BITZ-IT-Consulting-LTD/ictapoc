@@ -71,7 +71,7 @@
            <div class="u-flex u-items-center u-gap-3">
               <div class="u-flex u-items-center u-gap-2">
                 <i class="bi bi-cpu text-primary"></i>
-                <span class="u-text-[10px] u-font-black u-text-main u-uppercase u-tracking-widest">DRMS Markdown Engine</span>
+                <span class="u-text-[10px] u-font-black u-text-main u-uppercase u-tracking-widest">EDRMS Markdown Engine</span>
               </div>
               <div class="u-h-4 u-w-px u-bg-slate-300"></div>
               <span class="u-text-[10px] u-font-bold u-text-muted u-uppercase tracking-wider">Mermaid v10 Enabled</span>

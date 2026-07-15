@@ -75,8 +75,8 @@
                     <i class="bi bi-bank2"></i>
                   </div>
                   <div class="flex-1 text-left">
-                    <div class="text-xs font-black uppercase tracking-widest text-slate-500">Repository</div>
-                    <div class="text-[10px] text-slate-400 font-bold">Digital Artifacts</div>
+                    <div class="text-xs font-black uppercase tracking-widest text-slate-500">EDRMS</div>
+                    <div class="text-[10px] text-slate-400 font-bold">Electronic Records</div>
                   </div>
                 </router-link>
               </div>
@@ -176,7 +176,7 @@
 
       <!-- STAFF OPERATIONS VIEW -->
       <section
-        v-else-if="['officer', 'supervisor', 'registrar', 'mda_admin', 'GLOBAL_OFFICER', 'GLOBAL_SUPERVISOR', 'MDA_OFFICER', 'MDA_SUPERVISOR'].includes(user.role)"
+        v-else-if="['officer', 'supervisor', 'registrar', 'mda_admin', 'employee', 'GLOBAL_OFFICER', 'GLOBAL_SUPERVISOR', 'MDA_OFFICER', 'MDA_SUPERVISOR'].includes(user.role)"
         class="staff-portal">
         
         <!-- Contextual Operational Stats Row -->
@@ -266,6 +266,19 @@
                   </div>
                 </button>
 
+                <button v-if="user.role === 'mda_admin'" @click="staffCurrentTab = 'configuration'"
+                  class="sidebar-nav__item px-6 py-4 flex items-center gap-4 transition-all hover:bg-emerald-50/50 group"
+                  :class="{ 'bg-emerald-50/80 border-l-4 border-emerald-600': staffCurrentTab === 'configuration' }">
+                  <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-emerald-600 group-hover:scale-110 transition-transform">
+                    <i class="bi bi-ui-checks-grid"></i>
+                  </div>
+                  <div class="flex-1 text-left">
+                    <div class="text-xs font-black uppercase tracking-widest"
+                      :class="staffCurrentTab === 'configuration' ? 'text-emerald-900' : 'text-slate-500'">Service Configuration</div>
+                    <div class="text-[10px] text-slate-400 font-bold">Forms & Workflows</div>
+                  </div>
+                </button>
+
                 <div class="mx-6 my-4 border-t border-slate-100"></div>
 
                 <router-link to="/repository/artifacts" class="sidebar-nav__item px-6 py-4 flex items-center gap-4 transition-all hover:bg-emerald-50/50 group">
@@ -273,8 +286,8 @@
                     <i class="bi bi-bank2"></i>
                   </div>
                   <div class="flex-1 text-left">
-                    <div class="text-xs font-black uppercase tracking-widest text-slate-500">Repository</div>
-                    <div class="text-[10px] text-slate-400 font-bold">Artifact Registry</div>
+                    <div class="text-xs font-black uppercase tracking-widest text-slate-500">EDRMS</div>
+                    <div class="text-[10px] text-slate-400 font-bold">Electronic Records</div>
                   </div>
                 </router-link>
               </div>
@@ -531,6 +544,11 @@
                     </div>
                   </div>
                </div>
+            </div>
+
+            <!-- MDA-scoped Forms & Workflow Configuration -->
+            <div v-else-if="staffCurrentTab === 'configuration' && user.role === 'mda_admin'" class="tab-content">
+              <ServiceConfigManager :mda-filter-id="user.mda" :mda-details="user.mda_details" />
             </div>
           </div>
         </div>
@@ -797,40 +815,58 @@
       </BaseModal>
 
       <!-- SYSTEM ADMINISTRATION VIEW -->
-      <section v-if="user.role === 'admin'" class="admin-portal">
+      <section v-if="['admin', 'system_admin'].includes(user.role)" class="admin-portal">
         <div class="dashboard-layout">
           <!-- Left Sidebar Navigation -->
           <aside class="dashboard-sidebar">
-            <div class="card">
+            <div class="card architecture-nav">
               <div class="card__body p-0">
-                <div class="flex flex-col">
+                <header class="architecture-nav__header">
+                  <span class="architecture-nav__eyebrow"><i class="bi bi-bounding-box-circles"></i> Platform map</span>
+                  <strong>Reference Architecture</strong>
+                  <small>Select a capability within each layer</small>
+                </header>
+
+                <div class="architecture-nav__stack">
                   <div v-for="group in adminTabGroups" :key="group.title"
-                    class="p-4 border-b border-border-color last:border-0">
-                    <div
-                      class="text-[10px] font-black text-muted uppercase tracking-widest mb-3 flex items-center gap-2">
-                      <i :class="group.icon"></i> {{ group.title }}
+                    class="architecture-nav__layer" :class="[`architecture-nav__layer--${group.tone}`, { 'is-active': group.tabs.some(tab => tab.name === currentTab) }]">
+                    <div class="architecture-nav__layer-heading">
+                      <span class="architecture-nav__number">{{ group.layer }}</span>
+                      <span class="architecture-nav__layer-icon"><i :class="group.icon"></i></span>
+                      <span>
+                        <strong>{{ group.title }}</strong>
+                        <small>{{ group.description }}</small>
+                      </span>
                     </div>
-                    <div class="flex flex-col gap-1">
-                      <button v-for="tab in group.tabs" :key="tab" @click="currentTab = tab" class="sidebar-nav__item"
-                        :class="{ 'sidebar-nav__item--active': currentTab === tab }">
-                        <span class="sidebar-nav__text">{{ tab }}</span>
-                        <span v-if="tab === 'System Docs'"
-                          class="ml-2 bg-success text-white text-[8px] font-black px-2 py-0.5 rounded-full animate-pulse">UPDATED</span>
-                        <i v-if="currentTab === tab" class="bi bi-chevron-right sidebar-nav__arrow"></i>
+                    <div class="architecture-nav__capabilities">
+                      <button v-for="tab in group.tabs" :key="tab.name" @click="currentTab = tab.name" class="sidebar-nav__item"
+                        :class="{ 'sidebar-nav__item--active': currentTab === tab.name }">
+                        <i :class="tab.icon" class="sidebar-nav__capability-icon"></i>
+                        <span class="sidebar-nav__text">{{ tab.name }}</span>
+                        <i v-if="currentTab === tab.name" class="bi bi-chevron-right sidebar-nav__arrow"></i>
                       </button>
                     </div>
                   </div>
                 </div>
                 
-                <div class="p-4 border-t border-border-color bg-slate-50">
-                  <div class="text-[10px] font-black text-muted uppercase tracking-widest mb-3 flex items-center gap-2">
-                    <i class="bi bi-bank2"></i> Official Records
+                <div class="architecture-nav__foundation">
+                  <div class="architecture-nav__foundation-title">
+                    <i class="bi bi-layers-fill"></i>
+                    <span><strong>Evidence & Records Plane</strong><small>Cross-platform foundation</small></span>
                   </div>
-                  <div class="flex flex-col gap-1">
+                  <div class="architecture-nav__foundation-links">
                     <router-link to="/repository/artifacts" class="sidebar-nav__item">
-                      <span class="sidebar-nav__text">Artifact Registry</span>
+                      <i class="bi bi-bank2 sidebar-nav__capability-icon"></i>
+                      <span class="sidebar-nav__text">EDRMS</span>
                       <i class="bi bi-box-arrow-up-right sidebar-nav__arrow opacity-50 text-[10px]"></i>
                     </router-link>
+                    <button @click="currentTab = 'Technical Specs'" class="sidebar-nav__item"
+                      :class="{ 'sidebar-nav__item--active': currentTab === 'Technical Specs' }">
+                      <i class="bi bi-journal-richtext sidebar-nav__capability-icon"></i>
+                      <span class="sidebar-nav__text">Technical Evidence</span>
+                      <span class="architecture-nav__doc-count">30</span>
+                      <i v-if="currentTab === 'Technical Specs'" class="bi bi-chevron-right sidebar-nav__arrow"></i>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -862,20 +898,69 @@
                   @go-back-services="selectedDrilldownService = null"
                 />
 
-                <div v-if="currentTab === 'System Docs'"
+                <div v-if="currentTab === 'Technical Specs'"
                   class="docs-workstation mt-8 border-t border-border-color pt-8">
-                  <div class="mb-8 p-6 bg-primary-soft rounded-2xl border-2 border-primary border-dashed">
-                    <h2 class="text-2xl font-black text-primary flex items-center gap-3">
-                      <i class="bi bi-journal-richtext"></i>
-                      Authoritative System Documentation Registry
-                      <span class="badge badge--primary uppercase tracking-widest text-[10px]">Activated</span>
-                    </h2>
-                    <p class="text-primary/70 text-sm mt-1 font-medium">Organized Governance & Technical Specifications
-                      Library</p>
-                  </div>
-                  <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                  <section class="architect-hero">
+                    <div class="architect-hero__copy">
+                      <span class="architect-eyebrow"><i class="bi bi-cpu-fill"></i> System Architect View</span>
+                      <h2>Platform Architecture & Technical Evidence</h2>
+                      <p>Inspect how channels, orchestration, interoperability, shared registries, and trust controls
+                        work together as one government digital public infrastructure.</p>
+                      <div class="architect-standards">
+                        <span>GEA aligned</span><span>DPI architecture</span><span>API first</span><span>Zero-trust exchange</span>
+                      </div>
+                    </div>
+                    <div class="architect-scorecard">
+                      <article><strong>{{ architectureLayers.length }}</strong><small>Architecture layers</small></article>
+                      <article><strong>5</strong><small>Shared DPI rails</small></article>
+                      <article><strong>67</strong><small>Orchestrated services</small></article>
+                      <article><strong>{{ technicalDocumentCount }}</strong><small>Evidence documents</small></article>
+                    </div>
+                  </section>
+
+                  <section class="architect-blueprint" aria-labelledby="architecture-blueprint-title">
+                    <header>
+                      <div>
+                        <span class="architect-section-kicker">Logical reference architecture</span>
+                        <h3 id="architecture-blueprint-title">Trace the platform from channel to authoritative source</h3>
+                      </div>
+                      <span class="architect-live"><i class="bi bi-circle-fill"></i> POC architecture active</span>
+                    </header>
+                    <div class="architect-layer-flow">
+                      <button v-for="(layer, index) in architectureLayers" :key="layer.id" type="button"
+                        class="architect-layer" :class="[`architect-layer--${layer.id}`, { active: selectedDoc === layer.document }]"
+                        @click="selectedDoc = layer.document">
+                        <span class="architect-layer__number">0{{ index + 1 }}</span>
+                        <span class="architect-layer__icon"><i :class="layer.icon"></i></span>
+                        <strong>{{ layer.name }}</strong>
+                        <small>{{ layer.description }}</small>
+                        <span class="architect-layer__tech">{{ layer.technology }}</span>
+                      </button>
+                    </div>
+                    <footer class="architect-cross-cutting">
+                      <span><i class="bi bi-shield-lock-fill"></i> Security & NPKI</span>
+                      <span><i class="bi bi-person-check-fill"></i> Identity & consent</span>
+                      <span><i class="bi bi-journal-check"></i> Auditability</span>
+                      <span><i class="bi bi-activity"></i> Observability</span>
+                      <span><i class="bi bi-arrow-repeat"></i> Resilience & DR</span>
+                    </footer>
+                  </section>
+
+                  <section class="architect-evidence">
+                    <header class="architect-evidence__heading">
+                      <div>
+                        <span class="architect-section-kicker">Architecture decision evidence</span>
+                        <h3>Technical documentation workbench</h3>
+                      </div>
+                      <span class="architect-document-count">{{ technicalDocumentCount }} controlled documents</span>
+                    </header>
+                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
                     <!-- Documentation Navigation Sidebar -->
-                    <div class="lg:col-span-1 space-y-6">
+                    <aside class="architect-library lg:col-span-1 space-y-6">
+                      <div class="architect-library__title">
+                        <i class="bi bi-collection-fill"></i>
+                        <div><strong>Evidence Library</strong><small>Select an artifact to inspect</small></div>
+                      </div>
                       <div v-for="group in categorizedDocs" :key="group.category" class="doc-category">
                         <h3
                           class="flex items-center gap-2 text-[10px] font-black text-muted uppercase tracking-widest mb-3">
@@ -890,15 +975,25 @@
                           </button>
                         </div>
                       </div>
-                    </div>
+                    </aside>
 
                     <!-- Documentation Content Area -->
                     <div class="lg:col-span-3">
-                      <div class="border border-border-color rounded-2xl overflow-hidden shadow-inner bg-white">
+                      <header class="architect-document-header">
+                        <div class="architect-document-header__icon"><i class="bi bi-file-earmark-code-fill"></i></div>
+                        <div>
+                          <span>{{ selectedDocMeta.category }}</span>
+                          <h4>{{ selectedDocMeta.name }}</h4>
+                          <code>{{ selectedDoc }}</code>
+                        </div>
+                        <span class="architect-format">{{ selectedDocFormat }}</span>
+                      </header>
+                      <div class="architect-document-viewer border border-border-color rounded-b-2xl overflow-hidden shadow-inner bg-white">
                         <DocViewer :url="`/${selectedDoc}`" />
                       </div>
                     </div>
                   </div>
+                  </section>
                 </div>
               </div>
             </div>
@@ -1658,15 +1753,86 @@
 
 
   const adminTabGroups = [
-    { title: 'Governance & Strategy', icon: 'bi-shield-shaded', tabs: ['MDAs', 'Prioritization', 'Access Governance'] },
-    { title: 'Service Architecture', icon: 'bi-diagram-3-fill', tabs: ['Whole-of-Gov Catalogue', 'Cradle to Death', 'Architecture Designer'] },
-    { title: 'Data & Interoperability', icon: 'bi-database-fill-check', tabs: ['Shared Registries', 'API Gateway', 'Trust & Identity'] },
-    { title: 'Security & Operations', icon: 'bi-cpu-fill', tabs: ['Audit Logs', 'Platform Health', 'Technical Specs'] }
+    {
+      layer: '01',
+      title: 'Digital Frontend Channels',
+      description: 'Citizen, officer and assisted access',
+      icon: 'bi bi-window-stack',
+      tone: 'channels',
+      tabs: [
+        { name: 'Citizen Service Channels', icon: 'bi bi-person-vcard-fill' },
+        { name: 'Whole-of-Gov Catalogue', icon: 'bi bi-grid-1x2-fill' },
+        { name: 'Cradle to Death', icon: 'bi bi-signpost-split-fill' }
+      ]
+    },
+    {
+      layer: '02',
+      title: 'Core & Orchestration',
+      description: 'Workflows, forms and decisions',
+      icon: 'bi bi-bezier2',
+      tone: 'core',
+      tabs: [
+        { name: 'API Gateway', icon: 'bi bi-hdd-network-fill' },
+        { name: 'Orchestration Studio', icon: 'bi bi-ui-checks-grid' },
+        { name: 'Dynamic Forms & Schemas', icon: 'bi bi-file-earmark-code-fill' },
+        { name: 'Architecture Designer', icon: 'bi bi-diagram-3-fill' }
+      ]
+    },
+    {
+      layer: '03',
+      title: 'Interoperability Bridge',
+      description: 'Huduma Bridge and secure exchange',
+      icon: 'bi bi-arrow-left-right',
+      tone: 'exchange',
+      tabs: [
+        { name: 'Huduma Bridge', icon: 'bi bi-share-fill' },
+        { name: 'Registry Adapters', icon: 'bi bi-plugin' },
+        { name: 'Central Service Catalogue', icon: 'bi bi-journal-bookmark-fill' }
+      ]
+    },
+    {
+      layer: '04',
+      title: 'Authoritative Data & Payments',
+      description: 'Master registries and financial rails',
+      icon: 'bi bi-database-fill-check',
+      tone: 'data',
+      tabs: [
+        { name: 'National Master Registries', icon: 'bi bi-database-fill' },
+        { name: 'Government Payments', icon: 'bi bi-credit-card-2-front-fill' },
+        { name: 'Revenue & Reconciliation', icon: 'bi bi-cash-stack' }
+      ]
+    },
+    {
+      layer: 'T',
+      title: 'Trust & Identity Hub',
+      description: 'Cross-cutting security controls',
+      icon: 'bi bi-shield-lock-fill',
+      tone: 'trust',
+      tabs: [
+        { name: 'Consent Manager', icon: 'bi bi-check2-square' },
+        { name: 'Identity Federation & NPKI', icon: 'bi bi-fingerprint' },
+        { name: 'Access Governance', icon: 'bi bi-person-lock' },
+        { name: 'Identity Directory', icon: 'bi bi-people-fill' }
+      ]
+    },
+    {
+      layer: 'O',
+      title: 'Governance & Operations',
+      description: 'Ownership, assurance and health',
+      icon: 'bi bi-activity',
+      tone: 'operations',
+      tabs: [
+        { name: 'MDAs', icon: 'bi bi-buildings-fill' },
+        { name: 'Prioritization', icon: 'bi bi-bar-chart-steps' },
+        { name: 'Audit Logs', icon: 'bi bi-clipboard2-pulse-fill' },
+        { name: 'Platform Health', icon: 'bi bi-heart-pulse-fill' }
+      ]
+    }
   ];
   const route = useRoute();
   const router = useRouter();
 
-  const currentTab = ref(route.query.tab || 'MDAs');
+  const currentTab = ref(route.query.tab || 'Orchestration Studio');
   const selectedDrilldownMda = ref(null);
   const selectedDrilldownService = ref(null);
 
@@ -1714,18 +1880,28 @@
       'MDAs': MdaManager,
       'Prioritization': ServiceCatalogueMatrix,
       'Access Governance': AdminRolesView,
+      'Identity Directory': UserManager,
       
+      'Citizen Service Channels': ServiceCatalogueMatrix,
+      'Orchestration Studio': ServiceConfigManager,
+      'Dynamic Forms & Schemas': ServiceConfigManager,
       'Whole-of-Gov Catalogue': ServiceCatalogueMatrix,
       'Cradle to Death': ServiceCatalogueMatrix,
       'Architecture Designer': ArchitectureSimulator,
       
-      'Shared Registries': RegistriesMonitor,
       'API Gateway': ApiRegistry,
-      'Trust & Identity': UserManager,
+      'Huduma Bridge': ApiRegistry,
+      'Registry Adapters': RegistriesMonitor,
+      'Central Service Catalogue': ServiceCatalogueMatrix,
+      'National Master Registries': RegistriesMonitor,
+      'Government Payments': ApiRegistry,
+      'Revenue & Reconciliation': ApiRegistry,
+
+      'Consent Manager': SecurityTrustView,
+      'Identity Federation & NPKI': SecurityTrustView,
       
       'Audit Logs': AuditLogManager,
-      'Platform Health': SystemHealthView,
-      'Technical Specs': DocViewer
+      'Platform Health': SystemHealthView
     };
     return map[currentTab.value] || null;
   });
@@ -1739,6 +1915,7 @@
         { name: 'Workflow Engine', file: 'docs/architecture/poc_algorithm_workflow_documentation.md' },
         { name: 'RBAC Implementation', file: 'docs/architecture/RBAC_IMPLEMENTATION_SUMMARY.md' },
         { name: 'BPMN Enhancements', file: 'docs/architecture/BPMN_WORKFLOW_ENHANCEMENT.md' },
+        { name: 'Configurable Workflows', file: 'docs/architecture/CONFIGURABLE_WORKFLOWS_COMPLETE.md' },
       ]
     },
     {
@@ -1749,6 +1926,8 @@
         { name: 'Functional Specs', file: 'docs/poc/poc_functional_non_functional_requirements.md' },
         { name: 'System Design', file: 'docs/poc/poc_system_design_documents.md' },
         { name: 'Test & Validation', file: 'docs/poc/poc_test_validation_plan.md' },
+        { name: 'POC Report (PDF)', file: 'docs/poc/%23 PROOF OF CONCEPT (POC) REPORT_ REPEATABLE GOVERNMENT SERVICES PLATFORM.pdf' },
+        { name: 'Proof of Concept (PDF)', file: 'docs/poc/Proof of Concept .pdf' },
       ]
     },
     {
@@ -1756,8 +1935,14 @@
       icon: 'bi-journal-check',
       docs: [
         { name: 'Deployment Plan', file: 'docs/guides/poc_deployment_dev_ops_plan.md' },
+        { name: 'Deployment Guide', file: 'docs/guides/DEPLOYMENT.md' },
         { name: 'Huduma Bridge', file: 'docs/guides/huduma_bridge_instructions.md' },
+        { name: 'Frontend Cache Guide', file: 'docs/guides/FRONTEND_CACHE_ISSUE.md' },
         { name: 'BEM UI Standards', file: 'docs/style-guide/BEM-DOCUMENTATION.md' },
+        { name: 'BEM Quick Reference', file: 'docs/style-guide/BEM-QUICK-REFERENCE.md' },
+        { name: 'BEM Transformation', file: 'docs/style-guide/BEM-TRANSFORMATION-COMPARISON.md' },
+        { name: 'BEM Overview', file: 'docs/style-guide/README-BEM.md' },
+        { name: 'Service Registry UI', file: 'docs/style-guide/service-registry-bem.html' },
       ]
     },
     {
@@ -1765,12 +1950,81 @@
       icon: 'bi-clipboard-data-fill',
       docs: [
         { name: 'POC Final Report', file: 'docs/reports/ICTA_POC_Comprehensive_Report.md' },
+        { name: 'POC Final Report (HTML)', file: 'docs/reports/ICTA_POC_Comprehensive_Report.html' },
+        { name: 'POC Report Outline', file: 'docs/reports/POC_Report_Outline.md' },
         { name: 'Consolidated Actions', file: 'docs/reports/ICTA_WB_CONSOLIDATED_ACTIONS.md' },
         { name: 'Meeting Actions', file: 'docs/reports/ICTA_MEETING_ACTIONS.md' },
       ]
+    },
+    {
+      category: 'Exports & Evidence',
+      icon: 'bi-box-arrow-up-right',
+      docs: [
+        { name: 'All Service Forms', file: 'docs/exports/ALL_SERVICES_FORMS_COMPLETE.md' },
+        { name: 'All Service Forms (HTML)', file: 'docs/exports/ALL_SERVICES_FORMS_COMPLETE.html' },
+        { name: 'Architecture Export', file: 'docs/exports/architecture_three.html' },
+        { name: 'Catalogue Verification', file: 'docs/exports/verify_catalogue_data.html' },
+        { name: 'Repeatable Services Presentation', file: 'docs/exports/Presentation - Repeatable Services Algorithm.pdf' },
+      ]
     }
   ];
-  const selectedDoc = ref('docs/architecture/architecture_three.md');
+
+  const architectureLayers = [
+    {
+      id: 'channels',
+      name: 'Digital Channels',
+      description: 'Citizen, business, officer and assisted access',
+      technology: 'Web · Mobile · USSD',
+      icon: 'bi bi-window-stack',
+      document: 'docs/poc/poc_project_overview_concept_note.md'
+    },
+    {
+      id: 'orchestration',
+      name: 'Core & Orchestration',
+      description: 'Workflows, decisions, schemas and dynamic forms',
+      technology: 'BPMN · JSON Schema',
+      icon: 'bi bi-bezier2',
+      document: 'docs/architecture/poc_algorithm_workflow_documentation.md'
+    },
+    {
+      id: 'exchange',
+      name: 'Interoperability',
+      description: 'Secure policy-driven exchange between agencies',
+      technology: 'KeSEL · X-Road · APIs',
+      icon: 'bi bi-arrow-left-right',
+      document: 'docs/architecture/architecture_three.md'
+    },
+    {
+      id: 'foundations',
+      name: 'Data & Payments',
+      description: 'Authoritative registries and government payments',
+      technology: 'IPRS · KRA · GPA',
+      icon: 'bi bi-database-fill-check',
+      document: 'docs/poc/poc_system_design_documents.md'
+    },
+    {
+      id: 'operations',
+      name: 'Operations & Assurance',
+      description: 'Monitoring, audit, security, resilience and validation',
+      technology: 'NPKI · Audit · DR',
+      icon: 'bi bi-shield-check',
+      document: 'docs/poc/poc_test_validation_plan.md'
+    }
+  ];
+
+  const selectedDoc = ref('docs/poc/poc_system_design_documents.md');
+  const technicalDocumentCount = computed(() => categorizedDocs.reduce((total, group) => total + group.docs.length, 0));
+  const selectedDocMeta = computed(() => {
+    for (const group of categorizedDocs) {
+      const document = group.docs.find(doc => doc.file === selectedDoc.value);
+      if (document) return { ...document, category: group.category };
+    }
+    return { name: 'Technical Document', category: 'Architecture Evidence' };
+  });
+  const selectedDocFormat = computed(() => {
+    const extension = selectedDoc.value.split('.').pop()?.toUpperCase();
+    return extension === 'MD' ? 'MARKDOWN' : extension || 'DOCUMENT';
+  });
 
   onMounted(async () => {
     // 1. Ensure user data is loaded (essential for role-based logic)
@@ -1779,10 +2033,14 @@
     }
 
     const role = user.value?.role?.toLowerCase();
+
+    if (role === 'mda_admin') {
+      staffCurrentTab.value = 'configuration';
+    }
     
     // 2. Fetch data based on role
     const citizenRoles = ['citizen', 'hospital_staff'];
-    const staffRoles = ['officer', 'supervisor', 'registrar', 'mda_admin', 'global_officer', 'global_supervisor', 'mda_officer', 'mda_supervisor'];
+    const staffRoles = ['officer', 'supervisor', 'registrar', 'mda_admin', 'employee', 'global_officer', 'global_supervisor', 'mda_officer', 'mda_supervisor'];
     
     // Data relevant to citizen portal (can also be seen by staff for catalogue view)
     if (citizenRoles.includes(role) || staffRoles.includes(role)) {
@@ -1805,7 +2063,7 @@
       }
     } 
     // Admin specific data
-    else if (role === 'admin') {
+    else if (['admin', 'system_admin'].includes(role)) {
       mdaStore.fetchMdas();
       serviceConfigStore.fetchServices();
       serviceConfigStore.fetchFamilies();
@@ -2947,5 +3205,705 @@
     to {
       box-shadow: 0 0 15px rgba(236, 35, 42, 0.8);
     }
+  }
+
+  /* System Architect Technical Specs Workbench */
+  .architect-hero {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr);
+    gap: 2rem;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    border-radius: 1.5rem;
+    color: white;
+    background:
+      radial-gradient(circle at 85% 15%, rgba(45, 212, 191, .25), transparent 27%),
+      linear-gradient(135deg, #101f35, #173f5d 58%, #0f5962);
+  }
+
+  .architect-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: .12;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, .32) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, .32) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+  }
+
+  .architect-hero__copy,
+  .architect-scorecard {
+    position: relative;
+    z-index: 1;
+  }
+
+  .architect-eyebrow,
+  .architect-section-kicker {
+    display: block;
+    margin-bottom: .45rem;
+    color: #2dd4bf;
+    font-size: .64rem;
+    font-weight: 900;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+
+  .architect-eyebrow i {
+    margin-right: .4rem;
+  }
+
+  .architect-hero h2 {
+    margin: 0 0 .65rem;
+    color: white;
+    font-size: clamp(1.7rem, 3vw, 2.5rem);
+    font-weight: 900;
+    letter-spacing: -.045em;
+    line-height: 1.1;
+  }
+
+  .architect-hero p {
+    max-width: 660px;
+    margin: 0;
+    color: #d2e3eb;
+    font-size: .86rem;
+    line-height: 1.65;
+  }
+
+  .architect-standards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+    margin-top: 1rem;
+  }
+
+  .architect-standards span {
+    padding: .3rem .58rem;
+    border: 1px solid rgba(255, 255, 255, .18);
+    border-radius: 999px;
+    color: #d8edf0;
+    background: rgba(255, 255, 255, .08);
+    font-size: .56rem;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .architect-scorecard {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .65rem;
+    align-self: center;
+  }
+
+  .architect-scorecard article {
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 1rem;
+    background: rgba(8, 29, 48, .42);
+    backdrop-filter: blur(8px);
+  }
+
+  .architect-scorecard strong,
+  .architect-scorecard small {
+    display: block;
+  }
+
+  .architect-scorecard strong {
+    color: white;
+    font-size: 1.35rem;
+    font-weight: 900;
+  }
+
+  .architect-scorecard small {
+    margin-top: .15rem;
+    color: #b8ced8;
+    font-size: .58rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .architect-blueprint,
+  .architect-evidence {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e0e8ef;
+    border-radius: 1.5rem;
+    background: white;
+    box-shadow: 0 12px 35px rgba(15, 35, 55, .05);
+  }
+
+  .architect-blueprint > header,
+  .architect-evidence__heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .architect-section-kicker {
+    margin-bottom: .2rem;
+    color: #0f766e;
+  }
+
+  .architect-blueprint h3,
+  .architect-evidence h3 {
+    margin: 0;
+    color: #17243a;
+    font-size: 1.15rem;
+    font-weight: 900;
+    letter-spacing: -.02em;
+  }
+
+  .architect-live,
+  .architect-document-count {
+    padding: .42rem .68rem;
+    border-radius: 999px;
+    color: #047857;
+    background: #ecfdf5;
+    font-size: .58rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .architect-live i {
+    margin-right: .3rem;
+    color: #10b981;
+    font-size: .45rem;
+  }
+
+  .architect-layer-flow {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: .65rem;
+    padding: 1.1rem;
+    border: 1px solid #e4ebf1;
+    border-radius: 1.15rem;
+    background: linear-gradient(180deg, #f8fbfd, #f4f8fa);
+  }
+
+  .architect-layer-flow::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 8%;
+    right: 8%;
+    height: 2px;
+    background: linear-gradient(90deg, #9fd5cf, #8db9d0, #d6acbc);
+  }
+
+  .architect-layer {
+    --layer-color: #0f766e;
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+    padding: .9rem;
+    border: 1px solid #dce5ec;
+    border-top: 3px solid var(--layer-color);
+    border-radius: .85rem;
+    text-align: left;
+    background: white;
+    cursor: pointer;
+    transition: .2s ease;
+  }
+
+  .architect-layer:hover,
+  .architect-layer.active {
+    border-color: var(--layer-color);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(20, 42, 65, .1);
+  }
+
+  .architect-layer--channels { --layer-color: #7c3aed; }
+  .architect-layer--orchestration { --layer-color: #e11d48; }
+  .architect-layer--exchange { --layer-color: #0284c7; }
+  .architect-layer--foundations { --layer-color: #059669; }
+  .architect-layer--operations { --layer-color: #d97706; }
+
+  .architect-layer__number {
+    position: absolute;
+    top: .55rem;
+    right: .6rem;
+    color: #a1adba;
+    font-family: monospace;
+    font-size: .52rem;
+    font-weight: 900;
+  }
+
+  .architect-layer__icon {
+    display: grid;
+    place-items: center;
+    width: 2.15rem;
+    height: 2.15rem;
+    margin-bottom: .65rem;
+    border-radius: .65rem;
+    color: var(--layer-color);
+    background: color-mix(in srgb, var(--layer-color) 10%, white);
+  }
+
+  .architect-layer strong,
+  .architect-layer small,
+  .architect-layer__tech {
+    display: block;
+  }
+
+  .architect-layer strong {
+    color: #253449;
+    font-size: .7rem;
+    font-weight: 900;
+  }
+
+  .architect-layer small {
+    min-height: 2.3rem;
+    margin-top: .25rem;
+    color: #768596;
+    font-size: .57rem;
+    line-height: 1.35;
+  }
+
+  .architect-layer__tech {
+    margin-top: .65rem;
+    padding-top: .55rem;
+    border-top: 1px solid #edf1f4;
+    color: var(--layer-color);
+    font-size: .5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .architect-cross-cutting {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .7rem 1.5rem;
+    margin-top: .7rem;
+    padding: .75rem;
+    border: 1px dashed #bdcad4;
+    border-radius: .8rem;
+    color: #627386;
+    background: #f8fafc;
+  }
+
+  .architect-cross-cutting span {
+    font-size: .56rem;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .architect-cross-cutting i {
+    margin-right: .3rem;
+    color: #0f766e;
+  }
+
+  .architect-library {
+    max-height: 78vh;
+    padding: 1rem;
+    overflow-y: auto;
+    border: 1px solid #e2e8ee;
+    border-radius: 1rem;
+    background: #f8fafc;
+  }
+
+  .architect-library__title {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    padding-bottom: .85rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #dde5eb;
+  }
+
+  .architect-library__title > i {
+    display: grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: .65rem;
+    color: #0f766e;
+    background: #dff7f3;
+  }
+
+  .architect-library__title strong,
+  .architect-library__title small {
+    display: block;
+  }
+
+  .architect-library__title strong {
+    color: #26364b;
+    font-size: .72rem;
+    font-weight: 900;
+  }
+
+  .architect-library__title small {
+    margin-top: .1rem;
+    color: #8390a0;
+    font-size: .55rem;
+  }
+
+  .architect-document-header {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid #dfe7ed;
+    border-radius: 1rem 1rem 0 0;
+    color: white;
+    background: #17243a;
+  }
+
+  .architect-document-header__icon {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex: 0 0 auto;
+    border-radius: .7rem;
+    color: #5eead4;
+    background: rgba(255, 255, 255, .08);
+  }
+
+  .architect-document-header > div:nth-child(2) {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .architect-document-header span,
+  .architect-document-header h4,
+  .architect-document-header code {
+    display: block;
+  }
+
+  .architect-document-header span {
+    color: #5eead4;
+    font-size: .52rem;
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .architect-document-header h4 {
+    margin: .15rem 0;
+    overflow: hidden;
+    color: white;
+    font-size: .82rem;
+    font-weight: 900;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .architect-document-header code {
+    overflow: hidden;
+    color: #91a7b8;
+    font-size: .56rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .architect-document-header .architect-format {
+    padding: .35rem .55rem;
+    border: 1px solid rgba(255, 255, 255, .15);
+    border-radius: .45rem;
+    color: #d9e7ed;
+    background: rgba(255, 255, 255, .07);
+    white-space: nowrap;
+  }
+
+  .architect-document-viewer :deep(.markdown-container) {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  @media (max-width: 1100px) {
+    .architect-hero {
+      grid-template-columns: 1fr;
+    }
+
+    .architect-layer-flow {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .architect-layer-flow::before {
+      display: none;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .architect-hero,
+    .architect-blueprint,
+    .architect-evidence {
+      padding: 1rem;
+    }
+
+    .architect-scorecard,
+    .architect-layer-flow {
+      grid-template-columns: 1fr;
+    }
+
+    .architect-blueprint > header,
+    .architect-evidence__heading {
+      flex-direction: column;
+    }
+
+    .architect-library {
+      max-height: none;
+    }
+  }
+
+  /* Admin navigation as a compact reference-architecture map */
+  .architecture-nav {
+    overflow: hidden;
+    border: 1px solid #dce5ea;
+    background: #f8fafc;
+    box-shadow: 0 18px 45px rgba(15, 31, 45, .08);
+  }
+
+  .architecture-nav__header {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+    padding: 1.15rem 1rem 1rem;
+    color: white;
+    background: linear-gradient(145deg, #0c2233, #123e4d);
+  }
+
+  .architecture-nav__header::after {
+    position: absolute;
+    right: -2rem;
+    bottom: -3rem;
+    width: 7rem;
+    height: 7rem;
+    border: 1px solid rgba(94, 234, 212, .25);
+    border-radius: 50%;
+    content: '';
+  }
+
+  .architecture-nav__header strong {
+    font-size: .92rem;
+    font-weight: 900;
+    letter-spacing: -.015em;
+  }
+
+  .architecture-nav__header small {
+    color: #9fb7c1;
+    font-size: .58rem;
+    font-weight: 700;
+  }
+
+  .architecture-nav__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    color: #5eead4;
+    font-size: .52rem;
+    font-weight: 900;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  .architecture-nav__stack {
+    position: relative;
+    padding: .6rem .55rem .35rem;
+  }
+
+  .architecture-nav__stack::before {
+    position: absolute;
+    top: 1.9rem;
+    bottom: 1.7rem;
+    left: 1.47rem;
+    width: 2px;
+    background: linear-gradient(#38bdf8, #8b5cf6 24%, #14b8a6 45%, #16a34a 63%, #f59e0b 79%, #ef4444);
+    content: '';
+    opacity: .45;
+  }
+
+  .architecture-nav__layer {
+    --layer-accent: #64748b;
+    position: relative;
+    padding: .48rem .35rem .55rem;
+    border: 1px solid transparent;
+    border-radius: .7rem;
+    transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+
+  .architecture-nav__layer + .architecture-nav__layer {
+    margin-top: .18rem;
+  }
+
+  .architecture-nav__layer--channels { --layer-accent: #0ea5e9; }
+  .architecture-nav__layer--core { --layer-accent: #8b5cf6; }
+  .architecture-nav__layer--exchange { --layer-accent: #14b8a6; }
+  .architecture-nav__layer--data { --layer-accent: #16a34a; }
+  .architecture-nav__layer--trust { --layer-accent: #f59e0b; }
+  .architecture-nav__layer--operations { --layer-accent: #ef4444; }
+
+  .architecture-nav__layer.is-active {
+    border-color: color-mix(in srgb, var(--layer-accent) 23%, white);
+    background: color-mix(in srgb, var(--layer-accent) 5%, white);
+    box-shadow: 0 5px 15px color-mix(in srgb, var(--layer-accent) 8%, transparent);
+  }
+
+  .architecture-nav__layer-heading {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.05rem 1.65rem minmax(0, 1fr);
+    align-items: center;
+    gap: .4rem;
+    padding: .18rem 0 .42rem;
+  }
+
+  .architecture-nav__number {
+    color: var(--layer-accent);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .48rem;
+    font-weight: 900;
+  }
+
+  .architecture-nav__layer-icon {
+    display: grid;
+    width: 1.65rem;
+    height: 1.65rem;
+    place-items: center;
+    border: 2px solid white;
+    border-radius: .52rem;
+    color: white;
+    background: var(--layer-accent);
+    box-shadow: 0 3px 8px color-mix(in srgb, var(--layer-accent) 25%, transparent);
+    font-size: .7rem;
+  }
+
+  .architecture-nav__layer-heading > span:last-child {
+    min-width: 0;
+  }
+
+  .architecture-nav__layer-heading strong,
+  .architecture-nav__layer-heading small {
+    display: block;
+  }
+
+  .architecture-nav__layer-heading strong {
+    overflow: hidden;
+    color: #1e293b;
+    font-size: .61rem;
+    font-weight: 900;
+    letter-spacing: .035em;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .architecture-nav__layer-heading small {
+    margin-top: .06rem;
+    overflow: hidden;
+    color: #82919f;
+    font-size: .48rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .architecture-nav__capabilities {
+    display: flex;
+    flex-direction: column;
+    gap: .1rem;
+    margin-left: 2.1rem;
+  }
+
+  .architecture-nav .sidebar-nav__item {
+    min-width: 0;
+    padding: .42rem .48rem;
+    border-left-width: 2px;
+    border-radius: .4rem;
+    color: #526170;
+    font-size: .58rem;
+    line-height: 1.2;
+  }
+
+  .architecture-nav .sidebar-nav__item:hover {
+    color: var(--layer-accent, #0f766e);
+    background: white;
+  }
+
+  .architecture-nav__layer .sidebar-nav__item--active {
+    border-left-color: var(--layer-accent);
+    color: var(--layer-accent);
+    background: white;
+    box-shadow: 0 2px 9px rgba(15, 23, 42, .07);
+  }
+
+  .sidebar-nav__capability-icon {
+    flex: 0 0 auto;
+    width: .75rem;
+    color: currentColor;
+    font-size: .62rem;
+    text-align: center;
+    opacity: .78;
+  }
+
+  .architecture-nav__foundation {
+    padding: .75rem .8rem .85rem;
+    border-top: 1px solid #dce5ea;
+    background: #eaf0f3;
+  }
+
+  .architecture-nav__foundation-title {
+    display: flex;
+    align-items: center;
+    gap: .48rem;
+    margin-bottom: .45rem;
+    color: #334155;
+  }
+
+  .architecture-nav__foundation-title > i {
+    color: #0f766e;
+    font-size: .72rem;
+  }
+
+  .architecture-nav__foundation-title strong,
+  .architecture-nav__foundation-title small {
+    display: block;
+  }
+
+  .architecture-nav__foundation-title strong {
+    font-size: .55rem;
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+
+  .architecture-nav__foundation-title small {
+    color: #84929f;
+    font-size: .46rem;
+    font-weight: 700;
+  }
+
+  .architecture-nav__foundation-links {
+    display: flex;
+    flex-direction: column;
+    gap: .18rem;
+  }
+
+  .architecture-nav__foundation .sidebar-nav__item {
+    background: rgba(255, 255, 255, .68);
+  }
+
+  .architecture-nav__doc-count {
+    display: grid;
+    min-width: 1.15rem;
+    height: 1.15rem;
+    place-items: center;
+    border-radius: 999px;
+    color: white;
+    background: #0f766e;
+    font-size: .43rem;
+    font-weight: 900;
   }
 </style>

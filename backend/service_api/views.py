@@ -20,6 +20,7 @@ from rest_framework import viewsets, permissions, status, serializers, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.exceptions import PermissionDenied
 from .models import (
     ServiceRequest, ServiceConfig, WorkflowStep, User, AuditLog, MDA, Role, 
     ServiceDomain, ServiceCategory, InterDepartmentalMemo, GovernmentFile, 
@@ -363,6 +364,13 @@ class ServiceConfigViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = ServiceConfig.objects.exclude(service_status='deprecated')
+
+        user = self.request.user
+        if user.is_authenticated and user.role == 'mda_admin':
+            allowed_mda_ids = set(user.assigned_mdas.values_list('id', flat=True))
+            if user.mda_id:
+                allowed_mda_ids.add(user.mda_id)
+            queryset = queryset.filter(mda_id__in=allowed_mda_ids)
         
         # Explicit query param filtering to ensure robust scoping from the frontend
         family_id = self.request.query_params.get('service_family')
@@ -375,6 +383,17 @@ class ServiceConfigViewSet(viewsets.ModelViewSet):
             
         return queryset.select_related('mda', 'service_family')
 
+    def perform_create(self, serializer):
+        user = self.request.user
+        if user.role == 'mda_admin':
+            allowed_mda_ids = set(user.assigned_mdas.values_list('id', flat=True))
+            if user.mda_id:
+                allowed_mda_ids.add(user.mda_id)
+            target_mda = serializer.validated_data.get('mda')
+            if not target_mda or target_mda.id not in allowed_mda_ids:
+                raise PermissionDenied('MDA administrators can only configure services for their assigned MDA.')
+        serializer.save()
+
 class WorkflowStepViewSet(viewsets.ModelViewSet):
     queryset = WorkflowStep.objects.all()
     serializer_class = WorkflowStepSerializer
@@ -383,10 +402,27 @@ class WorkflowStepViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = WorkflowStep.objects.all()
+        user = self.request.user
+        if user.is_authenticated and user.role == 'mda_admin':
+            allowed_mda_ids = set(user.assigned_mdas.values_list('id', flat=True))
+            if user.mda_id:
+                allowed_mda_ids.add(user.mda_id)
+            queryset = queryset.filter(service_config__mda_id__in=allowed_mda_ids)
         service_config_id = self.request.query_params.get('service_config')
         if service_config_id:
             queryset = queryset.filter(service_config_id=service_config_id)
         return queryset.order_by('sequence')
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        if user.role == 'mda_admin':
+            allowed_mda_ids = set(user.assigned_mdas.values_list('id', flat=True))
+            if user.mda_id:
+                allowed_mda_ids.add(user.mda_id)
+            service_config = serializer.validated_data.get('service_config')
+            if not service_config or service_config.mda_id not in allowed_mda_ids:
+                raise PermissionDenied('MDA administrators can only configure workflows for their assigned MDA.')
+        serializer.save()
 
 class ServiceRequestViewSet(viewsets.ModelViewSet):
     queryset = ServiceRequest.objects.all()

@@ -1,6 +1,13 @@
 <template>
   <div class="markdown-container bg-white p-8 rounded-xl shadow-sm border border-slate-100 max-w-none">
-    <div v-if="loading" class="flex items-center justify-center p-12">
+    <iframe
+      v-if="isEmbeddedDocument"
+      :src="url"
+      :title="documentTitle"
+      class="document-frame"
+      sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+    ></iframe>
+    <div v-else-if="loading" class="flex items-center justify-center p-12">
       <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
     </div>
     <div v-else-if="error" class="p-4 bg-red-50 text-red-700 rounded-lg">
@@ -45,7 +52,7 @@
 </template>
 
 <script setup>
-  import { ref, watch, onMounted, nextTick } from 'vue';
+  import { ref, watch, onMounted, nextTick, computed } from 'vue';
   import { Marked } from 'marked';
   import DOMPurify from 'dompurify';
   import mermaid from 'mermaid';
@@ -67,6 +74,13 @@
   const zoomContainer = ref(null);
   let activeMermaidCode = '';
 
+  const documentExtension = computed(() => {
+    const cleanUrl = props.url.split('?')[0].split('#')[0];
+    return cleanUrl.split('.').pop()?.toLowerCase() || '';
+  });
+  const isEmbeddedDocument = computed(() => ['pdf', 'html', 'htm'].includes(documentExtension.value));
+  const documentTitle = computed(() => decodeURIComponent(props.url.split('/').pop() || 'Technical document'));
+
   const marked = new Marked();
 
   // Configure mermaid
@@ -84,6 +98,12 @@
 
     loading.value = true;
     error.value = null;
+
+    if (isEmbeddedDocument.value) {
+      renderedHtml.value = '';
+      loading.value = false;
+      return;
+    }
 
     try {
       const response = await fetch(props.url);
@@ -214,6 +234,15 @@
 </script>
 
 <style>
+
+  .document-frame {
+    display: block;
+    width: 100%;
+    min-height: 75vh;
+    border: 0;
+    border-radius: 0.75rem;
+    background: white;
+  }
 
   /* Custom styles for the markdown body to ensure it looks premium */
   .markdown-body h1 {

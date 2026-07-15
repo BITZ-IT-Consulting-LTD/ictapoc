@@ -119,7 +119,7 @@
     <div v-else class="u-p-20 u-text-center">
        <i class="bi bi-shield-slash u-text-4xl u-text-danger u-mb-4 block"></i>
        <h3 class="u-text-sm u-font-black u-text-main u-uppercase">Access Denied or Invalid Path</h3>
-       <p class="u-text-xs u-text-muted u-mt-2">This hierarchy branch does not exist in the official DRMS registry.</p>
+       <p class="u-text-xs u-text-muted u-mt-2">This hierarchy branch does not exist in the official EDRMS structure.</p>
     </div>
   </div>
 </template>

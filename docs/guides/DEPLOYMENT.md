@@ -1,126 +1,299 @@
-# Deployment Guide: GOK Repeatable Services Platform
+# Production Deployment Guide
 
-This document provides step-by-step instructions for deploying the GOK Repeatable Services Platform in both local development and production environments.
+This runbook deploys the GoK Repeatable Services Platform POC at:
 
----
+**https://gokservices.bitz-itc.com/**
 
-## 1. Local Development Setup (Docker)
+It assumes one Linux host running Docker Compose and host-level Nginx. Host Nginx terminates TLS and proxies to the container gateway on `127.0.0.1:8087`. PostgreSQL, Redis, Django, Celery, and the frontend remain isolated on the Docker network.
 
-The fastest way to get the platform running is using **Docker Compose**. This spins up the Backend (Django), Frontend (Vue), Database (PostgreSQL), and Cache (Redis).
+## 1. Production topology
 
-### **Prerequisites**
-- Docker & Docker Compose installed.
-- Access to the repository.
+```text
+Internet
+   |
+   | HTTPS :443
+   v
+Host Nginx
+   |
+   | HTTP 127.0.0.1:8087
+   v
+Docker Nginx
+   |-- /api, /admin, /health, /ready --> Django + Gunicorn
+   |-- /static                         --> collected Django assets
+   |-- protected documents             --> EDRMS media volume
+   `-- all other routes                 --> Vue frontend
 
-### **Steps**
-1. **Clone & Enter Directory:**
-   ```bash
-   git clone <repository_url>
-   cd ictapoc
-   ```
+Django --> PostgreSQL
+Django/Celery --> authenticated Redis
+```
 
-2. **Environment Configuration:**
-   Create a `.env` file in the root:
-   ```bash
-   POSTGRES_DB=icta_db
-   POSTGRES_USER=icta_user
-   POSTGRES_PASSWORD=icta_pass
-   SECRET_KEY=dev_secret_key
-   DEBUG=True
-   ```
+Only ports 80 and 443 should be publicly reachable. The Docker gateway is deliberately bound to loopback.
 
-3. **Build & Start Containers:**
-   ```bash
-   docker-compose build
-   docker-compose up -d
-   ```
+## 2. Server and DNS prerequisites
 
-4. **Initialize Database:**
-   ```bash
-   docker-compose exec backend python manage.py migrate
-   ```
+Minimum recommended POC host:
 
-5. **Seed Demo Data:**
-   Load the Ministries (MDAs) and sample Service Configurations:
-   ```bash
-   docker-compose exec backend python manage.py loaddata mda_seed_data.json
-   docker-compose exec backend python manage.py loaddata service_config_seed_data.json
-   ```
+- Ubuntu 22.04 or 24.04 LTS
+- 2 vCPU, 4 GB RAM, and 30 GB persistent disk
+- Docker Engine with the Compose plugin
+- Nginx and Certbot installed on the host
+- DNS `A` record for `gokservices.bitz-itc.com` pointing to the host IPv4 address
+- Optional DNS `AAAA` record only when IPv6 is configured on the host
+- Inbound TCP 80 and 443 allowed by the cloud firewall and host firewall
 
-6. **Access the App:**
-   - **Frontend:** [http://localhost](http://localhost) (via Nginx proxy)
-   - **Backend API:** [http://localhost:8001/api](http://localhost:8001/api)
+Verify DNS before requesting a certificate:
 
----
+```bash
+dig +short gokservices.bitz-itc.com A
+```
 
-## 2. Production Deployment
+## 3. Install runtime dependencies
 
-For a GOK-ready production environment, we use a dedicated `docker-compose.prod.yml` which sets up:
-1.  **Backend:** Gunicorn application server with static file collection.
-2.  **Frontend/Nginx:** An internal Nginx container that serves the built Vue.js assets and proxies API requests.
-3.  **Database & Cache:** PostgreSQL and Redis.
+Install Docker from Docker's official repository, then install host Nginx and Certbot:
 
-### **Steps**
+```bash
+sudo apt update
+sudo apt install -y nginx certbot
+sudo systemctl enable --now nginx
+docker --version
+docker compose version
+```
 
-1.  **Configure Environment:**
-    Ensure your `.env` file has production settings. **Critical**: Set hosts to service names.
-    ```bash
-    POSTGRES_DB=icta_db
-    POSTGRES_USER=icta_user
-    POSTGRES_PASSWORD=secure_password
-    POSTGRES_HOST=db
-    
-    REDIS_HOST=redis
-    REDIS_PORT=6379
-    
-    SECRET_KEY=long_random_secret_key
-    DEBUG=False
-    ALLOWED_HOSTS=yourdomain.com,localhost,127.0.0.1
-    ```
+Add the deployment user to the Docker group if required, then start a new shell session:
 
-2.  **Build and Run:**
-    Use the production compose file:
-    ```bash
-    docker-compose -f docker-compose.prod.yml up -d --build
-    ```
+```bash
+sudo usermod -aG docker "$USER"
+```
 
-    *This command will:*
-    - Build the Vue frontend (multi-stage build).
-    - Build the Django backend and install Gunicorn.
-    - Start the Internal Nginx (Port 80).
-    - Run `collectstatic` automatically on startup.
+## 4. Clone and configure the application
 
-3.  **Host Nginx Configuration (External):**
-    The user requested an "Internal Nginx" to communicate with the "Host Nginx".
-    The container `nginx` exposes Port 80.
-    
-    Configure your **Host** Nginx to proxy to this container:
-    ```nginx
-    server {
-        listen 80;
-        server_name yourdomain.com;
-    
-        location / {
-            proxy_pass http://localhost:80;
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-        }
-    }
-    ```
+```bash
+sudo mkdir -p /opt/gokservices
+sudo chown "$USER":"$USER" /opt/gokservices
+git clone https://github.com/BITZ-IT-Consulting-LTD/ictapoc.git /opt/gokservices/app
+cd /opt/gokservices/app
+```
 
-4.  **Verification:**
-    - Access `http://localhost` (or your domain).
-    - Check API at `http://localhost/api/`.
-    - Check Admin at `http://localhost/admin/`.
+Create the untracked production environment file from the committed template:
 
----
+```bash
+cp .env.production.example .env
+chmod 600 .env
+```
 
-## 3. Post-Deployment Verification
-Run these checks to ensure the system is functional:
-- [ ] **Login:** Can a user log in via the Frontend?
-- [ ] **Submission:** Can a Citizen submit a "Birth Registration" request?
-- [ ] **Workflow:** Does an Officer see the pending task in their dashboard?
-- [ ] **Audit:** Does the Admin view show the step-by-step audit logs?
+Generate independent random values for the database, Redis, Django, and JWT secrets:
 
----
-*Created by Loshie (AI Assistant)*
+```bash
+openssl rand -hex 32
+openssl rand -hex 50
+```
+
+Edit `.env` and replace every `REPLACE_WITH_...` value. The production host values must include:
+
+```dotenv
+DEBUG=False
+ALLOWED_HOSTS=gokservices.bitz-itc.com,localhost,127.0.0.1,backend
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
+REDIS_HOST=redis
+REDIS_PORT=6379
+USE_X_ACCEL_REDIRECT=True
+```
+
+Never commit `.env` or paste its contents into tickets, chat, or deployment logs.
+
+## 5. Issue the TLS certificate
+
+The committed final Nginx configuration references the Let's Encrypt certificate, so issue it before enabling that configuration. On a new single-purpose host:
+
+```bash
+sudo systemctl stop nginx
+sudo certbot certonly --standalone \
+  --domain gokservices.bitz-itc.com \
+  --agree-tos \
+  --no-eff-email \
+  --email YOUR_OPERATIONS_EMAIL
+sudo systemctl start nginx
+```
+
+If the host already serves other sites, use Certbot's webroot or Nginx workflow instead of stopping Nginx.
+
+Confirm the certificate exists:
+
+```bash
+sudo test -f /etc/letsencrypt/live/gokservices.bitz-itc.com/fullchain.pem
+sudo test -f /etc/letsencrypt/live/gokservices.bitz-itc.com/privkey.pem
+```
+
+## 6. Install the host Nginx configuration
+
+The production host configuration is committed at:
+
+`docker/prod/nginx/host-gokservices.bitz-itc.com.conf`
+
+Install and enable it:
+
+```bash
+sudo mkdir -p /var/www/certbot
+sudo cp docker/prod/nginx/host-gokservices.bitz-itc.com.conf \
+  /etc/nginx/sites-available/gokservices.bitz-itc.com.conf
+sudo ln -sfn /etc/nginx/sites-available/gokservices.bitz-itc.com.conf \
+  /etc/nginx/sites-enabled/gokservices.bitz-itc.com.conf
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+The configuration provides:
+
+- HTTP-to-HTTPS redirection
+- TLS 1.2 and TLS 1.3
+- HSTS and baseline response security headers
+- Forwarded host, client IP, and HTTPS scheme headers for Django
+- 100 MB request bodies for EDRMS document uploads
+- Five-minute upstream timeouts for large document operations
+- A persistent ACME challenge path for certificate renewal
+
+## 7. Build and start the production stack
+
+Validate the resolved Compose configuration without printing it into shared logs because it contains secret environment values:
+
+```bash
+docker compose -f docker-compose.prod.yml config --quiet
+```
+
+Build and start:
+
+```bash
+docker compose -f docker-compose.prod.yml build --pull
+docker compose -f docker-compose.prod.yml up -d
+docker compose -f docker-compose.prod.yml ps
+```
+
+The backend entrypoint automatically runs database migrations, collects Django static files, and seeds the POC platform and EDRMS data. The seeding commands are designed for this demonstration environment.
+
+Review startup logs:
+
+```bash
+docker compose -f docker-compose.prod.yml logs --tail=200 backend
+docker compose -f docker-compose.prod.yml logs --tail=100 celery
+docker compose -f docker-compose.prod.yml logs --tail=100 nginx
+```
+
+## 8. Verification
+
+Run these checks from the host:
+
+```bash
+curl -I http://gokservices.bitz-itc.com/
+curl -fsS https://gokservices.bitz-itc.com/health
+curl -fsS https://gokservices.bitz-itc.com/ready
+curl -I https://gokservices.bitz-itc.com/login
+```
+
+Expected results:
+
+- HTTP redirects to HTTPS.
+- `/health` returns a successful liveness response.
+- `/ready` confirms application dependencies are ready.
+- `/login` returns the Vue application.
+- `/admin/` loads with Django Admin styling.
+- EDRMS previews and downloads work through Nginx protected-media delivery.
+
+Inspect the certificate and public TLS path:
+
+```bash
+openssl s_client -connect gokservices.bitz-itc.com:443 \
+  -servername gokservices.bitz-itc.com </dev/null 2>/dev/null \
+  | openssl x509 -noout -subject -issuer -dates
+```
+
+## 9. POC exposure warning
+
+This repository intentionally seeds demonstration accounts and displays quick-access login buttons. Before exposing the site beyond an approved POC audience:
+
+- Change all seeded account passwords.
+- Restrict access at the firewall, VPN, or host Nginx when possible.
+- Do not use real citizen records, credentials, payment information, or classified documents.
+- Replace mocked registry, identity, payment, and KeSEL connections before treating the platform as production infrastructure.
+- Configure a real email provider and operational alerting.
+
+## 10. Routine deployment update
+
+Back up the database before every application update:
+
+```bash
+cd /opt/gokservices/app
+mkdir -p backups
+set -a
+. ./.env
+set +a
+docker compose -f docker-compose.prod.yml exec -T db \
+  pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Fc \
+  > "backups/gokservices-$(date +%Y%m%d-%H%M%S).dump"
+```
+
+Deploy the update:
+
+```bash
+git fetch origin
+git pull --ff-only
+docker compose -f docker-compose.prod.yml build --pull
+docker compose -f docker-compose.prod.yml up -d --remove-orphans
+docker compose -f docker-compose.prod.yml ps
+curl -fsS https://gokservices.bitz-itc.com/ready
+```
+
+## 11. Backup and restore
+
+Database backup:
+
+```bash
+docker compose -f docker-compose.prod.yml exec -T db \
+  pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Fc > backup.dump
+```
+
+EDRMS media-volume backup:
+
+```bash
+docker compose -f docker-compose.prod.yml exec -T backend \
+  tar -czf - -C /app/media . \
+  > "backups/edrms-media-$(date +%Y%m%d-%H%M%S).tar.gz"
+```
+
+Store backups off-host and test restoration periodically. A database restore should be rehearsed on a separate environment before it is needed in an incident.
+
+## 12. Rollback
+
+Application rollback:
+
+```bash
+git log --oneline -10
+git checkout SAFE_COMMIT_OR_TAG
+docker compose -f docker-compose.prod.yml build
+docker compose -f docker-compose.prod.yml up -d
+curl -fsS https://gokservices.bitz-itc.com/ready
+```
+
+Do not reverse a database migration without reviewing that migration's data effects. Restore the matching database backup when code and schema are no longer compatible.
+
+## 13. Operations
+
+Useful commands:
+
+```bash
+docker compose -f docker-compose.prod.yml ps
+docker compose -f docker-compose.prod.yml logs -f --tail=200
+docker compose -f docker-compose.prod.yml restart nginx
+docker compose -f docker-compose.prod.yml exec backend python manage.py check
+sudo nginx -t
+sudo journalctl -u nginx --since "30 minutes ago"
+```
+
+Verify automatic certificate renewal:
+
+```bash
+sudo certbot renew --dry-run
+systemctl list-timers | grep certbot
+```
+
+The production database, Redis data, collected static files, and EDRMS media are stored in named Docker volumes. Never run `docker compose down -v` on the production host unless permanent data deletion is explicitly intended.

@@ -5,9 +5,9 @@
       <div class="page__title-group">
         <h1 class="page__title text-premium flex items-center gap-3">
           <i class="bi bi-bank2 u-text-primary"></i>
-          DRMS Portal
+          Public EDRMS
         </h1>
-        <p class="page__subtitle u-mt-2">Authoritative Central Public Repository for Government Deliverables and Records</p>
+        <p class="page__subtitle u-mt-2">Public access to approved government documents and records managed through EDRMS</p>
       </div>
     </header>
 
@@ -97,7 +97,7 @@
              <!-- Hierarchical Breadcrumb -->
              <div class="flex items-center gap-2 text-xs text-slate-500 overflow-x-auto whitespace-nowrap px-2">
                 <span class="hover:text-primary cursor-pointer font-bold flex items-center gap-2" @click="clearFilters">
-                   <i class="bi bi-diagram-3"></i> Repository Root
+                   <i class="bi bi-diagram-3"></i> EDRMS Root
                 </span>
                 <template v-if="filters.registry">
                   <i class="bi bi-chevron-right text-[10px] opacity-50"></i>
@@ -137,7 +137,7 @@
         <!-- Active Loader -->
         <div v-if="loading && artifacts.length === 0" class="flex-1 flex flex-col items-center justify-center min-h-[300px]">
           <div class="animate-spin h-10 w-10 border-4 border-primary border-t-transparent rounded-full mb-4"></div>
-          <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Querying DRMS Schema...</p>
+          <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Querying EDRMS Schema...</p>
         </div>
 
         <!-- Artifact Cards List -->
@@ -223,7 +223,7 @@
           <div v-if="artifacts.length === 0" class="flex flex-col items-center justify-center min-h-[300px] border-2 border-dashed border-slate-200 rounded-3xl p-10 bg-slate-50 shadow-inner">
              <span class="text-5xl mb-4 text-primary opacity-50">🔍</span>
              <h3 class="text-slate-800 font-black mb-2 text-lg">No Schema Matches</h3>
-             <p class="text-slate-500 text-sm text-center max-w-md font-medium">Adjust your hierarchical filters or search query to find documents within the repository tree.</p>
+             <p class="text-slate-500 text-sm text-center max-w-md font-medium">Adjust your hierarchical filters or search query to find documents within the EDRMS structure.</p>
              <button @click="clearFilters" class="mt-6 button button--secondary button--tiny button--pill">Clear All Filters</button>
           </div>
         </div>

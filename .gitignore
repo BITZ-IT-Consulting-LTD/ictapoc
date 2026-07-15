@@ -33,6 +33,7 @@ staticfiles/
 .env
 .env.*
 *.env
+!.env.production.example
 .venv
 env/
 venv/
