@@ -40,7 +40,7 @@ jobs:
           set -euo pipefail
 
           SCRIPT=$(cat <<'EOF'
-          set -euo pipefail
+          set -eu
           cd /opt/gokservices/app
 
           mkdir -p backups
