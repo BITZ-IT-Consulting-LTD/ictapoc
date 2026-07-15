@@ -79,3 +79,12 @@ Create a `production` [Environment](https://docs.github.com/actions/deployment/t
 - Add a required reviewer on the `production` Environment if you want a manual approval gate before deploys actually run (recommended, since this pushes to a public POC referenced in `docs/guides/DEPLOYMENT.md`).
 - This does **not** run database migrations separately — they run automatically inside the backend container's entrypoint on start, same as manual deploys.
 - Rollback is still manual: SSH/SSM in and follow `docs/guides/DEPLOYMENT.md` §12, or re-run this workflow after reverting `main`.
+- **`.env` password drift**: PostgreSQL only applies `POSTGRES_PASSWORD` the first time it initializes an empty data volume. If `.env` is edited or regenerated after the `db` volume already exists, the live database keeps the old password while `backend`/`celery` read the new one from `.env`, and the backend container will crash-loop with `password authentication failed`. If this happens, either wipe the `postgres_prod_data` volume (fine before real data exists) or sync it in place:
+  ```bash
+  set -a; . ./.env; set +a
+  docker compose -f docker-compose.prod.yml exec -T db \
+    psql -U "$POSTGRES_USER" -d postgres -c \
+    "ALTER USER \"$POSTGRES_USER\" WITH PASSWORD '$POSTGRES_PASSWORD';"
+  docker compose -f docker-compose.prod.yml up -d
+  ```
+- **`nginx` won't start until `backend` is healthy**: the `nginx` service has `depends_on: backend: condition: service_healthy`. If `up -d` runs while `backend` is still unhealthy (e.g. mid password-drift crash loop above), Compose skips starting `nginx` entirely rather than erroring — `docker compose ps` will simply be missing an `nginx` row. Once `backend` is healthy, just re-run `docker compose -f docker-compose.prod.yml up -d` to bring `nginx` up.
