@@ -9,7 +9,7 @@
         </div>
         <div class="navbar__menu">
           <router-link to="/public-repository" class="navbar__link" active-class="navbar__link--active">
-            <i class="bi bi-bank2"></i> Repository
+            <i class="bi bi-bank2"></i> EDRMS
           </router-link>
           <router-link to="/login" class="navbar__link" active-class="navbar__link--active">
             <i class="bi bi-shield-lock-fill"></i> Portal Access

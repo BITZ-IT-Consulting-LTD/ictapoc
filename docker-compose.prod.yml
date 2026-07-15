@@ -1,7 +1,6 @@
-version: '3.8'
-
 services:
   backend:
+    image: ictapoc-backend:prod
     build:
       context: .
       dockerfile: ./docker/prod/backend/Dockerfile
@@ -16,11 +15,32 @@ services:
       db:
         condition: service_healthy
       redis:
-        condition: service_started
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
       timeout: 10s
+      retries: 5
+    restart: always
+    networks:
+      - intranet
+
+  celery:
+    image: ictapoc-backend:prod
+    command: celery -A project worker --loglevel=${LOG_LEVEL:-info}
+    volumes:
+      - media_volume:/app/media
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "celery -A project inspect ping -d celery@$$HOSTNAME --timeout=10 | grep -q pong"]
+      interval: 30s
+      timeout: 15s
       retries: 5
     restart: always
     networks:
@@ -38,10 +58,11 @@ services:
     build:
       context: .
       dockerfile: ./docker/prod/nginx/Dockerfile
-    # Expose only internal port; host Nginx handles 80/443
+    # Bind only to loopback; host Nginx is the sole public ingress.
     ports:
-      - "8087:80"
+      - "127.0.0.1:8087:80"
     volumes:
+      - static_volume:/app/staticfiles:ro
       - media_volume:/app/media:ro # Required for X-Accel-Redirect PDF preview
     depends_on:
       backend:
@@ -71,8 +92,13 @@ services:
 
   redis:
     image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes", "--requirepass", "${REDIS_PASSWORD}"]
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    volumes:
+      - redis_prod_data:/data
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: ["CMD-SHELL", "redis-cli -a \"$$REDIS_PASSWORD\" ping | grep -q PONG"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -86,5 +112,6 @@ networks:
 
 volumes:
   postgres_prod_data:
+  redis_prod_data:
   static_volume:
   media_volume:

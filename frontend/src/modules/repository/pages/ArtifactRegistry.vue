@@ -4,15 +4,15 @@
       <div class="page__title-group">
         <h1 class="page__title text-premium flex items-center gap-3">
           <i class="bi bi-bank2 u-text-primary"></i>
-          Artifact Registry
+          EDRMS
         </h1>
-        <p class="page__subtitle u-mt-2">Authoritative Central Repository for Government Deliverables and Records</p>
+        <p class="page__subtitle u-mt-2">Electronic Document and Records Management System for Government Deliverables and Records</p>
       </div>
       
       <div class="page__actions">
         <div class="u-flex u-items-center u-gap-3">
         <router-link v-if="['admin', 'system_admin'].includes(userRole)" to="/repository/configuration" class="button button--secondary button--tiny button--pill u-px-4">
-           <i class="bi bi-gear-fill u-mr-2"></i> DRMS Config
+           <i class="bi bi-gear-fill u-mr-2"></i> EDRMS Configuration
         </router-link>
         <router-link to="/repository/explore/project-registry" class="button button--secondary button--tiny button--pill u-px-4">
            <i class="bi bi-diagram-3 u-mr-2"></i> Hierarchical Explorer

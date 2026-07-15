@@ -404,7 +404,11 @@
                       <label class="form__label">
                         <i class="bi bi-building me-1"></i>Institutional Ownership (MDA)
                       </label>
-                      <div class="space-y-2">
+                      <div v-if="mdaFilterId" class="form__input u-flex u-items-center u-justify-between u-bg-slate-100">
+                        <span class="u-font-bold">{{ getMdaName(mdaFilterId) }}</span>
+                        <i class="bi bi-lock-fill u-text-muted"></i>
+                      </div>
+                      <div v-else class="space-y-2">
                         <input type="text" v-model="mdaDropdownSearch" placeholder="🔍 Filter agencies..."
                           class="form__input">
                         <select v-model="editForm.mda" class="form__select" required>
@@ -532,7 +536,8 @@
   import BaseModal from '../Common/BaseModal.vue';
 
   const props = defineProps({
-    mdaFilterId: { type: [Number, String], default: null }
+    mdaFilterId: { type: [Number, String], default: null },
+    mdaDetails: { type: Object, default: null }
   });
 
   const emit = defineEmits(['drilldown-transactions', 'go-back-mdas']);
@@ -740,6 +745,11 @@
     // Handle if mda is already an object or just an ID
     const mdaId = typeof mda === 'object' ? mda.id : mda;
     const found = mdas.value.find(m => String(m.id) === String(mdaId));
+    if (!found && props.mdaDetails && String(props.mdaDetails.id) === String(mdaId)) {
+      return props.mdaDetails.code
+        ? `${props.mdaDetails.name} (${props.mdaDetails.code})`
+        : props.mdaDetails.name;
+    }
     if (!found) return typeof mda === 'object' ? mda.name || 'N/A' : 'N/A';
     return found.code ? `${found.name} (${found.code})` : found.name;
   };
@@ -869,7 +879,7 @@
       id: null,
       service_code: '',
       service_name: '',
-      mda: mdas.value.length > 0 ? mdas.value[0].id : null,
+      mda: props.mdaFilterId || (mdas.value.length > 0 ? mdas.value[0].id : null),
       service_type: 'G2C',
       service_groups: [],
       config: { rules: { schema: { properties: {}, required: [] } } },

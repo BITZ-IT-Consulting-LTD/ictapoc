@@ -132,15 +132,21 @@
             <!-- Quick Access -->
             <div class="quick-access">
               <p class="quick-access__title">
-                <i class="bi bi-lightning-fill"></i> Architectural Pilot Quick Access
+                <i class="bi bi-lightning-fill"></i> POC User Access
               </p>
               <div class="quick-access__grid">
-                <button @click="quickLogin('global.officer')" class="quick-button">Global Officer</button>
-                <button @click="quickLogin('global.supervisor')" class="quick-button">Global Supervisor</button>
-                <button @click="quickLogin('moh.officer')" class="quick-button">MOH Officer</button>
-                <button @click="quickLogin('moe.officer')" class="quick-button">MOE Officer</button>
-                <button @click="quickLogin('maggy1')" class="quick-button quick-button--full">Mock Citizen
-                  (Maggy)</button>
+                <button
+                  v-for="account in pocAccounts"
+                  :key="account.username"
+                  type="button"
+                  class="quick-button"
+                  :class="{ 'quick-button--admin': ['admin', 'system.admin'].includes(account.username) }"
+                  :aria-label="`Access the POC as ${account.label}`"
+                  @click="quickLogin(account.username)"
+                >
+                  <span class="quick-button__label">{{ account.label }}</span>
+                  <span class="quick-button__username">{{ account.username }}</span>
+                </button>
               </div>
             </div>
           </div>
@@ -286,6 +292,23 @@
   const username = ref('')
   const password = ref('')
   const errorMessage = ref('')
+
+  const pocAccounts = [
+    { username: 'admin', label: 'Administrator' },
+    { username: 'system.admin', label: 'System Admin' },
+    { username: 'citizen1', label: 'Citizen' },
+    { username: 'officer1', label: 'Officer' },
+    { username: 'supervisor1', label: 'Supervisor' },
+    { username: 'registrar1', label: 'Registrar' },
+    { username: 'moh.admin', label: 'MOH Administrator' },
+    { username: 'employee1', label: 'Government Employee' },
+    { username: 'global.officer', label: 'Global Officer' },
+    { username: 'global.supervisor', label: 'Global Supervisor' },
+    { username: 'moh.officer', label: 'MOH Officer' },
+    { username: 'moh.supervisor', label: 'MOH Supervisor' },
+    { username: 'moe.officer', label: 'MOE Officer' },
+    { username: 'nurse.jane', label: 'Hospital Staff' }
+  ]
 
   // Simulation State
   const ssoModalOpen = ref(false)
@@ -763,11 +786,12 @@
 
   .quick-access__grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.5rem;
   }
 
   .quick-button {
+    min-width: 0;
     padding: 0.75rem 1rem;
     border-radius: var(--radius-sm);
     border: 1px solid var(--border-color);
@@ -777,6 +801,11 @@
     color: var(--text-main);
     cursor: pointer;
     transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+    text-align: left;
   }
 
   .quick-button:hover {
@@ -787,6 +816,41 @@
 
   .quick-button--full {
     grid-column: span 2;
+  }
+
+  .quick-button--admin {
+    background: var(--primary-soft);
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .quick-button__label {
+    font-weight: 800;
+  }
+
+  .quick-button__username {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-muted);
+    font-family: monospace;
+    font-size: 0.6875rem;
+    font-weight: 600;
+  }
+
+  @media (max-width: 520px) {
+    .login-brand,
+    .login-auth {
+      padding: 2rem 1.5rem;
+    }
+
+    .quick-access__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .quick-button--full {
+      grid-column: span 1;
+    }
   }
 
   /* Legacy Login */

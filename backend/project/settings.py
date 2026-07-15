@@ -94,7 +94,7 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
@@ -146,6 +146,12 @@ CSRF_TRUSTED_ORIGINS = [
     "https://gokservices.bitz-itc.com",
 ]
 
+# The host Nginx terminates TLS and forwards the original request scheme.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+
 # Celery Configuration
 REDIS_PW = config('REDIS_PASSWORD')
 REDIS_CONN_URL = f"redis://:{REDIS_PW}@{config('REDIS_HOST')}:{config('REDIS_PORT')}/0"
@@ -162,6 +168,7 @@ CELERY_RESULT_SERIALIZER = 'json'
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
+SECURE_REFERRER_POLICY = 'same-origin'
 
 # Structured Logging (JSON) for Cloud-Native Observability
 LOGGING = {
@@ -213,7 +220,7 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 104857600 # 100MB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 104857600 # 100MB
 
 # Media Files Management
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "media"
 
 # Performance: Enable Nginx X-Accel-Redirect for large file downloads

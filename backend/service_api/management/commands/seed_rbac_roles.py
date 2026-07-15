@@ -42,6 +42,36 @@ class Command(BaseCommand):
                  'description': 'Public User / Citizen', 
                  'permissions': ['request_create', 'request_view_own', 'saved_docs_manage']
             },
+            {
+                 'name': 'officer',
+                 'description': 'Standard MDA desk officer',
+                 'permissions': ['mda_view', 'request_action']
+            },
+            {
+                 'name': 'supervisor',
+                 'description': 'MDA workflow supervisor and approver',
+                 'permissions': ['mda_view', 'request_action', 'request_approve', 'reports_view']
+            },
+            {
+                 'name': 'registrar',
+                 'description': 'MDA registrar responsible for formal review and issuance',
+                 'permissions': ['mda_view', 'request_action', 'request_approve', 'reports_view']
+            },
+            {
+                 'name': 'mda_admin',
+                 'description': 'MDA administrator for users, services, forms, and workflows',
+                 'permissions': ['mda_view', 'mda_manage_users', 'mda_manage_services', 'reports_view', 'request_action']
+            },
+            {
+                 'name': 'system_admin',
+                 'description': 'Platform administrator without Django superuser privileges',
+                 'permissions': ['all', 'global_view', 'global_manage', 'reports_view']
+            },
+            {
+                 'name': 'employee',
+                 'description': 'Government employee with MDA-scoped service access',
+                 'permissions': ['mda_view', 'request_action']
+            },
         ]
 
         for role_data in roles_to_create:
