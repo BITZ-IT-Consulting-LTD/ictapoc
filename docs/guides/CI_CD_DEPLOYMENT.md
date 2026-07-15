@@ -16,7 +16,7 @@
    aws ssm describe-instance-information --query "InstanceInformationList[].InstanceId"
    ```
 3. **Create an IAM OIDC identity provider for GitHub Actions** (skip if your AWS account already has one): provider URL `https://token.actions.githubusercontent.com`, audience `sts.amazonaws.com`.
-4. **Create an IAM role** (e.g. `github-actions-deploy-gokservices`) with a trust policy scoped to this repo/branch:
+4. **Create an IAM role** (e.g. `github-actions-deploy-gokservices`) with a trust policy scoped to this repo's `production` Environment. Because the deploy job declares `environment: production`, GitHub issues an OIDC token whose `sub` claim is `repo:<owner>/<repo>:environment:production` (not the `ref:refs/heads/...` form used by non-environment jobs) — the trust policy must match that exact form:
    ```json
    {
      "Version": "2012-10-17",
@@ -26,7 +26,7 @@
        "Action": "sts:AssumeRoleWithWebIdentity",
        "Condition": {
          "StringEquals": { "token.actions.githubusercontent.com:aud": "sts.amazonaws.com" },
-         "StringLike": { "token.actions.githubusercontent.com:sub": "repo:BITZ-IT-Consulting-LTD/ictapoc:ref:refs/heads/main" }
+         "StringLike": { "token.actions.githubusercontent.com:sub": "repo:BITZ-IT-Consulting-LTD/ictapoc:environment:production" }
        }
      }]
    }

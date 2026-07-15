@@ -39,12 +39,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          COMMAND_ID=$(aws ssm send-command \
-            --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
-            --document-name "AWS-RunShellScript" \
-            --comment "Deploy ${{ github.sha }} to gokservices production" \
-            --timeout-seconds 1200 \
-            --parameters commands="$(cat <<'EOF'
+          SCRIPT=$(cat <<'EOF'
           set -euo pipefail
           cd /opt/gokservices/app
 
@@ -76,7 +71,20 @@ jobs:
           echo "Health check failed after deploy" >&2
           exit 1
           EOF
-          )" \
+          )
+
+          # Build the SSM parameters as real JSON (one array element per line) so the
+          # AWS CLI never has to parse quotes/newlines through its shorthand syntax.
+          jq -n --arg script "$SCRIPT" \
+            '{commands: ($script | split("\n"))}' \
+            > /tmp/ssm-params.json
+
+          COMMAND_ID=$(aws ssm send-command \
+            --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
+            --document-name "AWS-RunShellScript" \
+            --comment "Deploy ${{ github.sha }} to gokservices production" \
+            --timeout-seconds 1200 \
+            --parameters file:///tmp/ssm-params.json \
             --query "Command.CommandId" \
             --output text)
 
