@@ -41,6 +41,7 @@ jobs:
 
           SCRIPT=$(cat <<'EOF'
           set -eu
+          export HOME=/root
           git config --global --add safe.directory /opt/gokservices/app
           cd /opt/gokservices/app
 
